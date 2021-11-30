@@ -1,0 +1,94 @@
+---
+slug: metasearch-engine-upgrade
+name: Metasearch engine - upgrade Google search
+publisher: Capitan Dev Team
+rating: 4.148148148148148
+rating_count: 27
+user_count: 2,000+
+---
+
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "version": "2.0.5",
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "default_locale": "en",
+    "options_page": "/src/options/index.html",
+    "icons": {
+        "16": "images/icons/16.png",
+        "32": "images/icons/32.png",
+        "48": "images/icons/48.png",
+        "64": "images/icons/64.png",
+        "128": "images/icons/128.png",
+        "256": "images/icons/256.png"
+    },
+    "manifest_version": 2,
+    "background": {
+        "scripts": [
+            "src/background/utils.js",
+            "src/background/options.js",
+            "src/background/searchEngines.js",
+            "src/background/ga.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_start",
+            "js": [
+                "/src/common/libs/jquery.min.js",
+                "/src/content/panel.js"
+            ]
+        },
+        {
+            "matches": ["https://www.google.com/*"],
+            "css": ["/src/content/styles.css"],
+            "run_at": "document_end",
+            "js": [
+                "/src/content/fonts/inject.js"
+            ]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_start",
+            "js": [
+                "/src/common/jquery-plugins/sticky/index.js",
+                "/src/common/jquery-plugins/side-bar/index.js",
+                "/src/common/jquery-plugins/modal/index.js",
+                "/src/content/Utils.js",
+                "/src/common/jquery-plugins/cards/index.js",
+                "/src/content/getValueSelector.js",
+                "/src/content/openSearchEngine.js",
+                "/src/content/EnginesManager.js",
+                "/src/content/SideBarController.js",
+                "/src/content/index.js"
+            ]
+        },
+        {
+            "matches": ["https://www.google.com/*"],
+            "run_at": "document_end",
+            "css": ["/src/content/googleAutocompletes/styles.css"],
+            "js": [
+                "/src/content/googleAutocompletes/Cards.js",
+                "/src/content/googleAutocompletes/Results.js",
+                "/src/content/googleAutocompletes/GooglePage.js",
+                "/src/content/googleAutocompletes/GooglePage.js",
+                "/src/content/googleAutocompletes/plugin.js",
+                "/src/content/googleAutocompletes/index.js"
+            ]
+        }
+    ],
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+    "permissions": ["tabs", "unlimitedStorage", "storage", "<all_urls>"],
+    "web_accessible_resources": [
+        "/images/*",
+        "/src/common/styles.css",
+        "/src/common/jquery-plugins/sticky/styles.css",
+        "/src/common/jquery-plugins/side-bar/styles.css",
+        "/src/common/jquery-plugins/cards/styles.css",
+        "/src/common/jquery-plugins/modal/styles.css",
+        "/src/content/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+        "/src/content/fonts/fonts.css",
+        "/src/content/styles.css"
+    ]
+}

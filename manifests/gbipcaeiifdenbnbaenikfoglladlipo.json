@@ -1,0 +1,62 @@
+---
+slug: betmax
+name: BetMax
+publisher: BetMax
+rating: 4.8352941176470585
+rating_count: 85
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "BetMax",
+  "description": "Максимальные коэффициенты для ставок на спорт",
+  "version": "1.0.1",
+  "icons": {
+    "48": "icon48.png",
+    "16": "icon16.png",
+    "128": "icon128.png"
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    "*.js",
+    "*.css",
+    "*.png",
+    "*.ttf",
+    "*.svg",
+    "*.html",
+    "*.woff2"
+  ],
+  "content_security_policy":"script-src 'self' 'unsafe-eval'; font-src https://*; object-src 'self'",
+  "content_scripts": [
+      {
+        "matches": ["*://*/*"],
+        "exclude_matches": ["https://*.bingoboom.ru/*"],
+        "js": ["js/injector.js", "js/coefficents-window.js"],
+        "css": ["no-connection/no-connection.css"]
+      },
+      {
+        "matches": ["https://sport.bingoboom.ru/*"],
+        "js": ["js/injector.js"],
+        "css": ["no-connection/no-connection.css"],
+        "all_frames": true
+      },
+      {
+        "matches": ["https://bingoboom.ru/*"],
+        "js": ["js/coefficents-window.js"],
+        "css": ["no-connection/no-connection.css"]
+      }
+  ],
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}

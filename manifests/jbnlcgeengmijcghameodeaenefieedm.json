@@ -1,0 +1,62 @@
+---
+slug: snowplow-analytics-debugg
+name: Snowplow Analytics Debugger
+publisher: SnowcatCloud Inc.
+rating: 5
+rating_count: 6
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "Snowplow Analytics Debugger",
+	"short_name": "Snowplow Debugger",
+	"version": "1.1.0",
+	"description": "Debug your Snowplow Analytics implementation with the Snowplow Analytics Debugger in Developer Tools.",
+	"author": "SnowcatCloud",
+	"icons": {
+		"128": "/img/logo.png"
+	},
+	"browser_action": {
+		"default_icon": "/img/logo.png",
+		"default_popup": "/pages/popup/index.html"
+	},
+	"devtools_page": "/js/background/devtools.html",
+	"options_ui": {
+		"page": "/pages/options/index.html",
+		"open_in_tab": false
+	},
+	"background": {
+		"persistent": true,
+		"scripts": [
+			"/lib/jquery.min.js",
+			"/lib/webx.js",
+			"/js/background/background.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"run_at": "document_start",
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": [
+				"/js/content_script.js"
+			]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"storage",
+		"webRequest",
+		"webRequestBlocking",
+		"<all_urls>"
+	],
+	"web_accessible_resources": [
+		"/*"
+	],
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://d1fxqpms5uv8pj.cloudfront.net/; object-src 'self'"
+}

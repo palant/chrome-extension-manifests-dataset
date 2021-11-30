@@ -1,0 +1,111 @@
+---
+slug: speechify-for-chrome
+name: Speechify for Chrome
+publisher: Speechify
+rating: 4.418823964497041
+rating_count: 5408
+user_count: 1,000,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Speechify for Chrome",
+  "author": "Speechify Inc",
+  "version": "6.8.0",
+  "description": "Listen to any website with Speechify for Chrome",
+  "icons": {
+    "16": "images/icon-light-square-16.png",
+    "32": "images/icon-light-square-32.png",
+    "48": "images/icon-light-square-48.png",
+    "128": "images/icon-light-square-128.png"
+  },
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "mac": "Alt+Q",
+        "windows": "Alt+Q",
+        "chromeos": "Alt+Q",
+        "linux": "Alt+Q"
+      },
+      "description": "Play/Pause Control"
+    },
+    "save-to-library": {
+      "suggested_key": {
+        "mac": "Alt+S",
+        "windows": "Alt+S",
+        "chromeos": "Alt+S",
+        "linux": "Alt+S"
+      },
+      "description": "Save item to library"
+    }
+  },
+  "minimum_chrome_version": "40.0",
+  "content_security_policy": "script-src 'sha256-Qcd1S5XAuSTIuXH4NgKRf8If0mMbg7uAxcUkCe7azvI=' 'self' https://*.firebaseio.com/ https://api.amplitude.com https://speechify-api-polly.s3.amazonaws.com/ https://files.getspeechify.com/ https://widget.intercom.io/ https://js.intercomcdn.com/; object-src 'self'",
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "storage",
+    "https://speechifydev.firebaseio.com/",
+    "https://*/",
+    "http://*/",
+    "file://*/"
+  ],
+  "background": {
+    "page": "background-wrapper.html",
+    "persistence": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-wrapper.js"],
+      "css": ["css/speechify.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://docs.google.com/document/*"],
+      "js": ["gdocs.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["iframes.js"],
+      "css": ["css/speechify.css"],
+      "all_frames": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["toggleIcon.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://auth.getspeechify.com/*",
+      "*://speechify-auth-dev.netlify.app/*",
+      "*://app.getspeechify.com/*",
+      "*://app.speechify.com/*",
+      "*://www.speechify.com/*",
+      "*://speechify.com/*",
+      "*://speechify-landing-dev.netlify.app/*",
+      "*://auth.speechify.com/*",
+      "*://web-chi-mocha.vercel.app/*",
+      "*://beta-app.speechify.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    "content.js",
+    "features.json",
+    "fonts/*",
+    "images/*",
+    "audio/*",
+    "gdocs-inject.js",
+    "pdf.worker.js",
+    "houdini.js",
+    "audio-worklet.js",
+    "content/*"
+  ],
+  "browser_action": {}
+}

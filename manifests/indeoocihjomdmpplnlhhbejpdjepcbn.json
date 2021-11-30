@@ -1,0 +1,50 @@
+---
+slug: tumblr-archive
+name: tumblr archive
+publisher: black.humour
+rating: 0
+rating_count: 0
+user_count: 99
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "tumblr archive",
+  "version": "0.0.4",
+  "manifest_version": 2,
+  "homepage_url": "http://tuliu.aacc.in/",
+  "description": "if you posts contain sensitive media, this rep will help you show tumblr archive ",
+  "icons": {
+    "16": "icons/128.png",
+    "48": "icons/128.png",
+    "128": "icons/128.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/128.png",
+    "default_title": "tumblr archive"
+  },
+  "background": {
+    "scripts": ["dist/background.entry.js"]
+  },
+  "permissions": [
+    "tabs",
+    "*://*.tumblr.com/*",
+    "storage",
+    "notifications",
+    "activeTab"
+  ],
+  "content_scripts": [{
+    "js": ["dist/inject.entry.js"],
+    "matches": ["*://*.tumblr.com/*"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["https://www.tumblr.com/dashboard/blog/*"],
+    "css": ["pop/src/css/blog.css"],
+    "js": ["dist/blog.entry.js"]
+  }, {
+    "matches": ["https://www.tumblr.com/safe-mode*"],
+    "js": ["dist/safemode.entry.js"]
+  }],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

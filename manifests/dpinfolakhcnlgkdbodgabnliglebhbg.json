@@ -1,0 +1,77 @@
+---
+slug: stackup
+name: Stackup
+publisher: StackUp LLC
+rating: 4.166666666666667
+rating_count: 42
+user_count: 30,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "Stackup",
+    "description": "Track, Measure, and Reward Online Reading.",
+    "version": "5.1.8",
+    "minimum_chrome_version": "69",
+    "icons": {
+        "16": "images/icon_on.png",
+        "48": "images/icon_on.png",
+        "128": "images/icon_on.png"
+    },
+
+    "browser_action": {
+        "default_icon": "images/icon_off.png",
+        "default_popup": "popup.html"
+    },
+
+    "background": {
+        "page": "background_page.html",
+        "persistent": true
+    },
+
+    "content_scripts": [{
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["lib/jquery.min.js", "js/page/fake-news.js", "lib/rangy-core.js", "lib/simmer.js", "lib/mark.es6.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/page/timetracking_cs.js", "lib/readability.js", "lib/textstatistics.js", "js/page/getreadabilitystats.js", "js/page/annotations.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "http://*.mackinvia.com/Reader/Launch?*",
+                "https://*.mackinvia.com/Reader/Launch?*",
+                "http://*.mackinviatest.com/Reader/Launch?*",
+                "https://*.mackinviatest.com/Reader/Launch?*"
+            ],
+            "js": ["js/page/mackin.js"]
+        }
+    ],
+
+    "permissions": [
+        "tabs",
+        "storage",
+        "notifications",
+        "identity",
+        "identity.email",
+        "tts",
+        "cookies",
+        "http://*/*",
+        "https://*/*",
+        "alarms"
+    ],
+
+    "web_accessible_resources": [
+        "css/annotations.css",
+        "css/annotations-shadow.css",
+        "css/fake-news.css",
+        "fonts/*/*.*",
+        "images/logo.png",
+        "images/icon_on.png"
+    ]
+}

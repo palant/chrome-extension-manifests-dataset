@@ -1,0 +1,57 @@
+---
+slug: meow-the-cat-pet
+name: Meow, The Cat Pet
+publisher: ZhivoTech
+rating: 4.336378737541528
+rating_count: 1204
+user_count: 200,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "version": "1.10.5",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "background": {
+    "persistent": true,
+    "scripts": ["/js/bg.js"]
+  },
+  "permissions": ["<all_urls>", "notifications"],
+  "browser_action": {
+    "default_title": "Cat Pet",
+    "default_popup": "/html/popup.html"
+  },
+  "web_accessible_resources": [
+    "images/*.png",
+    "js/*.png",
+    "images/*.jpg",
+    "images/*.svg",
+    "js/*.json",
+    "js/*.atlas",
+    "sound/*.mp3"
+  ],  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_globs": ["*://*.meowthecatpet.com/game*", "*://*.meowplayground.com/game*", "*://localhost:5443/game*"],
+      "css": ["/css/dist/catpet.css"],
+      "js": [
+        "/js/dist/browserLoader.js",
+        "/js/dist/runCat.js"
+      ]
+    },
+    {
+      "matches": ["https://beta.meowthecatpet.com/game*", "https://www.meowplayground.com/game*", "http://localhost:5443/game/*"],
+      "js": ["js/domain-sync.js"]
+    }   
+  ],  
+  "icons": { "16": "16.png",
+           "48": "48.png",
+          "128": "128.png" 
+  },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com https://apis.google.com; object-src 'self'"
+
+}

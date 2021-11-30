@@ -1,0 +1,94 @@
+---
+slug: prime-party
+name: Prime Party
+publisher: VIDOC Browser Extensions
+rating: 3.7962962962962963
+rating_count: 216
+user_count: 100,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "version": "0.9.1",
+  "default_locale": "en",
+  "permissions": [
+    "declarativeContent",
+    "storage",
+    "https://*.primevideo.com/*",
+    "https://*.amazon.com/*",
+    "https://*.amazon.co.uk/*",
+    "https://*.amazon.de/*",
+    "https://*.amazon.co.jp/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.co.uk/*",
+        "https://*.amazon.de/*",
+        "https://*.amazon.co.jp/*"
+      ],
+      "js": [
+        "src/contentscripts/ui/amazon.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.primevideo.com/*", "https://*.amazon.com/*", "https://*.amazon.co.uk/*", "https://*.amazon.de/*", "https://*.amazon.co.jp/*"],
+      "css": ["src/contentscripts/ui/sidebar-host.css"],
+      "js": [
+        "lib/jquery.js",
+        "lib/socketio.js",
+        "lib/global-helpers.js",
+        "lib/states.js",
+        "src/contentscripts/helpers/helper.js",
+        "src/contentscripts/helpers/ui-helper.js",
+        "src/contentscripts/listener/state-listener.js",
+        "src/contentscripts/listener/extension-messages.js",
+        "src/contentscripts/listener/websocket.js",
+        "src/contentscripts/listener/start-video-button.js",
+        "src/contentscripts/listener/review-listener.js",
+        "src/contentscripts/actions/next-episode.js",
+        "src/contentscripts/actions/close.js",
+        "src/contentscripts/actions/play.js",
+        "src/contentscripts/actions/pause.js",
+        "src/contentscripts/actions/seek.js",
+        "src/contentscripts/actions/bind-actions.js",
+        "src/contentscripts/ui/navbar.js",
+        "src/contentscripts/ui/sidebar-host.js",
+        "src/contentscripts/listener/bootstrap.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "icon-small.png",
+    "src/sidebar/*"
+  ],
+  "background": {
+    "scripts": [
+      "src/background/declarative-content.js",
+      "src/background/messaging.js",
+      "src/background/party.js",
+      "src/background/gather.min.js"
+    ],
+    "persistent": false
+  },
+  "page_action": {
+    "default_icon": {
+      "19": "icon-small.png",
+      "38": "icon-small.png"
+    },
+    "default_title": "__MSG_extName__",
+    "default_popup": "src/popup/popup.html"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

@@ -1,0 +1,116 @@
+---
+slug: lumaly-gutscheine-cashbac
+name: Lumaly - Automatic Coupon Finder & Cashback
+publisher: Lumaly
+rating: 4.707692307692308
+rating_count: 195
+user_count: 100,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_app_name__",
+  "description": "__MSG_app_description__",
+  "version": "2.1.9.5",
+  "default_locale": "de",
+  "icons": {
+    "128": "accessible/lumaly/icon_orange.png",
+    "48": "accessible/lumaly/icon_orange.png",
+    "16": "accessible/lumaly/icon_orange.png"
+  },
+  "background": {
+    "scripts": [
+      "shared.js",
+      "jquery.min.js",
+      "webextension-polyfill.min.js",
+      "mixpanel.js",
+      "background.js",
+      "script.js"
+    ],
+    "persistent": true
+  },
+  "web_accessible_resources": [
+    "config.json",
+    "img/logo_for_alert.svg",
+    "img/close.svg",
+    "content.css",
+    "accessible/*"
+  ],
+  "content_security_policy": "script-src 'self' https://www.googletagmanager.com 'sha256-8hdnIz1BlJ9Osx4BGt/jG4ApkPKzDEUHkJJ8TLV4UEE=' https://www.googleadservices.com https://googleads.g.doubleclick.net; object-src 'self'",
+  "content_scripts": [
+    {
+      "js": [
+        "shared.js",
+        "jquery.min.js",
+        "allpages.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://lumaly.de/*",
+        "*://*.awin.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "helper-scripts/redirect/lumaly_discover.js"
+      ],
+      "matches": [
+        "*://lumaly.de/",
+        "*://lumaly.de/lp",
+        "*://lumaly.de/discover/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "shared.js",
+        "jquery.min.js",
+        "registration.js"
+      ],
+      "matches": [
+        "*://lumaly.de/friend-referral*",
+        "*://lumaly.de/willkommen*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "helper-scripts/redirect/lumaly_ausprobieren.js"        
+      ],
+      "matches": [
+        "*://lumaly.de/jetzt-ausprobieren/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "jquery.min.js",
+        "socialAuth.js"
+      ],
+      "matches": [
+        "*://*.lumaly.de/auth*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "unlimitedStorage",
+    "http://*/*",
+    "https://*/*",
+    "tabs"
+  ]
+}

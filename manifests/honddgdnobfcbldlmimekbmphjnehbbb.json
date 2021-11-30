@@ -1,0 +1,63 @@
+---
+slug: oreilly
+name: O'Reilly
+publisher: oreilly.com
+rating: 4
+rating_count: 3
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "O'Reilly",
+  "version": "0.3.16",
+  "description": "Get quick access to your content by opening a new tab and find trusted O'Reilly Answers when searching with Google or Stack Overflow",
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+  "permissions": [
+    "cookies",
+    "storage",
+    "tabs",
+    "*://*.oreilly.com/",
+    "*://*.oreilly.review/",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "background": {
+    "scripts": [
+      "background.bundle.js"
+    ]
+  },
+  "icons": {
+    "24": "icons/o_dot_24.png",
+    "48": "icons/o_dot_48.png",
+    "72": "icons/o_dot_72.png",
+    "128": "icons/o_dot_128.png"
+  },
+  "browser_action": {},
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/*"
+      ],
+      "js": [
+        "./contentScriptGoogle.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.stackoverflow.com/questions/*"
+      ],
+      "js": [
+        "./contentScriptStackoverflow.bundle.js"
+      ]
+    }
+  ],
+  "chrome_url_overrides": {
+    "pageToOverride": "newtab"
+  }
+}

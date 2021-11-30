@@ -1,0 +1,93 @@
+---
+slug: meeting-notes-for-google
+name: Meeting notes for Google Calendar - Meetric
+publisher: Meetric
+rating: 4.863013698630137
+rating_count: 73
+user_count: 4,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Meeting notes for Google Calendar - Meetric",
+  "version": "1.0.9",
+  "description": "Capture actionable meeting notes directly in Google Calendar",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/meetric_16.png",
+    "48": "images/meetric_32.png",
+    "128": "images/meetric_128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/meetric_16.png",
+      "32": "images/meetric_32.png",
+      "80": "images/meetric_80.png"
+    },
+    "default_title": "Meetric - meeting notes for Google Calendar",
+    "default_popup": "reload.html"
+  },
+  "host_permissions": [
+    "https://calendar.google.com/*",
+    "https://meet.google.com/*",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.meetric.app/*"],
+      "run_at": "document_end",
+      "js": ["contentScriptMeetric.js"]
+    },
+    {
+      "matches": ["https://calendar.google.com/calendar/*"],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "css": ["panel.css"],
+      "js": [
+        "jquery-3.5.1.min.js",
+        "common.js",
+        "sidebar.js",
+        "contentScriptCalendar.js"
+      ]
+    },
+    {
+      "matches": ["https://meet.google.com/*"],
+      "run_at": "document_end",
+      "all_frames": false,
+      "css": ["panel.css"],
+      "js": [
+        "jquery-3.5.1.min.js",
+        "common.js",
+        "sidebar.js",
+        "contentScriptMeet.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://calendar.google.com/calendar/*",
+        "https://meet.google.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false,
+      "css": ["panel.css"],
+      "js": [
+        "jquery-3.5.1.min.js",
+        "common.js",
+        "sidebar.js",
+        "contentScriptOthers.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["/images/meetric_20.png"]
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+---
+slug: movie-finder
+name: Movie Finder
+publisher: Movie Finder
+rating: 3.9
+rating_count: 10
+user_count: 100,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Movie Finder",
+  "description": "Provides quick commands from your browser’s address bar to search on popular movie sites.",
+  "version": "3.0.0",
+  "browser_action": {
+    "default_title": "Movie Finder",
+    "default_popup": "popup/popup.html"
+  },
+  "homepage_url": "https://www.moviefindersearch.com/wim/gotohub?s=dkds",
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "encoding": "UTF-8",
+      "favicon_url": "https://www.moviefindersearch.com/favicon.ico",
+      "is_default": true,
+      "name": "Movie Finder",
+      "keyword": "Movie Finder",
+      "search_url": "https://www.moviefindersearch.com/search/?category=web&s=dkds&vert=movie&q={searchTerms}",
+      "suggest_url": "https://sug.moviefindersearch.com/v1/sug/?s=dkds&vert=movie&q={searchTerms}"
+    }
+  },
+  "background": {
+    "page": "bg/background.html",
+    "persistent": true
+  },
+  "manifest_version": 2,
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.yahoo.com/*"
+      ],
+      "js": [
+        "jquery.js",
+        "content_script/first_search/keep_changes.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "alarms",
+    "notifications",
+    "cookies",
+    "*://*.moviefindersearch.com/*"
+  ],
+  "web_accessible_resources": [
+    "img/*",
+    "content_script/first_search/*"
+  ]
+}

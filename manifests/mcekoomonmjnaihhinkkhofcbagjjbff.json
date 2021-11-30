@@ -1,0 +1,59 @@
+---
+slug: share-a-cart-for-grocerie
+name: Share-A-Cart for Groceries
+publisher: Share-A-Cart
+rating: 5
+rating_count: 3
+user_count: 240
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "name": "__MSG_appName__",
+   "description": "__MSG_appDesc__",
+   "default_locale": "en",
+
+   "icons": {
+      "128": "images/sac-128.png",
+      "64": "images/sac-64.png",
+      "16": "images/sac-16.png"
+   },
+   "manifest_version": 2,
+   "background": {
+      "scripts": ["lib/metrix.js", "js/jquery-3.4.1.min.js", "js/underscore-min.js", "lib/consts.js", "browser-js/chrome.api.js", "browser-js/process_vendors.js", "lib/strip-headers.js", "lib/background-bye.js"]
+   },
+   "browser_action": {
+      "default_icon": "images/sac-16.png",
+      "default_title": "Share-A-Cart for Groceries"
+   },
+   "options_ui": {
+      "page": "options.html",
+      "open_in_tab": true
+   },
+   "content_scripts": [{
+      "all_frames": true,
+      "js": ["lib/injects/inject-add-cart.js"],
+      "matches": ["https://affil.walmart.com/cart/*"],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": ["lib/injects/inject-add-cart.js"],
+      "matches": ["https://www.amazon.com/gp/aws/cart/add.html*", "https://www.amazon.ca/gp/aws/cart/add.html*", "https://www.amazon.co.uk/gp/aws/cart/add.html*", "https://www.amazon.fr/gp/aws/cart/add.html*", "https://www.amazon.de/gp/aws/cart/add.html*", "https://www.amazon.it/gp/aws/cart/add.html*", "https://www.amazon.nl/gp/aws/cart/add.html*", "https://www.amazon.es/gp/aws/cart/add.html*", "https://www.amazon.cn/gp/aws/cart/add.html*", "https://www.amazon.in/gp/aws/cart/add.html*", "https://www.amazon.co.jp/gp/aws/cart/add.html*", "https://www.amazon.com.mx/gp/aws/cart/add.html*", "https://www.amazon.com.au/gp/aws/cart/add.html*", "https://www.amazon.com.br/gp/aws/cart/add.html*", "https://*.walmart.com/*"],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "lib/injects/sac.js"],
+      "matches": ["https://*.share-a-cart.com/*"],
+      "run_at": "document_start"
+   }],
+
+   "permissions": ["clipboardWrite", "storage", "unlimitedStorage", "tabs", "webRequest", "webRequestBlocking", "cookies", "https://*/*"],
+   "version": "0.3.1",
+
+   "browser_specific_settings": {
+      "gecko": {
+         "id": "{32457e01-f969-4141-a322-16de6b05d82a}"
+      }
+   }
+}

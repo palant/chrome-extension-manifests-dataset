@@ -1,0 +1,89 @@
+---
+slug: switch-workstation
+name: Switch Workstation
+publisher: switchextension
+rating: 4.098360655737705
+rating_count: 61
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Switch Workstation",
+  "short_name": "Switch",
+  "version": "3.6.3",
+  "description": "Switch is a workstation that helps you manage web applications and accounts in 1 place.",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-XxxUqaJ7f4IZT5l73mxUO6Ixs7z6VDON6W9uyffv9YM=' https://www.googletagmanager.com/gtag/js; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "vendor/jquery-3.3.1.min.js",
+        "vendor/jquery-ui-1.12.1.min.js",
+        "vendor/react-16.8.6.min.js",
+        "vendor/react-dom-16.8.6.min.js",
+        "dist/extension.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.officeapps.live.com/*", "https://docs.google.com/*"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "js": ["dist/iframe.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["vendor/axios-0.19.0.min.js", "dist/background.js"]
+  },
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "web_accessible_resources": ["dist/*", "vendor/*", "assets/*", "newtab.html", "spaces.html"],
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "management",
+    "background",
+    "history",
+
+    "http://*/*",
+    "https://*/*",
+    "file://*/*",
+
+    "contextMenus",
+    "cookies",
+    "webRequest",
+    "webRequestBlocking",
+    "webNavigation"
+  ],
+  "optional_permissions": ["notifications"],
+  "commands": {
+    "tab_history_back": {
+      "suggested_key": {
+        "default": "Ctrl+Comma",
+        "windows": "Ctrl+Comma",
+        "mac": "MacCtrl+Comma"
+      },
+      "description": "Tab History Back"
+    },
+    "tab_history_forward": {
+      "suggested_key": {
+        "default": "Ctrl+Period",
+        "windows": "Ctrl+Period",
+        "mac": "MacCtrl+Period"
+      },
+      "description": "Tab History Forward"
+    }
+  }
+}

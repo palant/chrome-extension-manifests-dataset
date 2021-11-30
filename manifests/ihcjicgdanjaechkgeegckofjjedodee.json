@@ -1,0 +1,85 @@
+---
+slug: malwarebytes-browser-guar
+name: Malwarebytes Browser Guard
+publisher: Malwarebytes
+rating: 4.06158357771261
+rating_count: 682
+user_count: 8,000,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "author": "Malwarebytes",
+  "name": "Malwarebytes Browser Guard",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "2.3.13",
+
+  "icons": {
+    "128": "app/assets/icon.png"
+  },
+
+  "web_accessible_resources": [
+    "*.eot",
+    "*.ttf",
+    "*.woff",
+    "*.woff2",
+    "app/assets/close-icon.svg",
+    "app/assets/tooltip.svg",
+    "app/eventpages/block.html",
+    "app/eventpages/debugger.html",
+    "app/eventpages/downloading.html",
+    "app/eventpages/message.html",
+    "injection-instart.js",
+    "vendor/*"
+  ],
+
+  "externally_connectable": {
+    "matches": ["*://*.msn.com/*"]
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-messaging.js"]
+    }
+  ],
+
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+
+  "browser_action": {
+    "default_icon":  "app/assets/icon.png",
+    "default_popup": "app/pop.html",
+    "default_title": "Malwarebytes"
+  },
+
+  "permissions": [
+    "alarms",
+    "downloads",
+    "storage",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "unlimitedStorage",
+    "<all_urls>",
+    "contextMenus"
+  ],
+
+  "optional_permissions": ["nativeMessaging"],
+  "incognito": "split"
+}

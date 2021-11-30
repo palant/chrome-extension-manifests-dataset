@@ -1,0 +1,107 @@
+---
+slug: przypominajka-fanimanipl
+name: Przypominajka FaniMani.pl
+publisher: FaniMani.pl
+rating: 4.752577319587629
+rating_count: 97
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Przypominajka FaniMani.pl",
+  "description": "Dzięki Przypominajce średnio 2.5% z tego co i tak zapłacisz podczas zakupów w internecie trafi do wybranej organizacji społecznej.",
+  "author": "FaniMani.pl",
+  "version": "4.0.0",
+  "background": {
+    "scripts": [
+      "background_pages/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/widget.js"
+      ],
+      "css": [
+        "resources/css/widget.css"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://google.??",
+        "*://google.??/*",
+        "*://google.???",
+        "*://google.???/*",
+        "*://google.co.uk",
+        "*://google.co.uk/*",
+        "*://www.google.??",
+        "*://www.google.??/*",
+        "*://www.google.???",
+        "*://www.google.???/*",
+        "*://www.google.co.uk",
+        "*://www.google.co.uk/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/google_buttons.js"
+      ],
+      "css": [
+        "resources/css/google_buttons.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://localhost/*",
+        "*://fanimani.pl/*",
+        "*://www.fanimani.pl/*",
+        "*://dev.fanimani.pl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/fanimani_pl.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "*://localhost/*",
+    "*://fanimani.pl/*",
+    "*://*.fanimani.pl/*"
+  ],
+  "icons": {
+    "16": "resources/img/icon16.png",
+    "48": "resources/img/icon48.png",
+    "128": "resources/img/icon128.png"
+  },
+  "web_accessible_resources": [
+    "resources/*.*"
+  ],
+  "browser_action": {
+    "default_popup": "content_scripts/popup.html",
+    "default_icon": {
+      "32": "resources/img/icon-status-default.png"
+    }
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "*://fanimani.pl/*",
+      "*://www.fanimani.pl/*",
+      "*://dev.fanimani.pl/*"
+    ]
+  }
+}

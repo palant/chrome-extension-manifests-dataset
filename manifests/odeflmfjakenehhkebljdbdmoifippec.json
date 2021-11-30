@@ -1,0 +1,80 @@
+---
+slug: hypeshot
+name: Hypeshot
+publisher: hypeshot
+rating: 5
+rating_count: 25
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+        "backgroundScript.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "name": "Hypeshot",
+  "description": "Personalize the way you watch sports",
+  "version": "2.0.1.19",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["indexScript.js"],
+      "exclude_matches": [
+        "https://fantasy.espn.com/basketball/team?leagueId=*",
+        "*://*.espn.com/fantasy/basketball/*"
+      ]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["notificationScript.js"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["controlButtonScript.js"]
+    },
+    {
+      "matches": [
+        "*://*.espn.com/fantasy/football/*",
+        "*://*.espn.com/fantasy/basketball/*",
+        "*://*.hypeshot.io/*",
+        "*://*.hypeshot-test.com/*",
+        "*://master.d44kt561uoeud.amplifyapp.com/*",
+        "*://*.basketball.fantasysports.yahoo.com/*",
+        "*://*.sleeper.app/*"
+      ],
+      "exclude_matches": ["https://fantasy.espn.com/basketball/league*"],
+      "js": ["onboardingScript.js"]
+    }
+	],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com; object-src 'self'",
+  "externally_connectable": {
+    "matches": [
+      "*://hypeshot-test.com/*",
+      "*://master.d44kt561uoeud.amplifyapp.com/*",
+      "*://hypeshot.io/*",
+      "*://app.hypeshot.io/*"
+    ]
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "identity",
+    "identity.email",
+    "history",
+    "tabs"
+  ],
+  "web_accessible_resources": ["*.css"]
+}

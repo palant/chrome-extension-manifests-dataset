@@ -1,0 +1,61 @@
+---
+slug: web-for-instagram-with-di
+name: Web for Instagram with Direct
+publisher: kelloggmisar
+rating: 4.288299155609168
+rating_count: 2487
+user_count: 200,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_name__",
+    "description": "__MSG_description__",
+    "default_locale": "en",
+    "icons": {
+        "128": "img/128.png",
+        "64": "img/64.png",
+        "32": "img/32.png"
+    },
+    "browser_action": {
+        "default_icon": "img/64.png",
+        "default_title": "__MSG_name__"
+    },
+    "background": {"scripts": ["js/lib/jquery.min.js", "js/storage.js", "js/background.js"]},
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "js": ["js/ua.js"],
+            "all_frames": true,
+            "matches": ["*://www.instagram.com/*"]
+        },
+        {
+            "js": ["js/content-scripts/rate.js"],
+            "css": ["css/rate.css"],
+            "all_frames": true,
+            "matches": ["*://www.instagram.com/*"]
+        },
+        {
+            "css": ["css/content.css"],
+            "js": ["js/lib/jquery.min.js", "js/storage.js", "js/content-scripts/content.js"],
+            "all_frames": true,
+            "matches": ["*://www.instagram.com/*"]
+        },
+        {
+            "matches": ["*://*/*"],
+            "all_frames": true,
+            "js": ["js/content-scripts/instaLinkListener.js"]
+        }
+    ],
+    "permissions": [
+        "<all_urls>",
+        "storage",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "options_page": "options.html",
+    "web_accessible_resources": ["img/*", "css/*"],
+    "manifest_version": 2,
+    "version": "1.0.2"
+}

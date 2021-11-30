@@ -1,0 +1,119 @@
+---
+slug: crumbs-best-privacy-from
+name: Crumbs - Best Privacy from the Makers of ABP
+publisher: Crumbs.org
+rating: 4.955223880597015
+rating_count: 67
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "1.9.1",
+  "author": "Eyeo GmbH",
+  "name": "__MSG_name_releasebuild__",
+  "short_name": "crumbs",
+  "description": "__MSG_description__",
+  "default_locale": "en_US",
+  "minimum_chrome_version": "49.0",
+  "minimum_opera_version": "36.0",
+
+  "applications": {
+    "gecko": {
+      "id": "{8a5c0a29-171f-4d31-96d8-4b957588ad3e}",
+      "strict_min_version": "91.1.0"
+    }
+  },
+
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "browser-polyfill.js",
+      "background.js"
+    ]
+  },
+
+  "devtools_page": "",
+  "icons": {
+    "128": "icons/crumbs-128.png",
+    "16": "icons/crumbs-16.png",
+    "32": "icons/crumbs-32.png",
+    "48": "icons/crumbs-48.png",
+    "64": "icons/crumbs-64.png"
+  },
+
+  "browser_action": {
+    "default_icon": {
+      "16": "icons/crumbs-16.png",
+      "20": "icons/crumbs-20.png",
+      "32": "icons/crumbs-32.png",
+      "40": "icons/crumbs-40.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "__MSG_name__"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "browser-polyfill.js",
+        "content-script.js"
+      ],
+      "run_at": "document_start",
+      "match_about_blank": true,
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.crumbs.org/*"],
+      "js": [
+        "email-relay.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.crumbs.org/thank-you/"],
+      "js": ["browser-polyfill.js", "first-time-use.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.crumbs.org/*"],
+      "js": [
+        "relay-auth.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    "crumbs-email-relay-menu.html"
+  ],
+
+  "options_page": "options.html",
+
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking",
+    "webNavigation",
+    "storage",
+    "unlimitedStorage",
+    "history",
+    "geolocation",
+    "proxy",
+    "cookies",
+    "alarms",
+    "menus",
+    "contextMenus",
+    "icons"
+  ],
+
+  "storage": {
+    "managed_schema": "managed-storage-schema.json"
+  }
+}
