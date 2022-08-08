@@ -1,0 +1,77 @@
+---
+slug: qoala
+name: Qoala
+publisher: Joinqoala SL
+rating: 4.574712643678161
+rating_count: 174
+user_count: 70,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Qoala",
+  "description": "Extensión de cupones y cashback en tus tiendas favoritas.",
+  "version": "3.3.0.4",
+  "homepage_url": "https://joinqoala.com",
+  "icons": {
+    "128": "assets/images/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "assets/images/icon32.png",
+      "128": "assets/images/icon128.png",
+      "1024": "assets/images/icon1024.png"
+    },
+    "default_title": "Abre Qoala",
+    "default_popup": "/popup/popup.html"
+  },
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["https://*.joinqoala.com/*"],
+  "optional_permissions": ["cookies"],
+  "background": {
+    "service_worker": "/service-workers/worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["/content-scripts/store/store.js"]
+    },
+    {
+      "matches": ["https://*/*"],
+      "js": ["/content-scripts/checkout/checkout.js"]
+    },
+    {
+      "matches": [
+        "https://qoala-web-six.vercel.app/*",
+        "https://*.joinqoala.com/*",
+        "https://qoala-web-teamqoala.vercel.app/*"
+      ],
+      "js": ["/content-scripts/auth/auth.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/images/icon128.png",
+        "/assets/animations/checkout.json",
+        "/assets/images/close_icon.svg",
+        "/content-scripts/store/popup/popup.html",
+        "/content-scripts/store/confirmation-popup/confirmation-popup.html",
+        "/content-scripts/store/lost-cashback-popup/lost-cashback-popup.html",
+        "/content-scripts/store/checkout-popup/checkout-popup.html",
+        "/content-scripts/store/redirect-popup/redirect-popup.html",
+        "/content-scripts/store/failed-cashback-popup/failed-cashback-popup.html",
+        "/content-scripts/store/featured-offer-popup/featured-offer-popup.html",
+        "/content-scripts/store/peer-offers-popup/peer-offers-popup.html",
+        "/content-scripts/checkout/receipt-popup/receipt-popup.html",
+        "/content-scripts/checkout/receipt-popup-success/receipt-popup-success.html",
+        "/content-scripts/checkout/coupon-trial-popup/coupon-trial-popup.html",
+        "assets/fonts/Manrope-Regular.ttf",
+        "assets/fonts/EuclidCircular-Medium.woff"
+      ],
+      "matches": ["https://*/*"]
+    }
+  ]
+}

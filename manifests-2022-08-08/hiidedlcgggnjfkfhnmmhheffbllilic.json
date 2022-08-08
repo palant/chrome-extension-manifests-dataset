@@ -1,0 +1,63 @@
+---
+slug: revnote-highlighter-web-p
+name: RevNote Highlighter - Web & PDF
+publisher: RevNote
+rating: 4.517241379310345
+rating_count: 29
+user_count: 1,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "manifest_version": 2,
+   "author": "RevNote",
+   "name": "RevNote Highlighter - Web & PDF",
+   "short_name": "RevNote Highlighter",
+   "description": "Keep on top of your reading, notes and citations.",
+   "version": "6.3.6",
+   "icons": {
+      "16": "assets/img/revnote-icon--16-blue.png",
+      "32": "assets/img/revnote-icon--32-blue.png",
+      "48": "assets/img/revnote-icon--48-blue.png",
+      "128": "assets/img/revnote-icon--128-blue.png"
+   },
+   "background": {
+      "scripts": ["services/Auth$.js", "config/CONFIG$.js", "services/Settings$.js", "services/TokenManager$.js", "services/LocalStorage$.js", "services/Tool$.js", "services/Server$.js", "services/Data$.js", "services/Error$.js", "background.js"],
+      "persistent": true
+   },
+   "browser_action": {
+      "default_icon": "assets/img/revnote-icon--32-grey.png",
+      "default_popup": "modules/Login/login.html",
+      "default_title": "Save to RevNote"
+   },
+   "content_scripts": [{
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["https://web.revnote.io/*", "https://web.revnote.local/*"],
+      "js": ["modules/Content/resources.js"],
+      "run_at": "document_start"
+   }, {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["https://revnote.io/*", "https://web.revnote.io/*", "https://web.revnote.local/*", "https://patents.google.com/*", "https://www.youtube.com/*"],
+      "js": ["modules/Content/clipper.js", "modules/Content/annotate.js"],
+      "css": ["modules/Content/content.css"],
+      "run_at": "document_end"
+   }, {
+      "matches": ["https://patents.google.com/*"],
+      "exclude_matches": [],
+      "js": ["modules/Content/googlePatentsClipper.js"],
+      "css": ["modules/Content/content.css"],
+      "run_at": "document_end"
+   }, {
+      "matches": ["https://www.youtube.com/*"],
+      "exclude_matches": [],
+      "js": ["modules/Content/youtubeClipper.js"],
+      "css": ["modules/Content/content.css"],
+      "run_at": "document_end"
+   }],
+   "permissions": ["activeTab", "webRequest", "webRequestBlocking", "tabs", "contextMenus", "http://*/*", "https://*/*"],
+   "web_accessible_resources": ["assets/*/*.*", "assets/*/*/*.*", "modules/PDFViewer/web/viewer.html"],
+   "externally_connectable": {
+      "matches": ["https://revnote.local/*", "https://web.revnote.local/*", "https://revnote.io/*", "https://web.revnote.io/*"]
+   }
+}

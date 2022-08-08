@@ -1,0 +1,96 @@
+---
+slug: tiktok-for-desktop-downlo
+name: TikTok™ for Desktop & Downloader
+publisher: BlueApps.inc
+rating: 3.6923076923076925
+rating_count: 13
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "__MSG_name__",
+	"description": "__MSG_description__",
+	"version": "1.0.5",
+	"default_locale": "en",
+	"icons": {
+		"16": "icon16.png",
+		"48": "icon48.png",
+		"128": "icon128.png"
+	},
+	"action": {
+		"default_icon": {
+			"128": "icon128.png"
+		}
+	},
+	"web_accessible_resources": [{
+		"resources":["*.css","*.js"],
+		"matches": ["<all_urls>"]
+	}],
+	"background": {
+		"service_worker": "./src/bg/bg.js"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.tiktok.com/*"
+			],
+			"js": [
+				"src/util/jquery.min.js",
+				"src/app/helper.js",
+				"src/app/search_close.js"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"*://*.tiktok.com/*"
+			],
+			"js": [
+				"src/util/jquery.min.js",
+				"src/util/jquery.slidingmessage.js",
+				"src/util/moment.js",
+				"src/util/utils.js",
+				"src/util/add-mobilify.js",
+				"src/app/add.js"
+			],
+			"run_at": "document_start",
+			"all_frames": true
+		},
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"exclude_matches": [
+				"*://*.tiktok.com/*"
+			],
+			"js": [
+				"src/util/utils.js",
+				"src/util/add-redirectToTikTok.js"
+			],
+			"run_at": "document_start",
+			"all_frames": true
+		}
+		
+	],
+	"declarative_net_request": {
+		"rule_resources": [{
+			"id": "ruleset_1",
+			"enabled": true,
+			"path": "./src/rules.json"
+		}]
+	},
+	"permissions": [
+		"tabs",
+		"activeTab",
+		"background",
+		"scripting",
+		"declarativeNetRequest",
+		"declarativeNetRequestFeedback"
+	],
+	"host_permissions": [
+		"<all_urls>"
+	]
+}

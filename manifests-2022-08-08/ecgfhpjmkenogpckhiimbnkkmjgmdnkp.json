@@ -1,0 +1,58 @@
+---
+slug: onhub-authorization-helpe
+name: OnHub Authorization Helper
+publisher: Angelo DeLuca
+rating: 5
+rating_count: 4
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OnHub Authorization Helper",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "https://accounts.google.com/embedded/setup/v2/safarivc/*",
+    "cookies",
+    "https://accounts.google.com/embedded/close"
+  ],
+  "icons":{
+    "16":"img/16.png",
+    "48":"img/48.png",
+    "128":"img/128.png"
+  },
+  "background": {
+    "scripts": [
+      "js/jquery.min.js",
+      "js/safarivcHR.js",
+      "js/getauthcode.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://accounts.google.com/embedded/setup/v2/safarivc/*?*"
+      ],
+      "js": [
+        "js/loginPage.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://accounts.google.com/embedded/close"
+      ],
+      "js": [
+        "js/jquery.min.js",
+        "js/tokenPage.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}

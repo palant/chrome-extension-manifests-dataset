@@ -1,0 +1,105 @@
+---
+slug: scrible-toolbar
+name: Scrible Toolbar
+publisher: Scrible, Inc.
+rating: 3.4305555555555554
+rating_count: 72
+user_count: 70,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Scrible Toolbar",
+  "version": "2.0.1",
+  "manifest_version": 3,
+  "description": "Smarter Web reading & research. Annotate, bookmark, save, cite, manage & share online articles. Use with your Scrible.com account.",
+  "icons": {
+    "16": "images/Favicon16.png",
+    "32": "images/Favicon32.png",
+    "48": "images/Favicon48.png",
+    "128": "images/Favicon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/Favicon19.png",
+      "24": "images/Favicon24.png",
+      "32": "images/Favicon32.png",
+      "38": "images/Favicon38.png",
+      "48": "images/Favicon48.png",
+      "128": "images/Favicon128.png"
+    },
+    "default_title": "Scrible Toolbar",
+    "default_popup": "sign_in.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "incognito": "split",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.scrible.com/*",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "js": ["content-scripts/sign-in-connector.js"],
+      "css": ["content_scripts.css"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "matches": [
+        "https://www.scrible.com/sign-in*",
+        "https://www.scrible.com/api/oauth*",
+        "https://www.scrible.com/app/",
+        "https://www.scrible.com/comm/serverComm.html*"
+      ]
+    },
+    {
+      "js": ["content-scripts/general-web-content-script.js"],
+      "css": ["content_scripts.css"],
+      "run_at": "document_end",
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "object-src 'self'; worker-src 'self'; frame-src 'self'; child-src 'self'; script-src 'self'; connect-src *;"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "signed-in.html",
+        "signed-in.js",
+        "injection-scripts/sign-in-helper-connector.js",
+        "pdf-loader-iframe.js",
+        "pdf-loader-iframe.html"
+      ],
+      "matches": [
+        "https://www.scrible.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "injection-scripts/toolbar-launcher-existing-source.js",
+        "injection-scripts/toolbar-launcher.js",
+        "injection-scripts/page-save-background-worker.js",
+        "page-capture-helper-iframe.js",
+        "page-capture-helper-iframe.html",
+        "images/Favicon32.png",
+        "images/scribleLogo.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+  ,
+"key":"MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDJYtK/KvoJG1GB3PUuVYT6YvkWFCdAAQJtuOna8ThoGEo+oOEd+pXuWR9zszvUuLA0JtSbaVeQ1NyNL6rM9iRz7/sj2rk1vWbs5VyMswXzGlxtSEBilBoZTZ/8fx/A5M22kpSE+7n5FHRRVSMFtziTTVWbZtjPeWIY3FTrVyVwDwIDAQAB"
+}

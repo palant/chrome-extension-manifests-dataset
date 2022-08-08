@@ -1,0 +1,163 @@
+---
+slug: keeper®-password-manager
+name: Keeper® Password Manager & Digital Vault
+publisher: Keeper Security
+rating: 4.788308457711443
+rating_count: 8040
+user_count: 500,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "homepage_url": "https://keepersecurity.com",
+  "default_locale": "en_US",
+  "manifest_version": 2,
+  "version": "16.4.6",
+  "author": "Keeper Security, Inc.",
+  "version_name": "16.4.6",
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "alarms",
+    "idle",
+    "storage",
+    "browsingData",
+    "activeTab",
+    "https://keepersecurity.com/vault/*",
+    "https://keepersecurity.eu/vault/*",
+    "https://keepersecurity.com.au/vault/*",
+    "https://govcloud.keepersecurity.us/vault/*"
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+K",
+        "mac": "Command+Shift+K",
+        "chromeos": "Alt+K",
+        "linux": "Alt+K"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "javascript/sandblaster.min.js",
+        "javascript/lodash.min.js",
+        "content_scripts/libphonenumber.js",
+        "content_scripts/custom_elements/dist/outer.js"
+      ],
+      "css": [
+        "content_scripts/custom_elements/outer.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://keepersecurity.com/console/*",
+        "https://keepersecurity.eu/console/*",
+        "https://keepersecurity.com.au/console/*",
+        "https://govcloud.keepersecurity.us/console/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "content_scripts/sso.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content_scripts/vault-start.js"
+      ],
+      "matches": [
+        "https://keepersecurity.com/vault/*",
+        "https://keepersecurity.eu/vault/*",
+        "https://keepersecurity.com.au/vault/*",
+        "https://govcloud.keepersecurity.us/vault/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content_scripts/vault.js"
+      ],
+      "matches": [
+        "https://keepersecurity.com/vault/*",
+        "https://keepersecurity.eu/vault/*",
+        "https://keepersecurity.com.au/vault/*",
+        "https://govcloud.keepersecurity.us/vault/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content_scripts/console.js"
+      ],
+      "matches": [
+        "https://keepersecurity.com/console/*",
+        "https://*.keepersecurity.com/console/*",
+        "https://keepersecurity.eu/console/*",
+        "https://*.keepersecurity.eu/console/*",
+        "https://keepersecurity.com.au/console/*",
+        "https://*.keepersecurity.com.au/console/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "icons/19-inactive.png",
+      "38": "icons/38-inactive.png"
+    },
+    "default_title": "Keeper",
+    "default_popup": "browser_action/browser_action.html"
+  },
+  "content_security_policy": "default-src 'self'; script-src 'self' 'unsafe-eval'; object-src 'none'; connect-src 'self' *; img-src 'self' https: data:; style-src 'self' 'unsafe-inline'; ",
+  "icons": {
+    "16": "icons/16x16_black.png",
+    "32": "icons/32x32.png",
+    "48": "icons/48x48.png",
+    "64": "icons/64x64.png",
+    "96": "icons/96x96.png",
+    "128": "icons/128x128.png"
+  },
+  "options_ui": {
+    "page": "javascript/optionsPage/options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+    "images/*",
+    "fonts/*",
+    "content_scripts/prompt/prompt.html",
+    "content_scripts/contextMenuConfirmation/contextMenuConfirmation.html",
+    "content_scripts/custom_elements/*",
+    "content_scripts/custom_elements/react/iframe/*.jsx",
+    "content_scripts/custom_elements/react/app/*.jsx",
+    "content_scripts/custom_elements/react/extension.html",
+    "content_scripts/hover_data/hover_data.html",
+    "content_scripts/confirm/confirm.js",
+    "content_scripts/*.js",
+    "extension_loaded.json"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://keepersecurity.com/vault/*",
+      "https://keepersecurity.eu/vault/*",
+      "https://keepersecurity.com.au/vault/*",
+      "https://govcloud.keepersecurity.us/vault/*"
+    ]
+  }
+}

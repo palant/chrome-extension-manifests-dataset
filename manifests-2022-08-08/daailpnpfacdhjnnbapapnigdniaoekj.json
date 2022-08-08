@@ -1,0 +1,42 @@
+---
+slug: pulsetrak
+name: PulseTrak
+publisher: getpulsetrak
+rating: 0
+rating_count: 0
+user_count: 20
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "PulseTrak",
+  "description": "Connect BlueTooth HRM, Record workouts on YouTube, Sync with Strava",
+  "icons": {
+    "128": "images/pulsetrak_logo.png"
+  },
+  "version": "0.0.0.3",
+  "permissions": ["storage"],
+  "background": {
+    "scripts": ["background.js","backgroundUtil.js","stravaUtil.js"],
+    "persistent": false
+  },"browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "32": "images/pulsetrak_logo.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:5000/*", "https://localhost:5000/*","https://getpulsetrak.github.io/*","https://*.getpulsetrak.com/*"],
+      "js": ["setup/setupHandler.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*.youtube.com/*", "https://*.youtube.com/*"],
+      "js": ["workout/workoutHtml.js","workout/workoutHandler.js","workout/workoutUtil.js","workout/bluetoothDriver.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "manifest_version": 2
+}

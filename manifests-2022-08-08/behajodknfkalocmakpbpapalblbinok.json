@@ -1,0 +1,75 @@
+---
+slug: flashcart
+name: FlashCart
+publisher: Chetan Kaul
+rating: 3.487603305785124
+rating_count: 121
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "FlashCart",
+	"short_name": "FlashCart",
+	"version": "2.2.0",
+	"author": "Chetan Kaul",
+	"description": "A tool to help you in Flipkart, Amazon, Realme flash sales, when its hard to get it to the cart we help you just do that.",
+	"icons": {
+		"128": "icon128.png",
+		"48": "icon48.png",
+		"16": "icon16.png"
+		},
+	"action": {
+		"default_icon": "icon16.png",
+		"default_popup": "popup.html",
+		"default_title": "Flashcart ⚡"
+		},
+	"content_scripts":[
+		{
+			"matches":["*://*.flipkart.com/*/p/*"],
+			"js":[
+				"firebase-app.js",
+				"firebase-database.js",
+				"jquery-2.0.1.min.js",
+				"flipkart_layout.js",
+				"flipkart_content.js"
+			]
+		},
+		{
+			"matches":["*://*.flipkart.com/*error*", "*://*.flipkart.com/viewcart"],
+			"js":["fk_redirect.js"]
+		},
+		{
+			"matches":["*://*.flipkart.com/checkout/*flash"],
+			"js":["jquery-2.0.1.min.js", "flipkart_checkout.js"]
+		},
+		{
+			"matches":["*://*.flipkart.com/payments?advance_payment*"],
+			"js":["jquery-2.0.1.min.js", "flipkart_advance.js"]
+		},
+		{
+			"matches":["*://www.amazon.in/*"],
+			"js":["jquery-2.0.1.min.js", "amazon_goldbox.js"],
+			"css":["amazon_goldbox_layout.css"]
+		},
+		{
+			"matches":["*://store.amazon.in/*"],
+			"js":["jquery-2.0.1.min.js", "amazon_store_goldbox.js"],
+			"css":["amazon_goldbox_layout.css"]
+		}
+	],
+	"permissions": [
+		"storage"
+	],
+	
+	"host_permissions": [
+		"*://*.flipkart.com/*"
+	],
+
+	"web_accessible_resources": [ {"resources": ["/sounds/checkout.mp3", "/sounds/captcha.mp3"],"matches": ["*://*.flipkart.com/*"], "extension_ids": []} ] ,
+	
+	"content_security_policy": {"extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' wss://*.firebaseio.com https://*.googleapis.com https://dealyaari.com;"}
+
+}

@@ -1,0 +1,62 @@
+---
+slug: tuberslab-youtube-notepad
+name: TubersLab - Youtube Notepad
+publisher: BL Tech
+rating: 4
+rating_count: 23
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "TubersLab - Youtube Notepad",
+    "version": "1.3.7",
+    "description": "YouTube Note-Taking with Screen shots, Timestamps and many more features.",
+    "icons": {
+        "16": "16x16.png",
+        "48": "48x48.png",
+        "128": "128x128.png"
+    },
+    "action": {
+        "default_title": "TubersLab",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.youtube.com/*"],
+            "js": ["in-content.js", "notepad.js", "quill.min.js"],
+            "css": [ "quill.snow.css", "notepad.css"]
+        }
+    ],
+    "commands": {
+        "go_to_notes" : {
+            "suggested_key": {
+                 "default": "Alt+Shift+F" 
+            },
+            "description": "Go to Notepad"
+        },
+        "toggle_notepad" : {
+            "suggested_key": {
+                 "default": "Alt+Shift+H" 
+            },
+            "description": "Hide or Show Notepad"
+        }
+    },
+    "web_accessible_resources": [{
+        "resources": ["recommended.html","notepad.html", "*.svg"],
+        "matches": ["http://*/*", "https://*/*"]
+    }],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "offline_enabled": false,
+    "permissions": ["downloads", "tabs", "storage"],
+    "host_permissions": [
+        "https://tuberslab-image-storage-bucket-uswest.s3.us-west-2.amazonaws.com/*",
+        "https://www.tuberslab.com/*",
+        "https://fonts.googleapis.com/*"
+      ]
+}
+

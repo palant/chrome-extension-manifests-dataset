@@ -1,0 +1,126 @@
+---
+slug: rabatta
+name: Rabatta
+publisher: Rabatta ApS
+rating: 4.354838709677419
+rating_count: 31
+user_count: 70,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rabatta",
+  "version": "5.1.0",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_title": "Rabatta",
+    "default_popup": "src/browserAction/action.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content-script-loader.webcomponents-bundle.js.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "https://onboarding.rabatta.app/*",
+        "https://verify.rabatta.dk/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/content-script-loader.inject.ts.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "match_about_blank": true,
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "https://onboarding.rabatta.app/*",
+        "https://verify.rabatta.dk/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/content-script-loader.onboarding.ts.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "matches": [
+        "https://onboarding.rabatta.app/*",
+        "https://verify.rabatta.dk/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "resources": [
+        "assets/webcomponents-bundle.js.js",
+        "assets/single-coupon.svg",
+        "assets/found-multiple-2.svg",
+        "assets/nothing.svg",
+        "assets/teeshoppen.svg",
+        "assets/found.svg",
+        "assets/thumbs-up.svg",
+        "assets/thumbs-down.svg",
+        "assets/big-coupon.svg",
+        "assets/review-us-neg.svg",
+        "assets/review-us-pos.svg",
+        "assets/searching.svg",
+        "assets/coupon-1.png",
+        "assets/coupon-2.png",
+        "assets/draggable.svg",
+        "assets/XClose.svg",
+        "assets/logo.svg",
+        "assets/fetchSiteData.js",
+        "assets/da.js",
+        "assets/sv.js",
+        "assets/no.js",
+        "assets/nl.js",
+        "assets/de.js",
+        "assets/storageManager.js",
+        "assets/commonAPI.js",
+        "assets/inject.ts.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://onboarding.rabatta.app/*",
+        "https://verify.rabatta.dk/*"
+      ],
+      "resources": [
+        "assets/storageManager.js",
+        "assets/commonAPI.js",
+        "assets/onboarding.ts.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

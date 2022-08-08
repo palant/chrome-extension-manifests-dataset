@@ -1,0 +1,98 @@
+---
+slug: mote-voice-notes-feedback
+name: Mote: voice notes & feedback
+publisher: Mote Technologies, Inc.
+rating: 4.642276422764228
+rating_count: 123
+user_count: 500,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "name": "__MSG_appName__",
+  "short_name": "Mote",
+  "author": "@justmoteHQ",
+  "icons": {
+    "16": "images/logos/mote-round-16.png",
+    "48": "images/logos/mote-round-48.png",
+    "128": "images/logos/mote-round-128.png"
+  },
+  "default_locale": "en_US",
+  "version": "0.1.7.3",
+  "description": "__MSG_appDesc__",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://drive.google.com/*",
+        "https://classroom.google.com/*",
+        "https://docs.google.com/*"
+      ],
+      "all_frames": true,
+      "js": ["static/js/content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://docs.google.com/forms/*"],
+      "all_frames": true,
+      "js": ["static/js/forms.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://docs.google.com/presentation/*"],
+      "all_frames": true,
+      "js": ["static/js/slides.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://drive.google.com/*",
+        "https://docs.google.com/file/*",
+        "https://classroom.google.com/*/g/*"
+      ],
+      "all_frames": true,
+      "js": ["static/js/gdrive.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/logos/mote-round-16.png",
+      "48": "images/logos/mote-round-48.png",
+      "128": "images/logos/mote-round-128.png"
+    },
+    "default_title": "Mote - fast, friendly voice messaging",
+    "default_popup": "popup.html"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.mote.com/*", "https://mote.com/*"]
+  },
+  "permissions": [
+    "storage",
+    "enterprise.deviceAttributes",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": ["*://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "sounds/*",
+        "mic.html",
+        "fonts/*.ttf",
+        "static/js/mic.js",
+        "locales/*",
+        "worklets/*"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

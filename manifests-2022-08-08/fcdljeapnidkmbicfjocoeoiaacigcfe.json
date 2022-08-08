@@ -1,0 +1,142 @@
+---
+slug: przypominajka-fanimanipl
+name: Przypominajka FaniMani.pl
+publisher: FaniMani.pl
+rating: 4.747368421052632
+rating_count: 95
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Przypominajka FaniMani.pl",
+  "description": "Dzięki Przypominajce średnio 2.5% z tego co i tak zapłacisz podczas zakupów w internecie trafi do wybranej organizacji społecznej.",
+  "author": "FaniMani.pl",
+  "version": "4.3.7",
+  "background": {
+    "scripts": [
+      "background_pages/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/widget.js"
+      ],
+      "css": [
+        "assets/css/widget.css"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://google.??",
+        "*://google.??/*",
+        "*://google.???",
+        "*://google.???/*",
+        "*://google.co.uk",
+        "*://google.co.uk/*",
+        "*://www.google.??",
+        "*://www.google.??/*",
+        "*://www.google.???",
+        "*://www.google.???/*",
+        "*://www.google.co.uk",
+        "*://www.google.co.uk/*",
+        "*://bing.com/*",
+        "*://www.bing.com/*",
+        "*://szukaj.wp.pl/*",
+        "*://szukaj.onet.pl/*",
+        "*://szukaj.interia.pl/*",
+        "*://yandex.com/*",
+        "*://www.yandex.com/*",
+        "*://duckduckgo.com/*",
+        "*://search.yahoo.com/*",
+        "*://search.brave.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/serp.js",
+        "content_scripts/1procent.js"
+      ],
+      "css": [
+        "assets/css/serp.css",
+        "assets/css/1procent.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://fanimani.pl/*",
+        "*://www.fanimani.pl/*",
+        "*://127.0.0.1/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/fanimani_pl.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://*.podatki.gov.pl/*",
+        "*://*.biznes.gov.pl/*",
+        "*://*.pitax.pl/*",
+        "*://*.e-deklaracje.info/*",
+        "*://*.e-pity.pl/*",
+        "*://*.podatnik.info/*",
+        "*://*.pit.pl/*",
+        "*://*.e-file.pl/*",
+        "*://*.deklaracjapit.org/*",
+        "*://*.pit-format.pl/*",
+        "*://*.ips-infor.com.pl/*",
+        "*://*.podatki-pit.pl/*",
+        "*://*.druki-formularze.pl/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/1procent.js"
+      ],
+      "css": [
+        "assets/css/1procent.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "*://fanimani.pl/*",
+    "*://*.fanimani.pl/*"
+  ],
+  "icons": {
+    "16": "assets/img/icon16.png",
+    "48": "assets/img/icon48.png",
+    "128": "assets/img/icon128.png"
+  },
+  "web_accessible_resources": [
+    "assets/*.*"
+  ],
+  "browser_action": {
+    "default_popup": "content_scripts/popup.html",
+    "default_icon": {
+      "32": "assets/img/icon-status-default.png"
+    }
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "externally_connectable": {
+    "matches": [
+      "*://fanimani.pl/*",
+      "*://www.fanimani.pl/*"
+    ]
+  }
+}

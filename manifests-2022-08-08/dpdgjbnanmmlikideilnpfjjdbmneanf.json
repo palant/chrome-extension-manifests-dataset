@@ -1,0 +1,60 @@
+---
+slug: timer-for-google-meet
+name: Timer for Google Meet
+publisher: Zoomcorder.com
+rating: 2.8
+rating_count: 15
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Timer for Google Meet",
+  "description": "Realtime timer for google meet.",
+  "default_locale": "en",
+  "version": "2.0",
+  "author": "DGT",
+  "permissions": ["storage"],
+
+  "host_permissions": [
+      "*://*.meet.google.com/*", "https://*.zoom.us/*", "https://*.zoomgov.com/*"
+  ],
+  "icons": {
+    "16": "./src/images/logo_16.png",
+    "32": "./src/images/logo_32.png",
+    "48": "./src/images/logo_48.png",
+    "128": "./src/images/logo_128.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "src/popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["src/sounds/ringtone.mp3", "/images/record.png", "/images/recimage.png", "/images/howto.jpg"],
+      "matches": ["*://*.meet.google.com/*","https://*.zoom.us/*", "https://*.zoomgov.com/*"]
+    }
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.meet.google.com/*","https://*.zoom.us/*", "https://*.zoomgov.com/*"],
+      "js": [
+        "src/sdk/socket.io-2.3.0.js",
+        "src/sdk/sentry-5.21.1.js",
+        "./src/content.js"
+      ],
+      "css": [
+        "./src/styles.css"
+      ]
+
+    }
+  ],
+
+   "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'self'"}
+}

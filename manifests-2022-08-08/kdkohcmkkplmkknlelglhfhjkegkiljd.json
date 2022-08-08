@@ -1,0 +1,83 @@
+---
+slug: noty-google-meet-transcri
+name: Noty: Google Meet Transcription & Zoom
+publisher: noty
+rating: 4.7924528301886795
+rating_count: 53
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.2.13",
+  "browser_action": {
+    "default_icon": "./assets/logo-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "page": "./dist/background/index.html",
+    "persistent": true
+  },
+  "icons": {
+    "16": "./assets/logo-512.png",
+    "48": "./assets/logo-512.png",
+    "128": "./assets/logo-512.png"
+  },
+  "permissions": [
+    "storage",
+    "*://*.zoom.us/*",
+    "*://*.google.com/*",
+    "*://*.live.com/*",
+    "*://*.noty.ai/*",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "optional_permissions": [
+    "activeTab"
+  ],
+  "commands": {
+    "screenshot": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "Capture screenshot"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/*",
+        "*://*.zoom.us/*"
+      ],
+      "js": [
+        "./dist/contentScripts/rtc.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.google.com/*",
+        "*://*.zoom.us/*"
+      ],
+      "js": [
+        "./dist/contentScripts/gmeet.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.noty.ai/*"
+      ],
+      "js": [
+        "./dist/contentScripts/webapp.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "dist/contentScripts/style.css"
+  ]
+}

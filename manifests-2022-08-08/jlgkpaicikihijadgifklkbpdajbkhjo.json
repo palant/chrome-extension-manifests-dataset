@@ -1,0 +1,69 @@
+---
+slug: crxmouse-chrome-gestures
+name: CrxMouse Chrome™ Gestures
+publisher: info
+rating: 4.519320632638389
+rating_count: 11128
+user_count: 700,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_descriptionjson__",
+  "version": "5.0.2",
+  "manifest_version": 2,
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "*://*/*",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "clipboardRead",
+    "clipboardWrite",
+    "bookmarks",
+    "unlimitedStorage",
+    "<all_urls>"
+  ],
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html",
+    "default_title": "crxMouse Top Gestures"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "css": ["css/content.css"],
+      "js": ["js/jquery-3.3.1.min.js", "content.js"],
+      "matches": ["*://*/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*/*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": ["js/frame.js"]
+    },
+    {
+      "matches": ["https://crxmouse.com/*"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "js": ["js/websiteHandler.js"]
+    }
+  ],
+  "options_page": "options.html",
+  "web_accessible_resources": ["image/*", "js/*", "icon.png", "html/notifi.html", "options.html", "fonts/*", "css/"],
+  "content_security_policy": "script-src 'self'  https://www.google-analytics.com; object-src 'self'"
+}

@@ -1,0 +1,67 @@
+---
+slug: mailtumble
+name: MailTumble
+publisher: MailTumble Pty Ltd
+rating: 5
+rating_count: 7
+user_count: 118
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "MailTumble",
+  "description": "Make disposable wrappers for all your email addresses",
+  "version": "1.0.6",
+  "icons": {
+    "16": "favicon.png",
+    "128": "favicon.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "128": "favicon.png"
+    },
+    "default_title": "Click Me",
+    "default_popup": "src/popup/index.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "src/background/index.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "src/contentPopup/styles.css"
+      ],
+      "js": [
+        "src/contentPopup/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.mailtumble.com/*",
+        "https://*.mailtumble.app/*"
+      ],
+      "js": [
+        "src/contentAuth/index.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "favicon.png",
+    "close.png"
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+}

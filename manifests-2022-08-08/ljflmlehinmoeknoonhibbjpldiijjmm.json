@@ -1,0 +1,147 @@
+---
+slug: speechify-text-to-speech
+name: Speechify Text-to-Speech (TTS)
+publisher: Speechify
+rating: 4.3883597883597885
+rating_count: 6615
+user_count: 900,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Speechify Text-to-Speech (TTS)",
+  "author": "Speechify Inc",
+  "version": "7.19.0",
+  "description": "Listen to docs, articles, PDFs, email — anything you read — with our leading text-to-speech reader.",
+  "icons": {
+    "16": "images/icon-light-square-16.png",
+    "32": "images/icon-light-square-32.png",
+    "48": "images/icon-light-square-48.png",
+    "128": "images/icon-light-square-128.png"
+  },
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "mac": "Alt+Q",
+        "windows": "Alt+Q",
+        "chromeos": "Alt+Q",
+        "linux": "Alt+Q"
+      },
+      "description": "Play/Pause"
+    },
+    "save-to-library": {
+      "suggested_key": {
+        "mac": "Alt+S",
+        "windows": "Alt+S",
+        "chromeos": "Alt+S",
+        "linux": "Alt+S"
+      },
+      "description": "Save to library"
+    },
+    "open-screenshot-mode": {
+      "suggested_key": {
+        "mac": "MacCtrl+Command+R",
+        "windows": "Alt+R",
+        "chromeos": "Alt+R",
+        "linux": "Alt+R"
+      },
+      "description": "Open Screenshot Mode"
+    }
+  },
+  "minimum_chrome_version": "40.0",
+  "content_security_policy": "script-src 'sha256-Qcd1S5XAuSTIuXH4NgKRf8If0mMbg7uAxcUkCe7azvI=' 'self' https://*.firebaseio.com/ https://api.amplitude.com https://files.getspeechify.com/; object-src 'self'",
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "contextMenus",
+    "storage",
+    "alarms",
+    "https://*/",
+    "http://*/",
+    "file://*/"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-idle-notifier.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-wrapper.js"
+      ],
+      "css": [
+        "css/speechify.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://docs.google.com/document/*"
+      ],
+      "js": [
+        "gdocs.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "iframes-wrapper.js"
+      ],
+      "css": [
+        "css/speechify.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "toggleIcon.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://speechify-auth-dev.netlify.app/*",
+      "*://*.getspeechify.com/*",
+      "*://*.speechify.com/*",
+      "*://speechify.com/*",
+      "*://speechify-landing-dev.netlify.app/*",
+      "*://web-chi-mocha.vercel.app/*"
+    ]
+  },
+  "web_accessible_resources": [
+    "features.json",
+    "fonts/*",
+    "images/*",
+    "audio/*",
+    "gdocs-inject.js",
+    "pdf.worker.js",
+    "houdini.js",
+    "audio-worklet.js",
+    "timestretch_bg.wasm",
+    "content/*",
+    "iframes/*"
+  ],
+  "browser_action": {}
+}

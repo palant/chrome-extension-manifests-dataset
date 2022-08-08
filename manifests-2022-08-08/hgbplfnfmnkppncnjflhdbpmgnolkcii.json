@@ -1,0 +1,130 @@
+---
+slug: talentis
+name: Talentis
+publisher: Ikiru People
+rating: 5
+rating_count: 3
+user_count: 552
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Talentis",
+  "description": "Talentis Browser Extension",
+  "version": "1.0.441",
+  "manifest_version": 3,
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "activeTab",
+    "webRequest",
+    "storage",
+    "tabs",
+    "identity",
+    "windows",
+    "tabs",
+    "webNavigation",
+    "declarativeNetRequest",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.talentis.global/",
+    "https://*.talentis.global/*",
+    "https://*.linkedin.com/",
+    "https://*.linkedin.com/*",
+    "https://linkedin.com/",
+    "https://linkedin.com/*",
+    "https://localhost/*",
+    "*://*.chromiumapp.org/"
+  ],
+  "action": {
+    "default_icon": "img/extension-32.png",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "img/extension-16.png",
+    "32": "img/extension-32.png",
+    "48": "img/extension-48.png",
+    "128": "img/extension-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/**/*.png",
+        "static/**/*.svg",
+        "index.html",
+        "signin-callback.html",
+        "signin-callback.js",
+        "signin-silent-callback.html",
+        "signin-silent-callback.js",
+        "logout-callback.html",
+        "logout-callback.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://linkedin.com/*",
+        "https://linkedin.com/",
+        "https://*.linkedin.com/",
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "config.js",
+        "content-script.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "config.js",
+        "google-content-script.js"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "https://*/*",
+        "http://localhost:3000/*"
+      ],
+      "js": [
+        "config.js",
+        "dom-scraper.js"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://*.talentis.global/",
+      "https://*.talentis.global/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,61 @@
+---
+slug: coin98-wallet
+name: Coin98 Wallet
+publisher: Coin98 Finance
+rating: 4.780715396578538
+rating_count: 643
+user_count: 60,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "6.2.0",
+  "manifest_version": 2,
+  "icons": {
+    "512": "logo512.png"
+  },
+  "browser_action": {
+    "default_icon": "logo512.png",
+    "default_popup": "popup.html#popup"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite",
+    "notifications",
+    "browser",
+    "*://connect.trezor.io/8/*"
+  ],
+  "web_accessible_resources": ["*", "**/*", "./popup.html", "popup.html"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline'; object-src 'self'",
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["extension/contentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/8/popup.html"
+      ],
+      "js": ["js/trezor-content-script.js"]
+    }
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "extension/cosmosServices.js",
+      "extension/commonServices.js",
+      "extension/reduxServices.js",
+      "extension/web3Services.js",
+      "extension/backgroundScript.js"
+    ]
+  }
+}

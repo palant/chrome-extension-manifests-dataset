@@ -1,0 +1,94 @@
+---
+slug: servicenow-tool-belt
+name: ServiceNow tool belt
+publisher: syvo
+rating: 5
+rating_count: 2
+user_count: 521
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "ServiceNow tool belt",
+  "version": "5.0.0",
+  "description": "A set of tools for ServiceNow developers and administrators",
+  "homepage_url": "https://github.com/macmorning/snowtools-webext",
+  "icons": {
+    "48": "icons/tools-48.png",
+    "128": "icons/tools-128.png"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+C"
+      },
+      "description": "Open the tools popup"
+    },
+    "execute-reframe": {
+      "suggested_key": {
+        "default": "Alt+F"
+      },
+      "description": "Reopen current url into navpage"
+    },
+    "execute-fieldnames": {
+      "suggested_key": {
+        "default": "Alt+N"
+      },
+      "description": "Switch from technical to display field names"
+    },
+    "execute-openversions": {
+      "suggested_key": {
+        "default": "Alt+V"
+      },
+      "description": "View versions of current object"
+    },
+    "execute-backgroundscript": {
+      "description": "Open a background script window on current instance"
+    }
+  },
+  "background": {
+    "scripts": ["background/background.js"]
+  },
+  "browser_action": {
+    "browser_style": true,
+    "default_title": "SNOW Toolbelt",
+    "default_icon": {
+        "48": "icons/tools-48.png",
+        "128": "icons/tools-128.png"
+    },
+    "default_popup": "dialog/snowbelt.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.service-now.com/*"],
+      "js": ["content-script/snowbelt-cs.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "tabs", 
+    "storage", 
+    "cookies"
+  ],
+  "optional_permissions": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>",
+        "downloads"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{db3d7d07-a7d3-4d87-9f39-4ef22214acbd}"
+    }
+  },
+  "web_accessible_resources": [
+    "/content-script/getSession.js",
+    "/css/snowbelt.css"
+  ]
+}

@@ -1,0 +1,94 @@
+---
+slug: ad-observer
+name: Ad Observer
+publisher: NYU Online Political Transparency Project Legacy
+rating: 5
+rating_count: 8
+user_count: 4,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "homepage_url": "https://adobserver.org",
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "64": "assets/icon64.png",
+    "128": "assets/icon128.png"
+  },
+  "manifest_version": 3,
+  "name": "Ad Observer",
+  "short_name": "Ad Observer",
+  "description": "A browser extension to share data about your social feed with researchers and journalists to increase transparency.",
+  "version": "3.2.8",
+  "version_name": "3.2.8 (80a4d3c)",
+  "default_locale": "en",
+  "content_scripts": [
+    {
+      "js": [
+        "preload/bundle.js"
+      ],
+      "matches": [
+        "*://*.facebook.com/*"
+      ],
+      "exclude_globs": [
+        "*://*.facebook.com/ads/archive*",
+        "*://*.facebook.com/ads/library*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "ytpreload/bundle.js"
+      ],
+      "matches": [
+        "*://www.youtube.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content/bundle.js"
+      ],
+      "matches": [
+        "*://*.facebook.com/*",
+        "*://www.youtube.com/*"
+      ],
+      "exclude_globs": [
+        "*://*.facebook.com/ads/archive*",
+        "*://*.facebook.com/ads/library*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "bundle.js"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "webpage/*",
+        "assets/runs_on_fb.js",
+        "assets/runs_on_yt.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "toolbar/index.html",
+    "default_title": "Ad Observer",
+    "default_icon": "assets/icon128.png"
+  }
+}

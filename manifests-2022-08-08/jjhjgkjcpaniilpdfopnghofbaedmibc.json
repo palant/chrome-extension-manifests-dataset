@@ -1,0 +1,66 @@
+---
+slug: troywell-ad-blocker
+name: Troywell - ad blocker
+publisher: Troywell
+rating: 5
+rating_count: 5
+user_count: 1,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "__MSG_appName__",
+	"short_name": "__MSG_appName__",
+	"version": "1.0.1",
+	"manifest_version": 2,
+	"description": "__MSG_appDescription__",
+	"default_locale": "en",
+	"icons": {
+		"16": "icons/icon-16.png",
+		"32": "icons/icon-32.png",
+		"48": "icons/icon-48.png",
+		"128": "icons/icon-128.png"
+	},
+	"browser_action": {
+		"default_icon": "icons/icon-128.png",
+		"default_popup": "popup.html",
+		"default_title": "__MSG_appName__"
+	},
+	"permissions": [
+		"tabs",
+		"webRequest",
+		"webRequestBlocking",
+		"management",
+		"webNavigation",
+		"contextMenus",
+		"storage",
+		"unlimitedStorage",
+		"<all_urls>",
+		"notifications"
+	],
+	"content_security_policy": "script-src 'self'; object-src 'self'",
+	"content_scripts": [
+		{
+			"all_frames": true,
+     		"match_about_blank": true,
+			"js": ["vendors/bundle.js", "contentBlock/bundle.js"],
+			"matches": ["<all_urls>"],
+			"run_at": "document_start"
+		},
+		{
+			"all_frames": false,
+			"js": ["vendors/bundle.js", "content/bundle.js"],
+			"matches": ["<all_urls>"],
+			"run_at": "document_end"
+		}
+	],
+	"web_accessible_resources": [
+		"*.css",
+		"*.png"
+	],
+	"background": {
+		"scripts": ["vendors/bundle.js", "bg/bundle.js"],
+		"persistent": true
+	}
+}

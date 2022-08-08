@@ -1,0 +1,64 @@
+---
+slug: go-links
+name: Go Links
+publisher: GoLinks
+rating: 4.71875
+rating_count: 32
+user_count: 70,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "Go Links",
+	"description": "The official Golinks.io, go/links browser extension. Create team shortlinks \"go links\" with one click.",
+	"homepage_url": "https://www.golinks.io",
+	"version": "2.5.33",
+	"icons": {
+		"16": "icons/icon16.png",
+		"48": "icons/icon48.png",
+		"128": "icons/icon128.png"
+	},
+	"browser_action": {
+		"default_icon": "icons/icon48.png",
+		"default_popup": "popup.html"
+	},
+	"omnibox": {
+		"keyword": "go/"
+	},
+	"permissions": [
+		"*://go/*",
+		"*://*.golinks.io/*",
+		"*://*.golinks.com/*",
+		"activeTab",
+		"cookies",
+		"storage",
+		"webRequest",
+		"webRequestBlocking"
+	],
+	"background": {
+		"scripts": [
+			"lib/jquery.min.js",
+			"background.js"
+		],
+		"persistent": true
+	},
+	"content_security_policy": "script-src 'self'; connect-src https://*.golinks.io; object-src 'self' blob:; font-src 'self';",
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.golinks.io/*",
+				"*://*.golinks.com/*"
+			],
+			"js": [
+				"identifier.js"
+			],
+			"run_at": "document_start"
+		}
+	],
+	"web_accessible_resources": [
+		"icons/icon16.png",
+		"images/*"
+	]
+}

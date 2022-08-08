@@ -1,0 +1,56 @@
+---
+slug: add-to-cart-out-of-stock
+name: Add to Cart - Out of Stock Bypass
+publisher: Well Done Tomato
+rating: 0
+rating_count: 0
+user_count: 126
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Add to Cart - Out of Stock Bypass",
+  "version": "1.1",
+  "description": "Add items to your cart, even if websites say they are unavailable or out of stock.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.microsoft.com/en-US/store/cart*",
+        "https://www.microsoft.com/en-us/store/cart*"
+      ],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": [
+        "src/ms/lib/Waiter.js",
+        "src/ms/cart/cart.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.gamestop.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "src/gs/lib/Waiter.js",
+        "src/gs/product.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "src/ms/cart/inject.js"
+    ],
+    "matches": ["https://www.microsoft.com/*"]
+  }],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "ATC - OOS Bypass"
+  },
+  "permissions": [
+  ],
+  "manifest_version": 3
+}

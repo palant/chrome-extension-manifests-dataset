@@ -1,0 +1,69 @@
+---
+slug: ambient-light-for-youtube
+name: Ambient light for YouTube™
+publisher: Wezelkrozum
+rating: 4.666666666666667
+rating_count: 36
+user_count: 1,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ambient light for YouTube™",
+  "description": "Immersive yourself in YouTube™ videos with ambient light!",
+  "version": "2.36.21",
+  "author": "Wessel Kroos",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "128": "images/icon-128.png"
+  },
+  "minimum_chrome_version": "88",
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "69.0"
+    }
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "24": "images/icon-24.png",
+      "32": "images/icon-32.png"
+    },
+    "default_popup": "options.html"
+  },
+  "background" : {
+    "service_worker" : "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "exclude_matches": ["https://www.youtube.com/live_chat*"],
+      "js": ["scripts/content.js"],
+      "css": ["styles/youtube-ambilight.css"]
+    },
+    {
+      "matches": ["https://www.youtube.com/live_chat*"],
+      "css": [
+        "styles/youtube-ambilight-iframe-live-chat.css"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "styles/options.css",
+      "scripts/youtube-ambilight.js",
+      "images/noise-1.png",
+      "images/noise-2.png",
+      "images/noise-3.png"
+    ],
+    "matches": ["https://www.youtube.com/*"]
+  }],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}

@@ -1,0 +1,97 @@
+---
+slug: simplytrends-shopify-drop
+name: SimplyTrends - Shopify Dropship Spy & Scraper
+publisher: SimplyTrends Team
+rating: 4.7407407407407405
+rating_count: 27
+user_count: 2,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "SimplyTrends",
+    "name": "SimplyTrends - Shopify Dropship Spy & Scraper",
+    "description": "SimplyTrends - Reveal all the secrets behind any Shopify store.",
+    "version": "0.0.0.14",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "action": {},
+    "permissions": [
+        "contextMenus",
+        "scripting",
+        "storage",
+        "management",
+        "declarativeNetRequest",
+        "webRequest",
+        "cookies"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "rule_1",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.facebook.com/*"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true,
+            "js": [
+                "facebook.js"
+            ]
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "contentscript.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.simplytrends.co/crx/*"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "js": [
+                "save.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "save.js",
+                "entry.js",
+                "windowscript.js",
+                "contentscript.js",
+                "images/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

@@ -1,0 +1,64 @@
+---
+slug: gitzip-for-github
+name: GitZip for github
+publisher: Kino Lien
+rating: 4.275590551181103
+rating_count: 127
+user_count: 80,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name": "GitZip for github",
+    "description": "It can make the sub-directories and files of github repository as zip and download it",
+    "version": "1.0.1",
+
+    "icons": {
+        "128": "images/icon-128px.png"
+    },
+
+    "action": {
+        "default_popup": "popup.html"
+    },
+
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+
+    "background": {
+        "service_worker": "js/background.js"
+    },
+
+    "permissions": [
+        "storage",
+        "contextMenus"
+    ],
+
+    "host_permissions": [
+        "https://api.github.com/*"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["*://github.com/*"],
+            "js": ["js/content/jszip.min.js","js/content/FileSaver.min.js","js/content/main.js"],
+            "css": ["css/main.css"]
+        },
+        {
+            "matches": ["*://kinolien.github.io/gitzip/*"],
+            "js": ["js/content/keysync.js"]
+        },
+        {
+            "matches": ["*://gitzip.org/gettoken/success"],
+            "js": ["js/content/autosave.js"]
+        }
+    ],
+
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self'"
+    }
+}

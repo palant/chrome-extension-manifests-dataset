@@ -1,0 +1,83 @@
+---
+slug: compose-ai-ai-powered-wri
+name: Compose AI: AI-powered Writing Tool
+publisher: Compose.ai
+rating: 4.3
+rating_count: 20
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Compose AI: AI-powered Writing Tool",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoG7scPS+wBDOvu4q9lUMD/p2o+o2Dx1UYU7vi5lEsdJ4JhouL94IIQy8rktSp2aV+QlTndnmV0k38SLG4UsoS+tGZavo0NL8OqWwY8quSdXd78TQp3dlnEclkcXN5DMG6eckWliXmDEJb3u53s0n647LL/6j4fG7MCzCIhXajY1HvZM/ekdXPaWSR3go5zVgjHeIeUWNg14jdBiTE2H0YHoo+zNMyfJjO3nKp6afMX274KrhnPnc2UQzrDfvtYcLMR8sp6jgW/0wAATbJTRNe3dufMcUfEYN1nZptVSuc/maGPTyRZJ+tzQmjOkQYrgAk971LResN2GLbZZnt7xYowIDAQAB",
+  "author": "ymdevs",
+  "version": "0.3.6",
+  "description": "AI that writes your emails.",
+  "icons": {
+    "128": "assets/compose_logo_128.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "permissions": ["tabs", "webNavigation", "https://*/", "management", "alarms"],
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Compose AI",
+    "default_icon": "assets/compose_logo_48.png",
+    "default_popup": "popup.html"
+  },
+  "externally_connectable": {
+    "matches": ["*://mail.google.com/*", "https://signature.compose.ai/*", "https://guide.compose.ai/*"]
+  },
+  "content_scripts": [
+    {
+      "js": ["gmailLoader.js"],
+      "run_at": "document_idle",
+      "matches": ["*://mail.google.com/*"],
+      "hostnames": ["mail.google.com"]
+    },
+    {
+      "js": ["superhuman.js"],
+      "run_at": "document_idle",
+      "matches": ["*://mail.superhuman.com/*"],
+      "hostnames": ["mail.superhuman.com"]
+    },
+    {
+      "js": ["outlook.js"],
+      "run_at": "document_idle",
+      "matches": ["*://outlook.office.com/*", "*://outlook.office365.com/*", "*://outlook.live.com/*"],
+      "hostnames": ["outlook.office.com", "outlook.office365.com", "outlook.live.com"]
+    },
+    {
+      "js": ["linkedin.js"],
+      "run_at": "document_idle",
+      "matches": ["*://www.linkedin.com/*", "*://linkedin.com/*"],
+      "hostnames": ["www.linkedin.com", "linkedin.com"]
+    },
+    {
+      "js": ["guide.js"],
+      "run_at": "document_idle",
+      "matches": ["*://guide.compose.ai/*"],
+      "hostnames": ["guide.compose.ai"]
+    },
+    {
+      "js": ["general.js"],
+      "run_at": "document_idle",
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    "gmail.js",
+    "webpage.js",
+    "general.js",
+    "everywhere.js",
+    "assets/compose_logo_128.png",
+    "assets/loader.svg",
+    "assets/michael.png",
+    "assets/wilson.png"
+  ]
+}

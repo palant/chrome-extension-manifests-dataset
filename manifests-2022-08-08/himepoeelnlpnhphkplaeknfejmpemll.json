@@ -1,0 +1,64 @@
+---
+slug: elia-–-own-your-english
+name: Elia – Own your English!
+publisher: getelia.com
+rating: 4.615384615384615
+rating_count: 13
+user_count: 1,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "version": "2.6",
+  "description": "__MSG_appDescription__",
+  "permissions": ["tabs", "storage", "<all_urls>"],
+  "background": {
+    "page": "/background/bg.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "Elia",
+    "default_popup": "popup/index.html",
+    "default_icon": "popup/images/applogo.png"
+  },
+  "default_locale": "en",
+  "web_accessible_resources": ["popup/*", "/content/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://getelia.com/*"],
+      "js": ["/content/login/append.js"]
+    },
+    {
+      "matches": ["https://forms.clickup.com/f/2f4hp-2521/9J8U1BCDXWOEW7HWVS"],
+      "js": ["/content/delete/deleteHandler.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_globs": ["https://meet.google.com/*"],
+      "all_frames": false,
+      "css": ["/content/styles/content.css"],
+      "js": [
+        "/lib/sbd.min.js",
+        "/lib/Readability.js",
+        "/common/common.js",
+        "/content/EliaCommon.js",
+        "/content/EliaCommunication.js",
+        "/content/WordLookup.js",
+        "/content/WordPractice.js",
+        "/content/WordRecommendation.js",
+        "/content/main.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "popup/images/applogo.png",
+    "48": "popup/images/applogo.png",
+    "128": "popup/images/applogo.png"
+  },
+  "content_security_policy": "script-src 'sha256-QsDy3ZvhYSgWcFM2NPNa3GgARoxI3lx9Tay7GJBeD/8=' 'sha256-fn4FykNDs6eBFwD+5Z6vbTzpuSRcWljZ79+3mmcS3so=' 'self' 'unsafe-eval' https://w.chatlio.com https://cdn.segment.com/ https://js.sentry-cdn.com/ https://browser.sentry-cdn.com/ https://www.googletagmanager.com/ https://www.google-analytics.com/ https://www.googleoptimize.com/ https://www.youtube.com/; object-src 'self'",
+  "incognito": "split",
+  "manifest_version": 2
+}

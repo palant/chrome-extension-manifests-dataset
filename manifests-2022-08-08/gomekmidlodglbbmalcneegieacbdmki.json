@@ -1,0 +1,78 @@
+---
+slug: avast-online-security-pri
+name: Avast Online Security & Privacy
+publisher: Avast Software
+rating: 4.4447571597003
+rating_count: 26293
+user_count: 10,000,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "version": "22.4.151",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "author": "Avast",
+  "incognito": "split",
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "common/ui/icons/icon-avast64.png",
+    "default_title": "Avast Online Security & Privacy"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Open AOSP UI"
+    }
+  },
+  "icons": {
+    "32": "common/ui/icons/icon-avast32.png",
+    "64": "common/ui/icons/icon-avast64.png",
+    "128": "common/ui/icons/icon-avast128.png"
+  },
+  "permissions": [
+    "https://*/*",
+    "http://*/*",
+    "storage",
+    "tabs",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "web_accessible_resources": [
+    "common/mocks/*",
+    "common/ui/*",
+    "common/ui/icons/*",
+    "common/ui/fonts/*",
+    "common/ui/css/*",
+    "locales/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.avast.com/*"
+      ],
+      "js": [
+        "scripts/contentAvast.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/contentInject.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/contentAdvertisers.js"]
+    }
+  ]
+}

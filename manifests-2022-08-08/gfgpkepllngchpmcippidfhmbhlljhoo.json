@@ -1,0 +1,81 @@
+---
+slug: xtranslate
+name: XTranslate
+publisher: ixrock
+rating: 4.47819660014782
+rating_count: 1353
+user_count: 50,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "XTranslate",
+  "description": "__MSG_description__",
+  "version": "2.65.1",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/icons/16.png",
+    "48": "assets/icons/48.png",
+    "128": "assets/icons/128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_popup": "options.html?page=translate",
+    "default_icon": {
+      "19": "assets/icons/48.png",
+      "38": "assets/icons/48.png"
+    }
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+X"
+      }
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.*", "adgoal/background.bundle.js"],
+      "matches": [
+        "*://*/*",
+        "file://*/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "user-script.js",
+        "adgoal/content.bundle.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "permissions": [
+    "tts",
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "activeTab"
+  ]
+}

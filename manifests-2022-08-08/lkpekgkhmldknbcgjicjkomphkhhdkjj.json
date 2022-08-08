@@ -1,0 +1,98 @@
+---
+slug: findthatlead
+name: FindThatLead
+publisher: FindThatLead
+rating: 4.369230769230769
+rating_count: 195
+user_count: 30,000+
+---
+
+{
+	"update_url": "https://clients2.google.com/service/update2/crx",
+	"manifest_version": 2,
+	"name": "FindThatLead",
+	"version": "5.9.4",
+	"default_locale": "en",
+	"description": "__MSG_manifest_description__",
+	"offline_enabled": false,
+	"background": {
+		"persistent": true,
+		"scripts": [
+			"scripts/jquery.min.js",
+			"scripts/background/background.js"
+		]
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.linkedin.com/*",
+				"*://*.findthatlead.com/*"
+			],
+			"js": [
+				"scripts/jquery.min.js"
+			],
+			"run_at": "document_end",
+			"all_frames": false
+		},
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"exclude_matches": [
+				"*://*.linkedin.com/*",
+				"*://docs.google.com/*",
+				"*://drive.google.com/*",
+				"*://*.twitter.com/*"
+			],
+			"js": [
+				"scripts/background/emails_dom.js"
+			],
+			"run_at": "document_end",
+			"all_frames": false
+		},
+		{
+			"matches": [
+				"*://*.findthatlead.com/*",
+				"*://*.scrab.in/*"
+			],
+			"js": [
+				"scripts/background/extension_installed.js"
+			],
+			"run_at": "document_end",
+			"all_frames": false
+		}
+	],
+	"browser_action": {
+		"default_title": "FindThatLead",
+		"default_icon": {
+			"16": "icons/icon_16.png",
+			"32": "icons/icon_32.png",
+			"48": "icons/icon_48.png",
+			"64": "icons/icon_64.png",
+			"128": "icons/icon_128.png"
+		},
+		"default_popup": "main.html"
+	},
+	"icons": {
+		"16": "icons/icon_16.png",
+		"32": "icons/icon_32.png",
+		"48": "icons/icon_48.png",
+		"64": "icons/icon_64.png",
+		"128": "icons/icon_128.png"
+	},
+	"content_security_policy": "script-src 'self' https://*.google-analytics.com https://*.mxpnl.com https://*.googletagmanager.com https://*.facebook.net https://*.googletagmanager.com https://*.googleadservices.com; object-src 'self'",
+	"permissions": [
+		"activeTab",
+		"clipboardWrite",
+		"tabs",
+		"storage"
+	],
+	"externally_connectable": {
+		"matches": [
+			"*://*.findthatlead.com/*"
+		]
+	},
+	"web_accessible_resources": [
+		"images/logo.svg"
+	]
+}

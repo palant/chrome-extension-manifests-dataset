@@ -1,0 +1,95 @@
+---
+slug: wriq
+name: WriQ
+publisher: Texthelp
+rating: 4
+rating_count: 8
+user_count: 20,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "WriQ",
+  "version": "3.5.0",
+  "homepage_url": "http://www.texthelp.com",
+  "description": "Create better writers, reduce teacher workload, and track progress over time.",
+  "action":
+  {
+    "default_title": "WriQ Chrome Extension",
+    "default_icon": {
+      "16": "icons/wriq-inactive.png"
+    }
+  },
+  "icons": {
+    "16": "icons/wriq-inactive.png",
+    "48": "icons/wriqIcon48.png",
+    "128": "icons/wriqLogo128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+X",
+        "mac": "Alt+Shift+X",
+        "chromeos": "Alt+Shift+X",
+        "linux": "Alt+Shift+X"
+      }
+    }
+  },
+
+  "permissions": [
+    "webNavigation",
+    "activeTab",
+    "tabs",
+    "storage",
+    "identity",
+    "unlimitedStorage",
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://wriq.texthelp.com/registration/*",
+    "https://*.texthelp.com/*",
+    "https://docs.google.com/",
+    "https://classroom.google.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/document/d/*"
+      ],
+      "js": [ "content/content.js" ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://docs.google.com/document/*"
+      ],
+      "js": [ "google-docs-preloader.js" ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://docs.google.com/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "google-docs-integration.js", "texthelp-wrapper.js",  "html-renderer.js"],
+      "matches": [ "*://docs.google.com/*", "*://classroom.google.com/*" ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "1008875921475-lrhan572u9mkdbo89ckr6he9g94no1do.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/drive.readonly"]
+  }
+}

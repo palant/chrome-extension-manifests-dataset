@@ -1,0 +1,82 @@
+---
+slug: better-tab-speed-dial-new
+name: Better Tab: Speed Dial, News Feed & To-do
+publisher: @fmschuler
+rating: 4.75
+rating_count: 4
+user_count: 172
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "short_name": "Better Tab",
+  "version": "1.2.0",
+  "author": "@fmschuler",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "icons": {
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "96": "icons/96.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_icon": "icons/32.png",
+    "default_title": "__MSG_appName__",
+    "default_popup": "popup.html",
+    "browser_style": true
+  },
+  "permissions": [
+    "storage",
+    "geolocation",
+    "tabs",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.ipinfo.io/*",
+    "*://*.rss.app/*",
+    "*://*.googleapis.com/*",
+    "*://*.bettertab.app/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://bettertab.app' 'https://www.googleapis.com'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "sidebar/side-panel.js"
+      ],
+      "css": [
+        "sidebar/side-panel.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sidebar/sidebar.html"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "extension_ids": [
+        "behkgahlidmeemjefcbgieigiejiglpc"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+---
+slug: priceblox-free-universal
+name: Priceblox: free universal price tracker
+publisher: https://priceblox.com/
+rating: 3.263157894736842
+rating_count: 19
+user_count: 1,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "__MSG_manifestName__",
+    "version": "0.1.0.4",
+    "default_locale": "en",
+    "description": "__MSG_manifestDescription__",
+    "background": {
+       "page": "background.html"
+    },
+    "icons": {
+       "128": "img/icon.png",
+       "16": "img/icon.png"
+    },
+    "browser_action": {
+        "default_icon": "img/icon.png",
+        "default_popup": "popup/popup.html",
+        "default_title": "Priceblox - Universal Price Tracker"
+    },
+    "content_scripts": [
+        {
+            "js": ["/content_scripts/js/link_settings.js"],
+            "matches": ["https://priceblox.com/welcome/*", "https://priceblox.com/willkommen/*", "https://priceblox.com/de/willkommen/*"],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "js/storage.js",
+                "js/price.js",
+                "js/product.js",
+                "content_scripts/js/globals.js",
+                "content_scripts/js/helpers.js",
+                "content_scripts/js/url_change_handler.js",
+                "content_scripts/js/title_change_handler.js",
+                "content_scripts/js/quicksave_button.js",
+                "content_scripts/js/message_handler.js",
+                "content_scripts/js/main.js"
+            ],
+            "css": ["content_scripts/css/content_css.css"],
+            "matches": ["*://*/*"],
+            "run_at": "document_start"
+        }
+    ],
+    "content_security_policy": "script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; object-src 'self'",
+    "options_page": "/dashboard/index.html",
+    "web_accessible_resources": [
+        "/svg/*",
+        "/img/*",
+        "/content_scripts/fonts/*",
+        "/content_scripts/html/*",
+        "/dashboard/index.html",
+        "/settings/privacy.html"
+    ],
+    "permissions": [
+        "http://*/*",
+        "https://*/*",
+        "notifications",
+        "activeTab",
+        "storage",
+        "tabs",
+        "webRequest"
+    ]
+}

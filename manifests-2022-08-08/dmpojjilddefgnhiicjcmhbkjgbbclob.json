@@ -1,0 +1,81 @@
+---
+slug: chameleon
+name: Chameleon
+publisher: chameleon.ext
+rating: 3.820282413350449
+rating_count: 779
+user_count: 800,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Chameleon",
+  "description": "Allow to run extensions from Opera add-ons",
+  "version": "1.8.7",
+  "icons": {
+    "16": "img/icon_16.png",
+    "48": "img/icon_48.png",
+    "128": "img/icon_128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "img/icon_19.png",
+      "38": "img/icon_38.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": [
+      "js/utils.js",
+      "js/tools.js",
+      "js/extension.js",
+      "js/bg.js"
+    ],
+    "persistent": true
+  },
+  "options_page": "options.html",
+  "sandbox": {
+    "pages": [
+      "sandbox.html"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://addons.opera.com/*"
+      ],
+      "js": [
+        "includes/sbInject.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://addons.opera.com/*/extensions/details/*"
+      ],
+      "js": [
+        "includes/operaStore.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "downloads",
+    "clipboardWrite",
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    "includes/sovetnik.opera.min.js"
+  ]
+}

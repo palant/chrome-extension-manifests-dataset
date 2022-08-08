@@ -1,0 +1,85 @@
+---
+slug: hyperise-personalized-sho
+name: Hyperise: Personalized Short Link creator
+publisher: Hyperise.com
+rating: 5
+rating_count: 2
+user_count: 218
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Hyperise: Personalized Short Link creator",
+  "short_name": "Hyperise Personalized Short Links",
+  "version": "1.0.9",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",      
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["clipboardWrite","tabs","storage", "activeTab"],
+  "host_permissions": [
+  "http://*/*",
+   "https://*/*"
+],
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "action": {
+    "default_title": "Hyperise Personalized Short Links",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "64": "icons/icon-64.png",      
+      "128": "icons/icon-128.png"
+    },
+    "default_popup": "/assets/html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "run_at":"document_end",
+      "js": ["/assets/js/content.js","jquery.js","bootstrap.js"],
+      "css": ["style.css","bootstrap.css","bodyStyleLinkedin.css"],
+      "matches": ["https://www.linkedin.com/*","http://www.linkedin.com/*"]
+      
+    },
+    {
+      "run_at":"document_end",
+      "js": ["/assets/js/contentFacebook.js","jquery.js","bootstrap.js"],
+      "css": ["styleFacebook.css","Modal.css","bootstrapFacebook.css"],
+      "matches": ["https://*.facebook.com/*","http://*.facebook.com/*"]
+    },
+    {
+       "run_at":"document_end",
+       "js":["jquery.js","/assets/js/contentGmail.js"],
+       "css": ["styleGmail.css"],
+       "matches": ["*://mail.google.com/*", "*://inbox.google.com/*"]
+    },
+    {
+      "run_at":"document_end",
+      "js":["jquery.js","/assets/js/contentOutlook.js"],
+      "css": ["styleGmail.css"],
+      "matches": ["*://*.outlook.live.com/*"]
+   },
+   {
+    "run_at":"document_end",
+    "js":["jquery.js","/assets/js/contentManual.js"],
+    "matches": ["*://*/*"]
+   }
+    
+  ],
+   "web_accessible_resources":[
+     {
+       "resources": [ "logo-seed.png"],
+      "matches": ["https://*.facebook.com/*","http://*.facebook.com/*","*://mail.google.com/*", "*://inbox.google.com/*","*://*.outlook.live.com/*"]
+     },{
+      "resources": [ "Modal.html"],
+      "matches": [  "http://*/*",
+      "https://*/*"]
+     }
+   ]
+  
+}

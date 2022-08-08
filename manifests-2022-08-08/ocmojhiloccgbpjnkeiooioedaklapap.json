@@ -1,0 +1,91 @@
+---
+slug: glimpse-–-google-trends-s
+name: Glimpse – Google Trends Supercharged
+publisher: https://meetglimpse.com
+rating: 4.866666666666666
+rating_count: 30
+user_count: 10,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "0.99.0",
+  "name": "Glimpse – Google Trends Supercharged",
+  "manifest_version": 3,
+  "description": "Enhance Google Trends data for better insights",
+  "homepage_url": "https://meetglimpse.com",
+  "icons": {
+    "16": "icons/logo-16.png",
+    "48": "icons/logo-48.png",
+    "128": "icons/logo-128.png"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://trends.google.com/*",
+    "https://meetglimpse.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Glimpse",
+    "default_popup": "./popup/index.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "google/google.css",
+        "extension.css"
+      ],
+      "matches": [
+        "https://*/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://trends.google.com/*"
+      ],
+      "css": [
+        "extension.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://trends.google.com/*",
+        "https://meetglimpse.com/*"
+      ],
+      "js": [
+        "vendors.js",
+        "inject.js"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://trends.google.com/*"
+      ],
+      "js": [
+        "inject-at-start.js"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "vendors.js",
+        "google/google.js"
+      ]
+    }
+  ]
+}

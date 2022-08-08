@@ -1,0 +1,50 @@
+---
+slug: find-website-used-fonts
+name: Find website used fonts
+publisher: Rebekah Bailey
+rating: 4.829545454545454
+rating_count: 88
+user_count: 20,000+
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Find website used fonts",
+  "description": "Find and list all the fonts used on a web page",
+  "version": "1.2.0",
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "32": "icons/icon32.png",
+    "38": "icons/icon38.png",
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": ["javascripts/background.js"]
+  },
+  "browser_action": {},
+  "web_accessible_resources": ["modal/modal.html", "modal/modal.css", "assets/gear-loading-icon.svg", "assets/search.png", "javascripts/page.zIndex.js"],
+  "permissions": ["*://*/*", "tabs", "activeTab", "webRequest", "webRequestBlocking", "storage"],
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["javascripts/libraries/Font-Guess/font-guess.js", "javascripts/content.find.font.js"],
+    "css": ["styles/content.css"],
+    "run_at": "document_start"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["content-scripts/idle.js"],
+    "all_frames": true,
+    "run_at": "document_idle"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["content-scripts/start.js"],
+    "all_frames": true,
+    "run_at": "document_start"
+  }]
+}

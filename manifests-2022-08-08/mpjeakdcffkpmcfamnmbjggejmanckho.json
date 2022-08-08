@@ -1,0 +1,125 @@
+---
+slug: zecento-droplist-con-ai-e
+name: Zecento: Droplist con AI e Codici Sconto
+publisher: Zecento
+rating: 5
+rating_count: 5
+user_count: 337
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "author": "Zecento",
+   "action": {
+      "default_icon": {
+         "128": "images/active-icon128.png",
+         "16": "images/active-icon16.png",
+         "32": "images/active-icon32.png",
+         "48": "images/active-icon48.png"
+      },
+      "default_title": "Zecento: Droplist con AI e Codici Sconto",
+      "default_popup": "popup.html"
+   },
+   "background": {
+      "service_worker": "atYourService.js"
+   },
+   "externally_connectable": {
+      "matches": ["*://*.zecento.com/*", "*://*.zecento.it/*"]
+   },
+   "description": "L'algoritmo ti dice se conviene comprare ora o aspettare. I codici sconto sono applicati in modo automatico al checkout.",
+   "icons": {
+      "128": "images/active-icon128.png",
+      "16": "images/active-icon16.png",
+      "32": "images/active-icon32.png",
+      "48": "images/active-icon48.png"
+   },
+   "content_scripts": [
+      {
+         "matches": [
+            "<all_urls>"
+         ],
+         "js": ["quickContentScript.bundle.js"],
+         "run_at": "document_start"
+      },
+      {
+         "matches": [
+            "<all_urls>"
+         ],
+         "js": ["content.bundle.js"]
+      },
+      {
+         "matches": ["<all_urls>"],
+         "all_frames": true,
+         "js": [
+            "helpersIframeInternal.js",
+            "iframeInternal.js"
+         ]
+      },
+      {
+         "matches": ["*://www.amazon.it/*", "*://www.amazon.de/*"],
+         "all_frames": true,
+         "js": [
+            "importWishlist.js"
+         ],
+         "run_at": "document_start"
+      },
+      {
+         "matches": ["*://www.zecento.com/fastRedirect/*", "*://www.zecento.com/goTo/*"],
+         "js": [
+            "fallBackSwitch.js"
+         ],
+         "run_at": "document_start"
+      }
+   ],
+   "manifest_version": 3,
+   "name": "Zecento: Droplist con AI e Codici Sconto",
+   "permissions": [
+      "cookies",
+      "storage",
+      "tabs",
+      "declarativeNetRequest",
+      "webRequest"
+   ],
+   "host_permissions": [
+      "*://*.zecento.com/*",
+      "\u003Call_urls\u003E"
+   ],
+   "short_name": "Zecento",
+   "version": "3.0.8.0",
+   "web_accessible_resources": [
+      {
+         "resources": [
+            "overlay-bello.html",
+            "great-success.html",
+            "overlay-second.html",
+            "slowinternet.html",
+            "bigerror.html",
+            "adBlocker.html",
+            "loaderCoupon.html",
+            "couponWorked.html",
+            "cashbackWorked.html",
+            "magicAlert.html",
+            "universalExstStyle.css",
+            "reassuringOverlay.html",
+            "zcNotification2-0.html",
+            "loadingDropList.html",
+            "removeFromDropList.html",
+            "addToDropList.html",
+            "priceChart.html",
+            "ctaBecomePremium.html",
+            "thanksForBeingPremium.html"
+         ],
+         "matches": [ "<all_urls>" ]
+      },
+      {
+         "resources": [
+            "script.js",
+            "injectionIframe.js",
+            "renameFunction.js",
+            "amzScript.js"
+         ],
+         "matches": [ "<all_urls>" ]
+      }
+   ]
+}
