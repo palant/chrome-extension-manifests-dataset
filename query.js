@@ -83,7 +83,7 @@ async function doQuery()
       continue;
 
     total++;
-    if (!manifest(JSON.parse(parsed.content)))
+    if (!manifest(JSON.parse(parsed.content.replace(/\uFEFF/g, ""))))
       continue;
 
     count++;
