@@ -1,0 +1,72 @@
+---
+slug: twitch-badge-collector-co
+name: Twitch Badge Collector - Collect Twitch Chat
+description: Collect only the chats you want in Twitch Chat!
+version: 1.4.13
+release_date: 'August 14, 2022'
+publisher: bluewarn
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.535714285714286
+rating_count: 28
+user_count: '6,000+'
+extension_website: 'https://tbc.bluewarn.dev'
+support_website: 'https://tbc.bluewarn.dev'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_ExtensionName__",
+  "version": "1.4.13",
+  "description": "__MSG_ExtensionDesc__",
+  "short_name": "TBC",
+  "default_locale": "en",
+  "icons": {
+    "128": "public/icons/cc_icon128.png"
+  },
+  "permissions": [
+    "webNavigation",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.twitch.tv/*"
+  ],
+  "background": {
+    "service_worker": "dist/js/extension_background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "all_frames" : true,
+      "css": [
+        "dist/css/inject_background.css"
+      ],
+      "js": [
+        "dist/js/inject_background.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://wtbc.bluewarn.dev/setting/filter*"
+      ],
+      "js": [
+        "dist/js/filterBridge.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["dist/js/mock_fetch.js"],
+    "matches": ["*://*.twitch.tv/*"]
+  }],
+  "action" : {
+    "default_title": "Twitch Badge Collector",
+    "default_popup": "public/popup.html",
+    "default_icon": {
+      "128": "public/icons/cc_icon128.png"
+    }
+  }
+}

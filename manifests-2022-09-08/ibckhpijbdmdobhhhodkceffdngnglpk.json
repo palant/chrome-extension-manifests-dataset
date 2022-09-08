@@ -1,0 +1,88 @@
+---
+slug: unclutter-ad-blocker-for
+name: Unclutter - Ad blocker for Reading
+description: >-
+  A new kind of reader mode to remove distractions, find popular quotes, outline
+  pages & more.
+version: 0.18.3
+release_date: 'September 6, 2022'
+publisher: Peter Hagen
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.764705882352941
+rating_count: 17
+user_count: '1,000+'
+publisher_site: lindylearn.io
+extension_website: 'https://unclutter.lindylearn.io'
+support_website: 'https://github.com/lindylearn/unclutter/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Unclutter - Ad blocker for Reading",
+    "version": "0.18.3",
+    "description": "A new kind of reader mode to remove distractions, find popular quotes, outline pages & more.",
+    "homepage_url": "https://github.com/lindylearn/unclutter",
+    "manifest_version": 3,
+    "action": {
+        "default_title": "Unclutter Current Article (Alt+C)"
+    },
+    "icons": {
+        "128": "assets/icon.png"
+    },
+    "permissions": ["storage", "scripting"],
+    "optional_permissions": ["contextMenus", "bookmarks"],
+    "host_permissions": ["<all_urls>"],
+    "options_ui": {
+        "page": "settings-page/index.html"
+    },
+    "minimum_chrome_version": "93",
+    "background": {
+        "service_worker": "background/events.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content-script/boot.js"],
+            "css": ["content-script/pageview/content.css"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "content-script/pageview/content.css",
+                "content-script/pageview/contentDark.css",
+                "overlay/index.css",
+                "overlay/indexDark.css",
+                "overlay/outline/outlineDark.css",
+                "overlay/outline/bottomDark.css",
+                "data/manualContentBlock.css",
+                "sidebar/index.html",
+                "sidebar/index.css",
+                "sidebar/dark.css",
+                "sidebar/index.js",
+                "sidebar/messaging.js",
+                "settings-page/indexFirefoxOverride.css",
+                "assets/**"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+C"
+            }
+        }
+    },
+    "externally_connectable": {
+        "ids": ["*"],
+        "matches": [
+            "https://library.lindylearn.io/*",
+            "http://localhost:3000/*"
+        ]
+    }
+}

@@ -1,0 +1,105 @@
+---
+slug: avrio
+name: Avrio
+description: >-
+  Avrio is the new way to capture and share data analysis, user research, and
+  learnings directly in context, with your team.
+version: 1.9.2
+release_date: 'July 22, 2022'
+publisher: Avrio
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 8
+user_count: 126
+publisher_site: avrio.com
+extension_website: 'https://www.avrio.com'
+support_website: 'https://help.avrio.com/hc/en-us'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Avrio",
+  "manifest_version": 2,
+  "description": "Avrio is the new way to capture and share data analysis, user research, and learnings directly in context, with your team.",
+  "homepage_url": "https://www.avrio.com",
+  "icons": {
+    "16": "assets/avrio-icon-dark-16.png",
+    "48": "assets/avrio-icon-dark-48.png",
+    "128": "assets/avrio-icon-dark-128.png"
+  },
+  "browser_action": {
+    "default_icon": "assets/avrio-icon-dark-16.png",
+    "default_title": "Avrio"
+  },
+  "background": {
+    "scripts": [
+      "./static/js/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "http://localhost:3000/"
+      ],
+      "all_frames": false,
+      "css": [
+        "./assets/extension.css"
+      ],
+      "js": [
+        "./static/js/content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://analytics.google.com/*",
+        "*://mail.google.com/*",
+        "*://docs.google.com/*",
+        "*://insights.hotjar.com/*",
+        "*://mixpanel.com/*"
+      ],
+      "all_frames": true,
+      "css": [
+        "./assets/extension.css"
+      ],
+      "js": [
+        "./static/js/createInsight.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "css": [
+        "./assets/extension.css"
+      ],
+      "js": [
+        "./static/js/pins.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "background",
+    "clipboardWrite",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "index.html",
+    "/static/*",
+    "/assets/*"
+  ],
+  "version": "1.9.2"
+}

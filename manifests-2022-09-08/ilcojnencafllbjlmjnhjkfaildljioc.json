@@ -1,0 +1,77 @@
+---
+slug: fiverrlytics-your-fiverr
+name: Fiverrlytics - Your Fiverr Assistant
+description: >-
+  Fiverrlytics helps you to get insights of any keyword. This tool provide
+  insights for up to 5 pages on fiverr.
+version: 1.0.2
+release_date: 'August 23, 2022'
+publisher: Bytelinx
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.125
+rating_count: 8
+user_count: '6,000+'
+extension_website: 'https://www.fiverrlytics.com'
+support_website: 'https://www.fiverrlytics.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "Fiverrlytics - Your Fiverr Assistant",
+	"manifest_version": 2,
+	"version": "1.0.2",
+	"description": "Fiverrlytics helps you to get insights of any keyword. This tool provide insights for up to 5 pages on fiverr.",
+	"omnibox": { "keyword" : "fiverrlytics" },
+	"icons":{
+		"16": "icon-extension.png",
+		"128":"icon-extension.png"
+	},
+	"web_accessible_resources" : [
+		"images/*.png", "images/*.gif"
+	],
+	"browser_action":{
+		"default_popup": "popup.html",
+		"default_icon": "icon-extension.png"
+	},
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://www.fiverr.com/*"],
+			"css": ["style.css"],
+			"js":["jquery.min.js","script.js"]
+	    },
+		{
+			"matches":["https://www.fiverr.com/users/*/requests","https://www.fiverr.com/users/*/requests?source=header_nav","https://www.fiverr.com/users/*/requests/offers"],
+			"css": ["style.css"],
+			"js":["jquery.min.js","buyer_details.js","attachment_preview.js","user_profile.js","calculate_budget.js","technology_tags.js"]
+		},
+		{
+			"matches": ["https://www.fiverr.com/inbox","https://www.fiverr.com/inbox/*"],
+			"css": ["style.css"],
+			"js":["jquery.min.js","message_notify.js"]
+	    },
+		{
+			"matches": ["https://www.fiverr.com/search/*","https://www.fiverr.com/search/*"],
+			"css": ["style.css"],
+			"js":["jquery.min.js","queue_orders.js","gig_tags.js","focused_keyword.js"]
+	    },
+		{
+			"matches": ["https://www.fiverr.com/","https://www.fiverr.com/*"],
+			"css": ["style.css"],
+			"js":["jquery.min.js","notification_icon.js"]
+	    }
+    ],
+	"permissions":[
+		"storage",
+		"notifications",
+		"https://s3.amazonaws.com/fiverr.com/*", 
+		"https://fiverr-secured-attachments.s3.amazonaws.com/*", 
+		"https://fiverr-auth.herokuapp.com/*", 
+		"https://fiverr-res.cloudinary.com/*",
+		"https://www.fiverr.com/*"
+	]
+}

@@ -1,0 +1,106 @@
+---
+slug: save-to-pocket
+name: Save to Pocket
+description: 'The easiest, fastest way to capture articles, videos, and more.'
+version: 4.0.5
+release_date: 'February 10, 2022'
+publisher: pocket-chrome-publishers
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.245224574083634
+rating_count: 7748
+user_count: '2,000,000+'
+publisher_site: getpocket.com
+support_website: 'https://help.getpocket.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Save to Pocket",
+  "version": "4.0.5",
+  "description": "The easiest, fastest way to capture articles, videos, and more.",
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/images/icon-16.png",
+    "48": "assets/images/icon-48.png",
+    "128": "assets/images/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "38": "assets/images/action-icon.png"
+    },
+    "default_title": "Save to Pocket"
+  },
+  "background": {
+    "service_worker": "pages/background/index.js",
+    "type": "module"
+  },
+  "options_page": "pages/options/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "pages/injector/import-content.js"
+      ],
+      "css": [
+        "assets/fonts/fonts.css",
+        "assets/pocket-save-extension.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://getpocket.com/extension_login_success*"
+      ],
+      "js": [
+        "pages/import-login.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://getpocket.com/login?e=4"
+      ],
+      "js": [
+        "pages/import-logout.js"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://getpocket.com/*"
+  ],
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "cookies",
+    "storage"
+  ],
+  "commands": {
+    "save-to-pocket-action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "windows": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P",
+        "chromeos": "Ctrl+Shift+P",
+        "linux": "Ctrl+Shift+P"
+      },
+      "description": "Save page to Pocket"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "pages/injector/content.js",
+        "pages/login.js",
+        "pages/logout.js"
+      ],
+      "matches": [
+        "*://*/*",
+        "*://getpocket.com/*"
+      ]
+    }
+  ]
+}

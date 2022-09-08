@@ -1,0 +1,102 @@
+---
+slug: nocoding-data-scraper-eas
+name: NoCoding Data Scraper - Easy Web Scraping
+description: >-
+  Simple web scraper,extracts web data from HTML pages and imports it into
+  Google Sheet, Excel or CSV
+version: 1.0.80
+release_date: 'April 19, 2022'
+publisher: miniRPA
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.575221238938053
+rating_count: 113
+user_count: '20,000+'
+publisher_site: minirpa.net
+extension_website: 'https://www.minirpa.net'
+support_website: 'https://doc.minirpa.net/en/index.html'
+---
+
+{
+  "name": "__MSG_extName__",
+  "short_name": "NoCoding Data Scraper",
+  "description": "__MSG_extDesc__",
+  "version": "1.0.80",
+  "author": "__MSG_extAuthor__",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "icons": {
+    "16": "resources/icons/MiniRPA-16.png",
+    "48": "resources/icons/MiniRPA-48.png",
+    "128": "resources/icons/MiniRPA-128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "resources/icons/MiniRPA-16.png",
+      "38": "resources/icons/MiniRPA-48.png"
+    },
+    "default_title": "__MSG_extName__",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://cext.minirpa.net/common/oauth2/*",
+        "https://cext.minirpa.net/common/thirdapp/*"
+      ],
+      "js": [
+        "oauth2/injection.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "/content/executorIndex.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://cext.minirpa.net/mb*"
+      ],
+      "js": [
+        "/content/managerIndex.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "webNavigation",
+    "storage",
+    "unlimitedStorage",
+    "notifications"
+  ],
+  "optional_permissions": [
+    "downloads"
+  ],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "web_accessible_resources": [
+    "/content/iframe/index.html",
+    "/content/editorIndex.css",
+    "/content/editorIndex.js",
+    "/oauth2/*",
+    "/static/examples/*.json",
+    "/static/examples/*.csv",
+    "/libs/*"
+  ]
+}

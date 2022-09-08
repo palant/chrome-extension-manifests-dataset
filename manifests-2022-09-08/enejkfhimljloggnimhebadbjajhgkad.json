@@ -1,0 +1,92 @@
+---
+slug: tella-for-chrome-screen-a
+name: Tella for Chrome - Screen and Camera Recorder
+description: The screen and camera recorder that makes your work look great.
+version: '2.18'
+release_date: 'July 29, 2022'
+publisher: chrome-extension
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.896551724137931
+rating_count: 29
+user_count: '2,000+'
+publisher_site: tella.tv
+extension_website: 'https://www.tella.tv/chrome'
+support_website: 'https://www.tella.tv'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Tella for Chrome - Screen and Camera Recorder",
+  "description": "The screen and camera recorder that makes your work look great.",
+  "version": "2.18",
+  "manifest_version": 2,
+  "permissions": [
+    "desktopCapture",
+    "tabCapture",
+    "tabs",
+    "activeTab",
+    "https://*.tella.tv/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.tella.tv/*",
+      "https://tella-git-chrome-plugin-tella.vercel.app/*",
+      "*://localhost/*"
+    ]
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "browser_action": {
+    "default_title": "Tella",
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "web_accessible_resources": [
+    "build/ExtensionPopup.bs.js",
+    "build/index.css",
+    "build/gmail.css",
+    "font/*.*",
+    "content-*.html",
+    "*.png"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "exclude_globs": [
+        "https://*.vercel.app/chrome-extension-objecturl",
+        "https://*.tella.tv/chrome-extension-objecturl",
+        "http://localhost:3000/chrome-extension-objecturl"
+      ],
+      "js": ["build/ExtensionPopup.bs.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.vercel.app/chrome-extension-objecturl",
+        "https://*.tella.tv/chrome-extension-objecturl",
+        "http://localhost:3000/chrome-extension-objecturl"
+      ],
+      "all_frames": true,
+      "js": ["build/ExtensionContentObjectUrlHandler.bs.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": [
+      "build/ExtensionBackground.bs.js",
+      "segment-snippet.js",
+      "rollbar-snippet.js"
+    ]
+  },
+  "content_security_policy": "script-src 'self' https://www.tella.tv https://cdn.segment.com https://cdn.rollbar.com; object-src 'self'"
+}

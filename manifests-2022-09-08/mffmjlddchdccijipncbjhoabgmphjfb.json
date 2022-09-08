@@ -1,0 +1,93 @@
+---
+slug: simple-downloader-for-vim
+name: Simple Downloader for Vimeo™
+description: >-
+  Extension for download video and subtitles from vimeo.com by injecting
+  download buttons directly into the Vimeo player.
+version: 1.4.30
+release_date: 'July 25, 2022'
+publisher: allen.evansfield
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.8349834983498345
+rating_count: 303
+user_count: '100,000+'
+publisher_site: vimeomate.com
+extension_website: 'https://vimeomate.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "version": "1.4.30",
+  "description": "__MSG_extDes__",
+  "homepage_url":"https://chrome.google.com/webstore/detail/simple-downloader-for-vim/mffmjlddchdccijipncbjhoabgmphjfb",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "default_locale": "en",
+  "browser_action": {
+    "default_title": "Inject Simple Vimeo Downloader buttons",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "activeTab",
+    "downloads",
+    "storage",
+    "*://vimeo.com/*",
+    "*://player.vimeo.com/*",
+    "*://*.akamaized.net/*",
+    "*://*.vimeocdn.com/*",
+    "*://*.facebook.com/*",
+    "*://*.twitter.com/*",
+    "*://*.pinterest.com/*",
+    "*://*.reddit.com/*",
+    "*://*.aliyuncs.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://vimeo.com/*",
+        "*://player.vimeo.com/*",
+        "*://*.akamaized.net/*",
+        "*://*.vimeocdn.com/*",
+        "*://*.facebook.com/*",
+        "*://*.pinterest.com/*",
+        "*://*.reddit.com/*",
+        "*://*.aliyuncs.com/*"
+      ],
+      "js": ["xrpa-data-module/content-script.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.twitter.com/*"
+      ],
+      "js": ["xrpa-data-module/content-script.js"],
+      "all_frames": true,
+      "run_at": "document_start"    
+    },
+      {
+        "js": [ "content-inject.js" ],
+        "matches": [ "*://vimeo.com/*" ],
+        "run_at": "document_start"
+    }
+  ],
+  "optional_permissions": [
+    "*://*.devlab21.com/*"
+  ],
+  "web_accessible_resources": [
+    "inject_icon.svg","icon128.png","ajax-listener.js"
+  ]
+}

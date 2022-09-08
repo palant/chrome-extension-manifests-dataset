@@ -1,0 +1,70 @@
+---
+slug: gitoqlok
+name: Gitoqlok
+description: Chrome extension that add source versioning control in Qlik
+version: 1.9.82
+release_date: 'September 4, 2022'
+publisher: gitoqlok
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 9
+user_count: '1,000+'
+publisher_site: gitoqlik.com
+extension_website: 'https://gitoqlok.com'
+support_website: >-
+  https://join.slack.com/t/gitoqlik/shared_invite/zt-ezsx8rht-KCz~eWgLxyVTsB0QmS9Gag
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Gitoqlok",
+  "description": "Chrome extension that add source versioning control in Qlik",
+  "version": "1.9.82",
+  "icons": {
+    "128": "img/GIT-qlik.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["/img/GIT-qlik.png", "/img/project.svg", "/img/thumbnailAssistanceIcons/beta.svg",
+        "/img/thumbnailAssistanceIcons/cert.svg", "/img/thumbnailAssistanceIcons/dev.svg",
+        "/img/thumbnailAssistanceIcons/none.svg", "/img/thumbnailAssistanceIcons/prod.svg",
+        "/img/thumbnailAssistanceIcons/review.svg"],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "background": {
+    "service_worker": "/src/background-script/background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": [
+        "/lib/jquery-3.5.1.min.js",
+        "/lib/qsocks.js",
+        "/src/content-script/content.bundle.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_title": "Gitoqlok - Version control in the Qlik Sense built-in editor",
+    "default_popup": "/src/popup/popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "contextMenus",
+    "downloads",
+    "scripting"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "options_page": "src/options-page/options.html"
+}

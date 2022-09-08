@@ -1,0 +1,79 @@
+---
+slug: dokkio-sidebar
+name: Dokkio Sidebar
+description: >-
+  Access online files and knowledge while working inside tools like Google Docs,
+  Gmail and Notion.
+version: 3.1.1
+release_date: 'August 22, 2022'
+publisher: Dokkio Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 11
+user_count: 353
+publisher_site: www.dokkio.com
+extension_website: 'https://www.dokkio.com/sidebar'
+support_website: 'https://www.dokkio.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "3.1.1",
+  "name": "Dokkio Sidebar",
+  "description": "Access online files and knowledge while working inside tools like Google Docs, Gmail and Notion.",
+  "permissions": [
+    "storage",
+    "pageCapture",
+    "<all_urls>",
+    "https://api.dokkio.com/*"
+  ],
+  "icons": {
+    "16": "dokkio_cloud_16x16.png",
+    "48": "dokkio_cloud_48x48.png",
+    "96": "dokkio_cloud_96x96.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "48": "dokkio_cloud_48x48.png",
+      "96": "dokkio_cloud_96x96.png"
+    },
+    "default_title": "Dokkio Extension",
+    "default_popup": "popup.html"
+  },
+  "omnibox": {
+    "keyword": "dokkio"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.dokkio.com/*"
+      ],
+      "js": [
+        "accessTokenFromDokkioPage.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://*.dokkio.com/*",
+        "https://*.dokkio-dev.com/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "panel.js"
+  ]
+}

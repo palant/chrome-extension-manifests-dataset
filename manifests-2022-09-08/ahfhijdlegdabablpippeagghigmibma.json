@@ -1,0 +1,62 @@
+---
+slug: web-vitals
+name: Web Vitals
+description: Measure metrics for a healthy site
+version: 1.1.1
+release_date: 'May 8, 2022'
+publisher: addyosmani
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 3.652173913043478
+rating_count: 23
+user_count: '100,000+'
+extension_website: 'https://github.com/GoogleChrome/web-vitals-extension'
+support_website: 'https://github.com/GoogleChrome/web-vitals-extension/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Web Vitals",
+  "version": "1.1.1",
+  "manifest_version": 2,
+  "description": "Measure metrics for a healthy site",
+  "homepage_url": "https://web.dev/vitals/",
+  "icons": {
+    "128": "icons/vitals128w.png",
+    "256": "icons/vitals256w.png",
+    "512": "icons/vitals512w.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/default256w.png",
+    "default_title": "Web Vitals",
+    "default_popup": "src/browser_action/popup.html"
+  },
+  "options_page": "src/options/options.html",
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "http://localhost/",
+    "http://*/*",
+    "https://*/*",
+    "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?*"
+  ],
+  "web_accessible_resources": [
+    "src/browser_action/viewer.css",
+    "src/browser_action/web-vitals.js",
+    "/node_modules/web-vitals/dist/web-vitals.js"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "css": ["src/browser_action/viewer.css"],
+      "js": ["src/browser_action/lodash-debounce-custom.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["src/bg/background.js"],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' https://www.googleapis.com; object-src 'self'"
+}

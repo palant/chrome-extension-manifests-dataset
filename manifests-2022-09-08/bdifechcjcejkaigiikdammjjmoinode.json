@@ -1,0 +1,101 @@
+---
+slug: neeva-search-for-chrome
+name: Neeva Search for Chrome
+description: Neeva Search for Chrome
+version: 1.2.84
+release_date: 'August 1, 2022'
+publisher: 'Neeva, Inc'
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 5
+rating_count: 2
+user_count: '1,000+'
+publisher_site: neeva.com
+extension_website: 'https://neeva.com'
+support_website: 'https://neeva.com/contact'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extName__",
+    "short_name": "__MSG_extShortName__",
+    "version": "1.2.84",
+    "description": "__MSG_extDescription__",
+    "default_locale": "en",
+    "background": {
+        "persistent": true,
+        "page": "html/background.html"
+    },
+    "icons": {
+        "16": "icons/extension-icon.png",
+        "32": "icons/extension-icon@2x.png",
+        "48": "icons/extension-icon@3x.png",
+        "128": "icons/extension-icon-128.png"
+    },
+    "browser_action": {
+        "default_popup": "html/popup.html"
+    },
+    "incognito": "split",
+    
+    "commands": {
+        "open-incognito": {
+            "suggested_key": {
+                "default": "Alt+Shift+N"
+            },
+            "description": "Launch Neeva incognito mode"
+        },
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+J",
+                "mac": "Command+Shift+J"
+            }
+        }
+    },
+    "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'",
+    "permissions": [
+        "storage",
+        "activeTab", "https://neeva.com/*"
+    ],
+    "optional_permissions": [
+        "bookmarks"
+    ],
+    
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "name": "Neeva",
+            "keyword": "Neeva Search",
+            "search_url": "https://neeva.com/search?q={searchTerms}&src=nvobar",
+            "favicon_url": "https://neeva.com/favicon.png",
+            "suggest_url": "https://neeva.com/suggest?q={searchTerms}&src=nvobar",
+            "encoding": "UTF-8",
+            
+            "is_default": true
+        }
+    },
+    
+        "content_scripts": [
+                {
+                    "matches": ["https://neeva.com/*"
+                    ],
+                    "js": [
+                        "/js/neevaContentScript.js"
+                    ],
+                    "run_at": "document_start"
+                }
+               
+            ],
+        
+        
+        "externally_connectable": {
+                "matches": [
+                "https://neeva.com/*"
+                ]
+            },
+        
+    
+    
+    "web_accessible_resources": ["/html/inpage-menu.html"],
+    
+    "manifest_version": 2
+}

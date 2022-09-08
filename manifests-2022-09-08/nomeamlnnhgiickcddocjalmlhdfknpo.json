@@ -1,0 +1,122 @@
+---
+slug: fellow-meeting-notes-agen
+name: 'Fellow: Meeting Notes, Agendas, and 1-on-1s'
+description: >-
+  Access Fellow meeting agendas and notes directly from Google Meet calls and
+  Google Calendar
+version: 1.2.4
+release_date: 'August 16, 2022'
+publisher: Fellow Insights Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.92
+rating_count: 50
+user_count: '20,000+'
+publisher_site: fellow.app
+extension_website: 'https://fellow.app'
+support_website: 'https://help.fellow.app/en/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "Fellow: Meeting Notes, Agendas, and 1-on-1s",
+	"homepage_url": "https://fellow.app/auth/login",
+	"externally_connectable": {
+		"matches": [
+			"https://*.fellow.app/*",
+			"https://*.fellow.co/*"
+		]
+	},
+	"version": "1.2.4",
+	"description": "Access Fellow meeting agendas and notes directly from Google Meet calls and Google Calendar",
+	"manifest_version": 3,
+	"default_locale": "en",
+	"permissions": [
+		"cookies",
+		"storage"
+	],
+	"host_permissions": [
+		"https://*.fellow.app/*",
+		"https://*.fellow.co/*"
+	],
+	"action": {
+		"default_title": "Fellow.app",
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16": "images/16.png",
+		"32": "images/32.png",
+		"48": "images/48.png",
+		"128": "images/128.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"http://meet.google.com/*",
+				"https://meet.google.com/*"
+			],
+			"exclude_matches": [
+				"http://meet.google.com/",
+				"https://meet.google.com/"
+			],
+			"js": [
+				"scripts/config.js",
+				"scripts/third_party/segment.js",
+				"scripts/third_party/jquery.min.js",
+				"scripts/third_party/jquery-ui.min.js",
+				"scripts/meet.js",
+				"scripts/content.js"
+			],
+			"css": [
+				"styles/third_party/jquery-ui.min.css",
+				"styles/meet.css"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"matches": [
+				"http://calendar.google.com/*",
+				"https://calendar.google.com/*"
+			],
+			"js": [
+				"scripts/config.js",
+				"scripts/third_party/segment.js",
+				"scripts/third_party/jquery.min.js",
+				"scripts/third_party/jquery-ui.min.js",
+				"scripts/button.js",
+				"scripts/sideBar.js",
+				"scripts/badges.js"
+			],
+			"css": [
+				"styles/button.css",
+				"styles/sideBar.css",
+				"styles/badges.css",
+				"styles/third_party/jquery-ui.min.css"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"images/*.svg"
+			],
+			"matches": [
+				"https://*.fellow.app/*",
+				"https://*.fellow.co/*",
+				"http://meet.google.com/*",
+				"https://meet.google.com/*",
+				"http://calendar.google.com/*",
+				"https://calendar.google.com/*"
+			],
+			"extension_ids": [
+				"eeclpdfpnjegalkhodajlgdhfhlacbgn",
+				"nomeamlnnhgiickcddocjalmlhdfknpo"
+			]
+		}
+	]
+}

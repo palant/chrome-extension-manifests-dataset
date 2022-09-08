@@ -1,0 +1,129 @@
+---
+slug: truffletv-formerly-known
+name: Truffle.TV (formerly known as Mogul.TV)
+description: Enhance your livestream viewing experience
+version: 3.2.13
+release_date: 'August 12, 2022'
+publisher: Truffle
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.561056105610561
+rating_count: 606
+user_count: '200,000+'
+publisher_site: truffle.vip
+extension_website: 'https://truffle.vip/extension'
+support_website: 'https://ludwig.social/chat/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Truffle.TV (formerly known as Mogul.TV)",
+  "version": "3.2.13",
+  "description": "Enhance your livestream viewing experience",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content/all/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*"
+      ]
+    },
+    {
+      "js": [
+        "content/twitch/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twitch.tv/*"
+      ]
+    },
+    {
+      "js": [
+        "content/youtube/import-index.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://v2.truffle.vip/*"
+      ],
+      "js": [
+        "content/mogultv/import-index.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.twitch.tv/*",
+    "*://v2.truffle.vip/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/all/inject.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "content/youtube/inject.js",
+        "popup/index.html"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "content/twitch/inject.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content/all/index.js",
+        "content/twitch/index.js",
+        "content/youtube/index.js",
+        "content/mogultv/index.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*",
+        "*://v2.truffle.vip/*"
+      ]
+    }
+  ]
+}

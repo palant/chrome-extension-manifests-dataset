@@ -1,0 +1,65 @@
+---
+slug: xcad
+name: XCAD
+description: XCAD Browser Extension
+version: 0.8.1
+release_date: 'August 25, 2022'
+publisher: XCAD Network
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.70873786407767
+rating_count: 103
+user_count: '10,000+'
+publisher_site: xcadnetwork.com
+extension_website: 'https://xcadnetwork.com'
+support_website: 'https://support.xcadnetwork.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "XCAD Browser Extension",
+  "version": "0.8.1",
+  "manifest_version": 3,
+  "name": "XCAD",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.xcademy.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [ "*://*.xcademy.com/*" ]
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "/assets/x.png"
+  },
+  "icons": {
+    "128": "/assets/x.png"
+  }, 
+  "background": {
+    "service_worker": "static/js/background.js"
+   },
+  "content_scripts": [
+    {
+      "js": ["static/js/content.js"],
+      "matches": [ "https://*.youtube.com/*" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "https://*.youtube.com/*" ],
+      "css": ["assets/js/content.styles.css"],
+      "run_at": "document_idle",
+      "all_frames":true
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [ "/assets/*", "inject.js" ],
+    "matches": [ "https://*.youtube.com/*" ]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

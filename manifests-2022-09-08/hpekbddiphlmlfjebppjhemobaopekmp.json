@@ -1,0 +1,102 @@
+---
+slug: pagenote
+name: pagenote
+description: make the web page as a notebook. mark and note something on you visiting page.
+version: 0.21.2
+release_date: 'August 22, 2022'
+publisher: rowthan
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.787234042553192
+rating_count: 47
+user_count: '6,000+'
+publisher_site: pagenote.cn
+extension_website: 'https://pagenote.cn/'
+support_website: 'https://pagenote.cn/page/?id=why'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "__MSG_extensionName__",
+    "short_name": "__MSG_extensionName__",
+    "version": "0.21.2",
+    "description": "__MSG_extensionDescription__",
+    "default_locale": "en",
+    "icons": {
+      "16": "images/light-16.png",
+      "32": "images/light-32.png",
+      "48": "images/light-48.png",
+      "64": "images/light-64.png",
+      "96": "images/light-96.png",
+      "128": "images/light-128.png"
+    },
+    "permissions": [
+      "activeTab",
+      "alarms",
+      "*://*/*",
+      "storage",
+      "contextMenus",
+      "<all_urls>",
+      "notifications",
+      "unlimitedStorage"
+    ],
+    "browser_action": {
+      "default_icon": {
+        "16": "images/light-16.png",
+        "32": "images/light-disable.png",
+        "48": "images/light-48.png",
+        "64": "images/light-64.png",
+        "96": "images/light-96.png",
+        "128": "images/light-128.png"
+      },
+      "default_title": "尚未此页面准备完毕，刷新页面试试？若仍有问题，请尝试重置设置。",
+      "default_popup": "popup.html"
+    },
+    "options_page": "pagenote.html",
+    "options_ui": {
+      "open_in_tab": true,
+      "page": "pagenote.html"
+    },
+    "homepage_url": "https://pagenote.cn/release",
+    "commands": {
+      "light": {
+        "description": "__MSG_toggle_light__",
+        "suggested_key": {
+          "default": "Ctrl+Shift+L"
+        }
+      },
+      "switch": {
+        "description": "__MSG_switch_pagenote__",
+        "suggested_key": {
+          "default": "Ctrl+Shift+N"
+        }
+      },
+      "capture": {
+        "description": "__MSG_capture_tabview__",
+        "suggested_key": {
+          "default": "Ctrl+Shift+K"
+        }
+      }
+    },
+    "background": {
+      "page": "background.html",
+      "persistent": true
+    },
+    "content_scripts": [
+      {
+        "all_frames": true,
+        "matches": ["<all_urls>"],
+        "run_at":"document_start",
+        "js": ["rollup/inject_check.js"]
+      },
+      {
+        "all_frames": false,
+        "matches": ["*://pagenote.cn/doctor","*://localhost/doctor"],
+        "js": ["rollup/logs.js"]
+      }
+    ],
+    "content_security_policy": "script-src 'self' https://pagenote.cn; object-src 'self' https://logike.cn",
+    "web_accessible_resources": ["rollup/content_script.js","images/**","lib/**","/**"]
+  }

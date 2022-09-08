@@ -1,0 +1,106 @@
+---
+slug: metasearch-engine-upgrade
+name: Metasearch engine - upgrade Google search
+description: >-
+  Instantly get search results in DuckDuckGo, Bing and Yahoo or any other search
+  engine while searching in Google
+version: 2.0.8
+release_date: 'August 30, 2022'
+publisher: Capitan Dev Team
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 3.9444444444444446
+rating_count: 36
+user_count: '3,000+'
+---
+
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "version": "2.0.8",
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "default_locale": "en",
+    "options_page": "/src/options/index.html",
+    "icons": {
+        "16": "images/icons/16.png",
+        "32": "images/icons/32.png",
+        "48": "images/icons/48.png",
+        "64": "images/icons/64.png",
+        "128": "images/icons/128.png",
+        "256": "images/icons/256.png"
+    },
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "src/background/index.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_start",
+            "js": [
+                "/src/content/fonts/inject.js",
+                "/src/common/libs/jquery.min.js",
+                "/src/content/panel.js"
+            ]
+        },
+        {
+            "matches": ["https://www.google.com/*"],
+            "css": ["/src/content/styles.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_start",
+            "js": [
+                "/src/common/jquery-plugins/sticky/index.js",
+                "/src/common/jquery-plugins/side-bar/index.js",
+                "/src/common/jquery-plugins/modal/index.js",
+                "/src/common/jquery-plugins/meowModal/MeowModal.js",
+                "/src/common/jquery-plugins/meowModal/index.js",
+                "/src/content/Utils.js",
+                "/src/common/jquery-plugins/cards/index.js",
+                "/src/common/utils.js",
+                "/src/content/getValueSelector.js",
+                "/src/content/openSearchEngine.js",
+                "/src/content/EnginesManager.js",
+                "/src/content/SideBarController.js",
+                "/src/content/MeowBackgroundClient.js",
+                "/src/content/index.js"
+            ]
+        },
+        {
+            "matches": ["https://www.google.com/*"],
+            "run_at": "document_end",
+            "css": ["/src/content/googleAutocompletes/styles.css"],
+            "js": [
+                "/src/content/googleAutocompletes/Cards.js",
+                "/src/content/googleAutocompletes/Results.js",
+                "/src/content/googleAutocompletes/GooglePage.js",
+                "/src/content/googleAutocompletes/GooglePage.js",
+                "/src/content/googleAutocompletes/plugin.js",
+                "/src/content/googleAutocompletes/index.js"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "permissions": ["tabs", "unlimitedStorage", "storage"],
+    "host_permissions": ["<all_urls>"],
+    "web_accessible_resources": [{
+        "resources": [
+            "/engines.json",
+            "/images/*",
+            "/src/common/styles.css",
+            "/src/common/jquery-plugins/sticky/styles.css",
+            "/src/common/jquery-plugins/side-bar/styles.css",
+            "/src/common/jquery-plugins/cards/styles.css",
+            "/src/common/jquery-plugins/modal/styles.css",
+            "/src/content/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+            "/src/content/fonts/fonts.css",
+            "/src/content/styles.css"
+        ],
+        "matches": ["<all_urls>"]
+    }]
+}

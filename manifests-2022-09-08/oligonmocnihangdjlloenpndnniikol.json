@@ -1,0 +1,88 @@
+---
+slug: edpuzzle
+name: Edpuzzle
+description: >-
+  Adds an Edpuzzle button next to YouTube™ videos to quickly start editing them
+  in Edpuzzle
+version: 4.0.6
+release_date: 'August 5, 2022'
+publisher: Edpuzzle
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.032786885245901
+rating_count: 61
+user_count: '400,000+'
+publisher_site: edpuzzle.com
+extension_website: 'https://edpuzzle.com'
+support_website: 'https://support.edpuzzle.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Edpuzzle",
+  "description": "Adds an Edpuzzle button next to YouTube™ videos to quickly start editing them in Edpuzzle",
+  "version": "4.0.6",
+  "manifest_version": 2,
+  "icons": {
+    "128": "images/App-icon_128x128.png"
+  },
+  "background": {
+    "scripts": [
+      "./screen_recorder/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_popup": "screen_recorder/html/popup.html",
+    "default_icon": "images/App-icon_128x128.png",
+    "default_title": "Make any video your lesson within/from Youtube"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://edpuzzle.com/*"
+      ],
+      "js": [
+        "./edpuzzle/edpuzzle_extension_helpers.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "css": [
+        "./youtube/css/edit_with_edpuzzle_button.css"
+      ],
+      "js": [
+        "./youtube/edit_with_edpuzzle_button.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "<all_urls>",
+    "tabCapture",
+    "desktopCapture"
+  ],
+  "web_accessible_resources": [
+    "images/edpuzzle-edit-button.png",
+    "images/pinExtension.png",
+    "images/mic-blocked.jpg",
+    "images/camera-blocked.jpg",
+    "images/camera-mic-blocked.jpg",
+    "screen_recorder/html/devices_detection.html",
+    "screen_recorder/html/webcam.html",
+    "screen_recorder/html/result.html",
+    "screen_recorder/background.js.map",
+    "screen_recorder/content_scripts/foreground.js.map"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://edpuzzle.com/*"
+    ]
+  }
+}

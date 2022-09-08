@@ -1,0 +1,84 @@
+---
+slug: yahoo-search
+name: Yahoo Search
+description: See search differently. Set your search engine to Yahoo!
+version: 2.0.4
+release_date: 'March 24, 2022'
+publisher: ypartnerpublisher-3
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 3.417910447761194
+rating_count: 67
+user_count: '100,000+'
+publisher_site: yahoo.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "default_locale": "en",
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "name": "Yahoo Partner",
+            "keyword": "Yahoo",
+            "search_url": "https://search.yahoo.com/search?p={searchTerms}&manifest=1",
+            "favicon_url": "https://www.yahoo.com/favicon.ico",
+            "suggest_url": "https://search.yahoo.com/sugg/ie?output=fxjson&command={searchTerms}&nResults=10",
+            "encoding": "UTF-8",
+            "is_default": true
+        }
+    },
+    "manifest_version": 2,
+    "name": "Yahoo Search",
+    "description": "See search differently. Set your search engine to Yahoo!",
+    "version": "2.0.4",
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "tabs",
+        "*://*.yahoo.com/"
+    ],
+    "icons": {
+        "128": "icons/Y_NT128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "64": "icons/Y_NT64.png"
+        }
+    },
+    "background": {
+        "scripts": [
+            "TrackerEncoder.js",
+            "Tracker.js",
+            "Constants.js",
+            "ViewUtils.js",
+            "BrowserGap.js",
+            "WiderMailManager.js",
+            "main.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.yahoo.com/*"
+            ],
+            "js": [
+                "notifyPresence.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://*.mail.yahoo.com/*"
+            ],
+            "js": [
+                "detectWiderMail.js"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "*://*.mail.yahoo.com/*"
+        ]
+    }
+}

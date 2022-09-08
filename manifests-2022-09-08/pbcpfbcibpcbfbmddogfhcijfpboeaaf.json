@@ -1,0 +1,121 @@
+---
+slug: amino-css-editor
+name: 'Amino: CSS Editor'
+description: >-
+  Live CSS Editor. Write custom CSS for any website and see your changes in real
+  time.
+version: 3.1.5
+release_date: 'July 6, 2022'
+publisher: Amino
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.290404040404041
+rating_count: 396
+user_count: '30,000+'
+publisher_site: aminoeditor.com
+extension_website: 'https://aminoeditor.com'
+support_website: 'https://docs.aminoeditor.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "__MSG_appName__",
+	"short_name": "Amino",
+	"description": "__MSG_appDesc__",
+	"default_locale": "en",
+	"version": "3.1.5",
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoKwbiWO3RtOm39ezm+Cq04NpBXbd7FgioUefm4tdW9mN7uUWO9Sp+ChuJAPpCbfh/Aq2n6uy5yWqlhPOaZqMy8SGxo/I2ERI10OZB4lBKO8k6v5P/oOp1eE3zs7m1mTzPIiIZldDb3+X3QrlrBHOmlDLNxbKGFCjExGN+YPjiIR2Vte0wG9rE7q4XTTNWlzzMykGKgzfXLorvGZDzUsIk/MF97xeZ5aVWtQ0dPrMN6ZPoAYuYl4bnMVBGRhFRcqedU2XFDt6xn9OYOppzH6sSTUOPtimV4hCg53ZTsrU76/CfTPYPVw/jgZ3mVBXFNlQZ8TxKNrA/+yuIQ3Qzj4OKwIDAQAB",
+	"browser_action": {
+		"default_icon": "assets/images/icon-disabled.png",
+		"default_popup": "index.html"
+	},
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+Space",
+				"mac": "MacCtrl+Shift+Space"
+			}
+		},
+		"devtools-panel": {
+			"suggested_key": {
+				"default": "Alt+Shift+Space"
+			},
+			"description": "Open Amino DevTools"
+		}
+	},
+	"permissions": [
+		"activeTab",
+		"storage",
+		"contextMenus",
+		"tabs",
+		"notifications",
+		"http://*/",
+		"https://*/"
+	],
+	"icons": {
+		"16": "assets/images/icon-16.png",
+		"48": "assets/images/icon-48.png",
+		"64": "assets/images/icon-64.png",
+		"128": "assets/images/icon-128.png",
+		"512": "assets/images/icon-512.png"
+	},
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://www.googletagmanager.com https://www.google-analytics.com https://ssl.google-analytics.com https://srv.buysellads.com; object-src 'self'",
+	"content_scripts": [
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": [
+				"assets/js/lib/jquery-3.4.1.min.js",
+				"assets/js/lib/sass/sass.sync.min.js",
+				"chrome/inject/apply-styles.js"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": [
+				"chrome/inject/inspect.js",
+				"chrome/inject/copy-selector.js"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"background": {
+		"scripts": [
+			"assets/js/lib/feathers/core.min.js",
+			"assets/js/lib/feathers/feathers.min.js",
+			"assets/js/lib/feathers/socket.io.min.js",
+			"chrome/env.js",
+			"chrome/background/options-messenger.js",
+			"chrome/background/amino-api.js",
+			"chrome/background/style-messenger.js",
+			"chrome/background/notification-handler.js",
+			"chrome/background/command-handler.js",
+			"chrome/background/autosave-handler.js",
+			"chrome/background/context-menu-handler.js",
+			"chrome/background/icon-state-handler.js",
+			"chrome/background/install-handler.js"
+		]
+	},
+	"web_accessible_resources": [
+		"assets/css/lib/prism.css",
+		"assets/images/icon-context.png",
+		"chrome/inject/inspect-overlay.html",
+		"chrome/inject/inspect-toolbar.html"
+	],
+	"devtools_page": "chrome/devtools/loader.html",
+	"externally_connectable": {
+		"matches": [
+			"*://*.app.aminoeditor.com/*",
+			"*://app.aminoeditor.com/*",
+			"*://*.aminoeditor.com/*"
+		]
+	}
+}

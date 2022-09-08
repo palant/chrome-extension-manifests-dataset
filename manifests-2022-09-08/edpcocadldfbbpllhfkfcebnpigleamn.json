@@ -1,0 +1,109 @@
+---
+slug: socialiq-influencer-marke
+name: SocialiQ - Influencer Marketing Research Tool
+description: >-
+  Get deep insights of Instagram and Tiktok creators. Discover and shortlist
+  your favourite profiles
+version: 1.5.0
+release_date: 'September 6, 2022'
+publisher: impulze.ai
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 4
+user_count: '3,000+'
+publisher_site: impulze.ai
+extension_website: 'https://www.impulze.ai'
+support_website: 'https://socilaiq.impulze.ai'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SocialiQ - Influencer Marketing Research Tool",
+  "version": "1.5.0",
+  "description": "Get deep insights of Instagram and Tiktok creators. Discover and shortlist your favourite profiles",
+  "permissions": ["storage", "tabs"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://socialiq.impulze.ai/*",
+        "*://app.staging.impulze.ai/*",
+        "*://*.127.0.0.1/*"
+      ],
+      "run_at": "document_end",
+      "js": ["socialIQ.js"],
+      "all_frames": false
+    },
+    {
+      "matches": ["*://*.instagram.com/*"],
+      "run_at": "document_start",
+      "js": ["instaStart.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.tiktok.com/*"],
+      "run_at": "document_end",
+      "js": ["tiktokStart.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.tiktok.com/*"],
+      "run_at": "document_idle",
+      "js": ["tiktokScript.js"],
+      "css": [
+        "css/font.css",
+        "css/material-design-iconic-font.min.css",
+        "css/toastr.min.css",
+        "css/animate.min.css",
+        "css/custom.css"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": ["*://*.instagram.com/*"],
+      "run_at": "document_end",
+      "js": ["instascript.js"],
+      "css": [
+        "css/font.css",
+        "css/material-design-iconic-font.min.css",
+        "css/toastr.min.css",
+        "css/animate.min.css",
+        "css/custom.css"
+      ],
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    "css/svg/*.svg",
+    "images/*.png",
+    "*.ttf",
+    "*.eot",
+    "*.svg",
+    "*.woff",
+    "*.woff2"
+  ],
+  "icons": {
+    "16": "images/hyper_light-16.png",
+    "32": "images/hyper_light-32.png",
+    "48": "images/hyper_light-48.png",
+    "64": "images/hyper_light-64.png",
+    "128": "images/hyper_light-128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "images/hyper_light-16.png",
+      "32": "images/hyper_light-32.png",
+      "48": "images/hyper_light-48.png",
+      "64": "images/hyper_light-64.png",
+      "128": "images/hyper_light-128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+}
