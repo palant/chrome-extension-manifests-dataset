@@ -23,7 +23,7 @@ query.js "manifest_version == 3"
 
 ```sh
 # List all Manifest V3 extensions with at least 10.000 users
-query.js "manifest_version == 3" "user_count >= 10000"
+query.js -m "user_count >= 10000" "manifest_version == 3"
 ```
 
 ```sh
@@ -33,7 +33,7 @@ query.js "content_security_policy =? /unsafe-eval/"
 
 ```sh
 # List all extensions with less than 1.000 users using activeTab permission
-query.js "permissions =? /activeTab/" "user_count < 1000"
+query.js -m "user_count < 1000" "permissions =? /activeTab/"
 ```
 
 ```sh
