@@ -1,0 +1,62 @@
+---
+slug: image-parser
+name: Image Parser
+description: >-
+  Ищет и агрегирует изображения на странице, позволяет сохранить изображения
+  даже с так называемых "защищенных" страниц.
+version: 0.2.7.1
+release_date: 'January 26, 2023'
+publisher: alepron
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4
+rating_count: 15
+user_count: '2,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Image Parser",
+  "short_name": "Image Parser",
+  "description": "Ищет и агрегирует изображения на странице, позволяет сохранить изображения даже с так называемых \"защищенных\" страниц.",
+  "version": "0.2.7.1",
+  "author": "alepron",
+
+  "permissions": ["activeTab", "scripting", "storage"],
+
+  "host_permissions": ["\u003Call_urls\u003E"],
+
+  "action": {
+    "default_icon": "img/icon_16.png",
+    "default_title": "Image Parser"
+  },
+
+  "icons": {
+    "48": "img/icon_48.png",
+    "16": "img/icon_16.png",
+    "128": "img/icon_128.png"
+  },
+
+  "background": {
+    "service_worker": "js/bg.js"
+  },
+
+  "content_scripts": [{
+    "all_frames": true,
+    "match_about_blank": true,
+    "matches": ["\u003Call_urls\u003E"],
+    "js": ["js/jquery.js", "js/FileSaver.js", "js/jszip.js", "js/imgparser.js"],
+    "css": ["css/styles.css"],
+    "run_at": "document_end"
+  }],
+
+  "options_page": "options.html",
+
+  "web_accessible_resources": [{
+    "resources": ["font/*.woff", "font/*.woff2", "img/*.svg"],
+    "matches": ["\u003Call_urls\u003E"]
+  }]
+}

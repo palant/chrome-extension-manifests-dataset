@@ -1,0 +1,108 @@
+---
+slug: duckduckgo-privacy-essent
+name: DuckDuckGo Privacy Essentials
+description: Simple and seamless privacy protection for your browser.
+version: 2023.3.3
+release_date: 'March 4, 2023'
+publisher: DuckDuckGo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.317160367722165
+rating_count: 1958
+user_count: '6,000,000+'
+publisher_site: duckduckgo.com
+extension_website: 'https://duckduckgo.com/app'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "default_locale": "en",
+    "version": "2023.3.3",
+    "minimum_chrome_version": "92.0",
+    "icons": {
+        "16": "img/icon_16.png",
+        "48": "img/icon_48.png",
+        "128": "img/icon_128.png"
+    },
+    "manifest_version": 2,
+    "browser_action": {
+        "default_icon": "img/icon_browser_action.png",
+        "default_popup": "dashboard/html/browser.html"
+    },
+    "omnibox": {
+        "keyword": "ddg"
+    },
+    "options_page": "html/options.html",
+    "background": {
+        "scripts": [
+            "public/js/background.js"
+        ]
+    },
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "encoding": "UTF-8",
+            "favicon_url": "https://duckduckgo.com/favicon.ico",
+            "is_default": true,
+            "keyword": "duckduckgo.com",
+            "name": "DuckDuckGo",
+            "prepopulated_id": 92,
+            "search_url": "https://duckduckgo.com/?q={searchTerms}",
+            "suggest_url": "https://duckduckgo.com/ac/?q={searchTerms}&type=list"
+        }
+    },
+    "content_security_policy": "script-src 'self'; object-src 'self'; frame-ancestors https://*.duckduckgo.com",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "match_about_blank": true,
+            "all_frames": true,
+            "css": [
+                "public/css/noatb.css"
+            ],
+            "js": [
+                "public/js/inject.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "public/js/content-scripts/autofill.js"
+            ],
+            "css": [
+                "public/css/autofill-host-styles.css"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "all_frames": true,
+            "run_at": "document_start"
+        }
+    ],
+    "permissions": [
+        "contextMenus",
+        "webRequest",
+        "webRequestBlocking",
+        "*://*/*",
+        "webNavigation",
+        "activeTab",
+        "tabs",
+        "storage",
+        "<all_urls>",
+        "alarms"
+    ],
+    "web_accessible_resources": [
+        "/web_accessible_resources/*",
+        "/img/logo-small.svg",
+        "/public/css/autofill.css",
+        "/public/font/*",
+        "/html/tracker-stats.html"
+    ],
+    "storage": {
+        "managed_schema": "managed-schema.json"
+    }
+}

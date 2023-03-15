@@ -1,0 +1,75 @@
+---
+slug: qoala
+name: Qoala
+description: Extensión de cupones y cashback en tus tiendas favoritas.
+version: 4.5.0
+release_date: 'March 14, 2023'
+publisher: Joinqoala SL
+category: Shopping
+category_slug: ext/12-shopping
+rating: 4.604761904761904
+rating_count: 210
+user_count: '80,000+'
+publisher_site: joinqoala.com
+extension_website: 'https://www.joinqoala.com/'
+support_website: 'https://help.joinqoala.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Qoala",
+  "version": "4.5.0",
+  "description": "Extensión de cupones y cashback en tus tiendas favoritas.",
+  "homepage_url": "https://joinqoala.com",
+  "icons": {
+    "128": "assets/images/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "assets/images/icon32.png",
+      "128": "assets/images/icon128.png",
+      "1024": "assets/images/icon1024.png"
+    },
+    "default_title": "Abre Qoala",
+    "default_popup": "/popup/Popup.html"
+  },
+  "permissions": ["activeTab", "storage"],
+  "background": {
+    "service_worker": "/BackgroundWorker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["/content-scripts/store/StoreContentScript.js"]
+    },
+    {
+      "matches": [
+        "https://*.joinqoala.com/*",
+        "http://localhost:3000/*"
+      ],
+      "js": ["/content-scripts/auth/AuthContentScript.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [ 
+      "https://*.joinqoala.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/images/icon128.png",
+        "/assets/images/iconwhite128.png",
+        "/assets/images/drag_icon.svg",
+        "/content-scripts/store/cashbackPopup/CashbackPopup.html",
+        "/content-scripts/store/mobileCashbackPopup/MobileCashbackPopup.html",
+        "/content-scripts/store/redirectPopup/RedirectPopup.html",
+        "/content-scripts/store/successPopup/SuccessPopup.html",
+        "/content-scripts/store/peerPopup/PeerPopup.html"
+      ],
+      "matches": ["https://*/*"]
+    }
+  ]
+}

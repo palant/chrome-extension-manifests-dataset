@@ -1,0 +1,128 @@
+---
+slug: email-tracker-email-track
+name: 'Email Tracker, Email Tracking w/ AI - Mailtag'
+description: >-
+  Email Tracking 2.0 for Gmail. Don't settle for a Email Tracker - Get more
+  Responses. Free e-mail tracking, Signatures and Campaigns.
+version: 2023.1.3005.1
+release_date: 'January 31, 2023'
+publisher: MailTag
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.031963470319635
+rating_count: 219
+user_count: '8,000+'
+publisher_site: mailtag.io
+extension_website: 'https://www.mailtag.io/'
+support_website: 'http://www.mailtag.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "__MSG_appName__",
+	"description": "__MSG_appDesc__",
+	"default_locale": "en",
+	"version": "2023.1.3005.1",
+	"background": {
+		"service_worker": "/js/background.js",
+		"type": "module"
+	},
+	"action": {
+		"default_icon": "assets/images/read-16.png",
+		"default_title": "MailTag for Gmail"
+	},
+	"content_scripts": [
+		{
+			"all_frames": false,
+			"js": [
+				"/js/content.js",
+				"/js/message-event-handler.js",
+				"/js/countries.js",
+				"/js/ping-send.js",
+				"/js/messageViewHandler.js",
+				"/js/compose-view-handler.js"
+			],
+			"matches": [
+				"https://mail.google.com/*"
+			],
+			"css": [
+				"/assets/css/mailtag.css",
+				"/assets/css/border.css",
+				"/assets/css/svg-arrow.css",
+				"/assets/css/content.css",
+				"/assets/css/windows-specific-css.css"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": false,
+			"js": [
+				"/js/extensionInjector.js"
+			],
+			"matches": [
+				"https://mail.google.com/*"
+			],
+			"run_at": "document_start"
+		}
+	],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self' ; object-src 'self'"
+	},
+	"permissions": [
+		"storage",
+		"cookies",
+		"tabs",
+		"gcm",
+		"activeTab",
+		"notifications",
+		"declarativeNetRequest",
+		"declarativeNetRequestWithHostAccess",
+		"declarativeNetRequestFeedback",
+		"scripting"
+	],
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"/assets/*",
+				"signin.html",
+				"tutorials.html",
+				"webfonts/*",
+				"js/gmailJsLoader.js",
+				"js/extension.js",
+				"js/embeddedcontent.js",
+				"js/injected.js",
+				"js/*.map",
+				"/_locales/*"
+			],
+			"matches": [
+				"https://mail.google.com/*"
+			]
+		}
+	],
+	"host_permissions": [
+		"https://mail.google.com/",
+		"https://inbox.google.com/",
+		"*://prod-main.mailtag.io/",
+		"*://*.mailtag.io/",
+		"*://*.googleusercontent.com/*"
+	],
+	"icons": {
+		"48": "assets/images/read-48.png"
+	},
+	"declarative_net_request": {
+		"rule_resources": [
+			{
+				"id": "ruleset_1",
+				"enabled": true,
+				"path": "rules.json"
+			}
+		]
+	},
+	"externally_connectable": {
+		"matches": [
+			"https://mail.google.com/*"
+		]
+	}
+}

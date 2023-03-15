@@ -1,0 +1,153 @@
+---
+slug: truffle
+name: Truffle
+description: Enhance your livestream viewing experience
+version: 4.0.1
+release_date: 'February 26, 2023'
+publisher: Truffle
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.450516986706056
+rating_count: 677
+user_count: '200,000+'
+publisher_site: truffle.vip
+extension_website: 'https://truffle.vip/extension'
+support_website: 'https://ludwig.social/chat/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Truffle",
+  "version": "4.0.1",
+  "description": "Enhance your livestream viewing experience",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "devtools_page": "devtools/entry.html",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content/embed/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*",
+        "*://*.patreon.com/*",
+        "*://*.ludwig.gg/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "content/privileged/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*.truffle.vip/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "content/twitch/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "content/youtube/import-index.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://v2.truffle.vip/*"
+      ],
+      "js": [
+        "content/mogultv/import-index.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "storage",
+    "unlimitedStorage",
+    "gcm",
+    "notifications",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected/all/index.js",
+        "devtools/index.html"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "injected/youtube/index.js",
+        "popup/index.html"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "injected/twitch/index.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content/embed/index.js",
+        "content/privileged/index.js",
+        "content/twitch/index.js",
+        "content/youtube/index.js",
+        "content/mogultv/index.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*",
+        "*://*.patreon.com/*",
+        "*://*.ludwig.gg/*",
+        "https://*.truffle.vip/*",
+        "*://v2.truffle.vip/*",
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

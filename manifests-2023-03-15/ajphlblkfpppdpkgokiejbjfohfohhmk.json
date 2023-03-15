@@ -1,0 +1,125 @@
+---
+slug: mote-voice-notes-feedback
+name: 'Mote: voice notes & feedback'
+description: 'Mote - fast, friendly voice messaging'
+version: 0.1.9.6
+release_date: 'March 12, 2023'
+publisher: 'Mote Technologies, Inc.'
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.701492537313433
+rating_count: 134
+user_count: '1,000,000+'
+publisher_site: mote.com
+extension_website: 'https://www.mote.com'
+support_website: 'https://support.mote.com/hc'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "name": "__MSG_appName__",
+  "short_name": "Mote",
+  "author": "@justmoteHQ",
+  "icons": {
+    "16": "images/logos/mote-round-16.png",
+    "48": "images/logos/mote-round-48.png",
+    "128": "images/logos/mote-round-128.png"
+  },
+  "default_locale": "en_US",
+  "version": "0.1.9.6",
+  "description": "__MSG_appDesc__",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+M",
+        "mac": "MacCtrl+Shift+M"
+      },
+      "description": "Toggle Mote Popup"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://drive.google.com/*",
+        "https://classroom.google.com/*",
+        "https://docs.google.com/*"
+      ],
+      "all_frames": true,
+      "js": ["static/js/content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://docs.google.com/forms/*"],
+      "all_frames": true,
+      "js": ["static/js/forms.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://docs.google.com/presentation/*"],
+      "all_frames": true,
+      "js": ["static/js/slides.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://drive.google.com/*",
+        "https://docs.google.com/file/*",
+        "https://classroom.google.com/*/g/*"
+      ],
+      "all_frames": true,
+      "js": ["static/js/gdrive.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.instructure.com/courses/*/gradebook/speed_grader?assignment_id=*&student_id=*",
+        "https://*.instructure.com/courses/*/assignments/*/submissions/*"
+      ],
+      "all_frames": true,
+      "js": ["static/js/canvas.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/logos/mote-round-16.png",
+      "48": "images/logos/mote-round-48.png",
+      "128": "images/logos/mote-round-128.png"
+    },
+    "default_title": "Mote - fast, friendly voice messaging",
+    "default_popup": "popup.html"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.mote.com/*", "https://mote.com/*", "*://localhost/*"]
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "enterprise.deviceAttributes",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": ["*://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "sounds/*",
+        "mic.html",
+        "fonts/*.ttf",
+        "static/js/mic.js",
+        "locales/*",
+        "worklets/*"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

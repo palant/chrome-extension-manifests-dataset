@@ -1,0 +1,73 @@
+---
+slug: weather-forecast
+name: Weather Forecast
+description: Provides local and long-range weather forecasts using Weather Underground
+version: 0.5.7
+release_date: 'January 8, 2023'
+publisher: chYer
+category: News & Weather
+category_slug: ext/6-news
+rating: 4.13125
+rating_count: 160
+user_count: '10,000+'
+extension_website: 'https://webextension.org/listing/forecast-plus.html'
+support_website: 'https://webextension.org/listing/forecast-plus.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Weather Forecast",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "version": "0.5.7",
+  "manifest_version": 3,
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "alarms",
+    "idle",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://www.wunderground.com/*",
+    "*://api.weather.com/*"
+  ],
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "action": {
+    "default_popup": "/data/popup/index.html",
+    "default_title": "To get badge notification, open popup -> Find location -> Press 'View Full Forecast'"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [{
+    "matches": ["*://www.wunderground.com/*"],
+    "js": [
+      "data/inject/clean.js",
+      "data/inject/observe.js"
+    ],
+    "run_at": "document_start",
+    "all_frames": true
+  }],
+  "homepage_url": "https://webextension.org/listing/forecast-plus.html",
+  "icons": {
+    "16": "data/icons/16.png",
+    "24": "data/icons/24.png",
+    "32": "data/icons/32.png",
+    "48": "data/icons/48.png",
+    "64": "data/icons/64.png",
+    "128": "data/icons/128.png",
+    "256": "data/icons/256.png"
+  },
+  "options_ui": {
+    "page": "/data/options/index.html",
+    "open_in_tab": true
+  }
+}

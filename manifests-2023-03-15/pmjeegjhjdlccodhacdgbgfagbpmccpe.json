@@ -1,0 +1,91 @@
+---
+slug: clockify-time-tracker
+name: Clockify Time Tracker
+description: Track time from anywhere on the web and improve productivity.
+version: 2.9.3
+release_date: 'March 14, 2023'
+publisher: COING Inc
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.8716216216216215
+rating_count: 148
+user_count: '300,000+'
+publisher_site: clockify.me
+extension_website: 'https://clockify.me'
+support_website: 'https://clockify.me/help/apps/chrome-extension'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "__MSG_appName__",
+	"short_name": "Clockify",
+	"description": "__MSG_appDesc__",
+	"default_locale": "en",
+	"background": {
+		"service_worker": "sw.js"
+	},
+	"version": "2.9.3",
+	"action": {
+		"default_popup": "index.html",
+		"default_title": "Clockify"
+	},
+	"content_scripts": [
+		{
+			"matches": ["https://*/*", "http://*/*"],
+			"js": [
+				"contentScripts/service-localstorage.js",
+				"contentScripts/clockifyLocales.js",
+				"vendors.bundle.js",
+				"main.bundle.js"
+			],
+			"css": ["styles/main-integration.css"]
+		}
+	],
+	"options_page": "settings.html",
+	"commands": {
+		"quick-start-stop-entry": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+U"
+			},
+			"description": "Quick start/stop current entry"
+		}
+	},
+	"icons": {
+		"16": "assets/images/logo-16.png",
+		"48": "assets/images/logo-48.png",
+		"128": "assets/images/logo-128.png"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"assets/images/*.png",
+				"assets/images/*.svg",
+				"assets/images/ui-icons/*.svg"
+			],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"permissions": [
+		"background",
+		"contextMenus",
+		"storage",
+		"tabs",
+		"activeTab",
+		"identity",
+		"idle",
+		"notifications",
+		"scripting",
+		"alarms"
+	],
+	"host_permissions": ["*://*/", "*://*.clockify.me/*"],
+	"optional_permissions": ["*://*/"],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+	"externally_connectable": {
+		"ids": ["*"],
+		"accepts_tls_channel_id": false
+	}
+}

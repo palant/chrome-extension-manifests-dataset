@@ -1,0 +1,74 @@
+---
+slug: quizlit-rapidly-search-qu
+name: Quizlit - Rapidly Search Quizlet
+description: Rapidly search Quizlet for those last-minute homework and exam questions!
+version: 1.5.0
+release_date: 'March 31, 2021'
+publisher: Connor Langlois
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 4.105263157894737
+rating_count: 19
+user_count: '7,000+'
+support_website: 'https://twitter.com/clanglois04'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name" : "Quizlit - Rapidly Search Quizlet",
+	"short_name": "Quizlit",
+	"author": "Connor Langlois",
+	"version" : "1.5.0",
+	"description" : "Rapidly search Quizlet for those last-minute homework and exam questions!",
+	"icons": {
+		"16": "images/icon16.png",
+		"32": "images/icon32.png",
+		"48": "images/icon48.png",
+		"128": "images/icon96_128.png"
+	},
+	"permissions": ["contextMenus", "storage", "<all_urls>"],
+	"content_security_policy": "script-src 'self' https://www.google.com https://www.gstatic.com; object-src 'self'",
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"default": "Ctrl+Q"
+			}
+		},
+		"search": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+Q"
+			},
+			"description": "Search highlighted question"
+		}
+	},
+	"omnibox": {
+		"keyword" : "quizlet"
+	},
+	"browser_action": {
+	   "default_icon": {
+		   "16": "images/icon16.png",
+		   "32": "images/icon32.png",
+		   "48": "images/icon48.png",
+		   "128": "images/icon128.png"
+	   },
+	   "default_popup": "index.html"
+	},
+	"background": {
+		"page": "background.html",
+		"persistent": false
+	},
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content.js"]
+		},
+		{
+			"matches": ["https://www.google.com/sorry/*"],
+			"all_frames": true,
+			"js": ["captcha.js"]
+		}
+	],
+	"web_accessible_resources": ["images/icon.svg", "js/iframe-resizer.js"],
+	"manifest_version": 2
+}

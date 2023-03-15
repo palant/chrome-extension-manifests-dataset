@@ -1,0 +1,120 @@
+---
+slug: meeting-agendas-notes-goa
+name: 'Meeting Agendas, Notes & Goals - Hypercontext'
+description: >-
+  Collaborative agendas, notes, next steps, goals and more with Hypercontext -
+  All within Google Meet and Google Calendar.
+version: '1.12'
+release_date: 'September 22, 2022'
+publisher: Hypercontext
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.96
+rating_count: 50
+user_count: '3,000+'
+publisher_site: hypercontext.com
+extension_website: 'https://hypercontext.com/'
+support_website: 'https://help.hypercontext.com/en/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Meeting Agendas, Notes & Goals - Hypercontext",
+  "version": "1.12",
+  "description": "Collaborative agendas, notes, next steps, goals and more with Hypercontext - All within Google Meet and Google Calendar.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "contextMenus",
+    "https://*.soapboxhq.com/*",
+    "https://*.hypercontext.com/*",
+    "https://calendar.google.com/*",
+    "https://mail.google.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js",
+      "dist/realtime.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "icons/icon128.png",
+    "default_title": "Hypercontext",
+    "default_popup": "embeds/popup/popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "hello@hypercontext.com",
+      "strict_min_version": "90.0"
+    }
+  },  
+  "content_scripts": [
+    {
+      "matches": ["https://*.hypercontext.com/*","https://*.hypercontext.dev/*"],
+      "exclude_matches": ["https://app.hypercontext.com/*"],
+      "all_frames": true,
+      "js": ["update-token.js"]
+    },
+    {
+      "matches": ["https://app.hypercontext.com/*"],
+      "all_frames": true,
+      "js": ["update-create.js"]
+    },
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "all_frames": true,
+      "js": [
+        "dist/google-calendar/inject.js"
+      ]
+    },
+    {
+      "matches": ["https://meet.google.com/*"],
+      "css": ["embeds/google_meet/inject.css"],
+      "js": [
+        "dist/utils.js",
+        "embeds/components/rate_extension/rate.js",
+        "embeds/google_meet/inject.js"
+      ]
+    }, 
+    {
+      "matches": ["https://*.zoom.us/*"],
+      "css": [],
+      "js": [
+        "dist/zoom/inject.js"
+      ]
+    },
+    {
+      "matches": ["https://app.asana.com/*"],
+      "js": ["embeds/asana/inject.js"]
+    },
+    {
+      "matches": ["https://todoist.com/app*"],
+      "js": ["embeds/todoist/inject.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "panel.html",
+    "icons/icon128.png",
+    "icons/icon48.png",
+    "icons/icon19.png",
+    "icons/icon16.png",
+    "embeds/components/embedded_webapp/hostpage-injected.js",
+    "embeds/components/nextsteps/panel.html",
+    "embeds/components/quickadd/panel.html",
+    "embeds/components/quickcreate/panel.html",
+    "embeds/google_calendar/panel.html",
+    "embeds/google_meet/panel.html",
+    "embeds/asana/panel.html",
+    "embeds/todoist/panel.html",
+    "dist/zoom/inject.js"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "manifest_version": 2
+}

@@ -1,0 +1,111 @@
+---
+slug: ali-orders
+name: Ali Orders
+description: Ali Orders - Automate your dropshipping by just a  single 1 click
+version: 3.0.0.2
+release_date: 'March 8, 2023'
+publisher: FireApps
+category: Shopping
+category_slug: ext/12-shopping
+rating: 3.3333333333333335
+rating_count: 24
+user_count: '30,000+'
+publisher_site: aliorders.fireapps.io
+extension_website: 'https://fireapps.io/shopify-apps/ali-orders'
+support_website: 'https://help.fireapps.io/ali-orders'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "3.0.0.2",
+  "description": "__MSG_extDescription__",
+  "externally_connectable": {
+    "matches": [
+      "https://*.fireapps.io/*",
+      "https://*.alihunter.io/*"
+    ]
+  },
+  "icons": {
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/contentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.aliexpress.com/*",
+        "https://*.oberlo.com/*",
+        "*://*.fireapps.io/*",
+        "*://*.alibaba.com/*"
+      ],
+      "css": ["assets/main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.aliexpress.com/*", 
+        "https://*.oberlo.com/*"
+      ],
+      "js": ["assets/bootstrap.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/item/*",
+        "https://*.aliexpress.com/store/product*"
+      ],
+      "js": ["assets/addToCartProduct.js", "assets/affiliate.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/af/*",
+        "https://*.aliexpress.com/category/*",
+        "https://*.aliexpress.com/*wholesale*",
+        "https://*.aliexpress.com/store/*",
+        "https://*.aliexpress.com/premium/*",
+        "https://www.aliexpress.com/price/*"
+      ],
+      "js": ["assets/singleProductImport.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "assets/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/custom_script.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "default_locale": "en",
+  "action": {
+    "default_title": "__MSG_extDescription__",
+    "default_icon": {
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting",
+    "cookies",
+    "webRequest",
+    "webNavigation",
+    "notifications"
+  ],
+  "host_permissions": ["<all_urls>"]
+}

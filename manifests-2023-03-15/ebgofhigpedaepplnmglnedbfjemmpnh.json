@@ -1,0 +1,134 @@
+---
+slug: lumaly-gutscheine-cashbac
+name: Lumaly - Gutscheine & Cashback
+description: >-
+  Jetzt mit Lumaly Geld sparen. Mit Lumaly erhalten Sie beim Online-Einkauf
+  immer die besten Gutscheine & Cashback.
+version: 2.2.3.5
+release_date: 'December 9, 2022'
+publisher: Lumaly
+category: Shopping
+category_slug: ext/12-shopping
+rating: 4.648221343873518
+rating_count: 253
+user_count: '100,000+'
+publisher_site: lumaly.de
+extension_website: 'https://lumaly.de/'
+support_website: 'https://lumaly.de/impressum/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_app_name__",
+  "description": "__MSG_app_description__",
+  "version": "2.2.3.5",
+  "default_locale": "de",
+  "icons": {
+    "128": "accessible/lumaly/icon-2022.png",
+    "48": "accessible/lumaly/icon-2022.png",
+    "16": "accessible/lumaly/icon-2022.png"
+  },
+  "background": {
+    "scripts": [
+      "shared.js",
+      "jquery.min.js",
+      "webextension-polyfill.min.js",
+      "mixpanel.js",
+      "background.js",
+      "script.js"
+    ],
+    "persistent": true
+  },
+  "web_accessible_resources": [
+    "config.json",
+    "img/close.svg",
+    "content.css",
+    "accessible/*"
+  ],
+  "content_security_policy": "script-src 'self' https://www.googletagmanager.com 'sha256-8hdnIz1BlJ9Osx4BGt/jG4ApkPKzDEUHkJJ8TLV4UEE=' https://www.googleadservices.com https://googleads.g.doubleclick.net; object-src 'self'",
+  "content_scripts": [
+    {
+      "js": [
+        "shared.js",
+        "jquery.min.js",
+        "allpages.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://lumaly.de/*",
+        "*://lumaly.com/*",
+        "*://*.awin.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "helper-scripts/redirect/lumaly_discover.js"
+      ],
+      "matches": [
+        "*://lumaly.de/",
+        "*://lumaly.de/lp",
+        "*://lumaly.de/discover/*",
+        "*://lumaly.com/*/",
+        "*://lumaly.com/lp",
+        "*://lumaly.com/discover/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "shared.js",
+        "jquery.min.js",
+        "registration.js"
+      ],
+      "matches": [
+        "*://lumaly.de/friend-referral*",
+        "*://lumaly.de/willkommen*",
+        "*://lumaly.com/friend-referral*",
+        "*://lumaly.com/*/willkommen*",
+        "*://lumaly.com/willkommen*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "helper-scripts/redirect/lumaly_ausprobieren.js"        
+      ],
+      "matches": [
+        "*://lumaly.de/jetzt-ausprobieren/*",
+        "*://lumaly.com/jetzt-ausprobieren/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "jquery.min.js",
+        "socialAuth.js"
+      ],
+      "matches": [
+        "*://*.lumaly.de/auth*",
+        "*://*.lumaly.com/auth*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "unlimitedStorage",
+    "http://*/*",
+    "https://*/*",
+    "tabs"
+  ]
+}

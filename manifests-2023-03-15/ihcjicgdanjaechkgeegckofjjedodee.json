@@ -1,0 +1,94 @@
+---
+slug: malwarebytes-browser-guar
+name: Malwarebytes Browser Guard
+description: The fastest and safest web browsing experience.
+version: 2.5.9
+release_date: 'March 9, 2023'
+publisher: Malwarebytes
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.064197530864197
+rating_count: 810
+user_count: '9,000,000+'
+publisher_site: www.malwarebytes.com
+extension_website: 'https://www.malwarebytes.com/browserguard'
+support_website: 'https://links.malwarebytes.com/support/browserguard'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "author": "Malwarebytes",
+  "name": "Malwarebytes Browser Guard",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "2.5.9",
+
+  "icons": {
+    "128": "app/assets/icon.png"
+  },
+
+  "web_accessible_resources": [
+    "*.eot",
+    "*.ttf",
+    "*.woff",
+    "*.woff2",
+    "app/assets/close-icon.svg",
+    "app/assets/tooltip.svg",
+    "app/eventpages/block.html",
+    "app/eventpages/debugger.html",
+    "app/eventpages/downloading.html",
+    "app/eventpages/message.html",
+    "injection-instart.js",
+    "vendor/*"
+  ],
+
+  "externally_connectable": {
+    "matches": ["*://*.msn.com/*"]
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.malwarebytes.com/browserguard/*"],
+      "js": ["content-debugging.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+
+  "browser_action": {
+    "default_icon":  "app/assets/icon.png",
+    "default_popup": "app/pop.html",
+    "default_title": "Malwarebytes"
+  },
+
+  "permissions": [
+    "alarms",
+    "downloads",
+    "storage",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "unlimitedStorage",
+    "nativeMessaging",
+    "<all_urls>",
+    "contextMenus"
+  ],
+
+  "incognito": "split"
+}

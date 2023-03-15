@@ -1,0 +1,91 @@
+---
+slug: google-meet-attendance-li
+name: Google Meet Attendance List
+description: Easiest way to save the attendance list for your meetings or lectures
+version: 4.1.1
+release_date: 'December 8, 2022'
+publisher: MeetList
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.694259818731118
+rating_count: 1655
+user_count: '300,000+'
+publisher_site: meetlist.io
+extension_website: 'https://meetlist.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "4.1.1",
+  "author": "Alex M",
+  "name": "Google Meet Attendance List",
+  "short_name": "Google Meet Attendance List",
+  "description": "Easiest way to save the attendance list for your meetings or lectures",
+
+  "default_locale": "en",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "options_page": "options.html",
+
+  "action": {
+    "default_icon": {
+      "16": "icons/logo-16.png",
+      "24": "icons/logo-24.png",
+      "32": "icons/logo-32.png",
+      "48": "icons/logo-48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Google Meet Attendance List"
+  },
+
+  "content_scripts": [
+    {
+      "js": ["browser-polyfill.js", "content.js"],
+      "matches": ["*://meet.google.com/*-*-*"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "js": ["sync.js"],
+      "matches": ["*://*.meetlist.io/*"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [{
+    "resources": [
+      "shims.js",
+      "icons/logo-24.png"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; script-src-elem 'self'"
+  },
+
+  "icons": {
+    "16": "icons/logo-16.png",
+    "32": "icons/logo-32.png",
+    "48": "icons/logo-48.png",
+    "64": "icons/logo-64.png",
+    "128": "icons/logo-128.png"
+  },
+
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "storage",
+    "unlimitedStorage"
+  ],
+
+  "host_permissions": [
+    "*://*.meetlist.io/*",
+    "*://api.meetlist.io/*"
+  ]
+}

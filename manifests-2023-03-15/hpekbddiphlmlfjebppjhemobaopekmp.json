@@ -1,0 +1,127 @@
+---
+slug: pagenote一页一记
+name: pagenote一页一记
+description: 在任意网页内，摘录重点、划线批注。打造个人笔记系统。
+version: 0.26.3.8
+release_date: 'March 12, 2023'
+publisher: rowthan
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.722222222222222
+rating_count: 54
+user_count: '8,000+'
+publisher_site: pagenote.cn
+extension_website: 'https://pagenote.cn/'
+support_website: 'https://pagenote.cn/page/?id=why'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "short_name": "__MSG_extensionName__",
+  "version": "0.26.3.8",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "zh_CN",
+  "icons": {
+    "16": "images/light-16.png",
+    "32": "images/light-32.png",
+    "48": "images/light-48.png",
+    "64": "images/light-64.png",
+    "96": "images/light-96.png",
+    "128": "images/light-128.png"
+  },
+  "permissions": [
+    "downloads",
+    "activeTab",
+    "alarms",
+    "*://*/*",
+    "storage",
+    "pageCapture",
+    "contextMenus",
+    "<all_urls>",
+    "notifications",
+    "unlimitedStorage"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "images/light-16.png",
+      "32": "images/light-32.png",
+      "48": "images/light-48.png",
+      "64": "images/light-64.png",
+      "96": "images/light-96.png",
+      "128": "images/light-128.png"
+    },
+    "default_title": "尚未此页面准备完毕，刷新页面试试？若仍有问题，请尝试重置设置。",
+    "default_popup": "/web/ext/popup.html"
+  },
+  "options_page": "pagenote.html",
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "pagenote.html"
+  },
+  "homepage_url": "https://pagenote.cn/release",
+  "commands": {
+    "_execute_browser_action": {
+      "description": "__MSG_active_extension__",
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      }
+    },
+    "capture": {
+      "description": "__MSG_capture_tabview__",
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      }
+    },
+    "enable_copy": {
+      "description": "允许复制",
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      }
+    }
+  },
+  "background": {
+    "scripts": [
+      "rollup/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*/*",
+        "file://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "rollup/inject_check.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "*://pagenote.cn/*",
+        "*://www.pagenote.cn/*",
+        "*://developer.pagenote.cn/*",
+        "*://logike.cn/*",
+        "*://pagenote.logike.cn/*",
+        "*://127.0.0.1/*",
+        "*://localhost/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "rollup/open_api_bridge.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://pagenote.cn; object-src 'self' https://logike.cn",
+  "web_accessible_resources": [
+    "rollup/content_script.js",
+    "images/**",
+    "lib/**",
+    "/**"
+  ]
+}

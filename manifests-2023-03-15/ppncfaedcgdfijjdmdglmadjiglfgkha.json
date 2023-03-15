@@ -1,0 +1,191 @@
+---
+slug: linkedhub
+name: LinkedHub
+description: HubSpot Integration
+version: 2.8.22
+release_date: 'February 26, 2023'
+publisher: petrovdigital.io
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.722222222222222
+rating_count: 18
+user_count: '7,000+'
+publisher_site: petrovdigital.io
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "LinkedHub",
+	"version": "2.8.22",
+	"manifest_version": 2,
+	"description": "HubSpot Integration",
+	"homepage_url": "https://linkedhub.io/",
+	"short_name": "LinkedHub",
+
+	"browser_action": {
+		"default_icon": "img/icon48.png",
+		"default_title": "LinkedHub"
+	},
+	"icons": {
+		"16": "img/icon16.png",
+		"48": "img/icon48.png",
+		"128": "img/icon128.png"
+	},
+	"options_ui": {
+		"page": "main.html",
+		"chrome_style": false,
+		"open_in_tab": true
+	},
+
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*.linkedin.com/*"
+			],
+			"js": [
+				"libs/jquery.min.js",
+				"libs/resizer.parent.js",
+				"libs/jquery.tiny-draggable.js",
+				"js/helpers/log_helper.js",
+				"js/helpers/url_helper.js",
+				"js/helpers/string_helper.js",
+				"js/api/linkedhub.js",
+				"js/api/hubspot.js",
+				"js/api/email_discovery.js",
+				"js/api/linkedin.js",
+				"js/helpers/utils.js",
+				"js/db/storage.js",
+				"js/components/inject/linkedin_helper.js"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"matches": [
+				"*://*.linkedhub.io/*"
+			],
+			"js": [
+				"js/components/inject/linkedhub.io.js"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"matches": [
+				"https://app.linkedhub.io/app/billing.html"
+			],
+			"js": [
+				"js/components/inject/billing.js"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"matches": [
+				"*://*.hubspot.com/*"
+			],
+			"js": [
+				"js/db/storage.js",
+				"js/components/inject/hubspot_helper.js",
+				"js/components/inject/hubspot_tutorial.js"
+			],
+			"run_at": "document_idle"
+		},
+		{
+			"all_frames": true,
+			"matches": [
+				"https://app.linkedhub.io/app/*/widget.html*"
+			],
+			"js": [
+				"libs/jquery.min.js",
+				"libs/tooltipster.bundle.min.js",
+				"js/db/storage.js",
+				"js/api/linkedhub.js",
+				"js/helpers/utils.js",
+				"js/components/inject/linkedin_onboarding.js",
+				"js/components/ui/doughnut_chart.js",
+				"js/components/inject/widget.js",
+				"libs/resizer.child.js"
+			],
+			"run_at": "document_idle"
+		},
+		{
+			"all_frames": true,
+			"matches": [
+				"https://app.linkedhub.io/app/*/cbox.html*"
+			],
+			"js": [
+				"libs/jquery.min.js",
+				"js/db/storage.js",
+				"js/api/linkedhub.js",
+				"js/helpers/utils.js",
+				"js/components/inject/cbox.js"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": true,
+			"matches": [
+				"https://app.linkedhub.io/app/*/panel.html*"
+			],
+			"js": [
+				"libs/jquery.min.js",
+				"libs/select2/select2.min.js",
+				"libs/tooltipster.bundle.min.js",
+				"libs/jquery-sortable.min.js",
+				"libs/datepicker/zebra_datepicker.min.js",
+				"js/db/storage.js",
+				"js/api/linkedhub.js",
+				"js/api/hubspot.js",
+				"js/api/linkedin.js",
+				"js/api/email_discovery.js",
+				"js/helpers/utils.js",
+				"js/helpers/string_helper.js",
+				"js/helpers/url_helper.js",
+				"js/components/inject/email_finder.js",
+				"js/components/inject/phone_finder.js",
+				"js/components/inject/sidepanel.js",
+				"js/components/inject/linkedin_onboarding.js",
+				"js/components/inject/panel.js"
+			],
+			"css": [
+				"libs/select2/select2.min.css",
+				"libs/tooltipster.bundle.min.css",
+				"libs/datepicker/zebra_datepicker.min.css",
+				"css/common.css",
+				"css/inject/fixed_btn.css",
+				"css/inject/datepicker_custom.css",
+				"css/select2.custom.css"
+			],
+			"run_at": "document_end"
+		}
+	],
+
+	"background": {
+		"scripts": [
+			"libs/jquery.min.js",
+			"js/api/linkedhub.js",
+			"js/db/storage.js",
+			"js/helpers/utils.js",
+			"js/background.js"
+		]
+	},
+	"web_accessible_resources": [],
+	"permissions": [
+		"storage",
+		"contextMenus",
+		"*://*.hubspot.com/*",
+		"*://*.canny.io/*",
+		"*://*.hubapi.com/*",
+		"*://*.linkedin.com/*",
+		"https://*.linkedhub.io/*",
+		"https://api.anymailfinder.com/*",
+		"https://api.findthatlead.com/*",
+		"https://*.hunter.io/*",
+		"https://*.toofr.com/*",
+		"https://*.findemails.com/*",
+		"https://bpi.briteverify.com/*",
+		"webRequest",
+		"webRequestBlocking",
+		"cookies"
+	],
+	"content_security_policy": "script-src 'self' https://canny.io https://*.intercom.io https://*.intercomcdn.com; object-src 'self'"
+}

@@ -1,0 +1,71 @@
+---
+slug: block-ads
+name: Block Ads
+description: Blocks ads and restrict advertisers from tracking your browsing activity
+version: '2.0'
+release_date: 'February 7, 2021'
+publisher: Jagan Elavarasan
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.6
+rating_count: 10
+user_count: '2,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Block Ads",
+  "version": "2.0",
+  "description": "Blocks ads and restrict advertisers from tracking your browsing activity",
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "browser_action": {
+    "default_icon": "icon128.png",
+    "default_popup": "popup.html",
+    "default_title": "Blocks ads while browsing web and watching videos on youtube, facebook, reddit, hotstar and more websites."
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.hotstar.com/*"],
+      "js": ["contentScript_hotstar.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["contentScript_fb.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["contentScript_linkedin.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["contentScript_youtube.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+        "js": ["contentScript_gads.js"],
+        "run_at": "document_start",
+        "exclude_matches": [
+            "https://www.hotstar.com/*",
+            "https://www.youtube.com/*",
+            "https://www.facebook.com/*",
+            "https://www.linkedin.com/*"
+        ]
+    }
+  ],
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
+  "manifest_version": 2
+}

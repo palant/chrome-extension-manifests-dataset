@@ -1,0 +1,106 @@
+---
+slug: fellow-meeting-notes-agen
+name: 'Fellow: Meeting Notes, Agendas, and 1-on-1s'
+description: >-
+  Access Fellow meeting agendas and notes directly from Google Meet calls and
+  Google Calendar
+version: 2.2.9
+release_date: 'February 4, 2023'
+publisher: Fellow Insights Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.755102040816326
+rating_count: 49
+user_count: '30,000+'
+publisher_site: fellow.app
+extension_website: 'https://fellow.app'
+support_website: 'https://help.fellow.app/en/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"version": "2.2.9",
+	"name": "Fellow: Meeting Notes, Agendas, and 1-on-1s",
+	"homepage_url": "https://fellow.app/auth/login",
+	"externally_connectable": {
+		"matches": [
+			"https://*.fellow.app/*",
+			"https://*.fellow.co/*"
+		]
+	},
+	"description": "Access Fellow meeting agendas and notes directly from Google Meet calls and Google Calendar",
+	"content_scripts": [
+		{
+			"matches": [
+				"https://meet.google.com/*"
+			],
+			"exclude_matches": [
+				"https://meet.google.com/"
+			],
+			"js": [
+				"scripts/google/meet.js"
+			],
+			"css": [
+				"styles/videocall.css"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"matches": [
+				"https://calendar.google.com/*"
+			],
+			"js": [
+				"scripts/google/calendar.js"
+			],
+			"css": [
+				"styles/button.css",
+				"styles/sidebar.css",
+				"styles/badges.css"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"images/*.svg",
+				"scripts/*.js"
+			],
+			"matches": [
+				"https://*.fellow.app/*",
+				"https://*.fellow.co/*",
+				"https://meet.google.com/*",
+				"https://calendar.google.com/*"
+			],
+			"extension_ids": [
+				"eeclpdfpnjegalkhodajlgdhfhlacbgn",
+				"nomeamlnnhgiickcddocjalmlhdfknpo"
+			]
+		}
+	],
+	"manifest_version": 3,
+	"default_locale": "en",
+	"permissions": [
+		"cookies",
+		"storage"
+	],
+	"host_permissions": [
+		"https://*.fellow.app/*",
+		"https://*.fellow.co/*"
+	],
+	"action": {
+		"default_title": "Fellow.app",
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16": "images/16.png",
+		"32": "images/32.png",
+		"48": "images/48.png",
+		"128": "images/128.png"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	}
+}

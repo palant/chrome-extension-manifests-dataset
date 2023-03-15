@@ -1,0 +1,97 @@
+---
+slug: classtag-parent-engagemen
+name: ClassTag Parent Engagement for Google
+description: Direct message parents without ever leaving Google Classroom.
+version: 1.6.0
+release_date: 'March 10, 2023'
+publisher: ClassTag
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 2
+user_count: '2,000+'
+publisher_site: classtag.com
+extension_website: 'https://classtag.com'
+support_website: 'https://home.classtag.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "ClassTag Parent Engagement for Google",
+  "description": "Direct message parents without ever leaving Google Classroom.",
+  "version": "1.6.0",
+  "homepage_url": "https://www.classtag.com",
+  "icons": {
+    "16": "/images/icon-enable16.png",
+    "48": "/images/icon-enable48.png",
+    "128": "/images/icon-enable128.png"
+  },
+  "browser_action": {
+    "default_icon": "/images/icon-enable16.png",
+    "default_title": "Classtag"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "background": {
+    "scripts": [
+      "application.js",
+      "commons.js",
+      "content.js",
+      "backgroundCheckAuthentication.js",
+      "backgroundGoogleAccountSSO.js",
+      "backgroundGoogleClassroomSSO.js",
+      "backgroundConnections.js",
+      "background.js"
+    ]
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y",
+        "chromeos": "Ctrl+Shift+Y",
+        "linux": "Ctrl+Shift+Y"
+      },
+      "global": false
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "./commons.js",
+        "./videojs.js",
+        "./content.js"
+      ],
+      "css": [
+        "./commons.css",
+        "./content.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "media/*",
+    "images/*"
+  ],
+  "permissions": [
+    "cookies",
+    "background",
+    "tabs",
+    "https://www.classtag.com/*"
+  ],
+  "oauth2": {
+    "client_id": "714829799219-q0avrojrbpc17bb4pferrd9g9dusucee.apps.googleusercontent.com",
+    "scopes": [
+      "email"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com/; object-src 'self'"
+}

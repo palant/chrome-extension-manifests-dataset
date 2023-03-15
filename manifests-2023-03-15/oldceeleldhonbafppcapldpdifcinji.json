@@ -1,0 +1,117 @@
+---
+slug: grammar-spell-checker—lan
+name: Grammar & Spell Checker—LanguageTool
+description: Check your texts for spelling and grammar problems everywhere on the web
+version: 6.2.0
+release_date: 'February 22, 2023'
+publisher: LanguageTooler GmbH
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.824811218985976
+rating_count: 9270
+user_count: '2,000,000+'
+publisher_site: languagetool.org
+extension_website: 'https://languagetool.org'
+support_website: 'https://forum.languagetool.org'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "__MSG_appName__",
+	"short_name": "LanguageTool",
+	"description": "__MSG_appDesc__",
+	"version": "6.2.0",
+	"default_locale": "en",
+	"author": "LanguageTooler GmbH",
+	"homepage_url": "https://languagetool.org/",
+	"offline_enabled": false,
+
+	"minimum_chrome_version": "93",
+
+	"icons": {
+		"16": "assets/images/icons/icon16.png",
+		"32": "assets/images/icons/icon32.png",
+		"48": "assets/images/icons/icon48.png",
+		"64": "assets/images/icons/icon64.png",
+		"128": "assets/images/icons/icon128.png"
+	},
+	"permissions": ["activeTab", "storage", "contextMenus", "scripting", "alarms"],
+	"storage": {
+		"managed_schema": "managed_settings.json"
+	},
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"content_scripts": [
+		{
+			"all_frames": true,
+			"match_about_blank": true,
+			"js": ["common/smoothscroll.js", "content.js"],
+			"matches": ["<all_urls>"],
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": true,
+			"match_about_blank": true,
+			"css": ["common/fonts.css", "content/styles/styles.css"],
+			"matches": ["<all_urls>"],
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": true,
+			"js": ["content/gdocs/injector.js"],
+			"matches": ["*://docs.google.com/document/*"],
+			"run_at": "document_start"
+		},
+		{
+			"all_frames": true,
+			"js": ["content/languagetool/injector.js"],
+			"matches": ["*://languagetool.org/*"],
+			"run_at": "document_start"
+		},
+		{
+			"all_frames": true,
+			"match_about_blank": true,
+			"js": ["content/outlook/injector.js"],
+			"matches": ["*://outlook.live.com/*", "*://outlook.office365.com/*", "*://outlook.office.com/*"],
+			"run_at": "document_start"
+		}
+	],
+	"options_ui": {
+		"page": "options/options.html",
+		"open_in_tab": true
+	},
+	"action": {
+		"default_icon": {
+			"16": "assets/images/icons/icon16.png",
+			"32": "assets/images/icons/icon32.png",
+			"64": "assets/images/icons/icon64.png"
+		},
+		"default_title": "LanguageTool",
+		"default_popup": "popup/popup.html"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"assets/fonts/*.woff2",
+				"assets/styles/*",
+				"common/*.css",
+				"common/*.js",
+				"content/*.css",
+				"content/*.js",
+				"config/*.js",
+				"welcome/*.js",
+				"welcome/welcome.css",
+				"welcome/managedLoginRedirectUri.html",
+				"welcome/loginRedirectUri.html",
+				"welcome/templates/index.html",
+				"assets/images/*"
+			],
+			"matches": ["<all_urls>"],
+			"extension_ids": []
+		}
+	]
+}
