@@ -8,10 +8,10 @@ This has been inspired by a [similar repository](https://github.com/mandatorypro
 
 The repository contains a `query.js` script allowing running queries against the dataset. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
 
-The script uses [matchme queries](https://github.com/DamonOehlman/matchme) and lists matching extensions. You can pass one or two queries on the command line:
+The script uses [matchme queries](https://github.com/DamonOehlman/matchme) and lists matching extensions. You can pass a manifest query and optionally a metadata query on the command line:
 
 ```sh
-query.js manifest-query [metadata-query]
+query.js [-m metadata-query] manifest-query
 ```
 
 Examples:
