@@ -28,15 +28,16 @@ query.js -m "user_count >= 10000" "manifest_version == 3"
 
 ```sh
 # List all extensions using 'unsafe-eval' Content Security Policy
-query.js "content_security_policy =? /unsafe-eval/"
+query.js "content_security_policy =? /unsafe-eval/i"
 ```
 
 ```sh
 # List all extensions with less than 1.000 users using activeTab permission
-query.js -m "user_count < 1000" "permissions =? /activeTab/"
+query.js -m "user_count < 1000" "permissions =? /activeTab/i"
 ```
 
 ```sh
-# List all extensions requesting permissions for all websites (<all_urls>, *://*/* or https://*/* permissions)
-./query.js "permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/"
+# List all extensions requesting permissions for all websites (<all_urls>,
+# *://*/* or https://*/* permissions)
+query.js "permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i"
 ```
