@@ -1,0 +1,222 @@
+---
+slug: ejoy-english-all-in-one-d
+name: eJOY English - All-in-one Dictionary
+description: >-
+  eJOY extension - Look up words with 1 click wherever you want: News, YouTube,
+  Netflix, Coursera...
+version: 6.7.12
+release_date: 'April 28, 2023'
+publisher: ejoy-english.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.8723453908984835
+rating_count: 4285
+user_count: '600,000+'
+publisher_site: ejoy-english.com
+extension_website: 'https://ejoy-english.com/extension/'
+support_website: 'https://ejoy-english.com/help/'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "6.7.12",
+  "ignore_whatnews": [
+    "6.7.11"
+  ],
+  "name": "eJOY English - All-in-one Dictionary",
+  "manifest_version": 2,
+  "description": "__MSG_ext_description__",
+  "default_locale": "en",
+  "options_page": "options/index.html",
+  "homepage_url": "https://ejoy-english.com/",
+  "browser_action": {
+    "default_title": "eJOY English",
+    "default_popup": "popup.html"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgl8emvaEzM+hMIPsN9DLG4Tc7L0VB235lK543yx5W5CspttgVVjvxfgAI+OMxrqhEJIG26SJ1nTHdSC3L3KICh5oY2i1RFBifnOxvp3DgaK3p2wcGNoQBqFl+HK0HoyGLCjKj+4afNHYDSlPvihuHPbCyUVSDyLZLbwJ3iWteBFAFD81VVTrcGn3p/LRF6tO6hoT/CKpNjGNqQblMFVksIiaX3Vhn+llvQwmgx4N+yuUxeFgvtifE7RIeIbPItbkpaBGODD727c3TqLGJfLYA3WvzO8SsGxdVd4hFbYXSXR7SyDABjjEZ0s6+lQt8y/KZBLFB/O9SpmG+a2UgKibyQIDAQAB",
+  "commands": {
+    "play": {
+      "suggested_key": {
+        "default": "Alt+Space"
+      },
+      "description": "Read/Pause"
+    },
+    "forward": {
+      "description": "Next"
+    },
+    "rewind": {
+      "description": "Previous"
+    },
+    "speaker": {
+      "description": "Speaker"
+    },
+    "showAdv": {
+      "suggested_key": {
+        "default": "Alt+T"
+      },
+      "description": "Show Advanced"
+    },
+    "on-off-reader-view": {
+      "description": "Toggle the Reader View"
+    }
+  },
+  "icons": {
+    "16": "img/logo/icon.png",
+    "48": "img/logo/icon@2x.png",
+    "128": "img/logo/icon@3x.png"
+  },
+  "web_accessible_resources": [
+    "inject.html",
+    "nfSettings.html",
+    "options/history.html",
+    "pop-ups/translation.html",
+    "/html/*",
+    "/css/*",
+    "/img/*",
+    "/lib/*",
+    "injected/*",
+    "assetsReader/*",
+    "captureToText/assets/images/ejoy-icon.png",
+    "captureToText/assets/images/tut-capture.png",
+    "readerView/reader/template.html"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/embed/*"
+      ],
+      "include_globs": [
+        "*://www.youtube.com/embed/*controls=0&start=0&origin=*"
+      ],
+      "all_frames": true,
+      "css": [
+        "css/hiddenElemen.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://www.udemy.com/*",
+        "*://www.coursera.org/*",
+        "*://www.youtube-nocookie.com/*",
+        "*://www.udemy.com/*",
+        "*://*.udemy.com/*",
+        "*://www.futurelearn.com/*",
+        "*://www.ted.com/*",
+        "*://www.iq.com/*",
+        "*://wetv.vip/*",
+        "*://w.mgtv.com/*",
+        "*://tv.apple.com/*",
+        "*://www.viki.com/*",
+        "*://www.netflix.com/*",
+        "*://www.primevideo.com/*",
+        "*://watchandlearn.scholastic.com/*",
+        "https://smile.amazon.ca/*",
+        "https://www.amazon.ca/*",
+        "https://smile.amazon.com/*",
+        "https://www.amazon.com/*",
+        "https://smile.amazon.co.uk/*",
+        "https://www.amazon.co.uk/*",
+        "https://www.amazon.de/*",
+        "https://www.amazon.es/*",
+        "https://www.amazon.fr/*",
+        "https://www.amazon.in/*",
+        "https://smile.amazon.it/*",
+        "https://www.amazon.it/*"
+      ],
+      "exclude_globs": [
+        "*://www.youtube.com/embed/*controls=0&start=0&origin=*"
+      ],
+      "css": [
+        "css/stylesVideo.css"
+      ],
+      "js": [
+        "js/injectVideo.bundle.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "js/injectReaderView.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "js/inject.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_end",
+      "css": [
+        "css/stylesCaptureToText.css"
+      ],
+      "js": [
+        "js/injectCaptureView.bundle.js",
+        "captureToText/assets/js/material.min.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ],
+    "matches": [
+      "*://ejoy-english.com/*",
+      "*://studify.tv/*",
+      "*://phimlearning.com/*",
+      "*://easylearning.gift/*",
+      "*://*.ejoy.ws/*",
+      "*://glotdojo.com/*"
+    ]
+  },
+  "optional_permissions": [
+    "*://*/*",
+    "webNavigation",
+    "cookies"
+  ],
+  "permissions": [
+    "tts",
+    "https://text-to-speech-demo.ng.bluemix.net/api/*",
+    "gcm",
+    "notifications",
+    "contextMenus",
+    "unlimitedStorage",
+    "tabs",
+    "webRequest",
+    "webNavigation",
+    "storage",
+    "*://*.nflximg.com/*",
+    "*://*.nflxvideo.net/*",
+    "*://*.nflxext.com/*",
+    "*://*.netflix.com/*",
+    "*://*.nflximg.net/*",
+    "*://api.ejoy.io/*",
+    "*://translate.google.com/*",
+    "*://api.urbandictionary.com/*",
+    "*://glosbe.com/*",
+    "*://api.ejoy.io/*",
+    "*://connect.ejoy.io/*",
+    "*://youtube.com/*",
+    "<all_urls>",
+    "http://fonts.googleapis.com/",
+    "https://fonts.googleapis.com/"
+  ],
+  "content_security_policy": "default-src 'self'; script-src 'self' https://translate.google.com https://www.youtube.com https://www.youtube.com/iframe_api https://s.ytimg.com http://localhost:4000 https://localhost:4000 https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js https://use.fontawesome.com/releases/v5.0.13/css/all.css 'unsafe-eval'; connect-src *; font-src *; frame-src *; style-src * 'unsafe-inline' 'self' blob:; media-src *; img-src * data:;"
+}

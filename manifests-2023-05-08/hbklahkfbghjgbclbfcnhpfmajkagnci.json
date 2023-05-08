@@ -1,0 +1,135 @@
+---
+slug: video-screenshots-and-not
+name: Video Screenshots and Notes - Video Notebook
+description: >-
+  Take Screenshots and Notes on YouTube videos, Google Meet, Udemy, Coursera &
+  more!
+version: 0.3.25
+release_date: 'April 27, 2023'
+publisher: Video Notebook
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.069767441860465
+rating_count: 43
+user_count: '50,000+'
+publisher_site: videonotebook.com
+extension_website: 'https://videonotebook.com/'
+support_website: 'https://videonotebook.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Video Screenshots and Notes - Video Notebook",
+  "short_name": "Video Notebook",
+  "version": "0.3.25",
+  "description": "Take Screenshots and Notes on YouTube videos, Google Meet, Udemy, Coursera & more!",
+  "icons": {
+    "48": "icons/icon48white.png",
+    "128": "icons/icon128alternate.png"
+  },
+  "browser_action": {
+    "default_title": "VideoNotebook.com"
+  },
+  "commands": {
+    "add-screenshot-note": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "Add a screenshot"
+    },
+    "add-text-note": {
+      "suggested_key": {
+        "default": "Alt+Z"
+      },
+      "description": "Add a text note"
+    },
+    "add-text-note-np": {
+      "suggested_key": {
+        "default": "Alt+X"
+      },
+      "description": "Add a text note without pausing a video"
+    },
+    "show-dialog": {
+      "suggested_key": {
+        "default": "Alt+V"
+      },
+      "description": "Show Video Notebook"
+    }
+  },
+  "background": {
+    "scripts": [
+      "./vendor/js/ga.js",
+      "./vendor/js/jquery.js",
+      "background.bundle.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "exclude_matches": [
+        "*://videonotebook.com/*",
+        "*://meet.google.com/*"
+      ],
+      "exclude_globs": [
+        "*://*.videonotebook.com/notebooks/*"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "main-content.bundle.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "google-meet-content.bundle.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://localhost/*",
+        "https://*.videonotebook.com/*",
+        "https://*.youtube.com/embed/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "embed-page.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "https://www.google-analytics.com/",
+    "<all_urls>",
+    "cookies",
+    "*://*.videonotebook.com/*",
+    "webRequest",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "vendor/css/*",
+    "css/*",
+    "icons/*",
+    "assets/fonts/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com/ https://apis.google.com; object-src 'self'",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsCoUejKdbokDJqUvLVh8hGZyH00OdjjJdquxz/qAfhfDurWpEho2lkY5+t5n3LnDl8C3v8ZUnAm+te01pWmp7Vclg8a8n5IzZf4LLiCbXno+HEmDDtUCgmgL/MviiZn6exYoFgpZmviQlZ2RCypSIbnV2DKUr0K8Y17OtTMxxpVm7mW7d38ICdLjECluS3yUg/xl5ZAf82CTjt/4GT1ciLk4xOMdOT62quXHP7t7VepNaELov1UPPbe0ttpVW3Zdem0jxQn/Kb+/BYw+wVOYgp/5bQHWUBQElJdT2Q6lxPUldhTfUfTnGDUExMes14c5Eq+Cv/xskZTOyZIn5Vh8xwIDAQAB",
+  "externally_connectable": {
+    "matches": [
+      "*://*.videonotebook.com/*",
+      "http://localhost:9000/*",
+      "https://localhost:9000/*"
+    ]
+  }
+}

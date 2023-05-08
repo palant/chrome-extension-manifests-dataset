@@ -1,0 +1,177 @@
+---
+slug: speechify-text-to-speech
+name: Speechify Text to Speech Voice Reader
+description: >-
+  Read aloud any Google Doc, PDF, webpage, or book with text to speech (TTS).
+  Natural sounding voices in 30+ languages & 130 voices.
+version: 9.1.0
+release_date: 'May 5, 2023'
+publisher: Speechify
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.429789249348804
+rating_count: 8446
+user_count: '1,000,000+'
+publisher_site: speechify.com
+extension_website: 'https://speechify.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "author": "Speechify Inc",
+  "version": "9.1.0",
+  "default_locale": "en",
+  "description": "__MSG_appDesc__",
+  "icons": {
+    "16": "images/icon-light-square-16.png",
+    "32": "images/icon-light-square-32.png",
+    "48": "images/icon-light-square-48.png",
+    "128": "images/icon-light-square-128.png"
+  },
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "mac": "Alt+Q",
+        "windows": "Alt+Q",
+        "chromeos": "Alt+Q",
+        "linux": "Alt+Q"
+      },
+      "description": "Play/Pause"
+    },
+    "save-to-library": {
+      "suggested_key": {
+        "mac": "Alt+S",
+        "windows": "Alt+S",
+        "chromeos": "Alt+S",
+        "linux": "Alt+S"
+      },
+      "description": "Save to library"
+    },
+    "open-screenshot-mode": {
+      "suggested_key": {
+        "mac": "MacCtrl+Command+R",
+        "windows": "Alt+R",
+        "chromeos": "Alt+R",
+        "linux": "Alt+R"
+      },
+      "description": "Open Screenshot Mode"
+    }
+  },
+  "minimum_chrome_version": "90",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts; default-src *; media-src data:; style-src 'nonce-nVxWUtkqVd';"
+  },
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "storage",
+    "alarms",
+    "scripting",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://*/",
+    "http://*/",
+    "file://*/"
+  ],
+  "optional_host_permissions": [],
+  "background": {
+    "service_worker": "background/main.js",
+    "type": "module"
+  },
+  "sandbox": {
+    "pages": [
+      "sandbox/sandbox.html"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-idle-notifier.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-wrapper.js"
+      ],
+      "css": [
+        "css/speechify.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "iframes-wrapper.js"
+      ],
+      "css": [
+        "css/speechify.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "toggleIcon.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://speechify-auth-dev.netlify.app/*",
+      "*://*.getspeechify.com/*",
+      "*://*.speechify.com/*",
+      "*://speechify.com/*",
+      "*://speechify-landing-dev.netlify.app/*",
+      "*://web-chi-mocha.vercel.app/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "features.json",
+        "fonts/*",
+        "images/*",
+        "audio/*",
+        "houdini.js",
+        "audio-worklet.js",
+        "timestretch_bg.wasm",
+        "content/*",
+        "iframes/*",
+        "sandbox/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": [],
+      "use_dynamic_url": true
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/icon-light-square-16.png",
+      "32": "images/icon-light-square-32.png",
+      "48": "images/icon-light-square-48.png",
+      "128": "images/icon-light-square-128.png"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnnXnXWS/0k0it5ppG9ZrLg+vbLcnWIc7oO0etuckHIoLFnbjjpV7/+ivDIkdkCpfbGtkc25lZfcuJHwk5b+kMEsWPeKn1XBENnxW4N3QdyXFQVEJeVQwGiuN0WBk3DTnfrwYePBzbfOelTVGR7hdLDsE+0WlQ+V3YfhcuCOHL7YxiCloj3fx7mr5H+q2VinDI/hjhWTKmw7Udd39BMZgwkXO1rtDeR4YAgoQrRp4eKkOccSRW3osZXFRve1HSnk9PWAAsi/AQNTvrcwMhGIyYMSd6xOpVt96mDa09oYCCidLAtCC3qRDPj4FUc0kogn5qjCDBYISYCO4KkRRFCbjBwIDAQAB"
+}

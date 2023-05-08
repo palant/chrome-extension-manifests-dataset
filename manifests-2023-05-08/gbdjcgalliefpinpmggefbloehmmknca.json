@@ -1,0 +1,97 @@
+---
+slug: adblock-all-advertisments
+name: Adblock all advertisments - No Ads extension
+description: >-
+  Block ads and popunders on social websites. Removing ads makes websites work
+  faster. Youtube Adblocker for pre-roll, banners
+version: 1.6.6
+release_date: 'April 2, 2023'
+publisher: NoAds application
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.686792452830189
+rating_count: 265
+user_count: '700,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "version": "1.6.6",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "generic_rules",
+        "enabled": true,
+        "path": "data/rules/rules_1.json"
+      },
+      {
+        "id": "g_rules",
+        "enabled": true,
+        "path": "data/rules/rules_2.json"
+      },
+      {
+        "id": "y_rules",
+        "enabled": true,
+        "path": "data/rules/y.json"
+      },
+      {
+        "id": "feedback_rules",
+        "enabled": true,
+        "path": "data/rules/feedback.json"
+      }
+    ]
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "icons": {
+    "128": "noadsblocker.png"
+  },
+  "action": {
+    "default_icon": "noadsblocker.png",
+    "default_popup": "index.html"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "bg.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "data/content/element-to-block.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "data/content/content.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "js": ["data/content/y.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "manifest_version": 3
+}

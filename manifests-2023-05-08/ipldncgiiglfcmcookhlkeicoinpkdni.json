@@ -1,0 +1,57 @@
+---
+slug: wildlink
+name: Wildlink
+description: Never miss out on earning when you share product links to friends and family.
+version: 5.1.0
+release_date: 'August 5, 2022'
+publisher: Wildlink
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 5
+user_count: 362
+publisher_site: www.wildlink.me
+extension_website: 'https://www.wildlink.me'
+support_website: 'https://www.wildlink.me/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "5.1.0",
+  "name": "Wildlink",
+  "short_name": "Wildlink",
+  "description": "Never miss out on earning when you share product links to friends and family.",
+  "icons": {
+    "128": "img/icon-128.png"
+  },
+  "permissions": ["storage", "tabs", "notifications", "background", "webRequest", "unlimitedStorage"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_icon": "img/icon-disabled-128.png"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start",
+      "js": ["browser-polyfill.min.js", "content.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.wildlink.me/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    },
+    {
+      "resources": ["earnings.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

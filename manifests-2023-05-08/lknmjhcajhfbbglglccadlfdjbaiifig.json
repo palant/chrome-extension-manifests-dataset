@@ -1,0 +1,163 @@
+---
+slug: record-transcribe-chatgpt
+name: 'Record, Transcribe & ChatGPT for Google Meet'
+description: Automatically record & transcribe Google Meet for FREE. 500k+ users
+version: 2.15.1
+release_date: 'May 4, 2023'
+publisher: tl;dv
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.914691943127962
+rating_count: 211
+user_count: '70,000+'
+publisher_site: tldv.io
+extension_website: 'https://tldv.io'
+support_website: 'https://intercom.help/tldv/en'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "2.15.1",
+  "short_name": "__MSG_appShortName__",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlkFjXjhDDdF0R7hADtKGAhpHcFHyAwy/1J98Fkr9xlZEdmSCWfKyQ5PxbEb7vzQQkKoPgaWwb8p0aZZjFzy4fJOj+0bW0+UefYx4xDDPESgnj7qeTXu7gcQq0NekDhn72RlYGzW3nnf460fMCfa/96cuCGvo965PRAZs+Hgvq+ZZlx1ibADTVNc5lMx4SjRFBjTl1i/4nPz+Zay+lT+5Trzx74Oi0rwMQb8PxA7+VsEbE4U87u3xYirg0St+G9gfy7NU00aFnnR7pHAjGxz2RC61RkQecWC9hT/UhJU8iMbMeiyL0WaXHtfOfsk8LAjN7HmljdbzzCqnHyaCbmpZFQIDAQAB",
+  "icons": {
+    "16": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
+  "action": {
+    "browser_style": true,
+    "default_icon": "images/icon.png",
+    "default_title": "__MSG_browserActionTitle__",
+    "default_popup": "pages/popup.html"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://tldv.io/*",
+      "*://tldv.preprod.pockost.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/*.map"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "optional_permissions": [
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://meet.google.com/*",
+        "*://calendar.google.com/*",
+        "*://*.notion.so/*",
+        "*://docs.google.com/*",
+        "*://trello.com/*",
+        "*://pipedrive.com/*",
+        "*://hubspot.com/*",
+        "*://salesforce.com/*",
+        "*://*.atlassian.com/*",
+        "*://*.atlassian.net/*",
+        "*://coda.io/*",
+        "*://*.zoom.us/*",
+        "*://*.hubspot.com/*",
+        "*://*.slack.com/*",
+        "*://*.salesforce.com/*",
+        "*://*.lightning.force.com/*",
+        "*://*.tldv.io/app/embed/*",
+        "*://*.pockost.com/app/embed/*"
+      ],
+      "css": [
+        "styles/fonts.css",
+        "styles/multi-tabs.css"
+      ],
+      "js": [
+        "scripts/multi-tabs-interface.script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://meet.google.com/*"
+      ],
+      "css": [
+        "styles/fonts.css",
+        "styles/basic.css"
+      ],
+      "js": [
+        "scripts/google-meet.script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://calendar.google.com/*"
+      ],
+      "css": [
+        "styles/fonts.css",
+        "styles/basic.css"
+      ],
+      "js": [
+        "scripts/google-calendar.script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.notion.so/*",
+        "*://docs.google.com/*",
+        "*://trello.com/*",
+        "*://pipedrive.com/*",
+        "*://hubspot.com/*",
+        "*://salesforce.com/*",
+        "*://*.atlassian.com/*",
+        "*://*.atlassian.net/*",
+        "*://coda.io/*",
+        "*://*.zoom.us/*",
+        "*://*.hubspot.com/*",
+        "*://*.slack.com/*",
+        "*://*.salesforce.com/*",
+        "*://*.lightning.force.com/*"
+      ],
+      "js": [
+        "scripts/pip-tabs.script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "pin-highlight": {
+      "suggested_key": {
+        "default": "Ctrl+Period",
+        "mac": "Command+Period"
+      },
+      "description": "Create a highlight during a meeting"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

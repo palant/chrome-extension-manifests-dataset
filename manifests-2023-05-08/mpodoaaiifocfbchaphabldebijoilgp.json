@@ -1,0 +1,76 @@
+---
+slug: userback-visual-feedback
+name: 'Userback: Visual Feedback & Bug Reporting'
+description: Userback is a visual feedback & bug reporting tool for websites
+version: 5.0.15
+release_date: 'February 15, 2023'
+publisher: Userback
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.825
+rating_count: 40
+user_count: '4,000+'
+publisher_site: www.userback.io
+extension_website: 'https://www.userback.io'
+support_website: 'https://support.userback.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "Userback: Visual Feedback & Bug Reporting",
+    "description": "Userback is a visual feedback & bug reporting tool for websites",
+    "version": "5.0.15",
+    "author": "Userback",
+
+    "browser_action": {
+        "default_icon": {
+            "16"  : "/src/icons/icon16.png",
+            "48"  : "/src/icons/icon48.png",
+            "96"  : "/src/icons/icon96.png",
+            "128" : "/src/icons/icon128.png",
+            "256" : "/src/icons/icon256.png"
+        },
+
+        "default_title": "Userback",
+        "default_popup": "/src/ui/popup/popup.html"
+    },
+
+    "icons": {
+        "16"  : "/src/icons/icon16.png",
+        "48"  : "/src/icons/icon48.png",
+        "128" : "/src/icons/icon128.png"
+    },
+
+    "background": {
+        "scripts": ["/src/init.js", "/src/lib/browser-polyfill.min.js", "/src/background.js"],
+        "persistent": true
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["/src/init.js", "/src/lib/browser-polyfill.min.js", "/src/lib/snap.svg-min.js"]
+        },
+        {
+            "matches": ["https://*.app.userback.io/capture/*", "https://*.app.userback.io/viewer/*"],
+            "js": ["/src/content.js"]
+        }
+    ],
+
+    "web_accessible_resources": ["/src/lib/vumeter-processor.js"],
+
+    "permissions": [
+        "desktopCapture",
+        "tabCapture",
+        "notifications",
+        "storage",
+        "unlimitedStorage",
+        "activeTab",
+        "tabs",
+        "contextMenus",
+        "<all_urls>"
+    ]
+}

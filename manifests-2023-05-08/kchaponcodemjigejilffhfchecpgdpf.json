@@ -1,0 +1,143 @@
+---
+slug: chatsonic-chatgpt-with-su
+name: ChatSonic - ChatGPT with super powers
+description: >-
+  Like ChatGPT but with internet access, references, AI image generation and
+  more.
+version: 1.0.0.50
+release_date: 'May 2, 2023'
+publisher: Writesonic
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.8581776591688905
+rating_count: 2623
+user_count: '60,000+'
+publisher_site: writesonic.com
+extension_website: 'https://writesonic.com/chat'
+support_website: 'https://writesonic.com/contact-us'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatSonic - ChatGPT with super powers",
+  "description": "Like ChatGPT but with internet access, references, AI image generation and more.",
+  "version": "1.0.0.50",
+  "icons": {
+    "128": "./images/logo.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "./images/logo.png"
+    },
+    "default_popup": "./pages/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "./js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/search*", "https://www.bing.com/search*"],
+      "js": ["./js/content_search.js"],
+      "css": ["./css/content_search.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*", "https://ads.google.com/aw/*", "https://adsmanager.facebook.com/*", "https://studio.youtube.com/channel/*"],
+      "css": ["./css/content_ads.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://app.writesonic.com/*", "https://staging.writesonic.com/*"],
+      "js": ["./js/content_auth.js"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["./js/content_main.js"],
+      "css": ["./css/main/main.css", "./css/main/email_widget.css", "./css/main/sum_text_iframe.css", "./css/main/autocomplete_widget.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "css": ["./css/content_facebook.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "css": ["./css/content_youtube.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://web.telegram.org/*"],
+      "css": ["./css/content_telegram.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "css": ["./css/content_gmail.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://twitter.com/*"],
+      "css": ["./css/content_twitter.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "css": ["./css/content_linkedin.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "css": ["./css/content_instagram.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://outlook.live.com/mail/*"],
+      "css": ["./css/content_outlook.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://secure.helpscout.net/*"],
+      "css": ["./css/content_helpscout.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    }
+  ],
+
+  "commands": {
+    "toggle-feature": {
+      "suggested_key": {
+        "chromeos": "Ctrl+M",
+        "default": "Ctrl+M",
+        "linux": "Ctrl+M",
+        "mac": "Command+M",
+        "windows": "Ctrl+M"
+      },
+      "description": "Toggle ChatSonic on any page."
+    }
+  },
+
+  "permissions": ["storage", "contextMenus"],
+  "host_permissions": ["https://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

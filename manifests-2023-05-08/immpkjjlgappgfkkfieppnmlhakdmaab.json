@@ -1,0 +1,78 @@
+---
+slug: imagus
+name: Imagus
+description: 'Enlarge thumbnails, and show images/videos from links with a mouse hover.'
+version: 0.9.8.74
+release_date: 'April 16, 2020'
+publisher: Deathamns
+category: Photos
+category_slug: ext/28-photos
+rating: 4.495901639344262
+rating_count: 1952
+user_count: '500,000+'
+extension_website: 'https://tiny.cc/Imagus'
+support_website: 'https://www.reddit.com/r/imagus/'
+---
+
+{
+	"manifest_version": 2,
+	"default_locale": "en",
+	"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"version": "0.9.8.74",
+	"name": "Imagus",
+	"description": "__MSG_APP_DESCRIPTION__",
+	"homepage_url": "https://www.reddit.com/r/Imagus",
+	"author": "Deathamns",
+
+	"icons": {
+		"128": "icon.png"
+	},
+	"permissions": [
+		"*://*/*",
+		"downloads",
+		"history",
+		"storage"
+	],
+	"incognito": "split",
+	"background": {
+		"page": "background.html",
+		"persistent": true
+	},
+	"options_ui": {
+		"page": "options.html",
+		"open_in_tab": true
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"includes/app.js"
+			],
+			"run_at": "document_start",
+			"all_frames": true
+		},
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"includes/content.js"
+			],
+			"run_at": "document_end",
+			"all_frames": true
+		},
+		{
+			"matches": ["https://*/search*"],
+			"include_globs":  ["https://www.google.*/search*"],
+			"js": ["js/sp_gim.js"],
+			"run_at": "document_idle"
+		},
+		{
+			"matches": ["https://duckduckgo.com/*"],
+			"css": ["css/sp_ddg.css"]
+		}
+	]
+}

@@ -1,0 +1,96 @@
+---
+slug: sortd-for-gmail
+name: Sortd for Gmail
+description: >-
+  All-in-one Sales, Service, Help Desk & Task Manager for Gmail teams. Visual
+  boards right in Gmail to share, assign and track emails.
+version: 2.2.172.11242
+release_date: 'April 25, 2023'
+publisher: Sortd
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.033195020746888
+rating_count: 482
+user_count: '60,000+'
+publisher_site: www.sortd.com
+extension_website: 'https://www.sortd.com'
+support_website: 'http://sortd.freshdesk.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Sortd for Gmail",
+  "short_name": "Sortd",
+  "description": "All-in-one Sales, Service, Help Desk & Task Manager for Gmail teams. Visual boards right in Gmail to share, assign and track emails.",
+  "version": "2.2.172.11242",
+  "permissions": [
+    "https://mail.google.com/*",
+    "https://app.sortd.com/*",
+    "tabs",
+    "storage",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "optional_permissions": [
+    "notifications",
+    "*://*.googleusercontent.com/*",
+    "*://*.sortd.com/*"
+  ],
+  "content_security_policy": "script-src 'self' https://www.googletagmanager.com https://www.googleadservices.com https://www.google-analytics.com https://googleads.g.doubleclick.net https://connect.facebook.net; object-src 'self'",
+  "web_accessible_resources": [
+    "img/*",
+    "templates/*",
+    "css/*",
+    "conf/*",
+    "scripts/*",
+    "scripts/frame-wrapper/*",
+    "scripts/video-frame-wrapper/*",
+    "components/*"
+  ],
+  "icons": {
+    "16": "img/icons/sortd_icon_16x16.png",
+    "48": "img/icons/sortd_icon_48x48.png",
+    "128": "img/icons/sortd_icon_128x128.png"
+  },
+  "background": {
+    "scripts": ["scripts/content-script/background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "exclude_matches": [
+        "https://mail.google.com/*&view=*",
+        "https://mail.google.com/*/?view=*",
+        "https://mail.google.com/mail/mu/background*",
+        "https://mail.google.com/mail/u/*/h/*/?*",
+        "https://mail.google.com/chat/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "scripts/webcomponents-ce.js",
+        "scripts/lib/jquery.min.js",
+        "scripts/lib/kefir.min.js",
+        "scripts/lib/inboxsdk.js",
+        "scripts/pickadate/picker.js",
+        "scripts/pickadate/picker.date.js",
+
+        "components/runtime.js",
+        "components/polyfills.js",
+        "components/main.js",
+
+        "scripts/content-script/main.js"
+      ]
+    },
+    {
+      "matches": ["https://app.sortd.com/su/*/indexce"],
+      "js": ["scripts/login/indexce.js"]
+    },
+    {
+      "matches": ["https://app.sortd.com/login/*"],
+      "js": ["scripts/login/authfailure.js"]
+    }
+  ]
+}

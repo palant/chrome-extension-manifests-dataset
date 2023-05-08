@@ -1,0 +1,83 @@
+---
+slug: flash-player-that-works
+name: Flash Player that Works!
+description: >-
+  Flash Player that runs flash files using Ruffle on ActionScript 3. Play
+  favorite flash games on Web.
+version: 0.0.2
+release_date: 'March 28, 2023'
+publisher: Flash Emulator
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.625
+rating_count: 88
+user_count: '200,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "0.0.2",
+  "name": "__MSG_name__",
+  "short_name": "__MSG_name__",
+  "description": "__MSG_desc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/logo.png",
+    "32": "icons/logo.png",
+    "48": "icons/logo.png",
+    "64": "icons/logo.png",
+    "128": "icons/logo.png",
+    "256": "icons/logo.png"
+  },
+  "background": {
+    "service_worker": "content-scripts/service-worker.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/logo.png",
+      "32": "icons/logo.png",
+      "48": "icons/logo.png",
+      "64": "icons/logo.png",
+      "128": "icons/logo.png",
+      "256": "icons/logo.png"
+    },
+    "default_title": "Click to search for embedded SWF contents",
+    "default_popup": "popup.html"
+  },
+  "sandbox": {
+    "pages": [
+      "content-scripts/ruffle-player/player.html"
+    ]
+  },
+  "content_scripts": [
+   {
+     "matches": ["<all_urls>"],
+     "css": ["styles/inject.css"],
+     "js": ["content-scripts/page.js"],
+     "match_about_blank": true,
+     "run_at": "document_start",
+     "all_frames": true
+   }
+ ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "notifications"
+  ],
+  "host_permissions": ["*://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*",
+        "styles/*",
+        "content-scripts/libs/ruffle.js",
+        "content-scripts/libs/*.wasm"
+      ],
+      "matches": [ "*://*/*" ]
+    }
+  ]
+}

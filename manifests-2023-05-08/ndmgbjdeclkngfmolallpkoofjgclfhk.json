@@ -1,0 +1,102 @@
+---
+slug: watchflix-stream-party-w
+name: 'Watchflix: stream party w/ friends'
+description: >-
+  Watch prime, hotstar, netflix, youtube, crunchyroll and google drive videos
+  with friends
+version: 6.1.0
+release_date: 'November 27, 2021'
+publisher: watchflix.group
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 3.84375
+rating_count: 32
+user_count: '5,000+'
+publisher_site: watchflix.group
+extension_website: 'http://watchflix.group/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Watchflix: stream party w/ friends",
+    "version": "6.1.0",
+    "description": "Watch prime, hotstar, netflix, youtube, crunchyroll and google drive videos with friends",
+    "manifest_version": 2,
+    "permissions": [
+        "activeTab",
+        "storage",
+        "declarativeContent",
+        "webNavigation",
+        "https://*.youtube.com/*"
+    ],
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com/analytics.js; object-src 'self'",
+    "page_action": {
+        "default_icon": {
+            "32": "img/WF32.png",
+            "128": "img/WF128.png"
+        },
+        "default_title": "Watchflix: stream party w/ friends",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.primevideo.com/*",
+                "https://*.amazon.com/*video*",
+                "https://*.amazon.de/*video*",
+                "https://*.amazon.co.uk/*video*",
+                "https://*.amazon.co.jp/*video*",
+                "https://*.amazon.com/Amazon-Video*",
+                "https://*.amazon.de/Amazon-Video*",
+                "https://*.amazon.co.uk/Amazon-Video*",
+                "https://*.amazon.co.jp/Amazon-Video*",
+                "https://*.hotstar.com/*",
+                "https://www.crunchyroll.com/*"
+            ],
+            "js": [
+                "js/vendors.js",
+                "js/shared.js",
+                "js/common.js",
+                "js/bgContent.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://static.crunchyroll.com/vilos-v2/web/vilos/player.html*",
+                "https://youtube.googleapis.com/embed/*"
+            ],
+            "js": ["js/content.js"],
+            "all_frames": true,
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://static.crunchyroll.com/vilos-v2/web/vilos/player.html*",
+                "https://youtube.googleapis.com/embed/*"
+            ],
+            "js": [
+                "js/vendors.js",
+                "js/shared.js",
+                "js/common.js",
+                "js/bgContent.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.crunchyroll.com/*"],
+            "css": ["css/crunchyroll.episode.css"],
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "scripts": ["js/common.js", "js/background.js"],
+        "persistent": false
+    },
+    "icons": {
+        "32": "img/WF32.png",
+        "128": "img/WF128.png"
+    }
+}

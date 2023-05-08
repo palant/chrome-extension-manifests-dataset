@@ -1,0 +1,96 @@
+---
+slug: bot-sentinel
+name: Bot Sentinel
+description: Automatically identify inauthentic accounts and toxic Twitter trolls.
+version: 2.1.5
+release_date: 'March 29, 2022'
+publisher: Bot Sentinel
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.6422764227642275
+rating_count: 123
+user_count: '20,000+'
+publisher_site: botsentinel.com
+extension_website: 'https://botsentinel.com'
+support_website: 'https://help.botsentinel.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Bot Sentinel",
+  "short_name": "Bot Sentinel",
+  "description": "Automatically identify inauthentic accounts and toxic Twitter trolls.",
+  "version": "2.1.5",
+  "manifest_version": 2,
+  "icons": {
+    "128": "images/icon.png"
+  },
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://www.twitter.com/*",
+        "https://mobile.twitter.com/*"
+      ],
+      "js": [
+        "scripts/twitter-content.js",
+        "libs/canvas.js",
+        "libs/jquery.js",
+        "libs/mustache.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "scripts/deck-content.js",
+        "libs/canvas.js",
+        "libs/jquery.js",
+        "libs/mustache.js"
+      ],
+      "matches": [
+        "https://tweetdeck.twitter.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "js": [
+        "scripts/social.js",
+        "libs/canvas.js",
+        "libs/jquery.js",
+        "libs/mustache.js"
+      ],
+      "matches": [
+        "https://counter.social/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "38": "images/icon.png"
+    },
+    "default_title": "Bot Sentinel",
+    "default_popup": "pages/popup.html"
+  },
+  "web_accessible_resources": [
+    "images/*",
+    "pages/*",
+    "styles/contentscript.css"
+  ],
+  "permissions": [
+    "*://botsentinel.com/*",
+    "*://*.botsentinel.com/*",
+    "*://twitter.com/*",
+    "*://*.twitter.com/*",
+    "storage"
+  ]
+}

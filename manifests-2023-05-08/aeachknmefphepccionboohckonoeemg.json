@@ -1,0 +1,69 @@
+---
+slug: coin98-wallet
+name: Coin98 Wallet
+description: Crypto Wallet & Defi Gateway
+version: 7.2.2
+release_date: 'April 29, 2023'
+publisher: Coin98 Finance
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.750385208012327
+rating_count: 649
+user_count: '60,000+'
+publisher_site: coin98.com
+extension_website: 'https://coin98.com'
+support_website: 'https://livechat.coin98.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "7.2.2",
+  "manifest_version": 2,
+  "icons": {
+    "512": "logo512.png"
+  },
+  "browser_action": {
+    "default_icon": "logo512.png",
+    "default_popup": "popup.html#popup"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite",
+    "notifications",
+    "browser",
+    "*://connect.trezor.io/8/*"
+  ],
+  "web_accessible_resources": ["*", "**/*", "./popup.html", "popup.html"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.googletagmanager.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["extension/contentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/8/popup.html"
+      ],
+      "js": ["js/trezor-content-script.js"]
+    }
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "extension/cosmosServices.js",
+      "extension/commonServices.js",
+      "extension/reduxServices.js",
+      "extension/web3Services.js",
+      "extension/backgroundScript.js"
+    ]
+  }
+}

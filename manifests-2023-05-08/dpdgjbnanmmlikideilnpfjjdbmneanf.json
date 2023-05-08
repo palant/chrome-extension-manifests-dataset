@@ -1,0 +1,68 @@
+---
+slug: timer-for-google-meet
+name: Timer for Google Meet
+description: Realtime timer for google meet.
+version: '7.0'
+release_date: 'April 23, 2023'
+publisher: Zoomcorder.com
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 2.6875
+rating_count: 16
+user_count: '10,000+'
+publisher_site: www.zoomcorder.com
+extension_website: 'https://Zoomcorder.com'
+support_website: 'https://zoomcorder.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Timer for Google Meet",
+  "description": "Realtime timer for google meet.",
+  "default_locale": "en",
+  "version": "7.0",
+  "author": "DGT",
+  "permissions": ["storage"],
+
+  "host_permissions": [
+      "https://zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"
+  ],
+  "icons": {
+    "16": "./src/images/logo_16.png",
+    "32": "./src/images/logo_32.png",
+    "48": "./src/images/logo_48.png",
+    "128": "./src/images/logo_128.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "src/popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["src/sounds/ringtone.mp3", "/images/record.png", "/images/recimage.png", "/images/howto.jpg"],
+        "matches": ["https://*.zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"]
+    }
+  ],
+
+  "content_scripts": [
+    {
+       "matches": ["https://*.zoom.us/*", "https://zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*" ],
+      "js": [
+        "src/sdk/socket.io-2.3.0.js",
+        "src/sdk/sentry-5.21.1.js",
+        "./src/content.js"
+      ],
+      "css": [
+        "./src/styles.css"
+      ]
+
+    }
+  ],
+
+   "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'self'"}
+}

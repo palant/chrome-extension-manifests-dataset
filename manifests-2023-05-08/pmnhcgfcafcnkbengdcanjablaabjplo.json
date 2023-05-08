@@ -1,0 +1,64 @@
+---
+slug: clearbit-connect-free-ver
+name: 'Clearbit Connect: Free, Verified B2B Emails'
+description: Instantly find emails for the right contacts at the right companies — for free
+version: 3.2.2
+release_date: 'March 23, 2023'
+publisher: Clearbit
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.31373989713446
+rating_count: 1361
+user_count: '100,000+'
+publisher_site: clearbit.com
+extension_website: 'https://connect.clearbit.com'
+support_website: 'https://help.clearbit.com/hc/en-us/categories/4421572620439-Free-Tools'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Clearbit Connect: Free, Verified B2B Emails",
+  "description": "Instantly find emails for the right contacts at the right companies — for free",
+  "author": "Clearbit",
+  "homepage_url": "https://connect.clearbit.com",
+  "version": "3.2.2",
+  "manifest_version": 3,
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "options.html"
+  },
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["./static/css/content-widget.css"],
+      "js": ["./static/js/content-all.js", "./static/js/content-widget.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["./static/js/content-gmail.js"],
+      "css": ["./static/css/content-gmail.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["static/media/*.svg", "sidebar.html"]
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "resources": ["pageWorld.js"]
+    }
+  ],
+  "host_permissions": ["https://mail.google.com/"],
+  "permissions": ["storage", "scripting", "declarativeNetRequest", "contextMenus"]
+}

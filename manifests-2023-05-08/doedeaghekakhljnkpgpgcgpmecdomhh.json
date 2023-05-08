@@ -1,0 +1,82 @@
+---
+slug: mojo-automatic-coupons-at
+name: Mojo - Automatic Coupons at Checkout
+description: Mojo automatically applies the best coupon codes at checkout!
+version: 3.1.1
+release_date: 'November 19, 2022'
+publisher: developer
+category: Shopping
+category_slug: ext/12-shopping
+rating: 4.696969696969697
+rating_count: 33
+user_count: '5,000+'
+publisher_site: mojocart.com
+extension_website: 'https://www.mojocart.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "version": "3.1.1",
+  "description": "__MSG_description__",
+  "icons": {
+    "16": "images/icons/icon16.png",
+    "48": "images/icons/icon48.png",
+    "128": "images/icons/icon128.png"
+  },
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_globs": [
+        "*://*facebook.*/*",
+        "*://*google.*/*",
+        "*://*youtube.*/*",
+        "*://*wikipedia.*/*",
+        "*://*instagram.*/*",
+        "*://*pinterest.*/*",
+        "*://*twitter.*/*"
+      ],
+      "js": ["content.js", "feature.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "all_frames": false,
+      "matches": ["https://store.facebook.com/*"],
+      "js": ["content.js", "feature.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "all_frames": false,
+      "matches": [
+        "https://fr.mojocart.com/*",
+        "https://de.mojocart.com/*",
+        "https://uk.mojocart.com/*",
+        "https://*.mojocart.com/*"
+      ],
+      "js": ["scripts/support.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["cookies", "storage", "webRequest", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_icon": "images/logo_gray@2x.png",
+    "default_title": "__MSG_name__"
+  },
+  "default_locale": "en_US",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["pages/*", "images/*", "fonts/*", "css/*", "scripts/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

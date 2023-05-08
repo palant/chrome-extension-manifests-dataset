@@ -1,0 +1,70 @@
+---
+slug: vin-analytics-for-chrome
+name: VIN Analytics for Chrome
+description: >-
+  Retrieves the factory Porsche Build Sheet from a VIN that is detected on a
+  webpage.
+version: '1.6'
+release_date: 'March 16, 2021'
+publisher: VINAnalytics.com
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 5
+rating_count: 1
+user_count: '1,000+'
+publisher_site: vinanalytics.com
+extension_website: 'https://vinanalytics.com/chrome'
+support_website: 'https://vinanalytics.com/contact/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "VIN Analytics for Chrome",
+	"short_name": "VIN Analytics Quick Lookup Tool",
+	"commands": {
+		"trigger": {
+		"suggested_key": {
+			"default": "Ctrl+M",
+			"mac": "Command+K"
+		},
+		"description": "Trigger an Automatic Build Sheet Lookup for a Porsche VIN."
+	  }
+	},
+	"version": "1.6",
+	"manifest_version":2,
+	"description": "Retrieves the factory Porsche Build Sheet from a VIN that is detected on a webpage.",
+	"icons":{
+		"16": "images/VA-APP-ICON16.png",
+		"32": "images/VA-APP-ICON32.png",
+		"48": "images/VA-APP-ICON48.png",
+		"128": "images/VA-APP-ICON128.png"
+	},
+	"options_page": "options.html",
+	"browser_action":{
+	},
+	"content_scripts":[{
+		"matches":["http://*/*", "https://*/*"], 
+		"exclude_matches": [
+		    "https://vinanalytics.com/*",
+			"https://nationalpreownedporsche.com/*"
+		],
+		"js": ["content.js"]
+	},
+	{
+		"matches":["https://nationalpreownedporsche.com/*"],
+		"js": ["npp-content.js"]
+	}
+	],
+	"background":{
+		"scripts": ["background.js"],
+		"persistent": false
+	},
+	"permissions":[
+		"activeTab",
+		"storage"
+	],
+	"web_accessible_resources": [
+		"*.js"		
+	]
+}

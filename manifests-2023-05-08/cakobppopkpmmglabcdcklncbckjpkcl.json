@@ -1,0 +1,112 @@
+---
+slug: voilà-–-ai-chatgpt-powere
+name: Voilà – AI ChatGPT powered assistant
+description: AI assistant for supercharged productivity
+version: 1.2.2
+release_date: 'May 4, 2023'
+publisher: Initial condition
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 28
+user_count: '10,000+'
+publisher_site: getvoila.ai
+extension_website: 'https://www.getvoila.ai'
+support_website: 'https://www.getvoila.ai/help'
+---
+
+{
+  "manifest_version": 3,
+  "name": "Voilà – AI ChatGPT powered assistant",
+  "description": "AI assistant for supercharged productivity",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "tabs"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "commands": {
+    "open": {
+      "suggested_key": {
+        "default": "Ctrl+M",
+        "mac": "Command+M"
+      },
+      "description": "Open Voilà assistant"
+    }
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "css/content-script.css"
+      ],
+      "js": [
+        "js/content-script.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ]
+    },
+    {
+      "matches": [
+        "*://docs.google.com/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start",
+      "js": [
+        "assets/js/d-contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "js/gmail-injector.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/gmail-js-loader.js",
+        "js/gmail-extension.js"
+      ],
+      "matches": [
+        "*://mail.google.com/*",
+        "*://*.mail.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self';"
+  },
+  "action": {
+    "default_title": "Voila",
+    "default_icon": {
+      "19": "icons/19.png",
+      "38": "icons/38.png"
+    }
+  },
+  "update_url": "http://clients2.google.com/service/update2/crx",
+  "version": "1.2.2"
+}

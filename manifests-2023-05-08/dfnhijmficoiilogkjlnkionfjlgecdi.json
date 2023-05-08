@@ -1,0 +1,84 @@
+---
+slug: online-pdf-editor-pdf2goc
+name: Online PDF Editor (pdf2go.com)
+description: Edit and convert PDF files.
+version: 7.3.0
+release_date: 'December 17, 2022'
+publisher: QaamGo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.376712328767123
+rating_count: 146
+user_count: '300,000+'
+publisher_site: pdf2go.com
+extension_website: 'https://www.pdf2go.com'
+support_website: 'https://www.pdf2go.com/help'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_pdf2go_name__",
+    "short_name": "PDF2Go",
+    "description": "__MSG_extension_pdf2go_description__",
+    "version": "7.3.0",
+    "author": "https://pdf2go.com",
+    "action": {
+        "default_icon": "icons/icon_64.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": ["translate_content.js", "gmail_content.js"],
+            "css": ["style.css"]
+        },
+        {
+            "matches": ["https://www.google.com/*"],
+            "js": ["translate_content.js", "google_search_content.js"],
+            "css": ["css/google_style.css", "style.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*", "file://*/*"],
+            "exclude_matches": ["https://www.google.com/*", "https://mail.google.com/*"],
+            "js": ["translate_content.js", "pdf_content.js", "pdf_injected.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "default_locale": "en",
+    "externally_connectable": {
+        "matches": ["*://*.pdf2go.com/*", "*://*.pdf2go.test/*"]
+    },
+    "host_permissions": ["http://*/*", "https://*/*", "file://*/*"],
+    "icons": {
+        "16": "icons/icon_16.png",
+        "32": "icons/icon_32.png",
+        "64": "icons/icon_64.png",
+        "128": "icons/icon_128.png"
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjdB1BGtkTnpKDkwPuHYb4pBUQ8Z0uEoEIBnZbBTmjyZZgdE3+/VJXEdcMFgHZBZKvKq/L9cPWIs/dxJKB9A/OlhPIu/fItT5izum0eMa5pvmouXbk6yiAs8BMtZBJoaBvulnMwmw5GQ2/GkyFZqFA1a2p5EJR8Z0TD2OAw5ybvbwl3zE7PQ2OcTpxGRakrZIQ4l5X/dU6pexR5IyGtr0sdBdbhwXLKhAsqKAgSgTHkc5u2L5F9iinrWHMJ8ROxuZ8vzVya4e/XFYMXyUpF3/oN4Y8kPugrqU+u8h4rXYgJ9rBJRvKktg7Sdu4z40QPZLnFSivN9Bed8kP6UwKlDIlwIDAQAB",
+    "manifest_version": 3,
+    "minimum_chrome_version": "93",
+    "options_page": "settings.html",
+    "permissions": ["contextMenus", "storage", "scripting"],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "pdf_injected.js",
+                "gmail_injected_lib.js",
+                "gmail_injected.js",
+                "assets/*",
+                "css/*",
+                "img/*",
+                "webfonts/*",
+                "_locales/*",
+                "iframe.html"
+            ],
+            "matches": ["http://*/*", "https://*/*", "file://*/*"]
+        }
+    ]
+}
