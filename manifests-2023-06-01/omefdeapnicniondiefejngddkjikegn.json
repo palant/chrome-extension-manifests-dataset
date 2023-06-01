@@ -1,0 +1,86 @@
+---
+slug: gmac-—-group-answers-coll
+name: GMAC — Group Answers Collector For FB™
+description: Collecting users' answers from Facebook groups to your GoogleSheets
+version: 3.2.17
+release_date: 'December 13, 2022'
+publisher: Zevik's-extensions
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.473684210526316
+rating_count: 19
+user_count: 349
+extension_website: 'https://extensions.fbtools.shop'
+support_website: 'https://rebrand.ly/gmac-contact'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extensionName__",
+  "short_name": "GMAC",
+  "version": "3.2.17",
+  "manifest_version": 2,
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "icons": {
+    "128": "img/logo_128.png",
+    "16": "img/logo_16.png",
+    "48": "img/logo_48.png"
+  },
+  "background": {
+    "scripts": [
+      "./js/vendor/bexer/index.js",
+      "./js/bg/00-setup-error-reporter.js",
+      "./js/bg/01-init-apis.js",
+      "./js/bg/01-storage-api.js",
+      "./check-license-v2/22-license-api.js",
+      "./check-license-v2/55-check-on-startup.js",
+      "./js/bg/10-updates-and-migrations.js",
+      "./js/bg/40-sheet-api.js",
+      "./js/bg/45-message-handler.js",
+      "./js/bg/50-main.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "notifications",
+    "identity",
+    "storage",
+    "alarms",
+    "tabs",
+    "*://*.facebook.com/*",
+    "https://www.googleapis.com/",
+    "*://v2.api.extensions.fbtools.shop/*"
+  ],
+  "oauth2": {
+    "client_id": "523201305048-9jkds8dt0m91fctuctksunn1c2un237r.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/chromewebstore.readonly",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "browser_action": {
+    "default_popup": "./pages/popup/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.facebook.com/*"
+      ],
+      "run_at": "document_start",
+      "css": ["./js/inject/inject.css"],
+      "js": [
+        "./js/inject/bexer-utils.js",
+        "./js/inject/bexer-error-transformer.js",
+        "./js/inject/inject.js"
+      ]
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAolWkiwJQYMHPu9AwGWlDf/erWKH1uLaQihggVmFKmaL4sPl/Om198lJkJzOao8iZGai7nSmyElF9pkkwNu5jNY7yujBjh0K+iew+HN/WJ/4mUvnYW43jSXtp23cun4QusPhJStsdy9kv2SSlkqiH99AvVnn2oCgisU07nzNnCNL99pOACmABxmqUM0XsEhB3IvS9fsgxYOEEDSUA8XqYHxQp5fzhS4RXa9hU6r3+4sr5MM8U0gEEM+1J7VdmoxYy2oW1YuLki6vju47Fftq6PdvQ2CIvH+kx/DtVri4NOEyPldiMbrcG9/TYmYBpFIHsZ21mhMDAf76NP/javjz5WQIDAQAB",
+  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
+  "externally_connectable": {
+    "matches": ["*://*.api.extensions.fbtools.shop/*"]
+  }
+}

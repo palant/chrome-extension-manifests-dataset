@@ -1,0 +1,56 @@
+---
+slug: random-episodes-generator
+name: Random Episodes Generator
+description: >-
+  This extension retrieves a random episode of 'The Simpsons' from either Disney
+  Plus and Star Plus (For LATAM users).
+version: 0.9.3
+release_date: 'October 17, 2022'
+publisher: Jasshtag
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 5
+user_count: 52
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Random Episodes Generator",
+    "description": "This extension retrieves a random episode of 'The Simpsons' from either Disney Plus and Star Plus (For LATAM users).",
+    "version": "0.9.3",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["storage", "activeTab", "tabs"],
+    "action":{
+        "default_popup": "/src/episodes_generator/popup.html",
+        "default_icon": {
+            "16": "/images/get_started16.png",
+            "32": "/images/get_started32.png",
+            "48": "/images/get_started48.png",
+            "128": "/images/get_started128.png"
+        }
+    },
+    "icons": {
+        "16": "/images/get_started16.png",
+        "32": "/images/get_started32.png",
+        "48": "/images/get_started48.png",
+        "128": "/images/get_started128.png"
+      },
+    "web_accessible_resources": [
+        {
+            "resources": ["scripts/*"],
+            "matches": ["*://*/*"]
+        }
+    ],
+    "content_scripts": [
+        {
+          "matches": ["*://www.starplus.com/*/video/*", "*://www.disneyplus.com/video/*"],
+          "js": ["scripts/random_helper.js","scripts/autoplay.js"],
+          "run_at": "document_end"
+        }
+      ]
+}

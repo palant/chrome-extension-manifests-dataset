@@ -1,0 +1,102 @@
+---
+slug: winston
+name: Winston
+description: >-
+  Integrates your browser with your Winston whole-home privacy system. A Winston
+  hardware device is required to use this add-on.
+version: 1.5.11
+release_date: 'January 8, 2021'
+publisher: 'Winston Privacy, Inc.'
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.5
+rating_count: 8
+user_count: '1,000+'
+publisher_site: winstonprivacy.com
+extension_website: 'https://winstonprivacy.com'
+support_website: 'https://support.winstonprivacy.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Winston",
+  "description": "Integrates your browser with your Winston whole-home privacy system. A Winston hardware device is required to use this add-on.",
+  "manifest_version": 2,
+  "version": "1.5.11",
+  "author": "Winston Privacy, Inc.",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "incognito": "spanning",
+  "permissions": [
+    "webRequest",
+    "<all_urls>",
+    "webRequestBlocking",
+    "webNavigation",
+    "tabs",
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "notifications",
+    "privacy"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "32": "assets/images/enabled-32.png",
+      "48": "assets/images/enabled-48.png",
+      "96": "assets/images/enabled-96.png"
+    },
+    "default_title": "Winston",
+    "default_popup": "popup/popup.html"
+  },
+  "icons": {
+    "32": "assets/images/enabled-32.png",
+    "48": "assets/images/enabled-48.png",
+    "96": "assets/images/enabled-96.png",
+    "128": "assets/images/winston-128x128.png"
+  },
+  "background": {
+    "scripts": [
+      "lib/browser-polyfill.js",
+      "lib/main.bundle.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "match_about_blank": true,
+    "all_frames": true,
+    "run_at": "document_start",
+    "js": [
+      "lib/browser-polyfill.js",
+      "lib/frame.bundle.js"
+    ]
+  }, {
+    "matches": ["http://*/*", "https://*/*"],
+    "match_about_blank": false,
+    "all_frames": false,
+    "run_at": "document_end",
+    "js": [
+      "content-scripts/authentication.bundle.js",
+      "content-scripts/notifications.bundle.js"
+    ]
+  }, {
+    "matches": ["http://*/*", "https://*/*"],
+    "match_about_blank": false,
+    "all_frames": false,
+    "run_at": "document_start",
+    "js": ["content-scripts/benchmark.bundle.js"]
+  }],
+  "web_accessible_resources": [
+    "pages/**/*.html",
+    "assets/images/logo.svg",
+    "assets/images/logo-white.svg",
+    "assets/images/benchmark-winston.svg",
+    "assets/images/benchmark-www.svg",
+    "lib/browser-polyfill.js",
+    "lib/intercept.bundle.js",
+    "fonts/*.woff2"
+  ],
+  "default_locale": "en"
+}

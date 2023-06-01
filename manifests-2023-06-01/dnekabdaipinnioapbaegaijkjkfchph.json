@@ -1,0 +1,118 @@
+---
+slug: testbuddy-your-true-qa-bu
+name: TestBuddy - Your true QA buddy
+description: Your bug reporting helper
+version: 1.1.0
+release_date: 'May 10, 2023'
+publisher: Test Unity
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 11
+user_count: 125
+extension_website: 'https://testbuddy.io/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"background": {
+		"service_worker": "./dist/background.js"
+	},
+	"short_name": "TestBuddy",
+	"description": "Your bug reporting helper",
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["./dist/document_start.js"],
+			"exclude_matches": [
+				"https://app.testbuddy.io/static/index.html",
+				"https://chrome.google.com/*"
+			],
+			"run_at": "document_start"
+		},
+
+		{
+			"matches": ["<all_urls>"],
+			"js": ["content_scripts/markerjs2.js"],
+			"exclude_matches": [
+				"https://app.testbuddy.io/static/index.html",
+				"https://chrome.google.com/*"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"all_frames": false,
+			"js": ["./dist/contentScript.js"],
+			"matches": ["<all_urls>"],
+			"exclude_matches": [
+				"https://app.testbuddy.io/static/index.html",
+				"https://chrome.google.com/*"
+			],
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": false,
+			"matches": ["https://app.testbuddy.io/static/index.html"],
+			"js": ["./dist/recordingCS.js"],
+			"run_at": "document_start"
+		}
+	],
+
+	"icons": {
+		"128": "icons/icon_128.png",
+		"16": "icons/icon_16.png",
+		"32": "icons/icon_32.png",
+		"48": "icons/icon_48.png"
+	},
+	"action": {
+		"default_title": "Open TestBuddy",
+		"default_popup": "popup.html"
+	},
+	"manifest_version": 3,
+
+	"name": "TestBuddy - Your true QA buddy",
+	"oauth2": {
+		"client_id": "683428039698-9ofji43hi325u99soqc0hnam2oj7hpv3.apps.googleusercontent.com",
+		"scopes": [
+			"https://www.googleapis.com/auth/chromewebstore.readonly",
+			"https://www.googleapis.com/auth/userinfo.email"
+		]
+	},
+	"externally_connectable": {
+		"matches": ["*://*.testbuddy.io/*"]
+	},
+	"web_accessible_resources": [
+		{
+			"matches": ["<all_urls>"],
+			"resources": ["./dist/document_start.js"]
+		},
+		{
+			"resources": ["./dist/contentScript.js"],
+			"matches": ["<all_urls>"]
+		},
+		{
+			"resources": ["script.js"],
+			"matches": ["<all_urls>"]
+		},
+		{
+			"resources": ["./content_scripts/markerjs2.js"],
+			"matches": ["<all_urls>"]
+		}
+	],
+
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+	"permissions": [
+		"activeTab",
+		"cookies",
+		"background",
+		"management",
+		"tabs",
+		"desktopCapture",
+		"scripting"
+	],
+	"host_permissions": ["<all_urls>"],
+	"version": "1.1.0"
+}

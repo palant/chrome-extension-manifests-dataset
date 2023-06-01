@@ -1,0 +1,96 @@
+---
+slug: gqueues-for-google-calend
+name: GQueues for Google Calendar
+description: Mark GQueues tasks complete directly in Google Calendar
+version: 1.2.2
+release_date: 'February 7, 2023'
+publisher: cameron@gqueues.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 18
+user_count: '9,000+'
+publisher_site: www.gqueues.com
+extension_website: 'https://www.gqueues.com'
+support_website: >-
+  https://learn.gqueues.com/en/articles/5337364-set-up-the-gqueues-for-google-calendar-chrome-extension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "GQueues for Google Calendar",
+    "version": "1.2.2",
+
+    "action": {},
+    "description" : "Mark GQueues tasks complete directly in Google Calendar",
+    "icons": {
+                "16"  : "gqIcon16.png",
+                "48"  : "gqIcon48.png",
+                "128" : "gqIcon128.png"
+    },
+
+    "author" : "GQueues",
+
+    "background": {
+        "service_worker": "background.min.js",
+        "type": "module"
+    },
+
+    "content_scripts": [
+
+        {
+            "run_at":   "document_end",
+            "matches":  [
+                            "https://calendar.google.com/*"
+                        ],
+            "css":      [
+                            "gqueues-calendar-ext.min.css"
+                        ],
+            "js":       [
+                            "jquery-2.1.1.min.js",
+                            "jquery-ui-1.11.2.min.js",
+                            "gqueues-calendar-ext.min.js"
+                        ]
+        },
+
+        {
+            "run_at":   "document_end",
+            "matches":  [
+                            "https://app.gqueues.com/calendarext?*",
+                            "https://www.gqueues.com/calendar/createEvents*",
+                            "https://app.gqueues.com/calendar/createEvents*"
+                        ],
+            "js":       [   
+                            "jquery-2.1.1.min.js",
+                            "login-content-script.js"
+                        ]
+        }
+
+
+
+     ],
+
+    "host_permissions": ["https://calendar.google.com/*"],
+
+    "permissions": [
+        "scripting",
+        "storage"
+    ],
+
+    "content_security_policy": {
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": [  "images/*",
+                            "fonts/*",
+                            "fonts.css"
+            ],
+            "matches": [ "https://calendar.google.com/*" ]
+        }
+    ]
+
+}
+

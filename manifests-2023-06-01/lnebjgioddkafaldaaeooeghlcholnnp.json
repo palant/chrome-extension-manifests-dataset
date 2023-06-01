@@ -1,0 +1,57 @@
+---
+slug: find-website-used-fonts
+name: Find website used fonts
+description: Find and list all the fonts used on a web page
+version: 2.0.2
+release_date: 'September 24, 2022'
+publisher: Rebekah Bailey
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.842105263157895
+rating_count: 95
+user_count: '40,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Find website used fonts",
+  "description": "Find and list all the fonts used on a web page",
+  "version": "2.0.2",
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "32": "icons/icon32.png",
+    "38": "icons/icon38.png",
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  },
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["javascripts/libraries/Font-Guess/font-guess.js", "javascripts/content.js"],
+    "run_at": "document_start"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["content-scripts/idle.js"],
+    "all_frames": true,
+    "run_at": "document_idle"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["content-scripts/start.js"],
+    "all_frames": true,
+    "run_at": "document_start"
+  }],
+  "background": {
+    "persistent": true,
+    "scripts": ["javascripts/background.js"]
+  },
+  "browser_action": {
+    "default_title": "Find Font",
+    "default_popup": "popup/popup.html"
+  },
+  "web_accessible_resources": ["modal/modal.html", "modal/modal.css", "modal/tooltip.css"],
+  "permissions": ["*://*/*", "tabs", "storage", "activeTab", "webRequest", "webRequestBlocking"]
+}

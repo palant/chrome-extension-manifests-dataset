@@ -1,0 +1,98 @@
+---
+slug: headingsmap
+name: HeadingsMap
+description: 'To show, browse and audit (for accessibility and SEO) the headings structure'
+version: 4.4.2
+release_date: 'May 22, 2023'
+publisher: Jorge Rumoroso
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.553571428571429
+rating_count: 56
+user_count: '80,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "author": "Jorge Rumoroso",
+  "manifest_version": 2,
+  "version": "4.4.2",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "activeTab",
+    "storage",
+    "webNavigation"
+    ],
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/headingsMap48.png"
+    },
+    "default_title": "headingsMap"
+  },
+  "icons": {
+    "48": "icons/headingsMap48.png",
+    "128": "icons/headingsMap128_with_margin.png"
+  },
+  "web_accessible_resources": [
+    "html/*",
+    "modules/*",
+    "getFrameId",
+    "_locales/*"
+  ],
+  "default_locale": "en",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O"
+      }
+    }
+  },
+  "applications": {
+    "gecko": {
+      "id": "headings@niquelheadings.net",
+      "strict_min_version": "58.0a1"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_scripts/utilsService.js",
+        "content_scripts/tooltipService.js",
+        "content_scripts/algorithms/commonFunctionalitiesService.js",
+        "content_scripts/algorithms/headingsMapService.js",
+        "content_scripts/algorithms/HTML5OutlineService.js",
+        "content_scripts/inAllDocuments.js",
+        "content_scripts/contextMenuService.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "modules/documentSelectorService.js",
+        "content_scripts/resizerService.js",
+        "content_scripts/treeService.js",
+        "content_scripts/pinPanelService.js",
+        "content_scripts/copyService.js",
+        "content_scripts/main.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ]
+}

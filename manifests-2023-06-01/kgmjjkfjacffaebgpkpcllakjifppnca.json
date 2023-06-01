@@ -1,0 +1,81 @@
+---
+slug: adobe-experience-cloud-vi
+name: Adobe Experience Cloud Visual Editing Helper
+description: >-
+  The Visual Editing Helper extension allows users to load their website into
+  Adobe Target or Adobe Journey Optimizer.
+version: 1.0.3
+release_date: 'April 26, 2023'
+publisher: Adobe Inc.
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 2
+user_count: '4,000+'
+extension_website: 'https://experience.adobe.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Adobe Experience Cloud Visual Editing Helper",
+  "version": "1.0.3",
+  "description": "The Visual Editing Helper extension allows users to load their website into Adobe Target or Adobe Journey Optimizer.",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "32": "assets/icons/icon32_grayscale.png",
+      "38": "assets/icons/icon38_grayscale.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*adobe_authoring_enabled*",
+        "*://*/*mboxEdit*",
+        "*://*/*mboxDisable*",
+        "*://*/*adobe_vec_authoring*"
+      ],
+      "js": ["client.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.adobe.com/*",
+        "https://*.adobe.net/*",
+        "https://*.adobe.io/*"
+      ],
+      "match_origin_as_fallback": true,
+      "js": ["assets/vecPostMessage.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/cookieOverride.js", "assets/fileLoader.js"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "background": { "service_worker": "background.js" },
+
+  "permissions": [
+    "browsingData",
+    "notifications",
+    "webRequest",
+    "webNavigation",
+    "cookies",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "38": "assets/icons/icon38.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  }
+}

@@ -1,0 +1,120 @@
+---
+slug: playlist
+name: Playlist
+description: >-
+  Create a playlist of webpages whether it is for music or videos or just to
+  keep track of what you want to look at.
+version: 0.0.8
+release_date: 'March 18, 2020'
+publisher: bluesh8dz
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 40
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Playlist",
+  "short_name": "Playlist",
+  "version": "0.0.8",
+  "manifest_version" : 2,
+  "description" : "Create a playlist of webpages whether it is for music or videos or just to keep track of what you want to look at.",
+  "author": "Sh8dz",
+  "icons" : 
+  {
+    "16": "icons/PL16.png",
+    "48": "icons/PL48.png",
+    "128": "icons/PL128.png"
+  },
+  "browser_action":
+  {
+    "default_title": "Playlist",
+    "default_popup": "popup/index.html"
+  },
+  "background": 
+  {
+    "scripts": [
+      "src/background.js"]
+  },
+  "content_scripts": 
+  [{
+    "matches": ["<all_urls>"],
+    "match_about_blank": true,
+    "js": [
+      "src/contentscript.js"
+    ],
+    "run_at": "document_idle",
+    "all_frames": false
+  },
+  {
+    "matches": ["<all_urls>"],
+    "match_about_blank": true,
+    "js": [
+      "src/framescript.js"
+    ],
+    "run_at": "document_idle",
+    "all_frames": true
+  }],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "permissions": ["management", "history", "activeTab", "tabs", "sessions", "http://*/", "<all_urls>", "storage", "unlimitedStorage", "notifications", "contextMenus"],
+  "commands": {
+    "enqueue": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Alt+A"
+      },
+      "description": "Adds current page to the current playlist"
+    },
+    "start": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Start playing in current tab"
+    },
+    "startInNewTab":{
+      "suggested_key": {
+        "default": "Shift+Alt+S",
+        "mac": "Shift+Alt+S"
+      },
+      "description": "Start playing in a new tab"
+    },
+    "playPause": {
+      "suggested_key": {
+        "default": "MediaPlayPause"
+      },
+      "description":"Plays or pauses the media in the last used tab running a playlist",
+      "global": true
+    },
+    "previous": {
+      "suggested_key": {
+        "default": "MediaPrevTrack"
+      },
+      "description":"Plays the previous track of the playling playlist in the current tab",
+      "global": true
+    },
+    "next": {
+      "suggested_key": {
+        "default": "MediaNextTrack"
+      },
+      "description":"Plays the next track of the playling playlist in the current tab",
+      "global": true
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+D",
+        "mac": "Alt+D"
+      },
+      "description": "Display playlist popup"
+    },
+    "Shuffle": {
+      "description": "Plays the playlist in a shuffle order or stop doing so"
+    },
+    "Loop": {
+      "description": "Loops the playlist or stops doing so"
+    }
+  }
+}

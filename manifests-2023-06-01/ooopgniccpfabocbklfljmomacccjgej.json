@@ -1,0 +1,112 @@
+---
+slug: audio-recordings-for-goog
+name: Audio Recordings for Google Classroom - Beep
+description: >-
+  Allows teachers and students to leave voice notes and feedback on Google
+  Classroom, Gmail, Google Docs, Slides, Forms, and Sheets.
+version: '1.19'
+release_date: 'May 22, 2023'
+publisher: Beep
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.783018867924528
+rating_count: 106
+user_count: '30,000+'
+publisher_site: beepaudio.com
+extension_website: 'https://www.beepaudio.com'
+support_website: 'https://www.beepaudio.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Audio Recordings for Google Classroom - Beep",
+  "short_name": "Beep for Google Classroom, Gmail, and Google Docs",
+  "author": "@beepaudio",
+  "version": "1.19",
+  "description": "Allows teachers and students to leave voice notes and feedback on Google Classroom, Gmail, Google Docs, Slides, Forms, and Sheets.",
+  "manifest_version": 2,
+  "permissions": [
+    "storage",
+    "management",
+    "https://mail.google.com/",
+    "activeTab"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://docs.google.com/forms/*"
+      ],
+      "js": [
+        "forms-content.bundle.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/document/*",
+        "https://docs.google.com/presentation/*",
+        "https://docs.google.com/spreadsheets/*"
+      ],
+      "js": [
+        "docs-content.bundle.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://classroom.google.com/*"
+      ],
+      "js": [
+        "classroom-content.bundle.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": [
+        "inboxsdk.js",
+        "gmail-content.bundle.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.google.com/*",
+        "https://www.beepaudio.com/*",
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "workspace-content.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "/assets/*"
+  ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Beep for Google Classroom, Gmail and Google Docs",
+    "default_icon": {
+      "16": "/assets/icon16.png",
+      "48": "/assets/icon48.png",
+      "128": "/assets/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "/assets/icon16.png",
+    "48": "/assets/icon48.png",
+    "128": "/assets/icon128.png"
+  },
+  "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://apis.google.com https://www.googleapis.com; object-src 'self'"
+}

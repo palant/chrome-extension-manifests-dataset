@@ -1,0 +1,424 @@
+---
+slug: 퍼센티
+name: 퍼센티
+description: 퍼센티 구매대행 상품 수집 및 편의기능을 위한 확장프로그램
+version: 1.1.38
+release_date: 'May 31, 2023'
+publisher: Percenty
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 7
+user_count: '5,000+'
+publisher_site: www.percenty.co.kr
+extension_website: 'https://www.percenty.co.kr/'
+support_website: 'https://www.percenty.co.kr/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "퍼센티",
+  "description": "퍼센티 구매대행 상품 수집 및 편의기능을 위한 확장프로그램",
+  "version": "1.1.38",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "퍼센티"
+  },
+  "icons": {
+    "16": "percenty_logo.png",
+    "48": "percenty_logo.png",
+    "128": "percenty_logo.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://*.amazon.com/*",
+    "https://*.amazon.co.jp/*",
+    "https://*.amazon.ca/*",
+    "https://*.amazon.fr/*",
+    "https://*.amazon.de/*",
+    "https://*.amazon.in/*",
+    "https://*.amazon.it/*",
+    "https://*.amazon.com.mx/*",
+    "https://*.amazon.es/*",
+    "https://*.amazon.co.uk/*",
+    "https://*.taobao.com/*",
+    "https://*.tmall.com/*",
+    "https://*.tmall.hk/*",
+    "https://*.aliexpress.com/item/*",
+    "https://*.1688.com/*",
+    "https://*.rakuten.co.jp/*",
+    "https://www.percenty.co.kr/*",
+    "https://sell.smartstore.naver.com/*",
+    "https://*.vvic.com/*",
+    "https://*.iherb.com/*"
+  ],
+  "incognito": "not_allowed",
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*/item_taobao_com_inject.js",
+        "*/detail_tmall_com_inject.js",
+        "*/aliexpress_com_inject.js",
+        "*/detail_1688_com_inject.js",
+        "*/vvic_com_inject.js",
+        "*/item_rakuten_com_inject.js",
+        "*/iherb_com_detail_inject.js",
+        "*/starbucks_docstart_inject.js",
+        "*/starbucks_docend_inject.js",
+        "*/detail_tmall_com_start_inject.js",
+        "*.png*",
+        "*.svg*"
+      ],
+      "matches": [
+        "https://*.taobao.com/*",
+        "https://detail.tmall.com/*",
+        "https://*.detail.tmall.com/*",
+        "https://detail.tmall.hk/*",
+        "https://*.aliexpress.com/*",
+        "https://detail.1688.com/*",
+        "https://show.1688.com/*",
+        "https://s.1688.com/*",
+        "https://*.vvic.com/*",
+        "https://item.rakuten.co.jp/*",
+        "https://*.iherb.com/*",
+        "https://*.amazon.com/*",
+        "https://*.amazon.co.jp/*",
+        "https://*.amazon.ca/*",
+        "https://*.amazon.fr/*",
+        "https://*.amazon.de/*",
+        "https://*.amazon.in/*",
+        "https://*.amazon.it/*",
+        "https://*.amazon.com.mx/*",
+        "https://*.amazon.es/*",
+        "https://*.amazon.co.uk/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.percenty.co.kr/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "./static/js/percenty_prod.js"
+      ],
+      "matches": [
+        "https://www.percenty.co.kr/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/item_taobao_com.js"
+      ],
+      "css": [
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://item.taobao.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/detail_tmall_com.js"
+      ],
+      "css": [
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://detail.tmall.com/*",
+        "https://*.detail.tmall.com/*",
+        "https://detail.tmall.hk/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/detail_tmall_com_start.js"
+      ],
+      "css": [
+      ],
+      "matches": [
+        "https://detail.tmall.com/*",
+        "https://*.detail.tmall.com/*",
+        "https://detail.tmall.hk/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "./static/js/s_taobao_com.js"
+      ],
+      "css": [
+        "/ListButton.css",
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://s.taobao.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/list_tmall_com.js"
+      ],
+      "css": [
+        "/ListButton.css",
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://list.tmall.com/*",
+        "https://list.tmall.hk/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/aliexpress_com.js"
+      ],
+      "css": [
+        "/ListButton.css",
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://*.aliexpress.com/item/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/aliexpress_com_list.js"
+      ],
+      "css": [
+        "/ListButton.css",
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://*.aliexpress.com/*category/*",
+        "https://*.aliexpress.com/*wholesale*",
+        "https://*.aliexpress.com/af/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/detail_1688_com.js"
+      ],
+      "css": [
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://detail.1688.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/show_1688_com.js"
+      ],
+      "css": [
+        "/ListButton.css"
+      ],
+      "matches": [
+        "https://show.1688.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/s_1688_com.js"
+      ],
+      "css": [
+        "/ListButton.css"
+      ],
+      "matches": [
+        "https://s.1688.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/amazon_com.js"
+      ],
+      "css": [
+        "/ListButton.css",
+        "/FloatingButton.css",
+        "/AmazonVariationSelectModal.css"
+      ],
+      "matches": [
+        "https://*.amazon.com/*/dp/*",
+        "https://*.amazon.co.jp/*/dp/*",
+        "https://*.amazon.ca/*/dp/*",
+        "https://*.amazon.fr/*/dp/*",
+        "https://*.amazon.de/*/dp/*",
+        "https://*.amazon.in/*/dp/*",
+        "https://*.amazon.it/*/dp/*",
+        "https://*.amazon.com.mx/*/dp/*",
+        "https://*.amazon.es/*/dp/*",
+        "https://*.amazon.co.uk/*/dp/*",
+        "https://*.amazon.com/dp/*",
+        "https://*.amazon.co.jp/dp/*",
+        "https://*.amazon.ca/dp/*",
+        "https://*.amazon.fr/dp/*",
+        "https://*.amazon.de/dp/*",
+        "https://*.amazon.in/dp/*",
+        "https://*.amazon.it/dp/*",
+        "https://*.amazon.com.mx/dp/*",
+        "https://*.amazon.es/dp/*",
+        "https://*.amazon.co.uk/dp/*",
+        "https://*.amazon.com/*gp/product/*",
+        "https://*.amazon.co.jp/*gp/product/*",
+        "https://*.amazon.ca/*gp/product/*",
+        "https://*.amazon.fr/*gp/product/*",
+        "https://*.amazon.de/*gp/product/*",
+        "https://*.amazon.in/*gp/product/*",
+        "https://*.amazon.it/*gp/product/*",
+        "https://*.amazon.com.mx/*gp/product/*",
+        "https://*.amazon.es/*gp/product/*",
+        "https://*.amazon.co.uk/*gp/product/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/amazon_com_list.js"
+      ],
+      "css": [
+        "/ListButton.css",
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://*.amazon.com/b?*",
+        "https://*.amazon.co.jp/b?*",
+        "https://*.amazon.ca/b?*",
+        "https://*.amazon.fr/b?*",
+        "https://*.amazon.de/b?*",
+        "https://*.amazon.in/b?*",
+        "https://*.amazon.it/b?*",
+        "https://*.amazon.com.mx/b?*",
+        "https://*.amazon.es/b?*",
+        "https://*.amazon.co.uk/b?*",
+
+        "https://*.amazon.com/*/b?*",
+        "https://*.amazon.co.jp/*/b?*",
+        "https://*.amazon.ca/*/b?*",
+        "https://*.amazon.fr/*/b?*",
+        "https://*.amazon.de/*/b?*",
+        "https://*.amazon.in/*/b?*",
+        "https://*.amazon.it/*/b?*",
+        "https://*.amazon.com.mx/*/b?*",
+        "https://*.amazon.es/*/b?*",
+        "https://*.amazon.co.uk/*/b?*",
+
+        "https://*.amazon.com/s?*",
+        "https://*.amazon.co.jp/s?*",
+        "https://*.amazon.ca/s?*",
+        "https://*.amazon.fr/s?*",
+        "https://*.amazon.de/s?*",
+        "https://*.amazon.in/s?*",
+        "https://*.amazon.it/s?*",
+        "https://*.amazon.com.mx/s?*",
+        "https://*.amazon.es/s?*",
+        "https://*.amazon.co.uk/s?*",
+
+        "https://*.amazon.com/*/s?*",
+        "https://*.amazon.co.jp/*/s?*",
+        "https://*.amazon.ca/*/s?*",
+        "https://*.amazon.fr/*/s?*",
+        "https://*.amazon.de/*/s?*",
+        "https://*.amazon.in/*/s?*",
+        "https://*.amazon.it/*/s?*",
+        "https://*.amazon.com.mx/*/s?*",
+        "https://*.amazon.es/*/s?*",
+        "https://*.amazon.co.uk/*/s?*",
+
+        "https://*.amazon.com/gp/browse*",
+        "https://*.amazon.co.jp/gp/browse*",
+        "https://*.amazon.ca/gp/browse*",
+        "https://*.amazon.fr/gp/browse*",
+        "https://*.amazon.de/gp/browse*",
+        "https://*.amazon.in/gp/browse*",
+        "https://*.amazon.it/gp/browse*",
+        "https://*.amazon.com.mx/gp/browse*",
+        "https://*.amazon.es/gp/browse*",
+        "https://*.amazon.co.uk/gp/browse*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/vvic_com.js"
+      ],
+      "css": [
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://*.vvic.com/item/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/vvic_com_list.js"
+      ],
+      "css": [
+        "/ListButton.css"
+      ],
+      "matches": [
+        "https://*.vvic.com/*/list/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/item_rakuten_com.js"
+      ],
+      "css": [
+        "/FloatingButton.css"
+      ],
+      "matches": [
+        "https://item.rakuten.co.jp/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/rakuten_com_category.js"
+      ],
+      "css": [
+        "/ListButton.css"
+      ],
+      "matches": [
+        "https://www.rakuten.co.jp/category/*",
+        "https://search.rakuten.co.jp/search/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "./static/js/iherb_com_detail.js"
+      ],
+      "css": [
+        "/FloatingButton.css",
+        "/IHerbOptionSelectModal.css"
+      ],
+      "matches": [
+        "https://kr.iherb.com/pr/*"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}
+

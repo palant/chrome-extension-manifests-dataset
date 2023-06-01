@@ -1,0 +1,107 @@
+---
+slug: jio-cinema-party
+name: Jio Cinema Party
+description: Watch Jio Cinema In Sync With Friends Using Jio Cinema Watch Party
+version: 1.0.0
+release_date: 'April 10, 2023'
+publisher: jcwatchparty
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 3
+user_count: '1,000+'
+publisher_site: jiocinemaparty.com
+extension_website: 'https://jiocinemaparty.com/'
+support_website: 'https://jiocinemaparty.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "version": "1.0.0",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "img/128.png",
+    "48": "img/48.png",
+    "32": "img/32.png",
+    "16": "img/16.png"
+  },
+  "action": {
+    "default_icon": "img/128.png",
+    "default_title": "__MSG_name__",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.jiocinema.com/*",
+        "http://*.jiocinema.com/*"
+      ],
+      "js": [
+        "content/index.js",
+        "content/videoController.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "content/contentScript.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.jiocinemaparty.com/*"
+      ],
+      "js": [
+        "jioCinema.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/contentScript.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "jioCinema.js"
+      ],
+      "matches": [
+        "https://www.jiocinemaparty.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "chat/index.html",
+        "content/index.js",
+        "content/videoController.js"
+      ],
+      "matches": [
+        "https://*.jiocinema.com/*",
+        "http://*.jiocinema.com/*"
+      ]
+    }
+  ]
+}

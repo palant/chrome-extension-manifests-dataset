@@ -1,0 +1,120 @@
+---
+slug: idemeum-for-chrome
+name: idemeum for chrome
+description: Passwordless login platform
+version: 2.8.0
+release_date: 'May 23, 2023'
+publisher: idemeum
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 58
+extension_website: 'https://idemeum.com'
+support_website: 'https://idemeum.com/contact/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "idemeum for chrome",
+    "description": "Passwordless login platform",
+    "version": "2.8.0",
+    "manifest_version": 3,
+    "icons": {
+        "16": "/assets/images/idemeum16.png",
+        "32": "/assets/images/idemeum32.png",
+        "48": "/assets/images/idemeum48.png",
+        "128": "/assets/images/idemeum128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "connect-src 'self' https://*.idemeum.com https://*.idemeum.in https://*.idemeumlab.com ; child-src 'self' data:; script-src 'self';style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; object-src 'self';"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "exclude_matches": [
+                "https://*.idemeum.com/adminportal/*",
+                "https://*.idemeum.in/adminportal/*",
+                "https://*.idemeumlab.com/adminportal/*",
+                "https://*.idemeum.com/userportal/*",
+                "https://*.idemeum.in/userportal/*",
+                "https://*.idemeumlab.com/userportal/*",
+                "https://*.idemeum.com/saml/*",
+                "https://*.idemeum.in/saml/*",
+                "https://*.idemeumlab.com/saml/*"
+            ],
+            "js": [
+                "lib/locking.js",
+                "assets/js/jquery-3.6.0.min.js",
+                "autofill/autofill.js",
+                "autofill/autofiller.js",
+                "autofill/notificationBar.js",
+                "contentscript/inlineMenuLoader.js",
+                "contentscript/appManagerLoader.js",
+                "contentscript/idleListener.js"
+            ],
+            "css": [
+                "assets/css/custom.css"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://*.idemeum.in/*",
+                "https://*.idemeum.com/*",
+                "https://*.idemeumlab.com/*"
+            ],
+            "js": [
+                "contentscript/portalScript.js",
+                "contentscript/idleListener.js",
+                "contentscript/common.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "background.html",
+        "default_icon": {
+            "16": "/assets/images/idemeum16.png",
+            "32": "/assets/images/idemeum32.png",
+            "48": "/assets/images/idemeum48.png",
+            "128": "/assets/images/idemeum128.png"
+        }
+    },
+    "permissions": [
+        "storage",
+        "alarms",
+        "idle",
+        "tabs"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "https://*.idemeum.com/*",
+        "https://*.idemeum.in/*",
+        "https://*.idemeumlab.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "drop-down/drop-down.html",
+                "app-manager/app-manager.html",
+                "inline-indicator/inline-indicator.html",
+                "/assets/images/*"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "file:///*"
+            ],
+            "use_dynamic_url": true
+        }
+    ]
+}

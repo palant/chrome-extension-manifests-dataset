@@ -1,0 +1,105 @@
+---
+slug: webtrends-optimize®-editi
+name: Webtrends Optimize® Editing Tools
+description: This extension allows loading target pages under Optimize Visual Editor
+version: 3.0.36.56
+release_date: 'February 3, 2023'
+publisher: Webtrends Optimize
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 9
+user_count: 648
+extension_website: 'https://app.webtrends-optimize.com'
+support_website: 'https://help.webtrends-optimize.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Webtrends Optimize® Editing Tools",
+    "description": "This extension allows loading target pages under Optimize Visual Editor",
+    "icons": {
+        "16": "src/img/webtrends_icon.png",
+        "128": "src/img/webtrends_avatar.png"
+    },
+    "version": "3.0.36.56",
+    "browser_action": {
+        "default_icon": "src/img/webtrends_avatar.png",
+        "default_popup": "src/popup/popup.html"
+    },
+    "permissions": [
+        "webRequest",
+        "webRequestBlocking",
+        "tabs",
+        "<all_urls>",
+        "storage",
+        "browsingData",
+        "cookies",
+        "webNavigation"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "src/common/storage_manager.js",
+                "src/content/utils.js",
+                "src/content/content.js",
+                "src/content/mixed_content_notifier.js"
+            ],
+            "matches": [
+                "*://*/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "src/common/storage_manager.js",
+                "src/content/utils.js",
+                "src/content/optimize_injector.js"
+            ],
+            "matches": [
+                "*://*/*"
+            ],
+            "exclude_globs": [
+                "*_wt.extensionBypass=true*"
+            ],
+            "all_frames": true,
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "src/common/storage_manager.js",
+                "src/content/utils.js",
+                "src/content/script_handler.js",
+                "src/content/scripts_observer.js"
+            ],
+            "matches": [
+                "*://*/*"
+            ],
+            "exclude_globs": [
+                "*_wt.extensionBypass=true*"
+            ],
+            "all_frames": true,
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "scripts": [
+            "src/common/storage_manager.js",
+            "src/background/tab_manager.js",
+            "src/background/optimize_listener.js",
+            "src/background/cors_listener.js",
+            "src/background/tag_listener.js",
+            "src/background/xframe_listener.js",
+            "src/background/mixed_content_listener.js",
+            "src/background/url_checker.js",
+            "src/background/sevice_workers.js"
+        ]
+    },
+    "minimum_chrome_version": "50",
+    "web_accessible_resources": [
+        "src/injector/wt_style.min.css",
+        "src/injector/injector_scripts.min.js"
+    ]
+}

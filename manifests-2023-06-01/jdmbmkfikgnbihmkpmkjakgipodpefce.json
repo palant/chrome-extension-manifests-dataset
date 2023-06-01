@@ -1,0 +1,71 @@
+---
+slug: threatconnect-browser-ext
+name: ThreatConnect Browser Extension
+description: >-
+  Browser extension that enables users to query ThreatConnect, add indicators,
+  and group indicators directly from a supported browser.
+version: 3.0.0
+release_date: 'October 24, 2022'
+publisher: ThreatConnect
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 487
+extension_website: 'https://threatconnect.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ThreatConnect Browser Extension",
+  "short_name": "tc-browser-extension",
+  "description": "Browser extension that enables users to query ThreatConnect, add indicators, and group indicators directly from a supported browser.",
+  "manifest_version": 2,
+  "minimum_chrome_version": "0",
+  "version": "3.0.0",
+  "web_accessible_resources": [
+    "index.html",
+    "/assets/content-scripts/content-styles.css",
+    "assets/icons/favicon-32x32.png"
+  ],
+  "icons": {
+    "512": "/assets/icons/favicon-512x512.png",
+    "192": "/assets/icons/favicon-192x192.png",
+    "128": "/assets/icons/favicon-128x128.png",
+    "32": "/assets/icons/favicon-32x32.png",
+    "16": "/assets/icons/favicon-16x16.png"
+  },
+  "chrome_url_overrides": {},
+  "options_ui": {
+    "page": "index.html#/settings"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "<all_urls>"
+  ],
+  "browser_action": {
+    "default_icon": "assets/icons/favicon-32x32.png",
+    "default_title": "ThreatConnect",
+    "default_popup": "index.html#home"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": [
+        "browser-polyfill.js",
+        "assets/content/main.js",
+        "assets/content-scripts/content-utilities.js",
+        "assets/content-scripts/scan-page.js",
+        "assets/content-scripts/show-results.js",
+        "assets/content-scripts/content-listeners.js"
+      ]
+    }
+  ],
+  "background": {
+    "page": "/assets/background-scripts/background.html"
+
+  }
+}

@@ -1,0 +1,128 @@
+---
+slug: checkmynews
+name: CheckMyNews
+description: '#'
+version: 0.0.0.16
+release_date: 'February 6, 2023'
+publisher: adimpact.slide.lig
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 3.6666666666666665
+rating_count: 3
+user_count: 97
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "0.0.0.16",
+  "manifest_version": 2,
+      "browser_action": {
+        "browser_style": true,
+        "default_icon": "media/alert1.png",
+        "default_popup": "ui/popup.html"
+      },
+  "background": {
+    "scripts": [
+      "third-party/jquery-3.1.1.min.js",
+      "third-party/sha512.min.js",
+      "utils/global_params.js",
+      "utils/error_handling.js",
+      "utils/background/general.js",
+      "utils/background/consent.js",
+      "utils/background/preference_crawl.js",
+      "utils/background/explanation_crawl.js",
+      "utils/background/adblocker.js",
+      "utils/interface_version_detection.js",
+      "utils/user_identification.js",
+      "utils/news_domains_lst.js",
+      "utils/background/news_organisation_sites.js",
+      "background.js"
+    ]
+  },
+  "icons": {
+    "16": "media/enabled.png",
+    "48": "media/enabled.png",
+    "128": "media/enabled.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "js": [
+        "third-party/jquery-3.1.1.min.js",
+        "graphics/loading.js",
+        "utils/global_params.js",
+        "utils/content-scripts/universal_methods.js",
+        "content-scripts/universal.js",
+        "utils/error_handling.js",
+        "utils/content-scripts/browser_detection.js",
+        "utils/interface_version_detection.js",
+        "utils/user_identification.js"
+      ],
+      "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"],
+      "all_frames": true
+    },
+    {
+      "run_at": "document_end",
+      "js": [
+        "third-party/mus.js",
+        "utils/news_domains_lst.js",
+        "utils/content-scripts/dialog_captcha.js",
+
+        "utils/content-scripts/ads_and_posts_detection/general.js",
+        "utils/content-scripts/ads_and_posts_detection/general_old_interface.js",
+        "utils/content-scripts/ads_and_posts_detection/general_new_interface.js",
+
+        "utils/content-scripts/ads_and_posts_detection/ad_detection/general.js",
+        "utils/content-scripts/ads_and_posts_detection/ad_detection/ads_detection.js",
+        "utils/content-scripts/ads_and_posts_detection/ad_detection/ads_detection_new_interface.js",
+
+        "utils/content-scripts/ads_and_posts_detection/posts_detection/general.js",
+        "utils/content-scripts/ads_and_posts_detection/posts_detection/posts_detection.js",
+        "utils/content-scripts/ads_and_posts_detection/posts_detection/posts_detection_new_interface.js",
+
+        "utils/content-scripts/mouse_tracking/general.js",
+        "utils/content-scripts/mouse_tracking/mouse_tracking.js",
+        "utils/content-scripts/mouse_tracking/mouse_tracking_new_interface.js",
+
+        "content-scripts/adgrabber.js"
+      ],
+      "matches": ["http://www.facebook.com/*", "https://www.facebook.com/*"]
+    },
+    {
+      "run_at": "document_end",
+      "js": [
+        "content-scripts/preferences_grabber.js"
+      ],
+      "matches": [
+        "http://www.facebook.com/ads/preferences*",
+        "https://www.facebook.com/ads/preferences*"
+      ],
+      "all_frames": true
+      }
+  ],
+  "permissions": [
+    "http://www.facebook.com/*",
+    "https://www.facebook.com/*",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "tabs"
+  ],
+  "incognito": "spanning",
+  "web_accessible_resources": [
+    "injections/error_handling.js",
+    "injections/ad_activity_crawl.js",
+    "injections/ad_block_detection.js",
+    "injections/ads_new_interface.js",
+    "injections/explanation_crawl.js",
+    "injections/preference_crawl.js",
+    "injections/universal.js",
+    "injections/xhr_overload_preferences.js",
+    "injections/xhr_overload_buttons.js",
+    "media/solving_captcha.gif"
+  ]
+}

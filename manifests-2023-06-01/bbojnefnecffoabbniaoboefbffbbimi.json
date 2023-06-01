@@ -1,0 +1,130 @@
+---
+slug: demodesk
+name: Demodesk
+description: 'The #1 Customer Meeting Platform for Sales and Success Teams'
+version: 4.8.0
+release_date: 'May 10, 2023'
+publisher: Demodesk
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 13
+user_count: '1,000+'
+publisher_site: demodesk.com
+extension_website: 'https://demodesk.com'
+support_website: 'https://help.demodesk.com'
+---
+
+{
+  "manifest_version": 3,
+  "name": "Demodesk",
+  "description": "The #1 Customer Meeting Platform for Sales and Success Teams",
+  "permissions": [
+    "cookies",
+    "storage",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "short_name": "Demodesk.com",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "4.8.0",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "256": "icons/icon-256.png",
+    "512": "icons/icon-512.png"
+  },
+  "action": {},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/umbrella-app.js"
+      ],
+      "css": [
+        "content-scripts/umbrella-app-parent-page.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content-scripts/google-calendar.js"
+      ],
+      "css": [
+        "content-scripts/google-calendar.css"
+      ],
+      "matches": [
+        "https://www.google.com/calendar/*",
+        "https://calendar.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content-scripts/mail.js"
+      ],
+      "css": [
+        "content-scripts/mail.css"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content-scripts/demodesk.js"
+      ],
+      "css": [
+        "content-scripts/demodesk.css"
+      ],
+      "matches": [
+        "https://demodesk.com/manage/*",
+        "https://demodesk-staging.com/manage/*",
+        "https://*.demodesk-review.com/manage/*",
+        "https://*.teshub.demodesk-dev.com/manage/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.demodesk.com/*",
+      "http://demodesk.com/*",
+      "https://demodesk-staging.com/*",
+      "https://demodesk-rc.com/*",
+      "https://*.teshub.demodesk-dev.com/*",
+      "https://*.demodesk-review.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup/popup.html",
+        "images/content-scripts/google-calendar/demodesk-icon.svg",
+        "images/mail-popup/assets/external-link.svg",
+        "images/mail-popup/assets/copy-link.svg",
+        "images/shared/assets/images/*",
+        "fonts/*",
+        "content-scripts/umbrella-app.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

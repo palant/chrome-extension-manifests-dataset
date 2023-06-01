@@ -1,0 +1,129 @@
+---
+slug: gobiz-công-cụ-hỗ-trợ-ngườ
+name: Gobiz - Công cụ hỗ trợ người mua hàng
+description: Gobiz - Công cụ hỗ trợ người mua hàng
+version: 3.0413.1515
+release_date: 'April 17, 2023'
+publisher: Gobiz Developer
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 4
+user_count: 488
+publisher_site: gobiz.vn
+extension_website: 'https://ext.gobiz.vn/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Gobiz - Công cụ hỗ trợ người mua hàng",
+    "short_name": "Gobiz - Công cụ hỗ trợ người mua hàng",
+    "description": "Gobiz - Công cụ hỗ trợ người mua hàng",
+    "version": "3.0413.1515",
+    "icons": {
+        "16": "logo-small.png",
+        "48": "logo-small.png",
+        "128": "logo-small.png"
+    },
+    "action": {
+        "default_icon": {
+            "32": "logo-small.png",
+            "64": "logo-small.png",
+            "128": "logo-small.png"
+        },
+        "name": "Gobiz",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://detail.1688.com/*",
+                "*://order.1688.com/*",
+                "*://order.1688.com/*",
+                "*://work.1688.com/home/*",
+                "*://buyertrade.taobao.com/trade/*",
+                "*://buy.taobao.com/auction/*",
+                "*://item.taobao.com/*",
+                "*://*.detail.tmall/*",
+                "*://*.detail.tmall.hk/*",
+                "*://*.tmall.com/item/*",
+                "*://*.tmall.com/order/*",
+                "*://*.detail.liangxinyao.com/*",
+                "*://*.detail.tmall.com/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["contentCommon.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["localStorageGetItem.js"]
+        },
+        {
+            "matches": ["*://*.dota.gobizdev.com/*", "*://localhost/*", "*://gsa.gobiz.vn/*", "*://drug.gobizdev.com/*", "*://my.sabo.asia/*"],
+            "run_at": "document_idle",
+            "js": ["localStorageGetItemM22.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentSupported.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentScriptSearchImage.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentScriptLink.js", "contentShop.js", "contentProduct.js", "contentProducts.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentScript.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://member1.taobao.com/*"],
+            "run_at": "document_idle",
+            "js": ["contentTaobao.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://order.1688.com/order/*"],
+            "run_at": "document_idle",
+            "js": ["content1688.js"],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://trade.tmall.com/*",
+                "*://buyertrade.taobao.com/*",
+                "*://trade.taobao.com/*",
+                "*://trade.tmall.com/detail/*",
+                "*://trade.1688.com/order/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["contentOrderDetailTaobao.js"],
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["injector.js", "all.css"],
+            "matches": ["<all_urls>"],
+            "extension_ids": []
+        }
+    ],
+    "permissions": ["storage", "activeTab", "tabs"],
+    "options_page": "options.html"
+}

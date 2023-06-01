@@ -1,0 +1,75 @@
+---
+slug: vr-dashboard-ityc
+name: VR Dashboard I.T.Y.C.
+description: Monitor boat position & call virtual sailor weather router
+version: 1.1.4
+release_date: 'March 15, 2023'
+publisher: sebastien.calvi
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: '1,000+'
+publisher_site: ityc.fr
+extension_website: 'https://www.ityc.fr/dash.html'
+support_website: 'https://www.ityc.fr/aide_dash.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "VR Dashboard I.T.Y.C.",
+    "short_name": "VR Dashboard I.T.Y.C.",
+    "description": "Monitor boat position & call virtual sailor weather router",
+    "version": "1.1.4",
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting",
+    "declarativeContent",
+    "unlimitedStorage"
+	],
+	"host_permissions" : [
+	"*://*.virtualregatta.com/*",
+	"*://*.ityc.fr/*",
+  "*://*.openstreetmap.org/*",
+  "http://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/",
+  "https://routage.vrzen.org/*",
+  "http://zezo.org/*",
+  "http://localhost:8081/nmea/*",
+  "http://localhost:8082/nmea/*",
+  "http://localhost:8083/nmea/*",
+  "http://localhost:8084/nmea/*"
+  ],
+
+  
+  "background": {
+      "service_worker": "./js/background.js"
+  },
+  "action": {
+      "default_icon": {"128": "icon_grey.png"},
+      "default_title": "I.T.Y.C. Dashboard"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.virtualregatta.com/*/offshore-*/*","https://www.virtualregatta.com/*/offshore-*-iframe/*"],
+      "js": ["./js/addResume2.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.virtualregatta.com/*/offshore-*/*","https://www.virtualregatta.com/*/offshore-*-iframe/*"],
+      "run_at": "document_end",
+      "css":["./css/content.css"]
+    }
+  ],
+  "manifest_version": 3,
+  "web_accessible_resources": [{
+    "resources": ["listener.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": ["https://www.virtualregatta.com/*/offshore-*/*","https://www.virtualregatta.com/*/offshore-*-iframe/*"
+    ]
+  }
+}

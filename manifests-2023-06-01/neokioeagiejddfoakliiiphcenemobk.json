@@ -1,0 +1,78 @@
+---
+slug: ali-orders
+name: Ali Orders
+description: Ali Orders - Automate your dropshipping by just a  single 1 click
+version: 3.0.0.8
+release_date: 'May 25, 2023'
+publisher: AliHunter
+category: Shopping
+category_slug: ext/12-shopping
+rating: 3.28
+rating_count: 25
+user_count: '30,000+'
+publisher_site: aliorders.fireapps.io
+extension_website: 'https://fireapps.io/shopify-apps/ali-orders'
+support_website: 'https://help.fireapps.io/ali-orders'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ali Orders",
+  "version": "3.0.0.8",
+  "default_locale": "en",
+  "description": "Ali Orders - Automate your dropshipping by just a  single 1 click",
+  "externally_connectable": {
+    "matches": ["https://*.fireapps.io/*", "https://*.alihunter.io/*", "https://*.aliorders.io/*"]
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/js/vendors.js", "assets/js/content_script.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/js/content_script_ao_old.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/*", "https://*.amazon.com/*", "https://*.etsy.com/*", "https://*.fireapps.io/*"],
+      "css": ["assets/css/bootstrap.css", "assets/css/content_script.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.aliexpress.com/*"],
+      "js": ["assets/js/bootstrap.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/item/*", "https://*.aliexpress.com/store/product*"],
+      "js": ["assets/js/add_to_card_product.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/js/custom_script.js", "assets/images/*.png", "assets/svg/*.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs", "storage", "scripting", "cookies", "webRequest", "webNavigation", "notifications"],
+  "host_permissions": ["<all_urls>"]
+}

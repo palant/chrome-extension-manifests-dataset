@@ -1,0 +1,85 @@
+---
+slug: snowplow-analytics-debugg
+name: Snowplow Analytics Debugger
+description: >-
+  Debug your Snowplow Analytics implementation with the Snowplow Analytics
+  Debugger in Developer Tools.
+version: 1.2.0
+release_date: 'March 14, 2022'
+publisher: SnowcatCloud Inc.
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.428571428571429
+rating_count: 7
+user_count: '3,000+'
+publisher_site: snowcatcloud.com
+extension_website: 'https://www.snowcatcloud.com'
+support_website: 'https://docs.snowcatcloud.com/snowplow-chrome-extension/introduction'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "Snowplow Analytics Debugger",
+	"short_name": "Snowplow Debugger",
+	"version": "1.2.0",
+	"description": "Debug your Snowplow Analytics implementation with the Snowplow Analytics Debugger in Developer Tools.",
+	"author": "SnowcatCloud",
+	"minimum_chrome_version": "88",
+	"icons": {
+		"128": "/img/logo.png"
+	},
+	"action": {
+		"default_icon": "/img/logo.png",
+		"default_popup": "/pages/popup/index.html"
+	},
+	"background": {
+		"service_worker": "service_worker.js"
+	},
+	"sandbox": {
+		"pages": [
+			"/pages/sandbox/index.html"
+		]
+	},
+	"devtools_page": "/js/background/devtools.html",
+	"options_ui": {
+		"page": "/pages/options/index.html",
+		"open_in_tab": false
+	},
+	"content_scripts": [
+		{
+			"run_at": "document_start",
+			"matches": [
+				"http://*/*",
+				"https://*/*"
+			],
+			"js": [
+				"/js/content_script.js"
+			]
+		}
+	],
+	"permissions": [
+		"activeTab",
+		"storage",
+		"webRequest"
+	],
+	"host_permissions": [
+		"<all_urls>"
+	],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"config.json",
+				"js/injected_script.js"
+			],
+			"matches": [
+				"<all_urls>"
+			],
+			"use_dynamic_url": true
+		}
+	]
+}

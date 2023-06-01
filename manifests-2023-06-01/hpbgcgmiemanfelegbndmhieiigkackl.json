@@ -1,0 +1,74 @@
+---
+slug: monsta-wallet
+name: Monsta Wallet
+description: A Wallet for Monsta Chain
+version: 2.2.2
+release_date: 'February 4, 2023'
+publisher: Monsta Infinite
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.428571428571429
+rating_count: 35
+user_count: '20,000+'
+extension_website: 'https://monstainfinite.com/'
+support_website: 'https://help.monstainfinite.com/hc/en-us'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appName__",
+  "version": "2.2.2",
+  "manifest_version": 2,
+  "author": "Monsta Infinite",
+  "description": "__MSG_appDescription__",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+M",
+        "mac": "Alt+Shift+M",
+        "chromeos": "Alt+Shift+M",
+        "linux": "Alt+Shift+M"
+      }
+    }
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": ["bundle.js", "background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "19": "images/icon-19.png",
+      "32": "images/icon-32.png",
+      "38": "images/icon-38.png",
+      "64": "images/icon-64.png",
+      "128": "images/icon-128.png",
+      "512": "images/icon-512.png"
+    },
+    "default_title": "Monsta Wallet",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [{
+    "matches": ["file://*/*", "http://*/*", "https://*/*"],
+    "js": ["contentscript.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }, {
+    "matches": ["*://connect.trezor.io/*/popup.html"],
+    "js": ["vendor/trezor/content-script.js"]
+  }],
+  "permissions": ["storage", "unlimitedStorage", "clipboardWrite", "http://localhost:8545/", "https://*.infura.io/", "activeTab", "*://*.eth/", "notifications"],
+  "web_accessible_resources": ["inpage.js", "phishing.html"],
+  "externally_connectable": {
+    "matches": ["https://metamask.io/*"],
+    "ids": ["*"]
+  }
+}

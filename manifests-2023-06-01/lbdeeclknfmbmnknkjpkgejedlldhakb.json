@@ -1,0 +1,70 @@
+---
+slug: quiche-reader
+name: Quiche Reader
+description: Save web pages to Quiche Reader.
+version: '1.1'
+release_date: 'April 8, 2023'
+publisher: Greg de J
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 231
+publisher_site: quiche.works
+extension_website: 'https://quiche.works/reader'
+support_website: 'https://quiche.works/reader/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Quiche Reader",
+  "version": "1.1",
+  "description": "Save web pages to Quiche Reader.",
+
+  "icons": {
+    "16": "icons/default16.png",
+    "32": "icons/default32.png",
+    "128": "icons/default128.png"
+  },
+
+  "browser_action": {
+    "default_title": "Save to Quiche Reader",
+    "default_icon": {
+      "16": "icons/toolbar16.png",
+      "32": "icons/toolbar32.png",
+      "128": "icons/toolbar128.png"
+    }
+  },
+
+  "background": {
+    "scripts": [
+      "auth.js",
+      "cloudkiterror.js",
+      "cloudkit.js",
+      "queue.js",
+      "background.js"
+    ],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://auth.readingqueue.app/*"],
+      "js": ["auth-notify.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"],
+      "js": ["handlebars.js", "overlay.js", "overlay-setup.js"]
+    }
+  ],
+
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "storage"
+  ]
+
+}

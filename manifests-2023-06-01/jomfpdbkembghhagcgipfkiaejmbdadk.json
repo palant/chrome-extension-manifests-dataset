@@ -1,0 +1,82 @@
+---
+slug: cartzy
+name: Cartzy
+description: Cartzy's Facebook marketplace solution for listing products.
+version: 1.1.6
+release_date: 'August 16, 2022'
+publisher: vaival-chrome-developers
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 59
+user_count: '3,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.facebook.com/marketplace/create/item*"],
+      "css": ["fb.css"],
+      "js": ["config.js","helpers.js","fb-content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.facebook.com/marketplace/you/*"],
+      "css": ["alertify.css"],
+      "js": ["config.js","jquery-3.6.0.min.js","helpers.js","alertify.js","fb-selling.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.facebook.com/marketplace/edit/*"],
+      "css": [],
+      "js": ["helpers.js","fb-edit.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://store.test/admin/*","*://*.mycartzy.tk/admin/*","*://*.mycartzy.ml/admin/*","*://*.mycartzy.com/admin/*"],
+      "css": ["alertify.css"],
+      "js": ["alertify.js","cartzy-content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.facebook.com/marketplace/item/*"],
+      "css": [],
+      "js": ["config.js","helpers.js","fb-stockupdate.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.facebook.com/marketplace/*"],
+      "css": [],
+      "js": ["helpers.js","not-found.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.facebook.com/marketplace/you/selling?title_search=*&is_delete=1&listing_id=*"],
+      "css": [],
+      "js": ["config.js","helpers.js","fb-delete.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "manifest_version": 3,
+  "name": "Cartzy",
+  "description": "Cartzy's Facebook marketplace solution for listing products.",
+  "version": "1.1.6",
+  "icons": {"128": "images/logo.png"},
+  "action": {
+    "default_icon": "images/logo.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [],
+  "incognito": "spanning"
+
+}

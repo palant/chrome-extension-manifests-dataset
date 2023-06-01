@@ -1,0 +1,114 @@
+---
+slug: selcuksportshd-ve-diziplu
+name: SelcukSportsHD ve DiziPlus Reklam Engelleyici
+description: Selcuk Sports HD ve Dizi Plus sitesindeki reklamları kaldırır.
+version: 1.3.1
+release_date: 'June 15, 2021'
+publisher: Suylaak
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 413
+extension_website: 'http://tacsiz.rf.gd'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "SelcukSportsHD ve DiziPlus Reklam Engelleyici",
+	"version": "1.3.1",
+	"description": "Selcuk Sports HD ve Dizi Plus sitesindeki reklamları kaldırır.",
+	"manifest_version": 2,
+	"icons": {
+		"16": "icon/icon16.png",
+		"32": "icon/icon32.png",
+		"48": "icon/icon48.png",
+		"64": "icon/icon64.png",
+		"72": "icon/icon72.png",
+		"96": "icon/icon96.png",
+		"128": "icon/icon128.png",
+		"144": "icon/icon144.png",
+		"192": "icon/icon192.png",
+		"256": "icon/icon256.png",
+		"512": "icon/icon512.png"
+	},
+	"background": {
+		"scripts": ["background.js"]
+	},
+	"browser_action": {
+		"default_popup": "popup.html",
+		"default_icon": "icon/icon64.png"
+    },
+	"permissions": [
+		"storage",
+		"declarativeNetRequest"
+	],
+	"content_scripts": [
+		{
+			"matches": ["*://*/*"],
+			"include_globs": [
+				"*://*dizi*.plus/*"
+			],
+			"run_at": "document_start",
+			"css": ["diziplus/style.css"]
+		},
+		{
+			"matches": ["*://*/*"],
+			"include_globs": [
+				"*://*.selcuksportshdgiris*.*/*"
+			],
+			"run_at": "document_start",
+			"css": ["selcuksportshdgiris/style.css"]
+		},
+		{
+			"matches": ["*://*/*"],
+			"include_globs": [
+				"*://*.selcuksportshdgiris*.*/*"
+			],
+			"run_at": "document_idle",
+			"js": ["selcuksportshdgiris/script.js"]
+		},
+		{
+			"matches": ["*://*/*"],
+			"include_globs": [
+                "*://*.selcuksportshd*.*/*"
+            ],
+			"exclude_globs": [
+                "*://*.selcuksportshdgiris*.*/*"
+            ],
+			"run_at": "document_idle",
+			"js": ["selcuksportshd/content.js"]
+		},
+		{
+			"matches": ["*://*/*"],
+			"include_globs": [
+                "*://*.selcuksportshd*.*/*"
+            ],
+			"exclude_globs": [
+                "*://*.selcuksportshdgiris*.*/*"
+            ],
+			"run_at": "document_start",
+			"css": ["selcuksportshd/style.css"],
+			"js": ["selcuksportshd/content_start.js"]
+		},
+		{
+			"matches": ["*://*/*"],
+			"include_globs": [
+                "*://*.selcuksportshd*.*/*"
+            ],
+			"exclude_globs": [
+                "*://*.selcuksportshdgiris*.*/*"
+            ],
+			"run_at": "document_end",
+			"js": ["selcuksportshd/content_end.js"]
+		}
+	],
+	"declarative_net_request" : {
+		"rule_resources" : [{
+		  "id": "ruleset_1",
+		  "enabled": true,
+		  "path": "rules_1.json"
+		}]
+	}
+}

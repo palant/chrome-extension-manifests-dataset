@@ -1,0 +1,105 @@
+---
+slug: notifications-for-youtube
+name: Notifications for YouTube
+description: Stop missing notifications for your YouTube subscriptions and live events.
+version: 1.7.1
+release_date: 'January 12, 2023'
+publisher: ViewTrender
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.131147540983607
+rating_count: 61
+user_count: '1,000+'
+publisher_site: viewtrender.com
+extension_website: 'https://notifications.viewtrender.com/'
+support_website: 'https://notifications.viewtrender.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Notifications for YouTube",
+  "version": "1.7.1",
+  "description": "Stop missing notifications for your YouTube subscriptions and live events.",
+  "default_locale": "en",
+  "action": {
+    "default_icon": "./assets/128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/16.png",
+    "48": "./assets/48.png",
+    "128": "./assets/128.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "https://*.viewtrender.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/feed/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "./dist/contentScripts/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/watch.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://notifications.viewtrender.com/auth/google/callback*"
+      ],
+      "js": [
+        "./dist/contentScripts/viewtrender.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/subscriptions.global.js",
+        "*.html",
+        "*.css",
+        "*.svg",
+        "content/*",
+        "images/*",
+        "js/*",
+        "icons/*"
+      ],
+      "matches": [
+        "https://www.youtube.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.youtube.com/*"
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+---
+slug: sumtotal-xapi-tracker
+name: SumTotal xAPI Tracker
+description: >-
+  This extension is used to record your progress on any YouTube Video that is
+  added as an Activity in your Learn application.
+version: '1.2'
+release_date: 'August 23, 2022'
+publisher: SumTotal Systems LLC
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 119
+extension_website: 'http://www.sumtotalsystems.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2",
+  "name": "SumTotal xAPI Tracker",
+  "description": "This extension is used to record your progress on any YouTube Video that is added as an Activity in your Learn application.",
+ 
+  "permissions": [
+    "activeTab",
+	"tabs",
+	"storage",
+	"declarativeContent"
+  ],
+  "host_permissions": [
+    "http://www.youtube.com/*",
+    "https://www.youtube.com/*",
+	"https://www.youtube.com/watch*",
+	"<all_urls>"
+  ],
+  "content_security_policy": {
+	  "script-src": "'unsafe-eval' 'self' https://www.youtube.com https://s.ytimg.com",
+	  "object-src": "'self'"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.youtube.com/*",
+        "https://www.youtube.com/*"
+      ],
+	"js": [
+        "src/sumtservice.js"
+      ],
+      "css": [
+        "assets/css/sumtotal.css"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "assets/images/xAPITracker_16x16_Enabled.png",
+	"48": "assets/images/xAPITracker_48x48_Enabled.png",
+    "128": "assets/images/xAPITracker_128x128_Enabled.png"
+  },
+  "action": {
+		"default_icon": "assets/images/xAPITracker_48x48_Disabled.png",
+		"default_popup": "sumtoptions.html"
+  },
+	
+  "options_ui":{
+		"page": "sumtoptions.html"
+	}
+}

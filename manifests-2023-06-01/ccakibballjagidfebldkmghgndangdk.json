@@ -1,0 +1,81 @@
+---
+slug: parrot-api-mocking
+name: Parrot API mocking
+description: Hassle-free mocking of xhr and fetch calls.
+version: 6.4.4
+release_date: 'March 25, 2023'
+publisher: Ruud Landman
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 3
+user_count: 145
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Parrot API mocking",
+  "description": "Hassle-free mocking of xhr and fetch calls.",
+  "version": "6.4.4",
+  "author": "Ruud Landman",
+  "background": {
+    "service_worker": "background/js/background.js"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": "images/parrot.png",
+    "default_popup": "popup/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/parrot.png"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "generic/js/alert.js",
+        "content/js/content-start.js"
+      ],
+      "css": [
+        "generic/css/css-variables.css",
+        "generic/css/alert.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content/js/webcomponents-bundle.js",
+        "content/js/mock-data-dialog.js",
+        "content/js/network-viewer.js",
+        "content/js/content-end.js"
+      ],
+      "css": [
+        "generic/css/css-variables.css",
+        "generic/css/alert.css"
+      ]
+    }
+  ],
+  "icons": {
+    "128": "images/parrot.png"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "permissions": ["storage", "scripting"]
+}

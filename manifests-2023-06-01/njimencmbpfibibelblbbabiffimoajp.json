@@ -1,0 +1,95 @@
+---
+slug: total-password
+name: Total Password
+description: Store your passwords safely and securely - Total Password makes life easier!
+version: 1.0.0
+release_date: 'April 30, 2023'
+publisher: Protected.net
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 928
+publisher_site: totalpassword.com
+extension_website: 'https://www.totalpassword.com'
+support_website: 'https://help.totalpassword.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Total Password",
+  "short_name": "TotalPass",
+  "description": "__MSG_manifest_description__",
+  "default_locale": "en",
+  "version": "1.0.0",
+  "author": "Total Password",
+  "homepage_url": "https://totalpassword.com/",
+  "background": {
+    "service_worker": "src/background/service-worker-wrapper.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "src/forge/forge.js",
+        "src/content_scripts/content-script.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "src/images/icons/icon-16.png",
+    "48": "src/images/icons/icon-48.png",
+    "128": "src/images/icons/icon-128.png"
+  },
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "tabs",
+    "browsingData",
+    "storage",
+    "cookies",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "bookmarks"
+  ],
+  "optional_permissions": [
+    "contextMenus",
+    "privacy"
+  ],
+  "action": {
+    "default_icon": {
+      "128": "src/images/icons/icon-128.png"
+    },
+    "default_popup": "src/ui/index.html",
+    "default_title": "Total Password"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "src/images/icons/blank.png",
+        "src/content_scripts/popup.html",
+        "src/content_scripts/notification.html",
+        "src/images/icons/icon-32.png",
+        "src/images/icons/icon-32-i.png",
+        "src/images/icons/iconForce-32.png"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; img-src * data: ; object-src 'self'"
+  }
+}

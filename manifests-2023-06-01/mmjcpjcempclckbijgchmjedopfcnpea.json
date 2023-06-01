@@ -1,0 +1,66 @@
+---
+slug: nocturnal-surfer-extensio
+name: Nocturnal Surfer Extension
+description: Inverted display mode for less eye strain in dark or dim lighting
+version: 1.0.1
+release_date: 'September 7, 2021'
+publisher: BrowserTech
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '50,000+'
+publisher_site: browsertech.co
+extension_website: 'https://browsertech.co'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Nocturnal Surfer Extension",
+  "short_name": "Nocturnal Surfer",
+  "homepage_url": "https://nocturnalsurfer.browsertech.co",
+  "description": "Inverted display mode for less eye strain in dark or dim lighting",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "activeTab",
+    "tabs",
+    "https://api.browsertech.co/nightlight/"
+  ],
+  "version": "1.0.1",
+  "browser_action": {
+    "default_icon": "public/images/icon.png",
+    "default_title": "Toggle night mode"
+  },
+  "icons": {
+    "16": "public/images/bd-16.png",
+    "32": "public/images/bd-32.png",
+    "48": "public/images/bd-48.png",
+    "128": "public/images/bd-128.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "landing.html"
+  },
+  "web_accessible_resources": ["images/*.*"],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["content_script_start.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": ["content_script_idle.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self';style-src 'self' 'unsafe-inline' *;media-src *;"
+}

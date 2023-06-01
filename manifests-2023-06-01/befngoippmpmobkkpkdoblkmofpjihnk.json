@@ -1,0 +1,114 @@
+---
+slug: leadiq
+name: LeadIQ
+description: LeadIQ helps customers build pipeline through smarter prospecting.
+version: 23.5.23
+release_date: 'May 23, 2023'
+publisher: LeadIQ
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.9215686274509802
+rating_count: 51
+user_count: '30,000+'
+extension_website: 'https://leadiq.com'
+support_website: 'https://leadiq.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LeadIQ",
+  "short_name": "LeadIQ",
+  "version": "23.5.23",
+  "manifest_version": 3,
+  "description": "LeadIQ helps customers build pipeline through smarter prospecting.",
+  "icons": {
+    "128": "meta/128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA47Jq+bxwttNMFCtMJ3GoZ/hOoGhw+fZMCKSPVtX2MtV+zuAlgfXj0xs7vgdqhe9kiEHhNqnYYgJbnUZCFKM4JkOirI5Mr13MhikYINQzBF/IUZh8WyG6WWZH4g8VtN39gbs70CpkCUZnRAtOMd59C939KsOfba07L05b4DM/jjjR167DsY+whvHlqYXRAVQGWGjNLjNOS4OWyNCDVDreDkXVTZW2ssFVMQVDJCFk/q0nTWvBJvGCXA2Gx8IGKRu7Lu2e+NQjljOGuWp1hBDC/oln9P3/idbs/5xgzdHnyPCHt7DryPKq+VBwOPdbIXetMET2RKd90wwfBfwgETAm6wIDAQAB",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "32": "meta/32.png"
+    },
+    "default_title": "LeadIQ"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.leadiq.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "resources": [
+        "prospector/images/widget.svg",
+        "prospector/content-scripts/in-page-context/network.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*",
+        "*://*.outreach.io/*",
+        "*://app.salesloft.com/*"
+      ],
+      "resources": [
+        "scribe/content-scripts/gmail.css",
+        "scribe/content-scripts/outreach.css",
+        "scribe/content-scripts/outreach-sidebar.css",
+        "scribe/content-scripts/salesloft.css",
+        "scribe/content-scripts/shared.css",
+        "scribe/content-scripts/trigger.css",
+        "scribe/images/minus.svg",
+        "scribe/images/leadiq.svg"
+      ]
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "scripting",
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.leadiq.com/*"
+  ],
+  "optional_host_permissions": [
+    "*://mail.google.com/*",
+    "*://*.outreach.io/*",
+    "*://app.salesloft.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [ "*://*.leadiq.com/*" ],
+      "js": [ "meta/content-scripts/leadiq-install-status.js" ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [ "*://*.leadiq.com/extension/*" ],
+      "js": [ "prospector/content-scripts/leadiq-ext-helper.js" ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://*.linkedin.com/*" ],
+      "js": [ "prospector/content-scripts/linkedin-support.js" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "*://*.linkedin.com/*" ],
+      "js": [ "prospector/content-scripts/linkedin-scroll-detector.js" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "*://*.linkedin.com/*" ],
+      "js": [ "prospector/content-scripts/linkedin-widget.js" ],
+      "run_at": "document_end"
+    }
+  ]
+}

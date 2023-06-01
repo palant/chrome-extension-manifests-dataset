@@ -1,0 +1,96 @@
+---
+slug: chatgpt-prompts-snack-pro
+name: ChatGPT Prompts - Snack Prompt
+description: >-
+  Discover the best AI prompts right inside Chat GPT from the top prompters on
+  the internet
+version: 0.0.9
+release_date: 'May 17, 2023'
+publisher: snackpromptcom
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.96875
+rating_count: 32
+user_count: '10,000+'
+publisher_site: snackprompt.com
+extension_website: 'https://SnackPrompt.com'
+support_website: 'https://snack-prompt.canny.io/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatGPT Prompts - Snack Prompt",
+  "version": "0.0.9",
+  "description": "Discover the best AI prompts right inside Chat GPT from the top prompters on the internet",
+  "action": {
+    "default_icon": "./assets/icon.png",
+    "default_popup": "./dist/popup/index.html",
+    "default_title": "Stack Prompt"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/src/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon.png",
+    "48": "./assets/icon.png",
+    "128": "./assets/icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "management",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/chat/*",
+    "http://localhost:3000/*",
+    "https://app-dev.snackprompt.com/*",
+    "https://app.snackprompt.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/gpt/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://snackprompt.com/*",
+        "https://app-dev.snackprompt.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/sp-platform/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://app-dev.snackprompt.com/*",
+        "https://snackprompt.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/common/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/gpt/scripts/index.js",
+        "dist/contentScripts/gpt/style.css"
+      ],
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://app-dev.snackprompt.com/*"
+      ]
+    }
+  ]
+}

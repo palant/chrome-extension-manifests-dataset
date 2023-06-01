@@ -1,0 +1,58 @@
+---
+slug: fond-extension
+name: Fond Extension
+description: >-
+  For Discounts users, get a helpful reminder whenever you visit a site with
+  discounts!
+version: 2.0.1
+release_date: 'December 7, 2022'
+publisher: Fond
+category: Shopping
+category_slug: ext/12-shopping
+rating: 3.75
+rating_count: 24
+user_count: '10,000+'
+extension_website: 'https://fond.co'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Fond Extension",
+  "description": "For Discounts users, get a helpful reminder whenever you visit a site with discounts!",
+  "version": "2.0.1",
+  "browser_action": {
+    "default_icon": "icon-gray_24.png",
+    "active_icon": "icon_24.png"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons": {
+    "16": "images/app_logo16.png",
+    "48": "images/app_logo48.png",
+    "128": "images/app_logo128.png",
+    "256": "images/app_logo256.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/banner.scss", "css/fonts.scss"],
+      "js": ["content_script.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*/tokens/extension_login_success"],
+      "js": ["authenticate.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fond.co/*"],
+      "js": ["install_checker.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["tabs", "storage"],
+  "web_accessible_resources": ["templates/*", "logo.png", "images/*", "fonts/*"]
+}

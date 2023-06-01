@@ -1,0 +1,70 @@
+---
+slug: exelare-extension
+name: Exelare Extension
+description: >-
+  Exelare extension is a bridge between Exelare and other sites which carry
+  candidate and contact profiles.
+version: 1.0.6
+release_date: 'March 28, 2023'
+publisher: Exelare
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 242
+extension_website: 'https://exelare.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Exelare Extension",
+  "description": "Exelare extension is a bridge between Exelare and other sites which carry candidate and contact profiles.",
+  "version": "1.0.6",
+  "minimum_chrome_version": "92",
+  "icons": {
+    "64": "icon.png",
+    "128": "icon_big.png"
+  },
+  "action": {
+    "icons": {
+      "16": "icon.png",
+      "24": "icon.png",
+      "34": "icon.png"
+    },
+    "default_title": "Login to Exelare",
+    "default_popup": "loginForm.html"
+  },
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "newBack.js"
+  },
+  "options_page": "options.html",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*",
+        "*://*.zoominfo.com/*"
+      ],
+      "exclude_matches":[
+        "*://*.linkedin.com/recruiter/smartsearch*",
+        "*://*.linkedin.com/recruiter/hiring-dashboard*"
+      ],
+      "css": [ "css/ExelareStyles.css" ],
+      "js" : [ "libs/jquery-3.2.1.min.js", "libs/jquery.cookie.js", "libs/lodash.min.js", "utils/helpers.js", "contentScript.js", "scraper.js" ],
+      "run_at" :  "document_end"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.zoominfo.com/*"
+  ]
+}

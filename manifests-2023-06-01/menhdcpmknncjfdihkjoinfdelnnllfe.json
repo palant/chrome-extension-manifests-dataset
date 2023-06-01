@@ -1,0 +1,73 @@
+---
+slug: intermedia-unite-chrome-e
+name: Intermedia Unite™ Chrome Extension
+description: Intermedia Unite™ Chrome Extension
+version: '0.40'
+release_date: 'April 3, 2023'
+publisher: Intermedia
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 8
+user_count: '4,000+'
+extension_website: 'https://intermedia.net'
+support_website: 'https://kb.intermedia.net'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuHPSJpk3sL7Fw130Z1fqJNdl/HlksZKvS8MvxIQS24VD9a5/+kUQ4m+jJUqgr57yI4HV2r0TXB8AQE15PdcYQ6on6nKjLZY+9pAKhl3ayWOHhnhtsfNj7xoEAGNDiejhP3tIRfrdOPvhDaQC6UKfe08kTfGaQAC6cSNjKgqOOQtoKCcV0tpRAfzXVAH3GSqIKJiOkUoKSGlHryU8R2286p6uS7Mu1U7AEfPwqiyKxPOY6uenQgIf7EyPecn732GX/+LrDrktc4IxS5KhXDyY22AYgzObcwcumTtaOeWw9x19bN2Xy/rwsgnBIlFQOv7pAJM6QlqunmDau7zhfkB98QIDAQAB",
+  "manifest_version": 2,
+
+  "name": "__MSG_manifest_name__",
+  "short_name": "__MSG_manifest_short_name__",
+  "description": "__MSG_manifest_description__",
+  "default_locale": "en",
+  "version": "0.40",
+
+  "icons": {
+    "64":  "assets/images/logo-64.png",
+    "128": "assets/images/logo-128.png"
+  },
+
+  "browser_action": {
+    "default_popup": "popup/index.html"
+  },
+
+  "background": {
+    "scripts": ["scripts/events.background.js"],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "https://*/*", "http://*/*" ],
+      "exclude_globs": [
+        "*://meeting.*anymeeting*.com/**", "*://webinar.*anymeeting*.com/**",
+        "*://meeting.gomeet*.com/**","*://webinar.meeting.gomeet*.com/**",
+        "*://meeting.rambomeet-*.com/**",  "*://webinar.meeting.rambomeet-*.com/**",
+        "*://meeting.meetuniverge.blue/**", "*://webinar.meetuniverge.blue/**"
+      ],
+      "js": [ "scripts/ctc.content.js" ],
+      "css": [ "assets/css/ctc.content.css" ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [ "https://www.google.com/calendar/*", "https://calendar.google.com/calendar/*" ],
+      "js": [ "scripts/gc.content.js" ],
+      "css": [ "assets/css/gc.content.css" ]
+    }
+  ],
+
+  "permissions": [
+    "storage",
+    "identity",
+    "https://extend-api.intermedia.net/*"
+  ],
+
+  "web_accessible_resources": [ "assets/*" ],
+
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com 'unsafe-eval' 'sha256-rCs+PE9jSqXeEtt5LDTouGqlYo4ifJhnJA3Dqiji5h0='; object-src 'self'"
+}

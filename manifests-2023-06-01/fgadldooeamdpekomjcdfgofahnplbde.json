@@ -1,0 +1,78 @@
+---
+slug: edcast-myguide-player
+name: EdCast MyGuide Player
+description: EdCast MyGuide Player
+version: '2023.05'
+release_date: 'May 24, 2023'
+publisher: EdCast
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '1,000+'
+publisher_site: www.myguide.org
+---
+
+{
+	"author": "EdCast",
+	"manifest_version": 3,
+	"name": "EdCast MyGuide Player",
+	"description": "EdCast MyGuide Player",
+	"version": "2023.05",
+	"options_ui": {
+		"page": "options/options.html",
+		"open_in_tab": false
+	},
+	"content_scripts": [{
+		"matches": ["*://*/*"],
+		"exclude_matches": [],
+		"css": ["content_script/dom_selector/css/style.css"],
+		"js": ["gm_client_iframe.js"],
+		"all_frames": true,
+		"match_about_blank": true
+	}, {
+		"matches": ["*://*/*"],
+		"exclude_matches": [],
+		"css": ["content_script/worker/css/style.css"],
+		"js": ["gm_client.js"]
+	}],
+	"background": {
+		"service_worker": "player_back.js"
+	},
+	"icons": {
+		"16": "common/img/gicon16.png",
+		"48": "common/img/gicon48.png",
+		"128": "common/img/gicon128.png"
+	},
+	"permissions": [
+		"storage"
+	],
+	"host_permissions": [
+		"https://api-v3.guideme.io/", "https://sso.myguide.org/", "https://v3-analytics.guideme.io/" ,"https://*.edcast.com/" 
+	],
+	"action": {
+		"default_icon": {
+			"40": "common/img/qu_icon.png"
+		},
+		"default_popup": "/browser_action/popup.html",
+		"browser_style": true
+	},
+	"update_url": "https://clients2.google.com/service/update2/crx",
+	"web_accessible_resources": [{
+		"resources": ["content_script/**/*.html",
+			"side_panel/**/*.html",
+			"side_panel/**/*.js",
+			"common/lib/fonts/*",
+			"common/img/*",
+			"common/icons/*",
+			"common/audio/*",
+			"data/api/*",
+			"data/assets/*"
+		],
+		"matches": ["<all_urls>"]
+	}],
+	"content_security_policy": {
+		"script-src": "self",
+		"object-src": "self"
+	}
+}

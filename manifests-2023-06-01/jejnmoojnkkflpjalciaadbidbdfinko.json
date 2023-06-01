@@ -1,0 +1,135 @@
+---
+slug: handy-browser-extension
+name: Handy browser extension
+description: Browser extension that allows videos to play in sync with your Handy
+version: 0.1.4
+release_date: 'November 15, 2022'
+publisher: Sweet Tech AS
+category: Fun
+category_slug: ext/14-fun
+rating: 2.3333333333333335
+rating_count: 3
+user_count: '4,000+'
+extension_website: >-
+  https://sweettech.notion.site/Handy-browser-extension-d04a46824a0a46ce8322c08bb2096797
+support_website: 'https://github.com/poengAlex/handy-browser-extension/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Handy browser extension",
+  "version": "0.1.4",
+  "description": "Browser extension that allows videos to play in sync with your Handy",
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  },
+  "options_page": "www/index.html#/options",
+  "action": {
+    "default_popup": "www/index.html#/popup",
+    "default_title": "Handy browser plugin"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:9001/*",
+        "http://localhost:9000/*",
+        "https://index.handyfeeling.com/*",
+        "https://www.ivdb.io/*",
+        "https://www.pornhub.com/view_video.php?viewkey=*",
+        "https://www.pornhub.com/embed/*",
+        "https://thebenefitmonkey.com/members/scenes/*",
+        "https://site-ma.brazzers.com/scene/*"
+      ],
+      "exclude_globs": [],
+      "js": [
+        "notify.js"
+      ],
+      "css": [
+        "assets/notify.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://localhost:9001/*",
+        "http://localhost:9000/*",
+        "https://index.handyfeeling.com/*",
+        "https://www.ivdb.io/*"
+      ],
+      "js": [
+        "index-extra.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.pornhub.com/view_video.php?viewkey=*",
+        "https://www.pornhub.com/embed/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle",
+      "js": [
+        "pornhub-embed.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://thebenefitmonkey.com/members/scenes/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "benefit-monkey.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://site-ma.brazzers.com/scene/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "brazzers.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/watch*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "youtube.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/embed/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle",
+      "js": [
+        "youtube-embed.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "short_name": "Handy browser extension"
+}

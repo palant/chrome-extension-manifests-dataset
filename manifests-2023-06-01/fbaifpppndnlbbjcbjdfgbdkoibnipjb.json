@@ -1,0 +1,65 @@
+---
+slug: twishare-to-misskey
+name: Twishare to Misskey
+description: Twitter のシェアボタンから Misskey にシェアすることができるようにします。
+version: 0.2.1
+release_date: 'May 31, 2023'
+publisher: redtea1220
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 217
+extension_website: 'https://github.com/alpaca-honke/twishare-to-io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name":"Twishare to Misskey",
+	"version":"0.2.1",
+	"description":"Twitter のシェアボタンから Misskey にシェアすることができるようにします。",
+	"icons":{
+		"16":"icons/16.png", 
+		"48":"icons/48.png",
+		"128":"icons/128.png"
+	},
+	"content_scripts":[
+		{
+			"run_at":"document_start",
+			"matches":["https://twitter.com/intent/tweet*","http://twitter.com/intent/tweet*"],
+			"js":["js_and_css/on_twitter_intent.js"]
+		},
+		{
+			"run_at": "document_end",
+			"matches": ["<all_urls>"],
+			"js": ["js_and_css/allpages.js"],
+			"css": ["js_and_css/allpages.css"]
+		}
+	],
+	"background": {
+		"service_worker": "js_and_css/background.js"
+	},
+	"action": {
+		"default_icon": {
+			"16": "icons/16.png",
+			"48": "icons/48.png",
+			"128": "icons/128.png"
+		},
+		"default_title": "共有先のサーバー名の設定",
+		"default_popup": "options/options.html"
+	},
+	"options_ui": {
+		"page": "options/options.html"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": ["assets/share.png"],
+			"matches": ["<all_urls>"]
+		}
+	],
+	"permissions": ["storage"],
+	"author":"Alkappa/alpaca-honke",
+	"homepage_url":"https://github.com/alpaca-honke/twishare-to-misskey/"
+}

@@ -1,0 +1,92 @@
+---
+slug: todobot-task-management-a
+name: ToDoBot - Task Management App for Slack
+description: >-
+  This extension will allow you to view and manage all your Slack ToDos right in
+  Chrome
+version: 0.0.14
+release_date: 'May 9, 2023'
+publisher: OneBar Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '1,000+'
+extension_website: 'https://thetodobot.com'
+support_website: 'https://thetodobot.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ToDoBot - Task Management App for Slack",
+  "description": "This extension will allow you to view and manage all your Slack ToDos right in Chrome",
+  "version": "0.0.14",
+  "icons": {
+    "16": "active.png",
+    "32": "active.png",
+    "48": "active.png",
+    "128": "active.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "cookies",
+    "scripting",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://api.thetodobot.com/"
+  ],
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "patches.js"
+      ],
+      "run_at": "document_start",
+      "exclude_matches": [
+        "http://localhost:4200/tests"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "/assets/vendor.js",
+        "/assets/todobot.js",
+        "init.js"
+      ],
+      "exclude_matches": [
+        "http://localhost:4200/tests"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/todobot.css",
+        "/assets/vendor.css",
+        "/images/*",
+        "active.png",
+        "inactive.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Open ToDoBot",
+    "default_icon": "inactive.png"
+  }
+}

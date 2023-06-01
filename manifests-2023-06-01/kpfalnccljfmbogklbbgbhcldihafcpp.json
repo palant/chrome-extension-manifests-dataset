@@ -1,0 +1,121 @@
+---
+slug: also-boughts-downloader-b
+name: Also Boughts Downloader by Kindletrends
+description: >-
+  Downloads Also Bought, Also Viewed and Also Read data, as well as Top 100s and
+  Hot New Releases from the Amazon Kindle Store
+version: 0.0.74
+release_date: 'October 16, 2022'
+publisher: Kindletrends
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.555555555555555
+rating_count: 9
+user_count: '2,000+'
+publisher_site: kindletrends.com
+extension_website: 'https://kindletrends.com/download-also-boughts-chrome-extension/'
+support_website: 'https://kindletrends.com/download-also-boughts-chrome-extension/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Also Boughts Downloader by Kindletrends",
+  "description": "Downloads Also Bought, Also Viewed and Also Read data, as well as Top 100s and Hot New Releases from the Amazon Kindle Store",
+  "homepage_url": "https://kindletrends.com/download-also-boughts-chrome-extension/",
+  "version": "0.0.74",
+  "manifest_version": 3,
+  "icons": { "16": "icon16.png",
+           "48": "icon48.png",
+          "128": "icon128.png" },
+  "action": {
+    "default_title": "Also Boughts and Top 100s Downloader by Kindletrends.  Click the button for instructions.",
+    "default_popup": "instructions.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "ajax-loader.gif" ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at" : "document_start",
+      "js": ["before.js",
+      "./options_sync/webext-options-sync.3.1.0.js",
+      "./console.history/console-history.min.js",
+      "./merge-images/index.umd.js"],
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.co.uk/*",
+        "https://*.amazon.ca/*",
+        "https://*.amazon.de/*"
+      ]
+    },
+    {
+      "run_at" : "document_idle",
+      "css": ["styles.css"],
+      "js": ["after.js",
+      "abs_downloader_functions.js",
+      "execute_abs_downloader_rewrite.js"],
+      "matches": [
+        "https://*.amazon.com/*/dp/*",
+        "https://*.amazon.com/dp/*",
+        "https://*.amazon.com/gp/product/*",
+        "https://*.amazon.co.uk/*/dp/*",
+        "https://*.amazon.co.uk/dp/*",
+        "https://*.amazon.co.uk/gp/product/*",
+        "https://*.amazon.ca/*/dp/*",
+        "https://*.amazon.ca/dp/*",
+        "https://*.amazon.ca/gp/product/*",
+        "https://*.amazon.de/*/dp/*",
+        "https://*.amazon.de/dp/*",
+        "https://*.amazon.de/gp/product/*"
+      ]
+    },
+    {
+      "run_at" : "document_idle",
+      "css": ["styles.css"],
+      "js": ["after.js",
+      "top_100s_functions.js",
+      "execute_top_100s_downloader.js"],
+      "matches": [
+        "https://*.amazon.com/gp/new-releases/*",
+        "https://*.amazon.com/gp/bestsellers/*",
+        "https://*.amazon.com/Best-Sellers-*",
+        "https://*.amazon.com/best-sellers-*",
+        "https://*.amazon.co.uk/gp/new-releases/*",
+        "https://*.amazon.co.uk/gp/bestsellers/*",
+        "https://*.amazon.co.uk/Best-Sellers-*",
+        "https://*.amazon.co.uk/best-sellers-*",
+        "https://*.amazon.ca/gp/new-releases/*",
+        "https://*.amazon.ca/gp/bestsellers/*",
+        "https://*.amazon.ca/Best-Sellers-*",
+        "https://*.amazon.ca/best-sellers-*",
+        "https://*.amazon.de/*gp/bestsellers/*",
+        "https://*.amazon.de/*gp/new-releases/*"
+      ]
+    },
+    {
+      "run_at" : "document_idle",
+      "css": ["styles.css"],
+      "js": ["after.js",
+      "search_functions.js",
+      "execute_search_downloader.js"],
+      "matches": [
+        "https://*.amazon.com/s?*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.amazon.com/*/dp/*",
+    "https://*.amazon.com/dp/*",
+    "https://*.amazon.com/gp/product/*"
+  ]
+}

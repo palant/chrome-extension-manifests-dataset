@@ -1,0 +1,80 @@
+---
+slug: twdisplayvicinity
+name: twDisplayVicinity
+description: Display the vicinity of a particular tweet on Twitter.
+version: 0.3.3.0
+release_date: 'September 29, 2022'
+publisher: furyu
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.525
+rating_count: 40
+user_count: '10,000+'
+publisher_site: memo.furyutei.work
+extension_website: 'https://memo.furyutei.work/entry/20140609/twDisplayVicinity'
+support_website: 'https://github.com/furyutei/twDisplayVicinity_Chrome/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version" : 3
+,   "name" : "__MSG_ext_title__"
+,   "short_name" : "__MSG_ext_short_name__"
+,   "version" : "0.3.3.0"
+,   "description" : "__MSG_ext_description__"
+,   "author" : "furyu"
+,   "default_locale" : "en"
+,   "icons" : {
+        "16" : "images/icon_16.png"
+    ,   "48" : "images/icon_48.png"
+    ,   "64" : "images/icon_64.png"
+    ,   "96" : "images/icon_96.png"
+    ,   "128" : "images/icon_128.png"
+    }
+,   "content_scripts" : [
+        {
+            "matches" : [ "*://twitter.com/*", "*://mobile.twitter.com/*", "*://tweetdeck.twitter.com/*" ]
+        ,   "js" : [ "scripts/jquery.min.js", "scripts/decimal.min.js", "scripts/inject_script.js", "scripts/load_options.js", "scripts/disable_graphql_profile_timeline.js" ]
+        ,   "run_at" : "document_start"
+        ,   "all_frames" : false
+        }
+    ,   {
+            "matches" : [ "*://twitter.com/*", "*://mobile.twitter.com/*" ]
+        ,   "js" : [ "scripts/main_react.js" ]
+        ,   "run_at" : "document_end"
+        ,   "all_frames" : false
+        }
+    ,   {
+            "matches" : [ "*://tweetdeck.twitter.com/*" ]
+        ,   "js" : [ "scripts/main_tweetdeck.js" ]
+        ,   "run_at" : "document_end"
+        ,   "all_frames" : false
+        }
+    ]
+,   "background" : {
+        "service_worker" : "background-wrapper.js"
+    }
+,   "options_ui" : {
+        "page" : "html/options.html"
+    ,   "open_in_tab" : true
+    }
+,   "action" : {
+        "default_icon" : "images/icon_16.png"
+    ,   "default_title" : "__MSG_ext_title__"
+    ,   "default_popup" : "html/options.html"
+    }
+,   "permissions": [
+        "storage",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback"
+     ]
+,   "host_permissions" : [
+        "*://*.twitter.com/*"
+    ]
+,   "web_accessible_resources" : [{
+        "resources" : [ "scripts/*.js" ],
+        "matches" : [ "*://*.twitter.com/*" ]
+    }]
+,   "incognito" : "split"
+}

@@ -1,0 +1,93 @@
+---
+slug: u2docs
+name: u2Docs
+description: Convert youtube to pdf document
+version: '0.3'
+release_date: 'March 22, 2023'
+publisher: u2docs
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 1
+user_count: 239
+publisher_site: u2docs.com
+extension_website: 'https://www.u2docs.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name"            : "u2Docs",
+  "version"         : "0.3",
+  "description"     : "Convert youtube to pdf document",
+  "default_locale": "en",
+
+  "icons": {
+    "16" : "/icons/dark/16x16.png",
+    "19" : "/icons/dark/19x19.png",
+    "38" : "/icons/dark/38x38.png",
+    "48" : "/icons/dark/48x48.png",
+    "128": "/icons/dark/128x128.png"
+  },
+
+  "action": {
+    "default_popup": "/popup/popup.html",
+    "default_icon": {
+      "16" : "/icons/dark/16x16.png",
+      "19" : "/icons/dark/19x19.png",
+      "38" : "/icons/dark/38x38.png",
+      "48" : "/icons/dark/48x48.png",
+      "128": "/icons/dark/128x128.png"
+        },
+    "default_title": "u2Docs"
+  },
+
+  "background" : {
+    "service_worker": "/background/background-wrapper.js"
+  },
+
+  "options_page": "/options/index.html",
+
+  "content_scripts": [
+    {
+        "all_frames" : true,
+        "run_at" : "document_end",
+        "matches": ["*://*.youtube.com/*"],
+        "js": ["/content/adb.js"]
+    }
+],
+
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.u2docs.com/*",
+        "https://*.youtube.com/*"
+      ],
+      "resources": [
+        "/icons/photo_camera.gif",
+        "/icons/search.gif",
+        "/icons/pause_24.png"
+      ]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+ 
+  "minimum_chrome_version": "101",
+
+  "permissions": [
+    "storage",
+    "scripting",
+    "tabs",
+    "activeTab",
+    "declarativeNetRequestWithHostAccess"
+  ],
+
+  "host_permissions": [
+    "*://*.u2docs.com/*",
+    "*://*.youtube.com/*"
+  ]
+}

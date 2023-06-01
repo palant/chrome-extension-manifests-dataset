@@ -1,0 +1,90 @@
+---
+slug: chatgpt-for-telegram
+name: ChatGPT for Telegram
+description: use this tool to get ChatGPT responses from any messages on Telegram.
+version: 1.0.1
+release_date: 'March 12, 2023'
+publisher: adtargetinghello
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: 788
+extension_website: 'https://teleplus.io/'
+support_website: 'https://teleplus.io/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDesc__",
+  "default_locale": "en",
+  "icons": {
+    "128": "icons/telegram-gpt.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_title": "GPT for Telegram",
+    "default_icon": {
+      "128": "icons/telegram-gpt.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://web.telegram.org/*"
+      ],
+      "js": [
+        "js/content-script.js"
+      ],
+      "css": [],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.openai.com/*"
+      ],
+      "js": [
+        "js/chatgpt-script.js"
+      ],
+      "css": [],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*"
+      ],
+      "matches": [
+        "*://web.telegram.org/*",
+        "*://*.openai.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "toggle_TelegramChatGPT": {
+      "description": "Run TelegramChatGPT on the current page.",
+      "suggested_key": {
+        "chromeos": "Ctrl+M",
+        "default": "Ctrl+M",
+        "linux": "Ctrl+M",
+        "mac": "Command+M",
+        "windows": "Ctrl+M"
+      }
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://web.telegram.org/*",
+    "*://*.openai.com/*"
+  ],
+  "version": "1.0.1"
+}

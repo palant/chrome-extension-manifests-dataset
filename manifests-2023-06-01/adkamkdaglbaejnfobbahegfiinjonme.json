@@ -1,0 +1,88 @@
+---
+slug: tidyhire
+name: tidyhire
+description: >-
+  tidyhire is a sourcing assistant for recruiters to find and engage relevant
+  candidates at scale.
+
+
+  ⚡ With tidyhire chrome extension,…
+version: 1.0.23
+release_date: 'May 29, 2023'
+publisher: tidyhire
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 73
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "tidyhire",
+  "version": "1.0.23",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Popup Sample",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-main.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.png",
+        "content-scripts/options.html",
+        "content-scripts/messageBox.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js"
+      ],
+      "matches": [
+        "*://*.linkedin.com/*",
+        "https://api.tidyhire.app/*",
+        "http://localhost:3000/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://api.tidyhire.app/*",
+    "https://api.tidyhire.app/api/*",
+    "http://localhost:3000/*",
+    "http://localhost:3000/api/*"
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ]
+}

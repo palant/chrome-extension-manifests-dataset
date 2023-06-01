@@ -1,0 +1,74 @@
+---
+slug: snow-screenshot-extension
+name: SNOW screenshot extension
+description: >-
+  This extension allows the user take screenshot of the page and store it in the
+  appropriate google drive location
+version: 0.0.8
+release_date: 'January 6, 2022'
+publisher: sorogovets.nikolay
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 1
+user_count: 76
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "SNOW screenshot extension",
+	"description": "This extension allows the user take screenshot of the page and store it in the appropriate google drive location",
+	"version": "0.0.8",
+	"icons": {
+		"16": "./img/icon_16.png",
+		"48": "./img/icon_48.png",
+		"128": "./img/icon_128.png"
+	},
+	"permissions": [
+		"storage",
+		"identity",
+		"tabs",
+		"activeTab",
+		"notifications",
+		"webNavigation",
+		"scripting"
+	],
+	"host_permissions": [
+		"<all_urls>",
+		"*://*.google.com/",
+		"http://*/*",
+		"https://*/*"
+	],
+	"action": {
+		"default_icon": "./img/icon.png",
+		"default_popup": "popup.html"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://coxauto.service-now.com/time*/**"
+			],
+			"js": [
+				"./js/content.js"
+			],
+			"run_at": "document_idle"
+		}
+	],
+	"background": {
+		"service_worker": "./js/background.js",
+		"type": "module"
+	},
+	"content_security_policy": {
+		"script-src": "'self' https://apis.google.com",
+		"object-src": "'self'"
+	},
+	"options_page": "options.html",
+	"oauth2": {
+		"client_id": "384905528545-jcek023539jsr0c42dtbsldeaav37knb.apps.googleusercontent.com",
+		"scopes": [
+			"https://www.googleapis.com/auth/drive"
+		]
+	}
+}

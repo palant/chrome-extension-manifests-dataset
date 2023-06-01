@@ -1,0 +1,71 @@
+---
+slug: daglo-모든-음성을-다-글로
+name: daglo - 모든 음성을 다 글로
+description: >-
+  음성을 빠르고 정확하게 텍스트로 변환하는 서비스입니다. 다글로의 놀라운 AI 음성 인식 기술로 중요한 순간을 기록하고, 정보를 모으고,
+  활용하세요.
+version: 1.2.0
+release_date: 'April 13, 2023'
+publisher: ActionPower Corp.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 9
+user_count: '1,000+'
+extension_website: 'https://daglo.ai'
+support_website: 'https://daglo.ai'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "daglo - 모든 음성을 다 글로",
+  "description": "음성을 빠르고 정확하게 텍스트로 변환하는 서비스입니다. 다글로의 놀라운 AI 음성 인식 기술로 중요한 순간을 기록하고, 정보를 모으고, 활용하세요.",
+  "version": "1.2.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "icons": {
+    "16": "/images/logo_16.png",
+    "32": "/images/logo_32.png",
+    "48": "/images/logo_48.png",
+    "128": "/images/logo_128.png"
+  },
+  "web_accessible_resources": [{
+    "matches": ["https://www.youtube.com/*"],
+    "resources": [
+      "assets/font/NotoSansKR-Regular.otf",
+      "assets/font/NotoSansKR-Medium.otf",
+      "assets/font/*.woff",
+      "assets/font/*.woff2"
+    ]
+  }],
+  "content_scripts":[
+    {
+      "matches": ["https://www.daglo.ai/*", "https://daglo.ai/*"],
+      "js" : ["daglo-login.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js" : [
+        "assets/language/default.js", "assets/language/ko.js", "assets/language/en.js", 
+        "modules/jquery/dist/jquery.js", "daglo-youtube.js", "toggleIcon.js"
+      ],
+      "css" : ["daglo-ext-font.css", "daglo-youtube.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"], 
+      "js" : [
+        "assets/language/default.js", "assets/language/ko.js", "assets/language/en.js", 
+        "modules/jquery/dist/jquery.js", "daglo-youtube.js", "toggleIcon.js"
+      ],
+      "css" : ["daglo-ext-font.css", "daglo-youtube.css"],
+      "run_at": "document_end",
+      "all_frames":true
+    }
+  ]
+}

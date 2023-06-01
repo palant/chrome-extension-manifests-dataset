@@ -1,0 +1,98 @@
+---
+slug: warm-welcome
+name: Warm Welcome
+description: Personal client communication through video in one simple app.
+version: 2.2.8
+release_date: 'June 13, 2022'
+publisher: Warm Welcome
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.625
+rating_count: 8
+user_count: '1,000+'
+extension_website: 'https://www.warmwelcome.com'
+support_website: 'http://help.warmwelcome.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Warm Welcome",
+  "version": "2.2.8",
+  "browser_action": {
+    "default_icon": "./dist/icons/logo-32.png"
+  },
+  "description": "Personal client communication through video in one simple app.",
+  "icons": {
+    "16": "./dist/icons/logo-16.png",
+    "48": "./dist/icons/logo-48.png",
+    "128": "./dist/icons/logo-128.png"
+  },
+  "background": {
+    "scripts": [
+      "./dist/background-bundle.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://mail.google.com/*",
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/main-bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://mail.google.com/*",
+        "https://*.warmwelcome.com/*",
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/parser-bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "./dist/gmail-bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/linkedin-bundle.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "web_accessible_resources": [
+    "dist/images/*.png",
+    "dist/images/*.svg",
+    "dist/images/*.gif",
+    "pages/recorder.html",
+    "pages/gmail-options.html",
+    "pages/linkedin-options.html"
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabCapture",
+    "desktopCapture",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

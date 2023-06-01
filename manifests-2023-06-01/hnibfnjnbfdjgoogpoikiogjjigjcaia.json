@@ -1,0 +1,92 @@
+---
+slug: trackden
+name: TrackDen
+description: >-
+  Streamline your track hunting process on Bandcamp. Add and edit songs,
+  organise songs into playlists and action them.
+version: 0.0.1.2
+release_date: 'April 20, 2023'
+publisher: TrackDen
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 229
+publisher_site: trackden.org
+extension_website: 'https://trackden.org/'
+support_website: 'https://trackden.org/docs'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TrackDen",
+  "description": "Streamline your track hunting process on Bandcamp. Add and edit songs, organise songs into playlists and action them.",
+  "version": "0.0.1.2",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "html/popup.html",
+    "default_icon": {
+      "16": "css/img/png/icon-inactive-16.png",
+      "32": "css/img/png/icon-inactive-32.png",
+      "48": "css/img/png/icon-inactive-48.png",
+      "128": "css/img/png/icon-inactive-128.png"
+    }
+  },
+  "icons": {
+    "16": "css/img/png/icon-active-16.png",
+    "32": "css/img/png/icon-active-32.png",
+    "48": "css/img/png/icon-active-48.png",
+    "128": "css/img/png/icon-active-128.png"
+  },
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "unlimitedStorage",
+    "downloads",
+    "declarativeContent"
+  ],
+
+  "host_permissions": ["https://*.bandcamp.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://*.bandcamp.com/track/*"],
+      "run_at": "document_idle",
+      "js": [
+        "js/content-scripts/bandcamp-track.js",
+        "js/content-scripts/bandcamp-cart.js"
+      ]
+    },
+    {
+      "matches": ["https://bandcamp.com/*/wishlist"],
+      "run_at": "document_idle",
+      "js": ["js/content-scripts/bandcamp-wishlist.js"]
+    },
+    {
+      "matches": ["https://*.bandcamp.com/album/*"],
+      "run_at": "document_idle",
+
+      "js": [
+        "js/content-scripts/bandcamp-album.js",
+        "js/content-scripts/bandcamp-cart.js"
+      ]
+    },
+    {
+      "matches": ["https://bandcamp.com/*"],
+      "run_at": "document_idle",
+      "js": ["js/content-scripts/bandcamp-purchases.js"],
+      "css": ["css/contentScriptCss.css"]
+    },
+    {
+      "matches": ["https://*.bandcamp.com/download/track/*"],
+      "run_at": "document_idle",
+      "js": ["js/content-scripts/bandcamp-purchase-confirm.js"]
+    }
+  ],
+  "options_page": "html/popup.html"
+}

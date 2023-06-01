@@ -1,0 +1,100 @@
+---
+slug: inboxpro
+name: InboxPro
+description: >-
+  InboxPro: AI-powered email assistant, Calendar scheduling, Tracking,
+  Templates, Followups, Email analytics
+version: 1.1.9
+release_date: 'April 27, 2023'
+publisher: InboxPro
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.875
+rating_count: 8
+user_count: '1,000+'
+publisher_site: inboxpro.io
+extension_website: 'https://inboxpro.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "InboxPro",
+  "version": "1.1.9",
+
+  "default_locale": "en",
+  "description": "InboxPro: AI-powered email assistant, Calendar scheduling, Tracking, Templates, Followups, Email analytics",
+  "action": {
+    "default_icon": {
+      "16": "icons/inboxpro-16x16.png",
+      "24": "icons/inboxpro-24x24.png",
+      "32": "icons/inboxpro-32x32.png"
+    },
+    "default_title": "InboxPro extension for Gmail"
+  },
+  "icons": {
+    "16": "icons/inboxpro-16x16.png",
+    "32": "icons/inboxpro-32x32.png",
+    "48": "icons/inboxpro-48x48.png",
+    "64": "icons/inboxpro-64x64.png",
+    "128": "icons/inboxpro-128x128.png"
+  },
+
+  "author": "InboxPro",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "js": ["content.js"],
+      "css": [
+        "css/compose_window.css",
+        "css/content.css",
+        "css/popup.css",
+        "css/flat_picker.css",
+        "css/auto-complete.css",
+        "css/readReceipts.css",
+        "css/quickTemplates.css",
+        "css/tippy.material.theme.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; script-src-elem 'self'; worker-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "scripting",
+    "notifications",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "http://localhost:4200/*",
+    "https://mail.google.com/",
+    "https://inbox.google.com/",
+    "https://fonts.gstatic.com/s/materialicons/",
+    "*://*.googleusercontent.com/*",
+    "http://localhost:3000/*",
+    "https://api.inboxpro.io/*",
+    "https://dev.inboxpro.io/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "images/*", "css/*"],
+      "matches": ["https://mail.google.com/*"]
+    },
+    {
+      "resources": ["icons/inboxpro-active.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://localhost/*", "*://inboxpro.io/*"],
+    "accepts_tls_channel_id": false
+  }
+}

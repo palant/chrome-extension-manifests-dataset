@@ -1,0 +1,109 @@
+---
+slug: yola-lexis-extension
+name: Yola Lexis Extension
+description: Look up and translate text with Yola Lexis Extension
+version: 1.5.5
+release_date: 'February 21, 2023'
+publisher: Yola Education
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.090909090909091
+rating_count: 11
+user_count: '10,000+'
+extension_website: 'https://lexis.yola.vn/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "version": "1.5.5",
+  "description": "__MSG_extensionDescription__",
+  "author": "com.yola.lexis",
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "identity"
+  ],
+  "action": {
+    "default_popup": "en/index.html?#/popup",
+    "default_title": "__MSG_extensionName__"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Y"
+      }
+    },
+    "video-toggle-caption": {
+      "suggested_key": {
+        "default": "Alt+V"
+      },
+      "description": "Toggle video subtitles"
+    }
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "videoContentScript.js"
+      ],
+      "css": [
+        "videoContentStyle.css"
+      ],
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://www.netflix.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "webContentScript.js"
+      ],
+      "css": [
+        "webContentStyle.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "index.html",
+        "**/index.html",
+        "*.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "oauth2": {
+    "client_id": "738717937724-36hd30ud2r8tit1gtsmtv2vm2et7g1ji.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "profile",
+      "email"
+    ]
+  },
+  "homepage_url": "https://lexis.yola.vn",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj6eaGNUqesI1Qp6agp2uHjSbOJPWPlzZ8JST746KxplIzbwrrxFbs0cEZdUqd6Pi2d7OxPWooS7d59H0+0kbTIzRk3o4cSssqo+o1EC6vreQDb5bxz3ZFrDFGYTuPr4pviXBjMxgQyLnWhHJaXfMjvxj+GQm9Ok823AaVkkSL+YNHFI8KDTLXg4cRYzIPD7AgiQUKif6s1Y8UU9JdBKFYJO2HvrqjeyiYC44CtVQbWK0D8/z8I4cCGUmMkrNzMk1OPKRKk7I5Fqmh0+mTrglOwYabaJ6wCLmo1uDSbVP0Hm0F0T4fvGYmadx92yLfwVewKnfjRtpKK34HL6WA6tUrQIDAQAB"
+}

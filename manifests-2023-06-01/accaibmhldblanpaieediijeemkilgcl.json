@@ -1,0 +1,72 @@
+---
+slug: peacock-watch-party
+name: Peacock Watch Party
+description: Watch Peacock TV in sync with friends
+version: 1.0.2
+release_date: 'November 29, 2022'
+publisher: Peacock Watch Party
+category: Fun
+category_slug: ext/14-fun
+rating: 1.75
+rating_count: 8
+user_count: '6,000+'
+publisher_site: peacockwatchparty.com
+extension_website: 'https://www.peacockwatchparty.com/'
+support_website: 'https://www.peacockwatchparty.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "version": "1.0.2",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "img/128.png",
+    "48": "img/48.png",
+    "32": "img/32.png",
+    "16": "img/16.png"
+  },
+  "action": {
+    "default_icon": "img/128.png",
+    "default_title": "__MSG_name__",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.peacocktv.com/*", "https://*.peacocktv.com/*"],
+      "js": ["content/index.js","content/videoController.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content/contentScript.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.peacockwatchparty.com/*"],
+      "js": ["peacock.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["tabs", "storage","unlimitedStorage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["content/contentScript.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    },
+    {
+      "resources": ["peacock.js"],
+      "matches": ["https://www.peacockwatchparty.com/*"]
+    },
+    {
+      "resources": ["chat/index.html","content/index.js", "content/videoController.js"],
+      "matches": ["https://*.peacocktv.com/*", "https://*.peacocktv.com/*"]
+    }
+  ]
+}

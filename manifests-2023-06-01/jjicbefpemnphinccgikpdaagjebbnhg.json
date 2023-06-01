@@ -1,0 +1,78 @@
+---
+slug: csgofloat-market-checker
+name: CSGOFloat Market Checker
+description: >-
+  Dedicated API for fetching the float value, paint seed, and screenshots of
+  CS:GO items on the Steam Market or Inventories
+version: 3.0.3
+release_date: 'October 25, 2022'
+publisher: Step7750
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.242647058823529
+rating_count: 272
+user_count: '400,000+'
+publisher_site: csgofloat.com
+extension_website: 'https://csgofloat.com'
+support_website: 'https://csgofloat.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "CSGOFloat Market Checker",
+    "short_name": "CSGOFloat",
+    "version": "3.0.3",
+    "description": "Dedicated API for fetching the float value, paint seed, and screenshots of CS:GO items on the Steam Market or Inventories",
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.steamcommunity.com/market/listings/730/*"],
+            "js": ["src/lib/page_scripts/market_listing.js"],
+            "css": ["src/global.css"]
+        },
+        {
+            "matches": [
+                "*://*.steamcommunity.com/id/*/tradehistory*",
+                "*://*.steamcommunity.com/profiles/*/tradehistory*"
+            ],
+            "js": ["src/lib/page_scripts/trade_history.js"],
+            "css": ["src/global.css"]
+        },
+        {
+            "matches": ["*://*.steamcommunity.com/id/*/inventory*", "*://*.steamcommunity.com/profiles/*/inventory*"],
+            "js": ["src/lib/page_scripts/inventory.js"],
+            "css": ["src/global.css"]
+        },
+        {
+            "matches": ["*://*.steamcommunity.com/tradeoffer/*"],
+            "js": ["src/lib/page_scripts/trade_offer.js"],
+            "css": ["src/global.css"]
+        }
+    ],
+    "background": {
+        "service_worker": "src/background.js",
+        "type": "module"
+    },
+    "permissions": ["storage", "scripting"],
+    "host_permissions": [
+        "*://*.steamcommunity.com/market/listings/730/*",
+        "*://*.steamcommunity.com/id/*/inventory*",
+        "*://*.steamcommunity.com/id/*/tradehistory*",
+        "*://*.steamcommunity.com/profiles/*/inventory*"
+    ],
+    "externally_connectable": {
+        "matches": ["*://*.steamcommunity.com/*"]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["src/model_frame.html", "src/model_frame.js"],
+            "matches": ["https://steamcommunity.com/*"]
+        }
+    ]
+}

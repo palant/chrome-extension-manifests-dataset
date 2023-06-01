@@ -1,0 +1,71 @@
+---
+slug: freshy-search
+name: Freshy Search
+description: Set Freshy Search as a Default Search provider.
+version: 1.23.211
+release_date: 'February 14, 2023'
+publisher: Freshy
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 5
+rating_count: 1
+user_count: '20,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Freshy Search",
+    "short_name": "FreshySearch",
+    "description": "Set Freshy Search as a Default Search provider.",
+    "version": "1.23.211",
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "32": "icons/32.png",
+        "128": "icons/128.png"
+    },
+    "background": {
+        "service_worker": "worker.js"
+    },
+    "action": {
+        "default_icon": {
+            "16": "icons/16.png",
+            "48": "icons/48.png",
+            "32": "icons/32.png",
+            "128": "icons/128.png"
+        },
+        "default_title": "Freshy Search",
+        "default_popup": "popup/popup.html"
+    },
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "name": "Web",
+            "is_default": true,
+            "encoding": "UTF-8",
+            "keyword": "search",
+            "favicon_url": "https://search.freshysearch-api.net/favicon.ico",
+            "search_url": "https://search.freshysearch-api.net/search/{searchTerms}",
+            "suggest_url": "https://meta.freshysearch-api.net/sug/?s={searchTerms}"
+        }
+    },
+    "host_permissions": ["*://*.freshysearch-api.net/*"],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://search.freshy.com/*",
+                "*://search.yahoo.com/yhs/search?hspart=tro*"
+            ],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "cookies",
+        "storage",
+        "tabs",
+        "search",
+        "declarativeNetRequest"
+    ],
+    "manifest_version": 3
+}

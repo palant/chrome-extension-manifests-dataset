@@ -1,0 +1,137 @@
+---
+slug: safetoopen-online-securit
+name: SafeToOpen Online Security
+description: >-
+  SafeToOpen Online Security protects you against scams, viruses, and phishing
+  web pages.
+version: 4.2.1
+release_date: 'April 11, 2023'
+publisher: SafeToOpen
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 13
+user_count: '5,000+'
+publisher_site: safetoopen.com
+extension_website: 'https://safetoopen.com/'
+support_website: 'https://safetoopen.com/contact.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "default_locale": "en",
+  "name": "__MSG_extName__",
+  "version": "4.2.1",
+  "homepage_url": "https://safetoopen.com/",
+  "description": "__MSG_appDesc__",
+  "short_name": "SafeToOpen",
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "permissions": [
+    "downloads",
+    "storage",
+    "tabs",
+    "alarms",
+    "contextMenus",
+    "history",
+    "pageCapture",
+    "webRequest",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>", "file:///"
+  ],
+  "background": {
+    "service_worker": "js/worker.js",
+    "type": "module",
+    "update_url": "https://clients2.google.com/service/update2/crx"
+  },
+  "action": {
+    "default_icon": "images/SafeToOpen_128.png",
+    "default_title": "SafeToOpen 4.2.1",
+    "default_popup": "html/popup.html"
+  },
+  "icons": {
+    "16": "images/SafeToOpen_16.png",
+    "32": "images/SafeToOpen_32.png",
+    "48": "images/SafeToOpen_48.png",
+    "128": "images/SafeToOpen_128.png"
+  },
+  "manifest_version": 3,
+  "commands": {
+    "scan-page": {
+        "suggested_key": {
+            "default": "Shift+Alt+S",
+            "mac": "Shift+Alt+S"
+        },
+        "description": "Scan the current page"
+    },
+    "show-settings": {
+      "suggested_key": {
+          "default": "Shift+Alt+O",
+          "mac": "Shift+Alt+O"
+      },
+      "description": "Show SafeToOpen Settings"
+    },
+    "report_page": {
+      "suggested_key": {
+          "default": "Shift+Alt+R",
+          "mac": "Shift+Alt+R"
+      },
+      "description": "Report the current page"
+    },
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Shift+Alt+M",
+        "mac": "Shift+Alt+M"
+      },
+      "global": false
+    } 
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "html/*",
+        "css/*",
+        "js/*",
+        "images/*",
+        "data/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>", "file:///"
+      ],
+      "css": [
+        "css/style.css",
+        "css/alerts.css"
+      ],
+      "all_frames": false,
+      "js": [
+        "js/safetoopen.js",
+        "js/psl.min.js",
+        "js/enc.js",
+        "js/jquery-3.6.1.js",
+        "js/html2canvas.min.js"							   
+      ],
+      "run_at": "document_idle",
+      "match_about_blank": true
+    },
+    {
+      "js": [
+        "js/frames.js",
+        "js/jquery-3.6.1.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+---
+slug: gistvid
+name: GistVid
+description: >-
+  Extracts, summarises, and generates blog entries for video content from
+  various platforms.
+version: 1.5.5
+release_date: 'May 29, 2023'
+publisher: Christos Alexiou
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 24
+publisher_site: gistvid.com
+extension_website: 'https://gistvid.com'
+support_website: 'https://gistvid.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GistVid",
+  "version": "1.5.5",
+  "description": "Extracts, summarises, and generates blog entries for video content from various platforms.",
+  "action": {
+    "default_popup": "src/popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://extensionpay.com/*"
+      ],
+      "js": [
+        "src/ExtPay.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://*/",
+        "https://*/"
+      ],
+      "js": [
+        "src/ExtPay.js",
+        "src/content.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.gistvid.com https://gen.gistvid.com http://localhost:8000 https://extensionpay.com;"
+  },
+  "icons": {
+    "48": "src/assets/icon.png"
+  }
+}

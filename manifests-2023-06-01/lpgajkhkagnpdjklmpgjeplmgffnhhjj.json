@@ -1,0 +1,192 @@
+---
+slug: trim-imdb-ratings-on-netf
+name: 'Trim: IMDB Ratings on Netflix and Prime Video'
+description: >-
+  Show IMDB, Rotten Tomatoes and Metacritic ratings on Netflix, Amazon Prime
+  Video and other streaming services
+version: '7.18'
+release_date: 'May 30, 2023'
+publisher: goodmovies
+category: Fun
+category_slug: ext/14-fun
+rating: 4.113475177304965
+rating_count: 282
+user_count: '50,000+'
+publisher_site: gettrim.cc
+extension_website: 'https://gettrim.cc/'
+support_website: 'https://gettrim.cc/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Trim: IMDB Ratings on Netflix and Prime Video",
+  "short_name": "IMDB Ratings on Netflix and Prime Video",
+  "version": "7.18",
+  "description": "Show IMDB, Rotten Tomatoes and Metacritic ratings on Netflix, Amazon Prime Video and other streaming services",
+  "permissions": [
+    "storage",
+    "declarativeContent"
+  ],
+  "host_permissions": [
+    "https://goodmovies.io/*"
+  ],
+  "optional_host_permissions": [
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.netflix.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "netflix/view.js",
+        "netflix/sort.js",
+        "netflix/search.js",
+        "netflix/menu.js",
+        "netflix/genre_bar.js",
+        "netflix/content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "netflix/search.css",
+        "netflix/menu.css",
+        "netflix/genre_bar.css",
+        "netflix/content.css"
+      ]
+    },
+    {
+      "matches": ["https://*.primevideo.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "prime/prime_view.js",
+        "prime/prime_content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "prime/prime_content.css"
+      ]
+    },
+    {
+      "matches": ["https://*.hulu.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "hulu/view.js",
+        "hulu/content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "hulu/content.css"
+      ]
+    },
+    {
+      "matches": ["https://*.hbomax.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "hbo/view.js",
+        "hbo/content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "hbo/content.css"
+      ]
+    },
+    {
+      "matches": ["https://*.disneyplus.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "disney/view.js",
+        "disney/content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "disney/content.css"
+      ]
+    },
+    {
+      "matches": ["https://tv.apple.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "apple/view.js",
+        "apple/content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "apple/content.css"
+      ]
+    },
+    {
+      "matches": ["https://*.peacocktv.com/*"],
+      "js": [
+        "lib/config.js",
+        "lib/toggle.js",
+        "lib/content.js",
+        "lib/view.js",
+        "peacock/view.js",
+        "peacock/content.js"
+      ],
+      "css": [
+        "lib/content.css",
+        "peacock/content.css"
+      ]
+    },
+    {
+      "matches": ["https://*.imdb.com/*"],
+      "js": [
+        "lib/config.js",
+        "imdb/content.js"
+      ],
+      "css": ["imdb/content.css"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon_16.png",
+    "24": "images/icon_24.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "netflix/netflix_geo.js",
+        "disney/disney_geo.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.gettrim.cc/*"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhVf5nvGhapJG95dqton9pMjbr3/gyUG73bp2XhmmnZbu3N+kXfNIJaZGjY06gAyP0Urgoe+0PN2vW9i9q65XQhwjHJ7+Zvn7Hu5GgS1q5q+QpdVQ2RQBGfyfEymu0zHKnWFgkGTGOFgUorn57+k7ZhM2jVDNJ0MgxD/mBr0RGhHY7aalyQj+0xthZ4iLSzyMgEf/mSan0hTkFJm+pJzY1qCvoQAEokrFmZDLhG1PkQ84/4oM6ezCBdGK8HlVdC1KcLcyQlyNDX1KKvcFQxY2kSeOyC7j2KQnpkAKf7mi+3CKvpbvuiRAJtqAoW9L7kXOkcDpK8D/2ORByJCsdIBaFQIDAQAB",
+  "manifest_version": 3
+}

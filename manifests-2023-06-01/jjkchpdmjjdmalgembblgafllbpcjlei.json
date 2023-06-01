@@ -1,0 +1,68 @@
+---
+slug: trellix-endpoint-security
+name: Trellix Endpoint Security Web Control
+description: Trellix Endpoint Security Web Control
+version: 10.7.0.5573
+release_date: 'April 26, 2023'
+publisher: Trellix
+category: Productivity
+category_slug: ext/7-productivity
+rating: 2.4148351648351647
+rating_count: 364
+user_count: '9,000,000+'
+---
+
+{
+  "name": "__MSG_extName__",
+  "version": "10.7.0.5573",
+  "manifest_version": 2,
+  "description": "__MSG_extDesc__",
+  "icons": {
+		"128": "Resources/128.png"
+		},
+  "default_locale": "en",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "background" : {
+	"persistent": true,
+	"scripts": ["background.js"]
+  },
+  "page_action": {
+    "default_icon": "Resources/nb_button_grey.gif",
+    "default_popup": "popup.html",
+    "default_title": "Trellix Endpoint Security Web Control"
+  },
+  "content_scripts" : [
+    {
+      "matches" : ["http://*/*","https://*/*"],	
+      "js" : ["ContentScript.js" ],
+	  "exclude_matches": [ "*://www.trellix.com/SAE*", "*://www.trellix.com/SAE*"],
+      "run_at" : "document_end",
+      "all_frames" : true
+    },
+   {
+      "all_frames": true,
+      "js": [ "ContentOnDocStart.js" ],
+	  "exclude_matches": [ "*://www.trellix.com/SAE*", "*://www.trellix.com/SAE*"],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start"
+   },
+   {
+	  "all_frames": true,
+      "js": [ "WarnBlockContentScript.js" ],
+      "matches": [ "*://www.trellix.com/SAE*", "*://www.trellix.com/SAE*"],
+      "run_at": "document_end"
+   } ],
+  "update_url":"http://clients2.google.com/service/update2/crx",
+  "permissions" : [
+	"webRequest",
+	"webRequestBlocking",
+	"tabs",
+	"http://*/*",
+	"https://*/*",
+	"nativeMessaging",
+	"downloads"
+  ],
+  "web_accessible_resources" : [
+  "Resources/mcafee.gif"
+  ]
+}

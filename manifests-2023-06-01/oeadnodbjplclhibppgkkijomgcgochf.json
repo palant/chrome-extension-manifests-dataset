@@ -1,0 +1,130 @@
+---
+slug: niconico-peppermint+
+name: Niconico-PepperMint+
+description: ニコニコ動画をもっとクールにする拡張機能
+version: 1.5.3
+release_date: 'May 31, 2023'
+publisher: CYakigasi
+category: Fun
+category_slug: ext/14-fun
+rating: 0
+rating_count: 0
+user_count: 55
+extension_website: 'https://github.com/castella-cake/niconico-peppermint-extension'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Niconico-PepperMint+",
+    "short_name": "PepperMint+",
+    "description": "ニコニコ動画をもっとクールにする拡張機能",
+    "version": "1.5.3",
+    "version_name": "1.5.3",
+    "author": "CYakigasi",
+    "homepage_url": "https://github.com/castella-cake/niconico-peppermint-extension",
+    "icons": {
+        "64": "icons/peppermint-logo-64.png"
+    },
+
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.nicovideo.jp/*"],
+            "js": ["js/jquery-3.6.3.min.js","js/jquery-ui.min.js","js/forall.js"],
+            "run_at": "document_start",
+            "all_frames" : true
+        },
+        {
+            "matches": ["*://*.nicovideo.jp/*"],
+            "js": ["js/forall_waitdom.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://dic.nicovideo.jp/*"],
+            "js": ["js/nicopedia.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["*://dic.nicovideo.jp/*"],
+            "js": ["js/nicopedia_end.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://www.nicovideo.jp/video_top*"],
+            "js": ["js/video_top.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://www.nicovideo.jp/ranking*"],
+            "js": ["js/ranking.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://www.nicovideo.jp/search/*", "*://www.nicovideo.jp/tag/*", "*://www.nicovideo.jp/mylist_search/*"],
+            "js": ["js/searchpage.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://www.nicovideo.jp/watch/*"],
+            "js": ["js/watch.js"],
+            "run_at": "document_end"
+        },
+        {            
+            "matches": ["*://www.nicovideo.jp/watch/*"],
+            "js": ["js/watch_first.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["*://www.nicovideo.jp/watch/*"],
+            "js": ["js/watch_idle.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["*://*.nicovideo.jp/series/*"],
+            "js": ["js/series.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://live.nicovideo.jp/*"],
+            "js": ["js/live.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://sp.nicovideo.jp/watch/*"],
+            "js": ["js/spredirect.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": [
+            "pagemod/*"
+        ],
+        "matches": [
+            "*://*.nicovideo.jp/*"
+        ]
+    }],
+
+    "action": {
+        "browser_style": true,
+        "default_popup": "pages/quickpanel.html",
+        "default_icon": {
+            "32": "icons/peppermint-logo-32.png",
+            "64": "icons/peppermint-logo-64.png",
+            "128": "icons/peppermint-logo-128.png" 
+        },
+        "default_title": "Niconico-PepperMint"
+    },
+    "options_ui": {
+        "page": "pages/option.html",
+        "browser_style": true
+    },
+    "permissions": [
+        "storage",
+        "contextMenus"
+    ],
+    "host_permissions": ["*://ext.nicovideo.jp/api/getthumbinfo/*"]
+}

@@ -1,0 +1,228 @@
+---
+slug: kami-for-google-chrome
+name: Kami for Google Chrome™
+description: >-
+  Kami is an interactive learning platform empowering students and enhancing the
+  way teachers teach, feedback, and assess.
+version: 2.0.16964
+release_date: 'May 26, 2023'
+publisher: Kami
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.562126712729828
+rating_count: 8539
+user_count: 0
+extension_website: 'https://www.kamiapp.com'
+support_website: 'https://help.kamiapp.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Kami for Google Chrome™",
+  "short_name": "Kami",
+  "version": "2.0.16964",
+  "description": "Kami is an interactive learning platform empowering students and enhancing the way teachers teach, feedback, and assess.",
+  "homepage_url": "https://www.kamiapp.com",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://drive.google.com/picker*"
+      ],
+      "js": [
+        "notable/integrations/classroom/picker/content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://canary.kamihq.com/web/*",
+        "*://canary2.kamihq.com/web/*",
+        "*://staging.kamihq.com/web/*",
+        "*://local.kamipdf.com/web/*",
+        "*://web.kamihq.com/web/*",
+        "*://test.kamihq.com/web/*",
+        "*://test1.kamihq.com/web/*",
+        "*://test2.kamihq.com/web/*",
+        "*://test3.kamihq.com/web/*",
+        "*://test4.kamihq.com/web/*",
+        "*://test5.kamihq.com/web/*",
+        "*://test6.kamihq.com/web/*"
+      ],
+      "js": [
+        "notable/viewer/bootstrap.js",
+        "notable/viewer/auto_login.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://classroom.google.com/*"
+      ],
+      "css": [
+        "notable/integrations/classroom/styles.css",
+        "notable/integrations/classroom/attachment_automation.css"
+      ],
+      "js": [
+        "notable/integrations/classroom/content.js",
+        "notable/integrations/classroom/attachment_automation.js",
+        "notable/integrations/classroom/formative_assessment.js",
+        "notable/integrations/classroom/custom_grader.js",
+        "notable/integrations/url_matcher.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://classroom.google.com/*g/tg/*"
+      ],
+      "js": [
+        "notable/integrations/classroom/grading.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "notable/integrations/schoology/content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "notable/viewer/open_with_kami.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/document/d/*",
+        "https://docs.google.com/presentation/d/*",
+        "https://docs.google.com/spreadsheets/d/*"
+      ],
+      "js": [
+        "notable/google_docs.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://docs.google.com/*"
+      ],
+      "css": [
+        "notable/google_docs.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://assignments.onenote.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "notable/microsoft_teams/assignments.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.peardeck.com/*"
+      ],
+      "js": [
+        "notable/integrations/peardeck/page_script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "mime_types": [
+    "application/pdf"
+  ],
+  "storage(disabled)": {
+    "managed_schema": "preferences_schema.json"
+  },
+  "background": {
+    "page": "pdfHandler.html"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "icon19.png",
+      "38": "icon38.png"
+    },
+    "default_title": "Kami - PDF and Document Annotation"
+  },
+  "incognito": "split",
+  "content_security_policy": "script-src 'self';",
+  "web_accessible_resources": [
+    "getFrameId",
+    "delegate.html",
+    "hello",
+    "content/web/options.html",
+    "content/web/viewer.html",
+    "content/images/tick.svg",
+    "notable/viewer/open_with_kami.html",
+    "notable/integrations/schoology/page_script.js",
+    "notable/integrations/schoology/styles.css",
+    "notable/integrations/peardeck/page_script.js",
+    "http:/*",
+    "https:/*",
+    "ftp:/*",
+    "file:/*",
+    "chrome-extension:/*",
+    "filesystem:/*",
+    "drive:*"
+  ],
+  "offline_enabled": true,
+  "options_page": "content/web/options.html",
+  "container": "GOOGLE_DRIVE",
+  "api_console_project_id": "185741998891",
+  "gdrive_mime_types": {
+    "http://drive.google.com/intents/opendrivedoc": [
+      {
+        "type": [
+          "application/pdf",
+          "application/vnd.google.drive.ext-type.pdf"
+        ],
+        "href": "https://web.kamihq.com/web/viewer.html",
+        "title": "Open",
+        "disposition": "window"
+      }
+    ]
+  },
+  "oauth2": {
+    "client_id": "185741998891-boet3ik0ho58mic9ttbhbtl75bjekic5.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/drive.install",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/drive.readonly",
+      "https://www.googleapis.com/auth/classroom.courses",
+      "https://www.googleapis.com/auth/classroom.coursework.me",
+      "https://www.googleapis.com/auth/classroom.coursework.students"
+    ]
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.kamihq.com/*",
+      "https://*.kamipdf.com/*"
+    ]
+  }
+}

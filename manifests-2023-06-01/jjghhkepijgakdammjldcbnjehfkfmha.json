@@ -1,0 +1,98 @@
+---
+slug: salesforce
+name: Salesforce
+description: >-
+  Work with Salesforce records directly in your email application with the Gmail
+  integration.
+version: 2.242.1
+release_date: 'March 30, 2023'
+publisher: Salesforce
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.426403641881639
+rating_count: 1318
+user_count: '300,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Salesforce",
+    "short_name": "Salesforce",
+    "description": "Work with Salesforce records directly in your email application with the Gmail integration.",
+    "incognito": "split",
+    "icons": {
+        "16": "common/img/cloud_logo_16.png",
+        "48": "common/img/cloud_logo_48.png",
+        "128": "common/img/cloud_logo_128.png"
+    },
+    "action": {
+        "default_icon": "common/img/cloud_logo_256.png"
+    },
+    "background": {
+        "service_worker": "background.bundle.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "js": [
+                "gmail/js/bootstrap.bundle.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://calendar.google.com/*"
+            ],
+            "js": [
+                "gcal/js/bootstrap.bundle.js"
+            ]
+        }
+    ],
+    "options_ui": {
+        "page": "options/html/options.html"
+    },
+    "permissions": [
+        "management",
+        "storage",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [
+        "https://mail.google.com/",
+        "https://calendar.google.com/",
+        "*://*.googleusercontent.com/*",
+        "*://*.salesforceiq.com/*",
+        "https://test.salesforce.com/",
+        "https://login.salesforce.com/"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "redirect_pixel_request",
+                "enabled": true,
+                "path": "redirect_rules.json"
+            }
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "common/fonts/SalesforceSans-Regular.woff2",
+                "common/fonts/SalesforceSans-Regular.woff",
+                "common/img/SFLogo.svg",
+                "common/img/chevronright.svg",
+                "gmail/js/embedded.bundle.js",
+                "gmail/css/embedded.css",
+                "gcal/js/embedded.bundle.js",
+                "gcal/css/embedded.css"
+            ],
+            "matches": [
+                "https://mail.google.com/*",
+                "https://calendar.google.com/*"
+            ]
+        }
+    ],
+    "version": "2.242.1"
+}

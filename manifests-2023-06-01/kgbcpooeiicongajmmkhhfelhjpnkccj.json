@@ -1,0 +1,69 @@
+---
+slug: sarv-nc-lite
+name: Sarv NC Lite
+description: Sarv NS Remove background noise during calls from Sarv
+version: 2.0.0
+release_date: 'August 24, 2020'
+publisher: Ramesh C Sarv
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 197
+publisher_site: sarv.com
+extension_website: 'https://wave.sarv.com'
+support_website: 'https://sarv.com/contact/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Sarv NC Lite",
+  "version": "2.0.0",
+  "manifest_version": 2,
+  "description": "Sarv NS Remove background noise during calls from Sarv",
+  "icons": {
+    "128": "images/main_ico.png"
+  },
+  "background": {
+    "scripts": ["/static/js/background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "32": "images/ico.png"
+    },
+    "default_title": "Sarv NC Lite",
+    "default_popup": "index.html"
+  },
+  "content_scripts" : [
+    {
+      "js": [ "/static/js/contentFrame.js" ],
+      "matches": ["*://*.webex.com/*"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "js": [ "/static/js/content.js" ],
+      "matches": [ "http://*.sarv.com/*", "https://*.sarv.com/*" , "https://online-voice-recorder.com/" ],
+      "exclude_matches": [ "*://*.webex.com/*" ],
+      "run_at": "document_start",
+      "all_frames": false,
+      "match_about_blank": true
+    }
+  ],
+  "permissions": [
+    "http://*.sarv.com/*",
+    "https://*.sarv.com/*",
+    "storage",
+    "system.cpu"
+  ],
+  "web_accessible_resources": [
+    "/wasm/sarv-processor.js",
+    "/static/js/patch.js",
+    "/models/small_8k.thw",
+    "/models/small_16k.thw"
+  ],
+  "content_security_policy": "script-src 'self' 'sha256-VV4UqglrRsVPDSbzvfGOKNddgB4LxrRmviH9GoBJ5jk='; object-src 'self'"
+}

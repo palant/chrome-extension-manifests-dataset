@@ -1,0 +1,84 @@
+---
+slug: turrex-turo-explorer
+name: Turrex Turo Explorer
+description: >-
+  Turrex Explorer is a Chrome extension for Turo analytics. Search for
+  profitable cars and make smarter decisions.
+version: '1.05'
+release_date: 'May 24, 2023'
+publisher: Turrex
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.714285714285714
+rating_count: 7
+user_count: 124
+publisher_site: turrex.com
+extension_website: 'https://turrex.com'
+support_website: 'https://turrex.com/#s_faq'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.05",
+  "name": "Turrex Turo Explorer",
+  "description": "Turrex Explorer is a Chrome extension for Turo analytics. Search for profitable cars and make smarter decisions.",
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/pages/background/index.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/turrex-icon16.png",
+      "48": "images/turrex-icon48.png",
+      "128": "images/turrex-icon128.png"
+    },
+    "default_title": "Turrex Turo Explorer"
+  },
+  "icons": {
+    "16": "images/turrex-icon16.png",
+    "48": "images/turrex-icon48.png",
+    "128": "images/turrex-icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://turo.com/*"
+      ],
+      "js": [
+        "src/pages/fetch_start/index.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://turo.com/*",
+        "https://turrex.com/*",
+        "http://localhost:3000/*"
+      ],
+      "js": [
+        "src/pages/loadSearch/index.js"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "assets/css/loadSearchStyle.chunk.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "src/pages/fetch/index.js",
+        "assets/css/ordersStyle.chunk.css",
+        "images/*"
+      ],
+      "matches": [
+        "https://turo.com/*",
+        "https://turrex.com/*",
+        "http://localhost:3000/*"
+      ]
+    }
+  ]
+}

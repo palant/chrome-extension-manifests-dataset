@@ -1,0 +1,115 @@
+---
+slug: stubtabs
+name: StubTabs
+description: Each tab is a unique browser.
+version: 3.1.2
+release_date: 'May 7, 2020'
+publisher: StubTabs
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3
+rating_count: 2
+user_count: 127
+publisher_site: stubtabs.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA59w36UPmXCcdkyXZpCoH2cj/W9D9PzorVP6kcjrDE5+1vOzHQvavv8PQz1+XysAgDcyrzAw4MRXbuPBPEdsNvLJUAr0F53E/ukAoIhNHD+hZEGN6y3bD8QUoBq5WUKhSvL61PpnRUQvXCasZd1LStSkvlpJLYDeLCdvcnBp23vewWG+cYJFBmaK004Q4ePzk9b4fo8JHsfcTJcAFOi/89/ivFLtNZagESt/cOQoPx9ya/CPEJVz9jdHMMLZjXN4e+4thV8ev58P5lRvjzQzQyC46ByezNcY3caRYDV6jll1lK6OXdmtC7Urrvv9PyLxc5UwC9pKR5YWEDUo2a7EVowIDAQAB",
+    "manifest_version": 2,
+    "name": "StubTabs",
+    "version": "3.1.2",
+
+    "description": "Each tab is a unique browser.",
+    "icons": {
+        "128": "icon.png"
+    },
+    
+    "options_ui": {
+      "page": "options/options.html",
+      "open_in_tab": true
+    },
+    
+    "commands": {
+        "duplicate-tab": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+A",
+                "mac": "Command+Shift+A"
+            },
+            "description": "Duplicate Tab"
+        },
+        "remove-tab-cookies": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+E",
+                "mac": "Command+Shift+E"
+            },
+            "description": "Remove All StubTabs Cookies in the Current Tab"
+        },
+        "refresh-tabs": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+S",
+                "mac": "Command+Shift+S"
+            },
+            "description": "Refresh All Tabs"
+        },
+        "convert-www1": {
+            "suggested_key": {
+                "default": "Alt+W",
+                "mac": "Alt+W"
+            },
+            "description": "Convert www1 URL"
+        }
+    },
+
+    "browser_action": {
+          "default_icon": "icon.png",
+          "default_title": "StubTabs",
+          "default_popup": "popup.html"
+    },
+
+    "background": {
+        "page": "background.html"
+    },
+
+    "content_scripts": [ {
+        "js": [ "content.js" ],
+        "matches": ["*://*/*"],
+        "run_at": "document_start"
+    }, {
+        "js": [ "timer.js", "icon.js", "duplicate.js" ],
+        "css": [ "duplicate.css" ],
+        "matches": ["*://*/*"],
+        "run_at": "document_idle"
+    }, {
+        "js": [ "1ticket.js", "tmder.js" ],
+        "matches": ["*://*.ticketmaster.com/*", 
+                    "*://*.ticketmaster.co.uk/*", 
+                    "*://*.ticketmaster.ca/*", 
+                    "*://*.ticketmaster.ie/*", 
+                    "*://*.ticketmaster.com.au/*", 
+                    "*://*.ticketmaster.co.nz/*", 
+                    "*://*.livenation.com/*"],
+        "run_at": "document_idle"
+    } ],
+
+    "permissions": [
+        "storage",
+        "*://*/*",
+        "webRequest",
+        "webRequestBlocking",
+        "identity",
+        "cookies",
+        "tabs",
+        "browsingData",
+        "management",
+        "contextMenus"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "oauth2": {
+        "client_id": "759061459762-3hp6kobg1jar51qao3fma0c63vcm5rdc.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/chromewebstore.readonly"
+        ]
+    }
+}

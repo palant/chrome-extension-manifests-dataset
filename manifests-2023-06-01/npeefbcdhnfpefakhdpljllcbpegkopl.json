@@ -1,0 +1,78 @@
+---
+slug: v2-cloud-clipboard
+name: V2 Cloud Clipboard
+description: Allows users to have direct clipboard access when using V2 Cloud Web Connect
+version: '1.5'
+release_date: 'March 7, 2018'
+publisher: v2cloud-dev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 211
+publisher_site: v2cloud.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+    "manifest_version" : 2,
+
+    "name"        : "V2 Cloud Clipboard",
+    "version"     : "1.5",
+    "description" : "Allows users to have direct clipboard access when using V2 Cloud Web Connect",
+
+    "icons" : {
+        "16"  : "icons/clipboard-allow-16.png",
+        "32"  : "icons/clipboard-allow-32.png",
+        "48"  : "icons/clipboard-allow-48.png",
+        "64"  : "icons/clipboard-allow-64.png",
+        "128" : "icons/clipboard-allow-128.png"
+    },
+
+    "permissions" : [
+        "http://*/*",
+        "https://*/*",
+        "clipboardRead",
+        "clipboardWrite",
+        "storage"
+    ],
+
+    "background" : {
+        "persistent" : false,
+        "scripts" : [
+            "private/background/clipboardService.js",
+            "private/background/popupService.js"
+        ]
+    },
+
+    "page_action" : {
+        "default_popup" : "private/popup/popup.html",
+        "default_icon" : {
+            "19" : "private/popup/icons/clipboard-maybe-19.png",
+            "38" : "private/popup/icons/clipboard-maybe-38.png"
+        }
+    },
+
+    "content_scripts" : [{
+        "matches" : [
+            "http://v2cloud.com/*",
+            "https://v2cloud.com/*",
+            "http://*.v2cloud.com/*",
+            "https://*.v2cloud.com/*"
+        ],
+        "js" : [
+            "private/content/init.js",
+            "private/content/clipboardBroker.js"
+        ],
+        "run_at"     : "document_start",
+        "all_frames" : true
+    }],
+
+    "web_accessible_resources" : [
+        "public/execCommand.js"
+    ],
+
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA30mr5sHK3aWSv3NMURoZpAUIVwQ9AOZMkSK/m5gFNgHGYGfFM1bokEqhcti1YMz6rJuEjcC3lAxIQZMUpFHiXiosK5YCknsyI29xQOp/Lg2Q4VUUcINNNZx1oMPAGrQz/PftMq8VzP/zQntOVxZU+vnly6BlOFbuMG9IAXH5oTCLFOUkWo8frWv4a0pHNii4llSeXPtO/udWJYcRGjwbfijSILGgQ+kQgn9hBG/9OGoic3Gvr/s0mHJl+0jVdXRuKu7Dc8rkNZ/53TyCK91DPvNV76aIqLb00OYolp0D4A7584HcUwMNX8lJw+djWH4+zRccgh95fO5oAOHQrPrYPQIDAQAB"
+}

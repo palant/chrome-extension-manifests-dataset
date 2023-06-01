@@ -1,0 +1,79 @@
+---
+slug: confluxportal
+name: ConfluxPortal
+description: A Conflux Wallet in your Browser
+version: 0.6.12
+release_date: 'December 21, 2021'
+publisher: Conflux Network
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.5
+rating_count: 6
+user_count: '10,000+'
+extension_website: 'https://portal.confluxnetwork.org'
+support_website: 'https://forum.conflux.fun/c/English/confluxportal'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ConfluxPortal",
+  "short_name": "ConfluxPortal",
+  "version": "0.6.12",
+  "manifest_version": 2,
+  "author": "https://confluxnetwork.org",
+  "description": "__MSG_appDescription__",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+M",
+        "mac": "Alt+Shift+M",
+        "chromeos": "Alt+Shift+M",
+        "linux": "Alt+Shift+M"
+      }
+    }
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "19": "images/icon-19.png",
+    "32": "images/icon-32.png",
+    "38": "images/icon-38.png",
+    "64": "images/icon-64.png",
+    "128": "images/icon-128.png",
+    "512": "images/icon-512.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": ["bg-libs.js", "background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "19": "images/icon-19.png",
+      "32": "images/icon-32.png",
+      "38": "images/icon-38.png",
+      "64": "images/icon-64.png",
+      "128": "images/icon-128.png",
+      "512": "images/icon-512.png"
+    },
+    "default_title": "ConfluxPortal",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [{
+    "matches": ["file://*/*", "http://*/*", "https://*/*"],
+    "js": ["portal-contentscript.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }, {
+    "matches": ["*://connect.trezor.io/*/popup.html"],
+    "js": ["vendor/trezor/content-script.js"]
+  }],
+  "permissions": ["storage", "unlimitedStorage", "clipboardWrite", "http://localhost:12537/", "https://confluxscan.io/*", "activeTab", "notifications"],
+  "web_accessible_resources": ["portal-inpage.js", "phishing.html"],
+  "externally_connectable": {
+    "matches": ["https://confluxscan.io/*", "https://testnet.confluxscan.io/*", "https://confluxnetwork.org/*", "https://portal-main.confluxrpc.com/*", "https://portal-test.confluxrpc.com/*"],
+    "ids": ["*"]
+  },
+  "minimum_chrome_version": "58"
+}

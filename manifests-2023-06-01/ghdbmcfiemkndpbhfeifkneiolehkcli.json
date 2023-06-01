@@ -1,0 +1,59 @@
+---
+slug: fujifilm-synapse-extensio
+name: FUJIFILM Synapse Extension
+description: FUJIFILM Synapse Extension for Window Management and Native Messaging.
+version: 1.3.0.02
+release_date: 'February 15, 2023'
+publisher: FUJIFILM Healthcare Americas Corporation
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 0
+rating_count: 0
+user_count: '400,000+'
+extension_website: 'https://healthcaresolutions-us.fujifilm.com/enterprise-imaging/synapse-pacs'
+support_website: >-
+  https://healthcaresolutions-us.fujifilm.com/medical-imaging-solutions/services/service-technical-support
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "1.3.0.02",
+  "default_locale": "en",
+  "description": "__MSG_extDescription__",
+  "icons": {
+    "128": "icon.png",
+    "48": "icon_48.png"
+  },
+  "background": {
+    "service_worker": "bsWrapper.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "*://*/*SynapseSignOn/sts/login*", "*://*/ImageViewer*", "*://*/*PowerJacket*", "*://*/WorkflowUI*", "*://*/*Client.Web*" ],
+      "js": [ "csNativeMessage.js" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "*://*/*iewer*", "*://*/*PowerJacket*", "*://*/WorkflowUI*", "*://*/*WorkflowUI*", "*://*/WebHelp5/*", "*://*/SSOMgr/*", "*://*/*ThinkLogChatUI*", "*://*/*AnalysisPanel*", "*://*/*DicomTransfer*", "*://*/*SynapseSignOn*", "*://*/Synapse/WebQuery*", "*://*/*Client.Web*" ],
+      "js": [ "csWindowManagement.js" ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "nativeMessaging"
+  ],
+  "host_permissions": [
+    "https://ajax.googleapis.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "canary.png", "canary.1.0.12.png" ],
+      "matches": [ "<all_urls>" ]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+---
+slug: fixdigital-plugin-for-gma
+name: Fixdigital plugin for Gmail and WhatsApp
+description: >-
+  The CRM platform that will grow your business through a plugin for Google and
+  WhatsApp
+version: '7.72'
+release_date: 'May 29, 2023'
+publisher: Info Fix Digital
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 202
+extension_website: 'https://www.fixdigital.co.il'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [ "contentScript.js", "sentry.js" ],
+      "matches": [ "https://web.whatsapp.com/*" ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "contentScriptGmail.js", "sentry.js" ],
+      "matches": [ "https://mail.google.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "contentScriptFixdigital.js" ],
+      "matches": [ "https://www.fixdigital.co.il/*", "http://staging.fixdigital.co.il/*" ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+	  "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "description": "The CRM platform that will grow your business through a plugin for Google and WhatsApp",
+  "externally_connectable": {
+    "matches": [ "https://web.whatsapp.com/*", "https://app.fixdigital.co.il/*", "https://www.fixdigital.co.il/*" ]
+  },
+  "icons": {
+    "128": "images/logo-128.png",
+    "16": "images/logo-16.png",
+    "32": "images/logo-32.png",
+    "48": "images/logo-48.png"
+  },
+  "manifest_version": 3,
+  "name": "Fixdigital plugin for Gmail and WhatsApp",
+  "options_page": "popup.html",
+  "action": {
+    "default_icon": {
+      "128": "images/logo-128.png",
+      "16": "images/logo-16.png",
+      "32": "images/logo-32.png",
+      "48": "images/logo-48.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "permissions": [ 
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [ "https://web.whatsapp.com/*", "https://mail.google.com/*", "https://app.fixdigital.co.il/*" ],
+  "version": "7.72",
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "iframeContentGmail.js", "sentry.js" ],
+      "matches": [ "https://mail.google.com/*" ]
+    },
+    {
+      "resources": ["images/*", "iframeContent.js", "sentry.js" ],
+      "matches": [ "https://web.whatsapp.com/*" ]
+    }
+  ]
+}

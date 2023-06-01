@@ -1,0 +1,107 @@
+---
+slug: neuralwriter-—-rewriting
+name: NeuralWriter — rewriting and paraphrasing
+description: Allow hard paraphrase/rewrite mode for neuralwriter
+version: 1.0.18
+release_date: 'April 19, 2023'
+publisher: Extension
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.6923076923076925
+rating_count: 13
+user_count: '70,000+'
+publisher_site: neuralwriter.com
+extension_website: 'https://neuralwriter.com'
+support_website: 'https://neuralwriter.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "NeuralWriter — rewriting and paraphrasing",
+    "version": "1.0.18",
+    "description": "Allow hard paraphrase/rewrite mode for neuralwriter",
+    "permissions": [
+        "scripting",
+        "alarms",
+        "background",
+        "storage",
+        "system.display",
+        "idle"
+    ],
+    "host_permissions": [
+        "https://api.neuralwriter.com/*",
+        "https://api2.neuralwriter.com/*",
+        "https://*.neuralwriter.com/*",
+        "https://*.facebook.com/*",
+        "https://*.instagram.com/*",
+        "https://*.google.com/*",
+        "http://localhost:3000/",
+        "http://localhost:44530/"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "general.js"
+            ],
+            "matches": [
+                "https://*.neuralwriter.com/*",
+                "https://*.facebook.com/*",
+                "https://*.google.com/*"
+            ],
+            "use_dynamic_url": true
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.neuralwriter.com/*",
+                "http://localhost:3000/"
+            ],
+            "js": [
+                "nw.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "https://*.neuralwriter.com/*",
+                "https://*.facebook.com/*",
+                "https://*.google.com/*"
+            ],
+            "js": [
+                "general_start.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": false,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "https://*.neuralwriter.com/*",
+                "https://*.facebook.com/*",
+                "https://*.google.com/*"
+            ],
+            "js": [
+                "general.js",
+                "math.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false,
+            "match_about_blank": true
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Neural Writer"
+    },
+    "icons": {
+        "128": "128.png"
+    }
+}

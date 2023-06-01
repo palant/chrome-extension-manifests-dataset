@@ -1,0 +1,107 @@
+---
+slug: sellha
+name: Sellha
+description: Sellha Chrome Extension
+version: 1.0.2
+release_date: 'May 23, 2023'
+publisher: ilovemalanghoney
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 5
+rating_count: 4
+user_count: '10,000+'
+extension_website: 'https://sellha.kr/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sellha",
+  "version": "1.0.2",
+  "description": "Sellha Chrome Extension",
+  "icons": {
+    "16": "icons/logo_s.png",
+    "32": "icons/logo_s.png",
+    "48": "icons/logo_s.png",
+    "128": "icons/logo_s.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Sellha",
+    "default_icon": "icons/logo_s.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["test.png"],
+      "matches": [
+        "*://*.sellha.kr/*",
+        "*://*.sellha.co.kr/*",
+        "*://*.sellha.net/*",
+        "http://localhost/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "host_permissions": [
+    "*://*.sellha.kr/*",
+    "*://*.sellha.co.kr/*",
+    "*://*.sellha.net/*",
+    "*://*.naver.com/*",
+    "http://localhost/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.sellha.kr/*",
+        "*://*.sellha.co.kr/*",
+        "*://*.sellha.net/*",
+        "http://localhost/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "pdContentScript.js",
+        "rtContentScript.js",
+        "bdContentScript.js",
+        "bpContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://smartstore.naver.com/*",
+        "https://brand.naver.com/*",
+        "https://shopping.naver.com/*"
+      ],
+      "css": ["insertProductDetail.css"],
+      "js": ["insertProductDetail.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.sellha.kr/*",
+      "*://*.sellha.co.kr/*",
+      "*://*.sellha.net/*",
+      "http://localhost/*"
+    ]
+  }
+}

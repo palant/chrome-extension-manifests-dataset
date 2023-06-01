@@ -1,0 +1,97 @@
+---
+slug: igcommentexporter-export
+name: IGCommentExporter - Export Instagram Comment
+description: >-
+  This extension will help you quickly export instagram comments to Excel xlsx
+  or csv files.
+version: 2.2.1
+release_date: 'March 16, 2023'
+publisher: EchoBot Team
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 599
+extension_website: 'https://igcommentsave.echobot.dev'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "homepage_url": "https://igcommentsave.echobot.dev",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "cookies",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "*://*.instagram.com/*",
+    "*://*.echobot.dev/*"
+  ],
+  "oauth2": {
+    "client_id": "138610376179-7a6g3to17rm3fu1rb9t1rbffpvvaip1s.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "libs/jquery-3.6.0.min.js",
+        "content-script.js"
+      ],
+      "matches": [
+        "*://*.instagram.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "auth.js"
+      ],
+      "matches": [
+        "*://*.echobot.dev/auth/success/igcommentexporter*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version": "2.2.1"
+}

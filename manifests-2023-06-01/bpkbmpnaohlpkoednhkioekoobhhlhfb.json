@@ -1,0 +1,73 @@
+---
+slug: simple-background-remover
+name: Simple Background Remover von Xidras.io
+description: Bearbeite Hintergründe & erstelle perfekte Bilder mit 1-Klick!
+version: '1.1'
+release_date: 'April 29, 2022'
+publisher: Xidras GmbH
+category: Photos
+category_slug: ext/28-photos
+rating: 0
+rating_count: 0
+user_count: 337
+extension_website: 'https://xidras.io/'
+support_website: 'https://www.xidras.io/contact/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "author": {
+    "name": "Xidras GmbH",
+    "email": "imprint@xidras.com",
+    "website": "https://xidras.io"
+  },
+  "version": "1.1",
+  "manifest_version": 3,
+  "default_locale": "de",
+
+  "homepage_url": "https://sbr.xidras.io/",
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "permissions": [
+    "contextMenus",
+    "notifications",
+    "tabs"
+  ],
+
+  "background": {
+    "service_worker": "./src/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file:///*"
+      ],
+      "js": ["./src/contentscripts/contentscript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://sbr.xidras.io/*",
+        "*://*.xidras.io/*"
+      ],
+      "js": ["./src/contentscripts/auth-pixel.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "icons": {
+    "16": "./public/icon.png",
+    "32": "./public/icon.png",
+    "48": "./public/icon.png",
+    "128": "./public/icon.png"
+  }
+}

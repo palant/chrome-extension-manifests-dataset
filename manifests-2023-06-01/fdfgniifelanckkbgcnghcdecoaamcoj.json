@@ -1,0 +1,71 @@
+---
+slug: twitter-violation-reports
+name: Twitter Violation Reports Assistant
+description: >-
+  One-click violation reports. Auto-filling of violation report forms. Detailed
+  DM feedback + screen-captures of removed tweets.
+version: '1.1'
+release_date: 'March 16, 2020'
+publisher: vayehee.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 47
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Twitter Violation Reports Assistant",
+  "description": "One-click violation reports. Auto-filling of violation report forms. Detailed DM feedback + screen-captures of removed tweets.",
+  "version": "1.1",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "browser_action": {
+    "default_title": "Twitter Violation Reprots Assistant",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "*://*.twitter.com/*",
+    "https://api.ipify.org/*",
+    "https://script.google.com/macros/s/*",
+    "https://script.googleusercontent.com/macros/*",
+    "https://sane.social/*",
+    "https://twitframe.com/*"
+  ],
+  "content_scripts": [{
+      "js": ["js/jquery-3.4.1.min.js", "js/content.js", "js/dropdown.js", "js/main_reporter.js", "js/updateAccountInfo.js", "js/directMessages.js"],
+      "css": ["css/dropdown.css"],
+      "matches": ["https://www.twitter.com/*", "https://twitter.com/*", "https://mobile.twitter.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://sane.social/callback*"],
+      "js": ["js/Twitter/session.js"]
+    },
+    {
+      "matches": ["https://sane.social/?report_batch=*"],
+      "js": ["js/jquery-3.4.1.min.js", "js/cause.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "background": {
+    "scripts": [
+      "js/jquery-3.4.1.min.js",
+      "js/Twitter/oAuth.js",
+      "js/Twitter/sha1.js",
+      "js/Twitter/twitter.js",
+      "background/background.js"
+    ],
+    "persistent": true
+  }
+}

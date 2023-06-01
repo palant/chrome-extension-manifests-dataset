@@ -1,0 +1,74 @@
+---
+slug: botsight
+name: BotSight
+description: >-
+  An inline, real-time Twitter annotator which computes, for each user in your
+  Twitter feed, the likelihood they are a bot.
+version: 1.2.7
+release_date: 'January 5, 2021'
+publisher: NortonLifeLock Research Group
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 3.375
+rating_count: 8
+user_count: '2,000+'
+publisher_site: download.botsight.nlok-research.me
+extension_website: 'https://download.botsight.nlok-research.me'
+support_website: 'https://download.botsight.nlok-research.me#faq'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "BotSight",
+	"version": "1.2.7",
+
+	"description": "An inline, real-time Twitter annotator which computes, for each user in your Twitter feed, the likelihood they are a bot.",
+	"icons": {
+		"48": "img/icons/Bot_icon48.png",
+		"96": "img/icons/Bot_icon96.png",
+		"128": "img/icons/Bot_icon128.png",
+		"256": "img/icons/Bot_icon256.png",
+		"512": "img/icons/Bot_icon512.png"
+	},
+
+	"author": "NortonLifeLock Research Group",
+
+	"content_scripts": [
+		{
+			"matches": ["*://*.twitter.com/*"],
+			"js": [
+				"lib/jquery/dist/jquery-3.4.1.min.js",
+				"lib/popper-core-2.3.3/popper.min.js",
+				"lib/tippy-6.1.1/tippy-bundle.umd.min.js",
+				"js/content-script.js"
+			],
+			"css": [
+				"/lib/fontawesome-free-5.12.1-web/css/all-chrome.css",
+				"/lib/fontawesome-free-5.12.1-web/css/all.css",
+				"lib/tippy-6.1.1/tippy.css",
+				"/css/spm-indicator.css"
+			],
+			"run_at": "document_idle"
+		}
+	],
+	"web_accessible_resources": [
+		"/lib/fontawesome-free-5.12.1-web/webfonts/*",
+		"/js/*.js.map"
+	],
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": true
+	},
+	"options_ui": {
+		"page": "html/settings.html"
+	},
+	"browser_action": {
+		"default_title": "BotSight",
+		"default_icon": "img/icons/Bot_icon512.png",
+		"default_popup": "html/popup.html"
+	},
+	"permissions": ["storage", "activeTab"],
+	"content_security_policy": "script-src 'self'; object-src 'self'; font-src 'self'"
+}

@@ -1,0 +1,88 @@
+---
+slug: vowel
+name: Vowel
+description: Allows you to schedule Vowel meetings easily from Google Calendar.
+version: 1.1.5
+release_date: 'May 23, 2023'
+publisher: Vowel
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 17
+user_count: '3,000+'
+publisher_site: vowel.com
+extension_website: 'https://www.vowel.com'
+support_website: 'https://help.vowel.com/en/collections/2059983-vowel-faq'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.1.5",
+  "name": "Vowel",
+  "manifest_version": 3,
+  "description": "Allows you to schedule Vowel meetings easily from Google Calendar.",
+  "icons": {
+    "16": "images/logo_16.png",
+    "32": "images/logo_32.png",
+    "48": "images/logo_48.png",
+    "128": "images/logo_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "*://*.vowel.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "cookies"
+  ],
+  "omnibox": {
+    "keyword": "vowel"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://calendar.google.com/calendar/*"
+      ],
+      "js": [
+        "calendar.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.vowel.com/*"
+      ],
+      "js": [
+        "vowelWebAppInject.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/images/logo.svg"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "/vowelWebApp.js"
+      ],
+      "matches": [
+        "*://*.vowel.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "minimum_chrome_version": "88"
+}

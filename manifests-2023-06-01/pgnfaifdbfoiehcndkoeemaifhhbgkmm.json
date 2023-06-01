@@ -1,0 +1,81 @@
+---
+slug: lazyapply-job-application
+name: 'LazyApply : Job Application Bot'
+description: >-
+  Apply to 100’s of jobs in just one click… Automate your application for Job
+  with the lifetime job application system LazyApply.
+version: 0.7.1
+release_date: 'June 1, 2023'
+publisher: Vivek dwivedi
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.8421052631578947
+rating_count: 57
+user_count: '10,000+'
+extension_website: 'https://lazyapply.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LazyApply : Job Application Bot",
+  "description": "Apply to 100’s of jobs in just one click… Automate your application for Job with the lifetime job application system LazyApply.",
+  "version": "0.7.1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./mainicon.png",
+    "32": "./mainicon.png",
+    "48": "./mainicon.png",
+    "128": "./mainicon.png"
+  },
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "action": {
+    "default_title": "Automate Your Job Application Process"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.indeed.com/*"],
+      "js": ["./jquery.min.js", "./indeed.bundle.js", "./debug.bundle.js"]
+    },
+    {
+      "matches": ["https://*.indeed.com/*"],
+      "js": ["./eventblock.bundle.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.linkedin.com/jobs/*"],
+      "js": ["./jquery.min.js", "./linkedin.bundle.js", "./debug.bundle.js"]
+    },
+    {
+      "matches": ["https://*.ziprecruiter.com/candidate/*"],
+      "js": ["./jquery.min.js", "./ziprecruiter.bundle.js", "./debug.bundle.js"]
+    },
+    {
+      "matches": ["https://app.lazyapply.com/*"],
+      "js": ["./jquery.min.js", "./globalDash.bundle.js"]
+    },
+    {
+      "matches": ["https://www.dice.com/*"],
+      "js": ["./jquery.min.js", "./dice.bundle.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://lazyapply.com/*", "https://app.lazyapply.com/*"]
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "power",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "identity",
+    "scripting"
+  ],
+  "host_permissions": ["http://*/", "https://*/"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

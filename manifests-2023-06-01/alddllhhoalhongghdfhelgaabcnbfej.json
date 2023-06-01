@@ -1,0 +1,77 @@
+---
+slug: 웨않되-맞춤법-검사기
+name: 웨않되 - 맞춤법 검사기
+description: 웹 브라우저용 한글 맞춤법 검사기
+version: 2.0.20
+release_date: 'May 2, 2023'
+publisher: whale.grammar
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.3666666666666667
+rating_count: 30
+user_count: '20,000+'
+support_website: 'https://forms.gle/M6VJXq3b46Ki76Q37'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "웨않되 - 맞춤법 검사기",
+  "version": "2.0.20",
+  "description": "웹 브라우저용 한글 맞춤법 검사기",
+  "icons": {
+    "16": "icons/application-icon-32.png",
+    "32": "icons/application-icon-32.png",
+    "128": "icons/application-icon-128.png",
+    "512": "icons/application-icon-512.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.coupang.com/*"],
+      "all_frames": true,
+      "js": ["content_script.coupang_console.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "exclude_matches": ["https://docs.google.com/document/*", "https://*.notion.so/*", "https://*.facebook.com/*"],
+      "match_about_blank": true,
+      "all_frames": true,
+      "js": ["content_script.universal.js"],
+      "css": ["content_script.universal.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/*",
+        "/*.css",
+        "/popup.html",
+        "content_script.coupang_inject.js",
+        "coupang_redirect.html",
+        "coupang_redirect.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["declarativeNetRequest", "cookies", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "action": {
+    "default_title": "웨않되 - 맞춤법 검사기",
+    "default_popup": "popup.html"
+  }
+}

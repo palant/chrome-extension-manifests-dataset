@@ -1,0 +1,143 @@
+---
+slug: overloop
+name: Overloop
+description: Overloop Extension
+version: 3.36.46
+release_date: 'May 30, 2023'
+publisher: Overloop
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.362068965517241
+rating_count: 58
+user_count: '5,000+'
+publisher_site: overloop.com
+extension_website: 'https://overloop.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Overloop",
+  "short_name": "Overloop",
+  "version": "3.36.46",
+  "description": "Overloop Extension",
+  "homepage_url": "https://overloop.com",
+  "icons": {
+    "16": "assets/img/overloop-icon-16.png",
+    "48": "assets/img/overloop-icon-48.png",
+    "128": "assets/img/overloop-icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/img/overloop-icon-16.png",
+      "48": "assets/img/overloop-icon-48.png",
+      "128": "assets/img/overloop-icon-128.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "webNavigation",
+    "cookies",
+    "identity",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://localhost:3000/*",
+    "*://*.overloop.com/*",
+    "*://*.linkedin.com/*",
+    "*://*.lightning.force.com/*",
+    "*://*.herokuapp.com/*"
+  ],
+  "background": {
+    "service_worker": "lib/background/service-worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/lib/client/dist/*",
+        "/lib/dist/*",
+        "/assets/*"
+      ],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.overloop.com/*",
+      "*://*.linkedin.com/*",
+      "*://*.lightning.force.com/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; img-src 'self' * blob: data:; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "exclude_matches": [
+        "*://*.linkedin.com/sales/*"
+      ],
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/dist/linkedin.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/sales/*"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "js": [
+        "lib/dist/linkedin-sales.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "lib/dist/linkedin-ui.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.lightning.force.com/*"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "js": [
+        "lib/dist/lightning-force.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.lightning.force.com/*"
+      ],
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "lib/dist/lightning-force-ui.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,67 @@
+---
+slug: betteryt
+name: BetterYt
+description: Addon for youtube streamer
+version: 2.2.26
+release_date: 'May 18, 2022'
+publisher: ogniste-wie
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.857142857142857
+rating_count: 14
+user_count: 102
+---
+
+{
+  "manifest_version": 3,
+  "icons": {
+    "128": "icon.png"
+  },
+  "name": "BetterYt",
+  "description": "Addon for youtube streamer",
+  "version": "2.2.26",
+  "action": {
+    "default_title": "BetterYT",
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "background/service_worker.js"
+  },
+  "content_scripts": [{
+    "matches": ["*://*.youtube.com/*", "*://studio.youtube.com/video/*/livestreaming"],
+    "exclude_matches": [
+      "*://studio.youtube.com/ytscframe",
+      "*://*.youtube.com/subscribe_embed*",
+      "*://*.youtube.com/embed*",
+      "*://*.youtube.com/yt/*"
+    ],
+    "js": [
+      "lib/jquery-3.6.0.min.js",
+      "CssUtil.js",
+      "lib/Nyt.js",
+      "betteryt_settings.js",
+      "functions/BetterYT.js",
+      "functions/BetterInit.js"
+    ],
+    "run_at": "document_end",
+    "all_frames": true
+  }, {
+    "matches": ["*://*.youtube.com/*"],
+    "js": [
+      "CssUtil.js",
+      "functions/BetterTheater.js"
+    ],
+    "run_at": "document_idle"
+  }],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "externally_connectable": {
+    "matches": ["*://*.youtube.com/*"]
+  },
+  "web_accessible_resources": [{
+    "resources": ["image/*", "css/*"],
+    "matches": ["*://*.youtube.com/*"]
+  }],
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage", "unlimitedStorage", "tabs", "activeTab","notifications", "scripting"]
+}

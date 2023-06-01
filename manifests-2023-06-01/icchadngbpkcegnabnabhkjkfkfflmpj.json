@@ -1,0 +1,98 @@
+---
+slug: simple-translator-select
+name: 'Simple Translate: Select to Translate'
+description: >-
+  Translate selected text with Google Translate. View translations and learn
+  words in 103 languages.
+version: 1.0.2
+release_date: 'November 29, 2022'
+publisher: Peta Sittek
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.625
+rating_count: 40
+user_count: '100,000+'
+---
+
+{
+
+
+
+   "background": {
+      "service_worker": "js/background.js"
+   },
+   "content_scripts": [
+       {
+           "all_frames": true,
+           "exclude_matches": ["*://translate.google.com/*"],
+           "js": [
+               "js/jquery.js",
+               "js/common_utils/translate_utils.js",
+               "js/common_utils/audio_utils.js",
+               "js/common_utils/languages.js",
+               "js/content.js"
+            ],
+           "css": ["css/content.css", "css/pageTranslation.css"],
+           "matches": ["<all_urls>"]
+       },
+       {
+         "all_frames": true,
+         "js": [
+             "js/jquery.js",
+             "js/translation_all_page_styling.js"
+          ],
+         "css": ["css/content.css", "css/pageTranslation.css"],
+         "matches": ["*://*.translate.goog/*"]
+       }
+   ],
+   "declarative_net_request" : {
+      "rule_resources" : [
+        {
+          "id": "ruleset",
+          "enabled": true,
+          "path": "rules.json"
+        }
+      ]
+    },
+   "host_permissions": [
+      "<all_urls>"
+   ],
+   "action": {
+      "default_icon": "images/128.png",
+      "default_title": "Translator",
+      "default_popup": "popup.html"
+   },
+   "default_locale": "en",
+   "description": "__MSG_description__",
+   "icons": {
+      "128": "images/128.png",
+      "48": "images/48.png"
+   },
+   "manifest_version": 3,
+   "name": "__MSG_name__",
+   "options_page": "settings.html",
+   "permissions": [
+      "contextMenus",
+      "activeTab",
+      "storage",
+      "tabs",
+      "system.display",
+      "declarativeNetRequest"
+   ],
+   "short_name": "Translator",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.2",
+   "web_accessible_resources": [
+      {
+        "resources":[
+            "js/*",
+            "images/*",
+            "css/*",
+            "fonts/*"
+         ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+   ]
+}

@@ -1,0 +1,87 @@
+---
+slug: aws-role-switch
+name: AWS role switch
+description: Quickly switch between roles on the AWS console
+version: 0.7.1
+release_date: 'December 13, 2022'
+publisher: stuemmel.jan
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 109
+extension_website: 'https://github.com/janstuemmel/aws-role-switch'
+support_website: 'https://github.com/janstuemmel/aws-role-switch/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "0.7.1",
+  "name": "AWS role switch",
+  "description": "Quickly switch between roles on the AWS console",
+  "homepage_url": "https://github.com/janstuemmel/aws-role-switch",
+  "options_ui": {
+    "page": "options/options.html",
+    "browser_style": false,
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.console.aws.amazon.com/*",
+        "https://*.console.amazonaws-us-gov.com/*",
+        "https://*.console.amazonaws.cn/*",
+        "https://lightsail.aws.amazon.com/*",
+        "https://health.aws.amazon.com/*",
+        "https://phd.amazonaws-us-gov.com/*",
+        "https://phd.amazonaws.cn/*"
+      ],
+      "js": [
+        "content/aws-console.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://signin.aws.amazon.com/*"
+      ],
+      "js": [
+        "content/aws-signin.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "manifest_version": 3,
+  "action": {
+    "default_title": "AWS role switch",
+    "default_popup": "popup/popup.html",
+    "browser_style": true,
+    "default_icon": {
+      "128": "assets/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.console.aws.amazon.com/*",
+    "https://*.console.amazonaws-us-gov.com/*",
+    "https://*.console.amazonaws.cn/*",
+    "https://lightsail.aws.amazon.com/*",
+    "https://health.aws.amazon.com/*",
+    "https://phd.amazonaws-us-gov.com/*",
+    "https://phd.amazonaws.cn/*"
+  ],
+  "commands": {
+    "_execute_action": {
+      "description": "Open the popup window",
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      }
+    }
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  }
+}

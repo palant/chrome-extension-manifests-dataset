@@ -1,0 +1,70 @@
+---
+slug: quack-record-bugs-capture
+name: 'Quack: Record bugs & capture developer logs'
+description: Tackle your bugs with full context.
+version: 0.6.4
+release_date: 'October 12, 2022'
+publisher: aviram7168
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 3
+user_count: 81
+extension_website: 'https://thequack.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Quack: Record bugs & capture developer logs",
+  "description": "Tackle your bugs with full context.",
+  "version": "0.6.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Quack ",
+    "default_icon": "icon.png"
+  },
+	"permissions": [
+		"storage",
+		"background",
+		"tabs",
+    "scripting",
+    "activeTab", 
+    "tabCapture",
+    "identity",
+    "alarms",
+    "identity.email"    
+	],
+  "optional_permissions": [ "downloads"],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "ids": ["dhanjhcjndcljabjcgplefpknbbgpfik","ddhgifilbplebgnkogbippbbfieagldj"],
+    "matches": ["http://localhost:3001/*","https://app.thequack.io/*","https://www.app.thequack.io/*"],
+    
+    "accepts_tls_channel_id": false
+  },
+  "web_accessible_resources": [{
+    "resources": ["injected_script.js","report.html","record.html"],
+    "matches": ["<all_urls>"]
+  }],
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches":["http://localhost:3001/*","https://app.thequack.io/*","https://www.app.thequack.io/*"],
+      "js":["recordContentScript.js"]
+    }
+  ]
+}

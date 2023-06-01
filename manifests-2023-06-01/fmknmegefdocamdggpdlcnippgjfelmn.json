@@ -1,0 +1,77 @@
+---
+slug: công-cụ-mua-hàng-gobiz
+name: Công cụ mua hàng Gobiz
+description: >-
+  Công cụ hỗ trợ mua hàng, dùng để sử dụng cho hệ thống Go Purchasing của
+  gobiz.vn
+version: '1.2'
+release_date: 'March 9, 2023'
+publisher: Gobiz Developer
+category: Shopping
+category_slug: ext/12-shopping
+rating: 0
+rating_count: 0
+user_count: 249
+publisher_site: gobiz.vn
+extension_website: 'https://gobiz.vn'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Công cụ mua hàng Gobiz",
+    "description": "Công cụ hỗ trợ mua hàng, dùng để sử dụng cho hệ thống Go Purchasing của gobiz.vn",
+    "version": "1.2",
+    "icons": {
+        "128": "img/icon.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "all_frames": true,
+            "css": ["style/content.css"],
+            "js": ["content.js"]
+        },
+        {
+            "css": ["autopai/css/custom.css"],
+            "js": ["autopai/config.js"],
+            "matches": ["<all_urls>"],
+            "runt_at": "document_end"
+        },
+        {
+            "js": ["autopai/config.js", "autopai/js/lib/md5.js", "autopai/js/autopai/init/taobao.js"],
+            "matches": [
+                "http://item.taobao.com/*",
+                "http://*.taobao.com/item/*",
+                "https://item.taobao.com/*",
+                "https://*.taobao.com/item/*",
+                "https://cart.taobao.com/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "css": ["autopai/css/custom.css"],
+            "js": ["autopai/config.js", "autopai/js/lib/md5.js", "autopai/js/autopai/init/tmall.js"],
+            "matches": ["http://*.tmall.com/item*", "https://*.tmall.com/item*", "http://*.tmall.hk/hk/item*", "https://*.tmall.hk/hk/item*"],
+            "run_at": "document_end"
+        },
+        {
+            "js": ["autopai/config.js", "autopai/js/lib/md5.js", "autopai/js/autopai/init/1688.js"],
+            "matches": ["http://detail.1688.com/*", "https://detail.1688.com/*", "http://*.1688.com/*", "https://*.1688.com/*"],
+            "exclude_matches": ["https://trade.1688.com/order/new_step_order_detail.htm*"],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": ["tabs", "storage"],
+    "host_permissions": ["*://*.taobao.com/*", "*://*.1688.com/*", "*://*.tmall.com/*", "*://*.tb.cn/*"],
+    "web_accessible_resources": [
+        {
+            "resources": ["injector.js"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

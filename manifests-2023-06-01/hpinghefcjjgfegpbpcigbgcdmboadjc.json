@@ -1,0 +1,160 @@
+---
+slug: video-screen-recorder-for
+name: Video & Screen Recorder For Work | Covideo
+description: >-
+  Record video from your webcam & screen, share them instantly, track who’s
+  watching!
+version: 3.0.0.7
+release_date: 'May 3, 2023'
+publisher: Covideo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 11
+user_count: '2,000+'
+publisher_site: www.covideo.com
+extension_website: 'https://www.covideo.com/'
+support_website: 'https://intercom.help/covideo-8a7de4b40e52/en'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "Covideo",
+    "name": "Video & Screen Recorder For Work | Covideo",
+    "description": "Record video from your webcam & screen, share them instantly, track who’s watching!",
+    "manifest_version": 3,
+    "action": {
+        "default_icon": "icon/favicon.png",
+        "default_popup": "index.html",
+        "default_title": "Video & Screen Recorder For Work | Covideo"
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl1rFFvO/WC1aMMZmJ0vQdAuetDj6z9yJxOK3X9wBBh3LIRRzDdcjow12v08GM7Z4q2BKw5Z640As3+I0tUEjsvJckRCRLIIo3D4gBw+SnivhGZ6/y9OUk18PmG70KpL0twovznschLQgNRvGAdlTIKF7ygfLReVF1yApVtffBA8iUI18SrcKXaMPUNJPUVkKnHJHYjWv82y8MP/fjb940M4ZAMTkhFcCYqS0OF95Lurxh909sG/wnH/pwYgWxjvYh7VD0fBzBXM6AVB3s+HFu81Ym7RhUA1MolFDXF5ml6XotmVWc2K7iwcwJ6EkU6WVKHWPqTwkEpn7rsuBNWJ4hQIDAQAB",
+    "icons": {
+        "16": "icon/favicon.png",
+        "48": "icon/favicon.png",
+        "128": "icon/favicon.png"
+    },
+    "background": {
+        "service_worker": "backgroundWorker.js"
+    },
+    "content_scripts": [{
+            "matches": ["https://mail.google.com/*"],
+            "js": ["pageWorld.js", "background.js", "gmailWindow.js"],
+            "css": ["gmailWindow.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.linkedin.com/*"],
+            "js": ["gmailWindow.js"],
+          "css": ["gmailWindow.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://*.hubspot.com/*"],
+            "js": ["gmailWindow.js"],
+            "css": ["gmailWindow.css"],
+            "run_at": "document_idle"
+        },
+        {
+          "matches": ["https://*.cloudkennect.com/*"],
+          "js": ["gmailWindow.js"],
+          "css": ["gmailWindow.css"],
+          "run_at": "document_idle"
+      },
+      {
+        "matches": ["<all_urls>", "*://localhost/*"],
+        "js": [
+            "./backgroundHelper/DrawImagesOnCanvasCommand.js",
+            "./backgroundHelper/RouteCapturedDataToDestinationCommand.js",
+            "./backgroundHelper/HandleEntirePageScreenshotCommand.js",
+            "./backgroundHelper/HandleFinishSelectedAreaScreenshotCommand.js",
+            "./backgroundHelper/HandleWindowScreenshotCommand.js",
+            "./backgroundHelper/ScreenshotController.js",
+            "./EntirePageScreenshot.js"
+        ],
+        "run_at": "document_idle"
+    }
+    ],
+    "host_permissions": [
+        "https://eiy0talp86.execute-api.us-east-1.amazonaws.com/dev/*",
+        "https://3atmfp4on1.execute-api.us-east-1.amazonaws.com/prod/*",
+        "https://www.inboxsdk.com/*",
+        "https://covideo.com/",
+        "https://www.covideo.com/",
+        "https://dev.covideo.com/",
+        "https://mail.google.com/*",
+        "https://www.googleapis.com/*",
+        "https://www.linkedin.com/*",
+        "https://*.hubspot.com/*",
+        "https://*.cloudkennect.com/*",
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+    ],
+    "permissions": [
+       "scripting",
+        "tabs",
+        "activeTab",
+        "notifications",
+        "clipboardWrite",
+        "desktopCapture",
+        "storage",
+        "unlimitedStorage"
+    ],
+    "options_ui": {
+        "page": "./options_window.html",
+        "open_in_tab": true
+    },
+    "web_accessible_resources": [
+        {"resources": [
+            "pageWorld.js",
+            "options_window.html",
+            "cameraStream.html",
+            "cameraStream.js",
+            "cameraNoSound.html",
+            "cameraNoSound.js",
+            "gmail.js",
+            "gmailNotify.js",
+            "gmailInjector.js",
+            "extension_button.js",
+            "pageLeaveAlert.js",
+            "options.js",
+            "icon/*",
+            "static/*",
+            "backgroundHelper/*",
+            "sso-signin.html",
+            "record_screen_window.html",
+            "covideoIntercomWidget.js",
+            "annotate_window.html"],
+            "matches": ["<all_urls>"]
+        }
+        
+    ],
+    "commands": {
+        "start-stop-recording": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+1",
+                "mac": "MacCtrl+Shift+1",
+                "chromeos": "Ctrl+Shift+1",
+                "linux": "Ctrl+Shift+1"
+            },
+            "description": "Start/Stop recording",
+            "global": true
+        },
+        "_execute_action": {
+            "suggested_key": {
+                "windows": "Ctrl+Shift+Y",
+                "mac": "MacCtrl+Shift+Y",
+                "chromeos": "Ctrl+Shift+Y",
+                "linux": "Ctrl+Shift+Y"
+            },
+            "global": false
+        }
+    },
+    "version": "3.0.0.7",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' ; object-src 'self'"
+    }
+     
+}

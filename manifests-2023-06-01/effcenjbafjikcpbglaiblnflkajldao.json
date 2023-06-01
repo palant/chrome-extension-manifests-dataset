@@ -1,0 +1,64 @@
+---
+slug: itsmydata
+name: itsmydata
+description: A tool to increase the awareness of your digital data traces.
+version: 1.0.1
+release_date: 'January 17, 2023'
+publisher: it's my data GmbH
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 158
+publisher_site: itsmydata.de
+extension_website: 'https://itsmydata.de'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extensionTitle__",
+  "version": "1.0.1",
+  "description": "__MSG_extensionDescription__",
+  "manifest_version": 2,
+  "homepage_url": "https://itsmydata.de",
+  "default_locale": "en",
+
+  "icons": {
+    "16": "logo_16.png",
+    "48": "logo_48.png",
+    "128": "logo.png"
+  },
+  "web_accessible_resources": ["manifest.json"],
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "api.js",
+      "background.js",
+      "vendors.js"
+    ]
+  },
+
+  "browser_action": {
+    "default_icon": "logo-off.png",
+    "default_title": "It's my data",
+    "default_popup": "login.html"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["vendors.js", "content.js"]
+  },
+    {
+      "matches": ["*://*/*"],
+      "exclude_matches": ["*://*/_/chrome/newtab*"],
+      "js": ["content.js"],
+      "all_frames": false,
+      "run_at": "document_idle"
+    }]
+}

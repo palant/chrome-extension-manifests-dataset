@@ -1,0 +1,81 @@
+---
+slug: 529renew
+name: 529renew
+description: Tracks 23andMe DNA Matches using a local SQL database
+version: 1.2.6
+release_date: 'April 13, 2023'
+publisher: CameronD73
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 159
+extension_website: 'https://github.com/CameronD73/529renew'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name" : "529renew",
+  "version" : "1.2.6",
+  "description" : "Tracks 23andMe DNA Matches using a local SQL database",
+  "background": {
+  	"service_worker": "service.js"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+      	"https://you.23andme.com/profile/*",
+      	"https://you.23andme.com/p/*/profile/*"
+      ],
+      "js" : [
+        "basicQueue.js",
+        "save_segments.js"
+      ],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+      	"https://you.23andme.com/family/relatives/*",
+      	"https://you.23andme.com/p/*/family/relatives/*"
+      ],
+      "js" : [
+        "start_db_tab.js"
+      ],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "icons" : {
+  	"16" : "529renew-16.png",
+  	"19" : "529renew-19.png",
+  	"48" : "529renew-48.png",
+  	"128" : "529renew-128.png"
+  },
+  "web_accessible_resources": [
+	{
+	  "resources": [
+		"*.png"
+	  ],
+	  "matches": [
+		"<all_urls>"
+	  ]
+	}
+  ],
+  "action":
+  {
+  	"default_icon" : "529renew-19.png",
+  	"default_title" : "View matches in 529Renew",
+    "default_popup" : "popup529.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'"
+  }
+}

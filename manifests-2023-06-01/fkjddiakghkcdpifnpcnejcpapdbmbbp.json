@@ -1,0 +1,75 @@
+---
+slug: google-meet-by-emocional
+name: Google Meet by Emocional
+description: Añade Emocional en tus videolladamas de Google Meet.
+version: 1.0.4
+release_date: 'January 24, 2023'
+publisher: emocional
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 6
+user_count: 62
+publisher_site: emocional.co
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Google Meet by Emocional",
+  "description": "Añade Emocional en tus videolladamas de Google Meet.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh791TBZj5pTgfkmBLPEUnaT0E3ZQBj09Yt1J7jbXt9Oub31r+WhXYC7x1sRj4PPbPaQzBnXG8eFpoI53zDD2nSwZndcn4q1kElCyRaOGh+2r0SO/TeLeS6mo2HnE2ChgRLAcLl6Bxq0fdqlZsNs5SlF/GV41KVTeq6Nf0lUGC2xlnctCwEZQcDy/vamC69kXSC8bn92ky2d4/7/pG4u77XzcdyvezmHi7oy4WzVluKEmuTzE0jlBshRibkVvHqp7kACRXTSBlHxnEg6lSfKfpC2Tqm1JXWZYjT6J+AdkccVTM1iLucoK8JKiBOPEwSGQZMWE+N8cdnAtOSP0jdwm/QIDAQAB",
+  "version": "1.0.4",
+  "icons": {
+    "128": "logo/active-icon.png"
+  },
+  "options_page": "settings/settings.html",
+  "action": {
+    "default_title": "Emotional Meetings",
+    "default_popup": "popup/popup.html",
+    "default_icon": "logo/active-icon.png"
+  },
+  "permissions": ["tabs", "storage", "identity", "identity.email", "scripting"],
+  "host_permissions": [
+    "https://emocional-app-dev-typeorm.ew.r.appspot.com/*",
+    "https://emocional-app-prod.ew.r.appspot.com/*",
+    "https://meet.google.com/*",
+    "https://app.slack.com/free-willy/*",
+    "https://teams.live.com/*",
+    "https://zoom.us/wc/*",
+    "https://app.emocional.co/*",
+    "https://dev.emocional.co/*"
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://app.slack.com/free-willy/*",
+        "https://teams.live.com/*",
+        "https://zoom.us/wc/*"
+      ],
+      "js": ["main.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["logo/logo.png", "audio/notification.mp3"],
+      "matches": [
+        "https://app.emocional.co/*",
+        "https://dev.emocional.co/*",
+        "https://meet.google.com/*",
+        "https://*.vercel.app/*",
+        "http://localhost:3000/*"
+      ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "944106436339-7dj188mr9ti6m6nmn4dh42v1vl6ja8pj.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
+  }
+}

@@ -1,0 +1,108 @@
+---
+slug: ali-invoice-free
+name: Ali Invoice FREE
+description: Converts AliExpress order details into an invoice ready to print
+version: 0.1.2.9
+release_date: 'May 3, 2023'
+publisher: Dropshipping Store
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.88
+rating_count: 25
+user_count: '30,000+'
+publisher_site: www.dropshipping.store
+extension_website: 'https://www.dropshipping.store/ali-invoice'
+support_website: 'https://www.dropshipping.store/ali-invoice-instructions-free'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Ali Invoice FREE",
+    "version": "0.1.2.9",
+    "manifest_version": 2,
+    "description": "Converts AliExpress order details into an invoice ready to print",
+    "author": "Ivan Matic",
+    "background": {
+        "scripts": ["./lib/jquery.min.js", "./js/background.js"],
+        "persistent": true
+    },
+    "icons": {
+        "16": "./img/icon16.png",
+        "32": "./img/icon32.png",
+        "48": "./img/icon48.png",
+        "64": "./img/icon64.png",
+        "128": "./img/icon128.png"
+    },
+    "browser_action": {
+        "default_title": "Ali Invoice FREE",
+        "default_icon": "./img/icon128.png",
+        "default_popup": "./html/popup.html",
+        "scripts": "./js/popup.js"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "content_scripts": [
+        {
+            "js": ["./lib/jquery.min.js", "./js/orders-page.js"],
+            "css": ["./css/custom.css"],
+            "matches": [
+                "http://trade.aliexpress.com/order_list.htm*",
+                "https://trade.aliexpress.com/order_list.htm*",
+                "http://trade.aliexpress.com/orderList.htm*",
+                "https://trade.aliexpress.com/orderList.htm*",
+                "http://trade.aliexpress.com/ordertrash/orderTrash.htm*",
+                "https://trade.aliexpress.com/ordertrash/orderTrash.htm*"
+            ]
+        },
+        {
+            "js": ["./lib/jquery.min.js", "./js/aliinvoice.js"],
+            "css": ["./css/custom.css"],
+            "matches": [
+                "http://trade.aliexpress.com/order_detail.htm*&inv=3",
+                "https://trade.aliexpress.com/order_detail.htm?inv=3*"
+            ]
+        },
+        {
+            "js": ["./lib/jquery.min.js", "./js/aliexpress.js"],
+            "matches": ["https://*.aliexpress.com/*"]
+        },
+        {
+            "js": [
+                "./lib/accounting.min.js",
+                "./lib/jquery.min.js",
+                "./js/components/modal.js",
+                "./js/components/interface.js",
+                "./js/components/utilities.js",
+                "./js/components/ordersPage.js",
+                "./js/components/orderDetails.js",
+                "./js/components/orderLogistics.js"
+            ],
+            "matches": ["*://*.aliexpress.com/*", "*://*.aliexpress.ru/*", "*://*.aliexpress.us/*"],
+            "css": ["./css/custom.css"]
+        }
+    ],
+
+    "web_accessible_resources": [
+        "/*.png",
+        "/img/*.png",
+        "/*.gif",
+        "/img/*.gif",
+        "/options.html"
+    ],
+
+    "permissions": [
+        "http://*.aliexpress.com/*",
+        "https://*.aliexpress.com/*",
+        "https://trade.aliexpress.com/*",
+        "http://my.dropshipping.store/*",
+        "https://my.dropshipping.store/*",
+        "https://www.dropshipping.store/*",
+        "storage"
+    ],
+    "optional_permissions": [
+        "*://*.aliexpress.us/*"	   
+    ]
+}

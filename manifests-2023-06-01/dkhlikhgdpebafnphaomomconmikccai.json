@@ -1,0 +1,206 @@
+---
+slug: ris+
+name: ris+
+description: Macht das RIS benutzerfreundlicher.
+version: 2.0.1
+release_date: 'May 2, 2022'
+publisher: ris+
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 288
+publisher_site: risplus.at
+extension_website: 'https://risplus.at'
+support_website: 'https://risplus.at/features'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "ris+",
+	"author": "Paul Eberstaller",
+	"version": "2.0.1",
+	"homepage_url": "https://www.risplus.at",
+	"description": "Macht das RIS benutzerfreundlicher.",
+	"icons": {
+		"128": "img/icon-128.png"
+	},
+	"omnibox": {
+		"keyword": "§"
+	},
+	"browser_action": {
+		"default_icon": "img/icon-128.png"
+	},
+	"background": {
+		"scripts": [
+			"js/jquery.js",
+			"js/background.js",
+			"js/algoliasearchLite.min.js",
+			"js/omnibox.js"
+		],
+		"persistent": false
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://www.ris.bka.gv.at/*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"run_at": "document_start",
+			"js": [
+				"js/loadingScreen.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*",
+				"*://*/*BgblAuth/BGBLA*",
+				"*://*/Dokumente/*"
+			],
+			"css": [
+				"css/generalStyle.css",
+				"css/instantsearch.min.css",
+				"css/search.css",
+				"css/risstyles.css"
+			],
+			"js": [
+				"js/jquery.js",
+				"js/generalScript.js",
+				"js/algoliasearchLite.min.js",
+				"js/instantsearch.min.js",
+				"js/search.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/GeltendeFassung.wxe*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"css": [
+				"css/GeltendeFassungStyle.css"
+			],
+			"js": [
+				"js/GeltendeFassungScript.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/Dokument.wxe*Abfrage=Vfgh*",
+				"https://*.ris.bka.gv.at/Dokument.wxe*Abfrage=Vwgh*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"css": [
+				"css/judikaturDetail.css"
+			],
+			"js": [
+				"js/judikaturDetail.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/Dokument.wxe*Abfrage=Justiz*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"css": [
+				"css/judikaturDetail.css"
+			],
+			"js": [
+				"js/judikaturDetail.js",
+				"js/justizScript.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/Dokument.wxe*Abfrage=Bundesnormen*",
+				"https://*.ris.bka.gv.at/Dokument.wxe*Abfrage=Landesnormen*",
+				"https://*.ris.bka.gv.at/NormDokument.wxe*Abfrage=Bundesnormen*",
+				"https://*.ris.bka.gv.at/NormDokument.wxe*Abfrage=Landesnormen*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"css": [
+				"css/bundesrechtDetail.css"
+			],
+			"js": [
+				"js/bundesrechtDetail.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/Ergebnis.wxe*Abfrage=Justiz*",
+				"https://*.ris.bka.gv.at/Ergebnis.wxe*Abfrage=Vfgh*",
+				"https://*.ris.bka.gv.at/Ergebnis.wxe*Abfrage=Vwgh*",
+				"https://*.ris.bka.gv.at/MarkierteDokumente.wxe*Abfrage=Justiz*",
+				"https://*.ris.bka.gv.at/MarkierteDokumente.wxe*Abfrage=Vfgh*",
+				"https://*.ris.bka.gv.at/MarkierteDokumente.wxe*Abfrage=Vwgh*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"css": [
+				"css/judikaturSuche.css"
+			],
+			"js": [
+				"js/judikaturSucheScript.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris.bka.gv.at/Ergebnis.wxe?*VonInkrafttretedatum=01.01.1800*",
+				"https://*.ris.bka.gv.at/MarkierteDokumente.wxe?*VonInkrafttretedatum=01.01.1800*"
+			],
+			"exclude_matches": [
+				"*://*/*ShowPrintPreview=True*"
+			],
+			"css": [
+				"css/fassungen.css"
+			],
+			"js": [
+				"js/fassungen.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.ris-links.dev/",
+				"https://*.ris-links.test/*",
+				"https://*.risplus.at/",
+				"http://*.risplus.at/"
+			],
+			"js": [
+				"js/ris-links-main-site.js"
+			]
+		}
+	],
+	"permissions": [
+		"*://*.algolianet.com/*",
+		"storage"
+	],
+	"web_accessible_resources": [
+		"img/icon_top.png",
+		"img/icon_suche.svg",
+		"img/icon_menu.svg",
+		"img/icon_menu_colored.svg",
+		"img/icon_link.svg",
+		"img/icon_link_colored.svg",
+		"img/icon_warning.svg",
+		"img/icon_forward.svg",
+		"img/icon_back.svg",
+		"img/icon_adler.svg",
+		"img/icon_dropdown.svg",
+		"fonts/*.woff"
+	]
+}

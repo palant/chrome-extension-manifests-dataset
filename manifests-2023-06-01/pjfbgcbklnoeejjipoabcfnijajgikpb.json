@@ -1,0 +1,56 @@
+---
+slug: netskope-chrome-extension
+name: Netskope Chrome Extension
+description: Extension to enforce Netskope Cloud Explicit Proxy
+version: 1.2.3
+release_date: 'November 15, 2021'
+publisher: Netskope
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.333333333333333
+rating_count: 6
+user_count: '100,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Netskope Chrome Extension",
+  "description": "Extension to enforce Netskope Cloud Explicit Proxy",
+  "version": "1.2.3",
+  "manifest_version": 3,
+  "permissions": [
+    "proxy",
+    "storage",
+    "cookies",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://authservice.goskope.com/nsauth/authenticate*",
+        "https://authservice.eu.goskope.com/nsauth/authenticate*",
+        "https://authservice.au.goskope.com/nsauth/authenticate*",
+        "https://authservice.de.goskope.com/nsauth/authenticate*"
+      ],
+      "js": [
+        "autocomplete.js"
+      ]
+    }
+  ],
+  "icons": {
+    "128": "netskope-logo-128.png"
+  },
+  "storage": {
+    "managed_schema": "managed-storage-schema.json"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

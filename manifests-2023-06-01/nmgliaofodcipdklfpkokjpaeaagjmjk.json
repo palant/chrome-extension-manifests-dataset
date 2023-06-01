@@ -1,0 +1,99 @@
+---
+slug: magicbrief-save-facebook
+name: MagicBrief - Save Facebook & TikTok ads
+description: >-
+  Save ad inspiration straight from the Facebook & Tiktok ad libraries, then
+  rework them in your own storyboards.
+version: 1.4.4
+release_date: 'May 4, 2023'
+publisher: MagicBrief
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 805
+publisher_site: magicbrief.com
+extension_website: 'https://magicbrief.com'
+support_website: 'https://magicbrief.com/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MagicBrief - Save Facebook & TikTok ads",
+  "description": "Save ad inspiration straight from the Facebook & Tiktok ad libraries, then rework them in your own storyboards.",
+  "version": "1.4.4",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ads.tiktok.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "tiktokContent.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "facebookContent.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.magicbrief.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "magicbriefContent.bundle.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.facebook.com/*",
+    "*://*.tiktok.com/*",
+    "*://app.magicbrief.com/*",
+    "*://api.magicbrief.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://app.magicbrief.com/*",
+      "https://magic-brief.azurewebsites.net/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "facebookInjectionScript.bundle.js"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "magicbriefInjectionScript.bundle.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*.firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com'; object-src 'self'"
+  }
+}

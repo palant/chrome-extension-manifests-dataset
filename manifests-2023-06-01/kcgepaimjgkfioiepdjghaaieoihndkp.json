@@ -1,0 +1,101 @@
+---
+slug: prospectdaddy-email-finde
+name: ProspectDaddy Email Finder
+description: >-
+  Search prospects on LinkedIn, Find business emails on Gmail, & Download
+  email-ready prospect lists
+version: 0.9.2
+release_date: 'April 10, 2023'
+publisher: ProspectDaddy
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 7
+user_count: 416
+publisher_site: prospectdaddy.com
+extension_website: 'https://prospectdaddy.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "0.9.2",
+  "name": "ProspectDaddy Email Finder",
+  "description": "Search prospects on LinkedIn, Find business emails on Gmail, & Download email-ready prospect lists",
+  "homepage_url": "https://prospectdaddy.com",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webRequest",
+    "*://mail.google.com/*",
+    "*://contacts.google.com/*"
+  ],
+  "content_security_policy": "script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk='; object-src 'self'",
+  "background": {
+    "scripts": [
+      "build/background.js",
+      "hot-reload.js",
+      "transliteration.min.js",
+      "jquery-3.4.1.min.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "build/inLoaders/init.js"
+      ]
+    },
+    {
+      "js": [
+        "build/gmLoaders/content.js"
+      ],
+      "matches": [
+        "*://*.mail.google.com/*"
+      ]
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "build/gmLoaders/editor.js"
+      ],
+      "matches": [
+        "*://*.mail.google.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "prospectdaddy.html",
+    "build/inLoaders/XMLHttpWatcher.js"
+  ],
+  "icons": {
+    "16": "icons/prospect-daddy-logo.png",
+    "48": "icons/prospect-daddy-logo-1.png",
+    "128": "icons/prospect-daddy-logo-2.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/prospect-daddy-logo.png",
+    "default_title": "ProspectDaddy"
+  },
+  "commands": {
+    "toggle-feature": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "MacCtrl+Shift+Y"
+      },
+      "description": "Send a 'toggle-feature' event to the extension"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "MacCtrl+Shift+L"
+      }
+    }
+  }
+}

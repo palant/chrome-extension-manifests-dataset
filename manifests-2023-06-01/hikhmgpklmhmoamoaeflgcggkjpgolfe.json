@@ -1,0 +1,55 @@
+---
+slug: eilla-ai-assistant
+name: Eilla - AI assistant
+description: 'Write, analyze and optimize content in seconds with the power of AI.'
+version: 0.2.0
+release_date: 'December 20, 2022'
+publisher: Eilla AI
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 6
+user_count: 114
+publisher_site: eilla.ai
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "Eilla",
+    "name": "Eilla - AI assistant",
+    "description": "Write, analyze and optimize content in seconds with the power of AI.",
+    "icons": {
+        "16": "logo128grey.png",
+        "48": "logo128.png",
+        "128": "logo128.png"
+    },
+    "version": "0.2.0",
+    "manifest_version": 3,
+    "permissions": [
+        "cookies",
+        "storage",
+        "activeTab",
+        "tabs"
+    ],
+    "host_permissions": [
+        "https://eilla.ai/",
+        "https://eilla-dev.nw.r.appspot.com/"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_title": "Open the popup"
+    },
+    "background": {
+        "service_worker": "./static/js/background.js"
+    },
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "exclude_matches": ["*://eilla.ai/*", "*://eilla-dev.nw.r.appspot.com/*"],
+        "js": ["./static/js/content.js"]
+    }],
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://eilla.ai",
+        "sandbox_pages": "connect-src https://eilla.ai; "
+    }
+}

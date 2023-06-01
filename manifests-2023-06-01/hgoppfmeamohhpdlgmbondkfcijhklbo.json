@@ -1,0 +1,114 @@
+---
+slug: seo-анализ-сайта-от-be1ru
+name: SEO-анализ сайта от Be1.ru
+description: >-
+  Анализ сайта, поможет проверить состояние важных показателей, от которых
+  зависят позиции ресурса в выдаче поисковых систем.
+version: 1.9.25
+release_date: 'March 8, 2023'
+publisher: Be1.ru
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.690140845070423
+rating_count: 71
+user_count: '20,000+'
+publisher_site: be1.ru
+extension_website: 'https://be1.ru/stat/'
+support_website: >-
+  https://be1.ru/faq/seo-tools/wordstat-assistent-zachem-on-kak-im-polyzovatysya/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "SEO-анализ сайта от Be1.ru",
+    "short_name": "Be1.ru",
+    "version": "1.9.25",
+    "description": "Анализ сайта, поможет проверить состояние важных показателей, от которых зависят позиции ресурса в выдаче поисковых систем.",
+    "homepage_url": "https://be1.ru/",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background/service.js",
+        "type": "module"
+    },
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "permissions": [
+        "tabs",
+        "storage",
+        "webRequest"
+    ],
+    "cross_origin_embedder_policy": {
+        "value": "require-corp"
+    },
+    "cross_origin_opener_policy": {
+        "value": "same-origin"
+    },
+    "action": {
+        "default_popup": "popup/analiz/popup.html",
+        "default_title": "SEO анализ сайта от Be1.ru",
+        "default_icon": {
+            "32": "icons/32.png",
+            "128": "icons/128.png"
+        }
+    },
+    "options_page": "options/options.html",
+    "icons": {
+        "32": "icons/32.png",
+        "128": "icons/128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "/vendor/inject.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://be1.ru/*"
+            ],
+            "js": [
+                "content/be1_helper/script.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://wordstat.yandex.ru/*",
+                "*://wordstat.yandex.com/*",
+                "*://wordstat.yandex.ua/*",
+                "*://wordstat.yandex.by/*",
+                "*://wordstat.yandex.kz/*",
+                "*://wordstat.yandex.com.tr/*",
+                "*://www.wordstat.yandex.ru/*",
+                "*://www.wordstat.yandex.com/*",
+                "*://www.wordstat.yandex.ua/*",
+                "*://www.wordstat.yandex.by/*",
+                "*://www.wordstat.yandex.kz/*"
+            ],
+            "css": [
+                "content/wordstat_assistant/style.css"
+            ],
+            "js": [
+                "vendor/jquery-3.4.1.js",
+                "common/functions.js",
+                "content/wordstat_assistant/script.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://www.similarweb.com/website/*",
+                "https://www.similarweb.com/error/notfound"
+            ],
+            "js": [
+                "content/similarweb/script.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        }
+    ]
+}

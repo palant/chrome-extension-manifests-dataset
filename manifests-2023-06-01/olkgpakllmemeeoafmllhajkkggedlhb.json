@@ -1,0 +1,91 @@
+---
+slug: segue
+name: Segue
+description: Interface Bless with ShippingEasy or Stamps.com
+version: 2.1.2
+release_date: 'January 7, 2018'
+publisher: czkpsegue
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 15
+user_count: 92
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+
+	"name": "Segue",
+	"description": "Interface Bless with ShippingEasy or Stamps.com",
+	"version": "2.1.2",
+  
+	"icons": { "128": "icon128.png"},
+  
+	"background": {
+		"scripts": ["eventPage.js"],
+		"persistent": false
+	},
+
+	"permissions": [
+		"activeTab",
+		"tabs",
+		"https://ajax.googleapis.com/",
+		"identity",
+		"https://www.googleapis.com/",
+		"storage"
+	],
+        
+	"browser_action": {
+		"default_icon": {"19": "icon19.png"},
+		"default_title": "Segue",
+		"default_popup": "popup.html"
+	},
+
+	"oauth2": {
+		"client_id": "843424711364-mc72tj159ugmmo9pgf1bfbrgpkfa7v9s.apps.googleusercontent.com",
+		"scopes": [
+			"https://www.googleapis.com/auth/plus.login",
+			"https://www.googleapis.com/auth/chromewebstore.readonly"
+		]
+	},
+  
+	"content_scripts": [
+        {
+                "matches": ["https://*.lularoebless.com/*"],
+		"js": ["newAuthorizeUser.js",
+               "new_bless_custom_menu.js"],
+		"css": ["newBless.css"]
+        },
+ 
+        {
+		"matches": ["https://*.mylularoe.com/my-receipts/*"],
+		"js": ["date_picker.js", 
+		       "sales_table.js", 
+		       "custom_menu.js",
+		       "mllr_content_script.js",
+		       "authorizeUser.js"],
+		"css": ["llr.css"]
+        },
+
+	{
+		"matches": ["https://*.shippingeasy.com/*"],
+		"js": ["se_content_script.js","postage.js"],
+		"css": ["se.css"]
+        },
+
+	{
+		"matches":["https://*.stamps.com/*"],
+		"js": ["stamps_content_script.js"]
+	}
+		
+	],
+
+	"web_accessible_resources": [
+		"llr_blob.html",
+		"se_blob.html",
+                "new_bless_blob.html"
+	]
+
+}

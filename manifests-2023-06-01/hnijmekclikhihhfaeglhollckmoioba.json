@@ -1,0 +1,100 @@
+---
+slug: hotbot-ai-with-search
+name: HotBot AI with Search
+description: 'Ask HotBot A.I. a question, set Yahoo as your default search engine.'
+version: 1.0.7
+release_date: 'April 8, 2023'
+publisher: publishers
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 5
+rating_count: 1
+user_count: '2,000+'
+publisher_site: hotbot.com
+extension_website: 'https://www.hotbot.com'
+support_website: 'https://www.hotbot.com/info/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "HotBot AI with Search",
+	"short_name": "HotBot AI",
+	"version": "1.0.7",
+	"description": "Ask HotBot A.I. a question, set Yahoo as your default search engine.",
+	"background": {
+		"service_worker": "worker/worker.js"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*.hotbot.com/*"],
+			"js": ["content/content.js"],
+			"run_at": "document_end"
+		},
+		{
+			"matches": ["*://*.gethotbot.com/*"],
+			"js": ["content/content_g.js"],
+			"run_at": "document_end"
+		}
+	],
+	"action": {
+		"default_icon": "img/hb-icon-16px.png",
+		"default_popup": "pop.html",
+		"default_title": "HotBot AI Search"
+	},
+	"chrome_settings_overrides": {
+		"search_provider": {
+			"encoding": "UTF-8",
+			"favicon_url": "https://www.hotbot.com/favicon.ico",
+			"is_default": true,
+			"keyword": "HotBot",
+			"name": "HotBot",
+			"search_url": "https://www.hotbot.com/web/ex?q={searchTerms}",
+			"suggest_url": "https://www.hotbot.com/ajax/sug.json?sc=ext&q={searchTerms}"
+		}
+	},
+	"icons": {
+		"16": "img/hb-icon-16px.png",
+		"32": "img/hb-icon-32px.png",
+        "48": "img/hb-icon-48px.png",
+        "96": "img/hb-icon-96px.png",
+        "128": "img/hb-icon-128px.png",
+        "256": "img/hb-icon-256px.png",
+        "512": "img/hb-icon-512px.png"
+	},
+	"homepage_url": "https://www.hotbot.com/app",
+	"declarative_net_request": {
+		"rule_resources": [
+			{
+				"enabled": true,
+				"id": "ruleset_hbs",
+				"path": "rules/1.json"
+			}, {
+				"enabled": false,
+				"id": "ruleset_ddg",
+				"path": "rules/2.json"
+			}, {
+				"enabled": false,
+				"id": "ruleset_goo",
+				"path": "rules/3.json"
+			}, {
+				"enabled": false,
+				"id": "ruleset_bin",
+				"path": "rules/4.json"
+			}, {
+				"enabled": false,
+				"id": "ruleset_yah",
+				"path": "rules/5.json"
+			}
+		]
+	},
+	"permissions": [
+		"declarativeNetRequestWithHostAccess",
+		"storage"
+	],
+	"host_permissions": [
+		"*://www.hotbot.com/web/ex*",
+		"*://gethotbot.com/*"
+	]
+}

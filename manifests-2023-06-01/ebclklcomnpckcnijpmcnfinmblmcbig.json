@@ -1,0 +1,81 @@
+---
+slug: notifi-me
+name: Notifi Me
+description: Discord Notification Plugin
+version: 2.0.2
+release_date: 'December 21, 2021'
+publisher: Notifi Me
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.5
+rating_count: 2
+user_count: 31
+publisher_site: www.notifime.co.uk
+extension_website: 'https://www.notifime.co.uk'
+support_website: 'https://www.notifime.co.uk/faqs'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Notifi Me",
+  "description": "Discord Notification Plugin",
+  "version": "2.0.2",
+  "background": {
+    "scripts": ["./js/moment.min.js", "./js/config.js", "./js/core.js", "./js/background/webRequestBlocking.js", "./js/background/junkRemover.js", "./js/background/discordRequests.js", "./js/background/checkSubscription.js", "./js/background/firstTimeInitialisator.js", "./js/background/background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/NotifiMeFavicon.png"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+   "128": "images/icon128.png" 
+  },
+  "web_accessible_resources": [
+    "images/*.svg",
+    "images/attachment-icon.svg",
+    "images/mainLogo.svg",
+    "images/*.png",
+    "NotifiMeFavicon.png",
+    "roboto/*.ttf"
+  ],
+  "externally_connectable": {
+    "matches": ["*://discord.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://discord.com/*"],
+      "js": ["./js/moment.min.js","./js/core.js", "./js/config.js", "./js/content.js", "./js/elementsForContentPage.js"],
+      "css": ["./css/content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://discord.com/*", "*://lfadekapajfccibjekflllljcnildhij/*"],
+      "js": ["./js/moment.min.js","./js/core.js", "./js/config.js", "./js/discordContent.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./js/moment.min.js", "./js/core.js", "./js/config.js", "./js/elementsForContentPage.js", "./js/contentNotifications.js"],
+      "css": ["./css/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "unlimitedStorage",
+    "webRequest",
+    "webRequestBlocking",
+    "clipboardRead",
+    "*://discord.com/*",
+    "*://lfadekapajfccibjekflllljcnildhij/*",
+    "*://cdn.discordapp.com/*",
+    "*://notifime-app.herokuapp.com/*"
+  ]
+}

@@ -1,0 +1,73 @@
+---
+slug: canva-automation-tool-can
+name: Canva Automation Tool - Canva Bulk Maker
+description: >-
+  Automate Canva designs by using dynamic variables, then download them
+  automatically on canva.com.
+version: 1.0.2
+release_date: 'May 2, 2023'
+publisher: niomaker hq
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 24
+extension_website: 'https://canvamaker.extensionsfox.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.0.2",
+  "homepage_url": "https://canvamaker.extensionsfox.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://*.canva.com/design/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://*.canva.com/design/*"
+      ],
+      "js": [
+        "./assets/jquery-3.6.4.min.js",
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

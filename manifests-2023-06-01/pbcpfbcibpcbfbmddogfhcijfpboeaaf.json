@@ -1,0 +1,118 @@
+---
+slug: amino-css-live-editor
+name: 'Amino: Live CSS Editor'
+description: >-
+  Customize any website with your own CSS and see your changes instantly with
+  Amino!
+version: 4.0.6
+release_date: 'March 15, 2023'
+publisher: Amino
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.3120567375886525
+rating_count: 423
+user_count: '30,000+'
+publisher_site: aminoeditor.com
+extension_website: 'https://aminoeditor.com'
+support_website: 'https://docs.aminoeditor.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "__MSG_appName__",
+	"short_name": "Amino",
+	"description": "__MSG_appDesc__",
+	"default_locale": "en",
+	"version": "4.0.6",
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoKwbiWO3RtOm39ezm+Cq04NpBXbd7FgioUefm4tdW9mN7uUWO9Sp+ChuJAPpCbfh/Aq2n6uy5yWqlhPOaZqMy8SGxo/I2ERI10OZB4lBKO8k6v5P/oOp1eE3zs7m1mTzPIiIZldDb3+X3QrlrBHOmlDLNxbKGFCjExGN+YPjiIR2Vte0wG9rE7q4XTTNWlzzMykGKgzfXLorvGZDzUsIk/MF97xeZ5aVWtQ0dPrMN6ZPoAYuYl4bnMVBGRhFRcqedU2XFDt6xn9OYOppzH6sSTUOPtimV4hCg53ZTsrU76/CfTPYPVw/jgZ3mVBXFNlQZ8TxKNrA/+yuIQ3Qzj4OKwIDAQAB",
+	"action": {
+		"default_icon": "assets/images/icon-disabled.png",
+		"default_popup": "index.html"
+	},
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+Space",
+				"mac": "MacCtrl+Shift+Space"
+			}
+		},
+		"devtools-panel": {
+			"suggested_key": {
+				"default": "Alt+Shift+Space"
+			},
+			"description": "Open Amino DevTools"
+		}
+	},
+	"permissions": [
+		"activeTab",
+		"storage",
+		"contextMenus",
+		"tabs",
+		"scripting",
+		"unlimitedStorage"
+	],
+	"host_permissions": [
+		"https://*/*",
+		"http://*/*"
+	],
+	"icons": {
+		"16": "assets/images/icon-16.png",
+		"24": "assets/images/icon-24.png",
+		"32": "assets/images/icon-32.png",
+		"48": "assets/images/icon-48.png",
+		"64": "assets/images/icon-64.png",
+		"128": "assets/images/icon-128.png",
+		"512": "assets/images/icon-512.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"assets/js/lib/sass/sass.sync.min.js",
+				"chrome/inject/apply-styles.js"
+			],
+			"run_at": "document_start"
+		},
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"css": [
+				"assets/css/web-components.css"
+			],
+			"js": [
+				"chrome/inject/extension-message-handler.js"
+			],
+			"run_at": "document_end"
+		}
+	],
+	"background": {
+		"service_worker": "worker.js",
+		"type": "module"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"amino-inspect.min.js",
+				"assets/css/lib/prism.css",
+				"assets/images/icon-context.png",
+				"assets/js/lib/webcomponents-bundle.js"
+			],
+			"matches": [
+				"<all_urls>"
+			]
+		}
+	],
+	"devtools_page": "chrome/devtools/loader.html",
+	"externally_connectable": {
+		"matches": [
+			"*://*.app.aminoeditor.com/*",
+			"*://app.aminoeditor.com/*",
+			"*://*.aminoeditor.com/*"
+		]
+	}
+}

@@ -1,0 +1,74 @@
+---
+slug: prime-party
+name: Prime Party
+description: >-
+  Watch Amazon Prime Video in sync with your friends using Amazon Prime Watch
+  Party
+version: 1.0.1
+release_date: 'September 8, 2022'
+publisher: Prime Party
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 1
+user_count: 152
+publisher_site: prime-party.com
+extension_website: 'https://www.prime-party.com/'
+support_website: 'https://www.prime-party.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "version": "1.0.1",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "img/128.png",
+    "48": "img/48.png",
+    "32": "img/32.png",
+    "16": "img/16.png"
+  },
+  "action": {
+    "default_icon": "img/128.png",
+    "default_title": "__MSG_name__",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.primevideo.com/*", "http://*.primevideo.com/*"],
+      "js": ["content/index.js", "content/videoController.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content/contentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.primewatchparty.com/*"],
+      "js": ["primevideo.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["tabs", "storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["content/contentScript.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    },
+    {
+      "resources": ["primevideo.js"],
+      "matches": ["https://www.primewatchparty.com/*"]
+    },
+    {
+      "resources": ["chat/index.html","content/index.js", "content/videoController.js"],
+      "matches": ["https://*.primevideo.com/*", "http://*.primevideo.com/*"]
+    }
+  ]
+}

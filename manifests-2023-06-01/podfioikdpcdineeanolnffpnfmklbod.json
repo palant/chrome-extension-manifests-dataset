@@ -1,0 +1,115 @@
+---
+slug: alisave-download-aliexpre
+name: AliSave - Download AliExpress Images
+description: Download AliExpress product images and description with one click.
+version: 5.6.7
+release_date: 'April 17, 2023'
+publisher: AliTools Inc
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.777777777777778
+rating_count: 18
+user_count: '1,000+'
+extension_website: 'https://alisave.pro'
+---
+
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "description": "Download AliExpress product images and description with one click.",
+    "version": "5.6.7",
+    "name": "AliSave - Download AliExpress Images",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "public/images/icon.png",
+            "32": "public/images/icon.png",
+            "48": "public/images/icon.png"
+        }
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "downloads"
+    ],
+    "host_permissions": [
+        "*://*.aliexpress.com/",
+        "*://*.aliexpress.ru/",
+        "*://*.aliexpress.us/",
+        "*://*.alicdn.com/",
+        "*://*.aliexpress-media.com/"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.aliexpress.com/item/*",
+                "*://*.aliexpress.com/store/product/*",
+                "*://*.aliexpress.us/item/*",
+                "*://*.aliexpress.us/store/product/*",
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.ru/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "content.bundle.js"
+            ],
+            "css": [
+                "css/fontawesome.min.css",
+                "css/content.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://feedback.aliexpress.com/display/productEvaluation.htm*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "feedbackIframe.bundle.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://*.aliexpress.ru/item/*",
+                "*://*.aliexpress.ru/store/product/*",
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.ru/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "contentRu.bundle.js"
+            ],
+            "css": [
+                "css/fontawesome.min.css",
+                "css/content.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "*.png",
+                "*.ttf",
+                "*.gif",
+                "*.svg",
+                "*.woff2"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.us/*",
+                "*://*.aliexpress.ru/*"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "public/images/icon.png",
+        "48": "public/images/icon.png",
+        "128": "public/images/icon.png"
+    },
+    "background": {
+        "service_worker": "background.bundle.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "manifest_version": 3
+}

@@ -1,0 +1,72 @@
+---
+slug: hulu-watch-party
+name: Hulu Watch Party
+description: Watch Hulu in sync with your loved ones
+version: 1.0.2
+release_date: 'November 26, 2022'
+publisher: Hulu Watch Party
+category: Fun
+category_slug: ext/14-fun
+rating: 4
+rating_count: 4
+user_count: '2,000+'
+publisher_site: huluwatchparty.net
+extension_website: 'https://www.huluwatchparty.net/'
+support_website: 'https://www.huluwatchparty.net/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "version": "1.0.2",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "./img/128.png",
+    "48": "./img/48.png",
+    "32": "./img/32.png",
+    "16": "./img/16.png"
+  },
+  "action": {
+    "default_icon": "./img/128.png",
+    "default_title": "__MSG_name__",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.hulu.com/*"],
+      "js": ["content/index.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.huluwatchparty.net/*"],
+      "js": ["huluParty.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content/contentScript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["tabs", "storage", "unlimitedStorage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["content/index.js", "content/videoController.js","content/contentScript.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    },
+    {
+      "resources": ["huluParty.js"],
+      "matches": ["https://www.huluwatchparty.net/*"]
+    },
+    {
+      "resources": ["chat/index.html"],
+      "matches": ["https://*.hulu.com/*", "http://*.hulu.com/*"]
+    }
+  ]
+}

@@ -1,0 +1,216 @@
+---
+slug: hiresweet
+name: HireSweet
+description: >-
+  Enhance your Gmail, Linkedin and Google Calendar with HireSweet profiles data.
+  Automate your LinkedIn tasks.
+version: 13.3.0
+release_date: 'May 22, 2023'
+publisher: HireSweet.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 22
+user_count: 231
+extension_website: 'https://hiresweet.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "HireSweet",
+  "version": "13.3.0",
+  "description": "Enhance your Gmail, Linkedin and Google Calendar with HireSweet profiles data. Automate your LinkedIn tasks.",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "downloads",
+    "webNavigation",
+    "tabs",
+    "webRequest",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://app.hiresweet.com/*"
+  ],
+  "action": {
+    "default_icon": "icons/hiresweet-32x32.png"
+  },
+  "icons": {
+    "16": "icons/hiresweet-16x16.png",
+    "32": "icons/hiresweet-32x32.png",
+    "128": "icons/hiresweet-128x128.png",
+    "192": "icons/hiresweet-192x192.png",
+    "512": "icons/hiresweet-512x512.png"
+  },
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "https://app.hiresweet.com/*"
+      ],
+      "js": [
+        "getHiresweetToken.js"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "inboxsdk.js",
+        "enhanceGmail.bundle.js"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "https://calendar.google.com/*"
+      ],
+      "js": [
+        "enhanceCalendar.bundle.js"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://www.linkedin.com/*",
+        "https://stackoverflow.com/*",
+        "https://github.com/*"
+      ],
+      "js": [
+        "enhanceLinkedin.bundle.js"
+      ],
+      "match_about_blank": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.png",
+        "*.svg",
+        "*.eot",
+        "*.woff",
+        "*.woff2",
+        "*.ttf",
+        "*.otf",
+        "*.css",
+        "*.map",
+        "hiresweet-for-linkedin.html",
+        "window-script.js"
+      ],
+      "matches": [
+        "https://www.linkedin.com/*",
+        "https://stackoverflow.com/*",
+        "https://github.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "*.png",
+        "*.svg",
+        "*.eot",
+        "*.woff",
+        "*.woff2",
+        "*.ttf",
+        "*.otf",
+        "*.css",
+        "*.map",
+        "hiresweet-for-calendar.html",
+        "window-script.js"
+      ],
+      "matches": [
+        "https://calendar.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "*.png",
+        "*.svg",
+        "*.eot",
+        "*.woff",
+        "*.woff2",
+        "*.ttf",
+        "*.otf",
+        "*.css",
+        "*.map",
+        "hiresweet-for-gmail.html",
+        "window-script.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://app.hiresweet.com/*"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuf+3AwyizeHFb8RnX+4b1UERunMtmy4Qq8hAbCglDQ+dM6nVIebfDtckwt+0+1C+qiLjxocUlByeh5H2ZpBwLvTsCIlHe2h2h8kH/UbsXFQVMPMPd9h68AvwvlrkfAEnZWxFeFLFQKhFJeOW4dbJG3znBlXr4nY1PsTUgxfghKiGHWdMhKsoRa0gqqpDlnG1c6XNJojBKjxe3PiBy3QsxwAcJBc015xUxyVXQcOLh3NZVxQUJngop+V3k/NEo+ve3/iwj+A+yfSKOErWJlC/+Fz5sP60gn/ArTlAuTgzF8ADjLZZux+pgqdhXMyRTlA5lZxzhUrvGBViOAtxvOJPPQIDAQAB",
+  "commands": {
+    "command-clipboard-copy": {
+      "description": "Copy to clipboard",
+      "suggested_key": {
+        "default": "Alt+C"
+      }
+    },
+    "command-mark-task-as-completed": {
+      "description": "Mark task as completed",
+      "suggested_key": {
+        "default": "Alt+M"
+      }
+    },
+    "command-snooze-task-one-week": {
+      "description": "Snooze task one week",
+      "suggested_key": {
+        "default": "Alt+S"
+      }
+    },
+    "command-go-to-next-task": {
+      "description": "Go to next task",
+      "suggested_key": {
+        "default": "Alt+G"
+      }
+    },
+    "command-go-to-right-tab": {
+      "description": "Go to right tab"
+    },
+    "command-go-to-left-tab": {
+      "description": "Go to left tab"
+    },
+    "command-move-to-not-contacted": {
+      "description": "Move to \"Not contacted\""
+    },
+    "command-move-to-contacted": {
+      "description": "Move to \"Contacted\""
+    },
+    "command-move-to-replied": {
+      "description": "Move to \"Replied\""
+    },
+    "command-move-to-interested": {
+      "description": "Move to \"Interested\""
+    },
+    "command-move-to-hired": {
+      "description": "Move to \"Hired\""
+    },
+    "command-move-to-archived-not-contacted": {
+      "description": "Move to \"Archived - Not contacted\""
+    },
+    "command-move-to-archived-no-reply": {
+      "description": "Move to \"Archived - No reply\""
+    },
+    "command-move-to-archived-contact-no-interested": {
+      "description": "Move to \"Archived - Contact not interested\""
+    },
+    "command-move-to-archived-contact-interested": {
+      "description": "Move to \"Archived - Contact interested\""
+    }
+  }
+}

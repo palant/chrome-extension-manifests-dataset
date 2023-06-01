@@ -1,0 +1,44 @@
+---
+slug: chrome-browser-lockdown
+name: Chrome Browser Lockdown
+description: >-
+  Blocks students from opening new tabs when they are completing a Castle
+  assignment.
+version: 0.0.8
+release_date: 'August 9, 2022'
+publisher: Castle Learning
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 1.8
+rating_count: 5
+user_count: '100,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chrome Browser Lockdown",
+  "description": "Blocks students from opening new tabs when they are completing a Castle assignment.",
+  "version": "0.0.8",
+  "permissions": [
+    "tabs",
+    "notifications"
+  ],
+  "icons": {
+    "16": "icon/icon-16.png",
+    "48": "icon/icon-48.png",
+    "128": "icon/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>", "*://*.castlelearning.com/*assignmentID=*", "*://*.app.schoology.com/external_tool/*", "*://*.canvas.instructure.com/courses", "http://localhost:90/*assignmentID=*" ],
+      "js": [ "content.js" ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ]
+}

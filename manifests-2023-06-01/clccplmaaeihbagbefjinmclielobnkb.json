@@ -1,0 +1,87 @@
+---
+slug: cerbys-browser-extension
+name: Cerby's browser extension
+description: The Cerby extension allows you to quickly and easily manage your accounts.
+version: 1.0.175
+release_date: 'May 19, 2023'
+publisher: 'Cerby, Inc.'
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 13
+user_count: '2,000+'
+extension_website: 'https://cerby.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cerby's browser extension",
+  "author": "Cerby inc.",
+  "version": "1.0.175",
+  "manifest_version": 2,
+  "description": "The Cerby extension allows you to quickly and easily manage your accounts.",
+  "icons": {
+    "16": "icons/ic_cerby16.png",
+    "48": "icons/ic_cerby48.png",
+    "128": "icons/ic_cerby128.png",
+    "512": "icons/ic_cerby512.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/ic_cerby48.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "page": "bg.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "build/contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.cerby.com/*"
+      ],
+      "js": [
+        "build/cerbyCS.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "build/inContextNotifications.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "https://*/",
+    "cookies",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "webRequest",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "menu.html",
+    "in-context-notifications.html",
+    "ui-module-dialog.html",
+    "/oauth2/*",
+    "assets/*",
+    "fonts/*",
+    "icons/cerby.svg",
+    "icons/ic_any_error.svg"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}

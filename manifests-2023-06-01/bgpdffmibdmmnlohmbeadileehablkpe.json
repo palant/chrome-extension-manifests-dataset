@@ -1,0 +1,70 @@
+---
+slug: backbeat
+name: Backbeat
+description: >-
+  An extension to synchronize streamers and viewers from Twitch with
+  cross-platform (Youtube, Deezer)
+version: Alpha 0.0.7 (30/12/21)
+release_date: 'December 31, 2021'
+publisher: Backbeat
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 2
+user_count: 42
+publisher_site: backbeat.live
+extension_website: 'https://backbeat.live'
+support_website: 'https://backbeat.live'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Backbeat",
+    "description": "An extension to synchronize streamers and viewers from Twitch with cross-platform (Youtube, Deezer)",
+    "version": "0.0.7",
+    "version_name": "Alpha 0.0.7 (30/12/21)",
+    "manifest_version": 2,
+    "background": {
+        "scripts": ["js/background/messageReciever.js"]
+    },
+    "permissions": [
+        "tabs", "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["*://*.backbeat.live/redirect/twitch*", "*://*.localhost/redirect/twitch*"],
+            "js": ["js/contentScripts/twitchRedirect.js"]
+        },
+        {
+            "matches": ["*://*.backbeat.live/redirect/deezer*", "*://*.localhost/redirect/deezer*"],
+            "js": ["js/contentScripts/deezerRedirect.js"]
+        },
+        {
+            "matches": ["*://*.backbeat.live/redirect/spotify*", "*://*.localhost/redirect/spotify*"],
+            "js": ["js/contentScripts/spotifyRedirect.js"]
+        },
+        {
+            "matches": ["*://*.backbeat.live/redirect/youtube*", "*://*.localhost/redirect/youtube*"],
+            "js": ["js/contentScripts/youtubeRedirect.js"]
+        },
+        {
+            "matches": ["*://www.amazon.fr/", "*://www.amazon.co.uk/", "*://www.amazon.de/", "*://www.amazon.com/", "*://www.amazon.es/", "*://www.amazon.com.mx/"],
+            "js": ["js/contentScripts/amazonRedirect.js"]
+        }
+    ],
+    "icons": {
+        "128": "./assets/images/logos/backbeat.png"
+    },
+
+    "web_accessible_resources": [
+        "./pages"
+    ],
+
+    "browser_action": {
+        "default_popup": "./popup/index.html"
+    },
+
+    "content_security_policy": "script-src 'self' https://api.deezer.com https://cdn.socket.io https://e-cdns-files.dzcdn.net https://www.youtube.com https://sdk.scdn.co; object-src 'self';"
+
+}

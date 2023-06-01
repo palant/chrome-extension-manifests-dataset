@@ -1,0 +1,57 @@
+---
+slug: my-ad-hunter
+name: My Ad Hunter
+description: Collect ads on Facebook. Spy on FB ads from any website.
+version: '2.6'
+release_date: 'May 1, 2023'
+publisher: Fuznet
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: '2,000+'
+publisher_site: www.fuznet.com
+support_website: >-
+  https://go.crisp.chat/chat/embed/?website_id=e502d533-2d6c-40d2-abf1-9f6bcc781e77
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "2.6",
+  "name": "My Ad Hunter",
+  "description": "Collect ads on Facebook. Spy on FB ads from any website.",
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["thirdparty/jquery-3.5.1.min.js","js/background.js"]
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "img/tab_icon32.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["https://www.facebook.com/"],
+      "js": ["thirdparty/jquery-3.5.1.min.js","js/crawler.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
+      "js": ["js/spy.js"]
+    }
+  ],
+  "web_accessible_resources": ["js/crawler.js"],
+  "permissions": [
+    "storage",
+    "file://*",
+    "unlimitedStorage",
+    "<all_urls>",
+    "tabs"
+  ],
+  "icons": {
+    "128": "img/tab_icon128.png"
+  },
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://js.stripe.com https://polyfill.io https://*.fontawesome.com https://unpkg.com; 'unsafe-eval'; object-src 'self'"
+}

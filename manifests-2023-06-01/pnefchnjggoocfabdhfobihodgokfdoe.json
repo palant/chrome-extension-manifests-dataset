@@ -1,0 +1,105 @@
+---
+slug: kaizan
+name: Kaizan
+description: Guiding companies on what they need to do to retain and grow clients.
+version: 2023.05.04.1639
+release_date: 'May 17, 2023'
+publisher: Kaizan.ai
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 167
+extension_website: 'https://kaizan.ai'
+support_website: 'https://help.kaizan.ai'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kaizan",
+  "version": "2023.05.04.1639",
+  "description": "Guiding companies on what they need to do to retain and grow clients.",
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "import-contentScript.js"
+      ],
+      "matches": [
+        "*://meet.google.com/*-*-*"
+      ],
+      "css": [
+        "bundle.css",
+        "assets/css/fonts.css",
+        "assets/css/vars.css",
+        "assets/css/text-styles.css",
+        "assets/css/simplepicker.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "import-rtcScript.js"
+      ],
+      "matches": [
+        "*://meet.google.com/*-*-*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "Kaizan"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "kaizan-api-net-requests",
+        "enabled": true,
+        "path": "kaizan-api-net-requests.json"
+      }
+    ]
+  },
+  "permissions": [
+    "cookies",
+    "declarativeNetRequest",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://app.kaizan.ai/*/*",
+    "https://meet.google.com/*-*-*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "rtc/script/index.js",
+        "assets/fonts/*",
+        "assets/img/*.svg"
+      ],
+      "matches": [
+        "*://meet.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "contentScript.js",
+        "rtcScript.js"
+      ],
+      "matches": [
+        "*://meet.google.com/*",
+        "https://app.kaizan.ai/*",
+        "https://meet.google.com/*"
+      ]
+    }
+  ]
+}

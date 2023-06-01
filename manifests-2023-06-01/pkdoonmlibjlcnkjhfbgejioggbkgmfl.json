@@ -1,0 +1,63 @@
+---
+slug: spotify-ad-blocker
+name: Spotify Ad Blocker
+description: Block All Ads on Spotify™ Web Player And Enjoy Music With No Interruptions
+version: 1.0.0
+release_date: 'January 19, 2023'
+publisher: Spotify Ad Blocker
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.076923076923077
+rating_count: 13
+user_count: '10,000+'
+publisher_site: spotifyadblocker.live
+extension_website: 'https://www.spotifyadblocker.live/'
+support_website: 'https://www.spotifyadblocker.live/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "version": "1.0.0",
+  "host_permissions": ["<all_urls>"],
+  "default_locale": "en",
+  "permissions": [
+    "tabs"
+  ],
+  "action": {
+    "default_icon": {
+      "128": "img/128.png",
+      "32": "img/32.png",
+      "48": "img/48.png",
+      "16": "img/16.png"
+    },
+    "default_title": "__MSG_name__"
+  }, 
+
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; connect-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://open.spotify.com/;",
+    "sandbox": "sandbox allow-scripts;"
+  },
+
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["scripts/contentScript.js", "scripts/checkStoped.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "scripts/contentScript.js","scripts/checkStoped.js","scripts/adsRemoval.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ]
+}

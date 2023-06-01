@@ -1,0 +1,171 @@
+---
+slug: 千品采集助手
+name: 千品采集助手
+description: 千品采集插件，进行采集商品。
+version: 1.4.15
+release_date: 'April 17, 2023'
+publisher: qianyi
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 0
+rating_count: 0
+user_count: 60
+---
+
+{
+	"update_url": "https://clients2.google.com/service/update2/crx",
+	"name": "千品采集助手",
+	"version": "1.4.15",
+	"description": "千品采集插件，进行采集商品。",
+	"permissions": [
+		"tabs",
+		"activeTab",
+		"declarativeContent",
+		"contextMenus",
+		"cookies"
+	],
+	"background": {
+		"service_worker": "background.js",
+		"type": "module"
+	},
+	"options_page": "options.html",
+	"action": {
+		"default_icon": "img/icon.png",
+		"default_title": "帮助您高效工作",
+		"default_popup": "popup.html"
+	},
+	"icons": {
+		"16": "img/icon.png",
+		"48": "img/icon.png",
+		"128": "img/icon.png"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"*://*/*"
+			],
+			"js": [
+				"js/var.js",
+				"js/jquery.min.js"
+			],
+			"css": [
+				"css/css.css"
+			],
+			"run_at": "document_idle"
+		},
+		{
+			"matches": [
+				"http://127.0.0.1:4000/*",
+				"http://10.30.13.2:31661/*",
+				"http://qlisting-web.800best.com/*",
+				"https://qlisting.qianyierp.com/*"
+			],
+			"js": [
+				"platformJs/listing.js"
+			],
+			"run_at": "document_idle"
+		},
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"js/var.js",
+				"js/base.js"
+			],
+			"run_at": "document_idle"
+		},
+		{
+			"matches": [
+				"*://*.aliexpress.com/item/*",
+				"*://*.aliexpress.us/item/*",
+				"*://detail.1688.com/*",
+				"*://item.taobao.com/*",
+				"*://*.alibaba.com/product-detail/*",
+				"*://shopee.com.my/*",
+				"*://shopee.co.th/*",
+				"*://shopee.vn/*",
+				"*://shopee.ph/*",
+				"*://shopee.sg/*",
+				"*://shopee.co.id/*",
+				"*://shopee.tw/*",
+				"*://*.lazada.com.my/products*",
+				"*://*.lazada.com.ph/products*",
+				"*://*.lazada.sg/products*",
+				"*://*.lazada.co.th/products*",
+				"*://*.lazada.co.id/products*",
+				"*://*.lazada.vn/*",
+				"*://*.pinduoduo.com/goods.html*",
+					"*://*.m.1688.com/*"
+			],
+			"js": [
+				"platformJs/detail.js"
+			],
+			"run_at": "document_idle"
+		},
+    {
+      "matches": [
+				"*://shopee.com.my/*qpstartindex*",
+				"*://shopee.co.th/*qpstartindex*",
+				"*://shopee.vn/*qpstartindex*",
+				"*://shopee.ph/*qpstartindex*",
+				"*://shopee.sg/*qpstartindex*",
+				"*://shopee.co.id/*qpstartindex*",
+				"*://shopee.tw/*qpstartindex*"
+      ],
+      "js": [
+        "interceptor/shopee.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://item.taobao.com/*qpstartindex*",
+        "*://login.taobao.com/*qpstartindex*"
+      ],
+      "js": [
+        "interceptor/injectTaoBao.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.1688.com/page/offerlist.htm*qpstartindex*"
+      ],
+      "js": [
+				"js/var.js",
+        "interceptor/aliAll1688.js"
+      ],
+      "run_at": "document_end"
+		},
+		{
+			"matches": [
+				"*://www.lazada.co.id/*qpstartindex*",
+				"*://www.lazada.vn/*qpstartindex*",
+				"*://www.lazada.com.my/*qpstartindex*",
+				"*://www.lazada.co.th/*qpstartindex*",
+				"*://www.lazada.sg/*qpstartindex*",
+				"*://www.lazada.com.ph/*qpstartindex*"
+			],
+			"js": [
+				"interceptor/lazada.js"
+			],
+			"run_at": "document_start"
+		},
+    {
+      "matches": [
+        "*://*.aliexpress.com/item/*qpstartindex*",
+        "*://*.aliexpress.us/item/*qpstartindex*"
+      ],
+      "js": [
+        "interceptor/aliexpress.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+	"web_accessible_resources": [{
+		"resources": ["interface/main.js"],
+		"matches": ["<all_urls>"]
+	}],
+	"manifest_version": 3
+}

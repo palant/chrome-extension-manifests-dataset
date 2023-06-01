@@ -1,0 +1,61 @@
+---
+slug: steam-order-scanner
+name: Steam Order Scanner
+description: Helps keep your market buy orders profitable. Also adds some useful features.
+version: 1.7.1
+release_date: 'February 16, 2021'
+publisher: SORS
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 7
+user_count: 163
+extension_website: 'https://github.com/auwaho/steam-order-scanner'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Steam Order Scanner",
+  "short_name": "SORS",
+  "description": "Helps keep your market buy orders profitable. Also adds some useful features.",
+  "version": "1.7.1",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "*://steamcommunity.com/*",
+    "*://localhost/*"
+  ],
+  "browser_action": {
+    "default_icon": "ext/icon.png",
+    "default_popup": "ext/popup/popup.html"
+  },
+  "icons": {
+    "48": "ext/icon.png"
+  },
+  "background": {
+    "scripts": ["ext/background.js"]
+  },
+  "content_scripts": [{
+      "matches": [
+        "*://steamcommunity.com/market/",
+        "*://steamcommunity.com/market/#",
+        "*://steamcommunity.com/market"
+      ],
+      "js": ["site/market.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://steamcommunity.com/market/listings/*/*"],
+      "js": ["site/listings.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://steamcommunity.com/*"],
+      "js": ["site/cancel.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

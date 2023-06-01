@@ -1,0 +1,100 @@
+---
+slug: youbehero
+name: YouBeHero
+description: 'YouBeHero: Μια δωρεά με κάθε ηλεκτρονική αγορά.'
+version: '2.4'
+release_date: 'March 1, 2023'
+publisher: YouBeHero
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 4
+user_count: 925
+publisher_site: www.youbehero.com
+extension_website: 'https://www.youbehero.com'
+support_website: 'https://www.youbehero.com/gr/faq'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "YouBeHero",
+    "version": "2.4",
+    "description": "YouBeHero: Μια δωρεά με κάθε ηλεκτρονική αγορά.",
+    "icons": {
+        "48": "icons/ybh-icon-48_white.png",
+        "128": "icons/ybh-icon-128_white.png"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage",
+        "notifications",
+        "cookies",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "include_globs": [
+                "http://www.google.*/*",
+                "https://www.google.*/*",
+                "http://duckduckgo.*/*",
+                "https://duckduckgo.*/*"
+            ],
+            "js": [
+                "search_engines.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "modal.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "adblocker.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "modals/*.html",
+                "styles/*.css",
+                "fonts/*.ttf",
+                "icons/*.png",
+                "icons/*.svg",
+                "images/*.png",
+                "adblocker/*.js",
+                "images/picture_adblockers.png",
+                "firebase/*.js"
+            ]
+        }
+    ]
+}

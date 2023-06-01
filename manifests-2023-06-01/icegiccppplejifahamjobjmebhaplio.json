@@ -1,0 +1,67 @@
+---
+slug: adblocker-for-web
+name: Adblocker for Web
+description: >-
+  Remove ads on Youtube, FB, Twitter, Twitch and all other websites. Allow a
+  faster and more enjoyable browsing experience with…
+version: 1.0.2
+release_date: 'May 15, 2023'
+publisher: Safety Web
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.2
+rating_count: 5
+user_count: 0
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_name__",
+    "version": "1.0.2",
+    "description": "__MSG_desc__",
+    "default_locale": "en",
+    "permissions": ["tabs", "declarativeNetRequest", "storage"],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "blockLIST",
+                "enabled": true,
+                "path": "./res/my.json"
+            },
+            {
+                "id": "advLIST",
+                "enabled": false,
+                "path": "./res/adv.json"
+            },
+            {
+                "id": "antiprnLIST",
+                "enabled": false,
+                "path": "./res/antiprn.json"
+            },
+            {
+                "id": "suspLIST",
+                "enabled": false,
+                "path": "./res/susp.json"
+            }
+        ]
+    },
+    "icons": { "48": "./icons/48.png", "64": "./icons/64.png" },
+    "content_scripts": [
+        {
+            "js": ["./block/yt_blocks.js", "./block/content.js"],
+            "run_at": "document_end",
+            "matches": ["https://*/*", "http://*/*"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Adblock"
+    },
+    "options_page": "options.html",
+    "background": {
+        "service_worker": "./worker.js"
+    },
+    "host_permissions": ["https://*/*", "http://*/*"],
+    "manifest_version": 3
+}

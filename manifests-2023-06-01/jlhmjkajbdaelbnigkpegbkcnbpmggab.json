@@ -1,0 +1,99 @@
+---
+slug: frak-beta
+name: Frak (Beta)
+description: Invest from just $1 and leverage your watch time on Youtube
+version: 0.3.7
+release_date: 'May 31, 2023'
+publisher: tech
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.714285714285714
+rating_count: 14
+user_count: '2,000+'
+publisher_site: frak.id
+extension_website: 'https://frak.id/'
+support_website: 'https://help.frak.id'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Frak (Beta)",
+  "description": "Invest from just $1 and leverage your watch time on Youtube",
+  "version": "0.3.7",
+  "manifest_version": 3,
+  "icons": {
+    "16": "inactive_logged_16.png",
+    "48": "inactive_logged_48.png",
+    "128": "inactive_logged_128.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "minimum_chrome_version": "93",
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+F",
+        "mac": "Alt+Shift+F"
+      },
+      "description": "Open extension"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/*.*",
+        "*.woff2",
+        "index.html",
+        "buy-frak.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.m.youtube.com/*",
+        "*://youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "js": [
+        "./video.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.dashboard-dev.frak.id/*",
+        "*://*.dashboard.frak.id/*"
+      ],
+      "js": [
+        "./dashboard.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "notifications",
+    "storage",
+    "webRequest"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
+  },
+  "host_permissions": [
+    "https://api.frak.id/*",
+    "https://dev.frak.id/*",
+    "*://*.youtube.com/*"
+  ]
+}

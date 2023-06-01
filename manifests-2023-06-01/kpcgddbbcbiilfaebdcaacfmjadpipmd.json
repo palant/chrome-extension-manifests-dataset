@@ -1,0 +1,78 @@
+---
+slug: pop-up-blocker-and-anti-m
+name: Pop up blocker and anti malware for Chrome
+description: >-
+  The extension to block annoying pop-ups, underlying windows (popunders) and
+  overlays. Browse without interference on all websites.
+version: 1.0.1
+release_date: 'December 28, 2021'
+publisher: BlueApps.inc
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 342
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "__MSG_name__",
+	"description": "__MSG_description__",
+	"short_name": "BlockPop",
+	"manifest_version": 3,
+	"version": "1.0.1",
+	"author": "Dexter's lab",
+	"default_locale": "en",
+	"web_accessible_resources": [{
+		"resources":["*.css","*.js","*.jpg","*.JPG","*.PNG","*.png","panel.html"],
+		"matches": ["<all_urls>"]
+	}],
+	"icons": {
+		  "16": "icon16.png",
+		  "48": "icon48.png",
+		  "128": "icon128.png"
+	},
+	"action": {
+		  "default_icon": "icon48.png",
+		  "default_title": "BlockPop Panel",
+		  "default_popup": "panel.html"
+	},
+	"background": {
+		"service_worker": "src/tabs.js"
+	},
+	"content_scripts":[
+		{
+			"matches": [
+				"<all_urls>"
+			],
+			"js": [
+				"src/lbr/container.js"
+			],
+			"all_frames": true,
+			"run_at": "document_end"
+		},
+		{
+			"all_frames": true,
+			"matches": ["<all_urls>"],
+			"run_at": "document_start",
+			"js": [
+				"src/lbr/jquery.min.js",
+				"src/window/blocker.js"
+			]
+		}
+   ],
+   "permissions": [
+	  "storage",
+	  "history",
+	  "activeTab",
+	  "tabs",
+	  "background",
+	  "scripting"
+	],
+	"host_permissions": [
+		"<all_urls>"
+	]
+  
+  }
+  

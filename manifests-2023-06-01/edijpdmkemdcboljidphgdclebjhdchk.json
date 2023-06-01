@@ -1,0 +1,76 @@
+---
+slug: youtube-party
+name: YouTube Party
+description: Watch YouTube Videos In Sync With Friends
+version: 1.0.0
+release_date: 'May 9, 2023'
+publisher: YT Party
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 4
+user_count: 32
+publisher_site: ottwatchparty.com
+extension_website: 'https://ottwatchparty.com/youtube'
+support_website: 'https://ottwatchparty.com/youtube'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "version": "1.0.0",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "img/128.png",
+    "48": "img/48.png",
+    "32": "img/32.png",
+    "16": "img/16.png"
+  },
+  "action": {
+    "default_icon": "img/128.png",
+    "default_title": "__MSG_name__",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*", "http://*.youtube.com/*"],
+      "js": ["content/index.js", "content/videoController.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["content/contentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://ottwatchparty.com/*"],
+      "js": ["youtube.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["tabs", "storage", "unlimitedStorage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["content/contentScript.js"],
+      "matches": ["https://*/*", "http://*/*"]
+    },
+    {
+      "resources": ["youtube.js"],
+      "matches": ["https://ottwatchparty.com/*"]
+    },
+    {
+      "resources": [
+        "chat/index.html",
+        "content/index.js",
+        "content/videoController.js"
+      ],
+      "matches": ["https://*.youtube.com/*", "http://*.youtube.com/*"]
+    }
+  ]
+}

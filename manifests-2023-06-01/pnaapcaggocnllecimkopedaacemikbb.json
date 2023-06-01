@@ -1,0 +1,48 @@
+---
+slug: escb-pki-user-certificate
+name: ESCB-PKI user certificate enrollment
+description: >-
+  This extension enables the management of cryptographic devices (smartcards
+  and/or tokens) for European System of Central Banks PKI…
+version: '1.3'
+release_date: 'January 9, 2023'
+publisher: escb-pki
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '4,000+'
+extension_website: 'http://pki.escb.eu/epkweb/en/index.html'
+support_website: 'http://pki.escb.eu/epkweb/en/support.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ESCB-PKI user certificate enrollment",
+    "version": "1.3",
+    "author": "SIA by Indra",
+	
+	"icons": {
+		"128": "ESCB-PKI.png"
+	},
+    
+    "web_accessible_resources":  [{
+            "resources": ["IndraToken.js"],
+            "matches": ["https://*.bde.es/*", "https://*.escb.eu/*"]
+        }],
+    
+    "permissions": ["nativeMessaging"],
+    "content_scripts": [
+        {
+        "matches": ["https://*.bde.es/*", "https://*.escb.eu/*"],
+        "include_globs": ["*/dcpuser/*", "*/epkmain/*", "*/epkuser/*", "*/epkchck/*", "*/epkcomp/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    }
+}

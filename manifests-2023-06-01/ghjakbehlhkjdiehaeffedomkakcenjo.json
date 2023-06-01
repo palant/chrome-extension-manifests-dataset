@@ -1,0 +1,110 @@
+---
+slug: browselive-web-safety
+name: Browse.live Web Safety
+description: Browser Extension that Hides Unfair Ads and Unsafe Search Results
+version: 2.23.1413.2632
+release_date: 'April 22, 2023'
+publisher: AppEsteem Corporation
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.4
+rating_count: 5
+user_count: '10,000+'
+extension_website: 'https://browse.live'
+support_website: 'https://browse.live/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"default_locale": "en",
+	"name": "__MSG_ExtName__",
+	"description": "__MSG_ExtDescription__",
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAt1Odf6T1vxyVP4h7LYh+sfOGSjkd/vGTTyjxd1ACirj1Hh8+GxVeTkMWDSL/Si83b31wSstfqWPcignUSg6ab6z/O1ycIvqYoA74B+WCEf5Kgc4cKUd8tgaV1LZaet0LGpvRTDpr6HUgIkvQJe/vh1Q7KXSpCclYQpHrNJNzjjtkqGInzz/cvue2iPW3AgAtOnO5vqgH9it9JwGbj4Rfuhz7rK1X6OdaYOuLm9GUoL/2XDjcpC26K16p7dO55MagT6hRtTGwtD01GrNRTplrC4WHFQzcLUxpFx27xWG4SR0Kt3sVGaO0vU8Eh77/ZbNjCMQM1gHFLJDLdIsyMSg1UwIDAQAB",
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+	"action": {
+		"default_icon": "media/logo_icon_play.png",
+		"default_popup": "popups/index.html"
+	},
+	"homepage_url": "https://browse.live",
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"run_at": "document_start",
+			"matches": [
+				"<all_urls>"
+			],
+			"all_frames": true,
+			"match_about_blank": true,
+			"js": [
+				"content.js"
+			]
+		},
+		{
+			"run_at": "document_start",
+			"matches": [
+				"https://browse.live/websafety/notification*",
+				"https://staging.browse.live/websafety/notification*"
+			],
+			"all_frames": true,
+			"js": [
+				"notification_blur.js"
+			]
+		},
+		{
+			"run_at": "document_start",
+			"matches": [
+				"https://browse.live/*"
+			],
+			"all_frames": true,
+			"js": [
+				"websafety_info.js"
+			]
+		}
+	],
+	"permissions": [
+		"tabs",
+		"storage",
+		"webRequest",
+		"alarms",
+		"scripting",
+		"downloads",
+		"management",
+		"declarativeNetRequest"
+	],
+	"host_permissions": [
+		"*://*/*"
+	],
+	"icons": {
+		"16": "media/16.png",
+		"48": "media/48.png",
+		"128": "media/128.png"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"notification.html",
+				"notification.js"
+			],
+			"matches": [
+				"<all_urls>"
+			]
+		}
+	],
+	"externally_connectable": {
+		"ids": [],
+		"matches": [
+			"https://*.browse.live/*",
+			"https://browse.live/*",
+			"https://blur.live/*",
+			"https://*.blur.live/*"
+		],
+		"accepts_tls_channel_id": false
+	},
+	"version": "2.23.1413.2632"
+}

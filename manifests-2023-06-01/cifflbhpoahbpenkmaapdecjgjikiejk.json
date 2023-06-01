@@ -1,0 +1,272 @@
+---
+slug: samo-select
+name: SAMO-select
+description: >-
+  Удобный инструмент для отправки туристам списка туров с ценами по e-mail или
+  смс.
+version: '1.65'
+release_date: 'May 30, 2023'
+publisher: SAMO-Soft
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 5
+user_count: 467
+publisher_site: agent.samo.ru
+extension_website: 'https://samo.ru/touragent/addons/item/688.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; media-src 'self'"
+    },
+    "name": "SAMO-select",
+    "description": "Удобный инструмент для отправки туристам списка туров с ценами по e-mail или смс.",
+    "version": "1.65",
+    "background": {
+        "service_worker": "data/js/background.js"
+    },
+    "action": {
+        "default_icon": "data/img/icon.png",
+        "default_popup": "data/popup.html",
+        "default_title": "SAMO-select"
+    },
+    "permissions": [
+        "activeTab",
+        "notifications",
+        "storage"
+    ],
+    "host_permissions": [
+        "*://gateway.samo.ru/*",
+        "*://api.samo.ru/*",
+        "*://tapi.samo.ru/*",
+        "*://sapi.samo.ru/*",
+        "*://agent.samo.ru/*"
+    ],
+    "options_ui": {
+        "page": "data/options.html"
+    },
+
+    "icons": {
+        "128": "data/img/icon128.png",
+        "16": "data/img/icon16.png",
+        "48": "data/img/icon.png"
+    },
+    "web_accessible_resources": [{
+        "resources": [
+            "data/img/icon.png",
+            "data/img/agency_select_agent_white.png",
+            "data/img/agency_select_copy_white.png",
+            "data/img/agency_select_email_white.png",
+            "data/img/agency_select_goto_white.png",
+            "data/img/agency_select_print_white.png",
+            "data/img/agency_select_send_white.png",
+            "data/img/agency_select_share_white.png",
+            "data/img/agency_select_sms_white.png"
+        ],
+        "matches": ["<all_urls>"]
+    }],
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": ["<all_urls>"],
+            "js": [
+                "data/js/jquery-3.3.1.min.js",
+                "data/js/lmd5.min.js",
+
+                "data/js/locales/ru.js",
+                "data/js/locales/en.js",
+                "data/js/locales/ro.js",
+                "data/js/locales/ua.js",
+                "data/js/lib.js",
+                "data/js/content.js",
+
+                "data/js/operators/shared/ssam.js",
+                "data/js/operators/shared/samo.js",
+                "data/js/operators/shared/samo/demo.samo.ru.js",
+                "data/js/operators/shared/samo/online.arttour.ru.js",
+                "data/js/operators/shared/samo/on-line.fondmira.ru.js",
+                "data/js/operators/shared/samo/online.vilar-tours.ru.js",
+                "data/js/operators/shared/samo/online.cntr.com.ua.js",
+                "data/js/operators/shared/samo/online.alf-ua.com.js",
+                "data/js/operators/shared/samo/tcc.com.ua.js",
+                "data/js/operators/shared/samo/online.kazunion.com.js",
+                "data/js/operators/shared/samo/onlinesamotur.swtravel.az.js",
+                "data/js/operators/shared/samo/online.kompastour.kz.js",
+                "data/js/operators/shared/samo/online.pitertour.ru.js",
+                "data/js/operators/shared/samo/mail.hispatour.com.js",
+                "data/js/operators/shared/samo/online.aristeya.com.ua.js",
+                "data/js/operators/shared/samo/online.dvphoenix.ru.js",
+                "data/js/operators/shared/samo/online.wrs.com.ua.js",
+                "data/js/operators/shared/samo/online.fakeltour.ru.js",
+                "data/js/operators/shared/samo/samo.sibtravel.com.js",
+                "data/js/operators/shared/samo/online.rzdtour.com.js",
+                "data/js/operators/shared/samo/samo.orbita.ua.js",
+                "data/js/operators/shared/samo/online.gal-cruise.com.ua.js",
+                "data/js/operators/shared/samo/krist.ru.js",
+                "data/js/operators/shared/samo/online.siesta.kiev.ua.js",
+                "data/js/operators/shared/samo/spectrum.ru.js",
+                "data/js/operators/shared/samo/anextour.js",
+                "data/js/operators/shared/samo/online.voiaj.md.js",
+                "data/js/operators/shared/samo/joinup.ua.js",
+                "data/js/operators/shared/samo/rus-tour.travel.js",
+                "data/js/operators/shared/samo/liktour.com.ua.js",
+                "data/js/operators/shared/samo/online.ambotis.gr.js",
+                "data/js/operators/shared/samo/online.lyubosvit.com.ua.js",
+                "data/js/operators/shared/samo/samo.premiera.travel.js",
+                "data/js/operators/shared/samo/goodtimetravel.ru.js",
+                "data/js/operators/shared/samo/online.adriatic-travel.com.ua.js",
+                "data/js/operators/shared/samo/dtravel.com.ua.js",
+                "data/js/operators/shared/samo/samo.feeria.ua.js",
+                "data/js/operators/shared/samo/online.space-travel.ru.js",
+                "data/js/operators/shared/samo/b2b.tui.ru.js",
+                "data/js/operators/shared/samo/b2b.tui.ua.js",
+                "data/js/operators/shared/samo/calypsotour.com.js",
+                "data/js/operators/shared/samo/online.pro-tour.kz.js",
+                "data/js/operators/shared/samo/b2b.tuibaltics.eu.js",
+                "data/js/operators/shared/samo/pro.globus-tour.ru.js",
+                "data/js/operators/shared/samo/online.paks.ru.js",
+                "data/js/operators/shared/samo/online.mibsgroup.ua.js",
+                "data/js/operators/shared/samo/pilon.net.ua.js",
+                "data/js/operators/shared/samo/zeus.travel.js",
+                "data/js/operators/shared/samo/samo.pegastour.ru.js",
+                "data/js/operators/shared/samo/samo.deltatravel.ua.js",
+                "data/js/operators/shared/samo/online.xclusivetravel.com.js",
+                "data/js/operators/shared/samo/online.zlatapraga.ru.js",
+                "data/js/operators/shared/samo/andromeda.selfietravel.kz.js",
+                "data/js/operators/shared/samo/online3.anextour.com.ua.js",
+                "data/js/operators/shared/samo/online.kvin-tur.ru.js",
+                "data/js/operators/shared/samo/bktravel.toursupport.ru.js",
+                "data/js/operators/shared/samo/online.cth.com.ge.js",
+                "data/js/operators/shared/samo/b2b.abktourism.kz.js",
+                "data/js/operators/shared/samo/online.voyagergroup.kg.js",
+                "data/js/operators/shared/samo/online.maldives.ru.js",
+                "data/js/operators/shared/samo/new.pilon.net.ua.js",
+                "data/js/operators/shared/samo/samo.intourist.ru.js",
+                "data/js/operators/shared/samo/b2b.tui.kz.js",
+                "data/js/operators/shared/samo/online.alliance.ua.js",
+                "data/js/operators/shared/samo/online.onetouch.travel.js",
+                "data/js/operators/shared/samo/b2b.tui.by.js",
+                "data/js/operators/shared/samo/zimaletokamchatka.ru.js",
+                "data/js/operators/shared/samo/online.r-express.ru.js",
+
+                "data/js/operators/shared/samo_modern.js",
+                "data/js/operators/shared/samo_modern/online.vinpearltravel.ru.js",
+                "data/js/operators/shared/samo_modern/newonline.paks.ru.js",
+
+                "data/js/operators/shared/bgoperator.js",
+                "data/js/operators/shared/bgoperator/bgoperator.ru.js",
+
+                "data/js/operators/shared/tourvisor.js",
+                "data/js/operators/shared/tourvisor/ecenter.travel.js",
+                "data/js/operators/shared/tourvisor/h-planet.ru.js",
+                "data/js/operators/shared/tourvisor/tourvisor.ru.js",
+                "data/js/operators/shared/tourvisor/b-travel.ru.js",
+                "data/js/operators/shared/tourvisor/grand-tt.ru.js",
+                "data/js/operators/shared/tourvisor/tour-kassa.js",
+                "data/js/operators/shared/tourvisor/oasistravel.online.js",
+
+                "data/js/operators/sletat.ru_site_new.js",
+                "data/js/operators/pegast.ru.js",
+
+                "data/js/operators/intourist.ru.js",
+                "data/js/operators/icstrvl.ru.js",
+                "data/js/operators/tez-tour.com.js",
+                "data/js/operators/old.tez-tour.com.js",
+                "data/js/operators/alean.ru.js",
+                "data/js/operators/delfin-tour.ru.js",
+                "data/js/operators/troyka.travel.js",
+                "data/js/operators/ruspo.ru.js",
+
+                "data/js/operators/shared/master.js",
+                "data/js/operators/shared/master/online.amigo-tours.ru.js",
+                "data/js/operators/shared/master/advanced.veditour.ru.js",
+                "data/js/operators/shared/master/oasis.com.ua.js",
+                "data/js/operators/shared/master/online.pac.ru.js",
+                "data/js/operators/shared/master/book.r-express.ru.js",
+                "data/js/operators/shared/master/online.all-poland.travel.js",
+                "data/js/operators/shared/master/online.sv-tour.ru.js",
+                "data/js/operators/shared/master/online.abkhazia.ru.js",
+                "data/js/operators/shared/master/online.sunnytravel.by.js",
+                "data/js/operators/shared/master/booking2.otpusk.by.js",
+                "data/js/operators/shared/master/online.jettravel.ru.js",
+                "data/js/operators/shared/master/online.tourshop4you.ru.js",
+
+                "data/js/operators/shared/master2.js",
+                "data/js/operators/shared/master2/online.rosting.by.js",
+                "data/js/operators/shared/master2/online.riviera-sochi.ru.js",
+                "data/js/operators/shared/master2/vtour.by.js",
+                "data/js/operators/shared/master2/booking.panteon.ru.js",
+                "data/js/operators/shared/master2/sales.touravent.ru.js",
+                "data/js/operators/shared/master2/online.rukurort.ru.js",
+                "data/js/operators/shared/master2/online.abstour.by.js",
+                "data/js/operators/shared/master2/online.intercity.by.js",
+                "data/js/operators/shared/master2/online.sanat.kz.js",
+                "data/js/operators/shared/master2/online.west-travel.ru.js",
+
+                "data/js/operators/shared/oti.js",
+                "data/js/operators/shared/oti/online.coral.ru.js",
+                "data/js/operators/shared/oti/online.coraltravel.com.ua.js",
+                "data/js/operators/shared/oti/bron.sunmar.ru.js",
+
+                "data/js/operators/shared/tourclient.js",
+                "data/js/operators/shared/tourclient/belturizm.by.js",
+                "data/js/operators/shared/tourclient/wozrozhdenie.ru.js",
+                "data/js/operators/shared/tourclient/online.tradevoyage.by.js",
+
+                "data/js/operators/shared/sletat_module.js",
+                "data/js/operators/shared/sletat_module/tripcafe.ru.js",
+
+                "data/js/operators/shared/tourvisor_original_module.ru.js",
+                "data/js/operators/shared/tourvisor_original_module/tourvisor_original.ru.js",
+
+                "data/js/operators/shared/ittour.js",
+                "data/js/operators/shared/ittour/andor-tour.com.ua.js",
+
+                "data/js/operators/shared/samo.travel.js",
+                "data/js/operators/shared/self.travel.js",
+
+                "data/js/operators/mouzenidis.js",
+                "data/js/operators/mouzenidis_new.js",
+                "data/js/operators/tpg.js",
+                "data/js/operators/shared/titbit_tibet.js",
+                "data/js/operators/shared/titbit_tibet/cita.com.ua.js",
+                "data/js/operators/shared/titbit_tibet/tkwelt.com.ua.js",
+                "data/js/operators/shared/titbit_tibet/almariss.com.ua.js",
+                "data/js/operators/gto.js",
+                "data/js/operators/turpoisk.js",
+                "data/js/operators/cruiz.info.js",
+                "data/js/operators/infoflot.com.js",
+                "data/js/operators/tourindex.ru.js",
+                "data/js/operators/vand.ru.js",
+                "data/js/operators/diamond-tours.ru.js",
+                "data/js/operators/shared/sletat_module_five.js",
+                "data/js/operators/bell.kz.js",
+                "data/js/operators/online.vremiatour.ru.js",
+                "data/js/operators/moretravel.ru.js",
+                "data/js/operators/touring.by.js",
+                "data/js/operators/meridien.ru.js",
+                "data/js/operators/unextour.ru.js",
+                "data/js/operators/capitaltour.md.js",
+                "data/js/operators/booking.clubmagellan.com.js",
+                "data/js/operators/searchvm.ntk-intourist.ru.js",
+                "data/js/operators/bsigroup.ru.js",
+                "data/js/operators/agency.coral.ru.js",
+                "data/js/operators/agent.anextour.com.js",
+
+                "data/js/operators/local.js",
+                "data/js/operators/global/init.js",
+                "data/js/web.js",
+                "data/js/notify.min.js",
+                "data/js/jquery.magnific-popup.min.js"
+            ],
+            "css": [
+                "data/css/content.css",
+                "data/css/magnific-popup.css"
+            ]
+        }
+    ]
+}

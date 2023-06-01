@@ -1,0 +1,59 @@
+---
+slug: upc-lookup
+name: UPC Lookup
+description: 'UPC Look helps you find UPC on Amazon, Walmart, Homedepot'
+version: 0.0.8
+release_date: 'May 6, 2023'
+publisher: Parellel Loop Inc.
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 2
+user_count: 808
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "UPC Lookup",
+  "description": "UPC Look helps you find UPC on Amazon, Walmart, Homedepot",
+  "version": "0.0.8",
+  "manifest_version": 3,
+  "permissions": [
+    "tabs",
+    "storage",
+    "identity",
+    "identity.email"
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "action": {
+    "default_title": "upc-lookup",
+    "default_icon": "images/icon-128.png"
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "19": "images/icon-19.png",
+    "38": "images/icon-38.png",
+    "128": "images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.amazon.com/*",
+        "*://*.walmart.com/*"
+      ],
+      "js": [
+        "content_script.bundle.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self'"
+  }
+}

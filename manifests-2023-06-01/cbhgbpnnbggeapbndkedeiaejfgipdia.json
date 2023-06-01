@@ -1,0 +1,105 @@
+---
+slug: omg-seo-plugin
+name: OMG SEO Plugin
+description: >-
+  OMG CC Chrome extension allows you to check metrics and backlinks, find
+  keyword ideas and analyze competition on the fly.
+version: '4.4'
+release_date: 'November 5, 2022'
+publisher: serpedplugin
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 8
+user_count: 365
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "OMG SEO Plugin",
+    "version": "4.4",
+    "manifest_version": 3,
+    "description": "OMG CC Chrome extension allows you to check metrics and backlinks, find keyword ideas and analyze competition on the fly.",
+    "icons": {
+        "48": "images/icon-128.png",
+        "128": "images/icon-128.png"
+    },
+    "action": {
+        "default_icon": "images/icon-128.png",
+        "default_title": "OMG Plugin",
+        "default_popup": "action/index.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "permissions": [
+        "notifications",
+        "activeTab",
+        "contextMenus",
+        "cookies",
+        "storage"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*",
+        "*://*.google.com/"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "include_globs": [
+                "*://www.google.*/*"
+            ],
+            "css": [
+                "css/contentcss.css"
+            ],
+            "js": [
+                "scripts/jquery.min.js",
+                "content_script_forgooglresult.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+                "css/contentcss.css"
+            ],
+            "js": [
+                "scripts/jquery.min.js",
+                "scripts/eventHandler.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+F",
+                "mac": "MacCtrl+Shift+F"
+            },
+            "description": "OMG Plugin"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*.png",
+                "images/*.svg"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

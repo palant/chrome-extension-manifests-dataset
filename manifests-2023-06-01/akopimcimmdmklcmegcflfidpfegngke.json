@@ -1,0 +1,83 @@
+---
+slug: vimcal
+name: Vimcal
+description: Fly through your calendar
+version: 1.0.35
+release_date: 'August 21, 2022'
+publisher: Vimcal Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: '1,000+'
+extension_website: 'https://vimcal.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Vimcal",
+  "name": "Vimcal",
+  "description": "Fly through your calendar",
+  "version": "1.0.35",
+  "manifest_version": 2,
+  "homepage_url": "https://vimcal.com",
+  "icons": {
+    "16": "16x16.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "background": {
+    "scripts": ["app/background.js"]
+  },
+  "commands": {
+    "toggle_extension": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K"
+      },
+      "description": "Toggle extension"
+    }
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "16x16.png",
+      "32": "32x32.png"
+    },
+    "default_title": "Vimcal"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.vimcal.com/*", "http://localhost/*"],
+      "css": ["/css/root.css"],
+      "js": ["/static/js/content.js"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "css": ["/css/root.css"],
+      "js": ["/static/js/content.js"],
+      "all_frames": false,
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "identity",
+    "https://maps.googleapis.com/*",
+    "https://*.vimcal.com/*",
+    "webNavigation",
+    "<all_urls>",
+    "background",
+    "history"
+  ],
+  "oauth2": {
+    "client_id": "800204084418-p9v6g9o2t9lklvr3bdssqd5p20c1hagu.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.email"]
+  },
+  "web_accessible_resources": ["index.html", "/static/*"],
+  "content_security_policy": "default-src 'self' http://localhost:3000 https://localhost:3000 https://dev.vimcal.com https://dogfood.vimcal.com https://prod.vimcal.com https://www.googleapis.com https://maps.googleapis.com 'unsafe-eval'; script-src 'self' 'sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk=' http://localhost:3000 https://localhost:3000 https://dev.vimcal.com https://dogfood.vimcal.com https://prod.vimcal.com https://www.googleapis.com https://maps.googleapis.com 'unsafe-eval'; connect-src 'self' http://localhost:3000 https://localhost:3000 https://dev.vimcal.com https://dogfood.vimcal.com https://prod.vimcal.com https://www.googleapis.com https://maps.googleapis.com 'unsafe-eval'; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' https://vimcal-email-assets.s3-us-west-1.amazonaws.com/ data:;"
+}

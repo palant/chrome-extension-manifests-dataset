@@ -1,0 +1,132 @@
+---
+slug: study-tools-voor-magister
+name: Study Tools voor Magister
+description: >-
+  Een extensie die verschillende aspecten van Magister verbetert en problemen
+  ermee oplost.
+version: 2.6.1
+release_date: 'May 24, 2023'
+publisher: QkeleQ10
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 132
+extension_website: 'https://qkeleq10.github.io/extensions/studytools'
+support_website: 'https://qkeleq10.github.io/extensions/studytools'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "$schema": "https://json.schemastore.org/chrome-manifest",
+    "manifest_version": 3,
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "version": "2.6.1",
+    "default_locale": "nl",
+    "icons": {
+        "16": "icons/16.png",
+        "32": "icons/32.png",
+        "48": "icons/48.png",
+        "64": "icons/64.png",
+        "128": "icons/128.png",
+        "256": "icons/256.png",
+        "300": "icons/300.png",
+        "512": "icons/512.png"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "studytools@qkeleq10.dev"
+        }
+    },
+    "background": {
+        "service_worker": "src/service-worker.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.magister.net/*",
+                "*://login.microsoftonline.com/*/oauth2/authorize*"
+            ],
+            "js": [
+                "src/util.js",
+                "src/popup/settings.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://*.magister.net/*"
+            ],
+            "js": [
+                "src/magister/scripts/style.js"
+            ],
+            "css": [
+                "src/magister/styles/main.css",
+                "src/magister/styles/gamification.css",
+                "src/magister/styles/today.css",
+                "src/magister/styles/grades.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://*.magister.net/magister/*"
+            ],
+            "js": [
+                "src/magister/scripts/main.js",
+                "src/magister/scripts/gamification.js",
+                "src/magister/scripts/today.js",
+                "src/magister/scripts/grades.js",
+                "src/magister/scripts/studyguide.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://accounts.magister.net/account/login*"
+            ],
+            "js": [
+                "src/magister/scripts/login.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://login.microsoftonline.com/*/oauth2/authorize*"
+            ],
+            "js": [
+                "src/other/microsoft-login.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "action": {
+        "default_icon": {
+            "16": "icons/16.png",
+            "32": "icons/32.png",
+            "48": "icons/48.png",
+            "64": "icons/64.png",
+            "128": "icons/128.png",
+            "256": "icons/256.png",
+            "300": "icons/300.png",
+            "512": "icons/512.png"
+        },
+        "default_popup": "src/popup/popup.html",
+        "default_title": "__MSG_appName__\nKlik om te configureren"
+    },
+    "options_page": "src/popup/popup.html",
+    "options_ui": {
+        "page": "src/popup/popup.html",
+        "open_in_tab": true
+    },
+    "permissions": [
+        "storage",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "*://*.magister.net/*"
+    ]
+}

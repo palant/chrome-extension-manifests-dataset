@@ -1,0 +1,80 @@
+---
+slug: weave
+name: Weave
+description: Record a video and share with your colleagues
+version: 0.0.6
+release_date: 'May 21, 2022'
+publisher: mandal.ashish
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 52
+extension_website: 'https://ui.weave.aurea.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Weave",
+  "description": "Record a video and share with your colleagues",
+  "version": "0.0.6",
+  "manifest_version": 3,
+  "action": {
+      "default_popup": "popup.html",
+      "default_title": "Weave"
+  },
+  "icons": {
+      "16": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "scripting",
+    "cookies",
+    "alarms"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://ui.weave.aurea.com/video/*"
+    ]
+  },
+  "host_permissions": [
+    "http://*/*", "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./content-scripts/index.js"]
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./overlay/index.js"],
+      "css": [ "./overlay/index.css" ]
+    },
+    {
+      "matches": [ "*://mail.google.com/*" ],
+      "js": [ "./gmail/index.js" ],
+      "css": [ "./gmail/index.css" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "*://community.aurea.com/create-video*" ],
+      "js": [ "./jive/index.js" ]
+    }
+ ],
+ "background": {
+   "service_worker": "background-script.js"
+ },
+ "web_accessible_resources": [
+   {
+     "resources": [ "logo192.png", "recorder.html", "recording-view.html", 
+                    "recording-view.css", "gmail-video-player.js", "gmail-video-player.css", 
+                    "video-selector.js", "video-selector.css", "jive.css"
+                  ],
+     "matches": ["http://*/*", "https://*/*"]
+   }
+ ]
+}

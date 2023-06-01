@@ -1,0 +1,104 @@
+---
+slug: app-for-whatsapp-and-mess
+name: App for WhatsApp and Messenger access
+description: >-
+  We gather all messenger in one app. Opens WhatsApp in the browser just in 1
+  click as well as other chats
+version: '5.1'
+release_date: 'October 26, 2022'
+publisher: plcolte01
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 788
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_name__",
+    "short_name": "WhatsGreen",
+    "description": "__MSG_description__",
+    "default_locale": "en",
+    "action": {
+        "default_icon": "img/i-48.png"
+    },
+    "version": "5.1",
+    "icons": {
+        "256": "img/i-256.png",
+        "128": "img/i-128.png",
+        "16": "img/i-16.png",
+        "19": "img/i-19.png",
+        "38": "img/i-38.png",
+        "48": "img/i-48.png",
+        "96": "img/i-96.png"
+    },
+    "background": {
+        "service_worker": "js/bg.js"
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "js": [
+                "js/tg_content.js"
+            ],
+            "matches": [
+                "*://web.telegram.org/*"
+            ],
+            "all_frames": true
+        },
+        {
+            "js": [
+                "js/wtp_content.js"
+            ],
+            "matches": [
+                "*://web.whatsapp.com/*"
+            ],
+            "all_frames": true
+        },
+        {
+            "js": [
+                "js/sk_content.js"
+            ],
+            "matches": [
+                "*://web.skype.com/*"
+            ],
+            "all_frames": true
+        },
+        {
+            "js": [
+                "js/jq.min.js",
+                "js/txtme_content.js"
+            ],
+            "matches": [
+                "*://whatsgreeny.com/*"
+            ],
+            "all_frames": true
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'",
+        "sandbox": "sandbox allow-scripts; script-src 'self' 'https://ssl.google-analytics.com'; object-src 'self'"
+    },
+    "manifest_version": 3,
+    "permissions": [
+        "tabs",
+        "storage",
+        "contextMenus",
+        "declarativeNetRequest",
+        "system.display"
+    ],
+    "declarative_net_request" : {
+        "rule_resources" : [
+          {
+            "id": "ruleset",
+            "enabled": true,
+            "path": "rules.json"
+          }
+        ]
+      },
+    "host_permissions": [
+        "<all_urls>"
+    ]
+}

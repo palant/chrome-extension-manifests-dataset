@@ -1,0 +1,90 @@
+---
+slug: x-bees
+name: x-bees
+description: Add quick access to x-bees
+version: 1.0.4
+release_date: 'May 5, 2023'
+publisher: Wildix
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 7
+user_count: 295
+publisher_site: wildix.com
+support_website: 'https://www.wildix.com/contacts'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extName__",
+    "version": "1.0.4",
+    "description": "__MSG_extDescription__",
+    "default_locale": "en",
+    "icons": {
+      "16": "images/icon/16.png",
+      "48": "images/icon/48.png",
+      "128": "images/icon/128.png"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "action": {
+        "default_icon": {
+            "19": "images/icon/19.png",
+            "48": "images/icon/48.png"
+          },
+          "default_title": "__MSG_extName__"
+    },
+    "permissions": [
+        "tabs",
+        "contextMenus",
+        "webNavigation"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://x-bees.biz/*",
+            "https://*.x-bees.biz/*"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://x-bees.biz/*",
+                "https://*.x-bees.biz/*"
+            ],
+            "js": ["js/content.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://calendar.google.com/calendar/*",
+                "https://outlook.live.com/calendar/*",
+                "https://outlook.office.com/calendar/*",
+                "https://outlook.office365.com/calendar/*"
+            ],
+            "css": ["/css/all.css"],
+            "js": [
+              "js/lib/connectionStatus.js",
+              "js/lib/jquery.js",
+              "js/lib/uuid.js",
+              "js/calendarEventContent.js"
+            ],
+            "all_frames" : false,
+            "run_at" : "document_end",
+            "match_about_blank": false
+        }
+    ],
+    "web_accessible_resources": [{
+      "matches": [
+        "https://calendar.google.com/*",
+        "https://outlook.office.com/*",
+        "https://outlook.live.com/*",
+        "https://outlook.office365.com/*"
+      ],
+      "resources": [
+        "images/icon/48.png"
+      ]
+    }],
+    "manifest_version": 3
+}

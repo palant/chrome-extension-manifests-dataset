@@ -1,0 +1,92 @@
+---
+slug: realyst-single-family-inv
+name: 'Realyst: Single Family Investment Tool'
+description: Allows you to more quickly evaluate the value of a property on Zillow.com
+version: '1.2'
+release_date: 'May 28, 2023'
+publisher: Realyst
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 10
+extension_website: >-
+  https://realyst.notion.site/Realyst-User-Guide-92e6ebb7f108449a861b6080597009a2
+support_website: >-
+  https://realyst.notion.site/Realyst-User-Guide-92e6ebb7f108449a861b6080597009a2
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Realyst: Single Family Investment Tool",
+  "description": "Allows you to more quickly evaluate the value of a property on Zillow.com",
+  "version": "1.2",
+  "author": "Realyst",
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "realyst_extension_icon.png",
+      "128": "realyst_extension_icon_128.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
+
+
+  "host_permissions": [
+    "https://*.zillow.com/*",
+    "https://api.openai.com/",
+    "https://extensionpay.com/*"
+  ],
+
+  "icons": {
+    "48": "realyst_extension_icon.png",
+    "128": "realyst_extension_icon_128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.zillow.com/*",
+        "https://extensionpay.com/*",
+        "https://realyst-extension.herokuapp.com/*"
+
+      ],
+      "js": ["ExtPay.js"]
+    },
+
+    {
+      "matches": ["https://extensionpay.com/*"], 
+      "css" : ["ext_pay_style.css"],
+      "js": ["ext_pay.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["logo-2.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval' http://localhost:* http://127.0.0.1:*; object-src 'self'"
+  }
+  
+  
+
+}
+
+

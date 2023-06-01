@@ -1,0 +1,90 @@
+---
+slug: searchatlas-seo-by-linkgr
+name: SearchAtlas SEO by LinkGraph
+description: >-
+  Leverage the power of SearchAtlas SEO data and insights on any page of your
+  website.
+version: '2.34'
+release_date: 'May 23, 2023'
+publisher: LinkGraph SEO
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 5
+rating_count: 16
+user_count: 420
+publisher_site: linkgraph.io
+extension_website: 'https://linkgraph.io'
+support_website: 'https://linkgraph.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SearchAtlas SEO by LinkGraph",
+  "description" : "Leverage the power of SearchAtlas SEO data and insights on any page of your website.",
+  "version": "2.34",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "background": {
+    "service_worker": "/static/js/background.js"
+  },
+  "icons": {
+    "16": "icon128.png",
+    "32": "icon128.png",
+    "128": "icon128.png"
+  },
+  "content_scripts" : [
+    {
+      "matches": [ "<all_urls>" ],
+      "css":["/css/contentGscRoot.css"],
+      "js": ["/static/js/contentGsc.js"],
+      "exclude_matches":["*://*/wp-login.php*", "*://*/wp-admin/*"],
+      "run_at": "document_end" 
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "css":["/css/contentOverviewRoot.css"],
+      "js": ["/static/js/contentOverview.js"],
+      "exclude_matches":["https://dashboard.linkgraph.io/", "*://*/wp-login.php*", "*://*/wp-admin/*", "https://www.google.com/*", "https://www.google.com/search*tbm=vid*", "https://www.google.com/search*tbm=isch*", "https://www.google.com/search*tbm=shop*", "https://www.google.com/search*tbs=lrf*", "https://www.google.com/search*tbm=lcl*", "https://docs.google.com/document/d/*/edit*", "*://*/wp-admin/*&action=edit", "*://*/*/wp-admin/*&action=edit", "https://www.figma.com/file/*/*", "https://gitlab.com/*"],
+      "run_at": "document_end" 
+    },
+    {
+      "exclude_matches":["https://www.google.com/search*tbm=vid*", "https://www.google.com/search*tbm=isch*", "https://www.google.com/search*tbm=shop*", "https://www.google.com/search*tbs=lrf*", "https://www.google.com/search*tbm=lcl*"],
+      "matches": [ "*://*/*" ],
+      "include_globs": ["*://*.google.*/search*"],
+      "css":["/static/css/contentKeyword.css"],
+      "js": ["/static/js/contentKeyword.js"],
+      "run_at": "document_end" 
+    },
+    {
+      "matches": ["https://docs.google.com/document/d/*/edit*", "*://*/wp-admin/*&action=edit", "*://*/*/wp-admin/*&action=edit", "https://www.figma.com/file/*/*"],
+      "js": ["/static/js/contentCa.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources":[{
+    "resources": [
+      "/static/media/*",
+      "/static/css/*",
+      "/css/*",
+      "/js/docsCanvas.js",
+      "/js/script.js"
+    ],
+    "matches": ["<all_urls>" ]
+  }],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "notifications",
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://dashboard.linkgraph.io/"
+  ]
+}

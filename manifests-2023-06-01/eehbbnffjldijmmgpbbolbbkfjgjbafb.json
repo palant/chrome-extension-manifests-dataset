@@ -1,0 +1,122 @@
+---
+slug: traitly
+name: Traitly
+description: >-
+  The Traitly Chrome extension simplifies the management of prospective
+  candidates when used with the Traitly platform.
+
+
+  The…
+version: '1.28'
+release_date: 'May 17, 2022'
+publisher: Traitly
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 33
+publisher_site: traitly.com
+extension_website: 'https:///www.traitly.com'
+support_website: 'https://www.traitly.com/contact'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Traitly",
+  "version": "1.28",
+  "description": "",
+  "icons": {
+    "48": "/icons/logo32.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.peoplewise.io/*",
+    "*://*.angel.co/*",
+    "*://*.workable.com/*",
+    "*://*.greenhouse.io/*",
+    "*://*.ashbyhq.com/*",
+    "*://*.lever.co/*",
+    "*://*.linkedin.com/*",
+    "*://*.mail.google.com/*",
+    "*://*.github.com/*"
+  ],
+  "web_accessible_resources": [
+    "/templates/frameMini.html",
+    "/templates/framePopup.html",
+    "/templates/frame.html",
+    "/templates/frame2.html",
+    "/src/injected/injectedPDFCheck.js",
+    "/src/injected/injectedTalentProfileCheck.js",
+    "/src/injected/injectedSalesRecruiterCheck.js"
+  ],
+  "background": {
+    "scripts": [
+      "/src/background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "/icons/logo16.png",
+      "32": "/icons/logo32.png",
+      "48": "/icons/logo32.png",
+      "128": "/icons/logo192.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.peoplewise.io/*",
+        "*://*.angel.co/*",
+        "*://*.workable.com/*",
+        "*://*.greenhouse.io/*",
+        "*://*.ashbyhq.com/*",
+        "*://*.lever.co/*",
+        "*://*.linkedin.com/*",
+        "*://*.mail.google.com/*",
+        "*://*.github.com/*"
+      ],
+      "css": [
+        "/css/main.css"
+      ],
+      "js": [
+        "/src/load.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/in/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "/src/injected/injectPDFCheck.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/talent/profile/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "/src/parseTalentProfile.js",
+        "/src/injected/injectTalentProfileCheck.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/recruiter/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "/src/parseSalesRecruiter.js",
+        "/src/injected/injectSalesRecruiterCheck.js"
+      ]
+    }
+  ]
+}

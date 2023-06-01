@@ -1,0 +1,77 @@
+---
+slug: recipe-search
+name: Recipe Search
+description: >-
+  Set as a default Search provider to provide enhanced search suggestion for
+  recipes keywords in Omnibox and show Web/Recipes Results.
+version: 1.23.103
+release_date: 'January 6, 2023'
+publisher: recipessearchnow
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 0
+rating_count: 0
+user_count: '9,000+'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Recipe Search",
+    "short_name": "RecipeSearch",
+    "description": "Set as a default Search provider to provide enhanced search suggestion for recipes keywords in Omnibox and show Web/Recipes Results.",
+    "version": "1.23.103",
+    "icons": {
+        "16": "icons/16.png",
+        "48": "icons/48.png",
+        "32": "icons/32.png",
+        "128": "icons/128.png"
+    },
+    "background": {
+        "service_worker": "worker.js"
+    },
+    "action": {
+        "default_icon": {
+            "16": "icons/16.png",
+            "48": "icons/48.png",
+            "32": "icons/32.png",
+            "128": "icons/128.png"
+        },
+        "default_title": "Recipe Search"
+    },
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "name": "Recipe Search",
+            "is_default": true,
+            "encoding": "UTF-8",
+            "keyword": "search",
+            "favicon_url": "https://search.freshysearch-api.net/favicon.ico",
+            "search_url": "https://search.freshysearch-api.net/search/{searchTerms}",
+            "suggest_url": "https://enhanced-meta.freshysearch-api.net/enhanced-sug/?s={searchTerms}"
+        }
+    },
+    "omnibox": {
+        "keyword": "recipe"
+    },
+    "host_permissions": [
+        "*://*.freshysearch-api.net/*",
+        "*://*.cooking.freshy.com/core/v2/complete/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://search.freshy.com/*",
+                "*://search.yahoo.com/yhs/search?hspart=tro*"
+            ],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "cookies",
+        "storage",
+        "tabs",
+        "declarativeNetRequest"
+    ],
+    "manifest_version": 3
+}
