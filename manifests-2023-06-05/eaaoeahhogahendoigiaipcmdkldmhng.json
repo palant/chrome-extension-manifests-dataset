@@ -1,0 +1,93 @@
+---
+slug: legion-trinity
+name: LEGION Trinity
+description: Automatically schedule your posts on Facebook
+version: 2.16.23
+release_date: 'May 13, 2021'
+publisher: Pantheon Marketing
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.25
+rating_count: 8
+user_count: 235
+size: 2.93MiB
+languages:
+  - English (United States)
+privacy_policy: 'https://www.legionsoftware.io/legal'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "LEGION Trinity",
+  "short_name": "LEGION Trinity",
+  "version": "2.16.23",
+  "description": "Automatically schedule your posts on Facebook",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
+  },
+  "browser_action": {
+    "default_title": "LEGION Trinity",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "cookies",
+    "activeTab",
+    "storage",
+    "clipboardRead",
+    "clipboardWrite",
+    "webRequest",
+    "webRequestBlocking",
+    "http://*.facebook.com/*",
+    "https://*.facebook.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "scripts/background/headers.js",
+      "scripts/background/app.js",
+      "scripts/background/friender.js",
+      "scripts/background/postDelivery.js",
+      "scripts/background/postsFriends.js",
+      "scripts/background/cancelRequests.js",
+      "scripts/background/arcHandler.js",
+      "scripts/background/cannedResponses.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.facebook.com/*",
+        "*://*.messenger.com/*"
+      ],
+      "js": [
+        "libs/jquery-3.4.1.min.js",
+        "scripts/content/cannedResponses.js",
+        "scripts/content/sendMessage.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://m.facebook.com/composer/mbasic/?csid=*"
+      ],
+      "js": [
+        "libs/jquery-3.4.1.min.js",
+        "scripts/content/alternatePhotoUpload.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://www.facebook.com/*"
+      ],
+      "js": [
+        "libs/jquery-3.4.1.min.js",
+        "scripts/content/alternateInteractions.js"
+      ]
+    }
+  ]
+}

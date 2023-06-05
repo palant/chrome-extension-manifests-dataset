@@ -1,0 +1,72 @@
+---
+slug: y-split-view
+name: Y. Split View
+description: Setup multiple YouTube stream within one screen.
+version: 1.10.4
+release_date: 'March 4, 2023'
+publisher: ChanPete
+category: Fun
+category_slug: ext/14-fun
+rating: 4.6
+rating_count: 15
+user_count: '2,000+'
+size: 3.23MiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Y. Split View",
+  "description": "Setup multiple YouTube stream within one screen.",
+  "permissions": [
+    "https://www.youtube.com/*",
+    "webRequest",
+    "webRequestBlocking",
+    "contextMenus",
+    "storage"
+  ],
+  "icons": {
+    "32": "icons/32.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/live_chat*",
+        "https://www.youtube.com/live_chat_replay*"
+      ],
+      "js": [
+        "./js/livechat.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/embed*"
+      ],
+      "js": [
+        "./js/player.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "browser_action": {
+    "default_title": "Y. Split View",
+    "default_icon": {
+      "32": "icons/32.png",
+      "64": "icons/64.png"
+    }
+  },
+  "content_security_policy": "script-src 'self' https://www.youtube.com; object-src 'self'",
+  "version": "1.10.4"
+}

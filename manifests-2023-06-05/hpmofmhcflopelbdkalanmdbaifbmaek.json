@@ -1,0 +1,173 @@
+---
+slug: amplemarket
+name: Amplemarket
+description: >-
+  Allows Amplemarket to work from within your Gmail account. Reach out to
+  team@amplemarket.com if you have any questions.
+version: 2.0.119
+release_date: 'May 30, 2023'
+publisher: Amplemarket
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 7
+user_count: '3,000+'
+size: 483KiB
+languages:
+  - English (United States)
+publisher_site: amplemarket.com
+extension_website: 'https://amplemarket.com'
+support_website: 'https://intercom.help/amplemarket/en'
+privacy_policy: 'https://amplemarket.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkk+Aa0MVCg8OanGoYtXobqmOzDQfIGLGBoz+ypyeMsDtLUJPQcFZibbAkLhD9cGfG0nLA0rhqlstXcTcfsp2cBvBXlABKfkXu5Kk8p3HPmZv0C2n7DiOaUvDd+V2hTmL2ZRau0T231cHun3FNHT72TKDnX80c6PtAuMmFO+UiEAQPTFspyM7tbhwCrMGjOy8r+G9SaP8RQsDWdLn1dMZZQhxZpEflkrMWPAKZ/jPRtr7O0va+nHA1bc/dnGGCUt5OCmtkDEqTLRBTiMaGJ+sxMwA/2VBnv3LYMbPkz/M4xg9HZHfsWIrzVtoNpQLOrloQIPM+VpuGcPHs1hTPGkuYwIDAQAB",
+  "manifest_version": 2,
+  "name": "Amplemarket",
+  "short_name": "Amplemarket",
+  "description": "Allows Amplemarket to work from within your Gmail account. Reach out to team@amplemarket.com if you have any questions.",
+  "version": "2.0.119",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://ampledash-staging.uc.r.appspot.com/*",
+      "*://amplemarket.com/*",
+      "*://app.amplemarket.com/*",
+      "*://staging.amplemarket.com/*",
+      "http://localhost:3000/*",
+      "https://localhost:3000/*"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "declarative_net_request_rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "*://*/linkedin.html",
+    "*://contacts.google.com/*",
+    "https://mail.google.com/",
+    "https://inbox.google.com/",
+    "*://linkedin.com/*",
+    "*://*.linkedin.com/*",
+    "tabs",
+    "webRequest",
+    "declarativeNetRequest",
+    "cookies",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "icon.png",
+    "empty-pixel.png",
+    "iframe.html",
+    "iframe.js",
+    "error.html",
+    "icon.svg",
+    "icon1.svg",
+    "icon2.svg",
+    "icon1_square.svg",
+    "linkedin_bulk_actions/linkedin.html",
+    "linkedin_bulk_actions/linkedin.js"
+  ],
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "vendor/sentry-7.45.0.js",
+      "vendor/jquery-3.4.1.js",
+      "vendor/eventsource.js",
+      "shared/machine_id.js",
+      "shared/waitForLogin.js",
+      "shared/config.js",
+      "shared/linkedin.js",
+      "shared/linkedin_background.js",
+      "shared/ampledash.js",
+      "shared/string.js",
+      "shared/fetch.js",
+      "shared/request_analytics.js",
+      "shared/current_sessions.js",
+      "analytics/linkedin_actions/background.js",
+      "linkedin_bulk_actions/background.js",
+      "linkedin_data_fetch/background.js",
+      "linkedin_window/background.js",
+      "linkedin_notifications/background.js",
+      "emailmatcher/background.js",
+      "background.js",
+      "salesforce_import/background.js",
+      "dialer/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "*://*.mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": [
+        "vendor/jquery-3.4.1.js",
+        "vendor/inboxsdk.js",
+        "vendor/transliteration.js",
+        "shared/config.js",
+        "extension.js",
+        "emailmatcher/gmail.js"
+      ],
+      "css": ["extension.css", "emailmatcher/style.css"]
+    },
+    {
+      "matches": [
+        "*://*.contacts.google.com/*",
+        "https://contacts.google.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "vendor/jquery-3.4.1.js",
+        "shared/config.js",
+        "emailmatcher/contacts.js"
+      ],
+      "css": ["emailmatcher/style.css"]
+    },
+    {
+      "matches": ["*://linkedin.com/*", "*://*.linkedin.com/*"],
+      "js": [
+        "vendor/jquery-3.4.1.js",
+        "shared/config.js",
+        "linkedin_bulk_actions/linkedin-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://linkedin.com/*", "*://*.linkedin.com/*"],
+      "js": [
+        "vendor/popper-2.11.1.js",
+        "vendor/tippyjs-6.3.7.js",
+        "vendor/toastify-1.12.0.js",
+        "shared/toast.js",
+        "shared/config.js",
+        "linkedin_window/inject.js",
+        "linkedin_window/video-message-inject.js",
+        "linkedin_window/voice-message-inject.js",
+        "linkedin_window/dreambox-inject.js"
+      ],
+      "css": [
+        "vendor/toastify-1.12.0.css",
+        "linkedin_window/css/dreambox-inject.css"
+      ]
+    },
+    {
+      "matches": ["*://*.force.com/*", "*://*.salesforce.com/*"],
+      "all_frames": true,
+      "js": ["shared/config.js", "salesforce_import/salesforce.js"]
+    }
+  ]
+}

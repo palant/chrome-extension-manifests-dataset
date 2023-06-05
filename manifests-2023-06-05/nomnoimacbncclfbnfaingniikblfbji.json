@@ -1,0 +1,92 @@
+---
+slug: debugger-for-google-analy
+name: Debugger for Google Analytics 4 (GA4)
+description: Browser DevTools extension for debugging Google Analytics 4 (GA4) events.
+version: 3.4.2
+release_date: 'June 2, 2023'
+publisher: James Yoon
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 4
+user_count: '4,000+'
+size: 87.56KiB
+languages:
+  - English (United States)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Debugger for Google Analytics 4 (GA4)",
+  "version": "3.4.2",
+  "version_name": "3.4.2",
+  "description": "Browser DevTools extension for debugging Google Analytics 4 (GA4) events.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "build/icons/16.png",
+    "48": "build/icons/48.png",
+    "128": "build/icons/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "build/icons/16-gray.png",
+      "48": "build/icons/48-gray.png",
+      "128": "build/icons/128-gray.png"
+    },
+    "default_title": "Debugger for Google Analytics™ 4",
+    "default_popup": "build/disabled.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "debug_mode_ruleset",
+      "enabled": false,
+      "path": "add_debug_mode_rule.json"
+    },
+    {
+      "id": "opt_out_ruleset",
+      "enabled": false,
+      "path": "add_opt_out_rule.json"
+    }]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ 
+        "build/devtools.html",  
+        "build/main.html",
+        "build/scripts/background.js",
+        "build/scripts/installDetector.js",
+        "build/scripts/installHook.js"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "devtools_page": "build/main.html",
+  "background": {
+    "service_worker": "build/scripts/background.js",
+    "type": "module"
+  },
+  "permissions": [ "webRequest", "declarativeNetRequest" ],
+  "host_permissions": [
+    "https://www.google-analytics.com/g/collect?v=2*",
+    "https://analytics.google.com/g/collect?v=2*",
+    "https://*/*g/collect?v=2*",
+    "https://*/gtag/js*",
+    "*://localhost/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "build/scripts/detector.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

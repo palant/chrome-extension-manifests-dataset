@@ -1,0 +1,101 @@
+---
+slug: oracle-guided-learning-ed
+name: Oracle Guided Learning Editor
+description: >-
+  Oracle Guided Learning is a powerful platform for creating interactive guides,
+  messages and tips for employee training.
+version: 6.14.0
+release_date: 'May 14, 2023'
+publisher: iridize-devs
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.75
+rating_count: 4
+user_count: '10,000+'
+size: 535KiB
+languages:
+  - English
+extension_website: 'https://www.oracle.com'
+privacy_policy: 'https://www.oracle.com/in/legal/privacy/privacy-policy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Oracle Guided Learning Editor",
+  "version": "6.14.0",
+  "manifest_version": 3,
+  "description": "Oracle Guided Learning is a powerful platform for creating interactive guides, messages and tips for employee training.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "homepage_url": "https://www.oracle.com/",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "commands": {
+    "capture-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Capture screenshhot"
+    }
+  },
+  "permissions": [
+    "webRequest",
+    "activeTab",
+    "scripting",
+    "storage",
+    "management"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["js/src/stLogger.js", "js/src/chrome.js", "js/src/extension.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["js/src/load_emb_code.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": ["js/src/epStarted.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/src/load_emb_code.js", "js/src/bridge/starter.js", "js/src/emb/stEmbedded.js", "js/src/emb/feEmbedded.js", "js/src/emb/previewEmbedded.js", "js/src/emb/stBaseNoJq.js", "js/src/emb/stWeb.js"],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": "icons/actions/1.png",
+    "default_title": "Click to open OGL Onboarding and Training for Web Products and Applications"
+  }
+}

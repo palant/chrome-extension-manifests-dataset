@@ -1,0 +1,101 @@
+---
+slug: quickpage-video-and-scree
+name: Quickpage - Video and Screen Recorder
+description: >-
+  Record your video and screen with one click. Share that content in an instant
+  with a Quickpage.
+version: 0.0.0.27
+release_date: 'May 3, 2023'
+publisher: Quickpage Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 10
+user_count: '1,000+'
+size: 2.58MiB
+languages:
+  - English (United States)
+extension_website: 'https://quickpage.io'
+support_website: 'https://quickpage.io'
+privacy_policy: 'https://quickpage.io/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Quickpage - Video and Screen Recorder",
+  "version": "0.0.0.27",
+  "description": "Record your video and screen with one click. Share that content in an instant with a Quickpage.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "38": "icons/icon38.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "app/popup.html",
+    "default_title": "Quickpage"
+  },
+  "background": {
+    "service_worker": "app/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": ["background", "storage", "tabs", "scripting"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "app/popup.html",
+        "app/popup.js",
+        "app/content.html",
+        "app/content.js",
+        "app/video.html",
+        "app/video.js",
+        "app/pageWorld.js"
+      ],
+      "matches": [
+        "<all_urls>",
+        "http://*/*",
+        "https://*/*",
+        "*://localhost/*",
+        "*://quickpageapp.com/*",
+        "*://*.quickpageapp.com/*",
+        "*://qp.watch/*",
+        "*://*.qp.watch/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://quickpageapp.com/*",
+      "*://*.quickpageapp.com/*",
+      "*://qp.watch/*",
+      "*://*.qp.watch/*"
+    ]
+  },
+  "host_permissions": [
+    "https://mail.google.com/",
+    "*://quickpageapp.com/*",
+    "*://*.quickpageapp.com/*",
+    "*://qp.watch/*",
+    "*://*.qp.watch/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", "http://*/*", "https://*/*"],
+      "css": [],
+      "js": ["/app/fabric.min.js", "/static/js/main.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "css": ["/static/css/mail.css"],
+      "js": ["/static/js/mail.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

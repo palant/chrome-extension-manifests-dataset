@@ -1,0 +1,84 @@
+---
+slug: wiokey-authenticator-comp
+name: WioKey Authenticator Companion
+description: Online companion bridge for WioKey FIDO2 strong authenticator
+version: 0.9.11
+release_date: 'October 3, 2020'
+publisher: WIOsense GmbH & Co. KG
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 117
+size: 829KiB
+languages:
+  - English
+publisher_site: wiosense.de
+extension_website: 'https://www.wiokey.de/'
+support_website: 'https://www.wiokey.de/tutorial'
+privacy_policy: 'https://www.wiosense.de/imprint'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "WioKey Authenticator Companion",
+  "version": "0.9.11",
+  "description": "Online companion bridge for WioKey FIDO2 strong authenticator",
+  "minimum_chrome_version": "40.0.0.0",
+  "icons": {
+    "16": "assets/icons/wiokey_icon.png",
+    "48": "assets/icons/wiokey_icon.png",
+    "128": "assets/icons/wiokey_icon.png"
+  },
+  "browser_action": {
+    "default_icon": "assets/icons/wiokey_icon.png",
+    "default_popup": "index.html",
+    "default_title": "WioKey Authenticator Companion"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "content/index_chrome.js"
+      ],
+      "run_at": "document_start",
+      "matches": ["https://*/*"],
+      "exclude_matches": ["https://*/*.xml"]
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "content/index_swal2.js"
+      ],
+      "run_at": "document_end",
+      "matches": ["https://*/*"],
+      "exclude_matches": ["https://*/*.xml"]
+    }
+  ],
+  "background": {
+    "scripts":[
+      "background/index.js"
+    ],
+    "persistent": true
+  },
+  "web_accessible_resources": [
+    "content/inject_webauthn_chrome.js",
+    "content/inject_hybridwebauthn_chrome.js",
+    "content/inject_u2f_chrome.js",
+    "content/inject_hybridu2f_chrome.js",
+    
+    "assets/icons/*.png"
+  ],
+  "permissions": [
+    "https://*/*",
+    "tabs",
+    "webNavigation"
+  ],
+  "externally_connectable": {
+    "ids": [],
+    "accepts_tls_channel_id": true
+  },
+  "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://www.googletagmanager.com https://stackpath.bootstrapcdn.com; object-src 'self'"
+}

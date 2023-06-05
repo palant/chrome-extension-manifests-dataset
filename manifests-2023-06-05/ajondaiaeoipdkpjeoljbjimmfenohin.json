@@ -1,0 +1,118 @@
+---
+slug: rapi-recorder
+name: Rapi Recorder
+description: Rapi - Auto-first record-playback web test automation
+version: 4.0.0
+release_date: 'February 17, 2023'
+publisher: rapitest.service
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 5
+user_count: 152
+size: 2.95MiB
+languages:
+  - English (United States)
+extension_website: 'https://github.com/RapiTest/rapi'
+support_website: 'https://github.com/RapiTest/rapi/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "description": "Rapi - Auto-first record-playback web test automation",
+    "manifest_version": 3,
+    "name": "Rapi Recorder",
+    "homepage_url": "https://github.com/RapiTest/rapi",
+    "icons": {
+        "48": "icons/logo-48.png",
+        "96": "icons/logo-96.png"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "contextMenus",
+        "downloads",
+        "webNavigation",
+        "notifications",
+        "storage",
+        "cookies",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess",
+        "declarativeNetRequestFeedback"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; "
+    },
+    "sandbox": {
+        "pages": [
+            "panel/sandbox.html"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "config.js",
+                "content/document_end.js"
+            ],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "config.js",
+                "content/document_start.js"
+            ],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://rapitest.github.io/rapi-pub/"
+            ],
+            "js": [
+                "panel/report/reportContentScript.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "service_worker": "background/background.js"
+    },
+    "action": {
+        "default_icon": "icons/logo-48.png",
+        "default_title": "Rapi"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "content/page_inject.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        },
+        {
+            "resources": [
+                "panel/report/report.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "options_page": "option/index.html",
+    "version": "4.0.0"
+}

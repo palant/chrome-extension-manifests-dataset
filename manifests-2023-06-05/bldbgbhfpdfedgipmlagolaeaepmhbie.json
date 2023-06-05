@@ -1,0 +1,158 @@
+---
+slug: betimeful-news-feed-eradi
+name: 'BeTimeFul: News Feed Eradicator 2.0'
+description: 'Stay Connected, Not Distracted.'
+version: 1.6.56
+release_date: 'May 8, 2023'
+publisher: developer
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.679089026915114
+rating_count: 483
+user_count: '1,000+'
+size: 9.75MiB
+languages:
+  - English (United States)
+publisher_site: betimeful.com
+extension_website: 'https://www.betimeful.com/'
+support_website: 'https://www.betimeful.com/privacy'
+privacy_policy: 'https://www.betimeful.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BeTimeFul: News Feed Eradicator 2.0",
+  "description": "Stay Connected, Not Distracted.",
+  "version": "1.6.56",
+  "permissions": ["storage", "cookies", "identity", "identity.email",  "*://*.betimeful.com/*"],
+  "host_permissions": [
+    "*://betimeful.com",
+    "https://www.betimeful.com",
+    "https://api.mixpanel.com/*"
+  ],
+  "icons": {
+    "16": "images/16.png",
+    "48": "images/48.png",
+    "128": "images/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "*"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/Pro.html",
+    "default_title": "Betimeful",
+    "default_icon": {
+      "16": "images/16.png",
+      "48": "images/48.png",
+      "128": "images/128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_security_policy": {
+    "script-src": "'sha256-P19iXOzUJX7OydF6WO1gy/JNRjyL2v7I6hFSoVr1lMI=' 'self' 'unsafe-eval' https://www.google-analytics.com https://www.googletagmanager.com",
+    "object-src": "'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.betimeful.com/cancel",
+        "*://www.betimeful.com/success"
+      ],
+      "js": ["js/success.js"]
+    },
+    {
+      "matches": [
+        "*://www.betimeful.com/helpafriend",
+        "*://www.betimeful.com/emailSuccess"
+      ],
+      "js": ["Libraries/raygun.min.js", "js/helpfriend.js"]
+    },
+    {
+      "matches": ["*://calendar.google.com/*"],
+      "js": [
+        "Libraries/jquery.js",
+        "Libraries/party.min.js",
+        "Libraries/popper.min.js",
+        "Libraries/bootstrap.min.js",
+        "Libraries/purify.min.js",
+        "js/quotes.js"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "styles/content.css",
+        "styles/Socialstyles.css",
+        "styles/bootstrap.min.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/sharer.php?u=betimeful.com",
+        "https://twitter.com/intent/tweet?text=Shout%20out%20to%20beTimeful.com%20for%20making%20my%20social%20media%20less%20additive!",
+        "https://www.linkedin.com/shareArticle?mini=true&url=betimeful.com",
+        "https://www.reddit.com/submit?url=betimeful.com&title=Shout out to beTimeful.com for making my social media less additive! #beTimeful"
+      ],
+      "js": ["Libraries/raygun.min.js", "js/shared.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://twitter.com/intent/tweet?url=betimeful.com/?Shared&text=*"
+      ],
+      "js": [
+        "Libraries/raygun.min.js",
+        "Libraries/partyShare.js",
+        "js/twitter.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://www.linkedin.com/feed/?BT-share"],
+      "js": [
+        "Libraries/jquery.js",
+        "Libraries/raygun.min.js",
+        "Libraries/partyShare.js",
+        "js/linkedin.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://www.reddit.com/*"],
+      "js": ["Libraries/raygun.min.js", "Libraries/jquery.js", "js/reddit.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.facebook.com/*",
+        "*://m.facebook.com/*",
+        "*://www.linkedin.com/*",
+        "*://m.linkedin.com/*",
+        "*://twitter.com/*",
+        "*://m.twitter.com/*",
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*",
+        "*://www.reddit.com/*",
+        "*://www.tiktok.com/*",
+        "*://www.instagram.com/*",
+        "*://m.instagram.com/*"
+      ],
+      "run_at": "document_start",
+      "css": ["styles/subscribe.css", "styles/popup.css", "styles/timer.css", "styles/propopup.css"],
+      "js": [
+        "Libraries/jquery.js",
+        "Libraries/raygun.min.js",
+        "Libraries/purify.min.js",
+        "js/quotes.js",
+        "Libraries/partyShare.js",
+        "js/social_handler.js",
+        "Libraries/stripe.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+---
+slug: safle-wallet
+name: Safle Wallet
+description: >-
+  Safle Wallet is a Next-Gen identity wallet based on a decentralised
+  infrastructure.
+version: 0.9.2
+release_date: 'March 17, 2023'
+publisher: Safle
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 5
+user_count: 100
+size: 13.73MiB
+languages:
+  - English
+publisher_site: safle.com
+extension_website: 'https://safle.com'
+support_website: 'http://t.me/saflechat'
+privacy_policy: >-
+  https://www.notion.so/getsafle/Safle-Privacy-Policy-4fa62dd356cb4398acdf93f3185c2504
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Safle Wallet",
+  "version": "0.9.2",
+  "description": "Safle Wallet is a Next-Gen identity wallet based on a decentralised infrastructure.",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "./index.html",
+    "default_title": "Open Safle Wallet",
+    "default_icon":"./safle-icon.png"
+  },
+  
+  "icons": { 
+    "16": "./safle-icon_16.png",
+    "32": "./safle-icon_32.png",
+    "48": "./safle-icon_48.png",
+   "128": "./safle-icon_128.png" 
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "content-script.js" ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "content-script.js" ],
+      "matches": [ "<all_urls>" ]
+    },
+    {
+      "resources": ["eth-provider.js"],
+      "matches": ["<all_urls>"],
+      "use_dynamic_url": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' https:",
+    "sandbox": "sandbox allow-scripts; script-src 'self'"
+  } 
+}

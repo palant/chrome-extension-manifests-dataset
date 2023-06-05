@@ -1,0 +1,96 @@
+---
+slug: phonemondo-callerid-and-c
+name: PhoneMondo - CallerID and Click2Call
+description: The PhoneMondo extension connects your browser to the PhoneMondo service.
+version: 3.0.8
+release_date: 'May 23, 2023'
+publisher: Scavix Software
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 979
+size: 269KiB
+languages:
+  - Deutsch
+  - English
+publisher_site: www.phonemondo.com
+extension_website: 'https://www.phonemondo.com'
+support_website: 'https://www.phonemondo.com/support/'
+privacy_policy: 'https://www.phonemondo.com/privacypolicy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"default_locale": "en",
+	"version": "3.0.8",
+	"name": "__MSG_appname__",
+	"short_name": "PhoneMondo",
+	"description": "__MSG_extensionDescription__",
+	"author": "Scavix Software",
+	"homepage_url": "https://www.phonemondo.com",
+	"icons":
+	{
+		"24": "res/pm-24.png",
+		"38": "res/pm-38.png",
+		"48": "res/pm-48.png",
+		"64": "res/pm-64.png",
+		"128": "res/pm-128.png",
+		"256": "res/pm-256.png",
+		"512": "res/pm-512.png"
+	},
+	"action":
+	{
+		"default_icon": "res/pm-38.png",
+		"default_title": "PhoneMondo",
+		"default_popup": "popup/login.html"
+	},
+	"background":
+	{
+		"service_worker": "js/phonemondo-sw.js"
+	},
+	"content_scripts": [
+        { 
+            "js": ["js/jquery.js","js/phonemondo-ext.js","js/phonemondo-handler.js","js/content.js"], 
+			"css": ["css/content.css"],
+            "matches": ["<all_urls>"],
+            "run_at": "document_end",
+			"all_frames": false
+        },
+		{ 
+            "js": ["js/jquery.js","js/phonemondo-ext.js","js/phonemondo-handler.js","js/content.js"], 
+			"css": ["css/content.css"],
+            "matches": ["*://*.phonemondo.com/*", "*://phonemondo.scavix.net/*"],
+            "run_at": "document_end",
+			"all_frames": true
+        }
+    ],
+	"content_security_policy": {"extension_pages":"script-src 'self'; object-src 'self'"},
+    "web_accessible_resources":[
+		{
+			"resources":["popup/*.html*", "js/*.js", "css/*.css"],
+			"matches":["<all_urls>"]
+		}],
+	"host_permissions":["<all_urls>"],
+	"permissions": [
+        "tabs",
+        "storage",
+        "contextMenus",
+		"scripting"
+	],
+    "commands": {
+        "phonemondo_start_call": {
+            "description": "__MSG_startcallshortcutdesc__",
+            "suggested_key": {
+                "default": "Alt+P"
+            }
+        },
+        "_execute_browser_action": {
+            "suggested_key": {
+              "default": "Alt+Shift+P"
+            }
+        }
+    }
+}

@@ -1,0 +1,81 @@
+---
+slug: elevate-chrome-extension
+name: Elevate Chrome Extension
+description: Elevate Chrome Extension
+version: '0.40'
+release_date: 'April 3, 2023'
+publisher: Serverdata
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.6666666666666665
+rating_count: 3
+user_count: '6,000+'
+size: 2.0MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - Nederlands
+  - italiano
+  - русский
+  - 日本語
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi8Rdsxyu8T+j337ehVeHZzrqLrcxRGgRWyhQAvvws+NdGGMgryDaNk5KwMmFIAPmIAz9dhktoos/JmCO98ag8DSVz6kb+uR33elXJ2I5jC3qkvp0SA2/hH5vRaRcp3EdIdI5Vk8X6/eSpCPfMEi28zTK9Ia425sUufXgnizDpKsfqmx4mUXK+4jH4+kxH0vs1A2RxbAgZjL+kwWqrnApsPzV4ztDWzv0sxGDlnoVJ79itpZ3XY5X2Ijhck3xDUnpWeEjtEoR1MX5OwGGOw8hMWkSm+twe3kDRg4s+WQOmRDVB4m5qgU270/7gXn78+l12k0qm3aSlNkNONiL53boiQIDAQAB",
+  "manifest_version": 2,
+
+  "name": "__MSG_manifest_name__",
+  "short_name": "__MSG_manifest_short_name__",
+  "description": "__MSG_manifest_description__",
+  "default_locale": "en",
+  "version": "0.40",
+
+  "icons": {
+    "64":  "assets/images/logo-64.png",
+    "128": "assets/images/logo-128.png"
+  },
+
+  "browser_action": {
+    "default_popup": "popup/index.html"
+  },
+
+  "background": {
+    "scripts": ["scripts/events.background.js"],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "https://*/*", "http://*/*" ],
+      "exclude_globs": [
+        "*://meeting.*anymeeting*.com/**", "*://webinar.*anymeeting*.com/**",
+        "*://meeting.gomeet*.com/**","*://webinar.meeting.gomeet*.com/**",
+        "*://meeting.rambomeet-*.com/**",  "*://webinar.meeting.rambomeet-*.com/**",
+        "*://meeting.meetuniverge.blue/**", "*://webinar.meetuniverge.blue/**"
+      ],
+      "js": [ "scripts/ctc.content.js" ],
+      "css": [ "assets/css/ctc.content.css" ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [ "https://www.google.com/calendar/*", "https://calendar.google.com/calendar/*" ],
+      "js": [ "scripts/gc.content.js" ],
+      "css": [ "assets/css/gc.content.css" ]
+    }
+  ],
+
+  "permissions": [
+    "storage",
+    "identity",
+    "https://elevate-api.serverdata.net/*"
+  ],
+
+  "web_accessible_resources": [ "assets/*" ],
+
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com 'unsafe-eval' 'sha256-rCs+PE9jSqXeEtt5LDTouGqlYo4ifJhnJA3Dqiji5h0='; object-src 'self'"
+}

@@ -1,0 +1,105 @@
+---
+slug: mychatgpt-save-my-chatgpt
+name: 'MyChatGPT: Save my ChatGPT/Bard conversations'
+description: >-
+  Save your ChatGPT, Google Bard or New Bing conversations, then you can share
+  it privately or publicly.
+version: 1.0.4
+release_date: 'April 18, 2023'
+publisher: MyChatGPT
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3
+rating_count: 4
+user_count: 455
+size: 62.77KiB
+languages:
+  - English
+publisher_site: mychatgpt.org
+extension_website: 'https://mychatgpt.org'
+privacy_policy: 'https://mychatgpt.org/privacy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MyChatGPT: Save my ChatGPT/Bard conversations",
+  "description": "Save your ChatGPT, Google Bard or New Bing conversations, then you can share it privately or publicly.",
+  "version": "1.0.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    },
+    "default_title": "Login to MyChatGPT",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "js": [
+        "get-constants.js",
+        "create-share-widget.js",
+        "content-chatgpt.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://bard.google.com/"
+      ],
+      "js": [
+        "get-constants.js",
+        "create-share-widget.js",
+        "content-bard.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.bing.com/*"
+      ],
+      "js": [
+        "get-constants.js",
+        "create-share-widget.js",
+        "content-bing.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [
+    "https://mychatgpt.org/*",
+    "https://*.mychatgpt.org/*",
+    "http://localhost:3000/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "cookies"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "config.json"
+      ],
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://bard.google.com/*",
+        "https://www.bing.com/*"
+      ]
+    }
+  ]
+}

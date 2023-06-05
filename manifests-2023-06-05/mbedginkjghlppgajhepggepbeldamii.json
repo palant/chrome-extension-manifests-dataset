@@ -1,0 +1,90 @@
+---
+slug: 360-emojis
+name: 360 EMOJIS
+description: "Select and save your favorite emojis\U0001F600 and use them all over the internet."
+version: '1.415'
+release_date: 'March 27, 2023'
+publisher: BOS
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 1
+user_count: 118
+size: 3.36MiB
+languages:
+  - English
+extension_website: 'https://360emojis.com'
+support_website: 'https://360emojis.com/support'
+privacy_policy: 'https://app.mysocial360.com/privacypolicy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "360 EMOJIS",
+  "short_name": "😀360 EMOJIS",
+  "version": "1.415",
+  "description": "Select and save your favorite emojis😀 and use them all over the internet.",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "homepage_url": "https://360emojis.com/",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E",
+        "windows": "Ctrl+Shift+E",
+        "chromeos": "Ctrl+Shift+E",
+        "linux": "Ctrl+Shift+E"
+      },
+      "description": "Opens Emoji Selector"
+    }
+  }, 
+  "host_permissions":["https://app.mysocial360.com/oauth/*","https://beta.app.360emojis.com/360emojis/*","https://*.360emojis.com/*"],
+  "permissions": [
+    "activeTab",
+    "clipboardRead",
+    "cookies",
+    "contextMenus",
+    "gcm",
+    "identity",
+    "identity.email",
+    "notifications",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo192.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.mysocial360.com/oauth*", "https://beta.app.360emojis.com/360emojis*","https://beta.app.360emojis.com/360emojis*"],
+      "js": ["./messages/auth.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./libs/jquery.js", "./libs/sweetalert.js", "./content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "logo128.png",
+    "32": "logo128.png",
+    "48": "logo128.png",
+    "128": "logo192.png"
+  }  
+}

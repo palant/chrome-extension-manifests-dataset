@@ -1,0 +1,81 @@
+---
+slug: secrets
+name: Secrets
+description: >-
+  This browser extension helps you fill logins using information stored in
+  Secrets
+version: 1.0.2
+release_date: 'March 17, 2021'
+publisher: Outer Corner
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: '1,000+'
+size: 1.54MiB
+languages:
+  - English
+publisher_site: outercorner.com
+extension_website: 'https://outercorner.com/secrets/'
+privacy_policy: 'https://outercorner.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Secrets",
+  "version": "1.0.2",
+  "description": "This browser extension helps you fill logins using information stored in Secrets",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "icons": {
+    "16": "Icon-16.png",
+    "32": "Icon-32.png",
+    "64": "Icon-64.png",
+    "128": "Icon-128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "toolbarIcon-color.png",
+      "38": "toolbarIcon-color@2x.png"
+    },
+    "theme_icons": [{
+      "light": "toolbarIcon-light.png",
+      "dark": "toolbarIcon-dark.png",
+      "size": 19
+    }, {
+      "light": "toolbarIcon-light@2x.png",
+      "dark": "toolbarIcon-dark@2x.png",
+      "size": 38
+    }],
+    "default_title": "Secrets"
+  },
+  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*"],
+      "all_frames": true,
+      "js": ["loginForms.js", "content.js"]
+    },
+    {
+      "matches": ["https://*/*"],
+      "all_frames": true,
+      "js": ["loginForms.js", "content.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "pages/settings.html",
+    "open_in_tab": false
+  },
+  "permissions": ["nativeMessaging", "tabs", "webNavigation", "storage", "clipboardWrite", "notifications", "contextMenus"],
+  "web_accessible_resources": [
+    "pages/*.css",
+    "pages/i18n/*",
+    "pages/request.html",
+    "pages/request.js"
+  ]
+}

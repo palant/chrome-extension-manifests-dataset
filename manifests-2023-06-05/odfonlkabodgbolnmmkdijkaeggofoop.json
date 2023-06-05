@@ -1,0 +1,116 @@
+---
+slug: clearly-reader-your-reade
+name: Clearly Reader - Your reader mode solution
+description: >-
+  A browser extension with reader mode for optimal experience. Features copy,
+  translate, speech, and PDF and Markdown export.
+version: 3.0.3
+release_date: 'June 3, 2023'
+publisher: Lesslab
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.681863230921705
+rating_count: 1009
+user_count: '90,000+'
+size: 7.04MiB
+languages:
+  - English
+  - español
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+publisher_site: clearlyreader.com
+extension_website: 'https://clearlyreader.com'
+privacy_policy: 'https://clearlyreader.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_pkgName__",
+  "version": "3.0.3",
+  "description": "__MSG_pkgDescription__",
+  "default_locale": "en",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "mac": "Alt+R",
+        "windows": "Alt+R",
+        "chromeos": "Alt+R",
+        "linux": "Alt+R"
+      }
+    }
+  },
+  "action": {
+    "default_title": "Active Clearly (Alt/Option+R)",
+    "default_icon": {
+      "16": "assets/icons/disable/ic_16.png",
+      "32": "assets/icons/disable/ic_32.png",
+      "48": "assets/icons/disable/ic_48.png",
+      "128": "assets/icons/disable/ic_128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "assets/icons/readable/ic_16.png",
+    "32": "assets/icons/readable/ic_32.png",
+    "48": "assets/icons/readable/ic_48.png",
+    "128": "assets/icons/readable/ic_128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost:5200 http://localhost:4000; object-src 'self'; connect-src *; style-src * 'unsafe-inline' 'self' blob:; font-src *; img-src * data: blob:; frame-src *; media-src *; child-src *; manifest-src *; frame-ancestors *;"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": [
+        "content-script/import-index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "*://app.clearlyreader.com/*",
+        "*://localhost:*/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab",
+    "tts",
+    "fontSettings"
+  ],
+  "offline_enabled": true,
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.*",
+        "assets/**/*.*",
+        "pages/**/*.*",
+        "content-script/index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-script/index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

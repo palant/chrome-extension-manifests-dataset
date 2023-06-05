@@ -1,0 +1,86 @@
+---
+slug: nuance-ehri-web-extension
+name: Nuance EHRi Web Extension
+description: Nuance EHR Interface Web Extension
+version: 3.19.3.42576
+release_date: 'April 13, 2023'
+publisher: 'Nuance Communications, Inc.'
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '10,000+'
+size: 110KiB
+languages:
+  - English (United States)
+privacy_policy: 'https://www.nuance.com/about-us/company-policies/privacy-policies.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version":  3,
+    "name":  "Nuance EHRi Web Extension",
+    "short_name":  "Nuance.EHRi",
+    "version":  "3.19.3.42576",
+    "description":  "Nuance EHR Interface Web Extension",
+    "minimum_chrome_version":  "104.0.0.0",
+    "action":  {
+                   "default_icon":  "images/DMGreen16x16.png"
+               },
+    "icons":  {
+                  "16":  "images/DMGreen16x16.png",
+                  "32":  "images/DMGreen32x32.png",
+                  "48":  "images/DMGreen48x48.png",
+                  "128":  "images/DMGreen128x128.png"
+              },
+    "permissions":  [
+                        "tabs",
+                        "nativeMessaging",
+                        "alarms"
+                    ],
+    "host_permissions":  [
+                             "*://*/*"
+                         ],
+    "content_scripts":  [
+                            {
+                                "matches":  [
+                                                "\u003call_urls\u003e"
+                                            ],
+                                "exclude_matches":  [
+                                                        "*://*/Shibboleth.sso/*",
+                                                        "*://averapacsweb/*"
+                                                    ],
+                                "all_frames":  false,
+                                "run_at":  "document_end",
+                                "js":  [
+                                           "jslib/ehriContentController.js",
+                                           "jslib/utils.js",
+                                           "jslib/events.js",
+                                           "jslib/appConfig.js",
+                                           "jslib/monitor.js",
+                                           "jslib/stringMonitor.js",
+                                           "jslib/htmlTransform.js",
+                                           "jslib/htmlTransformMeditech.js",
+                                           "jslib/nodeExt.js",
+                                           "content_Ehri.js",
+                                           "jsonpath-0.8.0.js"
+                                       ]
+                            }
+                        ],
+    "web_accessible_resources":  [
+                                     {
+                                         "resources":  [
+                                                           "content_Ehri.js",
+                                                           "data/*.json",
+                                                           "jslib/*.js"
+                                                       ],
+                                         "matches":  [
+                                                         "*://*/*"
+                                                     ]
+                                     }
+                                 ],
+    "background":  {
+                       "service_worker":  "background.js"
+                   }
+}

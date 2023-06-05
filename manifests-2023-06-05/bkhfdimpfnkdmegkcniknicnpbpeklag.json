@@ -1,0 +1,118 @@
+---
+slug: refined-neko-samafr
+name: Refined Neko-Sama.fr
+description: >-
+  Une extension qui corrige et rend pleinement fonctionnelle la page d'animes de
+  Neko-Sama.fr
+version: 1.0.2
+release_date: 'September 20, 2020'
+publisher: Astropilot
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 1
+user_count: 488
+size: 1.62MiB
+languages:
+  - Français
+extension_website: 'https://github.com/Astropilot/NekoSamaBetterFilters'
+support_website: 'https://github.com/Astropilot/NekoSamaBetterFilters'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Refined Neko-Sama.fr",
+  "version": "1.0.2",
+  "description": "Une extension qui corrige et rend pleinement fonctionnelle la page d'animes de Neko-Sama.fr",
+  "author": "Astropilot",
+  "homepage_url": "https://github.com/Astropilot/NekoSamaBetterFilters",
+  "minimum_chrome_version": "74",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "refined_nekosama@astropilot.github.io",
+      "strict_min_version": "67.0"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.neko-sama.fr/*",
+    "*://nekosama.codexus.fr/*"
+  ],
+  "background": {
+    "scripts": [
+      "web-request.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.neko-sama.fr/anime",
+        "https://www.neko-sama.fr/anime?*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "nekosama/search/hijack-js.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.neko-sama.fr/anime",
+        "https://www.neko-sama.fr/anime?*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "nekosama/search/better-filters.js"
+      ],
+      "css": [
+        "nekosama/search/better-filters.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.neko-sama.fr/anime/info/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "nekosama/anime/anime-info.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.neko-sama.fr/anime/episode/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "nekosama/episode/anime-episode.js"
+      ],
+      "css": [
+        "nekosama/episode/anime-episode.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.neko-sama.fr/anime/episode/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "nekosama/episode/hijack-js.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "nekosama/search/template.html"
+  ]
+}

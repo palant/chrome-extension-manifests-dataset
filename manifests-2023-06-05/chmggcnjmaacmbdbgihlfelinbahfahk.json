@@ -1,0 +1,95 @@
+---
+slug: helloworld
+name: Helloworld
+description: Helloworld的Chrome扩展
+version: 1.0.0
+release_date: 'June 21, 2022'
+publisher: '329052613'
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 57
+size: 700KiB
+languages:
+  - 中文 (简体)
+extension_website: 'https://www.helloword.com.cn/'
+privacy_policy: 'https://helloworldmore-1252698292.cos.ap-chengdu.myqcloud.com/Web2/pri.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+	"manifest_version": 3,
+	"name": "Helloworld",
+	"version": "1.0.0",
+	"description": "Helloworld的Chrome扩展",
+	"icons":
+	{
+		"16": "Imgs/20.png",
+		"48": "Imgs/40.png",
+		"128": "Imgs/120.png"
+	},
+	"background":
+	{
+		"service_worker" : "Chrome/hwservice.js"
+	},
+	"action":
+	{
+		"default_icon": "Imgs/20.png",
+		"default_title": "Helloworld",
+		"default_popup": "Chrome/popup.html"
+	},
+	"content_scripts":
+	[
+		{
+			"matches": ["https://web.whatsapp.com/"
+			, "https://web.telegram.org/*"
+			, "http://helloworldmore-1252698292.cos.accelerate.myqcloud.com/Web2/Html/*"
+			],
+			"js": ["Chrome/InjectStartJs.js"],
+			"run_at": "document_start"
+		},
+		{
+			"matches": ["https://web.whatsapp.com/", "https://web.telegram.org/*"],
+			"js": ["Chrome/InjectEndJs.js"],
+			"run_at": "document_end"
+		}
+	],
+	"permissions":
+	[
+		"webNavigation",
+		"tabs",
+		"notifications",
+		"storage",
+		"*://*/*",
+		"http://*/*",
+		"https://*/*"
+	],
+	"optional_permissions": [
+		"unlimitedStorage"
+	],
+	"host_permissions": [
+		"*://*/*"
+	],
+	"web_accessible_resources":
+	[
+		{
+			"resources": [
+		"Chrome/forchrome.js"
+		,"Comm/hwcomm.js"
+		,"Comm/preload.js"
+		,"Comm/comm_end.js"
+		,"Helper/whatsapphelper_end.js"
+		,"Helper/telegramnewhelper_end.js"
+				],
+			"matches": ["<all_urls>"]
+		}
+	],
+
+	"content_security_policy": {
+	},
+	"homepage_url": "https://www.helloword.com.cn/",
+	"omnibox": { "keyword" : "hw" }
+}

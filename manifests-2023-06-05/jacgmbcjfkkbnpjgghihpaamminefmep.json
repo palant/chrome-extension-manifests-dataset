@@ -1,0 +1,59 @@
+---
+slug: nowplayingsite-extension
+name: NowPlaying.Site Extension
+description: Implements a client to send the current active tab to the nowplaying widget
+version: 1.0.1
+release_date: 'December 20, 2022'
+publisher: NowPlaying
+category: Productivity
+category_slug: ext/7-productivity
+rating: 1
+rating_count: 1
+user_count: '1,000+'
+size: 76.61KiB
+languages:
+  - English
+extension_website: 'https://nowplaying.site/'
+support_website: 'https://discord.gg/c6586qD2Mk'
+privacy_policy: 'https://nowplaying.site/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "NowPlaying.Site Extension",
+    "version": "1.0.1",
+
+    "description": "Implements a client to send the current active tab to the nowplaying widget",
+
+    "background": {
+        "scripts": ["background.js"]
+    },
+    "options_page": "options/options.html",
+
+    "icons": {
+        "16": "icon/16.png",
+        "32": "icon/32.png",
+        "48": "icon/48.png",
+        "128": "icon/128.png"
+    },
+    "content_scripts": [{
+            "matches": ["*://*.youtube.com/*"],
+            "js": ["content-scripts/trackVideoProgress.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://*.soundcloud.com/*"],
+            "js": ["content-scripts/soundcloud.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content-scripts/mediaSessionProxy.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": ["content-scripts/mediaSessionProxy.inject.js"],
+    "permissions": ["tabs", "storage"]
+}

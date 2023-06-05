@@ -1,0 +1,104 @@
+---
+slug: a2reviews
+name: A2Reviews
+description: '[★] Import reviews from AliExpress, Amazon, Walmart, Etsy, DHGage!'
+version: 2.0.4
+release_date: 'May 30, 2023'
+publisher: A2Reviews
+category: Shopping
+category_slug: ext/12-shopping
+rating: 3.4
+rating_count: 20
+user_count: '8,000+'
+size: 141KiB
+languages:
+  - English (United States)
+extension_website: 'https://www.a2rev.com'
+support_website: 'https://help.a2rev.com'
+privacy_policy: 'https://www.a2rev.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "A2Reviews",
+  "description": "[★] Import reviews from AliExpress, Amazon, Walmart, Etsy, DHGage!",
+  "version": "2.0.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://app.a2rev.com/*"],
+      "run_at": "document_end",
+      "js": [
+        "js/jquery-3.6.1.min.js", 
+        "js/lodash.min.js", 
+        "js/moment.min.js", 
+        "js/a2-tools.js", 
+        "js/a2-content-core.js", 
+        "js/services/services-class.js",
+        "js/services/aliexpress-class.js", 
+        "js/services/amazon-class.js",
+        "js/services/etsy-class.js",
+        "js/services/walmart-class.js",
+        "js/services/dhgate-class.js",
+        "js/app-events.js"
+      ]
+    }, {
+      "matches": ["*://*.aliexpress.com/item/*", "*://*.aliexpress.us/item/*"],
+      "run_at": "document_end",
+      "js": [
+        "js/jquery-3.6.1.min.js",
+        "js/aasx.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "A2Reviews App",
+    "default_icon": "images/logo.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self' 'wasm-unsafe-eval';"
+  },
+  "host_permissions": [
+    "*://app.a2rev.com/*",
+    "*://*.amazon.com/*",
+    "*://*.amazon.ca/*",
+    "*://*.amazon.co.uk/*",
+    "*://*.amazon.com.au/*",
+    "*://*.amazon.com.br/*",
+    "*://*.amazon.fr/*",
+    "*://*.amazon.de/*",
+    "*://*.amazon.in/*",
+    "*://*.amazon.it/*",
+    "*://*.amazon.co.jp/*",
+    "*://*.amazon.com.mx/*",
+    "*://*.amazon.nl/*",
+    "*://*.amazon.es/*",
+    "*://*.amazon.cn/*",
+    "*://*.aliexpress.com/item/*",
+    "*://*.aliexpress.us/item/*",
+    "*://*.aliexpress.com/store/product/*",
+    "*://*.walmart.com/ip/*",
+    "*://*.dhgate.com/product/*",
+    "*://*.etsy.com/listing/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["images/*","css/*","js/*"],
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
+  }]
+}

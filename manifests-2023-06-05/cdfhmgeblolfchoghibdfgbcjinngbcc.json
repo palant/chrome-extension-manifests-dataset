@@ -1,0 +1,88 @@
+---
+slug: codeys-admin-toolbox-for
+name: Codeys - Admin toolbox for Salesforce
+description: Admin toolbox for Salesforce by codeys
+version: 0.0.0.8
+release_date: 'January 19, 2023'
+publisher: Codeys (Julie Boncour et David LEROUX)
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 284
+size: 601KiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Codeys - Admin toolbox for Salesforce",
+    "version": "0.0.0.8",
+    "description": "Admin toolbox for Salesforce by codeys",
+
+    "permissions": [
+        "declarativeContent", 
+        "storage",
+        "activeTab",  
+        "cookies",
+        "webNavigation",
+        "scripting"
+    ],
+    "host_permissions": [
+      "https://*.salesforce.com/*",
+      "https://*.lightning.force.com/*",
+      "https://*.force.com/*",
+      "https://*.cloudforce.com/*",
+      "https://*.visualforce.com/*"
+    ],
+
+    "content_scripts": [
+      {
+        "matches": [
+          "https://*.salesforce.com/_ui/identity/verification/policy/*",
+          "https://*.salesforce.com/_ui/identity/toopher/AddToopherUi*",
+          "https://*.salesforce.com/_ui/identity/verification/method/ToopherVerificationFinishUi*",
+          "https://*.salesforce.com/_ui/identity/verification/method/ToopherVerificationStartUi/*"
+        ],
+        "js": [ "js/skipVerifLink.js"],
+        "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "https://*.salesforce.com/identity/twofactor/registrationInterstitial*",
+          "https://*.salesforce.com/_ui/identity/twofactor/AddTwoFactorUi*"
+        ],
+        "js": [ "lib/jsOTP.min.js", "js/totp.js"],
+        "run_at": "document_idle"
+      },
+      {
+        "matches": [
+          "https://*.salesforce.com/_ui/identity/verification/method/TotpVerificationUi*"
+        ],
+        "js": [ "lib/jsOTP.min.js", "js/totp.js"],
+        "run_at": "document_idle"
+      }
+    ],
+
+    "background": {
+        "service_worker": "js/background.js"        
+    },
+
+    "action": {
+      "default_popup": "html/popup.html",
+      "default_icon": {
+        "16": "img/logo.png",
+        "32": "img/logo.png",
+        "48": "img/logo.png",
+        "128": "img/logo.png"
+      }
+    },
+
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    
+    "manifest_version": 3
+  }

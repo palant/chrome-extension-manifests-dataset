@@ -1,0 +1,81 @@
+---
+slug: zillow-data-exporter
+name: Zillow Data Exporter
+description: Export Zillow property listings to CSV or Excel in one click.
+version: 0.0.28
+release_date: 'May 26, 2023'
+publisher: Yann Hulot
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 4.636363636363637
+rating_count: 11
+user_count: '2,000+'
+size: 2.05MiB
+languages:
+  - English
+publisher_site: zillowdataexporter.com
+extension_website: 'https://zillowdataexporter.com'
+support_website: 'https://www.zillowdataexporter.com/contact'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Zillow Data Exporter",
+  "description": "Export Zillow property listings to CSV or Excel in one click.",
+  "manifest_version": 3,
+  "version": "0.0.28",
+  "icons": {
+    "16": "16x16.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "16x16.png",
+      "48": "48x48.png",
+      "128": "128x128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Zillow Data Exporter"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.zillow.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.zillowdataexporter.com/*"],
+      "js": ["zillowdataexporter.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.html"],
+      "matches": ["https://*.zillow.com/*"]
+    },
+    {
+      "resources": ["16x16.png", "48x48.png", "128x128.png"],
+      "matches": ["https://*.zillow.com/*"]
+    },
+    {
+      "resources": ["menu.html"],
+      "matches": ["https://*.zillow.com/*"]
+    }
+  ],
+  "host_permissions": ["https://*.zillow.com/*", "https://*.zillowdataexporter.com/*"],
+  "externally_connectable": {
+    "matches": ["*://*.zillowdataexporter.com/*"]
+  },
+  "permissions": ["storage", "tabs", "downloads"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src * 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.googleusercontent.com/* https://*.zillow.com/* https://www.zillowdataexporter.com/; object-src 'self'"
+  }
+}

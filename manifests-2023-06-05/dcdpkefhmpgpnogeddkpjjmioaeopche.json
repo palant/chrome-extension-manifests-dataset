@@ -1,0 +1,86 @@
+---
+slug: nimble-prospector
+name: Nimble Prospector
+description: 'Lead Capture, Data Discovery, and CRM that works on every web page'
+version: 23.05.02.0001
+release_date: 'May 2, 2023'
+publisher: Nimble Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.473214285714286
+rating_count: 112
+user_count: '8,000+'
+size: 763KiB
+languages:
+  - English (United States)
+publisher_site: nimble.com
+extension_website: 'http://nimble.com/widget'
+support_website: >-
+  https://support.nimble.com/nimble-for-g-suite-and-gmail/nimble-smart-contacts-app-for-google-chrome
+privacy_policy: 'http://www.nimble.com/company/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "Nimble Prospector",
+  "description": "Lead Capture, Data Discovery, and CRM that works on every web page",
+  "version": "23.05.02.0001",
+
+  "browser_action": {
+    "default_icon": "assets/images/icon38.png"
+  },
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
+  "permissions": [
+    "notifications", "tabs", "activeTab", "storage", "contextMenus", "<all_urls>"
+  ],
+  "background": {
+    "scripts": ["libs/jquery.js", "libs/microevent.js", "config.js", "apiAdapters/chrome/adapterBackground.js", "background.js"]
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "css": ["assets/styles/widget.css"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["*://*.mail.google.com/*", "*://*.inbox.google.com/*"],
+    "css": ["assets/styles/widget.css"],
+    "js": ["libs/jquery.js", "libs/inboxsdk.js", "libs/moment.min.js", "config.js", "apiAdapters/chrome/adapterForeground.js", "foreground/circleback.js", "foreground/inbox.js"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["*://*.twitter.com/*"],
+    "css": ["assets/styles/widget.css"],
+    "js": ["libs/jquery.js", "config.js", "apiAdapters/chrome/adapterForeground.js", "foreground/twitter-list-import.js"],
+    "run_at": "document_end"
+  },
+    {
+      "all_frames": true,
+      "matches": [
+        "*://addons.gsuite.google.com/*"
+      ],
+      "js": ["foreground/gmail-addon-agent.js"]
+    }, {
+      "all_frames": true,
+      "matches": [
+        "*://*.nimble.com/app/widget/*",
+        "*://*.devnimble.com/app/widget/*",
+        "*://*.dev.nimble.com/app/widget/*"
+      ],
+      "js": ["foreground/open-prospector.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "frame/frame.html",
+    "frame/frame.js",
+    "assets/*"
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  }
+}

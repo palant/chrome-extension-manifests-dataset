@@ -1,0 +1,168 @@
+---
+slug: xlaw
+name: xLaw
+description: >-
+  Extension to extend EUR-Lex, Riigi Teataja, Riigikohus.ee (§ link + additional
+  info)
+version: 2.2.1.1
+release_date: 'May 11, 2023'
+publisher: ExtendLaw
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 15
+user_count: '3,000+'
+size: 3.64MiB
+languages:
+  - eesti
+publisher_site: xlaw.eu
+extension_website: 'https://extendlaw.com/xlaw'
+privacy_policy: 'https://xlaw.eu/en/privacypolicy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "xLaw",
+  "description": "Extension to extend EUR-Lex, Riigi Teataja, Riigikohus.ee (§ link + additional info)",
+  "version": "2.2.1.1",
+  "minimum_chrome_version": "67",
+  "optional_permissions": [
+    "*://*/*"
+  ],
+  "permissions": [
+    "storage",
+    "https://xlaw.ee/",
+    "contextMenus"
+  ],
+  "omnibox": {
+    "keyword": "x"
+  },
+  "background": {
+    "scripts": [
+      "dist/background.js"
+    ],
+    "persistent": false
+  },
+  "icons": {
+    "16": "img/16x16.png",
+    "48": "img/48x48.png",
+    "128": "img/128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://xlaw.ee/*"
+      ],
+      "js": [
+        "dist/cs_xlaw_ee.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/akt/*",
+        "https://www.riigiteataja.ee/en/eli/*"
+      ],
+      "css": [
+        "node_modules/awesomplete/awesomplete.css",
+        "css/drop-theme.css",
+        "css/buttons.css",
+        "dist/cs_riigiteataja.css"
+      ],
+      "js": [
+        "lib/jsdiff/jsdiff.js",
+        "dist/cs_riigiteataja.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/regular.min.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/solid.min.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/fontawesome.min.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/light.min.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://www.nc.ee/*",
+        "https://www.riigikohus.ee/lahendid*",
+        "https://www.riigikohus.ee/et/lahendid*"
+      ],
+      "css": [
+        "dist/cs_riigikohus_permission.css"
+      ],
+      "js": [
+        "dist/cs_riigikohus_permission.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://eur-lex.europa.eu/*"
+      ],
+      "css": [
+        "node_modules/awesomplete/awesomplete.css",
+        "css/drop-theme.css",
+        "css/buttons.css",
+        "dist/cs_eurlex.css"
+      ],
+      "js": [
+        "dist/cs_eurlex.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/regular.min.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/solid.min.js",
+        "node_modules/@fortawesome/fontawesome-pro/js/fontawesome.min.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://curia.europa.eu/*"
+      ],
+      "js": [
+        "js/curia.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/kohtulahendid/detailid.html*"
+      ],
+      "css": [
+        "css/drop-theme.css",
+        "css/buttons.css"
+      ],
+      "js": [
+        "dist/cs_kohtulahend_detailid.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/kohtulahendid/otsingutulemus.html*",
+        "https://www.riigiteataja.ee/kohtulahendite_liigitus.html*",
+        "https://www.riigiteataja.ee/akt_seosed_kohtulahenditega.html*"
+      ],
+      "js": [
+        "dist/cs_kohtulahendid.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/otsingu_tulemus.html*"
+      ],
+      "css": [
+        "dist/cs_riigiteataja_otsing.css"
+      ],
+      "js": [
+        "dist/cs_riigiteataja_otsing.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "19": "img/19x19.png",
+      "38": "img/38x38.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    "config.json",
+    "img/*",
+    "data/*",
+    "dist/*.css"
+  ]
+}

@@ -1,0 +1,138 @@
+---
+slug: nak-extension
+name: NAK Extension
+description: >-
+  Auto login, course suggestions and exam notifications for Nordakademie
+  students
+version: 1.3.1
+release_date: 'December 9, 2022'
+publisher: yannickbrandtdev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 74
+size: 389KiB
+languages:
+  - Deutsch
+publisher_site: coderesting.dev
+extension_website: 'https://nak.coderesting.dev/nakextension/'
+privacy_policy: >-
+  https://www.privacypolicygenerator.info/live.php?token=AeAiUczn9V5tW3GzDLrH7WV9f4wcUk6R
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "NAK Extension",
+	"version": "1.3.1",
+	"description": "Auto login, course suggestions and exam notifications for Nordakademie students",
+	"manifest_version": 2,
+	"permissions": [
+		"storage",
+		"alarms",
+		"notifications",
+		"https://schedule-cleaner.herokuapp.com/*",
+		"https://cis.nordakademie.de/studium/pruefungen/pruefungsergebnisse/*"
+	],
+	"icons": { "128": "NAKExtension-128x128.png" },
+	"browser_specific_settings": {
+		"gecko": {
+			"update_url": "https://nak.coderesting.dev/nakextension/updates.json"
+		}
+	},
+	"browser_action": {
+		"default_icon": "NAKExtension-128x128.png",
+		"default_popup": "options/options.html"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://moodle2.nordakademie.de/login/index.php"],
+			"js": [
+				"scripts/storage.js",
+				"scripts/autoLogin/clicker.js",
+				"scripts/autoLogin/moodle.js"
+			]
+		},
+		{
+			"matches": [
+				"*://cis.nordakademie.de/*",
+				"*://cis.nordakademie.de/?no_cache=1"
+			],
+			"js": [
+				"scripts/storage.js",
+				"scripts/autoLogin/clicker.js",
+				"scripts/autoLogin/cis.js"
+			]
+		},
+
+		{
+			"matches": ["*://gitlab2.nordakademie.de/users/sign_in"],
+			"js": [
+				"scripts/storage.js",
+				"scripts/autoLogin/clicker.js",
+				"scripts/autoLogin/gitlab.js"
+			]
+		},
+
+		{
+			"matches": ["*://idp.nordakademie.de/idp/profile/SAML2/*"],
+			"js": [
+				"scripts/storage.js",
+				"scripts/autoLogin/clicker.js",
+				"scripts/autoLogin/shibboleth.js"
+			]
+		},
+
+		{
+			"matches": ["*://aaa.nordakademie.de/logon/LogonPoint/index.html"],
+			"js": [
+				"scripts/storage.js",
+				"scripts/autoLogin/clicker.js",
+				"scripts/autoLogin/citrix.js"
+			]
+		},
+		{
+			"matches": ["*://merkur.nordakademie.de/cgi-mod/*"],
+			"js": [
+				"scripts/storage.js",
+				"scripts/autoLogin/clicker.js",
+				"scripts/autoLogin/barracuda.js"
+			]
+		},
+		{
+			"matches": [
+				"*://wayf.springernature.com/*",
+				"*://link.springer.com/signup-login?*"
+			],
+			"js": ["scripts/storage.js", "scripts/autoLogin/springer.js"]
+		},
+		{
+			"matches": ["*://moodle2.nordakademie.de/*"],
+			"js": [
+				"scripts/storage.js",
+				"scripts/enhanceMoodle/stringSimilarity.js",
+				"scripts/enhanceMoodle/ical.js",
+				"scripts/enhanceMoodle/getSidebarInfo.js",
+				"scripts/enhanceMoodle/fillSidebar.js",
+				"scripts/enhanceMoodle/nextCoursesPanel.js",
+				"scripts/enhanceMoodle/showNextCourses.js",
+				"scripts/enhanceMoodle/main.js"
+			],
+			"css": ["scripts/enhanceMoodle/styles.css"]
+		}
+	],
+	"background": {
+		"scripts": [
+			"scripts/examNotifier/pdf.worker.min.js",
+			"scripts/examNotifier/pdf.min.js",
+			"scripts/storage.js",
+			"scripts/examNotifier/nakExamNotifier.js",
+			"background.js"
+		]
+	},
+	"options_ui": {
+		"page": "options/options.html",
+		"open_in_tab": false
+	}
+}

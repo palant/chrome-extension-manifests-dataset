@@ -1,0 +1,95 @@
+---
+slug: superemotes
+name: SuperEmotes
+description: >-
+  Create custom emotes and make them available in your Youtube comments and live
+  chat today!
+version: 1.4.1
+release_date: 'August 26, 2022'
+publisher: superemotesapp
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: 51
+size: 174KiB
+languages:
+  - English
+publisher_site: superemotes.com
+extension_website: 'https://superemotes.com'
+support_website: 'https://superemotes.com'
+privacy_policy: 'https://superemotes.com/html/privacy-policy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version" : 3,
+    "description": "Create custom emotes and make them available in your Youtube comments and live chat today!",
+    "name": "SuperEmotes",
+    "version": "1.4.1",
+    "host_permissions": ["https://api.superemotes.com/*"],
+    "permissions": [
+        "storage"
+      ],
+    "background": {
+        "service_worker": "js/background-scripts/background.js"
+    },
+    "icons": {
+    	"16": "img/robot_16.png",
+	    "24": "img/robot_24.png",
+	    "32": "img/robot_32.png",
+	    "48": "img/robot_48.png",
+	    "128": "img/robot_128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "img/robot_16.png",
+            "24": "img/robot_24.png",
+            "32": "img/robot_32.png"
+        },
+        "default_title": "SuperEmotes",
+        "default_popup": "/html/popup/popup.html"
+    },
+    "content_scripts": [
+        {
+	        "run_at": "document_end",
+            "js": ["js/reactions/reactions-constants.js","js/content-scripts/message-handlers.js",
+             "js/content-scripts/inject-utils.js", "js/content-scripts/injector.js"],
+            "matches": ["*://studio.youtube.com/*","*://*.youtube.com/*"],
+	        "all_frames": true
+        },
+        {
+            "run_at": "document_end",
+            "js": ["js/constants/facebook/constants.js", "js/emotes-tray/facebook/emotes-tray.js", "js/content-scripts/facebook/mapper.js", "js/content-scripts/facebook/injector.js"],
+            "css": [ "css/facebook/emotes-tray.css",  "css/facebook/base.css"],
+            "matches": ["*://*.facebook.com/*"]
+        }
+    ],
+    "web_accessible_resources": [
+    	{
+		    "resources": ["js/svg/svg.js", "js/css-vars/themes-utils.js", "js/dashboard/dashboard.js", "js/dashboard/draggable-window.js",
+                        "js/emote-details/emote-details-hover-constants.js", "js/emote-details/emote-details-hover.js",
+                        "js/emotes-tray/comment-emotes-tray-constants.js", "js/emotes-tray/comment-emotes-tray.js",
+                        "js/emotes-tray/live-stream-emotes-tray-constants.js", "js/emotes-tray/live-stream-emotes-tray.js",
+                        "js/emotes-tray/emotes-tray-utils.js",
+                        "js/page-scripts/page-script-constants.js", "js/page-scripts/page-utils.js", "js/page-scripts/page-script.js",
+                        "js/page-scripts/comment-section.js", "js/page-scripts/live-stream.js",  "js/page-scripts/mapper.js",
+                        "js/reactions/reactions-constants.js", "js/reactions/reactions-utils.js", "js/reactions/reactions.js",
+                        "js/network/network-constants.js",
+                        "js/tags/tags.js",
+                        "img/chevron_left.svg", "img/chevron_right.svg",
+                        "css/tags.css",
+                        "css/reactions.css", "css/live-stream-emotes-tray.css", "css/comment-emotes-tray.css", "css/popup.css", "css/dashboard.css", "css/youtubecontent.css", 
+                        "css/themes/bools-dark.css", "css/themes/grape-lime-soda.css", "css/themes/ice-cool-blue.css", "css/themes/laser-beam-attack.css", "css/themes/peaches-n-cream.css"
+                        ,"css/live-stream-chat.css","css/base.css"],
+		    "matches": ["*://*.youtube.com/*"]
+	    },
+        {
+            "resources": ["js/page-scripts/facebook/page-script.js", "js/constants/facebook/constants.js", "js/emotes-tray/facebook/emotes-tray.js",
+                "css/facebook/base.css"
+            ],
+            "matches": ["*://*.facebook.com/*"]
+        }
+    ]
+}

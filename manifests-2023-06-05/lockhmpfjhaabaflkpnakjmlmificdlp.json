@@ -1,0 +1,75 @@
+---
+slug: pokecard
+name: PokeCard
+description: Automatically verify and redeem Pokemon Trading Card Game (TCG) codes.
+version: 1.0.2
+release_date: 'January 15, 2022'
+publisher: VitCon
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 83
+size: 21.04KiB
+languages:
+  - English (United States)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "PokeCard",
+    "description": "Automatically verify and redeem Pokemon Trading Card Game (TCG) codes.",
+    "version": "1.0.2",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "declarativeNetRequest"
+    ],
+    "action": {
+        "default_popup": "page/popup.html",
+        "default_title": "Click to verify and redeem Pokemon TCG codes"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.pokemon.com/us/pokemon-trainer-club/enter-codes"
+            ],
+            "js": [
+                "js/content-script.js"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://www.pokemon.com/"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "js/page-context.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    },
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    }
+}

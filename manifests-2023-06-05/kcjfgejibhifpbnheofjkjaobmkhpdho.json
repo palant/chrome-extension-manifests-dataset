@@ -1,0 +1,97 @@
+---
+slug: centroly-bookmark-save-an
+name: 'Centroly - Bookmark, Save, and Discover Links'
+description: >-
+  Discover curated links from like-minded people, or build your own collections
+  of links
+version: 0.4.2
+release_date: 'March 4, 2023'
+publisher: Centroly
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 94
+size: 253KiB
+languages:
+  - English
+publisher_site: centroly.com
+extension_website: 'https://centroly.com'
+support_website: 'https://twitter.com/centroly'
+privacy_policy: 'https://centroly.com/terms'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Centroly - Bookmark, Save, and Discover Links",
+  "version": "0.4.2",
+  "description": "Discover curated links from like-minded people, or build your own collections of links",
+  "browser_action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true,
+    "chrome_style": false
+  },
+  "background": {
+    "page": "./dist/background/index.html",
+    "persistent": false
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "cookies",
+    "http://*/",
+    "https://*/",
+    "contextMenus",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./lib/jquery-3.6.1.slim.min.js",
+        "./dist/contentScripts/index.global.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "dist/contentScripts/style.css"
+  ],
+  "commands": {
+    "save-current-link": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Save current link to Centroly"
+    },
+    "manage-highlights": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+M",
+        "mac": "Command+Shift+M"
+      },
+      "description": "Manage saved highlights"
+    },
+    "highlight-selected": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "Command+Shift+H"
+      },
+      "description": "Highlight selected text"
+    }
+  }
+}

@@ -1,0 +1,162 @@
+---
+slug: brighthire
+name: BrightHire
+description: >-
+  BrightHire’s Chrome extension helps you improve quality of hire with every
+  interview.
+version: v2.2.23
+release_date: 'November 23, 2022'
+publisher: BrightHire
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 6
+user_count: '3,000+'
+size: 1.53MiB
+languages:
+  - English (United States)
+publisher_site: brighthire.ai
+extension_website: 'https://brighthire.ai'
+support_website: 'https://brighthire.ai'
+privacy_policy: 'https://brighthire.ai/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BrightHire",
+  "description": "BrightHire’s Chrome extension helps you improve quality of hire with every interview.",
+  "version": "2.2.23",
+  "version_name": "v2.2.23",
+  "action": {
+    "default_icon": "icon-128x128.png"
+  },
+  "background": {
+    "service_worker": "swWrapper.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.brighthire.ai/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.brighthire.ai/*",
+      "https://kyle-brighthire.ngrok.io/*"
+    ]
+  },
+  "icons": {
+    "16": "icon-16x16.png",
+    "48": "icon-48x48.png",
+    "128": "icon-128x128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "toast.html",
+        "drawer.html",
+        "sw-warning.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "extension_ids": []
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.greenhouse.io/interviews/scheduler?*",
+        "https://*.greenhouse.io/interviews/scheduler/legacy?*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "greenhouseSchedulerContentScript.js",
+        "swWarningContentScript.js"
+      ],
+      "css": [
+        "swWarningContentScript.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.greenhouse.io/people/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "greenhouseCandidateContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.greenhouse.io/guides/*/people/*",
+        "https://*.greenhouse.io/people/*",
+        "https://*.greenhouse.io/scorecards/*",
+        "https://hire.lever.co/interviews/*"
+      ],
+      "exclude_matches": [
+        "https://*.greenhouse.io/scorecards/*/confirmation"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "drawerContentScript.js",
+        "greenhouseScorecardContentScript.js",
+        "leverFeedbackFormContentScript.js",
+        "swWarningContentScript.js"
+      ],
+      "css": [
+        "drawerContentScript.css",
+        "copyButtonStyles.css",
+        "alert.css",
+        "swWarningContentScript.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://hire.lever.co/candidates*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "drawerContentScript.js",
+        "leverOpportunityContentScript.js",
+        "swWarningContentScript.js"
+      ],
+      "css": [
+        "drawerContentScript.css",
+        "swWarningContentScript.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.smartrecruiters.com/app/people*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "drawerContentScript.js",
+        "swWarningContentScript.js"
+      ],
+      "css": [
+        "drawerContentScript.css",
+        "swWarningContentScript.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://calendar.google.com/calendar/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "googleCalendarContentScript.js",
+        "swWarningContentScript.js"
+      ],
+      "css": [
+        "swWarningContentScript.css"
+      ]
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlqAtKfvTInIu+2UY6EF4LJXb8QRGAbYUlyjLLKXX+LQdniIWbSwYIS5Xwjf1w9wKyAQ89GBysRTOg1VjF4GvIx8MirlU2IdoNbRgXlMelBFZZ20eCOr4EgVO79gdsX/XE1DlCejvsw3gCbYRvUt5qt1NYYJmcJgTT5qCq3D3Rz/yxOyLuzTN38KlD0JzpmpWpevwNBPotw+/LrYcD5IztcTaKIkDMSvJaqFRifFQsyblj4CkpwKGCHQh5DZbtAIhfl9mV9XlKSY9wcqLvojWjS6e5PyjIrDh5Ob7i5O/BOF7hyqVpmW+axNeyh4VcTa1YS8ygNbBf7r0YuKZD0LcZQIDAQAB"
+}

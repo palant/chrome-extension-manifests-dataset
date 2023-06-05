@@ -1,0 +1,76 @@
+---
+slug: clienty-wap-sender
+name: Clienty Wap Sender
+description: Clienty WhatsApp message sender
+version: 1.7.1
+release_date: 'May 23, 2023'
+publisher: Facundo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 284
+size: 2.25MiB
+languages:
+  - español (Latinoamérica)
+publisher_site: clienty.co
+privacy_policy: 'https://clienty.co/tyc'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Clienty Wap Sender",
+  "version": "1.7.1",
+  "description": "Clienty WhatsApp message sender",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Clienty Wap Sender",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://web.whatsapp.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "web.whatsapp.content.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.clienty.co/*",
+        "*://*.clienty.test/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "clienty.content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "web.whatsapp.content.accessible.js"
+      ],
+      "matches": [
+        "*://web.whatsapp.com/*"
+      ]
+    }
+  ]
+}

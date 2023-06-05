@@ -1,0 +1,71 @@
+---
+slug: trello-checklist-plus
+name: Trello Checklist Plus
+description: Extends the Trello Checklist with usefull functions
+version: 0.0.12
+release_date: 'July 20, 2016'
+publisher: b.geissler89
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 2.875
+rating_count: 8
+user_count: 44
+size: 311KiB
+languages:
+  - English
+extension_website: 'https://www.web-ben.de'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "name": "Trello Checklist Plus",
+   "author" : "Benjamin Geißler",
+  "short_name" : "TC+",
+  "version": "0.0.12",
+  "manifest_version": 2,
+  "description": "Extends the Trello Checklist with usefull functions",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "page": "index.html"
+  },
+  "content_security_policy": "script-src 'self' https://api.trello.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://trello.com/*",
+        "https://trello.com/*"
+      ],
+      "exclude_matches": [
+        "https://trello.com/1/authorize?*",
+        "http://trello.com/1/authorize?*"
+      ],
+      "js": [
+        "bower_components/jQuery/dist/jquery.js",
+        "scripts/contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://trello.com/1/OAuthAuthorizeToken*"
+      ],
+      "js": [
+        "background/inject-workaround.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "background/chrome_ex_oauth.html"
+  ],
+  "permissions": [
+    "tabs",
+    "https://trello.com/1/OAuthGetRequestToken",
+    "https://trello.com/1/OAuthAuthorizeToken",
+    "https://trello.com/1/OAuthGetAccessToken"
+  ]
+}

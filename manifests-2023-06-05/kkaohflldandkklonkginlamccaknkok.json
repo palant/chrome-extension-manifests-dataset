@@ -1,0 +1,90 @@
+---
+slug: 샵플링-플러그인
+name: 샵플링 플러그인
+description: 샵플링 플러그인
+version: 0.5.9
+release_date: 'May 31, 2023'
+publisher: 샵플링
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '5,000+'
+size: 106KiB
+languages:
+  - 한국어
+publisher_site: www.shopling.co.kr
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"author": "Shopling",
+	"name": "샵플링 플러그인",
+	"description": "샵플링 플러그인",
+	"version": "0.5.9",
+	"homepage_url":"https://www.shopling.co.kr",
+	"action": {
+		"default_icon": "resource/icon.png",
+		"default_popup": "popup/popup.html"
+	},
+	"icons": { "128": "resource/icon.png" },
+	"permissions": [
+		"storage"
+	],
+	"background": {
+		"service_worker": "background.js"
+	},
+	"content_scripts": [
+		{
+			"matches": ["http://a.shopling.co.kr/*","http://cl.shopling.co.kr/*","http://pidion.shopling.co.kr/*"],
+			"run_at": "document_start",
+			"js": [
+				"plugin/jquery.js",
+				"library/common.js",
+				"script/check_protocol_is_https.js"
+			]
+		},
+		{
+			"matches": ["https://a.shopling.co.kr/*","https://cl.shopling.co.kr/*","https://pidion.shopling.co.kr/*"],
+			"run_at": "document_idle",
+			"all_frames": true,
+			"js": [
+				"plugin/jquery.js",
+				"library/common.js",
+				"script/shopling_data_process.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.taobao.com/*",
+				"https://*.tmall.com/*",
+				"https://*.aliexpress.com/*",
+				"https://*.1688.com/*",
+				"https://*.rakuten.co.jp/*",
+				"https://*.amazon.co.jp/*",
+				"https://*.shopping.yahoo.co.jp/*",
+				"https://*.item.jd.com/*"
+			],
+			"run_at": "document_start",
+			"all_frames": true,
+			"js": [
+				"plugin/jquery.js",
+				"library/common.js",
+				"script/overseas_notranslate.js", "script/overseas_item_data_crawling.js"
+			]
+		},
+		{
+			"matches": ["*://*/*"],
+			"exclude_matches": ["*://a.shopling.co.kr/*","*://cl.shopling.co.kr/*","*://pidion.shopling.co.kr/*"],
+			"run_at": "document_idle",
+			"all_frames": true,
+			"js": [
+				"plugin/jquery.js", "plugin/bililiteRange.js", "plugin/jquery.sendkeys.js",
+				"library/common.js",
+				"script/shopping_mall_auto_login.js"
+			]
+		}
+	]
+}

@@ -1,0 +1,176 @@
+---
+slug: sei-mprr
+name: SEI MPRR
+description: >-
+  SEI MPRR: Adiciona novas funcionalidades ao Sistema Eletrônico de Informações
+  - SEI
+version: 1.0.0
+release_date: 'April 22, 2019'
+publisher: rafaelrrabelo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 26
+size: 148KiB
+languages:
+  - português (Brasil)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "SEI MPRR",
+  "short_name": "SEI MPRR",
+  "description": "SEI MPRR: Adiciona novas funcionalidades ao Sistema Eletrônico de Informações - SEI",
+  "version": "1.0.0",
+  "author": "MPRR",
+  "homepage_url": "https://www.mprr.mp.br",
+  "icons": {"48": "icons/sei_++.png"},
+  "permissions": ["storage"],
+
+
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.br/sei/*", "*://*.br/sip/*", "*://*.ancine.gov.br/*", "*://*.ans.gov.br/*"],
+      "run_at": "document_start",
+      "css": ["cs_modules/core.css"],
+      "all_frames": true,
+      "js": [
+        "cs_modules/core.d_start.lib.js",
+        "cs_modules/core.d_start.RedirecionarPagina.js",
+        "cs_modules/core.d_start.Theme.js",
+        "cs_modules/core.d_start.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=*", "*://*.br/*controlador_externo.php?acao=*"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "js": [
+        "lib/jquery-3.2.1.min.js",
+        "cs_modules/core.d_idle.PontoControleCores.js",
+        "cs_modules/core.d_idle.AdicionarIdentificadorSeipp.js",
+        "cs_modules/core.d_idle.MenuSuspenso.js",
+        "cs_modules/core.d_idle.VerificarBlocoAssinatura.js",
+        "cs_modules/core.d_idle.IndicarConfiguracao.js",
+        "cs_modules/core.d_idle.AtalhoPublicacoesEletronicas.js",
+        "cs_modules/core.d_idle.MostrarEspecificacao.js",
+        "cs_modules/core.d_idle.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=documento_receber*"],
+      "all_frames": true,
+      "js": [
+        "cs_modules/documento_receber.ForcarReaberturaProcesso.js",
+        "cs_modules/documento_receber.AutopreencherDocumentoExterno.js",
+        "cs_modules/documento_receber.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=procedimento_controlar*"],
+      "js": [
+        "lib/jquery.tablesorter.min.js", "lib/jquery.tablesorter.widgets.min.js",
+        "cs_modules/procedimento_controlar.CorrigirTabelas.js",
+        "cs_modules/procedimento_controlar.ConfirmarAntesConcluir.js",
+        "cs_modules/procedimento_controlar.IncluirCalculoPrazos.js",
+        "cs_modules/procedimento_controlar.MarcarCorProcesso.js",
+        "cs_modules/lib.filtra_processos.js",
+        "cs_modules/lib.filtra_processos.PesquisarInformacoes.js",
+        "cs_modules/procedimento_controlar.filtra_processos.FiltraPorAtribuicao.js",
+        "cs_modules/procedimento_controlar.filtra_processos.CarregaInformacaoBlocos.js",
+        "cs_modules/lib.SelecionarMultiplosProcessos.js",
+        "cs_modules/procedimento_controlar.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=rel_bloco_protocolo_listar*"],
+      "js": [
+        "cs_modules/lib.filtra_processos.js",
+        "cs_modules/lib.filtra_processos.PesquisarInformacoes.js",
+        "cs_modules/lib.SelecionarMultiplosProcessos.js",
+        "cs_modules/lib.RetirarSobrestamentoReabrirEmBloco.js",
+        "cs_modules/rel_bloco_protocolo_listar.js"
+      ]
+    },
+        {
+      "matches": ["*://*.br/*controlador.php?acao=controle_unidade_gerar*"],
+      "js": [
+        "cs_modules/lib.SelecionarMultiplosProcessos.js",
+        "cs_modules/lib.RetirarSobrestamentoReabrirEmBloco.js",
+        "cs_modules/controle_unidade_gerar.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=procedimento_visualizar*"],
+      "all_frames": true,
+      "css": ["cs_modules/procedimento_visualizar.css"],
+      "js": [
+        "cs_modules/procedimento_visualizar.ConsultarInteressado.js",
+        "cs_modules/procedimento_visualizar.AutopreencherAndamento.js",
+        "cs_modules/procedimento_visualizar.CopiarNumeroProcessoDocumento.js",
+        "cs_modules/procedimento_visualizar.MostrarAnotacao.js",
+        "cs_modules/procedimento_visualizar.AbrirDocumentoNovaAba.js",
+        "cs_modules/procedimento_visualizar.CopiarLinkInterno.js",
+        "cs_modules/procedimento_visualizar.Dropzone.js",
+        "cs_modules/procedimento_visualizar.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=arvore_visualizar*"],
+      "all_frames": true,
+      "js": [
+        "cs_modules/arvore_visualizar.NovoDocumento.js",
+        "cs_modules/arvore_visualizar.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=anotacao_registrar*"],
+      "all_frames": true,
+      "js": [
+        "cs_modules/anotacao_registrar.AtualizarAnotacaoNaArvore.js",
+        "cs_modules/anotacao_registrar.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=infra_configurar*"],
+      "css": ["cs_modules/options_ui/options_ui.css"],
+      "js": [
+        "cs_modules/infra_configurar.Options_ui.js",
+        "cs_modules/infra_configurar.js"
+      ]
+    },
+    {
+      "matches": ["*://*.br/*controlador.php?acao=documento_gerar*"],
+      "all_frames": true,
+      "js": [
+        "cs_modules/documento_gerar.AumentaTamanho.js",
+        "cs_modules/documento_gerar.js"
+      ]
+    }
+  ],
+
+  "web_accessible_resources": [
+    "cs_modules/options_ui/options_ui.html",
+    "cs_modules/themes/black.css",
+    "cs_modules/themes/PontoControleCores_Anatel.css",
+    "icons/iconYellow.png",
+    "icons/iconBlue.png",
+    "icons/iconGreen.png",
+    "icons/iconRed.png",
+    "icons/ect.png",
+    "icons/link.png",
+    "icons/fileUpload.png",
+    "icons/aguarde.gif",
+    "cs_modules/procedimento_controlar.AdicionarOrdenacao.js",
+    "lib/jquery.tablesorter.min.js",
+    "lib/jquery.tablesorter.widgets.min.js"
+  ]
+}

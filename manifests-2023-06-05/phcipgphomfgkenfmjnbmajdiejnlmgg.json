@@ -1,0 +1,70 @@
+---
+slug: akita
+name: Akita
+description: Insight into your engagement with Web Monetization
+version: 1.1.1
+release_date: 'May 31, 2021'
+publisher: esse-dev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 43
+size: 277KiB
+languages:
+  - English
+extension_website: 'https://akitaproject.site/'
+support_website: 'https://github.com/esse-dev/akita/blob/master/README.md'
+privacy_policy: 'https://github.com/esse-dev/akita/blob/master/docs/PrivacyPolicy.md'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name":"Akita",
+	"version":"1.1.1",
+	"manifest_version": 2,
+	"description":"Insight into your engagement with Web Monetization",
+	"icons": {
+		"16": "assets/icons/icon_16x16.png",
+		"48": "assets/icons/icon_48x48.png",
+		"128": "assets/icons/icon_128x128.png"
+	},
+	"permissions":[
+		"storage",
+		"https://*/*"
+	],
+	"background": {
+		"scripts": ["src/background_script.js"]
+	},
+	"content_scripts": [
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"js": [
+				"src/data/WebMonetizationAsset.js",
+				"src/data/AkitaPaymentPointerData.js",
+				"src/data/AkitaOriginVisitData.js",
+				"src/data/AkitaOriginData.js",
+				"src/data/AkitaOriginStats.js",
+				"src/data/storage.js",
+				"src/content_scripts/content_general.js"
+			],
+			"all_frames":true
+		},
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"js": ["src/content_scripts/content_origin.js"]
+		},
+		{
+			"matches": ["http://*/*", "https://*/*"],
+			"js": ["src/content_scripts/content_iframe.js"],
+			"all_frames":true
+		}
+	],
+	"web_accessible_resources": ["src/page_inject_script.js"],
+	"browser_action": {
+		"default_icon": "assets/icons/icon_unmonetized.png",
+		"default_popup": "src/popup/popup.html",
+		"default_title": "Akita"
+	}
+}

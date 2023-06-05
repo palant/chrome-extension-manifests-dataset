@@ -1,0 +1,91 @@
+---
+slug: evyai
+name: evyAI
+description: A chrome extension to assist your comment post in LinkedIn
+version: 1.0.3
+release_date: 'June 4, 2023'
+publisher: evy_extension
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 139
+size: 2.64MiB
+languages:
+  - English
+extension_website: 'https://www.evyai.com/'
+support_website: 'https://www.evyai.com/'
+privacy_policy: 'https://evyai.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "evyAI",
+  "version": "1.0.3",
+  "icons": {
+    "128": "assets/Icons/icon-128.png"
+  },
+  "description": "A chrome extension to assist your comment post in LinkedIn",
+  "short_name": "evyAI",
+  "permissions": [
+    "tabs",
+    "identity",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://us-central1-gptchromeextension.cloudfunctions.net/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';script-src-elem 'self' 'unsafe-inline' https://apis.google.com",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*.firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com'; object-src 'self'"
+  },
+  "author": "Evy AI",
+  "minimum_chrome_version": "88",
+  "action": {
+    "default_icon": {
+      "128": "assets/Icons/icon-128.png"
+    },
+    "default_title": "evyAI"
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "js/background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/*",
+        "http://*.linkedin.com/*"
+      ],
+      "js": [
+        "js/contentScript.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/contentScript.bundle.js",
+        "assets/*"
+      ],
+      "matches": [
+        "https://*.linkedin.com/*",
+        "http://*.linkedin.com/*"
+      ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "776551117048-qtknk0lcqsr36tqj9t6dijj6ouuqpbmd.apps.googleusercontent.com",
+    "scopes": [
+      "email",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  }
+}

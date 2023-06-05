@@ -1,0 +1,101 @@
+---
+slug: robinhood-mint-sync
+name: Robinhood Mint Sync
+description: Automatically add your Robinhood portfolio to Mint
+version: 3.4.1
+release_date: 'January 30, 2021'
+publisher: George Walker
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.777777777777778
+rating_count: 45
+user_count: '3,000+'
+size: 465KiB
+languages:
+  - English
+extension_website: 'https://pkmnct.github.io/robinhood-mint-sync-chrome/'
+support_website: 'https://github.com/pkmnct/robinhood-mint-sync-chrome/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Robinhood Mint Sync",
+  "description": "Automatically add your Robinhood portfolio to Mint",
+  "version": "3.4.1",
+  "author": "George Walker",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "robinhood-mint-sync@georgewwalker.com",
+      "strict_min_version": "48.0"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png",
+    "512": "images/icon512.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background/main.js",
+      "js/background/update_install_listener.js",
+      "js/background/browser_action.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png",
+      "512": "images/icon512.png"
+    },
+    "default_title": "Robinhood Mint Sync"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://robinhood.com/account?syncMint=true"],
+      "js": ["js/content/robinhood/main.js"]
+    },
+    {
+      "matches": ["https://robinhood.com/login?redirectMint=true"],
+      "js": ["js/content/robinhood/login.js"]
+    },
+    {
+      "matches": [
+        "https://mint.intuit.com/settings.event?filter=property&addRobinhood=true"
+      ],
+      "js": ["js/content/mint/properties/update.js"]
+    },
+    {
+      "matches": [
+        "https://mint.intuit.com/settings.event?filter=property&setupRobinhood=true"
+      ],
+      "js": ["js/content/mint/properties/check.js"]
+    },
+    {
+      "matches": [
+        "https://mint.intuit.com/settings.event?filter=property&createProperty=true&property=*"
+      ],
+      "js": ["js/content/mint/properties/create.js"]
+    },
+    {
+      "matches": ["https://mint.intuit.com/overview.event*"],
+      "js": ["js/external/noty/noty.min.js", "js/content/mint/main.js"],
+      "css": [
+        "css/notification.css",
+        "js/external/noty/noty.css",
+        "js/external/noty/themes/relax.css"
+      ]
+    },
+    {
+      "matches": ["https://mint.intuit.com/*"],
+      "js": ["js/content/mint/triangleFix/triangleFix.js"],
+      "css": ["css/triangleFix.css"]
+    }
+  ],
+  "options_ui": { "page": "html/settings.html", "open_in_tab": true },
+  "permissions": ["storage", "https://phoenix.robinhood.com/accounts/unified"],
+  "web_accessible_resources": ["images/*.png", "js/external/*"]
+}

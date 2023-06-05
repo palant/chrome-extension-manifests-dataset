@@ -1,0 +1,115 @@
+---
+slug: tiplino-a-böngészőbe
+name: Tiplino a böngészőbe
+description: >-
+  A Tiplino a böngészőben mindig figyelmezteti, ha pénzt szerezhet vissza a
+  vásárlásból.
+version: 3.0.4
+release_date: 'May 24, 2022'
+publisher: Tipli
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 2
+user_count: '2,000+'
+size: 208KiB
+languages:
+  - magyar
+publisher_site: tiplino.hu
+extension_website: 'https://www.tiplino.hu/'
+privacy_policy: 'https://www.tipli.cz/souhlas-se-zpracovanim-osobnich-udaju'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.4",
+  "name": "Tiplino a böngészőbe",
+  "description": "A Tiplino a böngészőben mindig figyelmezteti, ha pénzt szerezhet vissza a vásárlásból.",
+  "homepage_url": "https://www.tiplino.hu",
+  "icons": {
+    "128": "assets/icon128.png",
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png"
+  },
+  "author": "https://www.tiplino.hu",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Tiplino a böngészőbe"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "roboto.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "protect-content-boxes.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.google.cz/*",
+        "https://www.google.sk/*",
+        "https://www.google.pl/*",
+        "https://www.google.ro/*",
+        "https://search.seznam.cz/*",
+        "https://*.heureka.cz/*",
+        "https://www.zbozi.cz/*"
+      ],
+      "js": [
+        "serp.js"
+      ],
+      "css": [
+        "roboto.css",
+        "serp.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

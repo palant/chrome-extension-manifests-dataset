@@ -1,0 +1,171 @@
+---
+slug: whatswey
+name: WhatsWey
+description: >-
+  Access your HubSpot CRM information from WhatsApp Web and log all
+  conversations in the HubSpot contact timeline
+version: '1.16'
+release_date: 'April 2, 2023'
+publisher: Niswey
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 64
+size: 1.2MiB
+languages:
+  - English (United States)
+publisher_site: www.niswey.com
+privacy_policy: 'https://www.niswey.com/privacy-policy'
+---
+
+{
+  "manifest_version": 3,
+  "name": "WhatsWey",
+  "short_name": "WhatsWey",
+  "version": "1.16",
+  "description": "Access your HubSpot CRM information from WhatsApp Web and log all conversations in the HubSpot contact timeline",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "background"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://whatswey.niswey.net/api/timeline' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*.firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com'; object-src 'self'"
+  },
+  "host_permissions": [
+    "https://web.whatsapp.com/*",
+    "https://*.hubspot.com/contacts/*/contact/*"
+  ],
+  "action": {
+    "default_icon": {
+      "128": "icon.png"
+    },
+    "default_title": "WhatsWey Extension",
+    "default_popup": "popup/popup.html"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://web.whatsapp.com/*"
+      ],
+      "js": [
+        "/js/jquery-3.6.0.js",
+        "core_injection.js",
+        "/js/config.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://web.whatsapp.com/*"
+      ],
+      "js": [
+        "/lib/sweetalert2.all.min.js",
+        "/js/utility.js",
+        "/js/whatsapp/markup.class.js",
+        "/js/svg.class.js",
+        "/lib/bootstrap-5.2.bundle.min.js",
+        "/lib/bootstrap-select.min.js",
+        "/js/sendMessage.js",
+        "/js/whatsapp/content.js",
+        "/js/service/hubspot.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.hubspot.com/contacts/*/contact/*"
+      ],
+      "js": [
+        "/js/jquery-3.6.0.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://web.whatsapp.com/*"
+      ],
+      "css": [
+        "/css/bootstrap-5.2.min.css",
+        "/css/sweetalert2.min.css",
+        "/css/fontawesome.min.css",
+        "/css/regular.css",
+        "/css/bootstrap-select.min.css",
+        "/css/whatsapp/content.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.hubspot.com/*"
+      ],
+      "js": [
+        "/js/hubspot/app.js",
+        "/js/service/hubspot.js",
+        "/js/jquery-3.6.0.js",
+        "/lib/sweetalert2.all.min.js",
+        "/js/utility.js",
+        "/lib/libphonenumber-js.min.js",
+        "/js/config.js",
+        "/lib/bootstrap-5.2.bundle.min.js",
+        "/lib/bootstrap-select.min.js",
+        "/js/hubspot/content.js",
+        "/js/svg.class.js",
+        "/js/sendMessage.js",
+        "/js/hubspot/markup.class.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.hubspot.com/*"
+      ],
+      "css": [
+        "/css/bootstrap-5.2.min.css",
+        "/css/sweetalert2.min.css",
+        "/css/fontawesome.min.css",
+        "/css/regular.css",
+        "/css/bootstrap-select.min.css",
+        "/css/hubspot/content.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "js": [
+        "core/ui_class_names.js",
+        "core/ui.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/*",
+        "assets/*",
+        "assets/fonts/*",
+        "assets/img/*",
+        "popup/*",
+        "js/service/*",
+        "js/jquery-3.6.0.js",
+        "popup/markup.js",
+        "/js/service/hubspot.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

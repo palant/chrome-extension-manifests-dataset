@@ -1,0 +1,93 @@
+---
+slug: infor-rpa-recorder-inspec
+name: Infor-RPA Recorder & Inspector
+description: >-
+  Infor-RPA Recorder & Inspector is used with RPA Studio to create workflows
+  easily
+version: 3.4.4
+release_date: 'December 2, 2022'
+publisher: inforglobalcloud
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 1
+user_count: 106
+size: 601KiB
+languages:
+  - English (United States)
+extension_website: 'https://www.infor.com/'
+privacy_policy: 'http://www.infor.com/company/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Infor-RPA Recorder & Inspector",
+  "version": "3.4.4",
+  "manifest_version": 3,
+  "description": "Infor-RPA Recorder & Inspector is used with RPA Studio to create workflows easily",
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+  "action": {
+    "default_title": "Infor-RPA Recorder & Inspector",
+    "default_icon": "icons/icon.png",
+    "default_popup": "popup.html",
+    "default_js": "js/popup.js",
+    "permissions": ["tabs"]
+  },
+  "icons": {
+     "48": "icons/icon.png",
+     "16": "icons/16.png",
+		"128": "icons/128.png"
+  },
+  "host_permissions": [
+  "http://*/*",
+  "https://*/*"
+],
+  "permissions": ["tabs",
+  "notifications",
+    "activeTab",
+    "webRequest",
+    "storage",
+    "webNavigation",
+    "downloads"
+  ],
+   "background" : {
+     "service_worker": "js/background.js"
+},
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "js": ["js/md5.min.js", "js/jquery-3.3.1.min.js", "js/pako.min.js", "js/tools.js", "js/custom-config.js", "js/locatorBuilders.js", "js/recorder.js","js/indexed-db-utils.js", "js/vista.js","js/siera.js"],
+	  
+      "match_about_blank": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*", "file://*/*"],
+      "css": ["css/style.css"],
+      "js": ["js/topbar.js", "js/recorder-handlers.js"],
+      "match_about_blank": true
+    },
+    {
+      "all_frames": true,
+      "js": [ "js/util.js", "js/content/atoms.js","js/content/utils.js",
+  "js/common/escape.js","js/content/targetSelecter.js", "js/content/sizzle.js","js/content/content.js"],
+      "match_about_blank": true,
+      "matches": ["\u003Call_urls>"]
+    }, {
+      "all_frames": true,
+      "js": ["js/common/browser-polyfill.js", "js/content/prompt-injecter.js"],
+      "match_about_blank": true,
+      "matches": ["\u003Call_urls>"],
+      "run_at": "document_start"
+    }, {
+		"js": [ "js/jquery-3.3.1.min.js","js/pathfinder/js/scripts/libs/jquery-json-2.6.js","js/pathfinder/js/scripts/libs/infor-companyon-client.js"],
+		"matches": ["https://*.inforcloudsuite.com/*", "https://*.awsdev.infor.com/*", "https://*.aws.infor.com/*", "https://*.cloud.infor.com/infor"],
+		"run_at": "document_start",
+    "all_frames": true
+  	}
+  ]
+}

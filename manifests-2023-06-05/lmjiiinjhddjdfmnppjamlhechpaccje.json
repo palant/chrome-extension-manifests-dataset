@@ -1,0 +1,73 @@
+---
+slug: group-doorman
+name: Group Doorman
+description: >-
+  Group Doorman extracts members' answers from your Facebook group and pushes to
+  a Google Spreadsheet
+version: 1.3.0
+release_date: 'May 5, 2023'
+publisher: dpoddubny
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.166666666666667
+rating_count: 6
+user_count: 123
+size: 3.25MiB
+languages:
+  - English
+publisher_site: groupdoorman.com
+extension_website: 'https://groupdoorman.com/'
+privacy_policy: 'https://groupdoorman.com/privacy-statement'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Group Doorman",
+  "short_name": "Group Doorman",
+  "version": "1.3.0",
+  "icons": {
+    "48": "assets/icons/favicon-48.png",
+    "128": "assets/icons/favicon-128.png"
+  },
+  "description": "Group Doorman extracts members' answers from your Facebook group and pushes to a Google Spreadsheet",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "alarms",
+    "background",
+    "notifications"
+  ],
+  "action": {
+    "default_popup": "index.html?#/popup",
+    "default_title": "Group Doorman"
+  },
+  "options_page": "index.html?#/options",
+  "content_scripts": [
+    {
+      "js": ["contentPage.js"],
+      "matches": [
+        "https://www.facebook.com/groups/*/membership_questions",
+        "https://www.facebook.com/groups/*/participation_questions",
+        "https://www.facebook.com/groups/*/member-requests/*",
+        "https://www.facebook.com/groups/*/participant_requests/*",
+        "https://www.facebook.com/groups/*/requests/*",
+        "https://www.facebook.com/settings?tab=language",
+        "https://www.facebook.com/groups/feed/"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "backgroundPage.js"
+  },
+  "web_accessible_resources": [{
+    "resources": ["assets/templates/status-widget.html", "assets/js/helpers.js"],
+    "matches": ["<all_urls>"]
+  }]
+}

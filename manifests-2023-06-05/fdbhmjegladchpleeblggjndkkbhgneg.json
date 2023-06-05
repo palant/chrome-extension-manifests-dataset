@@ -1,0 +1,182 @@
+---
+slug: callblitz
+name: CallBlitz
+description: Bring your sales floor back
+version: 0.0.3.0
+release_date: 'May 25, 2023'
+publisher: CallBlitz
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 272
+size: 937KiB
+languages:
+  - English (United States)
+publisher_site: callblitz.com
+extension_website: 'https://callblitz.com/'
+support_website: 'https://callblitz.com/support/'
+privacy_policy: 'https://callblitz.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "CallBlitz",
+  "description": "Bring your sales floor back",
+  "version": "0.0.3.0",
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "CallBlitz",
+    "default_icon": {
+      "16": "img/icon-16x16.png",
+      "48": "img/icon-48x48.png"
+    }
+  },
+  "icons": { 
+    "16": "img/icon-16x16.png",
+    "48": "img/icon-48x48.png",
+    "128": "img/icon-128x128.png" 
+  },
+  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "system.cpu",
+    "system.memory",
+    "scripting"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://app.getcallblitz.com/*", 
+      "https://web.outreach.io/*", 
+      "https://app.getcallblitz.com/assets/mock-outreach.html*",
+      "https://www.phoneburner.com/dialer/dial/begin*",
+      "https://app.salesloft.com/*",
+      "https://orum.com/*",
+      "https://app.callblitz.com/*", 
+      "https://app.callblitz.com/assets/mock-outreach.html*",
+      "https://app-staging.callblitz.com/*",
+      "https://app-staging.callblitz.com/assets/mock-outreach.html*",
+      "https://app.apollo.io/*",
+      "https://app.hubspot.com/*",
+      "https://*.connectandsell.com/*",
+      "https://phone.aircall.io/*",
+      "https://app.monsterconnect.com/*",
+      "https://app-v2.callblitz.com/*",
+      "https://callblitz.com/*",
+      "https://*.frontspin.com/*",
+      "https://*.justcall.io/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+          "*.png",
+          "*.js",
+          "*.css",
+          "*.html"
+      ],
+      "matches": [
+        "https://web.outreach.io/*",  
+        "https://app.getcallblitz.com/*",
+        "https://app-staging.callblitz.com/*",
+        "https://www.phoneburner.com/*",
+        "https://app.salesloft.com/*",
+        "https://orum.com/*",
+        "https://app.callblitz.com/*",
+        "https://app.apollo.io/*",
+        "https://app.hubspot.com/*",
+        "https://*.connectandsell.com/*",
+        "https://phone.aircall.io/*",
+        "https://app.monsterconnect.com/*",
+        "https://app-v2.callblitz.com/*",
+        "https://callblitz.com/*",
+        "https://*.frontspin.com/*",
+        "https://*.justcall.io/*"
+      ]
+    },
+    {
+      "resources": [
+          "*.ttf",
+          "*.svg"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.outreach.io/*", 
+        "https://app.getcallblitz.com/assets/mock-outreach.html*",
+        "https://app-staging.callblitz.com/assets/mock-outreach.html*",
+        "https://www.phoneburner.com/dialer/dial/begin*",
+        "https://app.salesloft.com/*",
+        "https://orum.com/dashboard*",
+        "https://app.callblitz.com/assets/mock-outreach.html*",
+        "https://callblitz.com/assets/mock-outreach.html*",
+        "https://app.apollo.io/*",
+        "https://app.hubspot.com/*",
+        "https://*.connectandsell.com/*",
+        "https://phone.aircall.io/*",
+        "https://app.monsterconnect.com/*",
+        "https://*.frontspin.com/*",
+        "https://*.justcall.io/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "js/deps/voxeet-sdk.js", 
+        "js/deps/datadog-logs-v4.js", 
+        "js/deps/jssip.min.js", 
+        "js/deps/sentry.js", 
+        "js/deps/socket-io.min.js",
+        "js/content-script-wrapper.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://app.getcallblitz.com/*",
+        "https://app.callblitz.com/*",
+        "https://app-staging.callblitz.com/*",
+        "https://app-v2.callblitz.com/*",
+        "https://callblitz.com/*"
+      ],
+      "js": ["js/auth.js"],
+      "run_at": "document_start"
+    },
+    {
+      "exclude_globs": [
+        "https://app.callblitz.com/*",
+        "https://app-staging.callblitz.com/*",
+        "https://app-v2.callblitz.com/*",
+        "https://callblitz.com/*",
+        "https://chrome.google.com/webstore*"
+      ],
+      "matches": ["https://*/*","http://*/*"],
+      "js": ["js/notification.js"],
+      "css": ["css/notification.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://app.callblitz.com/assets/main-meeting.html*",
+        "https://app-staging.callblitz.com/assets/main-meeting.html*",
+        "https://app-v2.callblitz.com/assets/main-meeting.html*",
+        "https://callblitz.com/assets/main-meeting.html*"
+      ],
+      "js": ["js/events.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  }
+}

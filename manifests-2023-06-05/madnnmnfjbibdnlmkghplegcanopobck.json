@@ -1,0 +1,71 @@
+---
+slug: trolley
+name: Trolley
+description: Trolley Shopping extension
+version: 1.4.2
+release_date: 'August 3, 2021'
+publisher: jointrolleyextension
+category: Shopping
+category_slug: ext/12-shopping
+rating: 0
+rating_count: 0
+user_count: 38
+size: 1.7MiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "Trolley",
+	"description": "Trolley Shopping extension",
+	"version": "1.4.2",
+	
+	"browser_action": {
+		"default_title": "Trolley Shopping extension",
+		"default_popup": "popup.html"
+	},
+
+	"icons": {
+		"16": "/images/favicon.png",
+		"48": "/images/favicon.png",
+		"128": "/images/favicon.png"
+	},
+
+	"content_scripts": [
+		{
+			"matches": ["<all_urls>"],
+			"js": ["js/content.js"],
+			"run_at": "document_start"
+		},
+		{
+			"matches": ["<all_urls>"],
+			"js": ["js/config.js", "js/jquery.min.js",  "js/core.js", "js/materialize.js", "js/simpleNotify.js", "js/workarounds.js"],
+			"css": ["css/simpleNotifyStyle.css", "./css/content.css"],
+			"run_at": "document_start"
+		},
+		{
+			"matches": ["https://accounts.google.com/o/oauth2/approval/v2?auto=false&response=state%3Dextension_token*"],
+			
+			"js": ["./js/oauth.js", "./js/oauthContent.js"],
+			"run_at": "document_start",
+			"all_frames": true
+		}
+	],
+  
+	"background": {
+		"scripts": ["./js/config.js", "./js/jquery.min.js", "./js/core.js", "./js/oauth.js", "./js/background.js"],
+		"persistent": true
+	},
+
+	"web_accessible_resources": ["images/*.gif"],
+
+	"permissions": [
+		"storage",
+		"activeTab",
+		"unlimitedStorage",
+		"<all_urls>"
+	]
+}

@@ -1,0 +1,84 @@
+---
+slug: gpt-plus
+name: GPT Plus
+description: Enhancement suite for web based ChatGPT
+version: 1.0.4
+release_date: 'April 17, 2023'
+publisher: pairprogio
+category: Productivity
+category_slug: ext/7-productivity
+rating: 1
+rating_count: 2
+user_count: 101
+size: 113KiB
+languages:
+  - English
+publisher_site: pairprog.io
+privacy_policy: 'https://pairprog.io/tos'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GPT Plus",
+  "version": "1.0.4",
+  "description": "Enhancement suite for web based ChatGPT",
+  "permissions": [
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*"
+  ],
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": false
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/openai.start.ts-loader.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "assets/openai.end.tsx-loader.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "assets/config.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "resources": [
+        "assets/gpt4Redirect.utils.js",
+        "assets/openai.start.ts.js",
+        "assets/config.store.js",
+        "assets/openai.end.tsx.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

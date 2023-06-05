@@ -1,0 +1,104 @@
+---
+slug: junify
+name: Junify
+description: >-
+  This browser extension helps you log into web applications and improve your
+  information security at work.
+version: 2.4.0
+release_date: 'June 2, 2023'
+publisher: Junify
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '2,000+'
+size: 2.65MiB
+languages:
+  - English
+  - 日本語
+extension_website: 'https://www.junify.com'
+privacy_policy: 'https://www.junify.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "Junify",
+  "description": "__MSG_appDesc__",
+  "version": "2.4.0",
+  "author": "Junify Corporation",
+  "permissions": [
+    "alarms",
+    "tabs",
+    "cookies",
+    "storage",
+    "webRequest",
+    "webNavigation",
+    "downloads",
+    "nativeMessaging",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "128": "./assets/images/icon.png"
+  },
+  "action": {
+    "default_icon": "/assets/images/icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "https://fonts.googleapis.com/css?family=Open+Sans/",
+        "assets/*",
+        "html/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./js/content_script.js"
+      ],
+      "css": [
+        "./assets/stylesheets/injected/junify_external_websites.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*extLogin=true*"
+      ],
+      "js": [
+        "./js/popup.js"
+      ],
+      "css": [
+        "./assets/stylesheets/injected/override_login_form.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "./js/background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.junify.com/*",
+      "https://*.junify.jp/*"
+    ]
+  }
+}

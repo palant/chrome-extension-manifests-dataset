@@ -1,0 +1,106 @@
+---
+slug: gliderai-connector
+name: GLIDER.ai Connector
+description: >-
+  GLIDER.ai Connector allows recruiter to invite candidates from ATS to schedule
+  Glider tests/interviews without integrations.
+version: 1.0.2
+release_date: 'March 8, 2023'
+publisher: GLIDER.ai
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3
+rating_count: 2
+user_count: 137
+size: 1.01MiB
+languages:
+  - English
+extension_website: 'https://glider.ai'
+support_website: 'https://glider.freshdesk.com/'
+privacy_policy: 'https://glider.ai/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appTitle__",
+  "description": "__MSG_appDescription__",
+  "version": "1.0.2",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "default_locale": "en",
+  "action": {
+    "default_popup": "html/index.html",
+    "default_title": "__MSG_appDefaultTitle__",
+    "default_icon": {
+      "16": "images/icons/gliderai-16x16.png",
+      "32": "images/icons/gliderai-32x32.png",
+      "48": "images/icons/gliderai-48x48.png",
+      "128": "images/icons/gliderai-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icons/gliderai-16x16.png",
+    "32": "images/icons/gliderai-32x32.png",
+    "48": "images/icons/gliderai-48x48.png",
+    "128": "images/icons/gliderai-128x128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://*.glider.ai/*"
+  ],
+  "content_scripts": [
+    {
+      "js": ["js/atsIntegrations/Bullhorn/content.js", "js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.bullhornstaffing.com/*"],
+      "all_frames": true
+    },
+    {
+      "js": ["js/atsIntegrations/Bullhorn/contentIframe.js", "js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.bullhornstaffing.com/*"],
+      "all_frames": false
+    },
+    {
+      "js": ["js/atsIntegrations/JobDiva/content.js","js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.jobdiva.com/*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://*.glider.ai/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["js/*"]
+    },
+    {
+      "resources": [
+        "js/atsIntegrations/JobDiva/web_accessible_resources.js"
+      ],
+      "matches": [
+        "https://*.jobdiva.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "options_page": "/html/options.html",
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "/html/options.html"
+  }
+}

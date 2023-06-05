@@ -1,0 +1,108 @@
+---
+slug: paper-memory
+name: Paper Memory
+description: >-
+  Automatically record papers and their codes from Arxiv, OpenReview & more!
+  Organize your library with tags, links and quick notes.
+version: 0.5.11
+release_date: 'May 19, 2023'
+publisher: vict0rsch
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 12
+user_count: '1,000+'
+size: 589KiB
+languages:
+  - English
+extension_website: 'https://github.com/vict0rsch/PaperMemory'
+support_website: 'https://github.com/vict0rsch/PaperMemory/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Paper Memory",
+  "version": "0.5.11",
+  "manifest_version": 2,
+  "description": "Automatically record papers and their codes from Arxiv, OpenReview & more! Organize your library with tags, links and quick notes.",
+  "homepage_url": "https://github.com/vict0rsch/PaperMemory",
+  "icons": {
+    "192": "icons/favicon-192x192.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "background": {
+    "scripts": [
+      "src/shared/min/utils.min.js",
+      "src/background/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icons/favicon-192x192.png",
+    "default_title": "PaperMemory",
+    "default_popup": "src/popup/min/popup.min.html"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "linux": "Ctrl+Shift+M"
+      },
+      "description": "Open PaperMemory's Popup"
+    },
+    "manualParsing": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P"
+      },
+      "description": "Manually trigger the parsing of a paper; only available if you have disabled auto-parsing in the menu"
+    },
+    "downloadPdf": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Download the pdf file for the current paper into your PaperMemoryStore"
+    }
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "downloads",
+    "downloads.open"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "src/shared/min/jquery.min.js",
+        "src/shared/js/utils/logTrace.js",
+        "src/shared/js/utils/miniquery.js",
+        "src/shared/js/utils/config.js",
+        "src/shared/js/utils/functions.js",
+        "src/shared/js/utils/gist.js",
+        "src/shared/js/utils/sync.js",
+        "src/shared/js/utils/data.js",
+        "src/shared/js/utils/paper.js",
+        "src/shared/js/utils/state.js",
+        "src/shared/js/utils/bibtexParser.js",
+        "src/shared/js/utils/parsers.js",
+        "src/content_scripts/content_script.js"
+      ],
+      "css": [
+        "src/shared/css/loader.css",
+        "src/content_scripts/content_script.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "src/data/*.json"
+  ]
+}

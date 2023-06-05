@@ -1,0 +1,84 @@
+---
+slug: supersea
+name: SuperSea
+description: The supercharged OpenSea experience
+version: 1.14.7
+release_date: 'May 26, 2023'
+publisher: Non Fungible Tools
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.833333333333333
+rating_count: 6
+user_count: '10,000+'
+size: 5.5MiB
+languages:
+  - English
+publisher_site: nonfungible.tools
+extension_website: 'https://nonfungible.tools'
+support_website: 'https://docs.supersea.xyz'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SuperSea",
+  "description": "The supercharged OpenSea experience",
+  "version": "1.14.7",
+  "minimum_chrome_version": "93",
+  "manifest_version": 3,
+  "action": {
+    "icons": {
+      "128": "icon.png"
+    },
+    "default_popup": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.opensea.io/*"],
+      "js": ["static/js/content/opensea.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.sudoswap.xyz/*"],
+      "js": ["static/js/content/sudoswap.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.gem.xyz/*"],
+      "js": ["static/js/content/gem.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "https://*.opensea.io/*",
+    "https://*.sudoswap.xyz/*",
+    "https://*.gem.xyz/*",
+    "https://*.nonfungible.tools/*"
+  ],
+  "icons": {
+    "128": "icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["static/js/pageContextInject.js"],
+      "matches": ["https://*.opensea.io/*"]
+    },
+    {
+      "resources": ["notification.mp3"],
+      "matches": ["https://*.opensea.io/*"]
+    }
+  ],
+  "permissions": ["storage", "notifications", "declarativeNetRequest"]
+}

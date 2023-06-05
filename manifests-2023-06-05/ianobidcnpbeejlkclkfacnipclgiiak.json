@@ -1,0 +1,89 @@
+---
+slug: crunchyroll-with-better-s
+name: Crunchyroll With Better Seasons
+description: >-
+  Instead of having multiple seasons as DUBS, change audio language directly
+  from the episode.
+version: 0.7.1
+release_date: 'March 4, 2023'
+publisher: Dragicafit
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.4
+rating_count: 10
+user_count: 748
+size: 599KiB
+languages:
+  - English
+extension_website: 'https://github.com/Dragicafit/Crunchyroll-With-Better-Seasons'
+support_website: 'https://github.com/Dragicafit/Crunchyroll-With-Better-Seasons/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Crunchyroll With Better Seasons",
+  "description": "Instead of having multiple seasons as DUBS, change audio language directly from the episode.",
+  "version": "0.7.1",
+  "author": "Dragicafit",
+  "icons": {
+    "16": "src/icons/icon16.png",
+    "48": "src/icons/icon48.png",
+    "128": "src/icons/icon128.png"
+  },
+  "permissions": ["storage", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["https://static.crunchyroll.com/*"],
+  "action": {
+    "default_title": "Crunchyroll With Better Seasons",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "src/icons/icon16.png",
+      "24": "src/icons/icon24.png",
+      "32": "src/icons/icon32.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/web-accessible-resources/tab.bundle.js"],
+      "matches": [
+        "https://beta.crunchyroll.com/*",
+        "https://www.crunchyroll.com/*",
+        "https://crunchyroll.com/*"
+      ]
+    },
+    {
+      "resources": ["src/web-accessible-resources/vilosOverride.bundle.js"],
+      "matches": ["https://static.crunchyroll.com/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://static.crunchyroll.com/vilos-v2/web/vilos/player.html*"
+      ],
+      "js": ["src/content-scripts/injectInPlayer.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://beta.crunchyroll.com/*",
+        "https://www.crunchyroll.com/*",
+        "https://crunchyroll.com/*"
+      ],
+      "js": ["src/content-scripts/injectInTab.bundle.js"],
+      "all_frames": false,
+      "run_at": "document_start"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "vilosOverride",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

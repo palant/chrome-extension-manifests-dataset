@@ -1,0 +1,61 @@
+---
+slug: getro
+name: Getro
+description: Getro's Contact Importer
+version: 2.6.2
+release_date: 'May 5, 2023'
+publisher: Getro
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 121
+size: 5.9MiB
+languages:
+  - English (United States)
+extension_website: 'https://getro.com/'
+privacy_policy: 'https://www.getro.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Getro",
+  "description": "Getro's Contact Importer",
+  "version": "2.6.2",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgLl5JESfjG3HRgOOIpdAL3VjXU+FtPgojQk3/uHO5e5oxT2EXyfOODLOrtC+ArToOrCyoXdKlWEdivC4MGGSE8RPuqt7pq4SVCMvOaeTHXwijQ5666K6hyygyR0PFLGr4/Uc1MT8qwyMuM3KGtvwy7P1BhbtooTPt2Fb9glWuWeWYbNDpmsuVc/9lRsvodTjJiOyQYoiBHypC369GFHkbGqgcmK4ePld9bOAXiIom9ypDp0KL+oNyll4Zvci8ZGcD1WwaIm/BV2MF4jneahvHah62e8PpftyFp5IbOb/dsUwFFJDr/+/BDA/yyyDhT4/E1F4fdvTF+9n0/Q5fzpnhwIDAQAB",
+  "icons": { 
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "css": ["/static/css/main.css"],
+      "js": ["/static/js/main.js"]
+    },
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["/content_scripts/add-to-getro-button.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["scripting", "storage", "webNavigation", "tabs", "management"],
+  "host_permissions": ["https://www.linkedin.com/*"],
+  "externally_connectable": {
+    "matches": ["http://localhost/*", "https://*.getro.com/*", "https://*.getro.dev/*"]
+  },
+  "web_accessible_resources":[{
+    "resources": ["/static/css/main.css"],
+    "matches": ["https://*.linkedin.com/*"]
+  }]
+}

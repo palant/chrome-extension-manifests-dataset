@@ -1,0 +1,84 @@
+---
+slug: multisubs
+name: MultiSubs
+description: Show multiple languages subtitles on Youtube
+version: '1.0'
+release_date: 'May 10, 2022'
+publisher: cpull.com
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 0
+rating_count: 0
+user_count: 74
+size: 763KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+publisher_site: meishizaolunzi.com
+privacy_policy: 'https://cpull.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "version": "1.0",
+  "default_locale": "en",
+  "manifest_version": 3,
+  "icons": {
+    "16": "asserts/mslogo16x16.png",
+    "32": "asserts/mslogo32x32.png",
+    "48": "asserts/mslogo48x48.png",
+    "128": "asserts/mslogo128x128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://www.youtube-nocookie.com/embed/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "interact.min.js",
+        "snippet.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://www.youtube-nocookie.com/embed/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "inspect.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "xhr.js",
+        "end.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "fontSettings"
+  ],
+
+  "action": {
+    "default_popup": "popup/build/index.html"
+  }
+}

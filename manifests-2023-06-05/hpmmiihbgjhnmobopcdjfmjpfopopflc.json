@@ -1,0 +1,77 @@
+---
+slug: ride-receipts
+name: Ride Receipts
+description: Automation extension to download invoices from Uber's dashboard.
+version: 1.1.15
+release_date: 'May 11, 2023'
+publisher: Hello Efficiency Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 2.3333333333333335
+rating_count: 3
+user_count: 341
+size: 307KiB
+languages:
+  - English
+publisher_site: ridereceipts.io
+support_website: 'https://ridereceipts.io/frequently-asked-questions/'
+privacy_policy: 'https://ridereceipts.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ride Receipts",
+  "short_name": "ridereceipts",
+  "description": "Automation extension to download invoices from Uber's dashboard.",
+  "version": "1.1.15",
+  "author": "Hello Efficiency Inc.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/icon-16.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "19": "icons/icon-19.png",
+      "38": "icons/icon-38.png"
+    },
+    "default_title": "ridereceipts",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://riders.uber.com/trips",
+        "http://riders.uber.com/trips/*",
+        "https://riders.uber.com/trips",
+        "https://riders.uber.com/trips?redirect=false",
+        "https://riders.uber.com/trips/*"
+      ],
+      "js": [
+        "contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; connect-src 'self' https://api.ridereceipts.io; img-src 'self'; style-src 'self';base-uri 'self';form-action 'self'"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "http://riders.uber.com/trips",
+    "http://riders.uber.com/trips/*",
+    "https://riders.uber.com/trips",
+    "https://riders.uber.com/trips/*"
+  ],
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "downloads.shelf",
+    "*://riders.uber.com/*",
+    "webNavigation"
+  ]
+}

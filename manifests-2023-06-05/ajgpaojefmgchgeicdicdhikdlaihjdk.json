@@ -1,0 +1,66 @@
+---
+slug: text-to-speech-extension
+name: Text to speech extension
+description: 'Listen to the content of the websites, pages or articles'
+version: 1.2.0
+release_date: 'January 3, 2023'
+publisher: Nina Bon
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.368421052631579
+rating_count: 19
+user_count: '7,000+'
+size: 305KiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Text to speech extension",
+  "description": "Listen to the content of the websites, pages or articles",
+  "version": "1.2.0",
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "32": "icons/icon32.png",
+    "38": "icons/icon38.png",
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png",
+    "256": "icons/icon256.png"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": ["javascripts/background.js"]
+  },
+  "browser_action": {
+    "default_title": "Popup",
+    "default_popup": "popup/popup.html"
+  },
+  "web_accessible_resources": ["styles/controls.css", "javascripts/page.zIndex.js", "libraries/vue-files/vue.esm-browser.js"],
+  "permissions": ["*://*/*", "storage", "tts", "contextMenus", "tabs", "activeTab", "webRequest", "webRequestBlocking"],
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["javascripts/libraries/Readability-readerable.js", "javascripts/libraries/Readability-0.4.0.js", "javascripts/content-compiled.js"],
+    "css": ["styles/content.css", "styles/fonts.css"],
+    "run_at": "document_start"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["content-scripts/idle.js"],
+    "all_frames": true,
+    "run_at": "document_idle"
+  }, {
+    "matches": ["*://*/*"],
+    "js": ["content-scripts/start.js"],
+    "all_frames": true,
+    "run_at": "document_start"
+  }],
+  "commands": {
+    "reload-extension": {
+      "description": "Reloads extension"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+---
+slug: jibble-time-tracker
+name: Jibble Time Tracker
+description: >-
+  Easily track time from anywhere for payroll, attendance, timesheets, billing
+  and project tracking.
+version: 1.1.0
+release_date: 'May 24, 2023'
+publisher: Jibble Ltd
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.961538461538462
+rating_count: 26
+user_count: '1,000+'
+size: 675KiB
+languages:
+  - English (UK)
+publisher_site: www.jibble.io
+extension_website: 'https://www.jibble.io'
+support_website: 'https://www.jibble.io/help'
+privacy_policy: 'https://www.jibble.io/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Jibble Time Tracker",
+  "short_name": "Jibble",
+  "description": "Easily track time from anywhere for payroll, attendance, timesheets, billing and project tracking.",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "permissions": ["contextMenus", "storage", "scripting", "tabs"],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Jibble"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.atlassian.net/*",
+        "https://docs.google.com/*",
+        "https://www.notion.so/*"
+      ],
+      "js": ["js/content.js"],
+      "css": ["assets/integrations/general.css"]
+    },
+    {
+      "css": ["assets/integrations/jira.css"],
+      "matches": ["https://*.atlassian.net/*"]
+    },
+    {
+      "css": ["assets/integrations/google-docs.css"],
+      "matches": ["https://docs.google.com/*"]
+    },
+    {
+      "css": ["assets/integrations/notion.css"],
+      "matches": ["https://www.notion.so/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "host_permissions": [
+    "https://*.jibble.io/*",
+    "https://*.atlassian.net/*",
+    "https://docs.google.com/*",
+    "https://www.notion.so/*"
+  ],
+  "icons": {
+    "16": "assets/icons/16.png",
+    "32": "assets/icons/32.png",
+    "48": "assets/icons/48.png",
+    "64": "assets/icons/64.png",
+    "128": "assets/icons/128.png"
+  },
+  "commands": {
+    "clock-in-out": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Toggle jibble"
+    }
+  }
+}

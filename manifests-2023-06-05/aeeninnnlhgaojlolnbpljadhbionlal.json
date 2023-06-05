@@ -1,0 +1,89 @@
+---
+slug: twiso-ai-notetaker-screen
+name: 'Twiso: AI Notetaker & Screen recorder'
+description: >-
+  Record yourself and your screen then share it with an instant link +
+  Collaborate using annotation, comments, and highlights.
+version: 0.0.20
+release_date: 'May 18, 2023'
+publisher: Twiso
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 5
+user_count: 135
+size: 745KiB
+languages:
+  - English
+extension_website: 'https://www.twiso.co/'
+support_website: 'https://help.twiso.co/en/'
+privacy_policy: 'https://www.twiso.co/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Twiso: AI Notetaker & Screen recorder",
+  "description": "Record yourself and your screen then share it with an instant link + Collaborate using annotation, comments, and highlights.",
+  "version": "0.0.20",
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.twiso.co/*", "http://*.twiso.co/*"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "js": ["scripts/installed_identifier.js"]
+    },
+    {
+      "matches": ["*://meet.google.com/*-*-*"],
+      "run_at": "document_start",
+      "js": ["scripts/google_meets.js"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "host_permissions": ["*://*/*"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs",
+    "desktopCapture",
+    "tabCapture"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "audio/start.mp3",
+        "audio/finish.mp3",
+        "images/*.*",
+        "fonts/*.woff2",
+        "sources.html",
+        "camera.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.twiso.co/*"]
+  },
+  "commands": {
+    "start-meetings-recording": {
+      "suggested_key": "Ctrl+Shift+S",
+      "description": "Capture Google Meet"
+    }
+  }
+}

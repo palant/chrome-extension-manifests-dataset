@@ -1,0 +1,79 @@
+---
+slug: ondoku3-chatgptbeta
+name: Ondoku3-ChatGPT(BETA)
+description: This is a Chrome extension that reads chatGPT's answers with Ondoku's voice.
+version: '4.37'
+release_date: 'June 5, 2023'
+publisher: ondoku3.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.25
+rating_count: 4
+user_count: '8,000+'
+size: 1.24MiB
+languages:
+  - English
+  - 日本語
+extension_website: 'https://ondoku3.com/'
+privacy_policy: 'https://ondoku3.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"name": "Ondoku3-ChatGPT(BETA)",
+	"version": "4.37",
+	"manifest_version": 3,
+	"default_locale": "en",
+	"icons": {
+		"32": "icon/32.png",
+		"48": "icon/48.png",
+		"128": "icon/128.png"
+	},
+	"description": "__MSG_Description__",
+	"permissions": [
+		"activeTab",
+		"storage"
+	],
+	"options_page": "src/option/option.html",
+	"background": {
+		"service_worker": "dist/background.js",
+		"type": "module"
+	},
+	"action": {
+		"default_popup": "src/option/action.html"
+	},
+	"content_scripts": [
+		{
+			"matches": [
+				"https://chat.openai.com/*"
+			],
+			"js": [
+				"dist/util.js",
+				"dist/audio-player.js",
+				"dist/app-status.js",
+				"dist/speech-recognition.js",
+				"dist/content-script.js"
+			],
+			"css": [
+				"src/content-script.css"
+			]
+		}
+	],
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"image/*"
+			],
+			"matches": [
+				"https://chat.openai.com/*"
+			]
+		}
+	],
+	"host_permissions": [
+		"https://ondoku3.com/*"
+	],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	}
+}

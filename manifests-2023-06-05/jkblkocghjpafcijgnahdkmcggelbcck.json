@@ -1,0 +1,80 @@
+---
+slug: capijzo
+name: Capijzo
+description: >-
+  Create text/ image snippets, store on Capijzo, inserts anywhere on Google
+  Chrome. Capijzo is an auto text expander tool.
+version: 0.0.1
+release_date: 'July 12, 2021'
+publisher: Capijzo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 165
+size: 1.27MiB
+languages:
+  - English (United States)
+publisher_site: capijzo.com
+extension_website: 'https://capijzo.com/'
+privacy_policy: 'https://capijzo.com/policy.php'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Capijzo",
+  "version": "0.0.1",
+  "manifest_version": 2,
+  "description": "Create text/ image snippets, store on Capijzo, inserts anywhere on Google Chrome. Capijzo is an auto text expander tool.",
+  "icons": { 
+              "16": "images/icon_16.png" ,
+              "128": "images/icon_128.png" 
+            },
+  "permissions": [
+                  "storage",
+                  "identity",
+                  "contextMenus"
+                  ],
+	"web_accessible_resources": [
+          "images/*",
+          "scripts/*"
+          ],
+
+  "browser_action": {"default_popup": "popup/index.html"},
+
+  "background":{"scripts":["scripts/background-script/main.js"]},
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["scripts/style/reset.css" , "scripts/style/search.css"],
+      "js": ["scripts/content-script/for-all-urls.js"]
+    },
+    {
+      "matches": ["https://app.capijzo.com/chrome_auth_facebook.php?task=log_in"],
+      "css": [],
+      "js": ["scripts/content-script/for-facebook-auth.js"]
+    },
+    {
+      "matches": ["https://app.capijzo.com/add-snippet"],
+      "css": [],
+      "js": ["scripts/content-script/for-snippet-add.js"]
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "css": [],
+      "js": [
+        "scripts/content-script/googleDocsUtil.js",
+        "scripts/content-script/for-google-docs.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "oauth2": {
+    "client_id": "423557004138-oe6b0i5pufhof2dcktq7u3lrduorjej7.apps.googleusercontent.com",
+    "scopes":[
+              "https://www.googleapis.com/auth/cloud-platform",
+              "https://www.googleapis.com/auth/userinfo.email"
+             ]
+  }
+}

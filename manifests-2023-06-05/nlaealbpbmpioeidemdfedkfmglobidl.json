@@ -1,0 +1,76 @@
+---
+slug: signnow-sign-and-fill-pdf
+name: signNow - Sign and Fill PDF & Word Documents
+description: >-
+  Sign PDF and Word documents from the web by clicking "Open in signNow" from
+  any document in your browser.
+version: '3.6'
+release_date: 'June 22, 2021'
+publisher: SignNow
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.101960784313725
+rating_count: 255
+user_count: '20,000+'
+size: 1.85MiB
+languages:
+  - English
+publisher_site: signnow.com
+extension_website: 'https://www.signnow.com'
+support_website: 'https://university.signnow.com/'
+privacy_policy: 'https://www.signnow.com/terms'
+---
+
+{
+    "update_url":"http://clients2.google.com/service/update2/crx",
+    "name": "signNow - Sign and Fill PDF & Word Documents",
+    "version": "3.6",
+    "manifest_version": 2,
+    "description": "Sign PDF and Word documents from the web by clicking \"Open in signNow\" from any document in your browser.",
+    "permissions": [
+        "<all_urls>",
+        "contextMenus",
+        "storage",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+    "background": {
+        "page": "pdfHandler.html"
+    },
+    "browser_action": {
+        "default_title": "signNow",
+        "default_popup": "pageAction/popup.html"
+    },
+    "content_scripts": [{
+        "matches": ["*://mail.google.com/mail/*"],
+        "js": ["lib/jquery.min.js", "js/gmail.js"],
+        "run_at": "document_end"
+    },{
+        "matches": ["*://*.signnow.com/*", "*://signnow.com/*"],
+        "js": ["lib/jquery.min.js", "js/signnow.js"],
+        "run_at": "document_start"
+    }],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "incognito": "split",
+    "storage": {
+        "managed_schema": "preferences_schema.json"
+    },
+    "web_accessible_resources": [
+        "content/web/viewer.html",
+        "http:/*",
+        "https:/*",
+        "ftp:/*",
+        "file:/*",
+        "chrome-extension:/*",
+        "blob:*",
+        "data:*",
+        "filesystem:/*",
+        "drive:*"
+    ]
+}

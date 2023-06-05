@@ -1,0 +1,73 @@
+---
+slug: 知识星球助手
+name: 知识星球助手
+description: 知识星球助手：一键下载星球全部文档、取消禁止复制文本、导出精华文本等功能
+version: 4.0.0
+release_date: 'May 28, 2023'
+publisher: changyongdon
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.454545454545454
+rating_count: 11
+user_count: '1,000+'
+size: 15.66MiB
+languages:
+  - 中文 (简体)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "知识星球助手",
+  "description": "知识星球助手：一键下载星球全部文档、取消禁止复制文本、导出精华文本等功能",
+  "version": "4.0.0",
+  "icons": {
+    "16": "img/星球.png",
+    "48": "img/星球.png",
+    "128": "img/星球.png"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_icon": {
+      "16": "img/星球.png",
+      "24": "img/星球.png",
+      "32": "img/星球.png"
+    },
+    "default_title": "知识星球助手",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "bg.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://wx.zsxq.com/dweb2/index/group/*"],
+      "js": ["js/GroupOperation.js"],
+      "css": ["css/GroupOperation.css", "css/main.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.zsxq.com/*"],
+      "js": ["js/UndoDisableCopy.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_zsxq_files",
+        "enabled": true,
+        "path": "ruleset_zsxq_files.json"
+      }
+    ]
+  },
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["downloads", "storage", "declarativeNetRequest", "declarativeNetRequestWithHostAccess", "declarativeNetRequestFeedback"],
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*", "img/星球.png"],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

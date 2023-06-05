@@ -1,0 +1,60 @@
+---
+slug: lilium
+name: Lilium
+description: Submit Winning Upwork Proposals
+version: '0.20'
+release_date: 'October 5, 2022'
+publisher: Lilium
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.555555555555555
+rating_count: 9
+user_count: '2,000+'
+size: 7.34MiB
+languages:
+  - English
+publisher_site: lilium.ai
+privacy_policy: 'https://www.lilium.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Lilium",
+  "version": "0.20",
+  "description": "Submit Winning Upwork Proposals",
+  "permissions": [
+    "clipboardWrite",
+    "activeTab",
+    "storage",
+    "https://api.rollbar.com/"
+  ],
+  "icons": {
+    "128": "chrome-extension/assets/enabled-icon.png"
+  },
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.upwork.com/ab/proposals/job/*",
+        "https://www.upwork.com/ab/proposals/interview/*"
+      ],
+      "js": [
+        "static/js/rollbarConfig.js",
+        "static/js/rollbar.min.js",
+        "static/js/contentScript.js"
+      ],
+      "css": ["static/css/contentScript.css"]
+    }
+  ],
+  "background": {
+    "scripts": ["static/js/rollbarConfig.js", "static/js/rollbar.min.js"],
+    "persistent": true
+  },
+  "content_security_policy": "script-src 'self' http://localhost:3000 https://cdn.rollbar.com; object-src 'self' https://cdn.rollbar.com",
+  "browser_action": {
+    "default_popup": "chrome-extension/popup.html",
+    "default_title": "Lilium"
+  },
+  "web_accessible_resources": ["static/*"]
+}

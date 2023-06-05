@@ -1,0 +1,113 @@
+---
+slug: business-click-to-call-ax
+name: Business Click to Call Axialys
+description: >-
+  Solution pour Centre de Contacts intégrée au navigateur pour recevoir des
+  appels et appeler en un clic un contact sur une page web.
+version: AxiaCall beta (1.0.14)
+release_date: 'December 8, 2022'
+publisher: axialysdev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 529
+size: 259KiB
+languages:
+  - Français
+publisher_site: axialys.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 2,
+	"name": "Business Click to Call Axialys",
+	"short_name": "AxiaCall",
+	"minimum_chrome_version": "84",
+	"version": "1.0.14",
+	"version_name": "AxiaCall beta (1.0.14)",
+
+	"omnibox": {"keyword": "popc"},
+	"default_locale": "fr",
+	"description": "__MSG_appDesc__",
+	"icons": {
+		"128": "img/logo2.png"
+	},
+
+	"author": "Axialys cloud Telecom Services",
+	"homepage_url": "https://voice-management.axialys.com/",
+
+	"background": {
+		"scripts": ["js/background.js"],
+		"persistent": true
+	},
+	"browser_action": {
+		"default_title": "VoiceManagement",
+		"default_tooltip": "Permet appels sortants/entrants",
+		"default_icon": "img/state/logo.png"
+	},
+
+	"content_scripts": [
+		{
+			"matches": [
+				"https://voice-management.axialys.com/operateurs/index.htm*"
+			],
+			"js":[
+				"js/interface.js"
+			]
+		},
+		{
+			"matches": [
+				"http://*/*", "https://*/*"
+			],
+			"exclude_matches" : [
+				"https://voice-management.axialys.com/operateurs/*"
+			],
+			"js": [
+				"js/content.js"
+			]
+		},
+		{
+			"matches": [
+				"https://*.easiware.fr/*"
+			],
+			"exclude_matches" : [
+				"https://voice-management.axialys.com/operateurs/*"
+			],
+			"js": [
+				"js/easiware.js"
+			]
+		}
+	],
+
+
+	"commands": {
+		"_execute_browser_action": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+F",
+				"mac": "MacCtrl+Shift+F"
+			},
+			"description": "Afficher la popup"
+		},
+		"_execute_options_page": {
+			"suggested_key": {
+				"default": "Ctrl+Shift+S",
+				"mac": "MacCtrl+Shift+S"
+			},
+			"description": "Afficher les options"
+		}
+	},
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://apis.google.com https://voice-management.axialys.com; object-src 'self' https://voice-management.axialys.com ",
+	"externally_connectable": {
+		"matches": ["https://voice-management.axialys.com/operateurs/*"]
+	},
+
+	"options_page": "www/options.html",
+	"options_ui": {
+		"chrome_style": true,
+		"open_in_tab": true,
+		"page":"www/options.html"
+	},
+	"permissions": [ "webRequest", "webRequestBlocking", "contextMenus", "storage", "https://voice-management.axialys.com/*", "https://*.easiware.fr/*" ]
+}

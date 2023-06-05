@@ -1,0 +1,121 @@
+---
+slug: komodo-web-recorder
+name: Komodo Web Recorder
+description: Capture screen and camera
+version: 1.5.1
+release_date: 'May 27, 2023'
+publisher: kgrauer
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.85
+rating_count: 20
+user_count: '10,000+'
+size: 452KiB
+languages:
+  - English
+publisher_site: komododecks.com
+extension_website: 'https://www.komododecks.com/'
+support_website: 'https://www.komododecks.com/'
+privacy_policy: 'https://komododecks.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Komodo Web Recorder",
+  "description": "Capture screen and camera",
+  "version": "1.5.1",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhFvYQ/mQRjUI6SLRgESnLnW3FMu5AKzWyavSAZA6BGpRsmTIzfZOQneXQueTf99aQ7edUeVQyDBFZUgady8XgC2DQVTG5T7PVtstTAF4eFQgNhQDVg96Mp18YpiFRFjVadQkpWhA6zmrLGkvD2SLmutxhtt9UYyKnk4KKPgvnlPzX/2xfZDVUafPl8m9T4aW04ZLtPWlGcbxjUexZGNtNqLbljVBfHYXLyX1OsszntqoJ6gETzPubyHrpXEBM93j/RZMLmTu1udrmYz0AQYcgeqh0FtnNG4TxINCpIq07zI9Nry7XJ9Pz73RJN58fT+t1sMrmLbXquWf7DbsWv978wIDAQAB",
+  "manifest_version": 2,
+  "minimum_chrome_version": "84.0",
+  "permissions": [
+    "<all_urls>",
+    "https://*.komododecks.com/*",
+    "https://komododecks.com/*",
+    "activeTab",
+    "storage",
+    "notifications",
+    "clipboardWrite",
+    "unlimitedStorage"
+  ],
+  "icons": {
+    "64": "static/images/icon/icon.png"
+  },
+  "browser_action": {
+    "default_icon": "static/images/icon/icon.png",
+    "default_title": "Komodo"
+  },
+  "background": {
+    "scripts": [
+      "src/constants-main.js",
+      "src/lib/sentry/7.41.0/bundle.min.js",
+      "src/bg/sentry-init-bg.js",
+      "src/util.js",
+      "src/bg/constants-bg.js",
+      "src/cs/constants-cs.js",
+      "src/bg/bg-util.js",
+      "src/bg/bg-rec-timer.js",
+      "src/bg/bg-media.js",
+      "src/bg/bg-guide.js",
+      "src/bg/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://spaces.vatom.com/*"
+      ],
+      "js": [
+        "src/cs/ui-variants/vatom-ui.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/util.js",
+        "src/constants-main.js",
+        "src/cs/constants-cs.js",
+        "src/cs/cs-hider.js",
+        "src/cs/cs-guide.js",
+        "src/cs/cs-ui.js",
+        "src/cs/cs-root.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "src/cs/gmail.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": ["static/*", "src/pages/iframes/*", "src/cs/ui-variants/*.css"],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      }
+    },
+    "toggle-pause-recording": {
+      "description": "Pause/Resume a Recording"
+    },
+    "stop-recording": {
+      "description": "Stop a Recording"
+    },
+    "pip-camera": {
+      "description": "Picture-in-Picture Camera"
+    }
+  },
+  "options_ui": {
+    "page": "src/pages/options/options.html",
+    "chrome_style": true,
+    "open_in_tab": true
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self';",
+  "externally_connectable": {
+    "matches": ["https://*.komododecks.com/*", "https://komododecks.com/*"]
+  }
+}

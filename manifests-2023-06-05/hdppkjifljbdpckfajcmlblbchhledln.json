@@ -1,0 +1,79 @@
+---
+slug: browser-redirection-exten
+name: Browser Redirection Extension
+description: This extension redirects Webpages.
+version: '6.5'
+release_date: 'May 2, 2023'
+publisher: Citrix Systems Inc
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.1
+rating_count: 10
+user_count: '900,000+'
+size: 141KiB
+languages:
+  - English
+extension_website: >-
+  https://docs.citrix.com/en-us/citrix-virtual-apps-desktops/multimedia/browser-content-redirection.html
+support_website: 'https://support.citrix.com/article/CTX230052'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Browser Redirection Extension",
+  "description": "This extension redirects Webpages.",
+  "version": "6.5",
+  "icons": {
+    "16": "citrix_icon16.png",
+    "48": "citrix_icon48.png",
+    "128": "citrix_icon.png"
+  },
+
+  "action": {
+    "default_icon": "citrix_icon_inactive.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start",
+      "js": [ "content-PageToServiceWorkerMessageProxy.js", "content-InjectedScriptConfigurator.js" ]
+    },
+    {
+      "matches": [ "*://*/*bcrFallback=bcrFallback*" ],
+      "run_at": "document_start",
+      "js": [ "content-VideoSuppressor.js" ]
+    }
+  ],
+
+  "background": {
+    "service_worker": "background-ImportScripts.js"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "activeTab",
+    "webNavigation",
+    "storage",
+    "tabs",
+    "nativeMessaging",
+    "webRequest"
+  ],
+
+  "host_permissions": [
+    "http://*/*","https://*/*"
+  ],
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "bcr.html", "HdxVideoBootstrapper.js", "CitrixBcrApi.js", "CitrixVideoSuppressor.js" ],
+      "matches": [ "*://*/*" ]
+    }
+  ]
+}

@@ -1,0 +1,81 @@
+---
+slug: vauto-vin-click
+name: vAuto VIN-Click
+description: >-
+  Finds VIN's on your pages and provides you with a simple way to open up a new
+  vAuto Appraisal with that VIN.
+version: 1.4.1
+release_date: 'February 15, 2023'
+publisher: vAuto VIN-Click
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: '10,000+'
+size: 291KiB
+languages:
+  - English
+  - Français
+extension_website: 'https://www.vauto.com'
+support_website: 'https://www.vauto.com/about/contact/'
+privacy_policy: 'https://www.coxautoinc.com/privacy-statement'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "short_name": "CAVA",
+  "version": "1.4.1",
+  "default_locale": "en",
+  "description": "Finds VIN's on your pages and provides you with a simple way to open up a new vAuto Appraisal with that VIN.",
+  "permissions": ["storage", "contextMenus", "tabs", "scripting"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://api.vauto.com/Va/api/mobile/session/V5;"
+  },
+  "host_permissions":["https://*/*", "http://*/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "all_frames": false,
+      "js": [
+        "lib/browser-polyfill.min.js",
+        "lib/popper.min.js",
+        "lib/tippy-bundle.umd.min.js",
+        "lib/jspanel/jspanel.min.js",
+        "services/constants.js",
+        "services/utils.js",
+        "services/analytics-messenger.js",
+        "services/vauto-api-messenger.js",
+        "services/vin-validator.js",
+        "services/vin-panel-actions.js",
+        "services/html-node-matcher.js",
+        "services/matched-vin-handler.js",
+        "models/matched-node.js",
+        "models/matched-vin-analytics-data.js",
+        "models/vehicle-data.js",
+        "main.js"
+      ],
+      "css": ["lib/jspanel/jspanel.min.css", "main.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/cava_16.png",
+    "48": "icons/cava_48.png",
+    "72": "icons/cava_72.png",
+    "96": "icons/cava_96.png",
+    "128": "icons/cava_128.png"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "web_accessible_resources": [{
+    "resources": ["lib/fonts/*.ttf", "lib/ga.js", "images/*"],
+    "matches": ["https://*/*", "http://*/*"]
+  }]
+}

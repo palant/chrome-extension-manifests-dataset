@@ -1,0 +1,58 @@
+---
+slug: kumpello-notifier
+name: Kumpello Notifier
+description: >-
+  Pozostaje online i wyświetla powiadomienia o nowych wiadomościach i
+  zdarzeniach z kumpello.pl, nawet po zamknięciu strony.
+version: 0.5.3
+release_date: 'December 15, 2014'
+publisher: ludwik
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 4
+user_count: 12
+size: 33.17KiB
+languages:
+  - polski
+extension_website: 'https://kumpello.pl/group/8272'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Kumpello Notifier",
+  "version": "0.5.3",
+  "manifest_version": 2,
+  "description": "Pozostaje online i wyświetla powiadomienia o nowych wiadomościach i zdarzeniach z kumpello.pl, nawet po zamknięciu strony.",
+  "icons": { "128": "img/logo.png" },
+  "browser_action": {
+    "default_title": "",
+    "default_icon": "img/logo.png",
+    "default_popup": "views/popup.html"
+  },
+  "permissions": [
+    "*://kumpello.pl/",
+    "notifications"
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "options_page": "views/options.html",
+  "background": {
+    "page": "views/background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://kumpello.pl/login", "*://kumpello.pl/login/*"],
+      "js": ["/js/rememberByDefault.js"]
+    },
+    {
+      "matches": ["*://kumpello.pl/*","*://kumpello.pl/"],
+      "exclude_matches": ["*://kumpello.pl/login*", "*://kumpello.pl/bye"],
+      "js": ["/js/detectLogin.js"]
+    },
+    {
+      "matches": ["*://kumpello.pl/user/*/priv", "*://kumpello.pl/account/notifications", "*://kumpello.pl/bye"],
+      "js": ["/js/checkAgain.js"]
+    }
+   ]
+}

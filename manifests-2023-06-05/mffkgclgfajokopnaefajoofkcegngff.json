@@ -1,0 +1,173 @@
+---
+slug: efitter
+name: efitter
+description: The sizing solution that finds your perfect fit when shopping online
+version: 3.2.0
+release_date: 'October 30, 2022'
+publisher: efitter
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 3
+user_count: 53
+size: 2.06MiB
+languages:
+  - English
+publisher_site: efitterapp.com
+extension_website: 'https://www.efitterapp.com/'
+support_website: 'https://www.efitterapp.com/frequently-asked-questions'
+privacy_policy: 'https://www.efitterapp.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "efitter",
+  "description": "The sizing solution that finds your perfect fit when shopping online",
+  "version": "3.2.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh7Vquhr3RcFNoELlSkESqaxCWSnCt+OpD/EjSIUiRCnfD9XYUvVQap4giguu0o3/DLy6x/vfyyHEY5s3yRcPYcL48hubmXwJsC7Rrho1nq8wmm1GEBCw+o9jo7i5bi6rIa7DUAwrIvgfwf4mPyR/cZoMydHd+tlEmhmh8weTsljjsSrXLNedg7JJNi1veA5IAg82Ucq+zoZwPKJPAklD1mBtmzggFf/1j7quh93fsPKjOLdga7Y3ZRdc4fx1nPUKk51IB4TPsUV06jMKCs5tZgv+q/PPYn1K5jtoM6tmZWrMC2J74HJ0arSCAWu7D+m08WXcC5pxgCSXTN6Xgy8N6wIDAQAB",
+
+  "action": {
+    "default_title": "efitter",
+    "default_icon": "./images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "./images/icon.png",
+    "48": "./images/icon.png",
+    "16": "./images/icon.png"
+  },
+  "background": {
+    "service_worker": "background-wrapper.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.zara.com/*",
+        "https://www2.hm.com/*",
+        "https://shop.mango.com/*",
+        "https://www.uniqlo.com/*",
+        "https://www.asos.com/*",
+        "https://www.houseofcb.com/*",
+        "https://www.bershka.com/*",
+        "https://www.stradivarius.com/*",
+        "https://www.pullandbear.com/*",
+        "https://www.massimodutti.com/*",
+        "https://www.marksandspencer.com/*"
+      ],
+      "js": [
+        "./js/data/sizes.js",
+        "./js/data/materials.js",
+        "./js/calculateSize.js",
+        "./js/getMaterialCharacteristic.js",
+        "./js/tools/config.js",
+        "./js/tools/jquery.min.js",
+        "./js/tools/core.js",
+        "./js/tools/simpleNotify.js",
+        "./js/tools/oauth.js",
+        "./js/content-scripts/content.js"
+      ],
+      "css": ["./css/simpleNotifyStyle.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://accounts.google.com/o/oauth2/approval/v2?auto=false&response=state%3Dextension_token*"
+      ],
+      "js": [
+        "./js/tools/config.js",
+        "./js/tools/jquery.min.js",
+        "./js/tools/core.js",
+        "./js/tools/oauth.js",
+        "./js/tools/oauthContent.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.zara.com/*"],
+      "js": ["./js/content-scripts/content-zara.js"],
+      "css": ["./css/zara-style.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www2.hm.com/*"],
+      "js": ["./js/content-scripts/content-hm.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://shop.mango.com/*"],
+      "js": ["./js/content-scripts/content-mango.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.uniqlo.com/*"],
+      "js": ["./js/content-scripts/content-uniqlo.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.asos.com/*"],
+      "js": ["./js/content-scripts/content-asos.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.bershka.com/*"],
+      "js": ["./js/content-scripts/content-bershka.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.houseofcb.com/*"],
+      "js": ["./js/content-scripts/content-houseofcb.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.stradivarius.com/*"],
+      "js": ["./js/content-scripts/content-stradivarius.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.pullandbear.com/*"],
+      "js": ["./js/content-scripts/content-pullbear.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.massimodutti.com/*"],
+      "js": ["./js/content-scripts/content-massimoDutti.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.marksandspencer.com/*"],
+      "js": ["./js/content-scripts/content-ms.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://mail.google.com/mail/u/0/?fs=1&su=Report%20Email*"],
+      "js": [
+        "./js/tools/config.js",
+        "./js/tools/core.js",
+        "./js/content-scripts/content-gmail.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "oauth2": {
+    "client_id": "479734964735-t5gmdfnqcfv2uj204rq1qiinpvh7mirg.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile",
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["storage", "identity", "identity.email"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

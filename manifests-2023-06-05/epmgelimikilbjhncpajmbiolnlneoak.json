@@ -1,0 +1,64 @@
+---
+slug: pluckr
+name: Pluckr
+description: Import your LinkedIn contacts into your HubSpot with a single click.
+version: 1.1.14
+release_date: 'May 15, 2022'
+publisher: pluckrapp
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 74
+size: 48.45KiB
+languages:
+  - English
+extension_website: 'https://www.pluckrapp.com/'
+support_website: 'https://www.pluckrapp.com/contact'
+privacy_policy: 'https://www.pluckrapp.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Pluckr",
+  "version": "1.1.14",
+  "description": "Import your LinkedIn contacts into your HubSpot with a single click.",
+  "author": "Hirewand Technologies",
+  "icons": {
+    "16": "./app/img/icon_19.png",
+    "48": "./app/img/icon_48.png",
+    "128": "./app/img/icon_128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Pluckr",
+    "default_icon": {
+      "19": "./app/img/icon_19.png",
+      "48": "./app/img/icon_48.png"
+    }
+  },
+  "background": {
+    "service_worker": "./app/js/utilities/background-loader.js"
+  },
+  "content_scripts": [{
+    "matches": ["*://*.linkedin.com/*", "*://*.pluckrapp.com/*"],
+    "js": ["./config.json", "./3rdparty/js/axios.min.js", "./app/js/config.js", "./app/js/utilities/message.js", "./app/js/utilities/template.js", "./app/js/portals/Portal.js", "./app/js/portals/LinkedIn/LinkedInPublic.js", "./app/js/portals/LinkedIn/LinkedInSalesNavigator.js", "./app/js/Content.js"],
+    "css": ["./app/css/global.css"],
+    "run_at": "document_start"
+  }],
+  "homepage_url": "https://www.pluckrapp.com/",
+  "externally_connectable": {
+    "matches": ["*://*.pluckrapp.com/*"]
+  },
+  "offline_enabled": true,
+  "optional_permissions": [],
+  "permissions": ["storage"],
+  "host_permissions": ["*://*.linkedin.com/*", "*://*.pluckrapp.com/*"],
+  "short_name": "Pluckr",
+  "web_accessible_resources": [{
+    "resources": ["config.json", "app/js/utilities/inject.js", "app/img/*"],
+    "matches": ["<all_urls>"]
+  }]
+}

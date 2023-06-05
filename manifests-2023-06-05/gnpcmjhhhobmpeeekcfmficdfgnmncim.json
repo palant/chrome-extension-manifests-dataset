@@ -1,0 +1,110 @@
+---
+slug: my-agent-extension-by-rep
+name: My Agent Extension by RepArchive
+description: >-
+  Automatically convert all links on reddit to your favorite shopping agent;
+  enrich the page with online information and QC pics.
+version: 1.6.0
+release_date: 'May 11, 2023'
+publisher: CH Web Development
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 5
+rating_count: 2
+user_count: 823
+size: 46.79KiB
+languages:
+  - English
+publisher_site: reparchive.com
+extension_website: 'https://reparchive.com'
+support_website: 'https://reparchive.com/report?service=Browser+Extension'
+privacy_policy: 'https://ch-webdev.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "My Agent Extension by RepArchive",
+  "version": "1.6.0",
+  "description": "Automatically convert all links on reddit to your favorite shopping agent; enrich the page with online information and QC pics.",
+  "icons": {
+    "48": "assets/icon.png"
+  },
+  "action": {
+    "default_icon": "assets/icon.png",
+    "default_popup": "assets/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/agent_logos/*",
+        "assets/platform_logos/*"
+      ],
+      "matches": [
+        "*://*.reddit.com/*",
+        "*://*.wegobuy.com/*",
+        "*://*.superbuy.com/*",
+        "*://*.sugargoo.com/*",
+        "*://*.cssbuy.com/*",
+        "*://*.pandabuy.com/*",
+        "*://*.hagobuy.com/*",
+        "*://*.taobao.com/*",
+        "*://*.weidian.com/*",
+        "*://*.1688.com/*",
+        "*://*.tmall.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.reddit.com/*"
+      ],
+      "js": [
+        "./content_script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.wegobuy.com/*",
+        "*://*.superbuy.com/*",
+        "*://*.sugargoo.com/*",
+        "*://*.cssbuy.com/*",
+        "*://*.pandabuy.com/*",
+        "*://*.hagobuy.com/*"
+      ],
+      "js": [
+        "./redirect.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.wegobuy.com/en/page/buy*",
+        "*://*.wegobuy.com/cn/page/buy*",
+        "*://*.superbuy.com/en/page/buy*",
+        "*://*.superbuy.com/cn/page/buy*",
+        "*://*.sugargoo.com/index/item/*",
+        "*://*.cssbuy.com/item*",
+        "*://*.pandabuy.com/product*",
+        "*://*.hagobuy.com/item/details*",
+        "*://*.taobao.com/*",
+        "*://*.weidian.com/*",
+        "*://*.1688.com/*",
+        "*://*.tmall.com/*"
+      ],
+      "js": [
+        "./toolbar.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "permissions": [
+    "storage"
+  ]
+}

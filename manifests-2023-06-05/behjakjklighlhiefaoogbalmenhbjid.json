@@ -1,0 +1,364 @@
+---
+slug: yuja-verity-for-test-proc
+name: YuJa Verity for Test Proctoring
+description: Chrome extension to be used with YuJa Verity
+version: 0.4.8.4
+release_date: 'May 10, 2023'
+publisher: yujacorp.developer
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '8,000+'
+size: 836KiB
+languages:
+  - English
+extension_website: 'https://www.yuja.com/verity/'
+support_website: 'https://support.yuja.com/'
+privacy_policy: 'https://www.yuja.com/documentation/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "YuJa Verity for Test Proctoring",
+  "description": "Chrome extension to be used with YuJa Verity",
+  "version": "0.4.8.4",
+  "manifest_version": 3,
+  "incognito": "spanning",
+  "action": {
+    "default_icon": "yuja.png"
+  },
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "management",
+    "scripting",
+    "storage",
+    "system.display",
+    "tabs",
+    "webRequest",
+    "contentSettings",
+    "privacy",
+    "offscreen",
+    "alarms"
+  ],
+  "icons": {
+    "16": "yuja16.png",
+    "512": "yuja.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.yuja.com/*"
+    ]
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "offscreen/get-permission.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*/quizzes/*/edit*"
+      ],
+      "js": [
+        "canvas/classic-quizzes/edit-quiz-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*/quizzes/*"
+      ],
+      "exclude_globs": [
+        "*edit*",
+        "*take*"
+      ],
+      "js": [
+        "canvas/classic-quizzes/take-quiz-inject.js"
+      ],
+      "css": [
+        "canvas/classic-quizzes/take-quiz-inject.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*/quizzes/*/take*"
+      ],
+      "js": [
+        "canvas/classic-quizzes/quiz-menu-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/courses/*/assignments/*"
+      ],
+      "exclude_matches": [
+        "https://*/courses/*/assignments/*/edit*"
+      ],
+      "js": [
+        "canvas/assignment/view-assignment-inject.js"
+      ],
+      "css": [
+        "canvas/assignment/view-assignment-inject.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/courses/*/assignments/*/edit*"
+      ],
+      "js": [
+        "canvas/assignment/edit-assignment-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://ilearn.quiz-lti-iad-prod.instructure.com/taking/*"
+      ],
+      "js": [
+        "canvas/new-quizzes/quiz-view-and-menu-inject.js"
+      ],
+      "css": [
+        "canvas/new-quizzes/quiz-view-inject.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/courses/*/assignments/*quiz_lti"
+      ],
+      "js": [
+        "canvas/new-quizzes/quiz-settings-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/courses/*/assignments/*"
+      ],
+      "js": [
+        "canvas/new-quizzes/quiz-info-getter-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://ilearn.quiz-lti-iad-prod.instructure.com/build/*"
+      ],
+      "exclude_globs": [
+        "*settings*"
+      ],
+      "js": [
+        "canvas/new-quizzes/quiz-build-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://ilearn.quiz-lti-iad-prod.instructure.com/build/*"
+      ],
+      "js": [
+        "canvas/new-quizzes/quiz-password-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/courses/*/gradebook"
+      ],
+      "js": [
+        "canvas/instructor-report-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/grade/report/grader/index.php?id=*"
+      ],
+      "js": [
+        "content-scripts/moodle/instructor-report-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/course/modedit.php?*update=*"
+      ],
+      "js": [
+        "content-scripts/moodle/quiz-settings-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/mod/course/view.php*"
+      ],
+      "js": [
+        "content-scripts/moodle/quiz-view-inject.js"
+      ],
+      "css": [
+        "content-scripts/moodle/quiz-view-inject.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/mod/quiz/view.php*"
+      ],
+      "js": [
+        "content-scripts/moodle/quiz-view-inject.js"
+      ],
+      "css": [
+        "content-scripts/moodle/quiz-view-inject.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/mod/quiz/review.php*"
+      ],
+      "js": [
+        "content-scripts/moodle/quiz-review-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/mod/quiz/attempt.php*",
+        "https://*/mod/quiz/summary.php*",
+        "https://*/mod/quiz/startattempt.php"
+      ],
+      "js": [
+        "content-scripts/moodle/quiz-menu-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/admin/settings.php?section=modsettingsquizcatyujaverity"
+      ],
+      "js": [
+        "content-scripts/moodle/admin-report-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/mod/quiz/startattempt.php"
+      ],
+      "js": [
+        "content-scripts/moodle/password-fail-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/webapps/assessment/do/content/assessment?*action=MODIFY*"
+      ],
+      "js": [
+        "blackboard/original/quiz-settings-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/webapps/assessment/take/launchAssessment.jsp*"
+      ],
+      "js": [
+        "blackboard/original/quiz-view-and-menu-inject.js"
+      ],
+      "css": [
+        "blackboard/original/quiz-view-and-menu-inject.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/webapps/assessment/take/launch.jsp*"
+      ],
+      "js": [
+        "blackboard/original/quiz-take-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/webapps/assessment/take/launch-redirect.jsp*"
+      ],
+      "js": [
+        "blackboard/original/quiz-take-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/webapps/assessment/take/submitted.jsp*"
+      ],
+      "js": [
+        "blackboard/original/quiz-submit-upload.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/webapps/gradebook/do/instructor/enterGradeCenter*"
+      ],
+      "js": [
+        "blackboard/original/instructor-report-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/d2l/le/activities/edit*"
+      ],
+      "js": [
+        "d2l/verity-settings-inject/new-quiz-edit.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/d2l/lms/quizzing/user/quiz_summary*"
+      ],
+      "js": [
+        "d2l/verity-assessment-inject/quiz-view-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/d2l/lms/quizzing/user/attempt/quiz_start_frame_auto.d2l*"
+      ],
+      "js": [
+        "d2l/verity-assessment-inject/quiz-menu-inject.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/d2l/lms/quizzing/admin/quizzes_manage.d2l?*"
+      ],
+      "js": [
+        "d2l/verity-result-inject/quiz-result-inject.js"
+      ],
+      "all_frames": true
+    }
+  ]
+}

@@ -1,0 +1,94 @@
+---
+slug: gm-cheems
+name: GM Cheems
+description: Chess.com and Lichess assistant
+version: 0.11.4
+release_date: 'May 17, 2023'
+publisher: GM Cheems
+category: Fun
+category_slug: ext/14-fun
+rating: 3.857142857142857
+rating_count: 7
+user_count: 672
+size: 1.44MiB
+languages:
+  - English
+publisher_site: gmcheems.com
+extension_website: 'https://www.gmcheems.com/'
+support_website: 'https://gmcheems.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"description": "Chess.com and Lichess assistant",
+	"version": "0.11.4",
+	"name": "GM Cheems",
+	"manifest_version": 3,
+	"action": {},
+	"background": {
+		"service_worker": "background-wrapper.js"
+	},
+	"icons": {
+		"128": "cheems_128.png"
+	},
+	"content_scripts": [
+		{
+			"run_at": "document_start",
+			"matches": [
+				"https://lichess.org/*"
+			],
+			"js": [
+				"gmcContent.bundle.js"
+			]
+		},
+		{
+			"run_at": "document_idle",
+			"matches": [
+				"https://*.chess.com/*"
+			],
+			"js": [
+				"gmcContent.bundle.js"
+			]
+		},
+		{
+			"run_at": "document_idle",
+			"matches": [
+				"https://lichess.org/*",
+				"https://*.chess.com/*"
+			],
+			"js": [
+				"contentApp.bundle.js"
+			]
+		}
+	],
+	"content_security_policy": {
+		"extension_pages": "script-src 'self'; object-src 'self'"
+	},
+	"web_accessible_resources": [
+		{
+			"resources": [
+				"pages/opening-book-import.html",
+				"pages/assets/opening-book-import.bundle.js",
+				"pages/st11.html",
+				"pages/assets/st11.wasm",
+				"pages/assets/st11.js",
+				"pages/assets/st11-proc.bundle.js"
+			],
+			"matches": [
+				"https://lichess.org/*",
+				"https://*.chess.com/*"
+			],
+			"use_dynamic_url": true
+		}
+	],
+	"sandbox": {
+		"pages": [
+			"pages/st11.html",
+			"pages/opening-book-import.html"
+		]
+	},
+	"permissions": [
+		"storage"
+	]
+}

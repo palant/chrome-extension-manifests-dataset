@@ -1,0 +1,111 @@
+---
+slug: amazon-show-price-without
+name: '[Amazon] show price without fees'
+description: >-
+  Show amazon product prices without the shipping fee that you pay to amazon as
+  a seller.
+version: 5.0.2
+release_date: 'November 15, 2022'
+publisher: MJ Digital
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 4.8
+rating_count: 5
+user_count: '1,000+'
+size: 416KiB
+languages:
+  - English (United States)
+extension_website: 'https://amzshowprice.clickfunnels.com/home'
+support_website: 'https://amzshowprice.clickfunnels.com/home'
+privacy_policy: 'https://amzshowprice.clickfunnels.com/privacy-policy23'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "[Amazon] show price without fees",
+  "short_name": "what I earn on amazon",
+  "description": "Show amazon product prices without the shipping fee that you pay to amazon as a seller.",
+  "version": "5.0.2",
+  "version_name": "5.0.2",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "src/index.html",
+    "default_title": "To see the chrome extension in action please open amazon and adjust your shipping fee percentage to your liking."
+  },
+  "background": {
+		"service_worker": "/src/authModule/js/background-worker.js"
+	},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.com/*",
+        "http://www.amazon.com/*",
+        "http://www.amazon.ca/*",
+        "https://www.amazon.ca/*",
+        "https://www.amazon.co.uk/*",
+        "http://www.amazon.co.uk/*",
+        "http://www.amazon.co.jp/*",
+        "https://www.amazon.co.jp/*",
+        "http://www.amazon.fr/*",
+        "https://www.amazon.fr/*",
+        "http://www.amazon.de/*",
+        "https://www.amazon.de/*"
+      ],
+      "js": [
+        "src/jquery-1.12.3.js",
+        "src/injectable.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "src/jquery-1.12.3.js",
+        "src/authModule/js/config.js",
+        "src/authModule/js/core.js",
+        "src/authModule/js/stripe_scripts.js",
+        "src/authModule/js/content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+			"matches": ["https://amazon-extension-test.herokuapp.com/*state=extension_token*"],
+			"js": ["src/authModule/js/core.js", "src/authModule/js/oauth.js", "src/authModule/js/oauthContent.js"],
+			"run_at": "document_start"
+		}
+  ],
+  "client_id": "286222568796-dh2fnemvefk5n48goa2glfl0gb42uq94.apps.googleusercontent.com",
+  "web_accessible_resources": [
+    {
+      "resources": [ "src/images/*" ],
+      "matches": [
+        "https://www.amazon.com/*",
+        "http://www.amazon.com/*",
+        "http://www.amazon.ca/*",
+        "https://www.amazon.ca/*",
+        "https://www.amazon.co.uk/*",
+        "http://www.amazon.co.uk/*",
+        "http://www.amazon.co.jp/*",
+        "https://www.amazon.co.jp/*",
+        "http://www.amazon.fr/*",
+        "https://www.amazon.fr/*",
+        "http://www.amazon.de/*",
+        "https://www.amazon.de/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "https://*.googleapis.com/",
+    "https://amazon-extension-test.herokuapp.com/*",
+    "*://localhost:44303/*"
+  ]
+}

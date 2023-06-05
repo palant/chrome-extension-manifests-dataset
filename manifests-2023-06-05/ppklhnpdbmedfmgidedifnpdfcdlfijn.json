@@ -1,0 +1,164 @@
+---
+slug: wanderlog-search-save-goo
+name: 'Wanderlog: search & save Google Maps places'
+description: >-
+  Make planning your next trip easier: search for places on articles and blog
+  posts on Google Maps without switching tabs.
+version: 1.0.7
+release_date: 'December 30, 2022'
+publisher: Wanderlog
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.0952380952380953
+rating_count: 21
+user_count: '10,000+'
+size: 1.4MiB
+languages:
+  - English (United States)
+publisher_site: wanderlog.com
+extension_website: 'https://wanderlog.com/'
+privacy_policy: 'https://wanderlog.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Wanderlog: search & save Google Maps places",
+  "version": "1.0.7",
+  "description": "Make planning your next trip easier: search for places on articles and blog posts on Google Maps without switching tabs.",
+  "icons": {
+    "128": "assets/logo.png"
+  },
+  "action": {
+    "default_title": "Wanderlog Chrome extension instructions",
+    "default_icon": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/serviceWorker.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "removeSouthwestFrameHeaders",
+        "enabled": true,
+        "path": "declarativeNetRequest/removeSouthwestFrameHeaders.json"
+      }
+    ]
+  },
+  "permissions": [
+    "declarativeNetRequestWithHostAccess",
+    "webRequest",
+    "contextMenus",
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": ["*://*.southwest.com/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/travel/flights*",
+        "*://*.google.com/flights*",
+        "*://*.airbnb.com/*",
+        "*://*.airbnb.az/*",
+        "*://*.airbnb.co.id/*",
+        "*://*.airbnb.ba/*",
+        "*://*.airbnb.cat/*",
+        "*://*.airbnb.cz/*",
+        "*://*.airbnb.me/*",
+        "*://*.airbnb.dk/*",
+        "*://*.airbnb.de/*",
+        "*://*.airbnb.at/*",
+        "*://*.airbnb.ch/*",
+        "*://*.airbnb.com.ee/*",
+        "*://*.airbnb.com.au/*",
+        "*://*.airbnb.ca/*",
+        "*://*.airbnb.gy/*",
+        "*://*.airbnb.co.in/*",
+        "*://*.airbnb.ie/*",
+        "*://*.airbnb.co.nz/*",
+        "*://*.airbnb.com.sg/*",
+        "*://*.airbnb.ae/*",
+        "*://*.airbnb.com.ar/*",
+        "*://*.airbnb.com.bz/*",
+        "*://*.airbnb.com.bo/*",
+        "*://*.airbnb.cl/*",
+        "*://*.airbnb.com.co/*",
+        "*://*.airbnb.co.cr/*",
+        "*://*.airbnb.com.ec/*",
+        "*://*.airbnb.com.sv/*",
+        "*://*.airbnb.es/*",
+        "*://*.airbnb.com.gt/*",
+        "*://*.airbnb.com.hn/*",
+        "*://*.airbnb.mx/*",
+        "*://*.airbnb.com.ni/*",
+        "*://*.airbnb.com.pa/*",
+        "*://*.airbnb.com.py/*",
+        "*://*.airbnb.com.pe/*",
+        "*://*.airbnb.co.ve/*",
+        "*://*.airbnb.be/*",
+        "*://*.airbnb.fr/*",
+        "*://*.airbnb.co.za/*",
+        "*://*.airbnb.is/*",
+        "*://*.airbnb.it/*",
+        "*://*.airbnb.lv/*",
+        "*://*.airbnb.lt/*",
+        "*://*.airbnb.hu/*",
+        "*://*.airbnb.com.mt/*",
+        "*://*.airbnb.com.my/*",
+        "*://*.airbnb.nl/*",
+        "*://*.airbnb.no/*",
+        "*://*.airbnb.pl/*",
+        "*://*.airbnb.com.br/*",
+        "*://*.airbnb.pt/*",
+        "*://*.airbnb.com.ro/*",
+        "*://*.airbnb.si/*",
+        "*://*.airbnb.rs/*",
+        "*://*.airbnb.fi/*",
+        "*://*.airbnb.se/*",
+        "*://*.airbnb.com.ph/*",
+        "*://*.airbnb.vn/*",
+        "*://*.airbnb.tr/*",
+        "*://*.airbnb.gr/*",
+        "*://*.airbnb.ru/*",
+        "*://*.airbnb.com.ua/*",
+        "*://*.airbnb.am/*",
+        "*://*.airbnb.co.kr/*",
+        "*://*.airbnb.jp/*",
+        "*://*.airbnb.cn/*",
+        "*://*.airbnb.com.hk/*",
+        "*://*.airbnb.tw/*",
+        "*://*.wanderlog.com/*"
+      ],
+      "js": ["js/content.js"]
+    },
+    {
+      "matches": ["*://*.southwest.com/*"],
+      "js": ["js/content.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/injectedScript.js"],
+      "matches": ["*://*.southwest.com/*"]
+    },
+    {
+      "resources": ["js/mapContent.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "assets/logo.svg",
+        "assets/logo-animated-white.gif",
+        "assets/logo-white.png"
+      ],
+      "matches": ["*://*.google.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "manifest_version": 3
+}

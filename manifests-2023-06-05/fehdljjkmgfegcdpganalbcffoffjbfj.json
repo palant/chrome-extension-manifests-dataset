@@ -1,0 +1,70 @@
+---
+slug: kaldrop-ad-finder
+name: KalDrop Ad Finder
+description: Display only ads in your newsfeed
+version: 1.0.0.25
+release_date: 'November 8, 2022'
+publisher: 'https://kaldrop.com'
+category: Search Tools
+category_slug: ext/38-search-tools
+rating: 0
+rating_count: 0
+user_count: 296
+size: 90.37KiB
+languages:
+  - English
+privacy_policy: 'https://kaldrop.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "KalDrop Ad Finder",
+    "description": "Display only ads in your newsfeed",
+    "version": "1.0.0.25",
+    "author": "Ron Hillel",
+    "icons": {
+        "16": "images/icon_16.png",
+        "64": "images/icon_64.png",
+        "128": "images/icon_128.png"
+    },
+    
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "https://*.facebook.com/*",
+        "https://*.fbcdn.net/*"
+    ],
+  
+    "browser_action":
+    {
+        "default_popup": "popup.html"
+    },
+
+    "content_security_policy": "script-src 'self' https://connect.facebook.net/ https://ssl.google-analytics.com/ https://apis.google.com https://www.gstatic.com/ https://*.firebaseio.com https://cdn.extensionanalytics.com; object-src 'self'",
+    "content_scripts":
+    [{
+        "matches": [
+            "https://*.facebook.com/*",
+            "https://*.fbcdn.net/*"
+        ],
+        "js": ["jquery.js", "functions.js", "content.js"],
+        "all_frames": true,
+        "runAt": "document_start"
+    },{
+        "matches": [
+            "https://app.adspy.com/ads/*",
+            "https://app.adspy.com/ads;userId=*"
+        ],
+        "js": ["jquery.js", "functions.js", "adspy.js"],
+        "all_frames": true,
+        "runAt": "document_start"
+    }],
+  
+    "background":
+    {
+        "scripts": ["jquery.js", "functions.js", "background.js"],
+        "persistent": false
+    }
+}

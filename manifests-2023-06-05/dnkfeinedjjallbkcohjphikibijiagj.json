@@ -1,0 +1,94 @@
+---
+slug: qas-web-recorder
+name: QAS Web Recorder
+description: QMetry Automation Studio Web Recorder
+version: 2.1.3
+release_date: 'September 30, 2021'
+publisher: QMetry
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 3
+user_count: 123
+size: 1.27MiB
+languages:
+  - English (UK)
+extension_website: 'http://www.qmetry.com'
+support_website: 'http://www.qmetry.com/automated-testing-tools-qmetry-automated-studio/'
+privacy_policy: 'https://www.qmetry.com/privacy-policy'
+---
+
+{
+	"key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAn8TQxIhr6hXhrTQTbs09S+hDfvV66qFGgGTtRbgklCECRAjbAjtLDVYVkUsdDhv0SG4fx5Mwnj6viCQp29s4zkrEiePu6xPDCXNH9ySs9/phdbMZeYwA9QCpdL4bNdMhVYWb2AGPvSAjLvsIsYiDlvzzV+1iSH2kG+CBQkNqcIvSCM3zIZLEsg9hA5caYyVKN2Aiz97yr9cgdAlb34xTIGetBH1hBOYscEX9NA7zeDzKCJValmnCHOEleNcpNrcfmYOnoxpy/qlHvoHhlLxf8pEmOU/QIPCKBBbAG2QEwkJU3spg5+MeO9vKmcpEtT1E5don9NThmdkta8snjmGROQIDAQAB",
+	"update_url": "https://clients2.google.com/service/update2/crx",
+	"description": "QMetry Automation Studio Web Recorder",
+	"manifest_version": 2,
+	"name": "QAS Web Recorder",
+	"version": "2.1.3",
+	"homepage_url": "https://www.qmetry.com/",
+	"icons": {
+		"16": "qas/images/branding_16.png",
+		"32": "qas/images/branding_32.png",
+		"48": "qas/images/branding_48.png",
+		"128": "qas/images/branding_128.png"
+	},
+	"permissions": [
+		"tabs",
+		"activeTab",
+		"contextMenus",
+		"webNavigation",
+		"notifications",
+		"http://*/",
+		"https://*/",
+		"storage",
+		"<all_urls>"
+	],
+	"content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
+	"content_scripts": [{
+			"matches": ["<all_urls>"],
+			"js": [
+				"common/browser-polyfill.js",
+				"content/runScript-injecter.js"
+			],
+			"match_about_blank": true,
+			"all_frames": true,
+			"run_at": "document_start"
+		},
+		{
+			"matches": ["<all_urls>"],
+			"js": [
+				"content/socket.io.js",
+				"content/bowser.js",
+				"content/atoms.js",
+				"content/utils.js",
+				"content/selenium-browserbot.js",
+				"common/escape.js",
+				"content/locatorBuilders.js",
+				"content/recorder.js",
+				"content/neighbor-xpaths-generator.js",
+				"content/recorder-handlers.js",
+				"content/sizzle.js",
+				"qas/jquery-3.2.1.min.js",
+				"qas/jquery.color.js"
+			],
+			"match_about_blank": true,
+			"all_frames": true
+		}
+	],
+	"background": {
+		"scripts": [
+			"background/recorder.js",
+			"common/browser-polyfill.js",
+			"content/socket.io.js",
+			"background/background.js",
+			"background/session.js"
+		]
+	},
+	"browser_action": {
+		"default_icon": "qas/images/branding_16.png",
+		"default_popup": "popup/popup.html",
+		"default_title": "QAS Web Recorder"
+	},
+	"web_accessible_resources": ["page/prompt.js", "page/runScript.js"],
+	"offline_enabled": true
+}

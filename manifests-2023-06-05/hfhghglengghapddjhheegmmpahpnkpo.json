@@ -1,0 +1,103 @@
+---
+slug: woocommerce-dropshipping
+name: WooCommerce Dropshipping
+description: >-
+  Works with the WooCommerce Dropshipping plugin to allow merchants to select
+  products from AliExpress
+version: '2.2'
+release_date: 'May 18, 2023'
+publisher: OPMC
+category: Shopping
+category_slug: ext/12-shopping
+rating: 3.125
+rating_count: 24
+user_count: '3,000+'
+size: 482KiB
+languages:
+  - English
+extension_website: 'https://woocommerce.com/products/woocommerce-dropshipping/'
+privacy_policy: 'https://opmc.com.au/about/opmc-terms-of-trade'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+	"manifest_version": 3,
+	"name": "WooCommerce Dropshipping",
+	"version": "2.2",
+	"description": "Works with the WooCommerce Dropshipping plugin to allow merchants to select products from AliExpress",
+	"action": {
+
+		"default_icon": "images/opmc_logo.png",
+		"default_popup": "popup/popup.html"
+	},
+	"icons":
+   	{
+		"128": "images/opmc_logo.png",
+		"16": "images/opmc_logo.png",
+		"48": "images/opmc_logo.png"
+	},
+	"content_scripts": [
+		{
+			"matches": ["*://*.aliexpress.com/item/*","*://*.aliexpress.com/category/*","*://*.aliexpress.com/af/category/*","*://*.aliexpress.com/wow/*","*://*.aliexpress.com/wholesale*","*://*.aliexpress.ru/item/*","*://*.aliexpress.ru/category/*","*://*.aliexpress.ru/af/category/*","*://*.aliexpress.ru/wow/*","*://*.aliexpress.ru/wholesale*","*://*.aliexpress.us/item/*","*://*.aliexpress.us/category/*","*://*.aliexpress.us/af/category/*","*://*.aliexpress.us/wow/*","*://*.aliexpress.us/wholesale*"],
+			"js": ["js_libraries/jquery-3.4.1.min.js",
+				"js_libraries/jquery-ui.min.js",
+				"js_libraries/chart.js",
+				"js_libraries/jquery.dataTables.min.js",
+				"js_content/functions.js",
+				"js_content/moment.js",
+				"js_content/scrape.js",
+				"js_content/auth.js",
+				"js_content/product/product.js",
+				"js_content/events.js",
+				"js_content/filerobot-image-editor.min.js"]
+		},
+		{
+			"matches": ["*://*/wp-admin*"],
+			"js": [ "js_libraries/jquery-3.4.1.min.js","js_checkout/checkout.js"]
+		},
+		{
+			"matches": ["*://shoppingcart.aliexpress.com/orders.htm*"],
+			"js": ["js_libraries/jquery-3.4.1.min.js", "js_libraries/countrycode.js", "js_libraries/statecode.js", "js_shoppingcart/shoppingcart.js"]
+		},
+		{
+			"matches": ["*://shoppingcart.aliexpress.com/order/confirm_order.htm*"],
+			"js": ["js_libraries/jquery-3.4.1.min.js", "js_libraries/countrycode.js", "js_libraries/statecode.js", "js_shoppingcart/shoppingcart.js"]
+		},
+		{
+			"matches": ["*://*.aliexpress.com/*"],
+			"js": ["js_content/events.js"]
+		}
+	],
+	"content_security_policy": {
+		"extension_page": "default-src script-src 'self' 'nonce-rAnd0m' 'unsafe-inline' "
+	},
+	"background": {
+		"service_worker": "js_bg/background.js"
+	},
+	"permissions": [
+		"storage",
+    	"activeTab"
+	],
+	"host_permissions": [
+		"https://www.aliexpress.com/",
+		"*://*/*"
+	],
+	"web_accessible_resources": [{
+    	"resources": [
+    	"/html/auth_form.html",
+    	"/html/popup_in.html",
+    	"/html/view-queue.html",
+		"/html/import-product-compare.html",
+    	"/html/import-product.html",
+    	"/html/product-success.html",
+    	"/html/product-failed.html",
+    	"/html/similar-products.html",
+    	"/html/orders-history.html",
+    	"/html/statistics.html",
+    	"/html/feedbacks.html",
+    	"/html/product-unavailable.html"
+		],
+		"matches": ["<all_urls>"]
+	}]
+}

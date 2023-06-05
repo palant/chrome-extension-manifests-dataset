@@ -1,0 +1,69 @@
+---
+slug: gitd-download-manager
+name: Gitd Download Manager
+description: >-
+  Download at Github,Bitbucket,Gitlab repository's selected files, folders as a
+  zip file with a single click, without any api token.
+version: 1.0.4
+release_date: 'April 20, 2023'
+publisher: uretgec
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 1
+user_count: 59
+size: 68.31KiB
+languages:
+  - English
+publisher_site: gitdownloadmanager.com
+extension_website: 'https://gitdownloadmanager.com'
+support_website: 'https://gitdownloadmanager.com/contact-me'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Gitd Download Manager",
+    "short_name": "Gitd",
+    "description": "Download at Github,Bitbucket,Gitlab repository's selected files, folders as a zip file with a single click, without any api token.",
+    "version": "1.0.4",
+    "homepage_url": "https://github.com/git-download-manager/gitd-extension",
+    "permissions": [
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "https://api.gitdownloadmanager.com/*"
+    ],
+    "icons": { 
+        "16": "icons/16.png",   
+        "32": "icons/32.png",
+        "128": "icons/128.png" 
+    },
+    "author": "Uretgec",
+    "offline_enabled": false,
+    "content_scripts": [
+        {
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
+            "css": ["gitdStyles.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"],
+            "js": ["lib/templates.js", "contentScript.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [ "lib/alpine-scp.min.js","lib/fflate.min.js","lib/gitdmanager.js" ],
+            "matches": ["*://github.com/*", "*://gitlab.com/*", "*://bitbucket.org/*"]
+        }
+    ],
+    "externally_connectable": {
+        "matches": ["https://api.gitdownloadmanager.com/*"]
+    }
+}

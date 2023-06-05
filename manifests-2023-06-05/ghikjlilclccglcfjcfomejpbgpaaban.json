@@ -1,0 +1,108 @@
+---
+slug: surf
+name: Surf
+description: Surf rewards you for your everyday browsing.
+version: 0.4.35
+release_date: 'April 21, 2023'
+publisher: trufan-devops-surf-prod
+category: Fun
+category_slug: ext/14-fun
+rating: 4.328474246841594
+rating_count: 1029
+user_count: '20,000+'
+size: 1.76MiB
+languages:
+  - English
+publisher_site: joinsurf.com
+extension_website: 'https://joinsurf.com'
+privacy_policy: 'http://joinsurf.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "0.4.35",
+  "name": "Surf",
+  "description": "Surf rewards you for your everyday browsing.",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "http://*/",
+    "https://*/",
+    "storage",
+    "webNavigation",
+    "alarms"
+  ],
+  "oauth2": {
+    "client_id": "616868683921-bpok9c7arg30t4srldtu4n1trobchint.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email",
+      "openid"
+    ]
+  },
+  "icons": {
+    "192": "logo192.png",
+    "512": "logo512.png"
+  },
+  "browser_action": {
+    "default_icon": "logo192.png",
+    "default_popup": "index.html",
+    "default_title": "Surf"
+  },
+  "background": {
+    "scripts": [
+      "./background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "./web-app-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "http://localhost:3000/*",
+        "https://app.joinsurf-staging.com/*",
+        "https://app.joinsurf.com/*"
+      ]
+    },
+    {
+      "js": [
+        "./marketing-site-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://surf-ae5ea3.webflow.io/*",
+        "https://joinsurf.com/*",
+        "https://www.joinsurf.com/*"
+      ]
+    },
+    {
+      "js": [
+        "./giveaways-site-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "http://localhost.test:3000/*",
+        "http://dashboard.localhost.test:3000/*",
+        "https://giveaways.joinsurf-staging.com/*",
+        "https://dashboard.giveaways.joinsurf-staging.com/*",
+        "https://giveaways.joinsurf.com/*",
+        "https://dashboard.giveaways.joinsurf.com/*"
+      ]
+    },
+    {
+      "js": [
+        "./alerts-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+---
+slug: immerse-with-migaku-beta
+name: Immerse With Migaku - Beta
+description: >-
+  Learn from Netflix, YouTube, local videos, any website, ebooks, and more. By
+  language learners for language learners.
+version: 0.9.9.23
+release_date: 'December 7, 2022'
+publisher: Migaku
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.6296296296296298
+rating_count: 27
+user_count: '7,000+'
+size: 324MiB
+languages:
+  - English (United States)
+publisher_site: migaku.io
+extension_website: 'https://www.migaku.io'
+support_website: 'https://www.migaku.io/contact'
+privacy_policy: 'https://www.migaku.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Immerse With Migaku - Beta",
+  "description": "Learn from Netflix, YouTube, local videos, any website, ebooks, and more. By language learners for language learners.",
+  "version": "0.9.9.23",
+  "manifest_version": 2,
+  "icons": {
+    "16": "imgs/migakufavicon.png",
+    "48": "imgs/migakufavicon.png",
+    "128": "imgs/migakufavicon.png"
+  },
+  "background": {
+    "scripts": ["background-bundle.js", "paginator-bundle.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "imgs/migakufavicon.png",
+    "default_popup": "extensionMenu.html"
+  },
+  "permissions": [
+    "tabs",
+    "tabCapture",
+    "storage",
+    "activeTab",
+    "downloads",
+    "clipboardRead",
+    "clipboardWrite",
+    "contextMenus",
+    "unlimitedStorage",
+    "<all_urls>",
+    "file://*"
+  ],
+  "content_scripts": [
+    {
+      "js": ["netflix-bundle.js"],
+      "matches": ["https://www.netflix.com/watch/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "run_at": "document_idle",
+      "js": ["youtube-bundle.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["webpage-bundle.js"],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://www.netflix.com/watch*",
+        "https://www.youtube.com/watch*"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "js": ["support-bundle.js"],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://www.netflix.com/watch*",
+        "https://www.youtube.com/watch*"
+      ]
+    }
+  ],
+  "web_accessible_resources": ["imgs/*", "fonts/*", "env/*"],
+  "externally_connectable": {
+    "matches": [
+      "https://www.netflix.com/*",
+      "https://www.youtube.com/watch*",
+      "https://www.reuters.com/article/%E5%B7%B4%E8%A5%BF%E5%B0%86%E6%9A%82%E5%81%9C%E7%94%9F%E4%BA%A7%E4%B8%AD%E5%9B%BD%E7%A7%91%E5%85%B4%E7%96%AB%E8%8B%97%EF%BC%8C%E5%9B%A0%E4%B8%AD%E6%96%B9%E5%8E%9F%E6%9D%90%E6%96%99%E5%8F%91%E8%B4%A7%E5%BB%B6%E8%BF%9F-idCNL4S2N004A"
+    ]
+  }
+}

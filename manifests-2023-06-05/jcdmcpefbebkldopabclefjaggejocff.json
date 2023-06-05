@@ -1,0 +1,75 @@
+---
+slug: ytm+-for-youtube-music
+name: YTM+ for YouTube™ Music
+description: >-
+  Upgrade your YouTube Music experience with a mini player, lyrics, themes, and
+  integrations!
+version: 3.2.0
+release_date: 'April 5, 2023'
+publisher: MitchellK
+category: Fun
+category_slug: ext/14-fun
+rating: 4.03
+rating_count: 100
+user_count: '20,000+'
+size: 1.89MiB
+languages:
+  - English
+publisher_site: ytmplus.app
+privacy_policy: 'https://www.ytmplus.app/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "YTM+ for YouTube™ Music",
+  "description": "Upgrade your YouTube Music experience with a mini player, lyrics, themes, and integrations!",
+  "version": "3.2.0",
+  "browser_action": {
+    "default_icon": "assets/128-icon.png",
+    "default_popup": "html/popup.html"
+  },
+  "permissions": [
+    "storage",
+    "*://music.youtube.com/*",
+    "*://*.spotify.com/*",
+    "*://*.ytmplus.app/*",
+    "notifications"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "icons": {
+    "16": "assets/16-icon.png",
+    "48": "assets/48-icon.png",
+    "128": "assets/128-icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://music.youtube.com/*"],
+      "js": ["content.bundle.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.spotify.com/*"],
+      "js": ["spotify.bundle.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.ytmplus.app/lastfm*"],
+      "js": ["lastfm.bundle.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "options_page": "html/options.html",
+  "web_accessible_resources": [
+    "src/options/options.html",
+    "css/youtube_music_light.css",
+    "css/popup.css",
+    "assets/*",
+    "utils/*"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": ["background.bundle.js"]
+  }
+}

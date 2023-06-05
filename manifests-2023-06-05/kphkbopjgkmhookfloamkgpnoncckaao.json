@@ -1,0 +1,90 @@
+---
+slug: datconnect
+name: DATconnect
+description: >-
+  Plugin that simplifies communication between carriers and brokers by allowing
+  carriers to send emails with one click from loadboard
+version: 1.9.4
+release_date: 'May 12, 2023'
+publisher: Carrierify Inc
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 29
+user_count: '2,000+'
+size: 1.73MiB
+languages:
+  - English
+publisher_site: datconnect.carrierify.com
+extension_website: 'https://datconnect.carrierify.com/'
+support_website: 'https://datconnect.carrierify.com/privacy'
+privacy_policy: 'https://datconnect.carrierify.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "DATconnect",
+    "short_name": "DATConnect send emails with one click from the power dat",
+    "version": "1.9.4",
+    "author": "samakovuluk",
+    "description": "Plugin that simplifies communication between carriers and brokers by allowing carriers to send emails with one click from loadboard",
+    "icons" : { 
+        "128": "images/icon128.png" 
+      },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://datconnect.carrierify.com/**", "https://dev.datconnect.carrierify.com/**"],
+        "js":["datconnect.js"],
+        "run_at": "document_end"
+      },
+
+      {
+        "matches": ["https://one.dat.com/search-loads-ow", "https://one.dat.com/search-trucks-ow", "https://one.dat.com/private-loads"],
+        "js":["scripts/jquery.min.js","onecontent.js"],
+        "css": ["css/content.css"],
+        "run_at": "document_end"
+      },
+
+      {
+        "matches": ["https://truckersedge.dat.com/search-loads", "https://truckersedge.dat.com/search-trucks", "https://truckersedge.dat.com/private-loads"],
+        "js":["scripts/jquery.min.js","truckcontent.js"],
+        "css": ["css/content.css"],
+        "run_at": "document_end"
+      },
+        
+      {
+          "matches": ["https://power.dat.com/search/loads", "https://power.dat.com/postings/trucks"],
+          "js": [ "scripts/jquery.min.js",
+            "content.js", "filter.js", "map.js", "rpm.js"],
+            "css": ["css/content.css"],
+          "run_at": "document_end"
+      },
+      {
+        "matches": ["https://main.truckstop.com/app/**"],
+        "js": [ "scripts/jquery.min.js",
+         "truckstop.js"],
+        "css": ["css/content.css"],
+        "run_at": "document_end"
+      }
+        
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "host_permissions":[
+        "https://power.dat.com/search/loads", "https://power.dat.com/postings/trucks"
+      ],
+      "web_accessible_resources": [{
+        "resources": ["scripts/*.js", "img/*.png", "popup.js"],
+        "matches": ["https://power.dat.com/*"]
+      }],
+      
+    "permissions": ["storage", "webRequest","activeTab","tabs"]
+   
+}
+

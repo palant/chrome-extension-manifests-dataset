@@ -1,0 +1,94 @@
+---
+slug: aso-assistant-with-chatgp
+name: ASO Assistant with ChatGPT
+description: >-
+  Automation tool with ChatGPT for Google Play & Apple app store optimization,
+  summary reviews, keyword, descriptions and more
+version: 1.0.0
+release_date: 'March 24, 2023'
+publisher: ASOTools
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 175
+size: 75.12KiB
+languages:
+  - English
+  - 中文 (简体)
+publisher_site: asotools.io
+extension_website: 'https://asotools.io/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDesc__",
+  "version": "1.0.0",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/logo-16.png",
+    "128": "icons/logo.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_title": "GPT Popup",
+    "default_icon": {
+      "128": "icons/logo.png"
+    }
+  },
+  "commands": {
+    "toggle_InstagramChatGPT": {
+      "description": "Run ChatGPT on the current page.",
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "linux": "Ctrl+B",
+        "mac": "Command+B"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://play.google.com/*"],
+      "js": [
+        "js/content-script.js",
+        "js/chunk-vendors.js"
+      ],
+      "css": [
+        "css/content-script.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.openai.com/*"],
+      "js": ["js/chatgpt-script.js"],
+      "css": [],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*"],
+      "matches": [
+        "*://play.google.com/*",
+        "*://*.openai.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "commands"
+  ],
+  "host_permissions": [
+    "*://play.google.com/*",
+    "*://*.openai.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline'"
+  }
+}

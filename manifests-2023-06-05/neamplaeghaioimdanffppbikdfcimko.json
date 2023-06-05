@@ -1,0 +1,94 @@
+---
+slug: insply
+name: Insply
+description: The worlds first inspiration software for LinkedIn
+version: 1.0.0
+release_date: 'August 5, 2022'
+publisher: Adam Holmgren
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 2
+user_count: 625
+size: 167KiB
+languages:
+  - English (UK)
+publisher_site: www.insply.io
+privacy_policy: 'https://www.insply.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Insply",
+    "description": "The worlds first inspiration software for LinkedIn",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "author": {
+        "name": "Mohsin Ali",
+        "url": "https://github.com/mohsinaliryk"
+    },
+    "background": {
+        "service_worker": "sw.js"
+    },
+    "action": {
+        "default_title": "LinkedIn Ads"
+    },
+    "icons": {
+        "24": "icons/24.png",
+        "32": "icons/32.png",
+        "48": "icons/48.png",
+        "64": "icons/64.png",
+        "128": "icons/128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.linkedin.com/*"],
+            "exclude_matches": [
+                "https://www.linkedin.com/company/*/posts/?feedView=ads&viewAsMember=true&viewFrom=insplyHome",
+                "https://www.linkedin.com/feed/update/urn:li:activity:*/?viewFrom=insplyLibrary",
+                "https://www.linkedin.com/campaignmanager/*"
+            ],
+            "css": ["css/content.css"],
+            "js": ["js/content.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://www.linkedin.com/company/*/posts/?feedView=ads&viewAsMember=true&viewFrom=insplyHome",
+                "https://www.linkedin.com/feed/update/urn:li:activity:*/?viewFrom=insplyLibrary"
+            ],
+            "css": ["css/linkedin.css", "css/tooltip.css"],
+            "js": ["js/linkedin.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": ["https://www.linkedin.com/company/*/posts/?feedView=ads&viewAsMember=true&viewFrom=insplyHome"],
+            "css": ["css/ads.css"],
+            "all_frames": true
+        },
+        {
+            "matches": ["https://www.linkedin.com/feed/update/urn:li:activity:*/?viewFrom=insplyLibrary"],
+            "css": ["css/ad.css"],
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": ["https://www.linkedin.com/*"],
+            "resources": [
+                "app.html", 
+                "css/app.css", 
+                "icons/*",
+                "js/app.js"
+            ]
+        }
+    ],
+    "host_permissions": ["https://www.linkedin.com/*"],
+    "permissions": [
+        "storage", 
+        "declarativeContent",
+        "declarativeNetRequest"
+    ]
+}

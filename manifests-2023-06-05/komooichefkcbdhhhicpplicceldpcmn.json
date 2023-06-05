@@ -1,0 +1,72 @@
+---
+slug: mastodon-friend-check
+name: Mastodon Friend Check
+description: >-
+  This extension shows 'Following' if you've already followed a remote Mastodon
+  web profile.
+version: 1.4.0
+release_date: 'February 4, 2023'
+publisher: developing.today
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: 29
+size: 31.4KiB
+languages:
+  - English (United States)
+publisher_site: developing.today
+extension_website: 'https://src.developing.today/MastodonFriendCheck'
+support_website: 'https://src.developing.today/MastodonFriendCheck/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.4.0",
+  "name": "Mastodon Friend Check",
+  "description": "This extension shows 'Following' if you've already followed a remote Mastodon web profile.",
+  "homepage_url": "https://src.developing.today/MastodonFriendCheck",
+  "permissions": ["activeTab", "alarms", "scripting", "storage", "contextMenus"],
+  "optional_host_permissions": ["https://*/*"],
+  "action": {
+    "default_icon":  "res/icon.png",
+    "default_title": "Toggle Mastodon Page\n🐘 🐘 Jump Now  🐘"
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+J"
+      },
+      "description": "Toggle/Jump Mastodon Page"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/@*",
+        "*://*/users/*",
+        "*://*/channel/*",
+        "*://*/notices/*",
+        "*://*/notes/*",
+        "*://*/i/web/post/*",
+        "*://*/i/web/profile/*",
+        "*://*/web/statuses/*"
+      ],
+      "js": ["src/content.js"],
+      "runAt": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "src/options.html"
+  },
+  "icons": {
+    "16": "res/icon16.png",
+    "128": "res/icon128.png"
+  }
+}
