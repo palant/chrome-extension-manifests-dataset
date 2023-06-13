@@ -1,0 +1,130 @@
+---
+slug: formswift-pdf-editorconve
+name: 'FormSwift PDF Editor:Convert, Sign, Edit'
+description: 'Edit, sign, and convert PDFs from Gmail or the web.'
+version: '1.4'
+release_date: 'May 12, 2023'
+publisher: FormSwift
+category: Productivity
+category_slug: ext/7-productivity
+rating: 1.4434250764525993
+rating_count: 654
+user_count: '400,000+'
+size: 5.7MiB
+languages:
+  - English
+publisher_site: formswift.com
+extension_website: 'http://formswift.com'
+support_website: 'http://formswift.com/faq.php'
+privacy_policy: 'https://formswift.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "FormSwift PDF Editor:Convert, Sign, Edit",
+  "short_name" : "FormSwift PDF Editor",
+  "author": "FormSwift",
+  "description": "Edit, sign, and convert PDFs from Gmail or the web.",
+  "manifest_version": 3,
+  "version": "1.4",
+
+  "background": {"service_worker": "bg.js"},
+
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+
+  "incognito": "split",
+
+  "permissions": [
+    "cookies",
+    "downloads",
+    "declarativeNetRequest",
+    "tabs"
+  ],
+
+  "host_permissions": ["<all_urls>"],
+
+  "content_security_policy": {
+    "extension-pages": "script-src 'self' https://formswift.com; object-src 'self'"
+  },
+
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+
+    "js": [
+      "common.js",
+      "documentList.js",
+      "lib/sha256.js",
+      "lib/utils.js",
+      "add-formswift-button.js",
+      "add-formswift-gmail-button.js",
+      "show-formswift-dialog.js",
+      "lib/pdfjs/build/pdf.js", 
+      "lib/pdfjs/build/pdf.worker.js", 
+      "viewer.js",
+      "pdf-parser.js",
+      "popup.js",
+      "tracking.js"
+    ],
+    "css": [
+      "formswift-dialog.css", 
+      "formswift-button.css", 
+      "formswift-gmail-button.css", 
+      "formswift.css"
+    ],
+    "run_at": "document_idle"
+  }],
+
+  "action": {
+    "default_icon": "images/icon-popup.png",
+    "default_popup": "popup.html"
+  },
+
+  "externally_connectable": {
+    "matches": ["*://*.formswift.com/*", "*://formswift.com/*"]
+  },
+
+  "web_accessible_resources": [{
+    "resources": [
+      "common.js",
+      "documentList.js",
+      "lib/sha256.js",
+      "lib/utils.js",
+      "add-formswift-button.js",
+      "add-formswift-gmail-button.js",
+      "show-formswift-dialog.js",
+      "lib/pdfjs/build/pdf.js", 
+      "lib/pdfjs/build/pdf.worker.js", 
+      "pdf-parser.js",
+      "formswift.css",
+      "viewer.js",
+      "viewer.html",
+      "viewer.css",
+      "pdf-parser.js", 
+      "images/EditTextIcon.svg",
+      "tracking.js"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "oauth2": {
+    "client_id": "1071967238404-n32ninu77jo54nu8lv5f3pvch6nn0f7e.apps.googleusercontent.com",
+    "key": "AIzaSyBDrhnQOAcsPCBVDstSGlpX4F9_cDxet9w",
+    "scopes": [
+        "https://www.googleapis.com/auth/drive.appdata",
+        "https://www.googleapis.com/auth/drive.file"
+    ]
+  }
+}

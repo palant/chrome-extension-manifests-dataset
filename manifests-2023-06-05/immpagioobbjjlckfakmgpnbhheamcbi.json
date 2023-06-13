@@ -1,0 +1,86 @@
+---
+slug: instatext
+name: InstaText
+description: Write like a native speaker.
+version: 1.0.9
+release_date: 'May 22, 2023'
+publisher: InstaText
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 6
+user_count: '100,000+'
+size: 313KiB
+languages:
+  - English
+publisher_site: instatext.io
+extension_website: 'https://instatext.io/'
+support_website: 'https://instatext.io/support/'
+privacy_policy: 'https://instatext.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "InstaText",
+    "version": "1.0.9",
+    "description": "Write like a native speaker.",
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "https://*/*"
+    ],
+    "icons": {
+        "16": "images/icon-16x16.png",
+        "48": "images/icon-48x48.png",
+        "128": "images/icon-128x128.png"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "js": ["js/content.js"],
+            "css": ["css/itButton.css", "css/highlight.css"],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "js": ["js/editor.js"],
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "https://docs.google.com/*"
+            ],
+            "js": ["js/canvasFallback.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [ "js/web-accessible/overleaf.js" ],
+            "matches": [ "*://www.overleaf.com/*" ]
+        },
+        {
+            "resources": [ "js/web-accessible/gdocs.js" ],
+            "matches": [ "https://docs.google.com/*" ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "images/icon-48x48.png"
+    },
+    "externally_connectable": {
+        "matches": ["*://instatext.io/*"]
+    },
+    "manifest_version": 3
+}
