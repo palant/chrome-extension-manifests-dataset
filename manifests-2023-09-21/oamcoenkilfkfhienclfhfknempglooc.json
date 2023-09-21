@@ -1,0 +1,87 @@
+---
+slug: earnplify
+name: Earnplify
+description: >-
+  The best way to amplify your savings by getting the best coupon deals and
+  earning real cash back!
+version: 0.0.4
+release_date: 'November 30, 2022'
+publisher: earnplify
+category: Shopping
+category_slug: ext/12-shopping
+rating: 0
+rating_count: 0
+user_count: 3
+size: 565KiB
+languages:
+  - English
+publisher_site: earnplify.com
+extension_website: 'https://earnplify.com/'
+support_website: 'https://earnplify.com/frequently-asked-questions/'
+privacy_policy: 'https://earnplify.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Earnplify",
+  "version": "0.0.4",
+  "manifest_version": 2,
+  "description": "The best way to amplify your savings by getting the best coupon deals and earning real cash back!",
+  "homepage_url": "https://earnplify.com/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "src/bg/init.js",
+      "src/bg/bg_support_functions.js",
+      "src/config.js",
+      "src/commonJS/dataProvider.js",
+      "src/commonJS/apiService.js",
+      "src/commonJS/utils_global.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "Earnplify",
+    "default_popup": "src/browser_action/browser_action.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/config.js",
+        "src/contentScripts/temp_coupons.js",
+        "src/contentScripts/inject_events.js",
+        "lib/umbrella/umbrella.min.js",
+        "lib/jquery/jquery.js",
+        "src/commonJS/utils_global.js",
+        "lib/mustache/mustache.js",
+        "src/contentScripts/get_token.js",
+        "src/contentScripts/inject_activate_cashback.js",
+        "src/contentScripts/inject_apply_coupons.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite",
+    "cookies",
+    "storage",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "src/partials/*.*",
+    "./resources/*",
+    "src/contentScripts/*.*",
+    "src/commonJS/utils_global.js"
+  ],
+  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'"
+}

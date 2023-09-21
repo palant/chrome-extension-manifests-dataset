@@ -1,0 +1,76 @@
+---
+slug: ground-news-bias-checker
+name: Ground News - Bias Checker
+description: Explore the web and lookup articles you find on Ground News
+version: 3.1.1
+release_date: 'August 4, 2023'
+publisher: Ground News
+category: News & Weather
+category_slug: ext/6-news
+rating: 4.297297297297297
+rating_count: 37
+user_count: '10,000+'
+size: 1.05MiB
+languages:
+  - English
+publisher_site: ground.news
+extension_website: 'https://www.ground.news'
+support_website: 'https://ground.news/frequently-asked-questions'
+privacy_policy: 'https://ground.news/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ground News - Bias Checker",
+  "version": "3.1.1",
+  "description": "Explore the web and lookup articles you find on Ground News",
+  "icons": {
+    "16": "16.png",
+    "32": "32.png",
+    "48": "48.png",
+    "128": "128.png"
+  },
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["https://extension.ground.news/*"],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/vendor.js", "js/content_script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://ground.news/extension/*/toolbar*"],
+      "js": ["js/toolbar_content_script.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "frame.html",
+      "js/frame.js",
+      "popup.html",
+      "js/popup.js"
+    ],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "action": {
+    "default_icon": {
+      "16": "16.png",
+      "32": "32.png",
+      "48": "48.png",
+      "128": "128.png"
+    },
+    "default_title": "Ground News Explorer",
+    "default_popup": "menu.html"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.ground.news/*"]
+  },
+  "manifest_version": 3
+}

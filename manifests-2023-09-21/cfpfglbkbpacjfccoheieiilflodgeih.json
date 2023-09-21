@@ -1,0 +1,79 @@
+---
+slug: mailtumble
+name: MailTumble
+description: Make disposable wrappers for all your email addresses
+version: 1.0.6
+release_date: 'February 8, 2022'
+publisher: MailTumble Pty Ltd
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 7
+user_count: 152
+size: 3.62MiB
+languages:
+  - English
+publisher_site: id.mailtumble.com
+extension_website: 'https://id.mailtumble.com'
+support_website: 'https://id.mailtumble.com'
+privacy_policy: 'https://mailtumble.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "MailTumble",
+  "description": "Make disposable wrappers for all your email addresses",
+  "version": "1.0.6",
+  "icons": {
+    "16": "favicon.png",
+    "128": "favicon.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "128": "favicon.png"
+    },
+    "default_title": "Click Me",
+    "default_popup": "src/popup/index.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "scripts": [
+      "src/background/index.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "src/contentPopup/styles.css"
+      ],
+      "js": [
+        "src/contentPopup/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.mailtumble.com/*",
+        "https://*.mailtumble.app/*"
+      ],
+      "js": [
+        "src/contentAuth/index.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "favicon.png",
+    "close.png"
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+}

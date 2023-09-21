@@ -1,0 +1,65 @@
+---
+slug: prosemirror-developer-too
+name: ProseMirror Developer Tools
+description: Run prosemirror-dev-toolkit as Chrome extension
+version: 1.0.10
+release_date: 'August 16, 2023'
+publisher: teemukoivisto.xyz
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 2
+user_count: 358
+size: 174KiB
+languages:
+  - English
+extension_website: 'https://github.com/TeemuKoivisto/prosemirror-dev-toolkit'
+support_website: 'https://github.com/TeemuKoivisto/prosemirror-dev-toolkit/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ProseMirror Developer Tools",
+  "version": "1.0.10",
+  "description": "Run prosemirror-dev-toolkit as Chrome extension",
+  "minimum_chrome_version": "102",
+  "homepage_url": "https://github.com/TeemuKoivisto/prosemirror-dev-toolkit",
+  "icons": {
+    "16": "devtools-16.png",
+    "32": "devtools-32.png",
+    "48": "devtools-48.png",
+    "128": "devtools-128.png"
+  },
+  "action": {
+    "default_popup": "pop-up.html",
+    "default_icon": "devtools-128.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "js": ["pop-up.js", "proxy.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "externally_connectable": {
+    "ids": ["*"]
+  },
+  "background": {
+    "service_worker": "sw.js"
+  },
+  "permissions": ["storage", "scripting", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

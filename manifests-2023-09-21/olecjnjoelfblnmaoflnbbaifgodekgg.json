@@ -1,0 +1,120 @@
+---
+slug: loadfinder
+name: LoadFinder
+description: Highlight callable loads
+version: 0.4.6
+release_date: 'May 3, 2023'
+publisher: mukluk
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 19
+size: 4.0MiB
+languages:
+  - English (United States)
+privacy_policy: 'https://truckbase.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LoadFinder",
+  "description": "Highlight callable loads ",
+  "version": "0.4.6",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "management"
+  ],
+  "host_permissions": [
+    "https://power.dat.com/*",
+    "http://localhost:3000/*",
+    "https://trbsextension.truckbase.ai/trbsextension/authenticate/",
+    "https://trbsextension.truckbase.ai/trbsextension/truck-data/",
+    "https://trbsextension-dev.truckbase.ai/trbsextension/authenticate/",
+    "https://trbsextension-dev.truckbase.ai/trbsextension/truck-data/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://power.dat.com/search/loads",
+        "https://power.dat.com/postings/trucks"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "ws.js",
+        "power.js",
+        "lru.js"
+      ],
+      "css": [
+        "page.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://justcall.io/app/macapp*",
+        "https://justcall.io/dialer*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "just_call.js"
+      ],
+      "css": [
+        "page_just_call.css"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "/images/joinspotter-logo.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "location_dict.json",
+        "zip5_dict.json",
+        "search_data.json",
+        "src_dst_zip3_to_miles.json",
+        "mkt_id_dict.json"
+      ],
+      "matches": [
+        "https://power.dat.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "next-load": {
+      "suggested_key": {
+        "default": "Ctrl+Right",
+        "mac": "Command+Shift+Right"
+      },
+      "description": "scroll into view the next best load"
+    },
+    "next-load-email": {
+      "suggested_key": {
+        "default": "Ctrl+Left",
+        "mac": "Command+Shift+Left"
+      },
+      "description": "scroll into view the next best email load"
+    },
+    "print-data-dev": {
+      "suggested_key": {
+        "default": "Ctrl+Up",
+        "mac": "Command+Shift+Up"
+      },
+      "description": "print data command"
+    }
+  },
+  "icons": {
+    "48": "/images/joinspotter-logo.png"
+  }
+}

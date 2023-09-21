@@ -1,0 +1,117 @@
+---
+slug: tool-eop
+name: Tool EOP
+description: Công cụ hỗ trợ học tiếng anh trên trang eop.edu.vn
+version: 3.0.8
+release_date: 'September 20, 2023'
+publisher: Truong kyle
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.9375
+rating_count: 16
+user_count: '10,000+'
+size: 583KiB
+languages:
+  - Tiếng Việt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Tool EOP",
+  "version": "3.0.8",
+  "description": "Công cụ hỗ trợ học tiếng anh trên trang eop.edu.vn",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Tool EOP",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://eop.edu.vn/study/task/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-1.auto-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://eop.edu.vn/study/course*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-2.check-unit-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://eop.edu.vn/task/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-3.unit-script.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "utils/custom-script/custom-script-reorder.js"
+      ],
+      "matches": [
+        "*://eop.edu.vn/*"
+      ]
+    },
+    {
+      "resources": [
+        "utils/custom-script/custom-script-pass.js"
+      ],
+      "matches": [
+        "*://eop.edu.vn/*"
+      ]
+    },
+    {
+      "resources": [
+        "utils/custom-script/lok.js"
+      ],
+      "matches": [
+        "*://eop.edu.vn/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/1.auto-script.js",
+        "content-scripts/2.check-unit-script.js",
+        "content-scripts/3.unit-script.js"
+      ],
+      "matches": [
+        "*://eop.edu.vn/*",
+        "https://aln3s6vsb6.execute-api.ap-southeast-1.amazonaws.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://aln3s6vsb6.execute-api.ap-southeast-1.amazonaws.com/*"
+  ]
+}

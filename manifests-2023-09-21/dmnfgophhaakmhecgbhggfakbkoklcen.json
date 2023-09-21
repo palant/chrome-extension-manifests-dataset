@@ -1,0 +1,209 @@
+---
+slug: loopin-ai-meeting-notes
+name: 'Loopin: AI meeting notes'
+description: 'Record, Transcribe, and Summarize meetings for free'
+version: 4.5.0.39
+release_date: 'September 20, 2023'
+publisher: Loopin
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.75
+rating_count: 16
+user_count: '3,000+'
+size: 13.76MiB
+languages:
+  - English
+publisher_site: loopinhq.com
+extension_website: 'https://loopinhq.com'
+privacy_policy: 'https://www.loopinhq.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Loopin: AI meeting notes",
+  "description": "Record, Transcribe, and Summarize meetings for free",
+  "version": "4.5.0.39",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./images/logo-16x16-blue-solid.png",
+    "32": "./images/logo-32x32-blue-solid.png",
+    "48": "./images/logo-48x48-blue-solid.png",
+    "128": "./images/logo-blue.png"
+  },
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "options_page": "./options.html",
+  "action": {
+    "default_icon": {
+      "16": "./images/logo-16x16-blue-solid.png",
+      "32": "./images/logo-32x32-blue-solid.png",
+      "48": "./images/logo-48x48-blue-solid.png",
+      "128": "./images/logo-blue.png"
+    },
+    "default_title": "Press Ctrl(Win)/Command(Mac)+Shift+L to open extension, Loopin"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      }
+    }
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "idle",
+    "alarms",
+    "scripting",
+    "unlimitedStorage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "app.js"
+      ],
+      "exclude_matches": [
+        "http://meet.google.com/*",
+        "https://meet.google.com/*",
+        "http://meet.google.com/",
+        "https://meet.google.com/",
+        "http://calendar.google.com/*",
+        "https://calendar.google.com/*",
+        "http://mail.google.com/*",
+        "https://mail.google.com/*",
+        "https://teams.live.com/*",
+        "http://teams.live.com/*",
+        "https://teams.microsoft.com/*",
+        "http://teams.microsoft.com/*"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "http://meet.google.com/*",
+        "https://meet.google.com/*",
+        "http://meet.google.com/",
+        "https://meet.google.com/",
+        "https://teams.live.com/*",
+        "http://teams.live.com/*",
+        "https://teams.microsoft.com/*",
+        "http://teams.microsoft.com/*"
+      ],
+      "js": [
+        "notification.js"
+      ],
+      "css": [
+        "styles/notification.css",
+        "styles/recording-notification.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://meet.google.com/*",
+        "https://meet.google.com/*",
+        "http://meet.google.com/",
+        "https://meet.google.com/"
+      ],
+      "js": [
+        "openExtensionInMeeting.js",
+        "addGmeetEndPopup.js",
+        "googleMeetRecording.js"
+      ],
+      "css": [
+        "styles/addGmeetEndPopup.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://teams.live.com/*",
+        "http://teams.live.com/*",
+        "https://teams.microsoft.com/*",
+        "http://teams.microsoft.com/*"
+      ],
+      "js": [
+        "openExtensionInTeam.js",
+        "teamRecording.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://calendar.google.com/*",
+        "https://calendar.google.com/*",
+        "http://mail.google.com/*",
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "addAppToGoogleCalendar.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://calendar.google.com/*",
+        "https://calendar.google.com/*"
+      ],
+      "js": [
+        "calendarButton.js"
+      ],
+      "css": [
+        "styles/gcal.css"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles/global.css"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "http://*.loopinhq.com/",
+    "https://*.loopinhq.com/",
+    "https://*.sentry.io/*",
+    "*://*/loopin*",
+    "*://*/sentry.io*",
+    "file://*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://*.loopinhq.com/*",
+      "https://*.loopinhq.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.bundle.js",
+        "popup.html",
+        "notification.js",
+        "openExtensionInMeeting.js",
+        "openExtensionInTeam.js",
+        "styles/global.css",
+        "addAppToGoogleCalendar.js",
+        "googleMeetRecording.js",
+        "calendarButton.js",
+        "login.js",
+        "images/*",
+        "index.html",
+        "index.html/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

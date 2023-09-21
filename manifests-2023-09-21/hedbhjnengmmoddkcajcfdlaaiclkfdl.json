@@ -1,0 +1,167 @@
+---
+slug: 新知魔方
+name: 新知魔方
+description: 知乎运营工具
+version: 2.3.0
+release_date: 'February 25, 2022'
+publisher: xinzhimofang
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '2,000+'
+size: 1.2MiB
+languages:
+  - 中文 (简体)
+extension_website: 'https://www.xinzhimofang.com/dashboard/index'
+support_website: 'https://p9s4qpasgz.feishu.cn/docs/doccnCibE3RyJzSQiratL484okd'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "新知魔方",
+  "description": "知乎运营工具",
+  "version": "2.3.0",
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "icons": {
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "browser_action": {
+    "default_title": "新知魔方",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.xinzhimofang.com/*",
+        "*://*.cmstop.cn/*"
+      ],
+      "js": [
+        "./content/backend.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/*"
+      ],
+      "js": [
+        "./vendors.js",
+        "./commons.js",
+        "./content/AllPage/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/*"
+      ],
+      "js": [
+        "./content/HomePage/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/hot*"
+      ],
+      "js": [
+        "./content/HotPage/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/search*"
+      ],
+      "js": [
+        "./content/SearchQuestionPage/index.js",
+        "./content/QuestionProfile/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/question*"
+      ],
+      "js": [
+        "./content/QuestionDetailPage/index.js",
+        "./content/QuestionProfile/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/people*",
+        "*://*.zhihu.com/org*"
+      ],
+      "js": [
+        "./content/PeopleDetail/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/topic*"
+      ],
+      "js": [
+        "./content/TopicPage/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/question/waiting*"
+      ],
+      "js": [
+        "./content/WaitingAnswerPage/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/creator/featured-question*"
+      ],
+      "js": [
+        "./content/QuestionRecommendPage/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.zhihu.com/p/*"
+      ],
+      "js": [
+        "./content/ArticlePage/index.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "*://*.baidu.com/*",
+    "*://*.zhihu.com/*",
+    "*://*.xinzhimofang.com/*",
+    "*://*.cmstop.cn/*",
+    "webRequest",
+    "webRequestBlocking",
+    "storage"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.xinzhimofang.com/*",
+      "*://*.cmstop.cn/*"
+    ],
+    "accepts_tls_channel_id": false
+  },
+  "web_accessible_resources": [
+    "images/*"
+  ]
+}

@@ -1,0 +1,119 @@
+---
+slug: gainsight-assist
+name: Gainsight Assist
+description: >-
+  Access Gainsight email templates and easily sync emails to Timeline directly
+  from Gmail to save time & effort in your day.
+version: 3.2.0
+release_date: 'August 17, 2023'
+publisher: Gainsight
+category: Productivity
+category_slug: ext/7-productivity
+rating: 2.923076923076923
+rating_count: 13
+user_count: '10,000+'
+size: 803KiB
+languages:
+  - English (United States)
+extension_website: 'https://www.gainsight.com'
+support_website: 'https://support.gainsight.com'
+privacy_policy: 'https://www.gainsight.com/policy/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Gainsight Assist",
+  "short_name": "Gainsight",
+  "description": "Access Gainsight email templates and easily sync emails to Timeline directly from Gmail to save time & effort in your day. ",
+  "version": "3.2.0",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.gainsight.com/*",
+        "https://*.gainsightapp.net/*",
+        "https://*.gainsightcloud.com/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "js": [
+        "./gainsight/main.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "js": [
+        "./mail/emailTemplates.chunk.js",
+        "./mail/main.js",
+        "./mail/moment.min.js",
+        "./mail/timeline.chunk.js"
+      ],
+      "css": [
+        "./mail/bundle.et-styles.css",
+        "./mail/bundle.login.css",
+        "./mail/bundle.main.css",
+        "./mail/bundle.timeline.css",
+        "./mail/bundle.update-dialog.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://mail-attachment.googleusercontent.com/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; frame-src https://*.gainsightapp.net/ https://*.gainsightcloud.com/ https://*.gainsight.com/ https://*.develgs.com:*/ ; connect-src https://staticjs-preprod.gainsightapp.net/chrome-cdn/preprod/release.json https://staticjs.gainsightapp.net/chrome-cdn/release/release.json https://*.google.com https://*.googleusercontent.com/ https://*.gainsightapp.net/* https://*.gainsightcloud.com/* https://endpoint1.collection.us2.sumologic.com/receiver/v1/http/ZaVnC4dhaV33Q9nZCT6Lqxs-vSyZZoIQLShEHO5QJ5Q7R97H-amFhUhtcO8yGDNVTpWG92Z_Ej5kFe_NIyxceNcdw5BxUMieF-GCIcFxmWwqOdKCJ5ScGw== https://*.gainsight.com/* https://*.develgs.com:*/ https://gateway.gainsightcloud.com https://gateway.us2.gainsightcloud.com https://gateway.eu.gainsightcloud.com https://*.gainsightcloud.com https://*.gainsight.com; style-src * 'unsafe-inline'; img-src 'self' data:; font-src 'self' https://fonts.gstatic.com/;",
+    "sandbox": "sandbox allow-scripts; script-src-elem  'unsafe-eval' 'unsafe-inline' 'self' https://web-sdk.aptrinsic.com/api/aptrinsic.js; object-src 'self'"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon-16.png",
+      "19": "icon-19.png",
+      "38": "icon-38.png",
+      "48": "icon-48.png",
+      "128": "icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "./background/networkService.js"
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "19": "icon-19.png",
+    "38": "icon-38.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "sandbox": {
+    "pages": [
+      "sBox.html"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "mail/images/*.png",
+        "mail/images/*.gif",
+        "icon.png",
+        "icon-16.png",
+        "icon-19.png",
+        "icon-38.png",
+        "icon-48.png",
+        "icon-128.png",
+        "pageWorld.js",
+        "sBox.html"
+      ],
+      "matches": [
+        "*://mail.google.com/*"
+      ]
+    }
+  ],
+  "manifest_version": 3
+}

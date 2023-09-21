@@ -1,0 +1,122 @@
+---
+slug: epyc-scheduler
+name: Epyc Scheduler
+description: Schedule Epyc Meetings directly from Calendars.
+version: 0.2.6
+release_date: 'September 25, 2020'
+publisher: IDrive Inc
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 68
+size: 242KiB
+languages:
+  - English
+privacy_policy: 'https://www.idrive.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Epyc Scheduler",
+    "version": "0.2.6",
+    "manifest_version": 2,
+    "description": "Schedule Epyc Meetings directly from Calendars.",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "default_locale": "en",
+    "background": {
+        "scripts": [
+            "js/jquery/jquery.min.js",
+            "src/API.js",
+            "src/bg/background.js"
+        ],
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": "icons/icon19.png",
+        "default_title": "Epyc Scheduler",
+        "default_popup": "src/browser_action/popup.html"
+    },
+    "permissions": [
+        "storage",
+        "https://meetapi.epyc.com/api/*",
+        "https://meet.remotepc.com/",
+        "https://meeting.epyc.com/"
+    ],
+    "content_scripts": [{
+            "matches": [
+                "https://calendar.google.com/calendar/*"
+            ],
+            "css": [
+                "src/inject/inject.css",
+                "css/epyc_btn.css"
+            ],
+            "js": [
+                "js/moment.min.js",
+                "js/jquery/jquery.min.js",
+                "src/DateTimeHelper.js",
+                "src/MeetingScheduler.js",
+                "src/API.js",
+                "src/inject/GoogleEventConverter.js",
+                "src/inject/GoogleEventPopupConverter.js",
+                "src/inject/google_inject.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://outlook.live.com/calendar/*"
+            ],
+            "css": [
+                "src/inject/inject.css",
+                "css/epyc_btn.css"
+            ],
+            "js": [
+                "js/moment.min.js",
+                "js/jquery/jquery.min.js",
+                "src/DateTimeHelper.js",
+                "src/MeetingScheduler.js",
+                "src/API.js",
+                "src/inject/GoogleEventConverter.js",
+                "src/inject/OutlookConverter.js",
+                "src/inject/OutlookCalloutConverter.js",
+                "src/inject/outlook_inject.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://calendar.yahoo.com/*"
+            ],
+            "css": [
+                "src/inject/inject.css",
+                "css/epyc_btn.css"
+            ],
+            "js": [
+                "js/moment.min.js",
+                "js/jquery/jquery.min.js",
+                "src/DateTimeHelper.js",
+                "src/MeetingScheduler.js",
+                "src/API.js",
+                "src/inject/GoogleEventConverter.js",
+                "src/inject/YahooConverter.js",
+                "src/inject/YahooEventHoverConverter.js",
+                "src/inject/YahooSmallPopupConverter.js",
+                "src/inject/yahoo_inject.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "img/*",
+        "icons/*"
+    ],
+    "content_security_policy": "script-src 'self' https://www.google.com https://www.gstatic.com; object-src 'self'",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "raghava@meet123.com"
+        }
+    }
+}

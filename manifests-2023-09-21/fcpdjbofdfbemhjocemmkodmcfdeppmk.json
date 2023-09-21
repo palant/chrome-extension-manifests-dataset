@@ -1,0 +1,72 @@
+---
+slug: xenett
+name: Xenett
+description: >-
+  An intelligent Clean-up and Close tool inside QuickBooks and Xero, It
+  automates, and expedites the review and close process.
+version: 1.0.7
+release_date: 'September 11, 2023'
+publisher: Xenett
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 996
+size: 189KiB
+languages:
+  - English
+publisher_site: xenett.com
+extension_website: 'https://xenett.com/'
+support_website: 'https://docs.xenett.com/'
+privacy_policy: 'https://www.xenett.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Xenett",
+    "version": "1.0.7",
+    "manifest_version": 3,
+    "description": "An intelligent Clean-up and Close tool inside QuickBooks and Xero, It automates, and expedites the review and close process.",
+    "permissions": ["activeTab","storage","notifications","cookies","tabs","idle"],
+    "author":"Xenett",
+    "icons": {
+        "16": "/images/xenett16.png",
+        "32": "/images/xenett32.png",
+        "48": "/images/xenett48.png",
+        "128": "/images/xenett128.png"
+    },    
+    "background": {
+      "service_worker": "/back/background.js"
+    },
+    "host_permissions": [
+        "*://*.intuit.com/*",
+        "*://*.xero.com/*",
+        "*://*.xenett.com/*"
+    ],
+    "options_page": "options.html",
+    "content_scripts": [{
+        "matches":    ["https://*.intuit.com/*","https://go.xero.com/*","https://reporting.xero.com/*"],
+        "js":         ["/config/config-prod.js","pages/confirmation_popup.js","pages/addclient.js","pages/addxeroclient.js","pages/login.js","js/jquery-3.6.0.min.js","js/socket.io.js","js/jquery-ui.min.js","/js/utils.js","/js/toast.js","/js/helpers.js","/content_scripts/content_listeners.js","/content_scripts/header/qbo_header.js","/content_scripts/header/xero_header.js","/content_scripts/content_qbo.js","/content_scripts/content_xero.js"],
+        "css": ["style.css"],
+        "run_at": "document_end",
+        "all_frames": true
+    }],
+    "web_accessible_resources": [
+     {
+       "resources": [ "images/*","options.html"],
+         "matches":    ["https://*.intuit.com/*","https://*.xero.com/*"]
+     }
+     ],
+     "externally_connectable": {
+        "ids": [
+          "njpmeekmbkfkhdeggbncpnkoegdojmln",
+          "fcpdjbofdfbemhjocemmkodmcfdeppmk"
+        ],
+        "matches": [
+          "http://localhost:*/*",
+          "https://*.xenett.com/*"
+        ],
+        "accepts_tls_channel_id": false
+      }
+}

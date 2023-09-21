@@ -1,0 +1,114 @@
+---
+slug: steamlvlup-card-factory
+name: Steamlvlup Card Factory
+description: >-
+  Improves your interaction with your Trading Cards, game Badges and Steam
+  profile level. Official Web Extansion by Steamlvlup.com
+version: 1.0.3
+release_date: 'April 10, 2023'
+publisher: steamlvlup
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.9278606965174125
+rating_count: 402
+user_count: '2,000+'
+size: 555KiB
+languages:
+  - English
+extension_website: 'https://steamlvlup.com/'
+support_website: 'https://steamlvlup.com/support#new'
+privacy_policy: 'https://steamlvlup.com/tos'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Steamlvlup Card Factory",
+ "version": "1.0.3",
+ "description": "Improves your interaction with your Trading Cards, game Badges and Steam profile level. Official Web Extansion by Steamlvlup.com",
+ "short_name": "SCF", 
+ "background": {
+  "service_worker": "script/background.js"
+ },
+ "permissions": [
+  "activeTab", "storage", "scripting", "offscreen"
+ ], 
+ "host_permissions": [
+  "*://steamcommunity.com/*",  "*://*.steampowered.com/*", "*://api.steamlvlup.com/*", "*://steamlvlup.com/*", "*://store.steampowered.com/app/*", "*://store.steampowered.com/*"
+ ],
+ 
+ "externally_connectable": {
+  "matches": ["*://steamcommunity.com/*", "*://steamlvlup.com/extension/bonus", "*://store.steampowered.com/app/*", "*://store.steampowered.com/*"]
+ },
+ "content_scripts": [
+  {
+   "matches": ["*://steamcommunity.com/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css"],
+   "js": ["script/helper.js",  "script/settings.js"]
+  },
+  {
+   "matches": ["*://store.steampowered.com/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css" ],
+   "js": [ "script/helper.js", "script/settings.js"]
+  },
+  {
+   "matches": ["*://store.steampowered.com/app/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css" ],
+   "js": [ "script/helper.js", "script/settings.js", "script/gameCache.js", "script/inGame.js"]
+  },
+  {
+   "matches": ["*://steamcommunity.com/id/*/inventory", "*://steamcommunity.com/id/*/inventory/*", "*://steamcommunity.com/profiles/*/inventory", "*://steamcommunity.com/profiles/*/inventory/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css"],
+   "js": ["script/helper.js","script/inventoryCache.js", "script/inInventory.js"]
+  },{
+   "matches": ["*://steamcommunity.com/id/*/tradeoffers/*", "*://steamcommunity.com/id/*/tradeoffers", "*://steamcommunity.com/profiles/*/tradeoffers/" ,"*://steamcommunity.com/tradeoffer/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css"],
+   "js": ["script/helper.js", "script/inTrade.js", "script/tradeController.js"]
+  },
+  {
+   "matches": ["*://steamcommunity.com/id/*/badges/*", "*://steamcommunity.com/profiles/*/badges/*", "*://steamcommunity.com/id/*/badges", "*://steamcommunity.com/profiles/*/badges"],
+   "run_at": "document_end",
+   "css": ["style/style.css" ],
+   "js": ["script/helper.js", "script/inBadges.js"]
+  },
+  {
+   "matches": ["*://steamlvlup.com/extension/bonus"],
+   "run_at": "document_end",
+   "css": ["style/style.css"],
+   "js": ["script/helper.js", "script/inBonus.js"]
+  },
+  {
+   "matches": ["*://steamcommunity.com/chat/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css"],
+   "js": ["script/helper.js", "script/inDropCards.js"]
+  },
+  
+  {
+   "matches": ["*://steamcommunity.com/id/*", "*://steamcommunity.com/profiles/*"],
+   "run_at": "document_end",
+   "css": ["style/style.css"],
+   "js": ["script/helper.js", "script/inProfile.js"]
+  }
+  
+ ],
+    "action": {
+        "default_title": "Steamlvlup Card Factory",
+        "default_icon": "icons/icon128.png",
+        "default_popup": "popup.html"
+    }, 
+ "icons": {
+  "128": "icons/icon128.png"  
+    },
+ "web_accessible_resources": [{
+  "resources": ["style/style.css", "script/content.js","script/helper.js", "script/settings.js" ,"script/*.js", "icons/*", "sound/*"],
+  "matches": ["*://steamcommunity.com/*",  "*://*.steampowered.com/*", "*://api.steamlvlup.com/*", "*://steamlvlup.com/*", "*://extension.steamlvlup.com/*", "*://store.steampowered.com/*"]
+ }]
+ 
+}

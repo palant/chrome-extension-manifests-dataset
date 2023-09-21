@@ -1,0 +1,102 @@
+---
+slug: youtube-auto-pause
+name: Youtube Auto Pause
+description: Stops Youtube on tab unfocus and continues on focus
+version: 1.4.1
+release_date: 'January 31, 2023'
+publisher: drodil
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.1
+rating_count: 20
+user_count: '1,000+'
+size: 275KiB
+languages:
+  - English
+extension_website: 'https://github.com/drodil/youtube_auto_pause'
+support_website: 'https://github.com/sponsors/drodil'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Youtube Auto Pause",
+  "version": "1.4.1",
+  "description": "Stops Youtube on tab unfocus and continues on focus",
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "idle"],
+  "host_permissions": [
+    "https://*.youtube.com/*",
+    "https://*.vimeo.com/*",
+    "https://*.netflix.com/watch/*",
+    "https://*.youtubekids.com/*"
+  ],
+  "homepage_url": "https://github.com/drodil/youtube_auto_pause",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/*",
+        "https://*.youtubekids.com/*",
+        "https://*.vimeo.com/*",
+        "https://*.netflix.com/watch/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": ["yt_auto_pause.js"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "64": "images/icon_64.png",
+    "128": "images/icon_128.png"
+  },
+  "action": {
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "64": "images/icon_64.png",
+      "128": "images/icon_128.png"
+    }
+  },
+  "background": {
+    "service_worker": "yt.js"
+  },
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": [
+      "https://*.youtube.com/*",
+      "https://*.youtubekids.com/*",
+      "https://*.vimeo.com/*",
+      "https://*.netflix.com/watch/*"
+    ]
+  },
+  "commands": {
+    "toggle-extension": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Toggle auto pause/resume"
+    },
+    "toggle-play": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "mac": "Command+Shift+Space"
+      },
+      "description": "Toggle play/pause"
+    },
+    "toggle_mute": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O",
+        "mac": "Command+Shift+O"
+      },
+      "description": "Toggle mute"
+    }
+  },
+  "manifest_version": 3
+}

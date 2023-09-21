@@ -1,0 +1,87 @@
+---
+slug: dashcam
+name: Dashcam
+description: >-
+  Why double-back when you can capture it the first time? Playback and share
+  whatever happens with Dashcam's desktop replay buffer.
+version: 0.2.2
+release_date: 'August 9, 2023'
+publisher: ian
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 0
+rating_count: 0
+user_count: 126
+size: 88.25KiB
+languages:
+  - English (United States)
+publisher_site: dashcam.io
+extension_website: 'https://dashcam.io'
+support_website: 'https://docs.dashcam.io'
+privacy_policy: 'https://replayable.io/legal/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dashcam",
+  "version": "0.2.2",
+  "description": "Why double-back when you can capture it the first time? Playback and share whatever happens with Dashcam's desktop replay buffer.",
+  "icons": {
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Dashcam",
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["webNavigation", "scripting", "webRequest"],
+  "host_permissions": [
+    "<all_urls>",
+    "https://github.com/",
+    "https://bitbucket.org/",
+    "https://*.atlassian.net/",
+    "https://*.height.app/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://github.com/*/issues/*",
+        "*://github.com/*/pull/*",
+        "*://github.com/*/compare/*",
+        "*://bitbucket.org/*/pull-requests/*",
+        "*://*.atlassian.net/*",
+        "*://*.height.app/*/T-*",
+        "*://*.height.app/T-*"
+      ],
+      "js": ["./replayable/index.js"],
+      "css": ["./replayable/index.css"],
+      "all_frames": true,
+      "content_security_policy": "script-src 'self' https://replayable.us.auth0.com; object-src 'self'"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./logs/index.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["shared/*", "replayable/*"],
+      "matches": [
+        "https://github.com/*",
+        "https://bitbucket.org/*",
+        "https://*.atlassian.net/*",
+        "https://*.height.app/*"
+      ]
+    },
+    {
+      "resources": ["logs/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

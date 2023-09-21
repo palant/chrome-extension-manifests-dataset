@@ -1,0 +1,209 @@
+---
+slug: table-capture
+name: Table Capture
+description: >-
+  Copies HTML tables to the clipboard or exports them to Microsoft Excel, CSV,
+  Google Sheets, Office 365, etc.
+version: 10.0.42
+release_date: 'September 18, 2023'
+publisher: GeorgeMike.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.323651452282157
+rating_count: 482
+user_count: '100,000+'
+size: 4.95MiB
+languages:
+  - English
+  - español
+publisher_site: www.georgemike.com
+extension_website: 'https://www.georgemike.com/tablecapture/'
+support_website: 'https://www.georgemike.com/tablecapture/'
+privacy_policy: 'https://www.georgemike.com/chrome/privacypolicy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com https://apis.google.com https://www.youtube.com/; object-src 'self'",
+
+  "version": "10.0.42",
+  "background": {
+    "scripts": [
+      "js/lib/js.cookie.v2.2.0.js",
+      "js/lib/clipboard.js",
+      "js/ActivityLogger.js",
+      "js/ActivityLogUtil.js",
+      "js/AuthWrapper.js",
+      "js/BackgroundDataManager.js",
+      "js/BackgroundScriptUtil.js",
+      "js/BigSyncStorage.js",
+      "js/BrowserEnv.js",
+      "js/Config.js",
+      "js/ExtensionUtils.js",
+      "js/GMikeAPI.js",
+      "js/MessageAction.js",
+      "js/OutputFormat.js",
+      "js/ScreenshotUtil.js",
+      "js/SheetsSync.js",
+      "js/TableActionLogger.js",
+      "js/TableUtil.js",
+      "js/table.analytics.js",
+      "js/background.js"
+    ]
+  },
+
+  "options_page": "options.html",
+
+  "web_accessible_resources": [
+    "images/icon.addressbar.gif",
+    "images/icon.addressbar.19.gif",
+    "images/loader.gif",
+    "images/icon.png",
+    "images/icon.csv.b.png",
+    "images/icon.clipboard.add.png",
+    "images/icon.clipboard.edit.png",
+    "images/icon.excel.svg",
+    "images/icon.html.png",
+    "images/icon.markdown.png",
+    "images/icon.menu.png",
+    "images/icon.o365.png",
+    "images/icon.sheets.png",
+    "images/icon.screenshot.big.png",
+    "images/icon.cloud.128.png",
+    "activate.html",
+    "activity.html",
+    "clips.html",
+    "cloud.html",
+    "manage-sheets.html",
+    "options.html",
+    "pdf-extract.html",
+    "recipes.html",
+    "support.html",
+    "upgrade.html",
+    "onboard/onboard.html"
+  ],
+
+  "name": "Table Capture",
+  "short_name": "Table Capture",
+  "description": "Copies HTML tables to the clipboard or exports them to Microsoft Excel, CSV, Google Sheets, Office 365, etc.",
+  "default_locale": "en",
+  "icons": {
+    "128": "images/icon.png"
+  },
+
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "exclude_matches": [],
+      "js": [
+        "js/lib/Blob.js",
+        "js/lib/FileSaver.v2.0.4.min.js",
+        "js/lib/xlsx.full.0.16.1.min.js",
+        "js/lib/js.cookie.v2.2.0.js",
+        "js/lib/clipboard.js",
+        "js/lib/html2canvas.js",
+        "js/lib/markdown-table.js",
+        "js/DataClipper.js",
+        "js/DataProvider.js",
+        "js/MockActivityLogger.js",
+        "js/MessageAction.js",
+        "js/OutputFormat.js",
+        "js/MutationSnoop.js",
+        "js/TableShow.js",
+        "js/DetachedTableShow.js",
+
+        "js/ElementWrapper.js",
+        "js/TableWrapper.js",
+        "js/SelectionWrapper.js",
+        "js/SpecialCaseElementWrapper.js",
+        "js/NotionTableWrapper.js",
+        "js/RecipeTableWrapper.js",
+
+        "js/app/PagingListener.js",
+        "js/app/DynamicPagingListener.js",
+        "js/app/NavigationPagingListener.js",
+
+        "js/app/AutoScroller.js",
+        "js/app/ContentScriptUtil.js",
+        "js/app/NextButtonListener.js",
+        "js/app/Robot.js",
+        "js/app/ContentModal.js",
+        "js/app/WorkshopEvent.js",
+        "js/app/WorkshopFrame.js",
+        "js/app/SelectionWorkshop.js",
+        "js/app/SelectionWorkshopDataManager.js",
+
+        "js/BigSyncStorage.js",
+        "js/BrowserEnv.js",
+        "js/Config.js",
+        "js/ExtensionUtils.js",
+        "js/ExcelUtil.js",
+        "js/TableActionLogger.js",
+        "js/TableUtil.js",
+        "js/ScreenshotUtil.js",
+        "js/SheetsSyncBridge.js",
+        "js/TableManager.js",
+        "js/content.js"
+      ],
+      "css": [
+        "css/lib/hint.min.css",
+        "css/content.css",
+        "css/SelectionWorkshop.css",
+        "css/ContentComponents.css",
+        "css/Loading.css",
+        "css/Toggle.css"
+      ],
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+
+  "permissions": ["tabs", "storage", "contextMenus", "webNavigation"],
+
+  "optional_permissions": ["identity"],
+
+  "oauth2": {
+    "client_id": "134705207172-cjqlrudj323jpldsf98sjmfaf2045b05.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+
+  "commands": {
+    "display-inline-table-capture": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+D",
+        "windows": "Alt+Shift+D",
+        "mac": "Alt+Shift+D"
+      },
+      "description": "Display Inline"
+    },
+    "launch-table-capture-workshop": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E"
+      },
+      "description": "Launch Workshop"
+    },
+    "_execute_page_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+T",
+        "windows": "Alt+Shift+T",
+        "mac": "Alt+Shift+T"
+      }
+    }
+  },
+
+  "page_action": {
+    "default_name": "Tables Available to Capture",
+    "default_icon": {
+      "19": "images/icon.addressbar.19.gif"
+    },
+    "default_popup": "popup.html"
+  }
+}

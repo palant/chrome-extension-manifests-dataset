@@ -1,0 +1,75 @@
+---
+slug: google-voice-byop
+name: Google Voice BYOP
+description: Helper extension to send Turbo BYOP messages via Google Voice.
+version: 0.3.0
+release_date: 'June 6, 2023'
+publisher: BEI.RE
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 467
+size: 56.1KiB
+languages:
+  - English (United States)
+privacy_policy: 'https://www.bei.re/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Google Voice BYOP",
+    "short_name": "GV-BYOP",
+    "version": "0.3.0",
+    "description": "Helper extension to send Turbo BYOP messages via Google Voice. ",
+    "author": "BEI.RE Corp",
+    "homepage_url": "https://www.bei.re",
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "action": {
+        "default_title": "GV-BYOP",
+        "default_icon": "icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://hangouts.google.com/webchat/*"],
+            "js": [
+                "contentScripts/hangoutsListViewManager.js",
+                "contentScripts/hangoutsThreadViewManager.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": ["https://voice.google.com/*"],
+            "js": [
+                "contentScripts/googleVoiceManager.js"
+            ],
+            "all_frames": true
+        },
+        {
+            "matches": ["https://hangouts.google.com/webchat/*", "https://voice.google.com/*"],
+            "js": [
+                "contentScripts/tools.js",
+                "contentScripts/main.js"
+            ],
+            "all_frames": true
+        }
+    ],
+
+    "icons": {
+        "48": "icon48.png",
+        "128": "icon.png"
+    },
+
+    "permissions": [
+        "clipboardWrite",
+        "clipboardRead",
+        "storage"
+    ]
+}

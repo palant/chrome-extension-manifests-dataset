@@ -1,0 +1,86 @@
+---
+slug: rodscones
+name: Rods&Cones
+description: Rods&Cones for Remote Expert
+version: 2.6.2
+release_date: 'May 12, 2023'
+publisher: Rods&Cones
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 990
+size: 596KiB
+languages:
+  - English
+extension_website: 'https://www.rods-cones.com'
+support_website: 'https://www.rods-cones.com/manual'
+privacy_policy: 'https://www.rods-cones.com/re_terms'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Rods&Cones",
+  "version": "2.6.2",
+  "description": "Rods&Cones for Remote Expert",
+  "manifest_version": 2,
+  "permissions": [
+    "storage",
+    "tabCapture",
+    "tabs",
+    "https://api.rods-cones.com/"
+  ],
+  "background": {
+    "scripts": [
+      "environment.js",
+      "logging-levels.js",
+      "logging-core.js",
+      "ffmpeg.min.js",
+      "signalr.min.js",
+      "jwt-decode.js",      
+      "common.js",
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "content_security_policy": "script-src 'self' 'wasm-eval' https://unpkg.com https://expert.rods-cones.com https://js.monitor.azure.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://expert.rods-cones.com/session/home",
+        "https://expert.rods-cones.com/session/qrcode/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "credentials-injector.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://expert.rods-cones.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "tab-warning.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [ "authcallback.html" ],
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/rodscones_icon16.png",
+      "32": "images/rodscones_icon32.png",
+      "48": "images/rodscones_icon48.png",
+      "128": "images/rodscones_icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/rodscones_icon16.png",
+    "32": "images/rodscones_icon32.png",
+    "48": "images/rodscones_icon48.png",
+    "128": "images/rodscones_icon128.png"
+  },
+  "options_page": "options.html"
+}

@@ -1,0 +1,126 @@
+---
+slug: aliexpress-dropshipping-a
+name: Aliexpress Dropshipping Assistant For Magento
+description: Dropship Products from aliexpress.com to magento
+version: 1.5.8
+release_date: 'September 5, 2022'
+publisher: CEDCommerce
+category: Productivity
+category_slug: ext/7-productivity
+rating: 1
+rating_count: 1
+user_count: 33
+size: 6.33MiB
+languages:
+  - English (United States)
+extension_website: 'https://cedcommerce.com/magento-2-extensions/aliexpress-affiliate-program'
+support_website: 'https://cedcommerce.com/magento-2-extensions/aliexpress-affiliate-program'
+privacy_policy: 'https://cedcommerce.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Aliexpress Dropshipping Assistant For Magento",
+  "description": "Dropship Products from aliexpress.com to magento",
+  "version": "1.5.8",
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_title": "Aliexpress Dropshipping Assistant For Magento | CEDCommerce",
+    "default_html" : "html/option.html",
+    "default_popup": "html/shipping.html"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "notifications",
+    "downloads",
+    "storage",
+    "tabs",
+    "cookies",
+    "https://aliexpress.com/*",
+    "https://bigcommerce.cedcommerce.com/",
+    "https://bigcommerce.cedcommerce.com/*",
+    "https://bigcommerce.com/*",
+    "https://bigcommerce.com/",
+    "https://aliexpress.com/",
+    "https://aliexpress.com/*",
+    "https://feedback.aliexpress.com/*",
+    "https://feedback.aliexpress.com/",
+    "https://freight.aliexpress.com/*",
+    "https://freight.aliexpress.com/"
+  ],
+  "short_name": "Compatible with Magento",
+  "author":"CEDCommerce",
+  "background": {
+      "page": "html/bana.html",
+      "persistent": true
+  },
+  "icons":{
+    "128": "images/icon.png"
+  },
+  "options_ui":{
+    "page": "html/option.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.aliexpress.com/*","*://*.aliexpress.com/wholesale?*", "*://*.aliexpress.com/af/category/*","*://*.aliexpress.com/af/*","*://*.aliexpress.com/category/*","*://*.aliexpress.com/premium/*","*://*.aliexpress.com/w/*","*://*.aliexpress.com/wholesale*"],
+      "js": [
+        "content-script/jquery-3.2.1.min.js",
+        "content-script/product/import.js",
+        "content-script/product/shipselector.js",
+        "content-script/product/jszip.js",
+        "content-script/product/FileSaver.js"
+      ],
+      "exclude_matches":["*://*.aliexpress.com/"],
+      "css": [ "css/import.css" ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },{
+       "matches": [ "http://*/*", "https://*/*"],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/cedali.js"],
+       "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm?chrmact=submitCart*" ],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/order/cedali_cart.js" ],
+       "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm?spm=*" ],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/order/cedShipment.js" ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://shoppingcart.aliexpress.com/orders.htm*", "*://shoppingcart.aliexpress.com/orders/*" ],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/order/cedali_order.js" ],
+       "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://*.aliexpress.com/item/*", "*://*.aliexpress.com/s/item/*", "*://*.aliexpress.com/store/product/*" ],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/order/cedali_product.js","content-script/product/item-import.js"],
+      "css": [ "css/style.css" ],
+       "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "https://shoppingcart.aliexpress.com/order/payOnlineSuccess.htm?orderIds*","https://icashier.alipay.com/payment/checkout.htm?orderId*"],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/order/cedOrderCompleted.js" ],
+       "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.aliexpress.com/af/*","*://*.aliexpress.com/category/*","*://*.aliexpress.com/premium/category/*","*://*.aliexpress.com/premium/*","*://*.aliexpress.com/w/*","*://*.aliexpress.com/wholesale*"],
+      "js": [ "content-script/jquery-3.2.1.min.js", "content-script/product/shipselector.js"],
+      "css": [ "css/style.css" ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [ "content-script/cedali2.js","content-script/jquery-3.2.1.min.js", "content-script/cedali.js","images/csv.png","images/zip.png","images/cancel.png","images/loader.gif"]
+}

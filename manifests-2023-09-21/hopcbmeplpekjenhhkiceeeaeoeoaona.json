@@ -1,0 +1,108 @@
+---
+slug: channel-groups-and-rating
+name: Channel groups and rating for YouTube™ subs
+description: >-
+  Equalizer, audio normalization, YouTube channel grouping and filtering,
+  analytics, exporting information to Excel and more.
+version: 1.0.69
+release_date: 'August 29, 2023'
+publisher: voronov.anton.a
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3
+rating_count: 11
+user_count: '1,000+'
+size: 3.96MiB
+languages:
+  - English
+  - español
+  - русский
+  - हिन्दी
+  - 中文 (简体)
+  - 中文 (繁體)
+publisher_site: groupsrating.com
+extension_website: 'https://www.groupsrating.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgmBpQopU8XCikcqRR6Hk+ZBfcKyquXfvpdVvKbYdP3qYGnoMe5hZUcbwnlUj3vhufiIvdLfGwfZO/PSkZte8pGbk57dENLbXDqt3iXb+vGk7ejMJdW/pk1l7Ej+65gSZEYTeKLAGI98FE+ERRb0n7Bo+yS0w0LQ8UNvpqyLST47kdF3oOx5kG9Y5Zv+vG+mrXxolBd1PUoocKWaNjHgOLFRGr1vZV7ID3W6ZLLkanqcsP70Qrgl6OFr8gslBAnBfTw8Wfy8iGFtFkaLDhg2iue26n1xxrt1ZX+4eLX9cIW9q45upC5rZliFpq8AB9dyoRad4ciyvnfR8VH5pfcu2oQIDAQAB",
+
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "version": "1.0.69",
+  "default_locale": "en",
+
+  "optional_permissions": [
+    "declarativeNetRequestWithHostAccess"
+  ],
+
+  "permissions": [
+    "tabs",
+    "identity",
+    "storage",
+    "alarms"
+  ],
+
+  "host_permissions": [
+    "*://www.youtube.com/*",
+    "*://m.youtube.com/*",
+    "https://www.googleapis.com/drive/v3/files/*",
+    "https://content.googleapis.com/drive/v3/files/*",
+    "https://content-people.googleapis.com/v1/people/me"
+  ],
+
+  "oauth2": {
+    "client_id": "498190557003-372vgfocadr690nfek5os7qg6irp2ce0.apps.googleusercontent.com",
+    "scopes": [
+    ]
+  },
+
+  "icons": {
+    "128": "content-spa/icon-128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "*://www.youtube.com/*" ],
+      "run_at": "document_end",
+      "js": [
+        "content-spa/runtime.js",
+        "content-spa/polyfills.js",
+        "content-spa/main.js"
+      ],
+      "css": [
+        "content/content.css"
+      ]
+    },
+    {
+      "matches": [ "https://www.youtube.com/embed/*" ],
+      "js": [
+        "embedding-app/embedding-content-bundle.js"
+      ],
+      "css": [
+      ],
+      "all_frames": true
+    }
+  ],
+
+  "background": {
+    "service_worker": "background-bundle.js"
+  },
+
+  "action": {
+    "default_popup": "popup-spa/index.html"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "*" ],
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ]
+    }
+  ]
+}

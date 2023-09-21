@@ -1,0 +1,96 @@
+---
+slug: whirlwind
+name: Whirlwind
+description: >-
+  Shop socially conscious, sustainable, and cruelty-free on your favorite
+  e-commerce sites and use your $$ to support your values!
+version: 1.2.0
+release_date: 'May 26, 2022'
+publisher: Whirlwind
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 1
+user_count: 38
+size: 932KiB
+languages:
+  - English (United States)
+extension_website: 'https://www.bethewhirlwind.com/'
+privacy_policy: >-
+  https://docs.google.com/document/d/1mulfGO1KYfYSl39jqG5Lx1hjKKenbFFWvqlvDw4h0mI/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Whirlwind",
+    "short_name": "Whirlwind",
+    "author": "Meredith Benson, meredith@bethewhirlwind.com",
+    "version": "1.2.0",
+    "description": "Shop socially conscious, sustainable, and cruelty-free on your favorite e-commerce sites and use your $$ to support your values!",
+    "page_action": {
+        "default_icon": "./images/WhirlwindLogo48.png",
+        "default_title": "Whirlwind",
+        "default_popup": "./html/popup.html"
+    },
+    "background":{
+        "scripts": ["background.js"],
+        "persistent": false
+    },
+    "content_scripts":[
+        {
+            "matches": ["https://www.amazon.com/*"],
+            "js":  ["./papaparse.min.js", "amazon.js"],
+            "exclude_matches": [
+                "https://www.target.com/*",
+                "https://www.walmart.com/*"
+            ]
+        },
+        {
+            "matches": ["https://www.target.com/*"],
+            "js":  ["./papaparse.min.js", "target.js"],
+            "exclude_matches": [
+                "https://www.amazon.com/*",
+                "https://www.walmart.com/*"
+            ]
+        },
+        {
+            "matches": ["https://www.walmart.com/*"],
+            "js":  ["./papaparse.min.js", "walmart.js"],
+            "exclude_matches": [
+                "https://www.target.com/*",
+                "https://www.amazon.com/*"
+            ]
+        },
+        {
+            "matches": ["https://*/*"],
+            "js":  ["./papaparse.min.js", "brand-content.js"],
+            "exclude_matches": [
+                "https://www.amazon.com/*",
+                "https://www.target.com/*",
+                "https://www.walmart.com/*",
+                "https://www.google.com/*"
+            ]
+        }
+    ],
+    "options_ui": {
+        "page": "./html/options.html",
+        "open_in_tab": true
+    },
+    "permissions": [
+        "storage", 
+        "alarms",
+        "https://www.target.com/*", 
+        "https://www.walmart.com/*"
+    ],
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'",
+    "icons": {
+        "48": "./images/WhirlwindLogo48.png", 
+        "264": "./images/WhirlwindLogo264.png"
+    },
+    "web_accessible_resources":[
+        "/html/popup.html", 
+        "/html/accessible.html"
+    ]
+}

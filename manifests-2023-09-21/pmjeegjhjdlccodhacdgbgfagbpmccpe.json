@@ -1,0 +1,104 @@
+---
+slug: clockify-time-tracker
+name: Clockify Time Tracker
+description: Track time from anywhere on the web and improve productivity.
+version: 2.10.2
+release_date: 'September 11, 2023'
+publisher: CAKE.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.871794871794872
+rating_count: 156
+user_count: '300,000+'
+size: 1.19MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - русский
+  - 日本語
+  - 한국어
+publisher_site: clockify.me
+extension_website: 'https://clockify.me'
+support_website: 'https://clockify.me/help/apps/chrome-extension'
+privacy_policy: 'https://cake.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "__MSG_appName__",
+ "short_name": "Clockify",
+ "description": "__MSG_appDesc__",
+ "default_locale": "en",
+ "background": {
+  "service_worker": "sw.js"
+ },
+ "version": "2.10.2",
+ "action": {
+  "default_popup": "index.html",
+  "default_title": "Clockify"
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://*/*", "http://*/*"],
+   "js": [
+    "contentScripts/service-localstorage.js",
+    "contentScripts/clockifyLocales.js"
+   ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": ["https://*/*", "http://*/*"],
+   "js": ["vendors.bundle.js", "main.bundle.js"],
+   "css": ["styles/main-integration.css"]
+  }
+ ],
+ "options_page": "settings.html",
+ "commands": {
+  "quick-start-stop-entry": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+U"
+   },
+   "description": "Quick start/stop current entry"
+  }
+ },
+ "icons": {
+  "16": "assets/images/logo-16.png",
+  "48": "assets/images/logo-48.png",
+  "128": "assets/images/logo-128.png"
+ },
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "assets/images/*.png",
+    "assets/images/*.svg",
+    "assets/images/ui-icons/*.svg"
+   ],
+   "matches": ["<all_urls>"]
+  }
+ ],
+ "permissions": [
+  "background",
+  "contextMenus",
+  "storage",
+  "tabs",
+  "activeTab",
+  "identity",
+  "idle",
+  "notifications",
+  "scripting",
+  "alarms"
+ ],
+ "host_permissions": ["*://*/", "*://*.clockify.me/*"],
+ "optional_permissions": ["*://*/"],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "externally_connectable": {
+  "ids": ["*"],
+  "accepts_tls_channel_id": false
+ }
+}

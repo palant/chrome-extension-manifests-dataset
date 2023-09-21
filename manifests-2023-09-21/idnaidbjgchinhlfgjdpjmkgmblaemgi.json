@@ -1,0 +1,91 @@
+---
+slug: equility-extension
+name: Equility Extension
+description: Equility extension
+version: 1.90.130
+release_date: 'September 3, 2023'
+publisher: Equility
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 50
+size: 620KiB
+languages:
+  - English
+extension_website: 'https://equilityhq.com'
+support_website: 'https://app.equilityhq.com/application/settings?support=1'
+privacy_policy: 'https://equilityhq.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Equility Extension",
+  "description": "Equility extension",
+  "version": "1.90.130",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./icons/favicon-32x32.png",
+    "48": "./icons/favicon-100x100.png",
+    "128": "./icons/favicon-180x180.png"
+  },
+  "action": {
+    "default_popup": "./index.html"
+  },
+  "background": {
+    "service_worker": "./static/js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.qbo.intuit.com/*"
+      ],
+      "js": [
+        "./static/js/content.js"
+      ],
+      "css": [
+        "./content/content.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.equilityhq.com/*",
+        "http://*.localhost:3001/*"
+      ],
+      "js": [
+        "./static/js/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["https://*.qbo.intuit.com/*"]
+    },
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]  
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "webNavigation",
+    "notifications",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.qbo.intuit.com/*",
+    "https://*.equilityhq.com/*",
+    "http://*.localhost:3001/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost;object-src 'self';"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnmieyY3AAcO9XVfUdd6aDQJ40wCqvvEiF1BFVEKU9L/drYKrJCoEZfk8sY6y+Eqg/XcUPytjiyBB1Aabkan1kdePZxL3X33o7eiLyP5PgvjJIZHjWYOltYwoLdUmOyI7fWtQpOlEwklnJwlFQa7AiAO7NB97VHbcutDNWLSnAhDOi+Qe1eW/0hrzMdXe3G9kWGEC4ZiOaDTv/2klur9wRIJvdSidurPUDt9btG2PJUjRJ5Q5EzXX5jnpydeUPMTNK9s/7epc71vrB1YlIHxnA+YW+q7jFAmP68ZqftT/hK8JN20+FswODDqMWiL9mib0KeS2B5Wov1o8hAV+scQIEQIDAQAB"
+}

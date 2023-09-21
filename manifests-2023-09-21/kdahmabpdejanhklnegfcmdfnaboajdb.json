@@ -1,0 +1,105 @@
+---
+slug: menti-for-google-slides
+name: Menti for Google Slides
+description: Show your Menti presentations in Google Slides
+version: '0.06'
+release_date: 'June 20, 2023'
+publisher: webmultiply.info
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 1
+user_count: '4,000+'
+size: 473KiB
+languages:
+  - English
+publisher_site: webmultiply.com
+privacy_policy: 'https://webforslides.webmultiply.com/webforslides/privacypolicy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Menti for Google Slides",
+  "description": "Show your Menti presentations in Google Slides",
+  "version": "0.06",
+  "permissions": [
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'; script-src-elem 'self' 'unsafe-eval' 'unsafe-inline'  https://www.mentimeter.com" ,
+      "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' ; child-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "https://docs.google.com/presentation/*" ],
+      "all_frames": false,
+      "js": [
+        "qrcode-decoder/index.min.js",
+        "qrious/qrious.min.js",
+        "content-min.js"
+      ]
+    },
+    {
+      "matches": [ "https://docs.google.com/presentation/*" ],
+      "all_frames": true,
+      "css": [
+        "content_iframe.css"
+      ]
+    },
+    {
+      "matches": [ 
+        "https://webmultiply.com/webforslides/signin.html"
+      ],
+      "all_frames": true,
+      "js": [
+        "content_signin-min.js"
+      ]
+    },
+    {
+      "matches": [ "https://www.mentimeter.com/app/dashboard*" ],
+      "all_frames": false,
+      "js": [
+        "content_mentimeter-min.js"
+      ],
+      "css": [
+        "content_mentimeter.css"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background-min.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+                "16": "icon/menti-icon16.png",
+                "48": "icon/menti-icon48.png",
+                "128": "icon/menti-icon128.png" },
+    "default_title": "Menti for Google Slides",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon/menti-icon16.png",
+    "48": "icon/menti-icon48.png",
+    "128": "icon/menti-icon128.png" },
+  "externally_connectable": {
+    "matches": [ 
+    "https://webmultiply.com/webforslides/signin.html"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "icon/menti-icon16.png", "icon/menti-icon48.png" ],
+      "matches": [ "https://docs.google.com/*"]
+    },
+    {
+      "resources": [ "icon/mentisharebutton.png","icon/mentishare.png","icon/menti-addtoslide.png" ],
+      "matches": [ "https://docs.google.com/*"]
+    },
+    {
+      "resources": [ "frame.html", "frame.js" ],
+      "matches": [ "https://docs.google.com/*"]
+    }
+  ]
+}

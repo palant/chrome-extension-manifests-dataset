@@ -1,0 +1,93 @@
+---
+slug: 京价保-京东价保助手
+name: 京价保 - 京东价保助手
+description: 京价保是一个监控京东商品价格变化，即时提供价保申请信息的浏览器插件
+version: 2.10.1
+release_date: 'June 16, 2021'
+publisher: 京价保
+category: Shopping
+category_slug: ext/12-shopping
+rating: 4.559808612440191
+rating_count: 418
+user_count: '50,000+'
+size: 1.01MiB
+languages:
+  - 中文 (简体)
+publisher_site: jjb.im
+extension_website: 'https://jjb.im'
+support_website: 'https://blog.jjb.im'
+privacy_policy: 'https://blog.jjb.im/policy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "京价保 - 京东价保助手",
+  "short_name": "京价保",
+  "description": "京价保是一个监控京东商品价格变化，即时提供价保申请信息的浏览器插件",
+  "version": "2.10.1",
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "static/image/jjb.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.jd.com/*",
+        "*://*.jd.hk/*"
+      ],
+      "js": [
+        "static/jquery.min.js",
+        "static/content_script.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "run_at": "document_start",
+      "js": [
+        "static/mobile_script.js"
+      ],
+      "matches": [
+        "*://*.m.jd.com/*",
+        "*://m.jr.jd.com/*",
+        "*://wq.jd.com/*",
+        "*://wqs.jd.com/*",
+        "*://msitepp-fm.jd.com/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "run_at": "document_end",
+      "js": [
+        "static/priceChart.js"
+      ],
+      "matches": [
+        "*://item.jd.com/*",
+        "*://re.jd.com/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "static/image/16.png",
+    "48": "static/image/48.png",
+    "128": "static/image/128.png"
+  },
+  "web_accessible_resources": [
+    "static/touch-emulator.js"
+  ],
+  "permissions": [
+    "*://*.jd.com/*",
+    "*://*.jd.hk/*",
+    "webRequest",
+    "webRequestBlocking",
+    "alarms",
+    "contextMenus",
+    "notifications"
+  ]
+}

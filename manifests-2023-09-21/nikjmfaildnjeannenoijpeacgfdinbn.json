@@ -1,0 +1,176 @@
+---
+slug: hyperdart-search
+name: hyperDart Search
+description: Federated search platform
+version: 5.30.4
+release_date: 'August 10, 2023'
+publisher: hyperDart
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 11
+user_count: 55
+size: 731KiB
+languages:
+  - English (United States)
+publisher_site: hyperdart.com
+extension_website: 'https://hyperdart.com'
+support_website: 'https://about.hyperdart.com/contact/'
+privacy_policy: 'https://about.hyperdart.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "hyperDart Search",
+ "version": "5.30.4",
+ "description": "Federated search platform",
+ "manifest_version": 3,
+ "permissions": [
+  "storage",
+  "topSites",
+  "tabs",
+  "contextMenus"
+ ],
+ "host_permissions": [
+  "https://*.hyperdart.com/*",
+  "https://*:*/*"
+ ],
+ "background": {
+  "service_worker": "background.js"
+ },
+ "icons": {
+  "16": "images/colorIcon/hd_16.png",
+  "32": "images/colorIcon/hd_32.png",
+  "48": "images/colorIcon/hd_48.png",
+  "128": "images/colorIcon/hd_128.png"
+ },
+ "externally_connectable": {
+  "matches": [
+   "https://*.hyperdart.com/*",
+   "http://localhost:3000/*"
+  ]
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "*://*.google.com/*",
+    "*://duckduckgo.com/*",
+    "*://*.bing.com/*",
+    "*://in.search.yahoo.com/*"
+   ],
+   "js": [
+    "content.js",
+    "upvote.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://*.amazon.com/*",
+    "https://*.amazon.in/*",
+    "https://*.amazon.ca/*",
+    "https://www.bestbuy.com/*",
+    "https://www.imdb.com/search/title/*",
+    "https://www.imdb.com/title/*",
+    "https://www.yelp.com/*",
+    "https://www.homedepot.com/*"
+   ],
+   "js": [
+    "/lib/penpal.min.js",
+    "contentPDT.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://*.wikipedia.org/wiki/*",
+    "https://css-tricks.com/*",
+    "https://medium.com/*",
+    "https://*/*",
+    "http://*/*"
+   ],
+   "js": [
+    "contentAnsSnippet.js"
+   ],
+   "css": [
+    "css/contentAnsSnippet.css"
+   ]
+  },
+  {
+   "matches": [
+    "https://*/*",
+    "http://*/*"
+   ],
+   "js": [
+    "empty.js"
+   ]
+  },
+  {
+   "matches": [
+    "<all_urls>"
+   ],
+   "exclude_matches": [
+    "*://www.google.com/*",
+    "*://hyperdart.com/*",
+    "*://dev.hyperdart.com/*"
+   ],
+   "js": [
+    "contentScriptSideSearch.js"
+   ]
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "*.png",
+    "images/searchEngines/*.ico",
+    "index.html"
+   ],
+   "extension_ids": [],
+   "matches": [
+    "https://hyperdart.com/*"
+   ]
+  },
+  {
+   "resources": [
+    "icons/*",
+    "https://*.hyperdart.com/*"
+   ],
+   "extension_ids": [],
+   "matches": [
+    "https://*.amazon.com/*",
+    "https://*.amazon.ca/*",
+    "https://*.amazon.in/*",
+    "https://www.bestbuy.com/*",
+    "https://www.yelp.com/*",
+    "https://www.homedepot.com/*",
+    "https://www.imdb.com/*"
+   ]
+  },
+  {
+   "resources": [],
+   "extension_ids": [],
+   "matches": [
+    "https://*/*",
+    "http://*/*"
+   ]
+  }
+ ],
+ "chrome_settings_overrides": {
+  "homepage": "https://hyperdart.com/hd",
+  "search_provider": {
+   "favicon_url": "https://hyperdart.com/hd/favicon.ico",
+   "name": "hyperDart",
+   "keyword": "hyperdart.com",
+   "search_url": "https://hyperdart.com/hd/web/search?q={searchTerms}&s=ext",
+   "suggest_url": "https://hyperdart.com/nodeapi/search/autocomplete?text={searchTerms}&format=osd",
+   "encoding": "UTF-8",
+   "is_default": true
+  }
+ },
+ "chrome_url_overrides": {
+  "newtab": "index.html"
+ },
+ "action": {
+  "default_popup": "popupPDT.html"
+ }
+}

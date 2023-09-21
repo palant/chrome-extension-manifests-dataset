@@ -1,0 +1,90 @@
+---
+slug: toolsyio-etsy-seo-and-ins
+name: Toolsy.io | Etsy SEO and Inspiration Tool
+description: Best Etsy SEO extension! Let's increase your Etsy sales together!
+version: 2.1.0
+release_date: 'May 10, 2023'
+publisher: Toolsy
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.287878787878788
+rating_count: 66
+user_count: '10,000+'
+size: 758KiB
+languages:
+  - English
+publisher_site: toolsy.io
+extension_website: 'https://www.toolsy.io'
+support_website: 'https://toolsy.io/contact-us'
+privacy_policy: 'https://toolsy.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Toolsy.io | Etsy SEO and Inspiration Tool",
+  "description": "Best Etsy SEO extension! Let's increase your Etsy sales together!",
+  "version": "2.1.0",
+  "host_permissions": ["*://*.etsy.com/*", "*://*.toolsy.io/*"],
+  "permissions": ["activeTab", "tabs"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "data/*.json",
+        "assets/*.svg",
+        "assets/icons/*",
+        "assets/fonts/font-awesome/fonts/*.*",
+        "assets/fonts/poppins/fonts/*.*",
+        "assets/img/*"
+      ],
+      "matches": ["http://*/*", "https://*/*", "file://*/*", "https://i.etsystatic.com/*"],
+      "use_dynamic_urls": true
+    }
+  ],
+  "icons": {
+    "16": "./icon_16.png",
+    "32": "./icon_32.png",
+    "48": "./icon_48.png",
+    "128": "./icon_128.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "action": {
+    "default_title": "Toolsy Extension",
+    "default_icon": "icon_32.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.etsy.com/search*", "*://*.etsy.com/*/search*", "*://*.etsy.com/market/*"],
+      "js": ["./search.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.etsy.com/shop/*", "*://*.etsy.com/*/shop/*"],
+      "js": ["./shop.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://etsy.com/listing/*", "*://*.etsy.com/listing/*", "*://*.etsy.com/*/listing/*"],
+      "js": ["./listing.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "module": {
+    "rules": [
+      {
+        "test": "/.jsx?$/",
+        "exclude": "/node_modules/",
+        "use": {
+          "loader": "babel-loader",
+          "options": {
+            "presets": ["@babel/preset-env", "@babel/preset-react"]
+          }
+        }
+      }
+    ]
+  }
+}

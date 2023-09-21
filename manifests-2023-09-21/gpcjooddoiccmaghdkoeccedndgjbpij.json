@@ -1,0 +1,64 @@
+---
+slug: flappypedia
+name: Flappypedia
+description: Flappypedia is a product that makes knowledge alive and within reach.
+version: 0.0.7
+release_date: 'October 30, 2022'
+publisher: flappypedia
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 32
+size: 224KiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Flappypedia",
+    "description": "Flappypedia is a product that makes knowledge alive and within reach.",
+    "version": "0.0.7",
+    "default_locale": "en",
+    "background": {
+        "service_worker": "/background.js"
+    },
+    "permissions": ["activeTab", "cookies"],
+    "host_permissions": [
+        "https://flappypedia.com/*"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "icons/flappy_logo_x1.png",
+        "48": "icons/flappy_logo_x2.png",
+        "128": "icons/flappy_logo_x3.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "/content.js",
+                "/injectors/google_docs_injector.js"
+            ]
+        },
+        {
+            "all_frames": true,
+            "js": ["injector.js"],
+            "matches": ["*://docs.google.com/document/*"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["*.js", "*.css"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

@@ -1,0 +1,103 @@
+---
+slug: cerbys-browser-extension
+name: Cerby's browser extension
+description: The Cerby extension allows you to quickly and easily manage your accounts.
+version: 1.0.223
+release_date: 'September 18, 2023'
+publisher: 'Cerby, Inc.'
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 15
+user_count: '3,000+'
+size: 4.4MiB
+languages:
+  - English (United States)
+extension_website: 'https://cerby.com'
+privacy_policy: 'https://www.cerby.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cerby's browser extension",
+  "author": "Cerby inc.",
+  "version": "1.0.223",
+  "manifest_version": 3,
+  "description": "The Cerby extension allows you to quickly and easily manage your accounts.",
+  "icons": {
+    "16": "icons/ic_cerby16.png",
+    "48": "icons/ic_cerby48.png",
+    "128": "icons/ic_cerby128.png",
+    "512": "icons/ic_cerby512.png"
+  },
+  "action": {
+    "default_icon": "icons/ic_cerby48.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "build/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "build/contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.cerby.com/*"
+      ],
+      "js": [
+        "build/cerbyCS.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "build/inContextNotifications.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "webRequest",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "menu.html",
+        "in-context-notifications.html",
+        "ui-module-dialog.html",
+        "create-account.html",
+        "suggest-request-seat.html",
+        "/oauth2/*",
+        "assets/*",
+        "fonts/*",
+        "icons/cerby.svg",
+        "icons/ic_any_error.svg",
+        "build/unsafeClick.js",
+        "signup-menu.html"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ]
+}

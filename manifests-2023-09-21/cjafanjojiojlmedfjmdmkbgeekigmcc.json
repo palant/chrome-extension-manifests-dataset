@@ -1,0 +1,115 @@
+---
+slug: mailshake
+name: Mailshake
+description: LinkedIn Automation & Dialer by Mailshake
+version: 1.0.42
+release_date: 'September 1, 2023'
+publisher: Mailshake.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: '1,000+'
+size: 10.37MiB
+languages:
+  - English
+extension_website: 'https://mailshake.com/'
+support_website: 'https://docs.mailshake.com/'
+privacy_policy: 'https://mailshake.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Mailshake",
+  "version": "1.0.42",
+  "manifest_version": 3,
+  "description": "LinkedIn Automation & Dialer by Mailshake",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mailshake.com/*",
+        "https://*.mailshake.com/*",
+        "https://*.mailshake-dev.com/*",
+        "https://*.mailshake-qa.com/*",
+        "http://0.0.0.0:8080/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://*.mailshake.com/*",
+        "*://*.mailshake-dev.com/*",
+        "*://*.mailshake-qa.com/*",
+        "http://0.0.0.0:8080/*",
+        "https://docs.google.com/*"
+      ],
+      "js": [
+        "phoneNumberMatcher.js"
+      ],
+      "css": [
+        "phone-number-matcher.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://*.linkedin.com/*",
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "linkedinClient.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": "assets/icons/icon19.png",
+    "default_title": "Mailshake",
+    "default_popup": "index.html#/login"
+  },
+  "options_ui": {
+    "page": "index.html#/options",
+    "open_in_tab": true,
+    "browser_style": true
+  },
+  "web_accessible_resources": [{
+    "resources": ["assets/img/link-bg.png"],
+    "matches": ["<all_urls>"],
+    "extension_ids": []
+  }],
+  "permissions": [
+    "notifications",
+    "webNavigation",
+    "webRequest",
+    "storage",
+    "alarms",
+    "system.display",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "*://0.0.0.0/*", "*://*.mailshake.com/*", "*://*.mailshake-dev.com/*", "*://*.mailshake-qa.com/*"]
+  }
+}

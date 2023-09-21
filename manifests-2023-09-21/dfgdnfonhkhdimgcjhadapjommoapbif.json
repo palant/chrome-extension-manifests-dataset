@@ -1,0 +1,64 @@
+---
+slug: viro-online-harassment-tr
+name: VIRO - Online Harassment Tracking
+description: Virtual Incident Reporting Operation
+version: 1.0.8
+release_date: 'June 6, 2022'
+publisher: viroinformedopinions
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 30
+size: 5.7MiB
+languages:
+  - English (United States)
+extension_website: 'https://informedopinions.org/onlineabuse'
+privacy_policy: 'https://informedopinions.org/viro-privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VIRO - Online Harassment Tracking",
+  "description": "Virtual Incident Reporting Operation",
+  "version": "1.0.8",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "action": {
+    "default_icon": "images/icon-32.png"
+  },
+  "icons": { "32": "images/icon-32.png",
+    "64": "images/icon-64.png"
+   },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["./js/libs/core.js", "./js/libs/jquery.min.js", "./js/config.js", "./js/iframe.js", "./js/content.js"],
+      "css": ["./css/content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://viro-app.herokuapp.com/oauth/google*"],
+      "js": [
+          "./js/config.js",
+          "./js/libs/core.js",
+          "./js/auth/oauthGoogleContent.js",
+          "./js/content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["images/*.png", "images/*.gif", "audio/*.mp3", "*.html", "video/*.mp4", "*.*", "poppins/*.*"],
+    "matches": ["<all_urls>"],
+    "extension_ids": []
+  }],
+  "host_permissions": ["*://*/*"],
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ]
+}

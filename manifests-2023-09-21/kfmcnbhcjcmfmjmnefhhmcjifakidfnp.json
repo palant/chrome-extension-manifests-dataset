@@ -1,0 +1,192 @@
+---
+slug: onepagecrm-lead-clipper
+name: OnePageCRM Lead Clipper
+description: Capture leads from any webpage in just one click!
+version: 3.3.64
+release_date: 'July 24, 2023'
+publisher: OnePageCRM
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.823529411764706
+rating_count: 17
+user_count: '2,000+'
+size: 3.29MiB
+languages:
+  - English (United States)
+publisher_site: onepagecrm.com
+support_website: 'https://help.onepagecrm.com/article/213-the-onepagecrm-lead-clipper'
+privacy_policy: 'https://www.onepagecrm.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OnePageCRM Lead Clipper",
+  "homepage_url": "http://www.onepagecrm.com/",
+  "version": "3.3.64",
+  "description": "Capture leads from any webpage in just one click!",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "content_scripts": [{
+    "matches": [
+      "*://*.linkedin.com/*"
+    ],
+    "js": [
+      "compile/vendors_content_script.js",
+      "compile/linkedin.js"
+    ]
+  }, {
+    "matches": [
+      "*://www.xing.com/*"
+    ],
+    "js": [
+      "compile/vendors_content_script.js",
+      "compile/xing.js"
+    ],
+    "run_at": "document_end",
+    "all_frames": true
+  }, {
+    "matches": [
+      "*://mail.google.com/*",
+      "https://www.google.com/s2/u/0/photos/*"
+    ],
+    "js": [
+      "compile/vendors_content_script.js",
+      "compile/gmail.js"
+    ],
+    "run_at": "document_end"
+  },
+  {
+    "matches": [
+      "*://mail.google.com/*"
+    ],
+    "js": [
+      "compile/emails_gmail.js"
+    ],
+    "css":[
+      "compile/css/bootstrap/css/bootstrap-tooltip.css"
+    ],
+    "run_at": "document_start"
+  },{
+    "matches": [
+      "*://inbox.google.com/*"
+    ],
+    "js": [
+      "compile/vendors_content_script.js",
+      "compile/google_inbox.js"
+    ],
+    "run_at": "document_end"
+  },
+    {
+      "matches": [
+        "*://app.onepagecrm.com/app/chrome_lead_clipper/*"
+      ],
+      "js": [
+        "compile/onepagecrm.js"
+      ],
+      "run_at": "document_end"
+    }, {
+      "matches": [
+        "*://*.onepagecrm.com/*"
+      ],
+      "js": [
+        "compile/options.js"
+      ]
+    }, {
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "js": [
+        "compile/vendors_content_script.js",
+        "compile/twitter.js"
+      ],
+      "run_at": "document_end"
+    }, {
+      "matches": [
+        "https://www.facebook.com/*"
+      ],
+      "js": [
+        "compile/vendors_content_script.js",
+        "compile/facebook.js"
+      ],
+      "run_at": "document_end"
+    }, {
+      "matches": [
+        "https://*.outlook.live.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.outlook.office365.com/*"
+      ],
+      "js": [
+        "compile/vendors_content_script.js",
+        "compile/outlook.js"
+      ],
+      "run_at": "document_end"
+    }, {
+      "matches": [
+        "https://*.outlook.live.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.outlook.office365.com/*"
+      ],
+      "js": [
+        "compile/outlook_request.js"
+      ],
+      "run_at": "document_start"
+    }, {
+      "matches": [
+        "https://*.mail.live.com/*"
+      ],
+      "js": [
+        "compile/vendors_content_script.js",
+        "compile/hotmail.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
+    "default_title": "OnePageCRM Lead Clipper",
+    "default_popup": ""
+  },
+  "background": {
+    "service_worker": "alwayslive.js"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "tabs",
+    "storage",
+    "gcm",
+    "notifications",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "externally_connectable": {
+    "matches": [
+      "https://app.onepagecrm.com/*",
+      "https://secure.onepagecrm.com/*",
+      "*://*.live.com/*",
+      "*://*.office.com/*",
+      "*://*.office365.com/*"
+    ]
+  },
+
+  "web_accessible_resources":[{
+    "resources": ["inject.js", "popup.html","/images/*" ,"pageWorld.js"],
+    "matches" :["*://*/*"],
+    "extension_ids": []
+   }],
+   "manifest_version": 3,
+   "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+
+}

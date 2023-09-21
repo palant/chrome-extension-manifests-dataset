@@ -1,0 +1,80 @@
+---
+slug: youtube-auto-quality-mana
+name: YouTube™ Auto Quality Manager
+description: Watch YouTube™ Movies automatically in any quality
+version: '2.1'
+release_date: 'October 8, 2022'
+publisher: admin
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.2
+rating_count: 5
+user_count: '4,000+'
+size: 20.98KiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "YouTube™ Auto Quality Manager",
+ "version": "2.1",
+ 
+ "default_locale": "en",
+ "description":"__MSG_extDescription__",
+ "icons":
+ {
+  "128":"icons/icon128.png"
+ },
+ 
+  "background":{
+    "service_worker":"background/main.js"
+  },
+
+ "content_scripts":
+ [ 
+  {
+   "js":
+   [
+    "contentscripts/any_start.js"
+   ],
+   "matches": [ "<all_urls>" ],
+   "run_at": "document_start"
+  },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "contentscripts/any_end.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+ ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+ 
+ "options_page": "ui/options.html",
+ 
+ "action":
+ {
+    "default_icon":
+  {
+      "64": "icons/icon64.png"
+    },
+    "default_title": "YouTube™ Auto Quality Manager",
+    "default_popup": "ui/pageaction.html"
+  },
+ 
+ "permissions":["activeTab",    "storage",    "webRequest",    "tabs"],
+
+  "web_accessible_resources": [{
+    "resources": ["inj/ytcom.js", "inj/emb.js", "inj/any.js"],
+    "matches": ["http://*/*", "https://*/*"]
+  }]
+}

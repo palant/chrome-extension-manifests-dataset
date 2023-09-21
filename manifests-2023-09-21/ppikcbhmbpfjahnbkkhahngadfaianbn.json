@@ -1,0 +1,118 @@
+---
+slug: hyperise-image-website-pe
+name: 'Hyperise: image & website personalization'
+description: >-
+  Our brains are hardwired to process images in milliseconds, adding
+  personalization creates pattern interrupts that captures…
+version: '2.8'
+release_date: 'August 24, 2023'
+publisher: Hyperise.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 6
+user_count: '1,000+'
+size: 1010KiB
+languages:
+  - English
+publisher_site: hyperise.com
+extension_website: 'https://hyperise.com'
+support_website: 'https://support.hyperise.com'
+privacy_policy: 'https://hyperise.com/privacy-policy'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Hyperise: image & website personalization",
+  "short_name": "Image & Website personalization",
+  "version": "2.8",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["clipboardWrite", "tabs", "storage", "activeTab", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "action": {
+    "default_title": "Hyperise: image & website personalization",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "48": "icons/icon-48.png",
+      "64": "icons/icon-64.png",
+      "128": "icons/icon-128.png"
+    },
+    "default_popup": "/assets/html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "js": ["/assets/js/Utils.js"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "run_at": "document_end",
+      "js": ["/assets/js/content.js", "jquery.js", "bootstrap.js"],
+      "css": ["style.css", "bootstrap.css", "bodyStyleLinkedin.css"],
+      "matches": ["https://www.linkedin.com/*", "http://www.linkedin.com/*"]
+    },
+    {
+      "run_at": "document_end",
+      "js": ["/assets/js/contentFacebook.js", "jquery.js", "bootstrap.js"],
+      "css": ["styleFacebook.css", "Modal.css", "bootstrapFacebook.css"],
+      "matches": ["https://*.facebook.com/*", "http://*.facebook.com/*"]
+    },
+    {
+      "run_at": "document_start",
+      "js": ["jquery.js", "/assets/js/contentGmail.js"],
+      "css": ["styleGmail.css"],
+      "matches": ["*://mail.google.com/*", "*://inbox.google.com/*"]
+    },
+    {
+      "run_at": "document_end",
+      "js": ["jquery.js", "/assets/js/contentOutlook.js"],
+      "css": ["styleGmail.css"],
+      "matches": ["*://*.outlook.live.com/*"]
+    },
+    {
+      "run_at": "document_end",
+      "js": ["jquery.js", "/assets/js/contentManual.js"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "run_at": "document_start",
+      "js": [
+        "/assets/js/jquery-1.11.1.min.js",
+        "/assets/js/jquery-sortable.js",
+        "/assets/other/js/content.js"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["logo-seed.png"],
+      "matches": [
+        "https://*.facebook.com/*",
+        "http://*.facebook.com/*",
+        "*://mail.google.com/*",
+        "*://inbox.google.com/*",
+        "*://*.outlook.live.com/*"
+      ]
+    },
+    {
+      "resources": ["Modal.html", "/assets/html/DestionationUrlFrame.html"],
+      "matches": ["http://*/*", "https://*/*"]
+    },
+    {
+      "resources": ["/assets/other/css/ui.css", "/assets/other/img/*", "/assets/img/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "options_page": "assets/other/html/options.html"
+}

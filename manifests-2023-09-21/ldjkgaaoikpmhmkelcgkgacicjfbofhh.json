@@ -1,0 +1,92 @@
+---
+slug: instapaper
+name: Instapaper
+description: Instapaper browser extension to save links for offline reading.
+version: 2.2.1
+release_date: 'August 16, 2023'
+publisher: accounts
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.782101167315175
+rating_count: 514
+user_count: '200,000+'
+size: 65.03KiB
+languages:
+  - English
+publisher_site: www.instapaper.com
+extension_website: 'http://www.instapaper.com'
+support_website: 'https://instapaper.zendesk.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Instapaper",
+  "description": "Instapaper browser extension to save links for offline reading.",
+  "version": "2.2.1",
+
+  "options_page": "options.html",
+  "icons": {
+    "16": "insta_logo_tiny.png",
+    "48": "insta_logo_small.png",
+    "128": "insta_logo.png"
+  },
+  "commands": {
+    "ctrl-shift-s": {
+      "suggested_key": { "default": "Ctrl+Shift+S" },
+      "description": "Save article keyboard shortcut"
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "readlater.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "insta_default_action.png"
+  },
+  "content_scripts": [
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "js": ["bookmarklet.js", "deflate-base64-min.js", "highlight_ugly.js"],
+        "css": ["instapaper.css"],
+        "run_at": "document_start"
+    },
+    {
+        "matches": ["http://twitter.com/*", "https://twitter.com/*"],
+        "js": ["twitter.js"]
+    },
+    {
+        "matches": ["http://www.reddit.com/*"],
+        "js": ["reddit.js"]
+    },
+    {
+        "matches": ["https://news.ycombinator.com/*"],
+        "js": ["hackernews.js"]
+    },
+    {
+        "matches": ["http://www.usv.com/", "https://www.usv.com/"],
+        "js": ["usv.js"],
+        "css": ["usv.css"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+        "*.png"
+    ],
+    "matches": [
+        "http://*/*",
+        "https://*/*"
+    ]
+  }]
+}

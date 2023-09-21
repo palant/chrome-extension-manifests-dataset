@@ -1,0 +1,117 @@
+---
+slug: phlinx
+name: Phlinx
+description: >-
+  Unlock a truly connected web! Get product reviews, videos, discussions, and
+  articles on any topic, right in the Phlinx sidebar.
+version: 1.12.20
+release_date: 'August 16, 2022'
+publisher: phlinx
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.760869565217392
+rating_count: 46
+user_count: '2,000+'
+size: 3.7MiB
+languages:
+  - English
+extension_website: 'https://phlinx.com'
+privacy_policy: 'https://phlinx.com/extension/privacystatement'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Phlinx",
+  "version": "1.12.20",
+
+  "description": "Unlock a truly connected web! Get product reviews, videos, discussions, and articles on any topic, right in the Phlinx sidebar.",
+  "background": {
+    "scripts": ["js/logs-control.js", "js/lib/common.js", "js/lib/jquery.js", "js/lib/vue.js", "js/lib/vuex.js", "js/background.js"]
+  },
+  "browser_action": {
+    "default_icon": "img/Icon_19.png",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["css/fonts.css"],
+      "js": ["js/content-availability-checker.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/logs-control.js", "js/inject/js-api-override.js", "js/inject/custom-css-injector.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/lib/common.js", "js/lib/jquery.js", "js/lib/vue.js", "js/lib/vuex.js", "js/inject/inboxsdk.js", "js/inject/compat-fixes.js", "js/content-frame-start.js"],
+      "css": ["css/phlinx.css", "css/hint.base.min.css", "js/content.css"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "toggle-black-list": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "windows": "Ctrl+Shift+E",
+        "mac": "MacCtrl+Shift+E"
+      },
+      "description": "Toggle Black List"
+    },
+    "show-empty-sidebar": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "windows": "Ctrl+Shift+Space",
+        "mac": "MacCtrl+Shift+Space"
+      },
+      "description": "Show empty Sidebar"
+    },
+    "show-history-sidebar": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "windows": "Ctrl+Shift+H",
+        "mac": "MacCtrl+Shift+H"
+      },
+      "description": "Show History Sidebar"
+    },
+    "toggle-api-mode": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "windows": "Ctrl+Shift+Y",
+        "mac": "MacCtrl+Shift+Y"
+      },
+      "description": "Toggle Dev/Prod API"
+    }
+  },
+  "icons": {
+    "16": "img/Icon_16.png",
+    "19": "img/Icon_19.png",
+    "48": "img/Icon_48.png",
+    "128": "img/Icon_128.png"
+  },
+
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com 'unsafe-eval'; object-src 'self'",
+
+  "web_accessible_resources": ["pdf/*" ,"templates/*", "img/*", "font/*", "js/inline/*", "js/content.js", "css/inject/*", "ftp:/*", "file:/*", "chrome-extension:/*", "blob:*", "data:*", "filesystem:/*", "drive:*"],
+  "permissions": [
+    "*://*/*",
+    "storage",
+    "commands",
+    "contextMenus",
+    "tabs",
+    "browsingData",
+    "webRequest",
+    "webRequestBlocking"
+  ]
+}

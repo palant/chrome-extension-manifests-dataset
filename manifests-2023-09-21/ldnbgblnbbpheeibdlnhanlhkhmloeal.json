@@ -1,0 +1,83 @@
+---
+slug: 豆瓣读书x上海图书馆
+name: 豆瓣读书x上海图书馆
+description: 豆瓣读书x上海图书馆馆藏查询工具
+version: '1.2'
+release_date: 'January 29, 2023'
+publisher: Pluto
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 2
+user_count: 35
+size: 214KiB
+languages:
+  - 中文 (简体)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "豆瓣读书x上海图书馆",
+  "description": "豆瓣读书x上海图书馆馆藏查询工具",
+  "version": "1.2",
+  "manifest_version": 3,
+
+  "action": {
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "24": "img/icon-24.png",
+      "32": "img/icon-32.png"
+    },
+    "default_title": "豆瓣读书x上海图书馆"
+  },
+
+  "background": {
+    "service_worker": "js/eventPage.js"
+  },
+
+  "content_scripts":[
+    {
+      "matches":[
+        "https://book.douban.com/subject/*"
+      ],
+      "js":["lib/jquery-3.2.1.min.js", "js/douban_cs.js"],
+      "css":["css/douban_library.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches":[
+        "http://old.library.sh.cn/wsjs/"
+      ],
+      "js":["lib/jquery-3.2.1.min.js", "lib/crypto-js.js", "js/sh_library_cs.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "options_page": "options/settings.html",
+
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "http://ipac.library.sh.cn/*",
+    "http://e.library.sh.cn/*",
+    "http://zsm.library.sh.cn/*",
+    "https://library.sh.cn/*"
+  ],
+
+  "web_accessible_resources": [{ 
+    "resources": [
+      "img/*",
+      "data/libraryInfo.json"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+
+}

@@ -1,0 +1,82 @@
+---
+slug: youtube中文配音
+name: Youtube中文配音
+description: '在youtube看英文视频的时候，点击插件图标,会用自动进行翻译，然后用中文进行朗读。'
+version: 0.8.3
+release_date: 'September 14, 2023'
+publisher: zhiboli597
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.5675675675675675
+rating_count: 37
+user_count: '10,000+'
+size: 5.48MiB
+languages:
+  - 中文 (简体)
+publisher_site: youtube-dubbing.com
+extension_website: 'https://youtube-dubbing.com/'
+support_website: 'https://youtube-dubbing.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Youtube中文配音",
+  "description": "在youtube看英文视频的时候，点击插件图标,会用自动进行翻译，然后用中文进行朗读。",
+  "version": "0.8.3",
+  "background": {
+    "service_worker": "background-pack.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content-bundle.js"],
+      "run_at" : "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["msg.js"],
+      "run_at" : "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["subtitles.js"],
+      "run_at" : "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "css": ["introjs.min.css"],
+      "js": ["intro.min.js"],
+      "run_at" : "document_start"
+    }
+  ],
+  "icons": {
+    "16": "images/icon.png",
+    "32": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon.png",
+      "32": "images/icon.png",
+      "48": "images/icon.png",
+      "128": "images/icon.png"
+    }
+  },
+  "permissions": ["tabs", "storage", "cookies", "contextMenus"],
+  "host_permissions": [
+    "https://proxy2.youtube-dubbing.com/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}

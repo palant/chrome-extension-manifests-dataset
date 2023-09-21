@@ -1,0 +1,97 @@
+---
+slug: pandacrazy-max
+name: PandaCrazy Max
+description: >-
+  Extension for Mturk.com to Collect HIT's for you at a set time value. Lot of
+  organizing of panda's for easier use.
+version: 1.0.7
+release_date: 'March 8, 2023'
+publisher: allbyjohn
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 11
+user_count: '10,000+'
+size: 3.43MiB
+languages:
+  - English (United States)
+extension_website: 'https://pandacrazymax.allbyjohn.com/'
+support_website: 'https://github.com/JohnnyRS/PandaCrazy-Max/wiki'
+privacy_policy: 'https://github.com/JohnnyRS/PandaCrazy-Max/wiki/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PandaCrazy Max",
+  "short_name": "PC Max",
+  "version": "1.0.7",
+  "author": "JohnnyRS",
+  "description": "Extension for Mturk.com to Collect HIT's for you at a set time value. Lot of organizing of panda's for easier use.",
+
+  "action": {
+    "default_icon": {
+      "32": "pcMax-32x32.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "PandaCrazy Max for Mturk.com"
+  },
+  "background": {
+    "service_worker": "js/pageScript/backgroundCommon.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://worker.mturk.com/*",
+        "*://worker.mturk.com/requesters/PandaCrazy*/projects?JRGID*",
+        "*://worker.mturk.com/projects/*/tasks/*?assignment_id*"
+      ],
+      "exclude_matches": [
+        "*://*.mturk.com/direct_deposit*",
+        "*://*.mturk.com/payment_schedule*"
+      ],
+      "css": ["css/PCM-Content-Script.css"],
+      "js":[
+        "lib/browser-polyfill.js",
+        "lib/jquery-3.6.0.min.js",
+        "js/common/common.js",
+        "js/common/DebuggerClass.js",
+        "js/contentScripts/hitHelper.js"
+      ],
+      "all_frames": true
+    }, {
+      "matches": [
+        "*://forum.turkerview.com/*",
+        "*://*.mturkforum.com/*",
+        "*://*.ourhitstop.com/*",
+        "*://*.forum.theottoforum.com/*",
+        "*://*.mturkcrowd.com/*",
+        "*://*.slack.com/client/TDBT14TPY/*",
+        "*://*.discord.com/channels/*",
+        "*://*.discord.com/app*"
+      ],
+      "css": ["css/PCM-Content-Script.css"],
+      "js": [
+        "lib/browser-polyfill.js",
+        "lib/jquery-3.6.0.min.js",
+        "js/common/DebuggerClass.js",
+        "js/contentScripts/forumHelper.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://worker.mturk.com/*",
+    "https://www.amazon.com/ap/signin?*openid.return_to=https://worker.mturk.com/*"
+  ],
+  "icons": {
+    "48": "pcMax-48x48.png",
+    "128": "pcMax-128x128.png"
+  }
+}

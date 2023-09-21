@@ -1,0 +1,124 @@
+---
+slug: veeva-web2pdf
+name: Veeva Web2PDF
+description: Create a PDF of your website that captures user interactions and links.
+version: 23.2.3.2
+release_date: 'September 15, 2023'
+publisher: Veeva Web2PDF
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.1666666666666665
+rating_count: 12
+user_count: '2,000+'
+size: 1.53MiB
+languages:
+  - English
+extension_website: 'https://veevaweb2pdf.com/welcome'
+support_website: 'https://www.veevaweb2pdf.com/hints'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Veeva Web2PDF",
+  "version": "23.2.3.2",
+  "description": "Create a PDF of your website that captures user interactions and links.",
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Web2pdf Hint Selector",
+    "default_icon": "./icons/V32.png",
+    "default_popup": "/templates/menu.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_globs": [
+        "http://127.0.0.1:8991/webcrawler/crawl/*",
+        "https://www.veevaweb2pdf.com/crawl/*",
+        "https://qaweb2pdf.vaultpdf.com/crawl/*",
+        "https://devweb2pdf.vaultpdf.com/crawl/*"
+      ],
+      "css": [
+        "styles/elementSelector.css"
+      ],
+      "js": [
+        "scripts/elementSelector.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_globs": [
+        "http://127.0.0.1:8991/webcrawler/crawl/*",
+        "https://www.veevaweb2pdf.com/crawl/*",
+        "https://qaweb2pdf.vaultpdf.com/crawl/*",
+        "https://devweb2pdf.vaultpdf.com/crawl/*"
+      ],
+      "css": [
+        "styles/credentialValidationService.css"
+      ],
+      "js": [
+        "scripts/credentialValidationService.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_globs": [
+        "http://127.0.0.1:8991/webcrawler/crawl/*",
+        "https://www.veevaweb2pdf.com/crawl/*",
+        "https://qaweb2pdf.vaultpdf.com/crawl/*",
+        "https://devweb2pdf.vaultpdf.com/crawl/*"
+      ],
+      "css": [
+        "styles/hintLimitPopup.css"
+      ],
+      "js": [
+        "scripts/hintLimitService.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icons/V16.png",
+    "32": "icons/V32.png",
+    "48": "icons/V48.png",
+    "128": "icons/V128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "templates/eventPopupFullV2.html",
+        "templates/credentialPopup.html",
+        "templates/hintLimitAlert.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "manifest_version": 3,
+  "short_name": "Web2PDF",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

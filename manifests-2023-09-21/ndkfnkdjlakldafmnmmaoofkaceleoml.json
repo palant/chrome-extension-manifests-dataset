@@ -1,0 +1,76 @@
+---
+slug: التحضير
+name: التحضير
+description: التحضير الآلي لدروس منصة مدرستي وأسئلة النصفي والنهائي
+version: 1.1.4
+release_date: 'August 30, 2023'
+publisher: أسئلتي
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: '1,000+'
+size: 691KiB
+languages:
+  - ‫العربية
+support_website: 'https://twitter.com/myasilaty'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "التحضير",
+    "description": "التحضير الآلي لدروس منصة مدرستي وأسئلة النصفي والنهائي",
+    "version": "1.1.4",
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "icons":{
+        "128":"./icon.png",
+        "64":"./icon.png",
+        "32":"./icon.png",
+        "16":"./icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://schools.madrasati.sa/*"               
+            ],
+            "js": [
+                "js/content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://schools.madrasati.sa/SchoolSchedule/Schedule/ManageLecture*"               
+            ],
+            "js": [
+                "js/close-tab-handler.js"
+            ]
+        },
+        {
+            "all_frames": true,
+            "matches": [
+                "https://schools.madrasati.sa/Teacher/Lessons/LessonDetailsNew?Data=*"               
+            ],
+            "js": [
+                "js/captcha-tracker.js"
+            ]
+        }
+    ],
+    "web_accessible_resources":[{
+        "resources":[
+            "logo.png",
+            "css/content.css",
+            "css/global.css",
+            "db/*"
+        ],
+        "matches":[
+            "https://schools.madrasati.sa/*"
+        ]
+    }],
+    "permissions":[
+        "storage"
+    ]
+}

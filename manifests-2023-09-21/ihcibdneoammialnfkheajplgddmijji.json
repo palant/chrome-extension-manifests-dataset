@@ -1,0 +1,122 @@
+---
+slug: hubtags
+name: HubTags
+description: Tag contacts within HubSpot so you can easily filter for these contacts later.
+version: 3.0.24
+release_date: 'July 21, 2023'
+publisher: petrovdigital.io
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '1,000+'
+size: 939KiB
+languages:
+  - English
+publisher_site: hubtags.io
+extension_website: 'https://www.hubtags.io/'
+privacy_policy: 'https://petrovdigital.io/legal'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "HubTags",
+    "version": "3.0.24",
+    "manifest_version": 2,
+    "description": "Tag contacts within HubSpot so you can easily filter for these contacts later.",
+    "short_name": "HubTags",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkvfej+FGiji/FJZ67/KMOcZR5hMpszlqYKJ7FQMsaytiATyB5qNc04jhABRQl+NuHA703TnQiXoP15XWGeREfsVuhinuIN6+CKfHSRKFBZ9NbQvU8l55QwkIa/YRf5n1fOygrMH0zWz6Xll97sNvqTGQPVjtojkjd7Tpc4VznIefKyyfl2uHOCfnkxa9Go+HjaMLnN/QH5/0q7R2HR9CfKn7lMUQqCN4ldqy7uUizXFhFlx/Mt+OaPQAHZ5eZpxaM6EsA4Rdn1uGKYJifILx3UoPrfc78F5DROxxgu4qhlzjG95mp9czH7fj11ISC/YbLXiKWcCuc5oeOGLKo5UU8wIDAQAB",
+    "browser_action": {
+        "default_icon": "img/icon48.png",
+        "default_title": "HubTags"
+    },
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+    "options_ui": {
+        "page": "settings.html",
+        "chrome_style": false,
+        "open_in_tab": true
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.hubspot.com/*"
+            ],
+            "js": [
+                "js/ext.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://*.hubspot.com/contacts/*"
+            ],
+            "js": [
+                "js/lib/sentry.js",
+                "js/lib/sentry-init.js",
+                "js/services/storage.js",
+                "js/services/bg-tasks.js",
+                "js/cs-loader.js"
+            ],
+            "css": [
+                "css/sidepanel.css",
+                "css/searchpanel.css",
+                "css/objectpanel.css"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://*.hubspot.com/*"
+            ],
+            "js": [
+                "js/services/hubspot-api-helper.js",
+                "js/services/hubspot-permissions-helper.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://*.hubspot.com/myaccounts-beta"
+            ],
+            "js": [
+                "js/services/get-acc-info.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://www.hubtags.io/*",
+                "*://hubtags-website.onrender.com/*"
+            ],
+            "js": [
+                "js/cs-hubtags-website.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        "css/*.*",
+        "img/*.*",
+        "js/*.*",
+        "help/*",
+        "settings.html"
+    ],
+    "permissions": [
+        "*://*.hubspot.com/*",
+        "*://*.hubapi.com/*",
+        "contextMenus",
+        "storage",
+        "identity",
+        "activeTab"
+    ]
+}

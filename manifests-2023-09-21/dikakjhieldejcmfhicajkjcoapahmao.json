@@ -1,0 +1,70 @@
+---
+slug: subtitle-downloader
+name: Subtitle Downloader
+description: Utility that helps download subtitles from different websites.
+version: 0.1.0
+release_date: 'January 17, 2023'
+publisher: clarapastore17
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '1,000+'
+size: 43.4KiB
+languages:
+  - English (United States)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Subtitle Downloader",
+  "version": "0.1.0",
+  "description": "Utility that helps download subtitles from different websites.",
+  "manifest_version": 3,
+  "author": "Language Dojo",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Subtitle Downloader"
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["activeTab", "downloads"],
+  "content_scripts": [
+    {
+      "js": ["netflix/contentscript.js", "netflix/inject.js"],
+      "matches": ["https://*.netflix.com/*"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": ["youtube/contentscript.js"],
+      "matches": ["https://*.youtube.com/*"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": ["npo/contentscript.js", "npo/inject.js"],
+      "matches": ["https://*.npostart.nl/*"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["netflix/worker.js"],
+      "matches": ["https://*.netflix.com/*"]
+    },
+    {
+      "resources": ["youtube/worker.js"],
+      "matches": ["https://*.youtube.com/*"]
+    },
+    {
+      "resources": ["npo/worker.js"],
+      "matches": ["https://*.npostart.nl/*"]
+    }
+  ]
+}

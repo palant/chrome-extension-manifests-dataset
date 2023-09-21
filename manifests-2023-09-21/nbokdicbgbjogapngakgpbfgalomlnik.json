@@ -1,0 +1,118 @@
+---
+slug: gameenable-designed-for-s
+name: GameEnable - Designed for Stadia™ & xCloud™
+description: >-
+  A VPN designed specifically for Stadia™ xCloud™ and GeforeNow™. Fast, secured
+  with 0 latency overhead when using the VPN.
+version: 1.0.155
+release_date: 'October 10, 2021'
+publisher: gameenable.com
+category: Fun
+category_slug: ext/14-fun
+rating: 3.5833333333333335
+rating_count: 24
+user_count: '1,000+'
+size: 194KiB
+languages:
+  - English
+publisher_site: gameenable.com
+extension_website: 'https://gameenable.com'
+support_website: 'https://discord.gg/V6fv3Nx'
+privacy_policy: 'https://gameenable.com/privacy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "GameEnable - Designed for Stadia™ & xCloud™",
+  "description": "A VPN designed specifically for Stadia™ xCloud™ and GeforeNow™. Fast, secured with 0 latency overhead when using the VPN.",
+  "version": "1.0.155",
+  "permissions": [
+    "proxy",
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "*://gameenable.com/*",
+    "*://stadia.google.com/*",
+    "*://play.geforcenow.com/*",
+    "*://www.xbox.com/*",
+    "*://xgpuweb.gssv-play-prod.xboxlive.com/*",
+    "*://prod.cloudmatchbeta.nvidiagrid.net/*",
+    "*://static-login.nvidia.com/*",
+    "*://layouts.nvidiagrid.net/*"
+  ],
+  "browser_action": {
+    "default_title": "GameEnable",
+    "default_popup": "ui/index/index.html",
+    "default_icon": "resources/icon16.png"
+  },
+  "externally_connectable": {
+    "matches": ["*://gameenable.com/*"]
+  },
+  "web_accessible_resources": [
+    "ui/alerts/all/notConnected/index.html",
+    "ui/alerts/all/proxyAPINotAvailable/index.html",
+    "ui/alerts/all/accountUsed/index.html",
+    "ui/alerts/all/setupNotCompleted/index.html",
+    "ui/alerts/stadia/accountLocked/index.html",
+    "ui/alerts/stadia/recommendedSettings/index.html"
+  ],
+  "content_scripts" : [
+    {
+      "matches" : [
+        "*://stadia.google.com/*",
+        "*://play.geforcenow.com/*",
+        "*://www.xbox.com/*",
+        "*://prod.cloudmatchbeta.nvidiagrid.net/*",
+        "*://static-login.nvidia.com/*",
+        "*://layouts.nvidiagrid.net/*"
+      ],
+      "run_at": "document_start",
+      "js" : ["injected/serviceWorkerBlocker/index.js"]
+    },
+    {
+      "matches" : [
+        "*://stadia.google.com/*",
+        "*://play.geforcenow.com/*",
+        "*://www.xbox.com/*",
+        "*://prod.cloudmatchbeta.nvidiagrid.net/*",
+        "*://static-login.nvidia.com/*",
+        "*://layouts.nvidiagrid.net/*"
+      ],
+      "js" : ["injected/topFrameOnly.js"]
+    },{
+      "run_at": "document_end",
+      "matches": [ "*://stadia.google.com/*" ],
+      "js": [
+        "injected/stadia/index.js",
+        "injected/stadia/enhanced.js"
+      ]
+    },{
+      "run_at": "document_start",
+      "matches": [ "*://www.xbox.com/*" ],
+      "js": [
+        "injected/xcloud/index.js"
+      ]
+    }],
+  "icons": {
+    "16": "resources/icon16.png",
+ "26": "resources/icon26.png",
+ "32": "resources/icon32.png",
+    "48": "resources/icon48.png",
+    "128": "resources/icon128.png"
+  },
+  "background": {
+    "scripts":
+    [
+      "config.js",
+      "utils/asyncExecuteScript.js",
+      "background/authentication.js",
+      "background/app.js",
+      "background/regionFinder.js",
+      "background/proxy.js",
+      "background/lifecycle.js",
+      "background/index.js"
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+---
+slug: cuponomia-cupom-e-cashbac
+name: Cuponomia - Cupom e Cashback
+description: >-
+  O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que
+  estiver comprando. Economia em apenas um clique!
+version: 3.22.0
+release_date: 'September 15, 2023'
+publisher: Cuponomia
+category: Shopping
+category_slug: ext/12-shopping
+rating: 4.844479004665629
+rating_count: 1929
+user_count: '500,000+'
+size: 3.97MiB
+languages:
+  - português (Brasil)
+publisher_site: cuponomia.com.br
+extension_website: 'https://www.cuponomia.com.br'
+support_website: 'https://www.cuponomia.com.br/perguntas-frequentes'
+privacy_policy: 'https://www.cuponomia.com.br/privacidade'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cuponomia - Cupom e Cashback",
+  "description": "O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que estiver comprando. Economia em apenas um clique!",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://www.cuponomia.com.br",
+  "icons": {
+    "128": "assets/img/icons/main-icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/img/icons/main-icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/check-website.js",
+        "content-scripts/inject-store-scrapers.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "content-scripts/cuponomia.js"
+      ],
+      "matches": [
+        "*://*.cuponomia.com.br/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.json",
+        "*.css",
+        "*.html",
+        "*.png",
+        "*.svg",
+        "*.js",
+        "*.woff",
+        "*.woff2",
+        "*.mp4"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version": "3.22.0"
+}

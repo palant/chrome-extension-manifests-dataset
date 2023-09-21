@@ -1,0 +1,79 @@
+---
+slug: zerocarbon-consumo-consci
+name: 'ZeroCarbon: consumo consciente'
+description: Zere o impacto ambiental de suas compras através da ZeroCarbon
+version: '4.7'
+release_date: 'January 3, 2023'
+publisher: ZeroCarbon
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 40
+user_count: 225
+size: 276KiB
+languages:
+  - português (Brasil)
+publisher_site: zerocarbon.com.br
+extension_website: 'https://www.zerocarbon.com.br'
+support_website: 'https://api.whatsapp.com/send?phone=5531997906618'
+privacy_policy: 'https://www.zerocarbon.com.br/privacidade'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ZeroCarbon: consumo consciente",
+  "version": "4.7",
+  "description": "Zere o impacto ambiental de suas compras através da ZeroCarbon",
+  "permissions": [
+    "unlimitedStorage",
+    "storage",
+    "tabs",
+    "<all_urls>",
+    "activeTab",
+    "https://www.zerocarbon.com.br/*",
+    "https://zerocarbonstaging.enacom.com.br/*",
+    "https://zerocarbondev.enacom.com.br/*"
+  ],
+  "background": {
+    "scripts": [
+      "scripts/socketIO.js",
+      "scripts/jquery-3.5.1.min.js",
+      "scripts/endpoints.js",
+      "scripts/background/background.js",
+      "scripts/background/requestData.js",
+      "scripts/background/eventHandler.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://www.zerocarbon.com.br/*"],
+      "all_frames": false,
+      "js": ["scripts/jquery-3.5.1.min.js", "scripts/endpoints.js", "scripts/content/content.js"],
+      "css": ["styles/reset.css", "styles/designsystem.css", "styles/content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.zerocarbon.com.br/*"],
+      "all_frames": false,
+      "js": ["scripts/jquery-3.5.1.min.js", "scripts/endpoints.js", "scripts/content/zerocarbon.js"],
+      "css": ["styles/reset.css", "styles/designsystem.css", "styles/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_action": {
+    "default_popup": "layouts/popup.html"
+  },
+  "icons": {
+    "64": "images/icon-plugin.png"
+  },
+  "web_accessible_resources": [
+    "layouts/content-loader.html",
+    "layouts/content-login.html",
+    "layouts/content-welcome.html",
+    "images/profile/zero-carbon-logo.png",
+    "images/profile/close-button.png"
+  ],
+  "manifest_version": 2
+}

@@ -1,0 +1,104 @@
+---
+slug: ellie-your-ai-email-assis
+name: Ellie - Your AI Email Assistant
+description: An AI that can write replies to your emails in your style. Powered by GPT-4.
+version: 1.6.4
+release_date: 'September 13, 2023'
+publisher: Squarecat
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.9444444444444446
+rating_count: 18
+user_count: '9,000+'
+size: 92.99KiB
+languages:
+  - English (United States)
+publisher_site: tryellie.com
+extension_website: 'https://tryellie.com'
+support_website: 'https://tryellie.com/help'
+privacy_policy: 'https://ellieai.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ellie - Your AI Email Assistant",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "version": "1.6.4",
+  "description": "An AI that can write replies to your emails in your style. Powered by GPT-4.",
+  "permissions": [
+    "scripting",
+    "storage",
+    "activeTab"
+  ],
+  "options_ui": {
+    "browser_style": true,
+    "page": "src/options/index.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.fastmail.com/mail/*",
+        "https://mail.google.com/mail/*"
+      ],
+      "js": [
+        "src/clients/common/index.js"
+      ],
+      "css": [
+        "src/clients/common/common.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "src/clients/gmail/libs/jquery-3.6.1.min.js",
+        "src/clients/gmail/libs/gmail.js"
+      ],
+      "css": [
+        "src/clients/gmail/styles.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://mail.google.com/mail/*"
+      ],
+      "js": [
+        "src/clients/gmail/index.js"
+      ],
+      "css": [
+        "src/clients/gmail/styles.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://app.fastmail.com/mail/*"
+      ],
+      "js": [
+        "src/clients/fastmail/index.js"
+      ],
+      "css": [
+        "src/clients/fastmail/styles.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  }
+}

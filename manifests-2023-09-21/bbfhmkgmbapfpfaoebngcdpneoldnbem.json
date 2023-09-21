@@ -1,0 +1,153 @@
+---
+slug: better-research
+name: Better Research
+description: AI-powered productivity for professionals.
+version: 0.2.5
+release_date: 'September 14, 2023'
+publisher: Better Research
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 8
+user_count: '2,000+'
+size: 593KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - dansk
+  - español
+  - italiano
+  - polski
+  - suomi
+  - svenska
+  - čeština
+  - русский
+  - 日本語
+  - 한국어
+publisher_site: betterresearch.com
+extension_website: 'https://betterresearch.com'
+support_website: 'https://betterresearch.com'
+privacy_policy: 'https://betterresearch.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Better Research",
+  "description": "__MSG_manifestDescription__",
+  "version": "0.2.5",
+  "manifest_version": 3,
+  "icons": {
+    "16": "/imgs/icon-16.png",
+    "48": "/imgs/icon-48.png",
+    "128": "/imgs/icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "tabs",
+    "storage",
+    "sidePanel"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html",
+    "openPanelOnActionClick": true
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "default_locale": "en",
+  "externally_connectable": {
+    "matches": [
+      "https://*.betterresearch.com/*",
+      "http://localhost/*"
+    ]
+  },
+  "chrome_url_overrides": {
+    "newtab": "newTab.html"
+  },
+  "action": {
+    "default_icon": "/imgs/icon-16.png",
+    "default_title": "__MSG_manifestOpenOverlay__"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      }
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts;  object-src 'self';"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "imgs/*",
+        "overlay.html",
+        "scOverlay.html",
+        "/js/markdownIt.js",
+        "/js/highlights.js",
+        "/js/tailwind.js",
+        "/js/sidepanel.js",
+        "sidepanel.html",
+        "/css/highlights.css",
+        "newTab.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "/js/gmail.js",
+        "js/jquery.js",
+        "scEmail.html"
+      ],
+      "matches": [
+        "*://mail.google.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "/js/content.js",
+        "/js/markdownIt.js",
+        "/js/newTab.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "/js/gmail.js",
+        "/js/gmailInjector.js",
+        "js/jquery.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "js/scEmail.js"
+      ]
+    }
+  ]
+}

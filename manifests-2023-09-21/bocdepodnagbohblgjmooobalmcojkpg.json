@@ -1,0 +1,160 @@
+---
+slug: csmoney-antiscam
+name: CS.Money Antiscam
+description: Extension protects from phishing and API scam.
+version: 1.20.3
+release_date: 'June 10, 2022'
+publisher: CS.Money
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.203703703703703
+rating_count: 54
+user_count: '50,000+'
+size: 9.39MiB
+languages:
+  - English
+  - español
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+extension_website: 'https://cs.money/'
+privacy_policy: 'https://cs.money/tos'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "1.20.3",
+  "author": "Cdewe",
+  "short_name": "CS.Money official portal verifier",
+  "permissions": [
+    "background",
+    "storage",
+    "tabs",
+    "alarms",
+    "webNavigation",
+    "management",
+    "cookies",
+    "https://steamcommunity.com/",
+    "https://csgo.agency/"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/extension-default.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://new.cs.money/*",
+        "https://cs.money/*"
+      ],
+      "js": [
+        "js/detect.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://steamcommunity.com/profiles/*",
+        "https://steamcommunity.com/id/*"
+      ],
+      "css": [
+        "css/steamrepAnalysis.css"
+      ],
+      "js": [
+        "js/steamrepAnalysis.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://steamcommunity.com/*/tradeoffers/*"
+      ],
+      "css": [
+        "css/p2pAnalysis.css",
+        "css/tradeOfferCardWarning.css"
+      ],
+      "js": [
+        "js/p2pAnalysis.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://steamcommunity.com/tradeoffer/*"
+      ],
+      "css": [
+        "css/tradeOfferAnalysis.css",
+        "css/p2pAnalysis.css",
+        "css/inventory.css"
+      ],
+      "js": [
+        "js/tradeOfferAnalysis.js",
+        "js/tradeInventories.js",
+        "js/p2pAnalysis.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "css/notify.css",
+        "css/popupWrapper.css"
+      ],
+      "js": [
+        "js/liveAnalysis.js",
+        "js/antiscamContentPopupHandler.js",
+        "js/insertAntiscamContentPopup.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://cs.money/",
+        "https://cs.money/*",
+        "https://*.cs.money/",
+        "https://*.cs.money/*"
+      ],
+      "css": [
+        "css/fakeLogin.css"
+      ],
+      "js": [
+        "js/fakeLogin.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://steamcommunity.com/*/inventory/*",
+        "https://steamcommunity.com/*/inventory"
+      ],
+      "js": [
+        "js/inventory.js"
+      ],
+      "css": [
+        "css/inventory.css"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://cs.money https://wiki.cs.money http://127.0.0.1:3000; object-src 'self'",
+  "web_accessible_resources": [
+    "img/*.*",
+    "icons/*.*",
+    "fonts/*.*",
+    "*.html"
+  ]
+}

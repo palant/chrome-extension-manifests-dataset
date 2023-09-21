@@ -1,0 +1,113 @@
+---
+slug: v2ex-plus
+name: v2ex plus
+description: 优雅便捷的 V2EX 扩展
+version: 2.1.1
+release_date: 'June 4, 2023'
+publisher: sciooga
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.39
+rating_count: 100
+user_count: '8,000+'
+size: 61.1KiB
+languages:
+  - 中文 (简体)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "v2ex plus",
+  "version": "2.1.1",
+  "manifest_version": 3,
+  "description": "优雅便捷的 V2EX 扩展",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage",
+    "declarativeNetRequest",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://*.v2ex.com/*",
+    "*://*.imgur.com/*",
+    "*://*.sinaimg.cn/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.v2ex.com/*"
+      ],
+      "js": [
+        "./inject/base64decode.js",
+        "./inject/dbclickToTop.js",
+        "./inject/sov2ex.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.v2ex.com/",
+        "*://*.v2ex.com/?tab=*",
+        "*://*.v2ex.com/go/*",
+        "*://*.v2ex.com/my/*",
+        "*://*.v2ex.com/recent*",
+        "*://*.v2ex.com/changes*"
+      ],
+      "css": [
+        "./inject/topicList/index.css",
+        "./inject/userinfo/index.css"
+      ],
+      "js": [
+        "./inject/topicList/index.js",
+        "./inject/userinfo/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.v2ex.com/t/*"
+      ],
+      "css": [
+        "./inject/topicDetail/index.css",
+        "./inject/userinfo/index.css"
+      ],
+      "js": [
+        "./inject/topicDetail/index.js",
+        "./inject/userinfo/index.js",
+        "./spider/index.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "weibo",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "action": {
+    "default_icon": "icon/icon38.png"
+  },
+  "options_ui": {
+    "page": "pages/options/index.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
+  },
+  "commands": {
+    "newV2EX": {
+      "description": "打开 V2EX"
+    },
+    "newMsg": {
+      "description": "查看 V2EX 消息"
+    }
+  }
+}

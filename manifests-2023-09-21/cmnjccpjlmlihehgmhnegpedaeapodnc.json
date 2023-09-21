@@ -1,0 +1,88 @@
+---
+slug: gitsight-by-remotely
+name: Gitsight by Remotely
+description: >-
+  Gitsight derives insights from open source repositories and their
+  contributors.
+version: 2.1.1
+release_date: 'June 27, 2022'
+publisher: maximo.cuadros
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 117
+size: 219KiB
+languages:
+  - English (United States)
+extension_website: 'https://gitsight.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Gitsight by Remotely",
+  "description": "Gitsight derives insights from open source repositories and their contributors.",
+  "version": "2.1.1",
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://profile.gitsight.com/*",
+    "*://mail.google.com/*",
+    "*://github.com/*"
+  ],
+  "content_security_policy":{
+    "extension_pages": "script-src 'self'; img-src 'self' https://*.gitsight.com; object-src 'self'"
+  },
+  "icons": {
+    "16": "assets/icon_16.png",
+    "48": "assets/icon_48.png",
+    "128": "assets/icon_128.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "assets/icon_48.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/vendor/profile.css",
+        "assets/widget.css",
+        "assets/widget.html"
+      ],
+      "matches": [
+        "*://mail.google.com/*",
+        "*://github.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "vendor/browser-polyfill.min.js",
+        "content-bundle.js",
+        "content-gmail.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://github.com/*"
+      ],
+      "js": [
+        "vendor/browser-polyfill.min.js",
+        "content-bundle.js",
+        "content-github.js"
+      ]
+    }
+  ]
+}

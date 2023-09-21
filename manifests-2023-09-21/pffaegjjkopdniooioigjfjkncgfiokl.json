@@ -1,0 +1,118 @@
+---
+slug: viewing-party
+name: Viewing Party
+description: Extension for viewingparty.net
+version: '2.7'
+release_date: 'November 24, 2022'
+publisher: ViewingParty.net
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: 25
+size: 238KiB
+languages:
+  - English (United States)
+publisher_site: viewingparty.net
+privacy_policy: 'https://viewingparty.net/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Viewing Party",
+  "description": "Extension for viewingparty.net",
+  "version": "2.7",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "commands": {
+    "Ctrl+M": {
+      "suggested_key": {
+        "default": "Ctrl+M",
+        "mac": "Command+M"
+      },
+      "description": "Ctrl+M."
+    }
+  },
+  "content_security_policy": {},
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "host.js",
+        "client.js",
+        "netflixScript.js",
+        "twitch_embed.js",
+        "twitch_embed_v1.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html"
+    
+  },
+"icons":{ "16": "icon16.png",
+           "48": "icon48.png",
+          "128": "icon128.png" },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://viewingparty.net/host*",
+        "*://viewingparty.net/?host=true*",
+        "https://www.viewingparty.net/host/*"
+      ],
+      "js": [
+        "hostStarter.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.netflix.com/*"
+      ],
+      "js": [
+        "netflixScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.hbomax.com/*"
+      ],
+      "js": [
+        "disney.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.disneyplus.com/*"
+      ],
+      "js": [
+        "disney.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.peacocktv.com/*"
+      ],
+      "js": [
+        "peacock.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://www.localhost:3000/*"
+    ]
+  },
+  "host_permissions": [
+    "https://netflix.com/*",
+    "https://viewingparty.vercel.app/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ]
+}

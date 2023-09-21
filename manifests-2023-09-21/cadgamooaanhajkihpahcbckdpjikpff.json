@@ -1,0 +1,84 @@
+---
+slug: 遊戯王db⇔wiki
+name: 遊戯王DB⇔Wiki
+description: 遊戯王公式カードデータベースと遊戯王カードWikiのカード詳細ページを相互に行き来できる拡張機能です。ラッシュデュエルにも対応しています。
+version: 1.0.1
+release_date: 'July 30, 2021'
+publisher: 湯ノ宮
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 0
+rating_count: 0
+user_count: 222
+size: 114KiB
+languages:
+  - 日本語
+extension_website: 'https://github.com/uyayimon/YuGiOh-CardDB-Wiki/wiki'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "遊戯王DB⇔Wiki",
+  "version": "1.0.1",
+  "manifest_version": 2,
+  "description": "遊戯王公式カードデータベースと遊戯王カードWikiのカード詳細ページを相互に行き来できる拡張機能です。ラッシュデュエルにも対応しています。",
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "48": "icons/icon-48x48.png",
+    "64": "icons/icon-64x64.png",
+    "96": "icons/icon-96x96.png",
+    "128": "icons/icon-128x128.png"
+  },
+
+  "permissions": ["tabs", "storage"],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.db.yugioh-card.com/*/*cid*",
+        "https://yugioh-wiki.net/*%A1%D4%*",
+        "https://rush.yugioh-wiki.net/*%E3%80%8A*",
+        "https://yugioh-wiki.net/*%E3%80%8A*"
+      ],
+      "js": ["content_scripts/nav-icon.js"],
+      "css": ["content_scripts/nav-icon.css"]
+    }
+  ],
+
+  "background": {
+    "scripts": ["js/encoding.js", "js/PDC_list.js", "background.js"],
+    "persistent": false
+  },
+
+  "page_action": {
+    "default_title": "遊戯王DB⇔Wiki",
+    "default_popup": "popup/popup.html"
+  },
+
+  "commands": {
+    "key_page_navigation": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "MacCtrl+Shift+Y"
+      },
+      "description": "データベース⇔Wikiの移動"
+    },
+    "key_google_search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+G",
+        "mac": "MacCtrl+Shift+G"
+      },
+      "description": "カード名をGoogle検索"
+    }
+  },
+
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
+
+  "web_accessible_resources": ["icons/iconDW-128x128.png"],
+
+  "homepage_url": "https://github.com/uyayimon/YuGiOh-CardDB-Wiki/wiki"
+}

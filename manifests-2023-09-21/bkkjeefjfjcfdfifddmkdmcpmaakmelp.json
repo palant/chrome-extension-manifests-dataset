@@ -1,0 +1,180 @@
+---
+slug: truffle
+name: Truffle
+description: Enhance your livestream viewing experience
+version: 4.3.3
+release_date: 'September 20, 2023'
+publisher: Truffle
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.373751783166904
+rating_count: 701
+user_count: '200,000+'
+size: 170KiB
+languages:
+  - English (United States)
+publisher_site: truffle.vip
+extension_website: 'https://truffle.vip/extension'
+support_website: 'https://discord.gg/eGC3ywbQNt'
+privacy_policy: 'https://truffle.vip/policies'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Truffle",
+  "version": "4.3.3",
+  "description": "Enhance your livestream viewing experience",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "legacy/popup/index.html"
+  },
+  "devtools_page": "devtools/entry.html",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "externally_connectable": {
+    "ids": [
+      "pmnmpgjfacmjcnfigcmgfipemjpggmeg"
+    ],
+    "matches": [
+      "*://*.truffle.vip/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "contexts/all/content-script/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "contexts/privileged/content-script/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*.truffle.vip/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "legacy/content/embed/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*",
+        "*://*.patreon.com/*",
+        "*://*.ludwig.gg/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "legacy/content/twitch/import-index.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "legacy/content/youtube/import-index.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://v2.truffle.vip/*"
+      ],
+      "js": [
+        "legacy/content/mogultv/import-index.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "storage",
+    "unlimitedStorage",
+    "gcm",
+    "notifications",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contexts/all/injected-script/index.js",
+        "devtools/index.html",
+        "legacy/injected/all/index.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "legacy/injected/youtube/index.js",
+        "legacy/injected/youtube/quick_actions.js",
+        "legacy/popup/index.html"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "legacy/injected/twitch/index.js",
+        "legacy/injected/twitch/quick_actions.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "contexts/all/content-script/index.js",
+        "contexts/privileged/content-script/index.js",
+        "legacy/content/embed/index.js",
+        "legacy/content/twitch/index.js",
+        "legacy/content/youtube/index.js",
+        "legacy/content/mogultv/index.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "https://*.truffle.vip/*",
+        "*://*.twitch.tv/*",
+        "*://*.youtube.com/*",
+        "*://*.patreon.com/*",
+        "*://*.ludwig.gg/*",
+        "*://v2.truffle.vip/*"
+      ]
+    }
+  ]
+}

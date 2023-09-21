@@ -1,0 +1,97 @@
+---
+slug: betterleap
+name: Betterleap
+description: Find any candidate's email address and email them quickly on Betterleap.
+version: '0.41'
+release_date: 'August 9, 2023'
+publisher: Betterleap Inc.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 306
+size: 9.68MiB
+languages:
+  - English (United States)
+extension_website: 'https://betterleap.com/'
+privacy_policy: 'https://betterleap.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "Betterleap",
+  "short_name": "React Extension",
+  "name": "Betterleap",
+  "version": "0.41",
+  "description": "Find any candidate's email address and email them quickly on Betterleap.",
+  "action": {
+    "default_title": "Betterleap"
+  },
+  "icons": {
+    "16": "favicon.ico",
+    "32": "favicon.ico",
+    "48": "favicon.ico",
+    "128": "favicon.ico"
+  },
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "permissions": [
+    "identity",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "storage",
+    "system.display",
+    "commands",
+    "webNavigation"
+  ],
+  "oauth2": {
+    "client_id": "219416760994-qipg37g9ctsp9qc0f9esp4luukh97ear.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "openid"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["./static/js/content.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; script-src-elem 'self' https:; connect-src https: http:; object-src 'self'; style-src 'self' 'unsafe-inline'; style-src-elem https://cdn.tiny.cloud/1/no-api-key/tinymce/5.2.2-80/skins/ui/oxide/skin.min.css 'unsafe-inline'; frame-src 'self' betterleap-api-dev.firebaseapp.com https://extension.betterleap.com "
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/icons/*",
+        "static/media/*",
+        "content.css",
+        "/static/js/*",
+        "main.css",
+        "sw-warning.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://extension.betterleap.com/*"],
+    "accept_tls_channel_id": true
+  },
+  "host_permissions": ["https://www.linkedin.com/*"],
+  "commands": {
+    "perform-primary-action": {
+      "suggested_key": {
+        "default": "Ctrl+W",
+        "mac": "MacCtrl+W"
+      },
+      "description": "Performs the primary action of the given extension view."
+    }
+  }
+}

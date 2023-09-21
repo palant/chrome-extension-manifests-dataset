@@ -1,0 +1,105 @@
+---
+slug: sum-up-now
+name: Sum Up Now
+description: >-
+  Automatic text summary online. Read news , articles , documents , etc but
+  faster !
+version: 0.1.1
+release_date: 'April 14, 2023'
+publisher: Pixel Perfect
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 16
+size: 1.24MiB
+languages:
+  - English
+publisher_site: sumupnow.com
+privacy_policy: 'https://pixel-perfect.dev/privacy-policy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Sum Up Now",
+  "description": "Automatic text summary online. Read news , articles , documents , etc but faster !",
+  "version": "0.1.1",
+
+  "action": {
+    "default_icon": "icons/icon.png"
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": [
+        "ElementPicker.js",
+        "ExtPay.js",
+        "content.js",
+        "howler.js",
+        "Readability.js"
+      ],
+      "css": [
+        "highlight.css"
+      ]
+    },
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["ExtPay.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "commands": {
+    "show_dialog": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+M",
+        "mac": "Command+Shift+M"
+      },
+      "description": "Show dialog"
+    },
+    "highlight": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+B",
+        "mac": "Command+Shift+B"
+      },
+      "description": "Enable/disable highlight text selection"
+    }
+  },
+
+
+  "permissions": [
+    "background",
+    "storage",
+    "contextMenus"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts; default-src *; media-src data:;"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/*"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

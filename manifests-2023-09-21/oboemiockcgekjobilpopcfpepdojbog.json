@@ -1,0 +1,60 @@
+---
+slug: promyze-for-code-review
+name: Promyze for Code Review
+description: Skyrocket your code review experience with all Promyze capabilities.
+version: 3.2.7
+release_date: 'July 27, 2023'
+publisher: Promyze
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 2
+user_count: 444
+size: 1.73MiB
+languages:
+  - English
+extension_website: 'https://promyze.com/code-review-plugin/?lang=en'
+support_website: 'https://intercom.help/promyze'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Promyze for Code Review",
+  "version": "3.2.7",
+  "description": "Skyrocket your code review experience with all Promyze capabilities.",
+  "permissions": ["activeTab", "contextMenus", "storage", "notifications"],
+  "web_accessible_resources": [
+    "browser-polyfill.js.map",
+    "popup/popup.html",
+    "contentscript/css/contentscript.css",
+    "contentscript/img/*",
+    "contentscript/css/*",
+    "contentscript/fonts/*"
+  ],
+  "icons": {
+    "128": "./promyze.png"
+  },
+  "browser_action": {
+    "default_title": "Promyze",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": ["browser-polyfill.js", "index.js"]
+  },
+  "options_page": "options/index.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*merge_requests*",
+        "*://*/*pull*",
+        "*://*.github.com/*",
+        "*://*/*reviews*"
+      ],
+      "js": ["browser-polyfill.js", "codeReviewDecoration.js"],
+      "css": ["contentscript/css/contentscript.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

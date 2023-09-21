@@ -1,0 +1,310 @@
+---
+slug: pgm+
+name: PGM+
+description: >-
+  PGM+: Adiciona funcionalidades aos sistemas da Procuradoria Geral do Município
+  de São Paulo
+version: 1.2.5
+release_date: 'April 13, 2023'
+publisher: Huno Molina
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 5
+user_count: 420
+size: 219KiB
+languages:
+  - português (Brasil)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "PGM+",
+    "description": "PGM+: Adiciona funcionalidades aos sistemas da Procuradoria Geral do Município de São Paulo",
+    "author": "Huno Molina Rodrigues dos Santos, Gabriel Guimarães Zeraik Fernandes",
+    "version": "1.2.5",
+    "permissions": [
+        "storage",
+        "clipboardRead",
+        "clipboardWrite",
+        "webRequest",
+        "tabs"
+    ],
+
+    "host_permissions": [
+        "https://pgmsp.net/",
+        "*://siajd.pgm.prefeitura.sp.gov.br/*",
+        "*://siajd.prefeitura.sp.gov.br/*"
+    ],
+
+    "web_accessible_resources": [{
+        "resources": ["img/*.png", "svg/*.svg"],
+        "matches": [
+            "*://siajd.pgm.prefeitura.sp.gov.br/*",
+            "*://siajd.prefeitura.sp.gov.br/*",
+            "*://siajd.prodam/*",
+            "*://processos.prefeitura.sp.gov.br/*",
+            "*://sei.prefeitura.sp.gov.br/*",
+            "*://esaj.tjsp.jus.br/*",
+            "*://pje1g.trf3.jus.br/*"
+        ]
+    }],
+
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+
+    "icons": {
+        "16": "img/p16.png",
+        "32": "img/p32.png",
+        "48": "img/p48.png",
+        "128": "img/p128.png",
+        "256": "img/p256.png"
+    },
+
+    "action": {
+        "default_icon": {
+            "16": "img/p16.png",
+            "32": "img/p32.png",
+            "48": "img/p48.png",
+            "128": "img/p128.png",
+            "256": "img/p256.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "content_scripts": [{
+            "matches": [
+                "*://siajd.pgm.prefeitura.sp.gov.br/*",
+                "*://siajd.prefeitura.sp.gov.br/*",
+                "*://siajd.prodam/*",
+                "*://processos.prefeitura.sp.gov.br/*",
+                "*://sei.prefeitura.sp.gov.br/*",
+                "*://esaj.tjsp.jus.br/*"
+            ],
+            "js": [
+                "scripts/recursos/alteraLinks.js",
+                "scripts/recursos/setClipboard.js",
+                "scripts/recursos/setClipboardReturnString.js",
+                "scripts/recursos/setMutationHandler.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/PesquisarPorNrAutos?*NumeroAutos=*",
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/PesquisarPorNrAutos?*NumeroAutos=*",
+                "*://siajd.prodam/UC_ACA_024_ConsultarAutos/PesquisarPorNrAutos?*NumeroAutos=*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/Pesquisar?*",
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/Pesquisar?*",
+                "*://siajd.prodam/UC_ACA_024_ConsultarAutos/Pesquisar?*"
+            ],
+            "js": [
+                "scripts/extensao/adicionarLinkParaSimproc/adicionaLinkParaSimproc.js",
+                "scripts/extensao/adicionarBotaoCopiarCNJ/adicionaBotaoCopiarCNJ.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://processos.prefeitura.sp.gov.br/Forms/consultarProcessos.aspx*"
+            ],
+            "js": ["scripts/extensao/adicionarLinkParaSimproc/colaNumeroNoSimproc.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://sei.prefeitura.sp.gov.br/sei/controlador.php?acao=procedimento_trabalhar*"
+            ],
+            "js": ["scripts/usuario/criarLinkNoSEI/seiMapCnj.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://esaj.tjsp.jus.br/cpopg/show.do*",
+                "*://esaj.tjsp.jus.br/cposg/show.do*",
+                "*://esaj.tjsp.jus.br/cposg/search.do*"
+            ],
+            "js": ["scripts/extensao/adicionarBotoesAoESAJ/adicionaBotaoSIAJDNoESAJ.js"],
+            "css": ["css/modal.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.prodam/UC_INT_032_ManterIntimacao/Pesquisar*"
+            ],
+            "js": [
+                "scripts/extensao/criarBadgeAlertaEPrazos/criaBadgeAlerta.js",
+                "scripts/extensao/criarBadgeAlertaEPrazos/criaBotoesPrazosDetalhesIntimacao.js",
+                "scripts/usuario/inserirBotaoCadastroAcao/insereBotaoCadastroAcao.js",
+                "scripts/usuario/inserirBotaoConsultaSimples/insereBotaoConsultaSimples.js",
+                "scripts/usuario/abrirOutraAba/consultaIntimacao.js",
+                "scripts/extensao/criarModalInteiroTeorLupa/criaModalInteiroTeorLupa.js"
+            ],
+            "css": ["css/modal.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_017_ManterAcaoJudicial/Adicionar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_017_ManterAcaoJudicial/Adicionar*",
+                "*://siajd.prodam/UC_ACA_017_ManterAcaoJudicial/Adicionar*"
+            ],
+            "js": ["scripts/usuario/inserirBotaoCadastroAcao/colaNumeroCnjCadastroAcao.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_017_ManterAcaoJudicial/*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_017_ManterAcaoJudicial/*",
+                "*://siajd.prodam/UC_ACA_017_ManterAcaoJudicial/*"
+            ],
+            "js": ["scripts/extensao/criarAtalhosTeclado/criaAtalhosCadastroAcao.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_023_ConsultaGeralAcoes/Pesquisar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_023_ConsultaGeralAcoes/Pesquisar*",
+                "*://siajd.prodam/UC_ACA_023_ConsultaGeralAcoes/Pesquisar*"
+            ],
+            "js": ["scripts/usuario/abrirOutraAba/consultaGeral.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/*",
+                "*://siajd.prodam/*"
+            ],
+            "exclude_matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_PET_080_Intermediaria/Elaborar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_PET_080_Intermediaria/Elaborar*"
+            ],
+            "js": ["scripts/usuario/esconderMenu/escondeMenu.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/*"
+            ],
+            "exclude_matches": ["*://siajd.prefeitura.sp.gov.br/UC_PET_080_Intermediaria/Elaborar*"],
+            "js": [
+                "scripts/usuario/alterarIcones/alteraIcones.js",
+                "scripts/usuario/fixarDivBotoes/fixaDivBotoes.js"
+            ],
+            "css": ["css/styleChangeIcons.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Adicionar*",
+                "*://siajd.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Adicionar*"
+            ],
+            "js": ["scripts/extensao/criarAtalhosTeclado/criaAtalhosIntimacao.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*"
+            ],
+            "js": [
+                "scripts/extensao/salvarParametrosIntimacao/paramIntimacao.js",
+                "scripts/extensao/salvarParametrosIntimacao/preencheParamsInt.js",
+                "scripts/usuario/selecionarBancaEntradaRepasse/selecionaBancaEntradaRepasse.js",
+                "scripts/extensao/adicionarBotaoOutrosNumeros/adicionaBotaoOutrosNumeros.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Pesquisar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/Pesquisar*",
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/*"
+            ],
+            "js": ["scripts/usuario/realizarLogoffESAJ/realizaLogoffESAJ.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/PesquisarPorNrAutos?&NumeroAutos*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/PesquisarPorNrAutos?&NumeroAutos*",
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/PesquisarPorNrAutos?NumeroAutos*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/PesquisarPorNrAutos?NumeroAutos*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/Pesquisar?*",
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_024_ConsultarAutos/Pesquisar?*",
+                "*://siajd.prodam/UC_ACA_024_ConsultarAutos/Pesquisar?*"
+            ],
+            "js": ["scripts/usuario/adicionarBotaoIntimacao/adicionaBotaoIntimacao.js", "scripts/extensao/criarBadgeAlertaEPrazos/criaBotoesPrazosDetalhesIntimacao.js", "scripts/usuario/alterarOrdemCosultaSimplesAscDesc/alteraOrdemConsultaSimplesAscDesc.js"],
+            "css": ["css/styleChangeIcons.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Adicionar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_INT_032_ManterIntimacao/Adicionar*"
+            ],
+            "js": ["scripts/usuario/adicionarBotaoIntimacao/colaNumeroAutoIntimacao.js", "scripts/extensao/colarNumeroAdicionarTarefaPje/colaNumeroAdicionarTarefa.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://esaj.tjsp.jus.br/cpopg/show.do?*",
+                "*://esaj.tjsp.jus.br/cposg/search.do?*",
+                "*://esaj.tjsp.jus.br/cposg/show.do?*"
+            ],
+            "js": ["scripts/extensao/copiarNumeroProcessoESAJ/copiaNumeroProcessoESAJ.js", "scripts/extensao/adicionarPrazosDispESAJ/adicionaPrazosDispESAJ.js"],
+            "css": ["css/btnCopyStyles.css", "css/tooltipESAJStyles.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_PET_080_Intermediaria/Elaborar*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_PET_080_Intermediaria/Elaborar*"
+            ],
+            "js": [
+                "scripts/extensao/salvarAutoRascunhoPeticao/salvaAutoRascunhoPeticao.js"
+            ],
+            "css": ["css/btnSwitch.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://siajd.prefeitura.sp.gov.br/UC_ACA_081_ManterProcessoSEI/CriarSEI?*",
+                "*://siajd.pgm.prefeitura.sp.gov.br/UC_ACA_081_ManterProcessoSEI/CriarSEI?*"
+            ],
+            "js": ["scripts/usuario/preencherSelectCriarSEI/preencheSelectCriarSEI.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://pje1g.trf3.jus.br/pje/Painel/painel_usuario/advogado.seam*",
+                "*://pje2g.trf3.jus.br/pje/Painel/painel_usuario/advogado.seam*"
+            ],
+            "js": ["scripts/extensao/adicionarBotaoAoPJE/adicionaBotaoSIAJDNoPJE.js"],
+            "css": ["css/modal.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://sccp.prefeitura.sp.gov.br/intranet/Forms/frm020_ConsultaManuPrecatorio.aspx*"
+            ],
+            "js": ["scripts/extensao/adicionarBotaoSCCP/adicionaBotaoESAJNoSCCP.js"],
+            "css": ["css/sccpStyles.css"],
+            "run_at": "document_end"
+        }
+    ]
+}

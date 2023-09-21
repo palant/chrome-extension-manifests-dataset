@@ -1,0 +1,190 @@
+---
+slug: my-apps-secure-sign-in-ex
+name: My Apps Secure Sign-in Extension
+description: My Apps Secure Sign-in Extension
+version: 8.0.02428.146
+release_date: 'August 29, 2023'
+publisher: Microsoft
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.1549295774647885
+rating_count: 71
+user_count: '2,000,000+'
+size: 178KiB
+languages:
+  - English (United States)
+extension_website: 'http://azure.microsoft.com/identity'
+support_website: 'https://aka.ms/myappsplugin'
+privacy_policy: 'https://privacy.microsoft.com/en-us/PrivacyStatement'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "action": {
+      "default_icon": "images/badgedIcon.png",
+      "default_popup": "popup/html/NotLoggedInPopup.html"
+   },
+   "author": "APSSO Team",
+   "background": {
+      "service_worker": "background.js"
+   },
+   "content_scripts": [
+      {
+         "all_frames": false,
+         "js": [
+            "js/NewPage.js"
+         ],
+         "matches": [
+            "http://*/*",
+            "https://*/*"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "js/ExtensionIdentifier.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/*",
+            "https://myapplications.microsoft.com/*",
+            "https://account.activedirectory.windowsazure.us/*",
+            "https://myapplications.microsoft.us/*",
+            "https://account.activedirectory.windowsazure.cn/*",
+            "https://myapplications.microsoft.cn/*"
+         ],
+         "run_at": "document_start"
+      },
+      {
+         "all_frames": true,
+         "js": [
+            "js/ExtensionIdentifier.js",
+            "js/UserTenantIdentifier.js",
+            "js/ListenPortalPage.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/*",
+            "https://myapplications.microsoft.com/*",
+            "https://account.activedirectory.windowsazure.us/*",
+            "https://myapplications.microsoft.us/*",
+            "https://account.activedirectory.windowsazure.cn/*",
+            "https://myapplications.microsoft.cn/*",
+            "https://*.hosting.portal.azure.net/*/Listener.html?*",
+            "https://*.hosting.azureportal.usgovcloudapi.net/*/Listener.html?*",
+            "https://*.azureportal.chinacloudapi.cn/*/Listener.html?*",
+            "https://ssotools.azurewebsites.net/*"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "js/CaptureApplicationLoginControls.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/applications/metadatacapture/captureapplicationmetadata.aspx?*",
+            "https://account.activedirectory.windowsazure.us/applications/metadatacapture/captureapplicationmetadata.aspx?*",
+            "https://account.activedirectory.windowsazure.cn/applications/metadatacapture/captureapplicationmetadata.aspx?*"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "js/Redirection.js",
+            "common/Log.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/applications/redirecttoapplication.aspx?*",
+            "https://account.activedirectory.windowsazure.us/applications/redirecttoapplication.aspx?*",
+            "https://account.activedirectory.windowsazure.cn/applications/redirecttoapplication.aspx?*"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "js/SendLogs.js",
+            "common/Log.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/applications/default.aspx*",
+            "https://account.activedirectory.windowsazure.com/r/*",
+            "https://account.activedirectory.windowsazure.us/applications/default.aspx*",
+            "https://account.activedirectory.windowsazure.us/r/*",
+            "https://account.activedirectory.windowsazure.cn/applications/default.aspx*",
+            "https://account.activedirectory.windowsazure.cn/r/*"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "js/CaptureListOfApps.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/applications/ssoextensionlandingpage.aspx",
+            "https://account.activedirectory.windowsazure.com/applications/ssoextensionlandingpage.aspx?*",
+            "https://account.activedirectory.windowsazure.us/applications/ssoextensionlandingpage.aspx",
+            "https://account.activedirectory.windowsazure.us/applications/ssoextensionlandingpage.aspx?*",
+            "https://account.activedirectory.windowsazure.cn/applications/ssoextensionlandingpage.aspx",
+            "https://account.activedirectory.windowsazure.cn/applications/ssoextensionlandingpage.aspx?*"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "js/TamperSaml.js"
+         ],
+         "matches": [
+            "https://account.activedirectory.windowsazure.com/applications/testfedaratedapplication.aspx?*",
+            "https://account.activedirectory.windowsazure.us/applications/testfedaratedapplication.aspx?*",
+            "https://account.activedirectory.windowsazure.cn/applications/testfedaratedapplication.aspx?*"
+         ],
+         "run_at": "document_start"
+      },
+      {
+         "all_frames": false,
+         "js": [
+            "js/ListenSamlResponse.js"
+         ],
+         "matches": [
+            "https://login.microsoftonline.com/*",
+            "https://login.microsoftonline.us/*",
+            "https://login.partner.microsoftonline.cn/*"
+         ],
+         "run_at": "document_start"
+      }
+   ],
+   "description": "My Apps Secure Sign-in Extension",
+   "host_permissions": [
+      "https://*/*",
+      "http://*/*"
+   ],
+   "icons": {
+      "128": "images/icon_128px.png",
+      "16": "images/icon_16px.png",
+      "32": "images/icon_32px.png",
+      "48": "images/icon_48px.png"
+   },
+   "manifest_version": 3,
+   "name": "My Apps Secure Sign-in Extension",
+   "permissions": [
+      "tabs",
+      "scripting",
+      "contextMenus",
+      "unlimitedStorage",
+      "webNavigation",
+      "storage",
+      "activeTab",
+      "declarativeNetRequest"
+   ],
+   "version": "8.0.02428.146",
+   "web_accessible_resources": [
+      {
+         "matches": [
+            "http://*/*",
+            "https://*/*"
+         ],
+         "resources": [
+            "images/notLoggedInIcon.png"
+         ]
+      }
+   ]
+}

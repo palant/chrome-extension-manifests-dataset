@@ -1,0 +1,104 @@
+---
+slug: previews-for-ttv-yt
+name: Previews (For TTV & YT)
+description: >-
+  Live previews when hovering over streams on Twitch & YouTube | A bunch of
+  quality of life improvements for TTV & YT
+version: '9.0'
+release_date: 'September 17, 2023'
+publisher: MarkM
+category: Fun
+category_slug: ext/14-fun
+rating: 4.862882096069869
+rating_count: 1145
+user_count: '60,000+'
+size: 413KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - português (Brasil)
+  - русский
+  - 日本語
+  - 한국어
+publisher_site: previews-app.com
+extension_website: 'https://previews-app.com/'
+support_website: 'https://github.com/Previews-app/Previews/issues'
+privacy_policy: 'https://previews-app.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "author": "Mark M <https://previews-app.com/>",
+  "homepage_url": "https://previews-app.com/",
+  "default_locale": "en",
+  "version": "9.0",
+  "permissions": ["storage", "scripting"],
+  "host_permissions": ["*://*.twitch.tv/*", "*://*.youtube.com/*", "*://previews-app.com/*"],
+  "optional_host_permissions": ["*://*.facebook.com/*"],
+  "background": {
+    "service_worker": "main/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.twitch.tv/*"],
+      "css": ["main/css.css","main/tp_sub_toast.css", "main/settings.css", "main/APS_settings.css"],
+      "js": ["main/core.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "exclude_matches": ["https://www.youtube.com/embed*","https://www.youtube.com/live_chat*"],
+      "css": ["main/css.css","main/tp_sub_toast.css", "main/settings.css"],
+      "js": ["main/core_yt.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.youtube.com/live_chat*"],
+      "css": ["main/css_yt_chat.css"],
+      "js": ["main/core_yt_chat.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://player.twitch.tv/?channel=*"],
+      "js": ["main/core_ttv_player.js"],
+      "css": ["main/core_ttv_player.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://clips.twitch.tv/*"],
+      "css": ["main/cd.css","main/css.css"],
+      "js": ["main/cd.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "images/TP16.png",
+    "24": "images/TP24.png",
+    "32": "images/TP32.png",
+    "48": "images/TP48.png",
+    "64": "images/TP64.png",
+    "128": "images/TP128.png"
+  },
+  "action": {
+    "default_icon": "images/TP48.png",
+    "default_title": "Previews (For TTV & YT)",
+    "default_popup": "popups/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "main/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

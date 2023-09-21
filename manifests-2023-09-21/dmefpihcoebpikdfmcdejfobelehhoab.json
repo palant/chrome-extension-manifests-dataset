@@ -1,0 +1,99 @@
+---
+slug: rewrote-ai
+name: Rewrote AI
+description: Rewrote - AI writing assistant integrated in your everyday
+version: 1.0.12
+release_date: 'May 9, 2023'
+publisher: marvin
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 43
+size: 828KiB
+languages:
+  - English
+publisher_site: rewrote.ai
+extension_website: 'https://rewrote.ai'
+support_website: 'https://rewrote.ai'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2ebemn2j7dgxyyyJL+UQ9hubk+UXDjD22gWBk1ruUDxSg3P7uVH+ifLqkZIiEq5X/TFSYm6TOjxicADLYi/i8Jaye/Z4WIuJlAuQmsq6ysZhsYynchzQRfGp3+2knwpp+DudC/oi4bCHlgwo3NLO2BHNGWwBIKC7TaBGZYeP6iDHcJDYd3u9bclt7vKU8WqM8Dw+BEuJNzHe32kOygv7PMA4Cv4RaUUP1NzLTg22de92Fu2SJx+ZRpB2yC7/J0+mktFlltD78VmC5Z2D+h7MIlR5a4jNAfbuBCpwOWT93BtLhul2Uz1mO8roQT2GE4qUHGOASkAsfHBhOKIJl0bsOwIDAQAB",
+  "name": "Rewrote AI",
+  "description": "Rewrote - AI writing assistant integrated in your everyday",
+  "version": "1.0.12",
+  "action": {
+    "default_icon": "images/rewrote.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/rewrote.png",
+    "48": "images/rewrote.png",
+    "128": "images/rewrote.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/gmail/extensionInjector.js"],
+      "css": ["css/widget.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content_script.js"],
+      "css": ["css/material.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/vendor.js",
+        "js/gmail/*.js",
+        "js/widget/*.js",
+        "fonts/*.otf",
+        "fonts/*.ttf",
+        "google_signin/**/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "./js/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "oauth2": {
+    "client_id": "1049557555623-q2fcvj3o9m70vcbk2loqgeoi7bg9qbme.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "csp_rules",
+        "enabled": true,
+        "path": "cspRules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "background",
+    "activeTab",
+    "storage",
+    "identity",
+    "tabs",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": ["<all_urls>"]
+}

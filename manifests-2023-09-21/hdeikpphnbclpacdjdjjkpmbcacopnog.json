@@ -1,0 +1,79 @@
+---
+slug: talking-web
+name: Talking Web
+description: Select the text and let Talking Web read it for you.
+version: 1.0.7.23
+release_date: 'March 8, 2019'
+publisher: speechlabs
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.8078431372549018
+rating_count: 255
+user_count: '10,000+'
+size: 89.07KiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - español
+  - italiano
+  - português (Brasil)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "__MSG_appName__",
+    "version": "1.0.7.23",
+    "default_locale": "en",
+    "description": "__MSG_appDesc__",
+    "icons": {
+        "48": "images/icon48.png",
+        "128": "images/icon144.png"
+    },
+    "browser_action": {
+        "default_icon": "images/icon48.png",
+        "default_title": "Talking Web",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "page": "background.html"
+    },
+    "permissions": [
+        "*://*.projectoxford.ai/*",
+        "*://xiaonacloudchat.cloudapp.net/Synthesize/SynthesizeVoice/*",
+        "*://speech.platform.bing.com/*",
+        "*://oxford-speech.cloudapp.net/token/issueToken",
+        "*://dc.services.visualstudio.com/*",
+        "contextMenus",
+        "downloads"
+    ],
+    "content_scripts" : [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/select.js"],
+            "all_frames": true ,
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://*.bing.com/*"],
+            "include_globs": ["*.bing.com/news*"],
+            "css": ["css/content_js.css"],
+            "js": ["js/lib/jquery-2.1.4.min.js", "js/bingnews.js"],
+            "all_frames": true,
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        "images/icon48.png"
+    ],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "minimum_chrome_version": "35.0"
+}

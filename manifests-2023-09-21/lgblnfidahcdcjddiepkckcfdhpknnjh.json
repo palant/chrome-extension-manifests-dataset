@@ -1,0 +1,136 @@
+---
+slug: fair-adblocker
+name: Fair AdBlocker
+description: >-
+  Block annoying ads, popups, malware and tracking (even on Facebook & Youtube),
+  browse faster, and protect your privacy.
+version: '1.560'
+release_date: 'September 11, 2023'
+publisher: Stands
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.789936997735969
+rating_count: 138249
+user_count: '1,000,000+'
+size: 6.36MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - dansk
+  - eesti
+  - español
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - български
+  - עברית
+  - 日本語
+  - 한국어
+publisher_site: standsapp.org
+extension_website: 'https://www.standsapp.org'
+support_website: 'https://support.standsapp.org/hc/en-us'
+privacy_policy: 'https://www.standsapp.org/privacy-policy'
+---
+
+{
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "version": "1.560",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": {
+      "19": "icons/19.png",
+      "38": "icons/38.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "Fair AdBlocker"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": [ 
+      "common/common.js", "common/common-background.js", 
+      "background/chrome.js", "background/utils.js", 
+      "background/stndz.js", "background/lists.js", 
+      "background/mystats.js", "background/user.js", 
+      "background/block-element.js", "background/notifications.js", 
+      "background/core.js", "background/start.js" 
+    ]
+ },
+  "icons": {
+    "16": "stands-icon.png",
+    "48": "stands-icon.png",
+    "128": "stands-icon.png"
+  },
+  "content_security_policy": "script-src 'self' https://www.googletagmanager.com https://www.google-analytics.com; object-src 'self';",
+  "default_locale": "en",
+  "permissions": [ 
+    "webNavigation", "tabs", "webRequest", 
+    "webRequestBlocking", "<all_urls>", 
+    "notifications", "storage", "contextMenus", 
+    "unlimitedStorage"
+  ],
+  "optional_permissions": [ "management" ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [ 
+        "common/common.js", 
+        "common/common-content.js", 
+        "content/chrome.js", 
+        "content/popup-blocking.js", 
+        "content/ruleParser.js",
+        "content/ruleApplier.js",
+        "content/doc-start.js", 
+        "content/messaging.js",
+        "content/shadow-dom.js"
+      ],
+      "match_about_blank": false,
+      "matches": [ "<all_urls>" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": false,
+      "js": [ "content/sites/fb.js" ],
+      "matches": [ "https://*.facebook.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "content/sites/yt.js" ],
+      "matches": [ "https://*.youtube.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "js": [ "content/doc-end.js" ],
+      "match_about_blank": false,
+      "matches": [ "<all_urls>" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "js": [ "content/sites/stands_cdn.js" ],
+      "matches": [ "https://new-prod.standsapp.org/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "content/sites/adblock_tester.js" ],
+      "matches": [ "https://adblock-tester.com/*" ],
+      "run_at": "document_end"
+   }
+  ],
+  "homepage_url": "https://www.standsapp.org",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlB8Pj+GOnpKxOAc2l9oQRbOSualZoR9vzE9UJdZP1K+oiHSka9oBKhE5xSXyZpDVzya/P/CCLnPJaZbIaks/7m2GfcmyneNgiGylYDOmuBlm8vUNDdeh8SN/t3IeEGvBa6c17JidtHJWJK8FvY/YVqWyewPgcfRsCg1yemcaA/PsvS8OVHtdt+4mXPM9c/RCm1UOANzNnkyUtU9AMY9EF2910B18jqxmhxp5qoPHtnL9ujK0mKdxLVKGV8xNLCxH0zc6gWcu9x+Sin8w7/7669Rs6yttGk28Mqg4uv5//lGUTrc/vEfKIWwr11pDF7Idw3Ev7Q3drw/LcupkcbY3lwIDAQAB",
+  "web_accessible_resources": [ "views/web_accessible/*" ],
+  "update_url": "https://clients2.google.com/service/update2/crx"
+}

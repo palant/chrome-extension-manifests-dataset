@@ -1,0 +1,79 @@
+---
+slug: privacy-bee-zero-trust-se
+name: 'Privacy Bee: Zero-Trust Secure Browsing'
+description: Keep yourself hidden as you browse the web with Privacy Bee.
+version: 2.1.0
+release_date: 'May 25, 2023'
+publisher: Privacy Bee
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 788
+size: 3.02MiB
+languages:
+  - English
+publisher_site: privacybee.com
+extension_website: 'https://privacybee.com'
+support_website: 'https://privacybee.com/support'
+privacy_policy: 'https://privacybee.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Privacy Bee: Zero-Trust Secure Browsing",
+  "description": "Keep yourself hidden as you browse the web with Privacy Bee.",
+  "version": "2.1.0",
+  "manifest_version": 2,
+  "icons": {
+    "16": "icons/pbLogo16.png",
+    "32": "icons/pbLogo32.png",
+    "48": "icons/pbLogo48.png",
+    "128": "icons/pbLogo128.png"
+  },
+  "browser_action": {
+    "default_title": "Privacy Bee",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "icons/pbLogo16.png",
+      "32": "icons/pbLogo32.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background/browser-polyfill.js",
+      "background/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "background/browser-polyfill.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://app.privacybee.test/login*",
+        "https://app.privacybee.com/login*"
+      ],
+      "js": [
+        "background/pb-login.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "*://developer.mozilla.org/*",
+    "storage",
+    "activeTab",
+    "tabs",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

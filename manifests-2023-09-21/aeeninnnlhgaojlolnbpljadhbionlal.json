@@ -1,0 +1,85 @@
+---
+slug: bluedot-ai-meeting-record
+name: 'Bluedot: AI Meeting Recorder & Notetaker'
+description: "Press \U0001F535 to record, transcribe and summarise your Google Meet with AI generated notes adapted to your needs."
+version: 0.0.34
+release_date: 'September 12, 2023'
+publisher: Twiso
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 10
+user_count: 369
+size: 1.63MiB
+languages:
+  - English
+extension_website: 'https://www.bluedothq.com'
+support_website: 'https://help.twiso.co/en/'
+privacy_policy: 'https://www.twiso.co/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bluedot: AI Meeting Recorder & Notetaker",
+  "description": "Press 🔵 to record, transcribe and summarise your Google Meet with AI generated notes adapted to your needs.",
+  "version": "0.0.34",
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.twiso.co/*", "http://*.twiso.co/*", "*://*.app.bluedothq.com/*"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "js": ["scripts/installed_identifier.js"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "host_permissions": ["*://*/*"],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabs",
+    "desktopCapture",
+    "tabCapture"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "css/meetSpeakers.css",
+        "css/meetOverlay.css",
+        "audio/start.mp3",
+        "audio/finish.mp3",
+        "images/*.*",
+        "fonts/*.woff2",
+        "microphone-sources.html",
+        "camera-sources.html",
+        "camera.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.twiso.co/*", "*://*.app.bluedothq.com/*"]
+  },
+  "commands": {
+    "start-meetings-recording": {
+      "suggested_key": "Ctrl+Shift+S",
+      "description": "Capture Google Meet"
+    }
+  }
+}

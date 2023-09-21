@@ -1,0 +1,93 @@
+---
+slug: miniorange-secure-single
+name: miniOrange Secure Single Sign-On Plug-in
+description: Secure auto login to any app
+version: '3.31'
+release_date: 'September 13, 2023'
+publisher: miniOrange
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '2,000+'
+size: 148KiB
+languages:
+  - English (United States)
+publisher_site: miniorange.com
+extension_website: 'https://www.miniorange.com'
+support_website: 'https://idp.miniorange.com/steps-to-setup-secure-browser-sso-apps/'
+privacy_policy: 'https://www.miniorange.com/usecases/miniOrange_Privacy_Policy.pdf'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "name": "miniOrange Secure Single Sign-On Plug-in",
+   "author": "miniOrange",
+   "short_name": "miniOrange SSO",
+   "version": "3.31",
+   "manifest_version": 2,
+   "description": "Secure auto login to any app",
+   "web_accessible_resources": [
+       "images/icon32-black.png",
+       "images/icon32.png"
+   ],
+   "icons": {
+       "32": "images/icon32.png",
+       "128": "images/icon128.png"
+   },
+   "browser_action": {
+       "default_icon": "images/icon32.png",
+       "default_popup": "html/popup.html"
+   },
+   "content_scripts": [
+       {
+           "all_frames": true,
+           "css": ["css/mocustomcss.css"],
+           "matches": ["<all_urls>"],
+           "run_at": "document_start"
+       },
+       {
+           "all_frames": true,
+           "js": [
+               "js/jquery-1.9.1.js",
+               "js/appDetails.js",
+               "js/extension.js",
+               "js/lib/uri-js/URI.js"
+           ],
+           "matches": ["<all_urls>"],
+           "run_at": "document_start"
+       },
+       {
+           "all_frames": true,
+           "js": [
+               "js/spinitiated/initialize.js",
+               "js/spinitiated/ui.js",
+               "js/jquery-1.9.1.js",
+               "js/sso-mo-login.js",
+               "js/common.js",
+               "js/gmail-configure-sf.js",
+               "js/lib/js-mcrypt/mcrypt.js",
+               "js/lib/js-mcrypt/rijndael.js",
+               "js/lib/js-mcrypt/Serpent.js",
+               "js/lib/uri-js/URI.js"
+           ],
+           "matches": ["<all_urls>"],
+           "run_at": "document_end"
+       }
+   ],
+
+   "background": {
+       "persistent": true,
+       "scripts": [
+           "js/jquery-1.9.1.js",
+           "js/background.js",
+           "js/suppress-pwd-save.js"
+       ]
+   },
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "externally_connectable": {
+       "matches": ["*://*.google.com/*"]
+   },
+   "permissions": ["<all_urls>", "storage", "privacy", "management", "cookies"]
+}

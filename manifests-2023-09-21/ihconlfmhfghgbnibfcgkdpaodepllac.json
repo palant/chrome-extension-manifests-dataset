@@ -1,0 +1,70 @@
+---
+slug: rating-tracker
+name: Rating Tracker
+description: Automatically tracks work hours completed by Lionbridge raters.
+version: 1.1.0
+release_date: 'May 5, 2020'
+publisher: nrodriguesdev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 46
+size: 3.3MiB
+languages:
+  - English (United States)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Rating Tracker",
+  "version": "1.1.0",
+  "description": "Automatically tracks work hours completed by Lionbridge raters.",
+  "permissions": ["storage", "notifications"],
+  "web_accessible_resources": [
+    "images/*.png",
+    "sounds/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "options_page": "options.html",
+  "content_scripts": [ 
+    {
+      "matches": ["https://www.raterhub.com/evaluation/rater*"],
+      "exclude_matches": ["https://www.raterhub.com/evaluation/rater/settings", "https://www.raterhub.com/evaluation/rater/task/show*", 
+                          "https://www.raterhub.com/evaluation/rater/personalized_task_history/tasks", "https://www.raterhub.com/evaluation/rater/task/recent_tasks"],
+      "js": ["refreshContentScript.js"]
+    },
+    {
+      "matches": ["https://www.raterhub.com/evaluation/rater/task/show*"],
+      "exclude_matches": ["https://www.raterhub.com/evaluation/rater/settings", "https://www.raterhub.com/evaluation/rater/personalized_task_history/tasks",
+                          "https://www.raterhub.com/evaluation/rater/task/recent_tasks"],
+      "js": ["taskContentScript.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.raterhub.com/evaluation/rater/task/show*"],
+      "exclude_matches": ["https://www.raterhub.com/evaluation/rater/settings", "https://www.raterhub.com/evaluation/rater/personalized_task_history/tasks",
+        "https://www.raterhub.com/evaluation/rater/task/recent_tasks"],
+      "js": ["htmlLoadedContentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.raterhub.com/evaluation/rater/task/show*"],
+      "exclude_matches": ["https://www.raterhub.com/evaluation/rater/settings", "https://www.raterhub.com/evaluation/rater/personalized_task_history/tasks",
+        "https://www.raterhub.com/evaluation/rater/task/recent_tasks"],
+      "js": ["domLoadedContentScript.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": { 
+    "128": "images/icon128.png" 
+  },
+  "browser_action": {
+    "default_popup": "popup.html"
+  },
+  "manifest_version": 2
+}

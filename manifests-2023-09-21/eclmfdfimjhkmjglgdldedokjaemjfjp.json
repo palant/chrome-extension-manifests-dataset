@@ -1,0 +1,65 @@
+---
+slug: desmodder-for-desmos
+name: DesModder for Desmos
+description: >-
+  Supercharge your Desmos graph creation and sharing experience with many
+  convenient features
+version: 0.11.9
+release_date: 'September 19, 2023'
+publisher: Jared Hughes
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 19
+user_count: '5,000+'
+size: 456KiB
+languages:
+  - English
+extension_website: 'https://github.com/jared-hughes/DesModder'
+support_website: 'https://github.com/jared-hughes/DesModder/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "DesModder for Desmos",
+  "description": "Supercharge your Desmos graph creation and sharing experience with many convenient features",
+  "manifest_version": 3,
+  "version": "0.11.9",
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": ["*://*.desmos.com/calculator*", "*://*.desmos.com/geometry*"],
+      "run_at": "document_start",
+      "js": ["preload/content.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["script.css", "script.js", "preload/script.js"],
+      "matches": ["*://*.desmos.com/*"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "net_request_rules.json"
+      }
+    ]
+  },
+  "permissions": ["storage", "declarativeNetRequest"],
+  "host_permissions": ["https://*.desmos.com/*", "https://wakatime.com/"],
+  "externally_connectable": {
+    "matches": ["https://*.desmos.com/*"]
+  }
+}

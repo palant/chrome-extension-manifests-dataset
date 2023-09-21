@@ -1,0 +1,136 @@
+---
+slug: pagenote-一页一记
+name: pagenote 一页一记
+description: 在任意网页内，摘录重点、划线批注。打造个人笔记系统。
+version: 0.26.7.3
+release_date: 'September 11, 2023'
+publisher: rowthan
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.637931034482759
+rating_count: 58
+user_count: '10,000+'
+size: 1.84MiB
+languages:
+  - 中文 (简体)
+publisher_site: pagenote.cn
+extension_website: 'https://pagenote.cn/'
+support_website: 'https://pagenote.cn/page/?id=why'
+privacy_policy: 'https://pagenote.cn/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extensionName__",
+  "short_name": "__MSG_extensionName__",
+  "version": "0.26.7.3",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "zh_CN",
+  "icons": {
+    "16": "images/light-16.png",
+    "32": "images/light-32.png",
+    "48": "images/light-48.png",
+    "64": "images/light-64.png",
+    "96": "images/light-96.png",
+    "128": "images/light-128.png"
+  },
+  "permissions": [
+    "downloads",
+    "activeTab",
+    "alarms",
+    "*://*/*",
+    "storage",
+    "pageCapture",
+    "contextMenus",
+    "<all_urls>",
+    "notifications",
+    "unlimitedStorage"
+  ],
+  "optional_permissions": [
+    "bookmarks"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "images/light-16.png",
+      "32": "images/light-32.png",
+      "48": "images/light-48.png",
+      "64": "images/light-64.png",
+      "96": "images/light-96.png",
+      "128": "images/light-128.png"
+    },
+    "default_title": "此页面尚未准备完毕，刷新页面或切换至其他页面试试？",
+    "default_popup": "/web/ext/popup.html"
+  },
+  "options_page": "pagenote.html",
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "pagenote.html"
+  },
+  "homepage_url": "https://pagenote.cn/release",
+  "commands": {
+    "_execute_browser_action": {
+      "description": "__MSG_active_extension__",
+      "suggested_key": {
+        "default": "Alt+Shift+P"
+      }
+    },
+    "capture": {
+      "description": "__MSG_capture_tabview__",
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      }
+    },
+    "enable_copy": {
+      "description": "允许复制",
+      "suggested_key": {
+        "default": "Alt+Shift+C"
+      }
+    }
+  },
+  "background": {
+    "scripts": [
+      "rollup/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*/*",
+        "file://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "rollup/inject_check.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "*://pagenote.cn/*",
+        "*://dev.pagenote.cn/*",
+        "*://test.pagenote.cn/*",
+        "*://www.pagenote.cn/*",
+        "*://developer.pagenote.cn/*",
+        "*://logike.cn/*",
+        "*://pagenote.logike.cn/*",
+        "*://127.0.0.1/*",
+        "*://localhost/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "rollup/open_api_bridge.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://pagenote.cn; object-src 'self' https://logike.cn",
+  "web_accessible_resources": [
+    "rollup/content_script.js",
+    "images/**",
+    "lib/**",
+    "/**"
+  ]
+}

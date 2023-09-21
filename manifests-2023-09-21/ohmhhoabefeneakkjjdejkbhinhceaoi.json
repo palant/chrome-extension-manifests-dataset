@@ -1,0 +1,159 @@
+---
+slug: amiba-cloud-extension
+name: Amiba Cloud Extension
+description: >-
+  Used with your Amiba Cloud PBX to receive call-, voicemail- and chat messages,
+  and Click2Dial from any webpage.
+version: 5.3.0
+release_date: 'October 20, 2022'
+publisher: MDS Gateways
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 3
+user_count: 151
+size: 5.52MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+extension_website: 'http://www.mdsamiba.com'
+support_website: 'http://www.mdsamiba.com/support.html'
+privacy_policy: 'http://www.mdsgateways.com/privacypolicy/softphone.html'
+---
+
+{
+ "update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 2,
+ "default_locale": "en",
+ "name": "Amiba Cloud Extension",
+ "short_name": "Amiba",
+ "description": "__MSG_extDescriptionMDS__",
+ "version": "5.3.0",
+ "version_name": "5.3.0",
+ "homepage_url": "https://www.amibacom.com",
+ "author": "mailto:chromeextension@amibacom.com?subject=Chrome%20Extension%204.3.0%20Feedback",
+ "icons":
+ {
+  "16": "/dist/mds/logo16.png",
+  "32": "/dist/mds/logo32.png",
+  "48": "/dist/mds/logo48.png",
+  "64": "/dist/mds/logo64.png",
+  "128": "/dist/mds/logo128.png"
+ },
+
+ "options_page": "options.html",
+
+ "options_ui":
+ {
+  "page": "options.html",
+  "chrome_style": false
+ },
+
+ "background":
+ {
+  "page": "background.html"
+ },
+
+ "content_security_policy": "script-src 'self' 'sha256-l9jyTiBA1gxK49AAMA74GFI6uY8SDI9W2eUh1sZyzQ0=' https://*.mdspbx.com; object-src 'self'; child-src 'self';",
+
+ "permissions":
+ [
+  "background",
+  "notifications",
+  "*://*/*",
+  "file://*/*",
+  "contextMenus",
+  "tabs",
+  "idle",
+  "clipboardRead",
+  "downloads",
+  "webRequest",
+  "webRequestBlocking",
+  "privacy"
+ ],
+
+ "content_scripts":
+ [
+  {
+   "matches":
+   [
+    "*://*/*",
+    "file://*/*"
+   ],
+   "exclude_matches": ["https://*.mdspbx.com/*"],
+   "js":
+   [
+    "jquery.js",
+    "jsFrame.js",
+    "libphonenumber/libphonenumber-max.js",
+    "popper/popper.js",
+    "popper/popper-utils.js",
+    "popper/tooltip.js",
+    "contentScript.js"
+   ],
+   "css":
+   [
+    "content.css"
+   ]
+  },
+  {
+   "matches": ["https://*.mdspbx.com/*"],
+   "js":
+   [
+    "jquery.js",
+    "newTabContent.js"
+   ]
+  }
+ ],
+
+ "browser_action":
+ {
+  "default_icon":
+  {
+   "48": "/dist/mds/icon48gray.png"
+  },
+
+  "default_title": "Amiba Cloud Extension - __MSG_extDefaultTitle__",
+  "default_popup": "popup.html"
+ },
+
+ "web_accessible_resources":
+ [
+  "/dist/mds/logo.svg",
+  "images/icons/SVG/call-button.svg",
+  "jsFrame.js",
+  "dist.js",
+  "content-click2dial.js"
+ ],
+
+ "commands":
+ {
+  "Answer":
+  {
+   "suggested_key":{"default": "MediaNextTrack", "mac": "MediaNextTrack"},
+   "global": true,
+   "description": "__MSG_commandsAnswer__"
+  },
+  "Reject":
+  {
+   "suggested_key":{"default": "MediaPrevTrack", "mac": "MediaPrevTrack"},
+   "global": true,
+   "description": "__MSG_commandsReject__"
+  },
+  "Dial":
+  {
+   "suggested_key":{"default": "MediaPlayPause", "mac": "MediaPlayPause"},
+   "global": true,
+   "description": "__MSG_commandsDial__"
+  },
+  "Portal":
+  {
+   "suggested_key":{"default": "MediaStop", "mac": "MediaStop"},
+   "global": true,
+   "description": "__MSG_commandsPortal__"
+  }
+ }
+}

@@ -1,0 +1,81 @@
+---
+slug: مدرستي-بلس
+name: مدرستي بلس
+description: اداة مساعدة للمعلمين لرصد الدرجات في نظام نور و منصة مدرستي
+version: 0.6.8
+release_date: 'September 3, 2023'
+publisher: afCode
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 6
+user_count: 811
+size: 703KiB
+languages:
+  - ‫العربية
+publisher_site: autorasd.com
+extension_website: 'https://autorasd.com'
+privacy_policy: 'https://autorasd.com/afCode/privacy-autorasd.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "مدرستي بلس",
+    "description": "اداة مساعدة للمعلمين لرصد الدرجات في نظام نور و منصة مدرستي",
+    "version": "0.6.8",
+
+    "icons": { "16": "icon/icon.png",
+        "48": "icon/icon.png",
+       "128": "icon/icon.png" },
+ "host_permissions":
+    [
+        "https://noor.moe.gov.sa/*",
+        "https://schools.madrasati.sa/*",
+        "https://autorasd.com/*",
+  "https://*.rcjy.edu.sa/*",
+        "https://vstedu.azureedge.net/*"
+    ],
+    "permissions": [
+        "declarativeNetRequest",
+        "storage"
+    ],
+ "background":{
+ "service_worker": "/js/bg.js",
+        "type" : "module"
+ },
+    "content_scripts": 
+    [
+        {
+            "matches": ["https://noor.moe.gov.sa/Noor/*"],
+            "js": ["js/libs/jquery.js", "js/load.js", "js/interface.js"],
+   "css": ["css/style.css", "css/bootstrap.min.css", "css/toastr.min.css"],
+            "run_at": "document_end"    
+        },
+  {
+            "matches": ["https://schools.madrasati.sa/*"],
+            "js": ["js/libs/jquery.js", "js/interfaceMad.js"],
+   "css": ["css/toastr.min.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://web.whatsapp.com/*"],
+            "js": ["js/libs/jquery.js", "js/libs/sweetalert.min.js","js/libs/whatsapp.js"],
+            "css": ["css/whatsapp.css"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["https://schools.madrasati.sa/*"],
+            "js": ["js/blocker.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [ {
+        "matches": ["<all_urls>"],
+        "resources": [ "js/libs/*"]
+     } 
+    ]
+}

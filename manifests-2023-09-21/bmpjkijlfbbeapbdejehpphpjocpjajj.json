@@ -1,0 +1,114 @@
+---
+slug: impacttracker-web-clipper
+name: ImpactTracker Web Clipper
+description: Clip web pages directly to evidence vault.
+version: 3.1.0
+release_date: 'August 22, 2023'
+publisher: HIVVE GROUP LTD
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.666666666666667
+rating_count: 3
+user_count: 277
+size: 923KiB
+languages:
+  - English
+publisher_site: vvimpacttracker.com.au
+extension_website: 'https://vvimpacttracker.com'
+support_website: 'https://hivve.tech/contact-us/'
+privacy_policy: 'https://vvimpacttracker.com/legal/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.1.0",
+  "author": "HIVVE GROUP LTD",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "default_locale": "en",
+  "options_page": "index.html?#/options",
+  "incognito": "split",
+  "action": {
+    "default_icon": {
+      "16": "assets/brand/it-logo-16.png",
+      "48": "assets/brand/it-logo-48.png",
+      "128": "assets/brand/it-logo-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/brand/it-logo-16.png",
+    "48": "assets/brand/it-logo-48.png",
+    "128": "assets/brand/it-logo-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "notifications",
+    "scripting",
+    "storage",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "oauth2": {
+    "client_id": "18h000jjt21a63qh04pgsdp6ic",
+    "authorization_endpoint": "https://myvvid.com/oauth2/authorize",
+    "token_endpoint": "https://myvvid.com/oauth2/token",
+    "userinfo_endpoint": "https://myvvid.com/oauth2/userinfo",
+    "logout_endpoint": "https://myvvid.com/logout",
+    "return_uri": "https://vvimpacttracker.com/extension/auth-callback",
+    "return_logout_uri": "https://vvimpacttracker.com/extension/auth-logout",
+    "jwks_uri": "https://myvvid.com/.well-known/jwks.json",
+    "scopes": [
+      "email",
+      "profile",
+      "openid"
+    ]
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": [
+        "contentPage.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "installHelpers.js"
+      ],
+      "matches": [
+        "https://*.vvimpacttracker.com/*",
+        "https://vvimpacttracker.com/*",
+        "https://*.vvimpacttracker.com.au/*",
+        "https://vvimpacttracker.com.au/*",
+        "https://hivveimpacttracker.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; object-src 'self'"
+  },
+  "host_permissions": [
+    "*://vvimpacttracker/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

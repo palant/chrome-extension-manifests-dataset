@@ -1,0 +1,124 @@
+---
+slug: ultrafox-inari-trợ-thủ-ch
+name: UltraFox Inari - trợ thủ chứng khoán Việt Nam
+description: >-
+  Công cụ mạnh nhất giúp bạn trở thành siêu nhân giao dịch chứng khoán cơ sở và
+  phái sinh VN30F1M ở Việt Nam.
+version: 0.23.1
+release_date: 'November 29, 2020'
+publisher: GURUCORE
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 45
+size: 345KiB
+languages:
+  - Tiếng Việt
+publisher_site: xcapital.vn
+extension_website: 'https://xcapital.vn'
+support_website: 'https://xcapital.vn#ultrafox'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "0.23.1",
+  "name": "UltraFox Inari - trợ thủ chứng khoán Việt Nam",
+  "description": "Công cụ mạnh nhất giúp bạn trở thành siêu nhân giao dịch chứng khoán cơ sở và phái sinh VN30F1M ở Việt Nam.",
+  "homepage_url": "https://ultrafox.netlify.app/",
+  "manifest_version": 2,
+
+  "background": {
+    "scripts": ["./background.js"],
+    "persistent": true
+  },
+  "commands": {
+    "Ctrl+M": {
+      "suggested_key": {
+        "default": "Ctrl+Q",
+        "mac": "Command+Q"
+      },
+      "description": "Ctrl+Q để tải lại công cụ. Cần đảm bảo là background page được giữ thường trực (persistent)."
+    }
+  },
+  "browser_action": {
+    "default_title": "Ultra Fox: trợ lý giao dịch chứng khoán Việt Nam (cơ sở và phái sinh)",
+    "default_icon": "assets/icons/icon_64.png",
+    "default_popup": "./popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["assets/contentScripts/jquery-3.5.1.min.js", "assets/contentScripts/draggabilly.pkgd.min.js", "assets/contentScripts/keymaster.min.js", "./contentScripts.js"],
+      "css": ["./contentScripts.css"],
+      "matches": [
+        "https://smartpro.vps.com.vn/*",
+        "https://smartone.vps.com.vn/*",
+        "https://trading.vcbs.com.vn/*",
+        "https://*.niteco.asia/*",
+        "https://trade.vndirect.com.vn/*",
+        "https://iboard.ssi.com.vn/*",
+        "http://stockprice.vn/*",
+        "https://www.fireant.vn/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "css": ["assets/contentScripts/CompanyVCBS.css"],
+      "matches": ["https://trading.vcbs.com.vn/*", "https://*.niteco.asia/*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "css": ["assets/contentScripts/CompanyVPS.css"],
+      "matches": ["https://*.vps.com.vn/*", "https://*.niteco.asia/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "options_page": "./options.html",
+
+  "icons": {
+    "16": "assets/icons/icon_16.png",
+    "32": "assets/icons/icon_32.png",
+    "64": "assets/icons/icon_64.png",
+    "128": "assets/icons/icon_128.png"
+  },
+
+  "web_accessible_resources": ["assets/injectedScripts/IS_VCBS.js", "assets/injectedScripts/IS_VPS.js", "assets/icons/*"],
+
+  "externally_connectable": {
+    "matches": [
+      "https://*.vps.com.vn/*",
+      "https://*.vdsc.com.vn/*",
+      "https://*.vcbs.com.vn/*",
+      "https://*.vndirect.com.vn/*",
+      "https://*.ssi.com.vn/*",
+      "https://*.xcapital.vn/*",
+      "https://*.niteco.asia/*",
+      "https://ultrafox.netlify.app/*"
+    ]
+  },
+
+  "permissions": [
+    "management",
+    "background",
+    "notifications",
+    "tts",
+    "webRequest",
+    "storage",
+    "unlimitedStorage",
+    "https://*.vps.com.vn/*",
+    "https://*.vdsc.com.vn/*",
+    "https://*.vcbs.com.vn/*",
+    "https://*.xcapital.vn/*",
+    "https://*.niteco.asia/*",
+    "https://*.firebaseio.com/*",
+    "https://spreadsheets.google.com/*",
+    "https://*.herokuapp.com/*",
+    "https://*.netlify.app/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

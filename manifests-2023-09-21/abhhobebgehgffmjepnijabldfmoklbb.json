@@ -1,0 +1,71 @@
+---
+slug: 浏览器小助手
+name: 浏览器小助手
+description: 浏览器小功能：定时截屏浏览器、万能复制等功能、复制某些特定网站文章内容
+version: 2.1.1
+release_date: 'May 2, 2023'
+publisher: changyongdon
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 36
+size: 1.22MiB
+languages:
+  - 中文 (简体)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "浏览器小助手",
+  "description": "浏览器小功能：定时截屏浏览器、万能复制等功能、复制某些特定网站文章内容",
+  "version": "2.1.1",
+  "icons": {
+    "16": "img/gongju_16.png",
+    "48": "img/gongju_48.png",
+    "128": "img/gongju_128.png"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_icon": {
+      "16": "img/gongju_16.png",
+      "24": "img/gongju_24.png",
+      "32": "img/gongju_32.png"
+    },
+    "default_title": "浏览器小助手",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "bg.js"
+  },
+  "commands": {
+    "open_product_panel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "windows": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y",
+        "chromeos": "Ctrl+Shift+Y",
+        "linux": "Ctrl+Shift+Y"
+      },
+      "description": "Inject a script on the page"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/UndoDisableCopy.js"],
+      "exclude_globs": ["https://www.zhihu.com/**"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*/*"],
+      "include_globs": ["https://www.zhihu.com/**"],
+      "js": ["js/ZhihuContentCopy.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage", "downloads"]
+}

@@ -1,0 +1,93 @@
+---
+slug: arqsign-certificado-digit
+name: ArqSign Certificado Digital
+description: >-
+  Extensão com propósito de carregar os certificados instalados na máquina local
+  para assinar documentos
+version: 0.0.0.12
+release_date: 'August 30, 2023'
+publisher: Arquivar | Gestão Inteligente de Documentos
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 844
+size: 461KiB
+languages:
+  - português (Brasil)
+publisher_site: arquivar.com.br
+extension_website: 'https://arquivar.com.br'
+support_website: 'https://arquivar.com.br/#fale-com-arquivar'
+privacy_policy: 'https://arquivar.com.br/politica-de-privacidade'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "ArqSign Certificado Digital",
+  "description": "Extensão com propósito de carregar os certificados instalados na máquina local para assinar documentos",
+  "version": "0.0.0.12",
+  "externally_connectable": {
+    "matches": [ "*://localhost/*", "*://arqsign.azurewebsites.net/*" ]
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [ "*://*/*" ],
+      "include_globs": [        
+        "*://*.arqsign.com/*",
+        "*://arqsign-*.azurewebsites.net/*",
+        "*://arquivar.com.br/*",
+        "*://arqsign.azurewebsites.net/*"
+      ],
+      "js": [
+        "popup/bootstrap/jquery.js",
+        "Shared/EnumFn.js",
+        "Shared/certificadoExtensionEnum.js",
+        "Shared/atualizacaoExtensionEnum.js",
+        "Shared/ResponseMessage.js",
+        "Shared/chromeUtils.js",
+        "contents/ProcessarMensagem.js",
+        "contents/Mensagem.js",
+        "contents/contents.js",
+        "contents/responses.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "Shared/EnumFn.js",
+      "Shared/ResponseMessage.js",
+      "Shared/chromeUtils.js",
+      "background/ProcessarMensagem.js",
+      "background/backgroundRules.js",
+      "background/background.js",
+      "background/certificados.js",
+      "background/atualizacao.js"
+    ],
+    "persistent": true
+  },
+  "page_action": {
+    "default_icon": {
+      "16": "arqsign16.png",
+      "24": "arqsign24.png",
+      "32": "arqsign32.png",
+      "48": "arqsign32.png"
+    },
+    "default_title": "Carregar Certificados..",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "arqsign16.png",
+    "24": "arqsign24.png",
+    "32": "arqsign32.png",
+    "48": "arqsign32.png"
+  },
+  "permissions": [
+    "activeTab",    
+    "nativeMessaging",
+    "declarativeContent"
+  ],  
+  "web_accessible_resources": [ "manifest.json", "contents/*", "Shared/*", "popup/*" ]
+}

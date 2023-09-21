@@ -1,0 +1,82 @@
+---
+slug: golinks
+name: GoLinks
+description: >-
+  The official GoLinks.io, go/links browser extension. Create team shortlinks
+  "go links" with one click.
+version: 2.7.2
+release_date: 'August 11, 2023'
+publisher: GoLinks
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.59375
+rating_count: 32
+user_count: '80,000+'
+size: 1.45MiB
+languages:
+  - English (United States)
+publisher_site: www.golinks.io
+extension_website: 'https://www.golinks.io'
+support_website: 'https://www.golinks.com/help/'
+privacy_policy: 'https://www.golinks.io/privacy.php'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "GoLinks",
+ "description": "The official GoLinks.io, go/links browser extension. Create team shortlinks \"go links\" with one click.",
+ "homepage_url": "https://www.golinks.io",
+ "version": "2.7.2",
+ "icons": {
+  "16": "icons/icon16.png",
+  "48": "icons/icon48.png",
+  "128": "icons/icon128.png"
+ },
+ "action": {
+  "default_icon": "icons/icon48.png",
+  "default_popup": "popup.html"
+ },
+ "omnibox": {
+  "keyword": "go/"
+ },
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "id": "redirect_rules",
+    "enabled": true,
+    "path": "redirect_rules.json"
+   }
+  ]
+ },
+ "host_permissions": [
+  "*://go/*",
+  "*://*.golinks.io/*",
+  "*://*.golinks.com/*"
+ ],
+ "permissions": [
+  "activeTab",
+  "cookies",
+  "storage",
+  "declarativeNetRequestWithHostAccess"
+ ],
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; connect-src https://*.golinks.io; object-src 'self'; font-src 'self';"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "*://*.golinks.io/*",
+    "*://*.golinks.com/*"
+   ],
+   "js": [
+    "identifier.js"
+   ],
+   "run_at": "document_start"
+  }
+ ]
+}

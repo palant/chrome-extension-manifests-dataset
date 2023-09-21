@@ -1,0 +1,68 @@
+---
+slug: xcad
+name: XCAD
+description: XCAD Browser Extension
+version: 3.0.10
+release_date: 'September 20, 2023'
+publisher: XCAD Network
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.5426829268292686
+rating_count: 164
+user_count: '60,000+'
+size: 14.87MiB
+languages:
+  - English
+publisher_site: xcadnetwork.com
+extension_website: 'https://xcadnetwork.com'
+support_website: 'https://support.xcadnetwork.com'
+privacy_policy: 'https://terms.xcadnetwork.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "XCAD Browser Extension",
+  "version": "3.0.10",
+  "manifest_version": 3,
+  "name": "XCAD",
+  "short_name": "XCAD",
+  "permissions": ["storage", "unlimitedStorage"],
+  "host_permissions": ["*://*.youtube.com/*", "*://*.xcademy.com/*"],
+  "externally_connectable": {
+    "matches": ["*://*.xcademy.com/*"]
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "/assets/x.png"
+  },
+  "display": "standalone",
+  "icons": {
+    "128": "/assets/x.png"
+  },
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["static/js/content.js"],
+      "matches": ["https://*.youtube.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "css": ["assets/css/content.styles.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*", "inject.js"],
+      "matches": ["https://*.youtube.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

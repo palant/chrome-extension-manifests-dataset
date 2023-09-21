@@ -1,0 +1,83 @@
+---
+slug: nicoexpansion
+name: nicoExpansion
+description: ニコニコに関する便利機能を追加します
+version: 3.10.4
+release_date: 'August 18, 2023'
+publisher: nimono3
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 5
+rating_count: 5
+user_count: '1,000+'
+size: 89.36KiB
+languages:
+  - 日本語
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "nicoExpansion",
+  "version": "3.10.4",
+  "description": "ニコニコに関する便利機能を追加します",
+  "icons": {
+    "512": "icons/nicoExp512.png",
+    "256": "icons/nicoExp256.png",
+    "128": "icons/nicoExp128.png",
+    "32" : "icons/nicoExp32.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.nicovideo.jp/*"
+      ],
+      "js": [ "script/ncid.js", "script/el.js", "script/main.js" ],
+      "css": [ "style/common.css", "style/nicodark_ex.css" ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://www.nicovideo.jp/watch/*"
+      ],
+      "css": [ "style/video.css" ]
+    },
+    {
+      "matches": [
+        "*://www.nicovideo.jp/my/mylist/*"
+      ],
+      "css": [ "style/exlist.css" ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "service_worker": "script/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "*://ext.nicovideo.jp/api/getthumbinfo/*",
+    "*://seiga.nicovideo.jp/ajax/*",
+    "*://*.nicovideo.jp/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/nicoExp32.png"],
+      "matches": ["*://*.nicovideo.jp/*"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{f8b8bf33-a4ef-4fd0-9ab1-3a6a6cbcd2eb}"
+    }
+  }
+}

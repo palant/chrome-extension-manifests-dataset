@@ -1,0 +1,112 @@
+---
+slug: push-security
+name: Push Security
+description: Keep your users secure.
+version: 1.41.3
+release_date: 'September 8, 2023'
+publisher: Push Security
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 10
+user_count: '20,000+'
+size: 830KiB
+languages:
+  - English
+publisher_site: pushsecurity.com
+extension_website: 'https://pushsecurity.com'
+support_website: 'https://pushsecurity.com/contact'
+privacy_policy: 'https://pushsecurity.com/legal/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Push Security",
+    "version": "1.41.3",
+    "description": "Keep your users secure.",
+    "action": {
+        "default_icon": {
+            "16": "assets/push16.png",
+            "24": "assets/push24.png",
+            "32": "assets/push32.png"
+        },
+        "default_popup": "dist/popup/index.html"
+    },
+    "background": {
+        "service_worker": "dist/background/main.js"
+    },
+    "icons": {
+        "16": "assets/push16.png",
+        "48": "assets/push48.png",
+        "128": "assets/push128.png"
+    },
+    "permissions": [
+        "alarms",
+        "identity",
+        "identity.email",
+        "scripting",
+        "storage",
+        "tabs",
+        "webNavigation",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "exclude_matches": [
+                "*://localhost/*",
+                "*://127.0.0.1/*",
+                "*://0.0.0.0/*"
+            ],
+            "js": [
+                "dist/contentScripts/global/index.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "dist/assets/fonts/*",
+                "dist/contentScripts/**.css"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://*.adobe.com/*",
+            "https://*.bamboohr.com/*",
+            "https://hub.docker.com/*",
+            "https://www.dropbox.com/*",
+            "https://mail.google.com/*",
+            "https://hootsuite.com/dashboard/*",
+            "https://www.figma.com/files/*",
+            "https://lastpass.com/*",
+            "https://login.microsoftonline.com/*",
+            "https://webshell.suite.office.com/iframe/*",
+            "https://outlook.office.com/*",
+            "https://web.postman.co/*",
+            "https://login.teamviewer.com/*",
+            "https://*.zoom.us/*"
+        ]
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "storage": {
+        "managed_schema": "policy.json"
+    }
+}

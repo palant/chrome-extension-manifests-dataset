@@ -1,0 +1,177 @@
+---
+slug: brainbuddy-ai-assistant-w
+name: 'BrainBuddy: AI Assistant with ChatGPT & Bard'
+description: >-
+  BrainBuddy is an All-in-one AI-powered Sidebar Assistant, with ChatGPT, Bard,
+  & more! ⚡
+version: 1.1.0
+release_date: 'September 20, 2023'
+publisher: CrazyInventions Inc
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 293
+size: 398KiB
+languages:
+  - English
+publisher_site: brainbuddy.to
+extension_website: 'https://brainbuddy.to'
+support_website: >-
+  https://chrome.google.com/webstore/detail/odhdjioheneboknfjdhldaoljedipcig/support
+privacy_policy: 'https://browsebetter.io/privacy-policy.php'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "BrainBuddy: AI Assistant with ChatGPT & Bard",
+  "short_name": "BrainBuddy SidePanel [Alt + X]",
+  "version": "1.1.0",
+  "description": "BrainBuddy is an All-in-one AI-powered Sidebar Assistant, with ChatGPT, Bard, & more! ⚡",
+  "icons": {
+    "32": "images/32.png",
+    "48": "images/48.png",
+    "64": "images/64.png",
+    "128": "images/128.png"
+  },
+  "homepage_url": "https://brainbuddy.to",
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "permissions": [
+    "sidePanel",
+    "unlimitedStorage",
+    "storage",
+    "background",
+    "contextMenus",
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+      "id": "ruleset_1a",
+      "enabled": true,
+      "path": "rule1a.json"
+      },
+      {
+        "id": "ruleset_1b",
+        "enabled": true,
+        "path": "rule1b.json"
+        },
+      {
+        "id": "ruleset_2",
+        "enabled": true,
+        "path": "rule2.json"
+        }    
+  ]
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://bard.google.com/*"],
+      "js": ["js/bard.js"],
+      "css": ["bard.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+    ,
+    {
+      "matches": ["*://chat.openai.com/*"],
+      "js": ["js/chatgpt.js"],
+      "css": ["chatgpt.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+    ,    
+    {
+      "matches": ["*://chat.openai.com/*", "*://bard.google.com/*"],
+      "js": ["js/a_fun.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+    ,    
+    {
+      "matches": ["*://chat.openai.com/*", "*://bard.google.com/*", "*://*.browsebetter.io/*", "*://*.brainbuddy.to/*"],
+      "js": ["js/unfocus.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+    ,
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/all.js"],
+      "css": ["all.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": 
+  [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "extension_ids": ["*"]
+    }
+  ],
+  "commands": 
+  {
+    "open_brainbuddy": 
+    {
+      "_execute_action": 
+      {
+        "default": "Alt+X",
+        "windows": "Alt+X",
+        "mac": "Alt+X",
+        "chromeos": "Alt+X",
+        "linux": "Alt+X"
+      },
+      "description": "Press Alt + X to open the BrainBuddy SidePanel"
+    },
+    "open_chatgpt": 
+    {
+      "suggested_key": 
+      {
+        "default": "Alt+C",
+        "windows": "Alt+C",
+        "mac": "Alt+C",
+        "chromeos": "Alt+C",
+        "linux": "Alt+C"
+      },
+      "description": "Press Alt + C to open ChatGPT"
+    },
+    "open_bard": 
+    {
+      "suggested_key": 
+      {
+        "default": "Alt+B",
+        "windows": "Alt+B",
+        "mac": "Alt+B",
+        "chromeos": "Alt+B",
+        "linux": "Alt+B"
+      },
+      "description": "Press Alt + B to open Bard"
+    }
+  },
+  "offline_enabled": true,
+  "author": "BrainBuddy: AI Assistant",
+  "background": {
+    "service_worker": "js/service.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "font-src 'self'; script-src 'self'; object-src 'self'; worker-src 'self'",
+    "content_scripts": "font-src 'self'; script-src 'self'; object-src 'self'; worker-src 'self'"
+  },
+  "minimum_chrome_version": "114", 
+  "action": {
+    "default_icon": {
+      "32": "images/32.png",
+      "48": "images/48.png",
+      "64": "images/64.png",
+      "128": "images/128.png"
+    },
+    "default_title": "BrainBuddy: AI Assistant [Alt + X]"
+  }
+}

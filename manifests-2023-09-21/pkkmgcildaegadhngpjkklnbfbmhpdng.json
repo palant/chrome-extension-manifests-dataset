@@ -1,0 +1,84 @@
+---
+slug: chatgpt-for-bing
+name: ChatGPT for Bing™
+description: Show ChatGPT's answers in Bing™ search results at the same time.
+version: 1.0.4
+release_date: 'September 3, 2023'
+publisher: radarlinkedin
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.636363636363637
+rating_count: 11
+user_count: '5,000+'
+size: 499KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - magyar
+  - português (Portugal)
+  - română
+  - русский
+  - українська
+  - עברית
+  - 中文 (简体)
+  - 日本語
+  - 한국어
+extension_website: 'https://linkedradar.com'
+support_website: 'https://linkedradar.com'
+privacy_policy: 'https://linkedradar.com/linkedradar-private-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "1.0.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "host_permissions": [
+    "*://*.openai.com/",
+    "*://*.linkedradar.com/*",
+    "*://*.bing.com/*",
+    "*://*.gptplus.com/*"
+  ],
+  "permissions": ["storage", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.bing.com/search*", "https://cn.bing.com/search*"],
+      "js": ["content-script.js"],
+      "css": ["content-script.css"]
+    },
+    {
+      "matches": ["*://*.gptplus.io/*"],
+      "js": ["gptplus-script.js"],
+      "css": [],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["chatgpt-script.js"],
+      "css": ["chatgpt-script.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [{ "resources": ["content-script.css"], "matches": ["<all_urls>"] }]
+}

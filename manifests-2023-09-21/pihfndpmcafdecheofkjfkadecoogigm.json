@@ -1,0 +1,100 @@
+---
+slug: stackeye
+name: StackEye
+description: >-
+  Follow Questions & Users on StackOverflow & All StackExchange Sites. Get
+  notifications for new answers/comments. Learn from experts
+version: 21.8.24
+release_date: 'August 24, 2021'
+publisher: RQ Labs
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.655172413793103
+rating_count: 29
+user_count: '1,000+'
+size: 542KiB
+languages:
+  - English
+publisher_site: stackxyz.com
+extension_website: 'https://stackxyz.com/stackeye'
+support_website: 'https://github.com/stackxyz/stackeye'
+privacy_policy: 'https://requestly.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "StackEye",
+
+  "version": "21.8.24",
+  "manifest_version": 2,
+  "description": "Follow Questions & Users on StackOverflow & All StackExchange Sites. Get notifications for new answers/comments. Learn from experts",
+
+  "background": {
+    "scripts": [
+      "src/shared/analytics.js",
+      "src/libs/jquery-1.9.1.js",
+      "src/shared/globals.js",
+      "src/shared/analyticsHelper.js",
+      "src/shared/api_methods.js",
+      "src/shared/shared.js",
+      "src/background/watchQuestion.js",
+      "src/background/followUser.js",
+      "src/background/background.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/questions/*"
+      ],
+      "js": [
+        "src/libs/jquery-1.9.1.js", 
+        "src/content_scripts/questionPage.js"
+      ],
+      "css": ["src/content_scripts/cs.css"]
+    },
+    {
+      "matches": [
+        "*://*/users/*"
+      ],
+      "js": [
+        "src/libs/jquery-1.9.1.js", 
+        "src/content_scripts/profilePage.js"
+      ],
+      "css": ["src/content_scripts/cs.css"]
+    }
+  ],
+
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  
+  "browser_action": {
+    "default_icon": "resources/images/icon_so_48.png",
+    "default_title": "Get latest notifications on your favorite questions",
+    "default_popup": "src/popup/popup.html"
+  },
+  
+  "icons": {
+    "16": "resources/images/icon_so_48.png",
+    "48": "resources/images/icon_so_48.png",
+    "128": "resources/images/icon_so_48.png"
+  },
+  
+  "permissions": [
+    "storage",
+    "tabs",
+    "*://*.askubuntu.com/*",
+    "*://*.mathoverflow.net/*",
+    "*://*.serverfault.com/*",
+    "*://*.stackapps.com/*",
+    "*://*.stackexchange.com/*",
+    "*://*.stackoverflow.com/*",
+    "*://*.superuser.com/*"
+  ],
+  
+  "web_accessible_resources": [
+    "resources/icons/eye-open/128.png",
+    "resources/icons/eye-closed/128.png"
+  ]
+}

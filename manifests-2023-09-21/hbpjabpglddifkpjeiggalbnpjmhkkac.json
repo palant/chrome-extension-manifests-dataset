@@ -1,0 +1,89 @@
+---
+slug: mirror-block
+name: Mirror Block
+description: >-
+  A browser extension that allows you to detect and (optionally) Counter-block
+  users who blocked you on Twitter.
+version: '0.15.0.0 [MV3]'
+release_date: 'March 25, 2022'
+publisher: 가을별
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.208333333333333
+rating_count: 24
+user_count: '20,000+'
+size: 283KiB
+languages:
+  - English
+  - 한국어
+extension_website: 'https://github.com/gaeulbyul/MirrorOfBlock'
+privacy_policy: 'https://gist.github.com/gaeulbyul/25b3a4abfdd91a32d98a5bbe78769f2d'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "__MSG_extension_description__",
+  "manifest_version": 3,
+  "name": "Mirror Block",
+  "author": "Gaeulbyul <aeiou256@gmail.com>",
+  "version": "0.15.0.0",
+  "version_name": "0.15.0.0 [MV3]",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/gaeulbyul/MirrorBlock",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://mobile.twitter.com/*",
+    "https://tweetdeck.twitter.com/*"
+  ],
+
+  "permissions": ["storage", "contextMenus", "activeTab"],
+
+  "options_ui": {
+    "page": "options/options.html"
+  },
+
+  "background": {
+    "service_worker": "service-worker-loader.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://mobile.twitter.com/*",
+        "https://tweetdeck.twitter.com/*"
+      ],
+      "css": ["styles/mirrorblock.css", "styles/mob-badge.css", "styles/chainblock.css"],
+      "js": ["bundled/twitter.bun.js", "bundled/chainblock.bun.js"]
+    },
+    {
+      "matches": ["https://tweetdeck.twitter.com/*"],
+      "css": ["styles/tweetdeck.css"],
+      "js": ["bundled/tweetdeck.bun.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://mobile.twitter.com/*",
+        "https://tweetdeck.twitter.com/*"
+      ],
+      "resources": ["bundled/tweetdeck_inject.bun.js", "bundled/twitter_inject.bun.js"]
+    }
+  ],
+
+  "action": {
+    "default_icon": "icons/icon-48.png",
+    "default_title": "Mirror Block",
+    "default_popup": "popup/popup.html"
+  }
+}

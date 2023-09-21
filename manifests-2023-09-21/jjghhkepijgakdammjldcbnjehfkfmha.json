@@ -1,0 +1,141 @@
+---
+slug: salesforce
+name: Salesforce
+description: Work with Salesforce records directly in your browser.
+version: 2.246.1
+release_date: 'September 20, 2023'
+publisher: Salesforce
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.420386904761905
+rating_count: 1344
+user_count: '300,000+'
+size: 2.19MiB
+languages:
+  - English (United States)
+privacy_policy: 'http://www.salesforce.com/company/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Salesforce",
+    "short_name": "Salesforce",
+    "description": "Work with Salesforce records directly in your browser.",
+    "incognito": "split",
+    "icons": {
+        "16": "common/img/cloud_logo_16.png",
+        "48": "common/img/cloud_logo_48.png",
+        "128": "common/img/cloud_logo_128.png"
+    },
+    "action": {
+        "default_icon": "common/img/cloud_logo_256.png",
+        "default_title": "Salesforce"
+    },
+    "background": {
+        "service_worker": "background.bundle.js"
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "windows": "Alt+E",
+                "mac": "Command+E",
+                "chromeos": "Alt+E",
+                "linux": "Alt+E"
+            }
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "js": [
+                "gmail/js/bootstrap.bundle.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://calendar.google.com/*"
+            ],
+            "js": [
+                "gcal/js/bootstrap.bundle.js"
+            ]
+        }
+    ],
+    "options_ui": {
+        "page": "options/html/options.html"
+    },
+    "side_panel": {
+        "default_path": "salesforce/companion.html"
+    },
+    "permissions": [
+        "management",
+        "storage",
+        "declarativeNetRequest",
+        "cookies",
+        "sidePanel",
+        "idle"
+    ],
+    "optional_permissions": [
+        "activeTab",
+        "notifications",
+        "system.display"
+    ],
+    "host_permissions": [
+        "https://mail.google.com/",
+        "https://calendar.google.com/",
+        "*://*.googleusercontent.com/*",
+        "*://*.salesforceiq.com/*",
+        "https://*.salesforce.com/",
+        "https://*.force.com/",
+        "https://*.visualforce.com/",
+        "https://*.cloudforce.com/",
+        "https://*.my-lightning.com/",
+        "https://*.crmforce.com/",
+        "https://*.my-salesforce/"
+    ],
+    "optional_host_permissions": [
+        "https://*/*"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "redirect_pixel_request",
+                "enabled": true,
+                "path": "redirect_rules.json"
+            }
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "common/fonts/SalesforceSans-Regular.woff2",
+                "common/fonts/SalesforceSans-Regular.woff",
+                "common/img/SFLogo.svg",
+                "common/img/chevronright.svg",
+                "gmail/js/embedded.bundle.js",
+                "gmail/css/embedded.css",
+                "gcal/js/embedded.bundle.js",
+                "gcal/css/embedded.css",
+                "lib/module*"
+            ],
+            "matches": [
+                "https://mail.google.com/*",
+                "https://calendar.google.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "everywhere/assets/*",
+                "salesforce/*"
+            ],
+            "use_dynamic_url": true,
+            "matches": [
+                "https://*/*"
+            ]
+        }
+    ],
+    "version": "2.246.1"
+}

@@ -1,0 +1,85 @@
+---
+slug: snl-internlenker
+name: SNL Internlenker
+description: >-
+  En utvidelse til Chrome for å gjøre redigering av artikler på Store Norske
+  Leksikon lettere med diverse snarveier og hjelpemidler.…
+version: '1.21'
+release_date: 'January 12, 2023'
+publisher: jotjern
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 5
+user_count: 157
+size: 38.27KiB
+languages:
+  - Norsk
+---
+
+{
+ "update_url": "https://clients2.google.com/service/update2/crx",
+ "name": "SNL Internlenker",
+ "version": "1.21",
+ "manifest_version": 3,
+ "host_permissions": ["*://*.snl.no/*", "*://snl.no/*",
+       "*://*.lex.dk/*", "*://lex.dk/*"],
+ "background": {
+  "service_worker": "background.js"
+ },
+ "icons": {
+
+ },
+ "content_scripts": [
+  {
+   "matches": ["*://*.snl.no/.improvements/*", "*://snl.no/.improvements/*",
+      "*://*.snl.no/.articles/new/*", "*://snl.no/.articles/new/*",
+      "*://*.lex.dk/.improvements/*", "*://lex.dk/.improvements/*",
+      "*://*.lex.dk/.articles/new/*", "*://lex.dk/.articles/new/*",
+      "*://*.snl.no/.edit_field/xhtml_draft/*", "*://snl.no/.edit_field/xhtml_draft/*",
+      "*://*.lex.dk/.edit_field/xhtml_draft/*", "*://lex.dk/.edit_field/xhtml_draft/*"],
+
+   "js": ["editor_tools.js", "title.js"],
+   "all_frames": false
+  },
+  {
+   "matches": ["*://*.snl.no/*", "*://snl.no/*",
+      "*://*.lex.dk/*", "*://lex.dk/*"],
+   "js": ["article_shortcuts.js"],
+   "all_frames": false
+  },
+  {
+   "matches": ["*://*.snl.no/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm",
+         "*://snl.no/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm",
+
+      "*://*.lex.dk/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm",
+         "*://lex.dk/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm"],
+
+   "js": ["dialog.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://*.snl.no/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm",
+      "*://snl.no/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm",
+      "*://*.lex.dk/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm",
+      "*://lex.dk/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm"],
+   "js": ["linkdialog.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://*.snl.no/.admin/taxonomies/new",
+      "*://snl.no/.admin/taxonomies/new",
+      "*://*.lex.dk/.admin/taxonomies/new",
+      "*://lex.dk/.admin/taxonomies/new"],
+   "js": ["sokimenyer.js"]
+  },
+  {
+   "matches": ["*://*.snl.no/.versions/list/*",
+      "*://snl.no/.versions/list/*"],
+   "js": ["versions.js"]
+  }
+ ],
+ "action": {
+  "default_popup": "popup.html"
+ }
+}

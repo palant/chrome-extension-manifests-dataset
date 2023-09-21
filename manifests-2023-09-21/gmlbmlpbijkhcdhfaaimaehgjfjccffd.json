@@ -1,0 +1,68 @@
+---
+slug: youtube-spam-remover
+name: YouTube Spam Remover
+description: Hides most YouTube spam comments
+version: 2.0.5
+release_date: 'August 23, 2023'
+publisher: Luke Pflibsen-Jones
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 2.8333333333333335
+rating_count: 6
+user_count: 678
+size: 1.45MiB
+languages:
+  - English (United States)
+extension_website: 'https://github.com/lukepfjo/YouTube-Spam-Remover'
+support_website: 'https://github.com/luketimothyjones/youtube-spam-remover/issues/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "YouTube Spam Remover",
+  "version": "2.0.5",
+  "description": "Hides most YouTube spam comments",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://yt3.ggpht.com/*",
+    "https://raw.githubusercontent.com/lukepfjo/YouTube-Spam-Remover/main/src/extern/opennsfwjs/model/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*", "https://youtube.com/watch*"],
+      "js": ["yt-spam-remover.js", "opennsfw.min.js", "pixelmatch.min.js"],
+      "css": ["yt-spam-remover.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["yt-spam-remover-worker.js", "opennsfw.min.js", "pixelmatch.min.js", "allowed-sites.json.gz"],
+      "matches": ["https://www.youtube.com/*", "https://youtube.com/*"]
+    }
+  ],
+  "action": {
+   "default_icon": {
+    "16": "icon16.png",
+    "48": "icon48.png"
+   },
+   "default_popup": "gui/ytsr-gui-tab.html"
+  },
+  "options_ui": {
+      "page": "gui/ytsr-gui-options.html",
+      "browser_style": true
+  },
+  "background": {
+    "service_worker": "yt-spam-remover-background.js"
+  }
+}

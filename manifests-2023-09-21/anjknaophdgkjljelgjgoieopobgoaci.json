@@ -1,0 +1,206 @@
+---
+slug: dat-companion
+name: DAT Companion
+description: 'Click to email loads, highlight best loads'
+version: 2.3.3
+release_date: 'September 20, 2023'
+publisher: mukluk
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 12
+user_count: '1,000+'
+size: 4.91MiB
+languages:
+  - English (United States)
+extension_website: 'https://extension.truckbase.ai/'
+support_website: 'https://extension.truckbase.ai/'
+privacy_policy: 'https://truckbase.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "DAT Companion",
+  "description": "Click to email loads, highlight best loads",
+  "version": "2.3.3",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "management",
+    "identity",
+    "identity.email",
+    "scripting",
+    "webRequest",
+    "offscreen"
+  ],
+  "oauth2": {
+    "client_id": "298325684176-3ojdkja6l2udhgqviune1uk4vtp91arh.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/gmail.send"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
+  },
+  "host_permissions": [
+    "https://freight.api.prod.dat.com/posting/v1/trucks/",
+    "https://power.dat.com/*",
+    "https://one.dat.com/*",
+    "http://localhost:3000/*",
+    "https://trbsextension.truckbase.ai/trbsextension/authenticate/",
+    "https://trbsextension.truckbase.ai/trbsextension/truck-data/",
+    "https://trbsextension-dev.truckbase.ai/trbsextension/authenticate/",
+    "https://trbsextension-dev.truckbase.ai/trbsextension/truck-data/",
+    "https://storage.googleapis.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://one.dat.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "scripts/json_loader.js",
+        "truck_post.js",
+        "js/pako.min.js",
+        "lru.js",
+        "scripts/constants.js",
+        "scripts/utils.js",
+        "scripts/ws_caller_assignments.js",
+        "scripts/ui/power_ui.js",
+        "scripts/table/power_table.js",
+        "scripts/search/power_search.js",
+        "scripts/table/truck_table.js",
+        "scripts/ui/one_ui.js",
+        "scripts/ui/truck_ui.js",
+        "scripts/table/one_table.js",
+        "scripts/search/one_search.js",
+        "scripts/message_handler.js",
+        "persistent.js"
+      ],
+      "css": [
+        "css/one.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://power.dat.com/postings/trucks"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "scripts/json_loader.js",
+        "truck_post.js",
+        "js/pako.min.js",
+        "lru.js",
+        "scripts/constants.js",
+        "scripts/utils.js",
+        "scripts/ws_caller_assignments.js",
+        "scripts/ui/power_ui.js",
+        "scripts/table/power_table.js",
+        "scripts/search/power_search.js",
+        "scripts/truck_post_ui/master_truck_post_ui.js",
+        "scripts/truck_post_ui/truck_post_ui.js",
+        "scripts/truck_post_ui/load_search_post_ui.js",
+        "scripts/message_handler.js",
+        "launch.js"
+      ],
+      "css": [
+        "css/power.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://power.dat.com/search/loads"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "js/pako.min.js",
+        "lru.js",
+        "scripts/constants.js",
+        "scripts/utils.js",
+        "scripts/json_loader.js",
+        "scripts/ws_caller_assignments.js",
+        "scripts/ui/power_ui.js",
+        "scripts/table/power_table.js",
+        "scripts/search/power_search.js",
+        "scripts/truck_post_ui/master_truck_post_ui.js",
+        "scripts/truck_post_ui/truck_post_ui.js",
+        "scripts/truck_post_ui/load_search_post_ui.js",
+        "scripts/message_handler.js",
+        "launch.js"
+      ],
+      "css": [
+        "css/power.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://justcall.io/app/macapp*",
+        "https://justcall.io/dialer*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "just_call.js"
+      ],
+      "css": [
+        "css/just_call.css"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "/images/trbs.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "json/location_dict.json",
+        "json/zip5_dict.json",
+        "json/search_data.json",
+        "json/src_dst_zip3_to_miles.json",
+        "json/mkt_id_dict.json"
+      ],
+      "matches": [
+        "https://power.dat.com/*",
+        "https://one.dat.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "next-load": {
+      "suggested_key": {
+        "default": "Ctrl+Right",
+        "mac": "Command+Shift+Right"
+      },
+      "description": "scroll into view the next best load"
+    },
+    "next-load-email": {
+      "suggested_key": {
+        "default": "Ctrl+Left",
+        "mac": "Command+Shift+Left"
+      },
+      "description": "scroll into view the next best email load"
+    },
+    "print-data-dev": {
+      "suggested_key": {
+        "default": "Ctrl+Up",
+        "mac": "Command+Shift+Up"
+      },
+      "description": "print data command"
+    }
+  },
+  "icons": {
+    "48": "/images/trbs.png"
+  }
+}

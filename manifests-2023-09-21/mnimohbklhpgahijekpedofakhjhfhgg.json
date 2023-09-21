@@ -1,0 +1,71 @@
+---
+slug: demoboost
+name: Demoboost
+description: 'Demo experience that sells. Easily create, share and track your demos.'
+version: 2.4.2
+release_date: 'September 6, 2023'
+publisher: Kamil Smuga
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 9
+user_count: 402
+size: 737KiB
+languages:
+  - English
+publisher_site: demoboost.com
+extension_website: 'https://demoboost.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Demoboost",
+  "description": "Demo experience that sells. Easily create, share and track your demos.",
+  "version": "2.4.2",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Demoboost"
+  },
+  "icons": {
+    "16": "logo_16.png",
+    "32": "logo_32.png",
+    "48": "logo_48.png",
+    "128": "logo_128.png"
+  },
+  "permissions": ["activeTab", "storage", "unlimitedStorage"],
+  "optional_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": ["lib/chrome-browser-polyfill.js", "lib/single-file-frames.js", "lib/extension-frames.js"],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-bootstrap.js",
+        "lib/extension-core.js",
+        "lib/single-file.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/content.js"],
+      "all_frames": true,
+      "persistent": false,
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["./static/js/background.js"],
+    "persistent": false
+  },
+  "web_accessible_resources": ["lib/web/hooks/hooks-web.js", "lib/web/hooks/hooks-frames-web.js"]
+}

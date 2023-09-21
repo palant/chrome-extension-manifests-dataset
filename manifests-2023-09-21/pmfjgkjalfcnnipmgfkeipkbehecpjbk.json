@@ -1,0 +1,68 @@
+---
+slug: extension-for-p2p
+name: Extension for P2P
+description: Extension that makes P2P possible
+version: 1.6.11
+release_date: 'November 12, 2022'
+publisher: WAXPEER
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 3.5208333333333335
+rating_count: 48
+user_count: '30,000+'
+size: 450KiB
+languages:
+  - English
+publisher_site: waxpeer.com
+extension_website: 'https://waxpeer.com'
+support_website: 'https://waxpeer.com/faq'
+privacy_policy: 'https://waxpeer.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Extension for P2P",
+  "short_name": "P2P Steam",
+  "description": "Extension that makes P2P possible",
+  "version": "1.6.11",
+  "icons": {
+    "128": "icon128.png"
+  },
+  "background": {
+    "scripts": ["scripts/config.js", "scripts/jquery.min.js", "scripts/background.js", "scripts/extension.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_title": "P2P Launcher",
+    "default_icon": "icon16.png",
+    "default_popup": "popup.html"
+  },
+  "externally_connectable": {
+    "matches": ["*://*.steampowered.com/*", "*://steamcommunity.com/*"]
+  },
+  "permissions": [
+    "notifications",
+    "storage",
+    "background",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.steampowered.com/*",
+    "*://steamcommunity.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://steamcommunity.com/tradeoffer/*"],
+      "run_at": "document_end",
+      "js": ["scripts/jquery.min.js"],
+      "css": ["style/trade.css"]
+    },
+    {
+      "matches": ["*://steamcommunity.com/*/inventory/", "*://steamcommunity.com/*/inventory"],
+      "run_at": "document_start",
+      "js": ["scripts/inventoryInjector.js"]
+    }
+  ],
+  "web_accessible_resources": ["scripts/steam/OverwrittenSteamEconomyv2.js"]
+}
