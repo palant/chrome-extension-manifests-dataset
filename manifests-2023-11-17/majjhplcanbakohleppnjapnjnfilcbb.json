@@ -1,0 +1,80 @@
+---
+slug: enablix-for-chrome
+name: Enablix for Chrome
+description: 'Browse, search and copy link or details of your content on Enablix.'
+version: 2.1.6
+release_date: 'September 27, 2023'
+publisher: Enablix
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 204
+size: 1.93MiB
+languages:
+  - English
+publisher_site: enablix.com
+extension_website: 'https://www.enablix.com'
+support_website: 'https://help.enablix.com'
+privacy_policy: 'https://www.enablix.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Enablix for Chrome",
+  "version": "2.1.6",
+  "description": "Browse, search and copy link or details of your content on Enablix.",
+  "manifest_version": 3,
+  "icons": { 
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png" 
+  },
+  "action": {
+    "default_icon": "assets/icons/icon128.png",
+    "default_title": "Enablix",
+    "default_popup": "chrome.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.enablix.com/",
+    "https://mail.google.com/",
+    "https://inbox.google.com/",
+    "https://web.outreach.io/",
+    "https://*.lightning.force.com/",
+    "https://www.linkedin.com/"
+  ],
+  "content_scripts" : [
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "js": ["content/inboxsdk.js", "content/gmail-processor.js"]
+    },
+    {
+      "matches": ["https://web.outreach.io/*"],
+     "css": ["content/outreach.scss"],
+      "js": ["content/outreach-processor.js"]
+    },
+    {
+      "matches": ["https://*.lightning.force.com/*"],
+      "css": ["content/highVelocity-salesforce.scss"],
+      "js": ["content/highVelocity-salesforce-processor.js"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "css": ["content/linkedIn.scss"],
+      "js": ["content/linkedIn-processor.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.enablix.com/*"
+    ]
+  }
+}

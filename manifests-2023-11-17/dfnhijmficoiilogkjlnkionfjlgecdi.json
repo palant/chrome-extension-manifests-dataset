@@ -1,0 +1,98 @@
+---
+slug: online-pdf-editor-pdf2goc
+name: Online PDF Editor (pdf2go.com)
+description: Edit and convert PDF files.
+version: 7.5.1
+release_date: 'June 7, 2023'
+publisher: QaamGo
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.448863636363637
+rating_count: 176
+user_count: '400,000+'
+size: 4.0MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Tiếng Việt
+  - español
+  - italiano
+  - português (Portugal)
+  - русский
+  - हिन्दी
+  - ‫العربية
+  - 中文 (简体)
+publisher_site: pdf2go.com
+extension_website: 'https://www.pdf2go.com'
+support_website: 'https://www.pdf2go.com/help'
+privacy_policy: 'https://www.pdf2go.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_pdf2go_name__",
+    "short_name": "PDF2Go",
+    "description": "__MSG_extension_pdf2go_description__",
+    "version": "7.5.1",
+    "author": "https://pdf2go.com",
+    "action": {
+        "default_icon": "icons/icon_64.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": ["translate_content.js", "gmail_content.js"],
+            "css": ["style.css"]
+        },
+        {
+            "matches": ["https://www.google.com/*","https://www.bing.com/*"],
+            "js": ["translate_content.js"],
+            "css": ["css/google_style.css", "style.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*", "file://*/*"],
+            "exclude_matches": ["https://www.google.com/*", "https://www.bing.com/*", "https://mail.google.com/*"],
+            "js": ["translate_content.js", "pdf_content.js", "pdf_injected.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "default_locale": "en",
+    "externally_connectable": {
+        "matches": ["*://*.pdf2go.com/*", "*://*.pdf2go.test/*"]
+    },
+    "host_permissions": ["http://*/*", "https://*/*", "file://*/*"],
+    "icons": {
+        "16": "icons/icon_16.png",
+        "32": "icons/icon_32.png",
+        "64": "icons/icon_64.png",
+        "128": "icons/icon_128.png"
+    },
+    "manifest_version": 3,
+    "minimum_chrome_version": "93",
+    "options_page": "settings.html",
+    "permissions": ["contextMenus", "storage", "scripting"],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "pdf_injected.js",
+                "gmail_injected_lib.js",
+                "gmail_injected.js",
+                "assets/*",
+                "css/*",
+                "img/*",
+                "webfonts/*",
+                "_locales/*",
+                "iframe.html"
+            ],
+            "matches": ["http://*/*", "https://*/*", "file://*/*"]
+        }
+    ]
+}

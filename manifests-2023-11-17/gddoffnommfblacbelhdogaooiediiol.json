@@ -1,0 +1,100 @@
+---
+slug: okkiio-外贸客户开发必备工具
+name: OKKI.io 外贸客户开发必备工具
+description: OKKI.io 轻松好用的外贸获客小插件
+version: 0.0.8
+release_date: 'November 14, 2023'
+publisher: 小满科技技术团队
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.666666666666667
+rating_count: 12
+user_count: 622
+size: 3.37MiB
+languages:
+  - 中文 (简体)
+publisher_site: okki-io.xiaoman.cn
+extension_website: 'https://okki-io.xiaoman.cn'
+privacy_policy: 'https://www.xiaoman.cn/deep-know?activeIndex=2'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "OKKI.io 外贸客户开发必备工具",
+  "version": "0.0.8",
+  "description": "OKKI.io 轻松好用的外贸获客小插件",
+  "action": {
+    "default_icon": "./assets/icon_not_login.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon@128.png",
+    "48": "./assets/icon@128.png",
+    "128": "./assets/icon@128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://okki-io.dev.xiaoman.cn/*",
+        "*://okki-io.xiaoman.cn/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ],
+      "exclude_matches": [
+        "*://*.xiaoman.cn/*",
+        "*://*.xiaoman.site/*",
+        "*://*.xiaoman.co/*",
+        "*://*.xiaoman.cc/*",
+        "*://web.whatsapp.com/*",
+        "*://crm.xiaoman.cn/*"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.xiaoman.cn/*"
+      ],
+      "js": [
+        "dist/contentScripts/observe.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*",
+        "dist/options/*",
+        "http://localhost:3303/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

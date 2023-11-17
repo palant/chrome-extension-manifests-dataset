@@ -1,0 +1,81 @@
+---
+slug: thumbnailtestcom-analytic
+name: ThumbnailTest.com Analytics Processor
+description: >-
+  Automatically grab analytics from youtube studio to track your A/B testing
+  results. For use with ThumbnailTest.com only.
+version: 1.4.4
+release_date: 'November 9, 2023'
+publisher: RoxCodes
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 874
+size: 120KiB
+languages:
+  - English
+extension_website: 'https://thumbnailtest.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "ThumbnailTest.com Analytics Processor",
+  "description": "Automatically grab analytics from youtube studio to track your A/B testing results. For use with ThumbnailTest.com only.",
+  "version": "1.4.4",
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+      {
+          "matches": [
+            "*://app.thumbnailtest.com/*",
+            "*://youtube.com/*",
+            "*://studio.youtube.com/*"
+          ],
+          "exclude_matches": [
+            "*://studio.youtube.com/video/*/editor"
+          ],
+          "js": ["js/content_script.js", "js/inject.js"],
+          "run_at": "document_start",
+          "all_frames": true
+      }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["js/sendConfig.js", "js/sweet.js"],
+      "matches": [
+        "*://app.thumbnailtest.com/*",
+        "*://youtube.com/*",
+        "*://studio.youtube.com/*"
+      ]
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://app.thumbnailtest.com/*",
+    "*://youtube.com/*",
+    "*://studio.youtube.com/*"
+  ]
+}

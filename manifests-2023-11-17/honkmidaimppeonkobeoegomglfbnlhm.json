@@ -1,0 +1,132 @@
+---
+slug: dsautopilot-addresses-and
+name: DSAutopilot addresses and orders copier
+description: Getmoretracks Extension + dsautopilot.com app
+version: 3.1.0
+release_date: 'October 12, 2022'
+publisher: dev.namatech
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: '3,000+'
+size: 222KiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DSAutopilot addresses and orders copier",
+  "version": "3.1.0",
+  "description": "Getmoretracks Extension + dsautopilot.com app",
+  "action": {
+    "default_title": "dsautopilot.com app",
+    "default_icon": "img/icon/logo/icon128.png"
+  },
+  "options_ui": {
+    "page": "js/frontend/views/popup/index.html",
+    "open_in_tab": false
+  },
+  "host_permissions": [
+    "https://app.ecomcircles.com/api/*",
+    "https://dropkit.com/*",
+    "https://sellercentral.amazon.com/*",
+    "https://www.amazon.ca/*",
+    "https://www.amazon.co.uk/*",
+    "https://www.amazon.com/*",
+    "https://www.walmart.com/checkout*"
+  ],
+  "permissions": [
+    "scripting",
+    "storage",
+    "webRequest",
+    "clipboardRead"
+  ],
+  "icons": {
+    "16": "img/icon/logo/icon16.png",
+    "32": "img/icon/logo/icon32.png",
+    "48": "img/icon/logo/icon48.png",
+    "128": "img/icon/logo/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/backend/index.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sellercentral.amazon.com/orders-v3*"
+      ],
+      "js": [
+        "js/lib/jquery-3.5.1.min.js",
+        "js/lib/notify.js",
+        "js/lib/moment.js",
+        "js/lib/moment-timezone.js",
+        "js/frontend/service/translations.js",
+        "js/frontend/service/eventsInjector.js",
+        "js/frontend/service/htmlComponents.js",
+        "js/frontend/service/clipboard.js",
+        "js/frontend/service/getmoretracksApi.js",
+        "js/frontend/views/seller/amazon/constants.js",
+        "js/frontend/views/seller/amazon/api.js",
+        "js/frontend/views/seller/amazon/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://dropkit.com/orders*"
+      ],
+      "js": [
+        "js/lib/jquery-3.5.1.min.js",
+        "js/frontend/service/dsAutopilotApi.js",
+        "js/frontend/views/competitors/dropkit/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://app.ecomcircles.com/source_orders*"
+      ],
+      "js": [
+        "js/lib/jquery-3.5.1.min.js",
+        "js/frontend/service/dsAutopilotApi.js",
+        "js/frontend/views/competitors/ecomcircles/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.walmart.com/checkout*"
+      ],
+      "js": [
+        "js/lib/jquery-3.5.1.min.js",
+        "js/frontend/service/eventsInjector.js",
+        "js/frontend/service/clipboard.js",
+        "js/frontend/service/clientAddress.js",
+        "js/frontend/service/htmlComponents.js",
+        "js/frontend/service/utils.js",
+        "js/frontend/views/buyer/walmart/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.amazon.com/*",
+        "https://www.amazon.ca/*"
+      ],
+      "js": [
+        "js/frontend/service/eventsInjector.js",
+        "js/frontend/service/clipboard.js",
+        "js/frontend/service/clientAddress.js",
+        "js/frontend/service/htmlComponents.js",
+        "js/frontend/service/utils.js",
+        "js/frontend/views/buyer/amazon/index.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

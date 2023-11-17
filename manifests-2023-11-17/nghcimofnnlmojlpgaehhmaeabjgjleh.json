@@ -1,0 +1,90 @@
+---
+slug: thumbly
+name: Thumbly
+description: >-
+  Generate AI-suggested video thumbnails directly from YouTube Studio: Pick
+  video frames and edit for quick thumbnail creation.
+version: 0.1.3
+release_date: 'August 29, 2023'
+publisher: team
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 379
+size: 873KiB
+languages:
+  - English
+publisher_site: thumb.ly
+extension_website: 'https://thumb.ly/'
+support_website: 'https://thumb.ly/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+ 
+  "manifest_version": 3,
+  "name": "Thumbly",
+  "version": "0.1.3",
+  "description": "Generate AI-suggested video thumbnails directly from YouTube Studio: Pick video frames and edit for quick thumbnail creation.",
+  "permissions": ["cookies","tabs", "notifications", "activeTab"],
+  "host_permissions": ["https://*.youtube.com/*","https://thumbly.co/*","https://app.thumb.ly/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+    
+  },
+  
+  "content_scripts": [
+    {
+      "matches": [
+          "https://studio.youtube.com/*",
+          "https://studio.youtube.com/video/*/edit",
+          "https://studio.youtube.com/channel/*/videos/*"
+      ],
+      "css": [
+        "assets/css/vendor/toastr.min.css",
+        "assets/css/popup.css"
+        
+      ],
+      "js": [
+        "assets/js/vendor/jquery.min.js",
+        "assets/js/vendor/toastr.min.js",
+        "content_script.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*"
+      
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "icons": {
+
+    "16": "assets/img/appicon-1@2x.png",
+    "32": "assets/img/appicon-3@2x.png",
+    "48": "assets/img/logo.png"
+ },
+  
+  "action": {
+    "default_icon": {
+      "16": "assets/img/appicon-1@2x.png",
+      "32": "assets/img/appicon-3@2x.png",
+      "48": "assets/img/logo.png"
+    },
+    "default_title": "Thumbly",
+    "default_popup": "popup.html"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self' 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+  
+
+}

@@ -1,0 +1,109 @@
+---
+slug: pro-trader-lite
+name: Pro Trader Lite
+description: >-
+  Perform health checks on your eBay listings, create new listings smoothly &
+  review, fix & relist or delist stale listings.
+version: 0.1.38
+release_date: 'November 14, 2023'
+publisher: Optiseller
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3
+rating_count: 2
+user_count: '1,000+'
+size: 1003KiB
+languages:
+  - English (UK)
+extension_website: 'https://protraderlite.optiseller.com/'
+support_website: 'https://help.optiseller.com'
+privacy_policy: 'https://www.optiseller.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Pro Trader Lite",
+  "description": "Perform health checks on your eBay listings, create new listings smoothly & review, fix & relist or delist stale listings.",
+  "version": "0.1.38",
+  "icons": {
+    "16": "ptlicon.png",
+    "48": "ptlicon.png",
+    "128": "ptlicon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ptlicon.png",
+        "graphic-price-low.png",
+        "graphic-price-medium.png",
+        "graphic-price-high.png",
+        "protrader-lite-logo.png"
+      ],
+      "matches": [
+        "*://*.ebay.co.uk/*",
+        "*://*.ebay.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ebay.co.uk/sh/*"
+      ],
+      "js": [
+        "jquery.min.js",
+        "contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.ebay.co.uk/sh/lst/active",
+        "*://*.ebay.co.uk/sh/lst/active?*",
+        "*://*.ebay.co.uk/sh/lst/",
+        "*://*.ebay.co.uk/sh/lst"
+      ],
+      "js": [
+        "jquery.min.js",
+        "manageListings.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.ebay.co.uk/lstng?*mode=AddItem*",
+        "*://*.ebay.co.uk/lstng?*mode=SellLikeItem*",
+        "*://*.ebay.co.uk/lstng?*mode=ReviseItem*",
+        "*://*.ebay.co.uk/lstng?*mode=SellSimilarItem*",
+        "*://*.ebay.co.uk/lstng?*mode=RelistItem*"
+      ],
+      "js": [
+        "jquery.min.js",
+        "createitem.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://bulksell.ebay.co.uk/ws/eBayISAPI.dll?SingleList*"
+      ],
+      "js": [
+        "jquery.min.js",
+        "createitemclassic.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://app.optiseller.com/Home/IndexV2*"
+      ],
+      "js": [
+        "torpedoHomepage.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ]
+}

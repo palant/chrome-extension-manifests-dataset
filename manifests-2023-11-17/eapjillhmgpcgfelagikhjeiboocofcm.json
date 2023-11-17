@@ -1,0 +1,120 @@
+---
+slug: petapator
+name: Petapator
+description: Increase your patent efficiency
+version: '11.3'
+release_date: 'April 8, 2023'
+publisher: Petapator
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.693181818181818
+rating_count: 88
+user_count: '2,000+'
+size: 412KiB
+languages:
+  - English
+publisher_site: petapator.com
+extension_website: 'https://www.petapator.com/'
+support_website: 'https://groups.google.com/forum/#!forum/user--petapator-aspator'
+privacy_policy: 'https://www.petapator.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Petapator",
+  "version": "11.3",
+  "manifest_version": 3,
+  "description": "Increase your patent efficiency",
+  "action": {},
+  "background": {
+    "service_worker": "/manifest/background/main.js"
+  },
+  "permissions": [
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://ppubs.uspto.gov/",
+    "https://worldwide.espacenet.com/"
+  ],
+  "icons": {
+    "16": "/blobs/icons/petakata_icon_16.png",
+    "128": "/blobs/icons/petakata_icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://worldwide.espacenet.com/*",
+        "https://ppubs.uspto.gov/pubwebapp/*",
+        "https://patents.google.com/*",
+        "https://patentscope.wipo.int/search/en/result.jsf*"
+      ],
+      "css": [
+        "/library/tostify/index.css"
+      ],
+      "js": [
+        "/library/tostify/index.js",
+        "/library/papaparse/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://worldwide.espacenet.com/*"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/manifest/content_scripts/espacenet/download_csv.js",
+        "/manifest/content_scripts/espacenet/searchRequestBody.js",
+        "/manifest/content_scripts/espacenet/insert_image.js"
+      ],
+      "css": [
+        "/manifest/content_scripts/espacenet/insert_image.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://ppubs.uspto.gov/pubwebapp/*"
+      ],
+      "css": [
+        "/manifest/content_scripts/uspto/insert_image.css"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+        "/manifest/content_scripts/uspto/download_csv.js",
+        "/manifest/content_scripts/uspto/insert_image.js",
+        "/manifest/content_scripts/uspto/searchRequestBody.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://patents.google.com/*"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/manifest/content_scripts/google/search_url.js",
+        "/manifest/content_scripts/google/download_csv.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://patentscope.wipo.int/search/en/result.jsf*"
+      ],
+      "css": [
+        "/manifest/content_scripts/wipo/insert_image.css"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/manifest/content_scripts/wipo/download_csv.js",
+        "/manifest/content_scripts/wipo/insert_image.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://petapator.com/user/"
+      ],
+      "js": [
+        "/manifest/content_scripts/petapator/user.js"
+      ]
+    }
+  ]
+}

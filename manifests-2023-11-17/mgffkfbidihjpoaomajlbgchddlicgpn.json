@@ -1,0 +1,104 @@
+---
+slug: pali-wallet
+name: Pali Wallet
+description: A Non-Custodial Crypto Wallet
+version: 2.0.10
+release_date: 'November 14, 2023'
+publisher: Pollum Labs
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.84
+rating_count: 50
+user_count: '10,000+'
+size: 43.1MiB
+languages:
+  - English
+extension_website: 'https://paliwallet.com/'
+support_website: 'https://discord.gg/Fs5fWGGu'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Pali Wallet",
+  "version": "2.0.10",
+  "icons": {
+    "16": "assets/icons/favicon-16.png",
+    "32": "assets/icons/favicon-32.png",
+    "48": "assets/icons/favicon-48.png",
+    "128": "assets/icons/favicon-128.png"
+  },
+  "description": "A Non-Custodial Crypto Wallet",
+  "short_name": "pali",
+  "permissions": [
+    "http://*/*",
+    "https://*/*",
+    "*://connect.trezor.io/9/*",
+    "tabs",
+    "storage",
+    "activeTab",
+    "*://*.eth/",
+    "clipboardWrite",
+    "unlimitedStorage",
+    "http://localhost:8545/"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "author": "pollum labs",
+  "minimum_chrome_version": "49",
+  "browser_action": {
+    "default_popup": "app.html",
+    "default_icon": {
+      "16": "assets/icons/favicon-16.png",
+      "32": "assets/icons/favicon-32.png",
+      "48": "assets/icons/favicon-48.png",
+      "128": "assets/icons/favicon-128.png"
+    },
+    "default_title": "Pali Wallet",
+    "chrome_style": false
+  },
+  "background": {
+    "scripts": [
+      "js/webextension.bundle.js",
+      "js/background.bundle.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "js/webextension.bundle.js",
+        "js/contentScript.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/9/popup.html",
+        "https://localhost:8088/*"
+      ],
+      "js": [
+        "js/webextension.bundle.js",
+        "js/trezorScript.bundle.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "js/inpage.bundle.js",
+    "js/handleWindowProperties.bundle.js",
+    "js/pali.bundle.js"
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P"
+      }
+    }
+  }
+}

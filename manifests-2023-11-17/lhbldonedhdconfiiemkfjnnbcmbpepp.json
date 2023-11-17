@@ -1,0 +1,61 @@
+---
+slug: redraft
+name: Redraft
+description: >-
+  Spend 10x less time writing emails - Redraft is a GPT writing assistant that
+  drafts emails in your tone of voice
+version: 0.1.5
+release_date: 'May 4, 2023'
+publisher: Redraft
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 74
+size: 149KiB
+languages:
+  - English (United States)
+extension_website: 'https://redraft.me'
+privacy_policy: 'https://redraft.me/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Redraft",
+  "short_name": "redraft",
+  "version": "0.1.5",
+  "description": "Spend 10x less time writing emails - Redraft is a GPT writing assistant that drafts emails in your tone of voice",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["scripts/injectGmail.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://localhost/*", "https://redraft.me/*"],
+      "js": ["scripts/auth.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/gmail.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

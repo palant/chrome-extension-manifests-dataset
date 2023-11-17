@@ -1,0 +1,82 @@
+---
+slug: promptdrive
+name: PromptDrive
+description: >-
+  Save, share and organize prompts to streamline workflow for ChatGPT, Bard AI,
+  Mid-journey and other prompt driven AI tools.
+version: 1.0.9
+release_date: 'July 10, 2023'
+publisher: PromptDrive.ai
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 9
+user_count: 806
+size: 217KiB
+languages:
+  - English
+publisher_site: promptdrive.ai
+extension_website: 'https://promptdrive.ai'
+privacy_policy: 'https://app.promptdrive.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PromptDrive",
+  "version": "1.0.9",
+  "description": "Save, share and organize prompts to streamline workflow for ChatGPT, Bard AI, Mid-journey and other prompt driven AI tools.",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "omnibox": {
+    "keyword": "pd"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "contextMenus",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://bard.google.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://bard.google.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ],
+    "matches": [
+      "*://*/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

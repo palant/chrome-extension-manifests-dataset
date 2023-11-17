@@ -1,0 +1,70 @@
+---
+slug: cravveai
+name: Cravve.ai
+description: Product discovery
+version: '3.2'
+release_date: 'October 7, 2023'
+publisher: Edekee Inc.
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 2
+user_count: 71
+size: 111KiB
+languages:
+  - English
+extension_website: 'https://www.craave.ai'
+support_website: 'https://discord.gg/4JVa8GSXgy'
+privacy_policy: 'https://www.edekee.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Cravve.ai",
+  "version": "3.2",
+  "description": "Product discovery",
+  "permissions": ["tabs",  "identity","identity.email", "storage"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "icons": {
+    "16": "assets/extensionLogo16.png",
+    "48": "assets/extensionLogo48.png",
+    "128": "assets/extensionLogo128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmXaOpPIAbzY82ObiyJVoaAhUFVwvQGlIgtl8FQVsagYC9+LvGzDMktL6pT5q0mfRLhND8mWA0c1KeMvIE4lWXXWHOmnVegPQLPehoHqA5Dqrvf4etw2rSWIyPA+T2dJ5LeWiiOCbitHuLqkm20yMMdY++69iqpWFul9NJFHaphKUsnRBtHmTJ0Ei/Ww09o5YJ99h469zGdVoiSCUUWhw5wBf7cXuTUh6AjrDE3DJQe07EsvvHpJz4iJvLJO7kAuNOEjKiJCOgwcMXpc6/pSLHUshpb0fecU52oxIwyLd47Z0Ie3PC9ZZ5956/PKYQ4av4TPNqvdkHMI/2TVWwTWOhwIDAQAB",
+
+  "action": {
+    "default_title": "cravve",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": [
+        "content_scripts/recognition.js",
+        "content_scripts/recommendation.js",
+        "content_scripts/utils.js",
+        "content_scripts/wishlist.js"
+      ],
+      "css": ["style.css"]
+    }
+  ],
+  "oauth2": {
+    "client_id": "1033871993020-5br9i9sk2d3g6q2l04elae6lj9rh184p.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/userinfo.email", "https://www.googleapis.com/auth/userinfo.profile"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": [
+        "https://d3t7szus8c85is.cloudfront.net/*",
+        "https://firebasestorage.googleapis.com/*"
+      ]
+    }
+  ]
+}

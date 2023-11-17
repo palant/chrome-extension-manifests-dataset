@@ -1,0 +1,80 @@
+---
+slug: volta
+name: Volta
+description: Browser extension to bring Volta experience to GitHub.
+version: 0.0.5
+release_date: 'April 13, 2023'
+publisher: NuxtLabs
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 136
+size: 71.94KiB
+languages:
+  - English
+extension_website: 'https://volta.net'
+support_website: 'https://volta.net/volta-net/feedback'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Volta",
+  "version": "0.0.5",
+  "description": "Browser extension to bring Volta experience to GitHub.",
+  "action": {
+    "default_icon": {
+      "16": "./assets/icon-16.png",
+      "32": "./assets/icon-32.png",
+      "48": "./assets/icon-48.png",
+      "128": "./assets/icon-128.png"
+    },
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "32": "./assets/icon-32.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://volta.net/*",
+    "https://api.volta.net/*"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://github.com/*",
+        "https://volta.net/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/icon.svg",
+        "assets/mdi/*.svg",
+        "assets/octicon/*.svg"
+      ],
+      "matches": [
+        "https://github.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

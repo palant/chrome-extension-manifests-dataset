@@ -1,0 +1,70 @@
+---
+slug: apexsync
+name: ApexSync
+description: Automatically Sync your apexsandbox.io code with Github
+version: 0.1.1
+release_date: 'September 15, 2022'
+publisher: Ankush Sarsewar
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 2
+user_count: 213
+size: 123KiB
+languages:
+  - English
+extension_website: 'https://github.com/Sarsewar/ApexSync'
+support_website: 'https://github.com/Sarsewar/ApexSync/issues'
+privacy_policy: 'https://www.privacypolicies.com/live/5f66a4d5-f361-481b-9b13-941da8652bc8'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ApexSync",
+  "description": "Automatically Sync your apexsandbox.io code with Github",
+  "homepage_url": "https://github.com/Sarsewar/ApexSync",
+  "version": "0.1.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "./assets/scripts/background.js"
+  },
+  "action": {
+    "default_icon": "assets/thumbnail.png",
+    "default_popup": "./popup.html"
+  },
+  "icons": {
+    "16": "assets/thumbnail.png",
+    "48": "assets/thumbnail.png",
+    "128": "assets/thumbnail.png"
+  },
+  "options_page": "./options.html",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://api.github.com/*",
+    "https://www.apexsandbox.io/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.apexsandbox.io/*",
+        "https://github.com/*"
+      ],
+      "js": [
+        "./assets/scripts/oauth2.js",
+        "./assets/scripts/authorize.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

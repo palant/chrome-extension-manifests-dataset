@@ -1,0 +1,107 @@
+---
+slug: mturk-pro
+name: MTurk Pro
+description: >-
+  A next-gen workflow app for the Amazon Mechanical Turk (MTurk) platform. Boost
+  your earnings, automate the boring stuff!
+version: 1.3.1
+release_date: 'September 30, 2022'
+publisher: MTurk Pro
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.25
+rating_count: 4
+user_count: 583
+size: 2.73MiB
+languages:
+  - English
+publisher_site: mturkpro.com
+privacy_policy: 'https://mturkpro.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "MTurk Pro",
+  "version": "1.3.1",
+  "description": "A next-gen workflow app for the Amazon Mechanical Turk (MTurk) platform. Boost your earnings, automate the boring stuff!",
+  "browser_action": {
+    "default_icon": "icons/logo_48.png",
+    "default_title": "MTurk Pro"
+  },
+  "icons": {
+    "48": "icons/logo_48.png",
+    "64": "icons/logo_64.png",
+    "96": "icons/logo_96.png",
+    "128": "icons/logo_128.png",
+    "144": "icons/logo_144.png",
+    "256": "icons/logo_256.png",
+    "512": "icons/logo_512.png"
+  },
+  "background": {
+    "scripts": [
+      "Background.js"
+    ]
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "cookies",
+    "notifications",
+    "webRequest",
+    "webRequestBlocking",
+    "declarativeNetRequest",
+    "tabs",
+    "*://*.mturk.com/*",
+    "*://*.turkerview.com/*",
+    "*://*.turkopticon.info/*",
+    "*://*.turkopticon.ucsd.edu/*",
+    "https://*.amazon.com/ap/signin*",
+    "https://*.mturkpro.com/*"
+  ],
+  "web_accessible_resources": [
+    "Scripts/frame.css",
+    "Scripts/hideID.css"
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "js": [
+        "Scripts/MTurkPro.js"
+      ],
+      "matches": [
+        "https://worker.mturk.com/*",
+        "https://www.amazon.com/ap/signin*"
+      ],
+      "exclude_matches": [
+        "*://*.mturk.com/direct_deposit*",
+        "*://*.mturk.com/payment_schedule*"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "Scripts/BatchFilter.js"
+      ],
+      "matches": [
+        "https://worker.mturk.com/filter?pp_filter*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "Scripts/BatchFrame.js"
+      ],
+      "css": [
+        "Scripts/pandapower.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ]
+}

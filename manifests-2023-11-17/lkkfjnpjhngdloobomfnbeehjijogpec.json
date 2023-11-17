@@ -1,0 +1,76 @@
+---
+slug: getbot
+name: GetBot
+description: Your personal AI chatbot to accompany you on your web journey
+version: 1.2.2
+release_date: 'October 25, 2023'
+publisher: GetBot
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 18
+user_count: 61
+size: 854KiB
+languages:
+  - English (United States)
+extension_website: 'https://getbot.ai'
+privacy_policy: 'https://getbot.ai/privacy&policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2.2",
+  "name": "GetBot",
+  "description": "Your personal AI chatbot to accompany you on your web journey",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "assets/logo.png"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background/index.js"
+  },
+  "commands": {
+    "open-chat": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      },
+      "description": "Open a chat window on the current page or navigate to GetBot domain by pressing above commands"
+    }
+  },
+  "content_scripts": [
+    {
+      "js": ["content/injector.js", "content/quickActions/index.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.getbot.ai/*", "*://getbot.ai/*"]
+    },
+    {
+      "js": ["content/proxy.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content/mail-reader/index.js"]
+    }
+  ],
+  "permissions": ["activeTab", "storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["content/inject-extension-id.js"],
+      "matches": ["*://*.getbot.ai/*", "*://getbot.ai/*"]
+    }
+  ]
+}

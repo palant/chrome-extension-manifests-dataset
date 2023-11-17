@@ -1,0 +1,109 @@
+---
+slug: blockspay-secure-multiple
+name: 'BlocksPay: Secure Multiple Chains Wallet'
+description: >-
+  BlocksPay is a wallet that gives you easy access to all things in crypto and
+  Web3. Switch accounts and chains with 1 click.
+version: 1.17.0
+release_date: 'May 1, 2023'
+publisher: BlocksScan
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.956521739130435
+rating_count: 23
+user_count: 101
+size: 8.96MiB
+languages:
+  - English
+publisher_site: blocksscan.io
+extension_website: >-
+  https://chrome.google.com/webstore/detail/blockspay-secure-multiple/pogabilnghhbafaheaepaaeopjpleimd
+support_website: 'https://www.blocksscan.io'
+privacy_policy: 'https://blocksscan.io/privacy-policy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "https://www.blocksscan.io",
+  "homepage_url": "https://www.blocksscan.io",
+  "version": "1.17.0",
+  "name": "BlocksPay: Secure Multiple Chains Wallet",
+  "short_name": "BlocksPay",
+  "permissions": [
+    "unlimitedStorage",
+    "tabs",
+    "clipboardRead"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E",
+        "chromeos": "Alt+Shift+E",
+        "linux": "Alt+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "BlocksPay is a wallet that gives you easy access to all things in crypto and Web3. Switch accounts and chains with 1 click.",
+  "icons": {
+    "16": "assets/img/icons/icon16.png",
+    "32": "assets/img/icons/icon32.png",
+    "64": "assets/img/icons/icon64.png",
+    "192": "assets/img/icons/icon192.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/img/icons/icon16.png",
+      "32": "assets/img/icons/icon32.png",
+      "64": "assets/img/icons/icon64.png",
+      "192": "assets/img/icons/icon192.png"
+    },
+    "default_title": "BlocksPay",
+    "default_popup": "action.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/inject.js",
+        "scripts/*.js.map"
+      ],
+      "use_dynamic_url": false,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "103",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

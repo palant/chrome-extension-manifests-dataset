@@ -1,0 +1,78 @@
+---
+slug: knowledgenetai-extension
+name: KnowledgeNet.ai Extension
+description: >-
+  Automatically surface knowledge while browsing the web, including any emails,
+  attachments and internal communications
+version: 0.20.0
+release_date: 'October 5, 2023'
+publisher: KnowledgeNet.ai
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 2
+user_count: 807
+size: 855KiB
+languages:
+  - English
+extension_website: 'https://knowledgenet.ai'
+support_website: 'http://help.knowledgenet.ai'
+privacy_policy: 'https://knowledgenet.ai/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "KnowledgeNet.ai Extension",
+  "description": "Automatically surface knowledge while browsing the web, including any emails, attachments and internal communications",
+  "version": "0.20.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Click to show an alert",
+    "default_icon": "icon48.png"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["entry.js", "icon128.png", "icon16.png", "icon48.png", "template.html", "main.css", "crm-domains.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": ["gmail.js"],
+      "css": ["gmail.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": ["main.css"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/",
+    "https://mail.google.com/",
+    "https://inbox.google.com/"
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "contextMenus",
+    "cookies",
+    "storage"
+  ]
+}

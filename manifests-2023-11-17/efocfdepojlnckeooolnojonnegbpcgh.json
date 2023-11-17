@@ -1,0 +1,120 @@
+---
+slug: 헤이셀러
+name: 헤이셀러
+description: 헤이셀러 파싱 프로그램
+version: 1.4.0
+release_date: 'November 17, 2023'
+publisher: RapidGlobal
+category: Shopping
+category_slug: ext/12-shopping
+rating: 1
+rating_count: 3
+user_count: '5,000+'
+size: 55.47KiB
+languages:
+  - 한국어
+extension_website: 'https://heyseller.kr'
+privacy_policy: >-
+  https://docs.google.com/document/d/1NMrkxNi2E4kCG7wY48IPNkkdD0EBzQ8GrnYEvRxvC6Q/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "헤이셀러",
+  "description": "헤이셀러 파싱 프로그램",
+  "version": "1.4.0",
+  "icons": {
+    "16": "/assets/imgs/icon16.png",
+    "32": "/assets/imgs/icon32.png",
+    "48": "/assets/imgs/icon48.png",
+    "128": "/assets/imgs/icon128.png"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": [
+        "/lib/util.js",
+        "/lib/enums/message_type.enum.js",
+        "/popup/popup.js"
+      ],
+      "css": ["/crawl/css/common.css", "/assets/css/popup.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://world.taobao.com/*"],
+      "js": ["/crawl/taobao_list/index.js", "/crawl/common.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://item.taobao.com/*"],
+      "js": ["/crawl/taobao/index.js", "/crawl/common.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://s.taobao.com/*"],
+      "js": ["/crawl/s.taobao/index.js", "/crawl/common.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.tmall.com/*"],
+      "js": ["/crawl/tmall.com/index.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://list.tmall.com/*"],
+      "js": ["/crawl/list.tmall.com/index.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.detail.tmall.com/item.htm?*"],
+      "js": ["/crawl/tmall/item.htm.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.detail.tmall.com/item.htm?*"],
+      "js": ["/crawl/common.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://item.tmall.com/*",
+        "*://*.detail.tmall.com/item_o.htm?*"
+      ],
+      "js": ["/crawl/tmall/index.js", "/crawl/common.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.tmall.com/*", "*://*.taobao.com/*"],
+      "js": ["/crawl/seller_list/index.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://www.heyseller.kr/*", "*://heyseller.kr/*"],
+      "js": ["/heyseller/index.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["storage", "tabs"],
+  "background": {
+    "service_worker": "my-background-script.js"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["https://*.taobao.com/*", "https://*.tmall.com/*"],
+      "resources": [
+        "/assets/imgs/logo.png",
+        "/assets/imgs/completeImage.png",
+        "/assets/imgs/profile.png",
+        "/assets/imgs/item_button.png",
+        "/assets/imgs/item_button_active.png",
+        "/lib/enums/message_type.enum.js",
+        "/crawl/taobao/inject.js",
+        "/crawl/tmall/inject.js",
+        "/crawl/tmall/item.htm_inject.js"
+      ]
+    }
+  ]
+}

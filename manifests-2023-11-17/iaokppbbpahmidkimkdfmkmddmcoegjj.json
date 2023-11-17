@@ -1,0 +1,71 @@
+---
+slug: twitch-adblocker
+name: Twitch adblocker
+description: 'Eliminate interruptions, enjoy Twitch streams ad-free'
+version: 1.0.1
+release_date: 'October 1, 2023'
+publisher: Odd Extensions
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.6
+rating_count: 10
+user_count: 153
+size: 1.02MiB
+languages:
+  - English
+extension_website: 'https://www.twitchadblocker.co/'
+support_website: 'https://www.twitchadblocker.co/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Twitch adblocker",
+  "description": "Eliminate interruptions, enjoy Twitch streams ad-free",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "twitch16x16.png",
+    "48": "twitch48x48.png",
+    "128": "twitch128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Twitch adblocker",
+    "default_icon": "twitch16x16.png"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": ["declarativeNetRequest","storage"],
+
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["https://www.twitch.tv/*"],
+      "js": ["adRemove.js", "removeTwitchAds.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["adRemove.js", "removeTwitchAds.js"],
+      "matches": ["https://www.twitch.tv/*"],
+      "run_at": "document_start"
+    }
+  ]
+}

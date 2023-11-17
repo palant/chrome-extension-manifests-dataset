@@ -1,0 +1,69 @@
+---
+slug: airbnb-review-summarizer
+name: Airbnb Review Summarizer
+description: Summarize Airbnb reviews to be useful
+version: 0.0.3
+release_date: 'June 6, 2023'
+publisher: radicalblind
+category: Fun
+category_slug: ext/14-fun
+rating: 0
+rating_count: 0
+user_count: 36
+size: 93.95KiB
+languages:
+  - English
+extension_website: 'https://airbnbreviewsummarizer.vercel.app/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Airbnb Review Summarizer",
+  "version": "0.0.3",
+  "description": "Summarize Airbnb reviews to be useful",
+  "action": {
+    "default_icon": "./assets/airbnb_openai.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/airbnb_openai.png",
+    "48": "./assets/airbnb_openai.png",
+    "128": "./assets/airbnb_openai.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://airbnb.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://airbnb.com/*/reviews*",
+        "https://*.airbnb.com/*/reviews*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

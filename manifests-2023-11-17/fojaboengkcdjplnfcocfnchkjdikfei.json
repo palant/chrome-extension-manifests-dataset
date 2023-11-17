@@ -1,0 +1,66 @@
+---
+slug: slack-deleter
+name: Slack Deleter
+description: elegantly delete slack messages
+version: 1.14.2
+release_date: 'December 20, 2022'
+publisher: hhhust
+category: Productivity
+category_slug: ext/7-productivity
+rating: 2.1320754716981134
+rating_count: 53
+user_count: '5,000+'
+size: 901KiB
+languages:
+  - English (United States)
+publisher_site: slackext.com
+extension_website: 'https://slackext.com/deleter'
+support_website: 'https://slackext.com/deleter'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.14.2",
+  "name": "Slack Deleter",
+  "manifest_version": 3,
+  "description": "elegantly delete slack messages",
+  "action": {
+    "default_title": "Slack Deleter",
+    "default_popup": "deleter-popup.html"
+  },
+  "web_accessible_resources": [{
+    "resources": ["js/inject.bundle.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "background": {
+    "service_worker": "js/background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "persistent": true,
+      "matches": [
+        "https://*.slack.com/*"
+      ],
+      "js": [
+        "js/content.bundle.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://slackext.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://slackext.com https://ssl.google-analytics.com/; style-src * 'unsafe-inline' 'self' blob:; img-src * 'self' data: https:;"
+  }
+}

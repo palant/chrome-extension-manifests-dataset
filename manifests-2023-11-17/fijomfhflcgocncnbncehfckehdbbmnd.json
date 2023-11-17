@@ -1,0 +1,83 @@
+---
+slug: improved-anaplan-dx
+name: Improved Anaplan DX
+description: >-
+  Improving Anaplan Model Builder DX and increasing efficiency. Brought to you
+  by valantic.
+version: 1.2.42
+release_date: 'November 16, 2023'
+publisher: valantic
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 11
+user_count: 242
+size: 56.76KiB
+languages:
+  - English
+extension_website: 'https://www.valantic.com/de/business-analytics/connected-planning-mit-anaplan/'
+privacy_policy: 'https://anaplan-dx-data-policy-529ea26da9d1.autoidleapp.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Improved Anaplan DX",
+    "description": "Improving Anaplan Model Builder DX and increasing efficiency. Brought to you by valantic.",
+    "version": "1.2.42",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "/background/background.min.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*.anaplan.com/*selectedWorkspace*"],
+            "all_frames": true,
+            "js": ["/inner/inner.min.js"],
+            "css": ["/inner/inner.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://*.anaplan.com/*modeling-ui*"],
+            "exclude_matches": ["https://*.anaplan.com/*selectedWorkspace*"],
+            "all_frames": true,
+            "js": ["/outer/outer.min.js"],
+            "css": ["/outer/outer.css"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://*.app.anaplan.com/home/*"],
+            "exclude_matches": [
+                "https://*.anaplan.com/*selectedWorkspace*",
+                "https://*.anaplan.com/*modeling-ui*"
+            ],
+            "all_frames": true,
+            "js": ["home.min.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://*.anaplan.com/*"],
+            "exclude_matches": [
+                "https://*.anaplan.com/*selectedWorkspace*",
+                "https://*.anaplan.com/*modeling-ui*",
+                "https://*.app.anaplan.com/home/*"
+            ],
+            "all_frames": true,
+            "js": ["container-shell.min.js"]
+        }
+    ],
+    "permissions": ["storage"],
+    "host_permissions": ["https://anaplan-extension-server.herokuapp.com/*"],
+    "action": {
+        "default_popup": "/popup/popup.html",
+        "default_icon": "/images/valantic.png"
+    },
+    "icons": {
+        "16": "/images/valantic.png",
+        "32": "/images/valantic.png",
+        "48": "/images/valantic.png",
+        "128": "/images/valantic.png"
+    },
+    "options_page": "/options/options.html"
+}

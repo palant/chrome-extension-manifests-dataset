@@ -1,0 +1,80 @@
+---
+slug: better-moving-times
+name: Better Moving Times
+description: >-
+  Better Moving Times improves time estimates for Strava routes based on
+  distance, elevation change, and even the bike you're riding!
+version: 1.0.2
+release_date: 'June 22, 2023'
+publisher: Dave Cohen
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 4
+user_count: 221
+size: 140KiB
+languages:
+  - English
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Better Moving Times",
+  "description": "Better Moving Times improves time estimates for Strava routes based on distance, elevation change, and even the bike you're riding!",
+  "version": "1.0.2",
+  "icons": {
+    "16": "images/badge16.png",
+    "48": "images/badge48.png",
+    "128": "images/badge128.png"
+  },
+
+  "action": {
+    "default_popup": "better-moving-times.html",
+    "default_icon": {
+      "16": "images/badge16.png",
+      "48": "images/badge48.png",
+      "128": "images/badge128.png"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "js": [
+        "lib/content.bundle.js"
+      ],
+      "css": ["css/bmt.css"],
+      "matches": [
+        "*://www.strava.com/athlete/routes*",
+        "*://www.strava.com/routes/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "lib/auth.bundle.js"
+      ],
+      "matches": [
+        "https://us-central1-tough-totem-239004.cloudfunctions.net/auth*"
+      ]
+    }
+  ],
+
+  "permissions": [
+    "storage"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "better-moving-times.html"
+      ],
+      "matches": [
+        "https://www.strava.com/*",
+        "https://us-central1-tough-totem-239004.cloudfunctions.net/*"
+      ]
+    }
+  ]
+}

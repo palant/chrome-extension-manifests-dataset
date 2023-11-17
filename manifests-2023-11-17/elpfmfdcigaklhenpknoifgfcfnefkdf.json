@@ -1,0 +1,88 @@
+---
+slug: veefeed
+name: veefeed
+description: Keep track of your YouTube and Twitch subscriptions
+version: 0.10.5
+release_date: 'January 17, 2022'
+publisher: fent
+category: Fun
+category_slug: ext/14-fun
+rating: 5
+rating_count: 1
+user_count: 19
+size: 1.56MiB
+languages:
+  - English
+extension_website: 'https://github.com/fent/chrome-veefeed'
+support_website: 'https://github.com/fent/chrome-veefeed/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "veefeed",
+  "version": "0.10.5",
+  "description": "Keep track of your YouTube and Twitch subscriptions",
+  "applications": {
+    "gecko": {
+      "id": "temp@veefeed.com"
+    }
+  },
+  "icons": {
+    "128": "img/icon-128.png"
+  },
+  "permissions": [
+    "https://www.twitch.tv/",
+    "https://api.twitch.tv/",
+    "https://www.youtube.com/",
+    "https://haloruns.z20.web.core.windows.net/content/feeds/latestRecords.json",
+    "https://www.speedrun.com/",
+    "https://t.co/",
+    "contextMenus",
+    "cookies",
+    "notifications",
+    "storage"
+  ],
+  "author": "fent (https://github.com/fent)",
+  "background": {
+    "page": "background/background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/watch?*v=*"
+      ],
+      "js": [
+        "util/time.js",
+        "util/hyperscript.js",
+        "content/shared.js",
+        "content/youtube.js"
+      ],
+      "css": [
+        "content/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.twitch.tv/videos/*"
+      ],
+      "js": [
+        "util/time.js",
+        "util/hyperscript.js",
+        "content/shared.js",
+        "content/twitch.js"
+      ],
+      "css": [
+        "content/style.css"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup/popup.html"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  }
+}

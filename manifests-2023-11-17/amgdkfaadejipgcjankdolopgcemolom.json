@@ -1,0 +1,86 @@
+---
+slug: zillow-data-exporter
+name: Zillow Data Exporter
+description: Export Zillow property listings to CSV or Excel in one click.
+version: 0.0.37
+release_date: 'November 3, 2023'
+publisher: Yann Hulot
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.583333333333333
+rating_count: 12
+user_count: '2,000+'
+size: 1.18MiB
+languages:
+  - English
+publisher_site: propertydatalabs.com
+extension_website: 'https://propertydatalabs.com'
+support_website: 'https://www.propertydatalabs.com/contact'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Zillow Data Exporter",
+  "description": "Export Zillow property listings to CSV or Excel in one click.",
+  "manifest_version": 3,
+  "version": "0.0.37",
+  "icons": {
+    "16": "16x16.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "16x16.png",
+      "48": "48x48.png",
+      "128": "128x128.png"
+    },
+    "default_title": "Zillow Data Exporter"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.zillow.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.zillowdataexporter.com/*"],
+      "js": ["zillowdataexporter.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.propertydatalabs.com/*"],
+      "js": ["zillowdataexporter.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["16x16.png", "48x48.png", "128x128.png"],
+      "matches": ["https://*.zillow.com/*"]
+    },
+    {
+      "resources": ["menu.html"],
+      "matches": ["https://*.zillow.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://*.zillow.com/*",
+    "https://*.zillowdataexporter.com/*",
+    "https://*.propertydatalabs.com/*"
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.zillowdataexporter.com/*", "*://*.propertydatalabs.com/*"]
+  },
+  "permissions": ["storage", "tabs", "downloads"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src * 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.googleusercontent.com/* https://*.zillow.com/* https://www.zillowdataexporter.com/ https://www.propertydatalabs.com; object-src 'self'"
+  }
+}

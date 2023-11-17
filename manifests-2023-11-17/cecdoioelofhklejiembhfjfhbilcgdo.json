@@ -1,0 +1,73 @@
+---
+slug: arxiv-viewer
+name: Arxiv Viewer
+description: Provides sneak peeks of referenced papers on arxiv.
+version: 2.12.22
+release_date: 'November 9, 2021'
+publisher: tchittesh
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 32
+size: 2.99MiB
+languages:
+  - English
+support_website: 'https://github.com/tchittesh/arxiv-viewer'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Arxiv Viewer",
+  "version": "2.12.22",
+  "description": "Provides sneak peeks of referenced papers on arxiv.",
+  "icons": {
+    "128": "arxiv_viewer_icon128.png",
+    "48": "arxiv_viewer_icon48.png",
+    "16": "arxiv_viewer_icon16.png"
+  },
+  "permissions": [
+    "webRequest", "webRequestBlocking",
+    "https://arxiv.org/pdf/*",
+    "tabs",
+    "webNavigation",
+    "storage"
+  ],
+  "content_scripts": [{
+    "matches": [
+      "https://arxiv.org/pdf/*"
+    ],
+    "run_at": "document_start",
+    "all_frames": true,
+    "css": ["contentstyle.css"],
+    "js": ["contentscript.js"]
+  }],
+  "content_security_policy": "script-src 'self' https://cdn.jsdelivr.net 'unsafe-eval'; object-src 'self'",
+  "storage": {
+    "managed_schema": "preferences_schema.json"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
+  "options_page": "options/options.html",
+  "background": {
+    "page": "pdfHandler.html"
+  },
+  "page_action": {
+    "default_icon": {
+      "16": "arxiv_viewer_icon16.png",
+      "48": "arxiv_viewer_icon48.png"
+    },
+    "default_title": "Show PDF URL",
+    "default_popup": "pageActionPopup.html"
+  },
+  "incognito": "split",
+  "web_accessible_resources": [
+    "content/web/viewer.html",
+    "http:/*",
+    "https:/*"
+  ]
+}

@@ -1,0 +1,84 @@
+---
+slug: testjet
+name: TestJet
+description: A Chrome extension for recording browser interaction
+version: 1.5.2
+release_date: 'June 25, 2023'
+publisher: Testjet
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 5
+rating_count: 3
+user_count: 31
+size: 3.04MiB
+languages:
+  - English
+extension_website: 'https://testjet.ai/'
+support_website: 'https://testjet.ai/contact-us/'
+privacy_policy: 'https://testjet.ai/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TestJet",
+  "version": "1.5.2",
+  "manifest_version": 2,
+  "description":
+    "A Chrome extension for recording browser interaction",
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "<all_urls>",
+    "activeTab",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "file://*/*",
+    "background",
+    "cookies",
+    "debugger"
+  ],
+  "icons": {
+    "16": "images/testjet-icon-16.png",
+    "48": "images/testjet-icon-48.png",
+    "128": "images/testjet-icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", "*://*/*", "file://*/*"],
+      "js": ["test-automation.js"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "match_about_blank": false
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "images/default-icon.png",
+    "default_title": "TestJet Automation Recorder",
+    "default_popup": "index.html"
+  },
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": [
+      "http://localhost/*",
+      "http://localhost:3000/*",
+      "https://localhost/*",
+      "https://localhost:3000/*",
+      "http://3.136.222.199:8080/*",
+      "https://3.136.222.199:8080/*",
+      "http://192.168.88.247:3000/*",
+      "https://*.mytestjet.com/*",
+      "https://*.testjet.ai/*"
+    ]
+  },
+  "web_accessible_resources": ["app/index.html", "*"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

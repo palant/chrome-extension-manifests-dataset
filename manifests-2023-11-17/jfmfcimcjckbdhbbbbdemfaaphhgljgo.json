@@ -1,0 +1,177 @@
+---
+slug: turn-off-the-lights
+name: Turn Off the Lights
+description: >-
+  The entire page will be fading to dark, so you can watch the videos as if you
+  were in the cinema. Works for YouTube™ and beyond.
+version: 4.4.5.0
+release_date: 'October 9, 2023'
+publisher: Stefan vd
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.521739130434782
+rating_count: 46
+user_count: '2,000+'
+size: 8.03MiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Kiswahili
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - मराठी
+  - हिन्दी
+  - বাংলা
+  - ગુજરાતી
+  - தமிழ்
+  - తెలుగు
+  - ಕನ್ನಡ
+  - മലയാളം
+  - ไทย
+  - አማርኛ
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+publisher_site: www.turnoffthelights.com
+extension_website: 'https://www.turnoffthelights.com'
+support_website: 'https://www.turnoffthelights.com/support'
+privacy_policy: 'https://www.stefanvd.net/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "short_name": "Turn Off the Lights",
+  "version": "4.4.5.0",
+  "description": "__MSG_description__",
+  "author": "Stefan vd",
+  "homepage_url": "https://www.turnoffthelights.com/support/",
+  "omnibox": { "keyword" : "totl" },
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_title": "__MSG_pageatitle__",
+    "default_icon": {
+      "19": "icons/iconstick19.png",
+      "38": "icons/iconstick38.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'none'; style-src 'self'; media-src https://www.turnoffthelights.com; child-src https://www.youtube.com https://www.turnoffthelights.com; connect-src https://www.turnoffthelights.com; script-src 'self'; img-src 'self' https://www.turnoffthelights.com * data:; object-src 'none'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/constants.js", "js/content.js", "js/eco.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css" : ["css/light.css"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["js/fps.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/autostop.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://*.youtube.com/*"], 
+      "css" : ["css/youtube.css"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "MacCtrl+Shift+L"
+      }
+    },
+    "toggle-feature-nightmode": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+N",
+        "mac": "MacCtrl+Shift+N"
+      },
+      "description": "__MSG_titelnighttheme__"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [{
+    "resources": ["/js/fps-block.js", "/js/hd-quality.js"],
+    "matches": ["*://www.youtube.com/*"],
+    "use_dynamic_url": true
+  },
+  {
+    "resources": ["/js/video-player-status.js"],
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
+  }],
+  "offline_enabled": true,
+  "minimum_chrome_version": "103",
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "permissions": ["contextMenus", "tabs", "storage", "webNavigation", "scripting"],
+  "host_permissions": ["<all_urls>"]
+}

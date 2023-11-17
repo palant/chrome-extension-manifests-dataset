@@ -1,0 +1,84 @@
+---
+slug: dashed-ai
+name: Dashed AI
+description: Integrate & Track Your Outbound Prospecting
+version: 0.0.0.3
+release_date: 'April 1, 2022'
+publisher: Dashed AI
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: 114
+size: 1.33MiB
+languages:
+  - English (UK)
+publisher_site: dashedai.com
+extension_website: 'https://www.dashedai.com'
+support_website: 'https://dashedai.tawk.help'
+privacy_policy: 'https://www.dashedai.com/privacypolicy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Dashed AI",
+  "version": "0.0.0.3",
+  "description": "Integrate & Track Your Outbound Prospecting",
+  "icons": { 
+    "16": "statics/dashed-icon-16.png",
+    "48": "statics/dashed-icon-48.png",
+    "128": "statics/dashed-icon-128.png" 
+  },
+  "permissions": [
+    "alarms",
+    "cookies",
+    "storage",
+    "tabs",
+    "webNavigation",
+    "https://linkedin.com/*",
+    "https://www.linkedin.com/*",
+    "https://mail.google.com/*",
+    "https://outlook.live.com/*",
+    "https://outlook.office365.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "config.js",
+      "helpers/utils.js",
+      "services/dashedApiService.js",
+      "services/linkedinService.js",
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "web_accessible_resources": [ 
+    "css/all.css",
+    "webfonts/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "helpers/utils.js",
+        "content_scripts/contentScriptGmail.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://outlook.live.com/*",
+        "https://outlook.office365.com/*"
+      ],
+      "js": [
+        "helpers/utils.js",
+        "content_scripts/contentScriptOutlook.js"
+      ],
+      "run_at": "document_start"
+    }
+  ], 
+  "browser_action": {}
+}

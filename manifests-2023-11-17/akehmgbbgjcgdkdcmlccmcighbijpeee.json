@@ -1,0 +1,138 @@
+---
+slug: ali-hunter-aliexpress-dro
+name: Ali Hunter - AliExpress Dropship
+description: >-
+  Best AliExpress product research tool for shopping & DropShipping Find
+  pseller's ratings, similar products, save images video.
+version: 3.1.3
+release_date: 'July 29, 2023'
+publisher: One Technology
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 4
+user_count: 317
+size: 1.88MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - català
+  - dansk
+  - español
+  - español (Latinoamérica)
+  - čeština
+  - Ελληνικά
+  - български
+  - मराठी
+  - አማርኛ
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+privacy_policy: 'https://sites.google.com/view/avengerprivacypolicy/home'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+ "manifest_version": 3,
+ "version":"3.1.3", 
+ "name": "Ali Hunter - AliExpress Dropship",
+ "description": "Best AliExpress product research tool for shopping & DropShipping Find pseller's ratings, similar products, save images video.",
+ "default_locale": "en",
+ 
+ "permissions":["tabs","storage",
+ "activeTab",
+ "downloads"
+ ],
+  "host_permissions": [
+        "*://*.aliexpress.com/",
+        "*://*.aliexpress.ru/",
+        "*://*.aliexpress.us/",
+        "*://*.alicdn.com/",
+        "*://*.aliexpress-media.com/"
+    ],
+ 
+ 
+ "icons": {
+  "128": "img/default_logo.png"
+ },
+ 
+ "content_scripts": [
+  {
+   "matches": ["*://*.aliexpress.com/*"],
+   "js": [
+    "js/chunk-vendors.js",
+    "js/content.js"
+   ],
+   "css": [
+    "css/main.css",
+    "css/content.css"
+   ],
+   "run_at": "document_start"
+  },
+  {"matches": [
+   "*://*.aliexpress.com/item/*",
+   "*://*.aliexpress.com/store/product/*",
+   "*://*.aliexpress.us/item/*",
+   "*://*.aliexpress.us/store/product/*"
+  ],
+  "run_at": "document_idle",
+  "js": [
+   "content.bundle.js"
+  ],
+  "css": [
+   "cs/fontawesome.min.css",
+   "cs/content.css"]
+  },
+  {
+            "matches": [
+                "*://feedback.aliexpress.com/display/productEvaluation.htm*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "feedbackIframe.bundle.js"
+            ],
+            "all_frames": true
+        },
+  {
+            "matches": [
+                "*://*.aliexpress.ru/item/*",
+                "*://*.aliexpress.ru/store/product/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "contentRu.bundle.js"
+            ],
+            "css": [
+                "cs/fontawesome.min.css",
+                "cs/content.css"
+            ]
+        }
+ ],
+ 
+ "background": {
+  "service_worker": "js/background.bundle.js",
+  "type": "module"
+ },
+ 
+ "action": {
+  "default_icon": "img/logo2.png",
+  "default_popup": "popup.html"
+ },
+ 
+ "web_accessible_resources": [{
+  "resources": ["img/*", "icon/*", "*.png",
+  "*.ttf",
+  "*.gif",
+  "*.svg",
+  "*.woff2"],
+  "matches": ["<all_urls>"]
+ }],
+ "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'self'; child-src 'self'"
+ }
+}

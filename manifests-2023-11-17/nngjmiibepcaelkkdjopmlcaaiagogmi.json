@@ -1,0 +1,107 @@
+---
+slug: shodo-日本語校正クラウド
+name: Shodo - 日本語校正クラウド
+description: ShodoはSNSやメールで使える日本語の校正、チェックツールです。
+version: 2.3.0
+release_date: 'March 14, 2023'
+publisher: 株式会社ゼンプロダクツ
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: '2,000+'
+size: 223KiB
+languages:
+  - 日本語
+publisher_site: shodo.ink
+extension_website: 'https://shodo.ink/'
+support_website: 'https://shodo.ink/contact/'
+privacy_policy: 'https://shodo.ink/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Shodo - 日本語校正クラウド",
+  "description": "ShodoはSNSやメールで使える日本語の校正、チェックツールです。",
+  "homepage_url": "https://shodo.ink/",
+  "version": "2.3.0",
+  "default_locale": "ja",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "commands"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "/js/background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "19": "icons/19.png",
+      "38": "icons/38.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "commands": {
+    "open-shodo": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Shodoを開いて校正する"
+    }
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "/img/brand.png"
+    ],
+    "matches": [
+      "https://mail.google.com/*",
+      "https://twitter.com/*",
+      "https://*.facebook.com/*"
+    ]
+  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://shodo.ink/extension/auth/*"
+      ],
+      "js": ["js/authentication.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "js": ["js/facebook.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["js/twitter.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["js/gmail.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content.js"],
+      "run_at": "document_end",
+      "match_about_blank": false
+    }
+  ]
+}

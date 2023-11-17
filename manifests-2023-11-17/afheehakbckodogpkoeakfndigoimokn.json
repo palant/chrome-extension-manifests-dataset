@@ -1,0 +1,119 @@
+---
+slug: ptt-web-enhanced
+name: PTT Web Enhanced
+description: 幫 PTT web 版增加各種方便的功能，例如推文顯示樓層、高亮標示點選 ID 的所有推文、標示文章作者的推文等等。
+version: 1.9.1
+release_date: 'September 14, 2022'
+publisher: Danny Lin
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: '1,000+'
+size: 38.27KiB
+languages:
+  - 中文 (繁體)
+extension_website: 'https://addons.mozilla.org/firefox/addon/ptt-web-enhanced/'
+support_website: 'https://github.com/Kenqr/ptt-web-enhanced'
+privacy_policy: 'https://github.com/danny0838/webscrapbook/wiki/Privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "PTT Web Enhanced",
+    "version": "1.9.1",
+
+    "description": "幫 PTT web 版增加各種方便的功能，例如推文顯示樓層、高亮標示點選 ID 的所有推文、標示文章作者的推文等等。",
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{27376da4-366d-4549-878e-5934e0114107}",
+            "strict_min_version": "63.0"
+        }
+    },
+
+    "icons": {
+        "16": "icon-16.png",
+        "32": "icon-32.png",
+        "128": "icon-128.png"
+    },
+
+    "permissions": [
+        "downloads",
+        "storage"
+    ],
+
+    "background": {
+        "scripts": [
+            "lib/browser-polyfill.js",
+            "background.js"
+        ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.ptt.cc/bbs/*/index*.html",
+                "https://www.ptt.cc/bbs/*/index*.html?*",
+                "https://www.ptt.cc/bbs/*/search?*"
+            ],
+            "js": [
+                "lib/browser-polyfill.js",
+                "utils/settings.js",
+                "utils/helpers.js",
+                "board.js"
+            ],
+            "css": [
+                "shared.css",
+                "board.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.ptt.cc/bbs/*/M.*.html",
+                "https://www.ptt.cc/bbs/*/M.*.html?*"
+            ],
+            "js": [
+                "lib/browser-polyfill.js",
+                "utils/settings.js",
+                "utils/helpers.js",
+                "article.js"
+            ],
+            "css": [
+                "shared.css",
+                "article.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.ptt.cc/ask/over18",
+                "https://www.ptt.cc/ask/over18?*"
+            ],
+            "js": [
+                "lib/browser-polyfill.js",
+                "utils/settings.js",
+                "utils/helpers.js",
+                "r18.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+
+    "browser_action": {
+        "default_icon": {
+          "16": "icon-16.png",
+          "32": "icon-32.png"
+        },
+        "default_title": "PTT Web Enhanced",
+        "default_popup": "options.html"
+    },
+
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    }
+}

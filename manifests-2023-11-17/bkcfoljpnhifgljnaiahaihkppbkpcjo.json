@@ -1,0 +1,78 @@
+---
+slug: remark
+name: Remark
+description: 'Uncensored Comments, anywhere.'
+version: 1.0.4
+release_date: 'March 24, 2022'
+publisher: Simplify
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 3
+user_count: 43
+size: 205KiB
+languages:
+  - English
+publisher_site: remark.surf
+extension_website: 'https://remark.surf'
+privacy_policy: 'https://www.remark.surf/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Remark",
+  "short_name": "Remark",
+  "version": "1.0.4",
+  "description": "Uncensored Comments, anywhere.",
+  "author": "Simplify Software",
+  "homepage_url": "https://remark.surf/",
+  "icons": {
+    "64": "assets/icon/64.png",
+    "128": "assets/icon/128.png",
+    "256": "assets/icon/256.png"
+  },
+  "web_accessible_resources": [{
+    "resources": ["assets/*.png", "assets/indicator/*.png", "assets/icon/*.png", "css/*.css"],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["entry/injected.js"],
+    "run_at": "document_end"
+  }],
+  "background": {
+    "service_worker": "entry/background.js"
+  },
+  "commands": {
+    "toggle_button": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "Toggle the Remark Button"
+    },
+    "toggle_sidebar": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Toggle the Remark Sidebar"
+    }
+  },
+  "externally_connectable": {
+    "matches": ["*://*.remark.surf/*"]
+  },
+  "permissions": ["tabs", "storage", "unlimitedStorage", "declarativeNetRequest"],
+  "optional_permissions": [],
+  "action": {
+    "default_title": "Remark"
+  },
+  "host_permissions": ["*://*/*"],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "CSP Change",
+      "path": "rules/csp.json",
+      "enabled": true
+    }]
+  }
+}

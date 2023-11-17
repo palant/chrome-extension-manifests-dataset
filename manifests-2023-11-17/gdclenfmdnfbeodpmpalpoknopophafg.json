@@ -1,0 +1,90 @@
+---
+slug: proabd-order-exporter
+name: ProABD Order Exporter
+description: Export load details for transfer to Central Dispatch order creation form.
+version: '1.3'
+release_date: 'July 8, 2021'
+publisher: ProABD
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 405
+size: 110KiB
+languages:
+  - English (United States)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "ProABD Order Exporter",
+    "version": "1.3",
+    "author": "Gregory C. Austrow, Robert A. Frazier",
+    "description": "Export load details for transfer to Central Dispatch order creation form.",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "declarativeContent",
+        "cookies",
+        "*://*.proabd.com/*",
+        "*://www.centraldispatch.com/protected/cargo/my-vehicles*",
+        "*://www.centraldispatch.com/protected/dispatch/broker*",
+        "*://www.centraldispatch.com/protected/dispatch/view*"
+    ],
+    "externally_connectable": {
+        "matches": [        
+            "*://*.proabd.com/abd_order_detail.php*",
+            "*://www.centraldispatch.com/protected/cargo/my-vehicles*",
+            "*://www.centraldispatch.com/protected/dispatch/broker*",
+            "*://www.centraldispatch.com/protected/dispatch/view*"
+        ]
+    },
+    "background": {
+        "scripts": [
+            "js/background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.proabd.com/abd_order_detail.php*"],
+            "js": ["js/lib/Scraper.js"]
+        },
+        {
+            "run_at": "document_end",
+            "matches": ["*://www.centraldispatch.com/protected/cargo/my-vehicles*"],
+            "js": ["js/central_js_inject_my_vehicles.js"],
+            "css": ["css/central_css_inject.css"]
+        },
+        {
+            "run_at": "document_idle",
+            "matches": ["*://www.centraldispatch.com/protected/dispatch/broker*"],
+            "js": ["js/central_js_inject_assign_dispatch.js"],
+            "css": ["css/central_css_inject.css"]
+        },
+        {
+            "run_at": "document_end",
+            "matches": ["*://www.centraldispatch.com/protected/dispatch/view*"],
+            "js": ["js/central_js_inject_view_dispatch.js"],
+            "css": ["css/central_css_inject.css"]
+        }
+    ],
+    "page_action": {
+        "default_popup": "popup.html",
+        "default_title": "Order Exporter",
+        "default_icon": {
+            "16": "images/abd_logo16.png",
+            "32": "images/abd_logo32.png",
+            "48": "images/abd_logo48.png",
+            "128": "images/abd_logo128.png"
+        }
+    },
+    "icons": {
+        "16": "images/abd_logo16.png",
+        "32": "images/abd_logo32.png",
+        "48": "images/abd_logo48.png",
+        "128": "images/abd_logo128.png"
+    },
+    "manifest_version": 2
+}

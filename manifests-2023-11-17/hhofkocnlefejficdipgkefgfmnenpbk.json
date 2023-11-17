@@ -1,0 +1,568 @@
+---
+slug: curateit-save-share-manag
+name: 'Curateit - Save, Share & manage gems'
+description: >-
+  Introducing CurateIt - the ultimate all-in-one Chrome extension for organizing
+  and saving your favorites.
+version: 4.1.1
+release_date: 'November 8, 2023'
+publisher: Savan V.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 1
+user_count: 41
+size: 11.83MiB
+languages:
+  - English (United States)
+extension_website: 'https://www.curateit.com/'
+privacy_policy: 'https://web.curateit.com/privacy-terms'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Curateit Ext",
+  "name": "Curateit - Save, Share & manage gems",
+  "description": "Introducing CurateIt - the ultimate all-in-one Chrome extension for organizing and saving your favorites.",
+  "icons": {
+    "16": "images/logo192.png",
+    "48": "images/logo192.png",
+    "128": "images/logo192.png"
+  },
+  "background": {
+    "service_worker": "./scripts/background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "storage",
+    "scripting",
+    "unlimitedStorage",
+    "contextMenus",
+    "history",
+    "search",
+    "browsingData",
+    "cookies",
+    "https://www.googleapis.com/*",
+    "<all_urls>",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "version": "4.1.1",
+  "manifest_version": 3,
+  "commands": {
+    "open-omni": {
+      "suggested_key": {
+        "default": "Ctrl+E",
+        "mac": "Command+E"
+      },
+      "description": "Open search"
+    },
+    "bookmark": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Create bookmark"
+    },
+    "full-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "Command+Shift+1"
+      },
+      "description": "Take full screenshot"
+    },
+    "selected-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2",
+        "mac": "Command+Shift+2"
+      },
+      "description": "Take selected area screenshot"
+    }
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "https://development-api.curateit.com/*/*",
+        "https://api.curateit.com/*/*",
+        "https://dev-app.curateit.com/*/*",
+        "https://curateit.com/*/*"
+      ],
+      "css": ["./scripts/theme.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/web-highlighter.min.js", "./scripts/highlight.js"],
+      "css": ["./scripts/highlight.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": [
+        "./scripts/menuHighlight.js",
+        "./scripts/custom-elements.min.js",
+        "./scripts/speed-reader/speed-reader.js",
+        "./scripts/menuHighlightTemplate.js"
+      ],
+      "css": ["./scripts/menuHighlight.css", "scripts/speed-reader/style.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "css": ["./scripts/codeSnippet.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": [
+        "./scripts/readerView.js",
+        "./scripts/readability.js",
+        "./scripts/html2pdf.bundle.min.js"
+      ],
+      "css": ["./scripts/readerView.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/text-expander/text-expander.js"
+      ],
+      "css": [
+        "./scripts/text-expander/text-expander.css",
+        "./scripts/text-expander/formPopup.css"
+      ],
+      "html": ["./scripts/text-expander/formPopup.html"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/pdfhighlight.js"],
+      "css": ["./scripts/pdfhighlight.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/darkreader.js", "./scripts/dark.js"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "css": ["./scripts/imageSave.css"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/codeSnippet.js", "./scripts/window-loaded-element.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/side-panel.js"],
+      "css": ["./scripts/main.css"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.youtube.com/*", "https://chat.openai.com/*"],
+      "js": ["./scripts/youtube-summary.js", "./scripts/jquery.min.js"],
+      "css": ["./scripts/youtube-summary.css"]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://read.amazon.in/notebook",
+        "https://read.amazon.in/notebook*",
+        "https://read.amazon.com/notebook*",
+        "https://read.amazon.com/kp/notebook*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./scripts/axios.min.js",
+        "./scripts/jquery.min.js",
+        "./scripts/omni-search/tld.min.js",
+        "./scripts/kindle-highlight/import-highlight.js"
+      ],
+      "css": ["./scripts/kindle-highlight/import-highlight.css"],
+      "html": ["./scripts/kindle-highlight/import-highlight.html"]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://twitter.com/*",
+        "https://mobile.twitter.com/*",
+        "https://twitter.com/i/bookmarks",
+        "https://development-api.curateit.com/*",
+        "https://api.curateit.com/*"
+      ],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/twitter-import/twitterImport.js",
+        "./scripts/twitter-import/twitterTest.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": [
+        "./scripts/axios.min.js",
+        "./scripts/jquery.min.js",
+        "./scripts/omni-search/tld.min.js",
+        "./scripts/omni-search/focus.js",
+        "./scripts/omni-search/searchContent.js",
+        "./scripts/omni-search/virtualized-list.min.js"
+      ],
+      "css": ["./scripts/omni-search/searchContent.css"],
+      "html": ["./scripts/omni-search/searchContent.html"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/copy-link-to-highlight.js", "./scripts/webapp-cred.js"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.linkedin.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/linkedin-import/linkedinImport.js",
+        "./scripts/linkedin-import/linkedinTest.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.quora.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/quora-import/quoraTest.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://medium.com/*", "https://*.medium.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/medium-import/mediumImport.js",
+        "./scripts/medium-import/mediumTest.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.reddit.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/reddit-import/redditImport.js",
+        "./scripts/reddit-import/redditTest.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://github.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/github-import/githubImport.js",
+        "./scripts/github-import/githubTest.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.youtube.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/youtube-import/youtubeTest.js",
+        "./scripts/youtube-import/youtubePlaylistImport.js",
+        "./scripts/youtube-import/YtProfileImport.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.goodreads.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/goodreads-import/goodReads.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.instagram.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/insta-import/instaGram.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://play.google.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/playStore.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.g2.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/g2.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://www.capterra.in/*",
+        "https://www.capterra.com/*",
+        "https://www.capterra.co.uk/*"
+      ],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/capterra.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://www.trustpilot.com/*",
+        "https://uk.trustpilot.com/*"
+      ],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/trustPilot.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.google.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/googleReviews.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.producthunt.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/productHunt.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://appsumo.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/appSumo.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.goodreads.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/goodReads.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://www.tripadvisor.in/*",
+        "https://www.tripadvisor.com/*",
+        "https://www.tripadvisor.co.uk/*"
+      ],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/tripAdvisor.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://www.yelp.com/*", "https://www.yelp.co.uk/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/yelp.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://www.amazon.in/*",
+        "https://www.amazon.com/*",
+        "https://www.amazon.co.uk/*"
+      ],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/amazon.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "matches": ["https://apps.apple.com/*"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/common.js",
+        "./scripts/testimonials/appStore.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/screenshots/jquery.Jcrop.min.js",
+        "./scripts/screenshots/html2canvas.min.js",
+        "./scripts/screenshots/screenshots.js"
+      ],
+      "css": [
+        "./scripts/screenshots/jquery.Jcrop.min.css",
+        "./scripts/screenshots/screen-shot.css"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "js": [
+        "./scripts/jquery.min.js",
+        "./scripts/tutorial-popup/tutorial-popup.js"
+      ],
+      "css": ["./scripts/tutorial-popup/tutorial-popup.css"],
+      "html": ["./scripts/tutorial-popup/tutorial-popup.html"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "js": ["./scripts/screenshotView.js"],
+      "css": ["./scripts/screenshotView.css"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; img-src * data:; connect-src *; navigate-to 'self' https://darkreader.org/* https://github.com/darkreader/darkreader/blob/main/CONTRIBUTING.md https://github.com/darkreader/darkreader https://opencollective.com/darkreader/donate https://twitter.com/darkreaderapp; child-src 'none'; worker-src 'none'; object-src 'none'; font-src 'self' https://fonts.gstatic.com; frame-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html",
+        "errorPopup.html",
+        "sidePanel.html",
+        "scripts/speed-reader/speed-reader.html",
+        "scripts/tutorial-popup/tutorial-popup.html",
+        "scripts/omni-search/searchContent.html",
+        "scripts/kindle-highlight/import-highlight.html",
+        "scripts/text-expander/formPopup.html",
+        "icons/close.svg",
+        "icons/play-button.svg",
+        "icons/play-button-outline.svg",
+        "icons/volumn-setting.svg",
+        "icons/colors-selector.svg",
+        "icons/message-circle.svg",
+        "icons/copy-icon.svg",
+        "icons/bookmark-icon-dark.svg",
+        "icons/share-icon.svg",
+        "icons/arrows-pointing-out.svg",
+        "icons/sun.svg",
+        "icons/save-icon.svg",
+        "icons/robbot.svg",
+        "icons/speed-line.svg",
+        "icons/language.svg",
+        "icons/down-arrow.svg",
+        "icons/play-button-solid.svg",
+        "icons/pause-circle-fill.svg",
+        "icons/download-alt.svg",
+        "icons/mdi_speak.svg",
+        "icons/x-mark-red.svg",
+        "icons/fullscreen-exit-line.svg",
+        "icons/moon-line.svg",
+        "icons/arrow-left-double-fill.svg",
+        "icons/arrow-right-double-fill.svg",
+        "icons/logo.png",
+        "icons/link-external.svg",
+        "assets/*",
+        "images/close.png",
+        "images/minimize.png",
+        "images/redo1.png",
+        "images/undo.png",
+        "images/tick.png",
+        "images/default-logo.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://twitter.com/*",
+    "https://mobile.twitter.com/*",
+    "https://development-api.curateit.com/*",
+    "https://api.curateit.com/*",
+    "https://api.twitter.com/*",
+    "https://twitter.com/i/bookmarks",
+    "https://twitter.com/*/likes",
+    "https://www.linkedin.com/*",
+    "https://medium.com/*",
+    "https://*.medium.com/*",
+    "https://www.reddit.com/*",
+    "https://github.com/*",
+    "https://dev-app.curateit.com/",
+    "https://curateit.com/",
+    "http://localhost:3000/",
+    "https://www.youtube.com/*",
+    "https://play.google.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "<all_urls>",
+      "https://twitter.com/*",
+      "https://mobile.twitter.com/*",
+      "https://development-api.curateit.com/*",
+      "https://api.curateit.com/*",
+      "https://dev-app.curateit.com/*",
+      "https://curateit.com/*",
+      "https://twitter.com/i/bookmarks"
+    ]
+  },
+  "omnibox": {
+    "keyword": "c:"
+  }
+}

@@ -1,0 +1,102 @@
+---
+slug: 불량뉴스백신
+name: 불량뉴스백신
+description: '포털(네이버, 다음)에서 불량뉴스를 알려주는 확장프로그램'
+version: '14'
+release_date: 'December 15, 2021'
+publisher: webmemoshare
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 4.871428571428571
+rating_count: 70
+user_count: '10,000+'
+size: 244KiB
+languages:
+  - 한국어
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "불량뉴스백신",
+  "description": "포털(네이버, 다음)에서 불량뉴스를 알려주는 확장프로그램",
+  "version": "14",
+  "icons": {
+    "128": "webMEMO-96.png"
+  },
+  "browser_action": {
+    "default_icon": "webMEMO-96.png"
+  },
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "wms_common.js",
+      "wms_background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.daum.net/*",
+        "https://*.daum.net/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "wms_daum.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "http://*.naver.com/*",
+        "https://*.naver.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "wms_naver.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.webmemoshare.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "wms_common.js",
+        "wms_login.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "http://*.naver.com/*",
+        "https://*.naver.com/*",
+        "http://*.daum.net/*",
+        "https://*.daum.net/*"
+      ],
+      "exclude_matches": [
+        "https://*.webmemoshare.com/*"
+      ],
+      "run_at": "document_idle",
+      "css": [
+        "./css/wms_common.css"
+      ],
+      "js": [
+       "wms_common.js",
+        "wms_ad_changer.js"
+      ],
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "storage",
+    "*://www.webmemoshare.com/*"
+  ],
+  "web_accessible_resources": [
+    "icons/*"
+  ]
+}

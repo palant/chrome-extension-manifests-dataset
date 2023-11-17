@@ -1,0 +1,134 @@
+---
+slug: 1cademy-assistant
+name: 1Cademy Assistant
+description: >-
+  This extension simplifies using OpenAI ChatGPT for researchers, instructors,
+  and students.
+version: 0.0.1.0
+release_date: 'August 14, 2023'
+publisher: 1Cademy
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 7
+user_count: 137
+size: 4.6MiB
+languages:
+  - English (United States)
+publisher_site: 1cademy.com
+extension_website: 'https://1cademy.com/'
+support_website: 'https://1cademy.com/'
+privacy_policy: 'https://1cademy.us/privacy'
+---
+
+{
+  "author": "1Cademy",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/icon.png",
+      "38": "images/icon-2x.png"
+    },
+    "default_title": "1Cademy Assistant"
+  },
+  "description": "This extension simplifies using OpenAI ChatGPT for researchers, instructors, and students.",
+  "icons": {
+    "128": "images/icon-8x.png",
+    "16": "images/icon.png",
+    "32": "images/icon-2x.png",
+    "48": "images/icon-3x.png"
+  },
+  "manifest_version": 3,
+  "minimum_chrome_version": "88.0",
+  "name": "1Cademy Assistant",
+  "omnibox": {
+    "keyword": "1cademy"
+  },
+  "host_permissions": [
+    "http://*/*", "https://*/*", "chrome://favicon/*"
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "windows",
+    "storage",
+    "commands"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/chat*"],
+      "js": ["createToaster.js"]
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["paste-detector.js"]
+    },
+    {
+      "matches": [
+        "https://*.core-econ.org/the-economy/book/text/*",
+        "https://core-econ.org/the-economy/book/text/*",
+        "https://wordpress.deeplearning.ai/wp-content/uploads/2022/03/andrew-ng-machine-learning-yearning.pdf",
+        "http://localhost:3000/notebook*",
+        "https://1cademy.com/notebook*"
+      ],
+      "js": ["assistant.js"]
+    },
+    {
+      "matches": ["https://chat.openai.com/chat*"],
+      "js": ["app.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["http://*/*", "https://*/*"]
+  },
+  "short_name": "1Cademy Assistant Helper",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "0.0.1.0",
+  "version_name": "0.0.1.0",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "rive-assistant/loader/*.riv",
+        "rive-assistant/assistant-0.riv",
+        "rive-assistant/idle.riv",
+        "paste-detector.js",
+        "images/icon-2x.png",
+        "images/icon-3x.png",
+        "images/icon-8x.png",
+        "images/icon.png",
+        "images/icon.svg"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "commands": {
+    "oa-paraphrase-cgpt": {
+      "suggested_key": {
+        "default": "Alt+Shift+E"
+      },
+      "description": "Paraphrase using ChatGPT"
+    },
+    "oa-improve-cgpt": {
+      "suggested_key": {
+        "default": "Alt+Shift+O"
+      },
+      "description": "Improve using ChatGPT"
+    },
+    "oa-shorten-cgpt": {
+      "suggested_key": {
+        "default": "Alt+Shift+Q"
+      },
+      "description": "Shorten using ChatGPT"
+    },
+    "oa-mcq-cgpt": {
+      "suggested_key": {
+        "default": "Alt+Shift+W"
+      },
+      "description": "Generate MCQ using ChatGPT"
+    }
+  }
+}

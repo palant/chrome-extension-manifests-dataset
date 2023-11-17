@@ -1,0 +1,90 @@
+---
+slug: tijdelijk-noodfonds-energ
+name: Tijdelijk Noodfonds Energie
+description: >-
+  Deze extensie is nodig om jouw inkomensgegevens op te halen bij de
+  Belastingdienst en het UWV
+version: 1.0.0
+release_date: 'February 23, 2023'
+publisher: noodfondsenergie
+category: Productivity
+category_slug: ext/7-productivity
+rating: 1.2
+rating_count: 5
+user_count: 133
+size: 20.25KiB
+languages:
+  - Nederlands
+publisher_site: noodfondsenergie.nl
+extension_website: 'https://www.noodfondsenergie.nl/'
+support_website: 'https://www.noodfondsenergie.nl/faq'
+privacy_policy: 'https://www.noodfondsenergie.nl/privacyverklaring'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Tijdelijk Noodfonds Energie",
+  "description": "Deze extensie is nodig om jouw inkomensgegevens op te halen bij de Belastingdienst en het UWV",
+  "version": "1.0.0",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://www.noodfondsenergie.nl/",
+  "icons": {
+    "32": "resources/logo32X32.png",
+    "48": "resources/logo48X48.png",
+    "128": "resources/logo128X128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.uwv.nl/*",
+        "https://*.toeslagen.nl/*",
+        "https://*.belastingdienst.nl/*",
+        "https://*.digid.nl/*",
+        "https://*.aqopi.com/*",
+        "https://iwize.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/content.js",
+        "content/actions.js",
+        "content/crypto.js",
+        "content/templateMatching.js",
+        "content/fetchBlob.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://*.noodfondsenergie.nl/*",
+    "https://*.toeslagen.nl/*",
+    "https://*.uwv.nl/*",
+    "https://*.belastingdienst.nl/*",
+    "https://*.digid.nl/*",
+    "https://*.aqopi.com/*",
+    "https://iwize.nl/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "resources/logo32X32.png",
+    "default_title": "Noodfonds Energie"
+  },
+  "web_accessible_resources": [{
+    "resources": ["/resources/logo80X80.png"],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": [
+      "https://*.noodfondsenergie.nl/*",
+      "https://*.iwize.nl/*"
+    ]
+  }
+}

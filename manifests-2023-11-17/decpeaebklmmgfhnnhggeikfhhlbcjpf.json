@@ -1,0 +1,89 @@
+---
+slug: framendeley
+name: FRAMEndeley
+description: Enrich Mendeley with Thematic Analysis functionality.
+version: 0.2.82
+release_date: 'September 20, 2023'
+publisher: onekin.org
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.666666666666667
+rating_count: 3
+user_count: 623
+size: 4.1MiB
+languages:
+  - English
+privacy_policy: 'https://onekin.org?page_id=10'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appShortName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.2.82",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "icons": {
+    "16": "images/logo16.png",
+    "48": "images/logo48.png",
+    "128": "images/logo128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/logo19.png",
+      "38": "images/logo38.png"
+    },
+    "default_title": "__MSG_browserActionTitle__"
+  },
+  "background": {
+    "page": "pages/background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.mendeley.com/robots.txt*"
+      ],
+      "js": [
+        "scripts/oauth2_inject.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.mendeley.com/*"
+      ],
+      "js": [
+        "libs/ocrad.js",
+        "scripts/content_script.js"
+      ],
+      "css": [
+        "styles/contentScript.css",
+        "styles/jquery-ui.min.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "options_page": "pages/options.html",
+  "options_ui": {
+    "page": "pages/options.html",
+    "chrome_style": false,
+    "open_in_tab": true
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "https://api.mendeley.com/*",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "images/*",
+    "scripts/*",
+    "scripts/adapters/*",
+    "pages/*",
+    "libs/*"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApPaOsdyTcmY2fo/BqsZ8x95XwtNvMbtkvNLoUqvEq6rG1rq2YdD/NoTqerGFtjt+B/3LEYQqOAaL5lxoeKsVMBSk+ZDYsw4RrxZXZhtwI8ieAMTEJZqcDZHIotcJes+QhpzRv8UffUTdaLNncUC7mB8sZZi0PBSxCZp9poPXE0SCzs6+UmIFVHeWagxf2KLWVCdXutLvLMYtVoQiO2aqnQDLcdAhaH0a3ydH5ZUGwvW8Zke4OfBIS7IJty7yU9R9Eeqv5jsjBWopoyf7zA5pKW6RFeIN91XTBfLzvBAaW9yH0q13fTDtBjXW75PRyXscZZpLwXI/dT0i/CP2SbJ8dwIDAQAB"
+}

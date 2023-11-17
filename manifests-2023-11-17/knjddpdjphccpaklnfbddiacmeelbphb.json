@@ -1,0 +1,67 @@
+---
+slug: catastro-wms-fixer
+name: Catastro WMS Fixer
+description: Corrige errores del servidor WMS de Catastro.
+version: 1.1.9
+release_date: 'November 10, 2023'
+publisher: Goolzoom
+category: Productivity
+category_slug: ext/7-productivity
+rating: 2.25
+rating_count: 4
+user_count: '1,000+'
+size: 21.31KiB
+languages:
+  - español
+publisher_site: goolzoom.com
+extension_website: 'https://www.goolzoom.com'
+privacy_policy: 'http://es.goolzoom.com/info/privacidad.aspx'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Catastro WMS Fixer",
+  "description": "Corrige errores del servidor WMS de Catastro.",
+  "version": "1.1.9",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": ["declarativeNetRequest"],
+  "host_permissions": [
+    "https://www1.sedecatastro.gob.es/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "https://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?*" ],
+      "js": [ "ServidorWMS.js" ],
+      "all_frames": true
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "RemoveClassElements.js" ],
+      "all_frames": true
+    },
+    {
+      "matches": [ "https://www1.sedecatastro.gob.es/*" ],
+      "world": "MAIN",
+      "js": [ "RemoveTarget.js" ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  }
+}

@@ -1,0 +1,74 @@
+---
+slug: ai-writing-check
+name: AI Writing Check
+description: Checks any text to see if it is human-written.
+version: 2.1.1
+release_date: 'March 10, 2023'
+publisher: flarez5858
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 54
+size: 398KiB
+languages:
+  - English
+extension_website: 'https://stratums.io/aiwritingcheck/main.html'
+privacy_policy: 'https://ksw2-center.glitch.me/privacy.txt'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "AI Writing Check",
+    "description": "Checks any text to see if it is human-written.",
+    "version": "2.1.1",
+    "icons": {
+        "16": "logo/icon16.png",
+        "48": "logo/icon48.png",
+        "128": "logo/icon128.png"
+    },
+    "permissions": [
+      "activeTab",
+      "contextMenus",
+      "notifications"
+    ],
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    },
+    "content_scripts": [
+      {
+        "js": ["content.js"],
+        "matches": ["<all_urls>"],
+        "run_at": "document_end"
+      },
+      {
+        "js": ["word-hooks.js"],
+        "matches": ["https://usc-word-edit.officeapps.live.com/*"],
+        "run_at": "document_end",
+        "all_frames": true
+      }
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    },
+    "web_accessible_resources": [{
+      "resources": ["query-pdf.js"],
+      "matches": ["<all_urls>"],
+      "use_dynamic_url": true
+    }],  
+    "commands": {
+      "check-text": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+1",
+          "mac": "Command+Shift+1",
+          "windows": "Ctrl+Shift+1",
+          "chromeos": "Ctrl+Shift+1",
+          "linux": "Ctrl+Shift+1"
+        },
+        "description": "Check text for AI writing."
+      }
+    }  
+}

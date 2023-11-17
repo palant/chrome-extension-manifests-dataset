@@ -1,0 +1,160 @@
+---
+slug: neutral
+name: Neutral
+description: Neutralize your carbon emissions
+version: 0.9.40
+release_date: 'February 14, 2022'
+publisher: Neutral
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 9
+user_count: '1,000+'
+size: 11.01MiB
+languages:
+  - English
+extension_website: 'https://shopneutral.io/'
+support_website: 'https://shopneutral.io/'
+privacy_policy: 'https://shopneutral.io/privacy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Neutral",
+    "version": "0.9.40",
+    "description": "Neutralize your carbon emissions",
+    "applications": {
+        "gecko": {
+            "id": "hello@shopneutral.io"
+        }
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkN40pi1PHGauTXfAi72XIMz2sodgonqvXh4TG0/s6vCkFHDNUXH42awXw5E2B1taekAieg6ffLTJM0JzhhChc+C3NzGGKH73WwGLDApz8At7BCoIMLR3zfcH7vV5HGJ/7UiknQd5GHXfDmnJTpKmUcwvtr8EB6uhhq6gChT5nGHLo0owvlzpmGHHOMkMfxbPAzf8ff1RPAWj/nJMtHpNL+R89iNb22cNg4BELX1Qj96P+5yIQa9H6+Ov89QtVINv8l+Tsb155Ihc6fRJSq/f/T93YJ+pzGZ9xU5icucjpo9AqiqDL0Q0s+YKcyDhPpU/6/cNFKcWvGZOO1vkh8ym2wIDAQAB",
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png",
+        "256": "icons/icon256.png",
+        "512": "icons/icon512.png"
+    },
+    "web_accessible_resources": [
+        "fonts/*",
+        "icons/*",
+        "includes/*",
+        "media/*",
+        "src/options/*"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "*://*.shopneutral.io/*"
+        ]
+    },
+    "permissions": [
+        "tab",
+        "tabs",
+        "storage",
+        "*://amazon.ca/*",
+        "*://www.amazon.ca/*",
+        "*://amazon.com/*",
+        "*://www.amazon.com/*",
+        "*://amazon.co.uk/*",
+        "*://www.amazon.co.uk/*",
+        "*://amazon.com.au/*",
+        "*://www.amazon.com.au/*",
+        "*://*.shopneutral.io/*",
+        "*://*.onetreeplanted.org/*",
+        "https://connect.facebook.net/en_US/sdk.js"
+    ],
+    "content_security_policy": "script-src 'self' https://connect.facebook.net; object-src 'self'",
+    "background": {
+        "scripts": [
+            "includes/lodash-core.js",
+            "src/global.js",
+            "src/auth/auth.js",
+            "src/log/LogHelper.js",
+            "src/log/BackgroundLogger.js",
+            "src/log/RemoteLogger.js",
+            "src/BrowserSwitcher.js",
+            "src/AbstractWebsiteHandler.js",
+            "src/background/BackgroundMessage.js",
+            "src/background/IconSwitcher.js",
+            "src/background/background.js"
+        ],
+        "persistent": false
+    },
+    "browser_action": {
+        "default_title": "Neutral",
+        "default_popup": "src/popup/popup.html"
+    },
+    "options_page": "src/options/new/dashboard.html",
+    "options_ui": {
+        "page": "src/options/new/dashboard.html",
+        "browser_style": false,
+        "chrome_style": false,
+        "open_in_tab": true
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [
+                "*://amazon.ca/*",
+                "*://www.amazon.ca/*",
+                "*://amazon.com/*",
+                "*://www.amazon.com/*",
+                "*://amazon.co.uk/*",
+                "*://www.amazon.co.uk/*",
+                "*://amazon.com.au/*",
+                "*://www.amazon.com.au/*",
+                "*://*.shopneutral.io/*"
+            ],
+            "css": [
+                "includes/glide/glide.core.min.css",
+                "src/inject/contentScript.css"
+            ],
+            "js": [
+                "includes/glide/glide.min.js",
+                "src/global.js",
+                "src/log/LogHelper.js",
+                "src/BrowserSwitcher.js",
+                "src/AbstractWebsiteHandler.js",
+                "src/inject/PageHandler.js",
+                "src/inject/PaymentHandler.js",
+                "src/inject/contentScript.js",
+                "includes/Stripe.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://amazon.ca/gp/product/*",
+                "*://www.amazon.ca/gp/product/*",
+                "*://amazon.ca/*/dp/*",
+                "*://www.amazon.ca/*/dp/*",
+                "*://amazon.com/gp/product/*",
+                "*://www.amazon.com/gp/product/*",
+                "*://amazon.com/*/dp/*",
+                "*://www.amazon.com/*/dp/*",
+                "*://amazon.co.uk/gp/product/*",
+                "*://www.amazon.co.uk/gp/product/*",
+                "*://amazon.co.uk/dp/*",
+                "*://www.amazon.co.uk/dp/*",
+                "*://amazon.co.uk/*/dp/*",
+                "*://www.amazon.co.uk/*/dp/*",
+                "*://amazon.com.au/gp/product/*",
+                "*://www.amazon.com.au/gp/product/*",
+                "*://amazon.com.au/*/dp/*",
+                "*://www.amazon.com.au/*/dp/*",
+                "*://amazon.com.au/dp/*",
+                "*://www.amazon.com.au/dp/*"
+            ],
+            "css": [
+                "src/inject/contentScript.css"
+            ],
+            "js": [
+                "src/inject/carbon-report-handler.js"
+            ]
+        }
+    ]
+}

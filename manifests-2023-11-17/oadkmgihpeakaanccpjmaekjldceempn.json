@@ -1,0 +1,108 @@
+---
+slug: sei-bot
+name: SEI Bot
+description: |-
+  Adiciona links em documentos no SEI automaticamente.
+  Aumenta número máximo de caracteres aceitos no modelo de documentos.
+
+  Modo de…
+version: '0.4'
+release_date: 'November 26, 2021'
+publisher: hmarquesdeoliveira86
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 4.5
+rating_count: 2
+user_count: 920
+size: 40.47KiB
+languages:
+  - português (Brasil)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name":"SEI Bot",
+  "version": "0.4",
+  "default_icon": "img/icons/sei128.png",
+  "icons": { "16": "img/icons/sei16.png",
+           "48": "img/icons/sei48.png",
+          "128": "img/icons/sei128.png" },
+  "web_accessible_resources":[
+    "img/*svg",
+    "img/*png",
+    "pages/info.html"
+  ],
+  "content_scripts": [
+
+    {
+      "matches": [
+        "*://sei.ibama.gov.br/controlador.php?acao=editor_montar&acao_origem=arvore_visualiza*",
+        "*://sei.ibama.gov.br/sei/controlador.php?acao=editor_montar&acao_origem=arvore_visualiza*",
+        "*://*/controlador.php?acao=editor_montar&acao_origem=arvore_visualiza*",
+        "*://*/sei/controlador.php?acao=editor_montar&acao_origem=arvore_visualiza*",
+        "*://*/sei/controlador.php?acao=editor_montar&id_procedimento*",
+      "*://*/controlador.php?acao=editor_montar&id_procedimento*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "js": [
+        "script/createLink2.js"
+      ],
+      "css":[
+        "styles/createLink.css"
+      ]
+    },
+
+    {
+    "matches": ["*://sei.ibama.gov.br/controlador.php?acao=procedimento_trabalhar*",
+    "*://sei.ibama.gov.br/sei/controlador.php?acao=procedimento_trabalhar*",
+    "*://*/controlador.php?acao=procedimento_trabalhar*",
+    "*://*/sei/controlador.php?acao=procedimento_trabalhar*",
+    "*://*/sei/controlador.php?acao=editor_montar&id_procedimento*",
+      "*://*/controlador.php?acao=editor_montar&id_procedimento*"
+  ],
+    "run_at": "document_idle",
+    "all_frames": true,
+    "js": [
+        "script/copyLink.js"
+
+    ]
+  },
+  {
+      "matches": ["*://sei.ibama.gov.br/controlador.php?acao=procedimento_trabalhar*",
+      "*://sei.ibama.gov.br/sei/controlador.php?acao=procedimento_trabalhar*",
+      "*://*/controlador.php?acao=procedimento_trabalhar*",
+      "*://*/sei/controlador.php?acao=procedimento_trabalhar*",
+      "*://*/sei/controlador.php?acao=editor_montar&id_procedimento*",
+      "*://*/controlador.php?acao=editor_montar&id_procedimento*"
+
+    ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "js": [
+        "script/gerarDocumento.js"
+
+      ]
+    },
+    {
+      "matches": ["*://sei.ibama.gov.br/controlador.php?acao=protocolo_pesquisa*",
+      "*://sei.ibama.gov.br/sei/controlador.php?acao=protocolo_pesquisa*",
+      "*://*/controlador.php?acao=protocolo_pesquisa*",
+      "*://*/sei/controlador.php?acao=protocolo_pesquisa*"],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "js": ["script/researchTools.js"
+        
+       
+      ],
+      "css":["styles/researchTools.css"
+        
+      
+      ]
+    }
+
+]
+
+}

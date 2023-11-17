@@ -1,0 +1,71 @@
+---
+slug: reviewdb-twitter
+name: ReviewDB Twitter
+description: Allows you to review other Twitter users
+version: 0.1.1
+release_date: 'June 6, 2023'
+publisher: mantikafasi
+category: Fun
+category_slug: ext/14-fun
+rating: 3.4
+rating_count: 5
+user_count: 74
+size: 56.42KiB
+languages:
+  - English
+extension_website: 'https://reviewdb.mantikafasi.dev'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ReviewDB Twitter",
+    "version": "0.1.1",
+    "description": "Allows you to review other Twitter users",
+    "icons": {
+        "16": "icons/icon_16.png",
+        "32": "icons/icon_32.png",
+        "48": "icons/icon_48.png",
+        "128": "icons/icon_128.png"
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": ["bundle.js", "bundle.css"],
+            "matches": ["https://twitter.com/*"]
+        },
+        {
+            "resources": ["authpage.html"],
+            "matches": ["https://manti.vendicated.dev/*"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://twitter.com/*"],
+            "run_at": "document_start",
+            "js": ["content.js"]
+        },
+        {
+            "matches": ["https://manti.vendicated.dev/api/reviewdb-twitter/auth*"],
+            "js": ["auth.js"]
+        }
+    ],
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "permissions": ["storage"],
+
+    "externally_connectable": {
+        "matches": [
+            "https://manti.vendicated.dev/api/reviewdb-twitter/auth",
+            "https://twitter.com/*"
+        ]
+    }
+}

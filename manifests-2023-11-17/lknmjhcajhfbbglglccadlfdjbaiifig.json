@@ -1,0 +1,131 @@
+---
+slug: record-transcribe-chatgpt
+name: 'Record, Transcribe & ChatGPT for Google Meet'
+description: Automatically record & transcribe Google Meet for FREE. 500k+ users
+version: 2.24.1
+release_date: 'November 1, 2023'
+publisher: tl;dv
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.855123674911661
+rating_count: 283
+user_count: '100,000+'
+size: 1.47MiB
+languages:
+  - English
+publisher_site: tldv.io
+extension_website: 'https://tldv.io'
+support_website: 'https://intercom.help/tldv/en'
+privacy_policy: 'https://tldv.io/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "2.24.1",
+  "short_name": "__MSG_appShortName__",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlkFjXjhDDdF0R7hADtKGAhpHcFHyAwy/1J98Fkr9xlZEdmSCWfKyQ5PxbEb7vzQQkKoPgaWwb8p0aZZjFzy4fJOj+0bW0+UefYx4xDDPESgnj7qeTXu7gcQq0NekDhn72RlYGzW3nnf460fMCfa/96cuCGvo965PRAZs+Hgvq+ZZlx1ibADTVNc5lMx4SjRFBjTl1i/4nPz+Zay+lT+5Trzx74Oi0rwMQb8PxA7+VsEbE4U87u3xYirg0St+G9gfy7NU00aFnnR7pHAjGxz2RC61RkQecWC9hT/UhJU8iMbMeiyL0WaXHtfOfsk8LAjN7HmljdbzzCqnHyaCbmpZFQIDAQAB",
+  "icons": {
+    "16": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
+  "action": {
+    "default_icon": "images/icon.png",
+    "default_title": "__MSG_browserActionTitle__"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://tldv.io/*",
+      "*://tldv.tech/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/*.map"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "optional_permissions": [
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://meet.google.com/*",
+        "*://*.zoom.us/*",
+        "*://calendar.google.com/*",
+        "*://*.tldv.io/app/embed/*",
+        "*://*.tldv.tech/app/embed/*"
+      ],
+      "css": [
+        "styles/fonts.css",
+        "styles/multi-tabs.css"
+      ],
+      "js": [
+        "scripts/multi-tabs-interface.script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://meet.google.com/*"
+      ],
+      "css": [
+        "styles/fonts.css",
+        "styles/basic.css"
+      ],
+      "js": [
+        "scripts/service-worker.script.js",
+        "scripts/google-meet.script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://calendar.google.com/*"
+      ],
+      "css": [
+        "styles/fonts.css",
+        "styles/basic.css"
+      ],
+      "js": [
+        "scripts/google-calendar.script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "pin-highlight": {
+      "suggested_key": {
+        "default": "Ctrl+Period",
+        "mac": "Command+Period"
+      },
+      "description": "Create a highlight during a meeting"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

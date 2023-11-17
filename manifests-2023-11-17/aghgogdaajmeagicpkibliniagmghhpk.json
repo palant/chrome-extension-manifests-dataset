@@ -1,0 +1,573 @@
+---
+slug: magnet拡張機能
+name: Magnet拡張機能
+description: Magnetサービスご契約者さま専用の拡張機能です。Yahoo!ストアクリエイターを自動更新することができます。
+version: 2.0.9
+release_date: 'August 2, 2023'
+publisher: 株式会社オーガランド
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '5,000+'
+size: 32.21MiB
+languages:
+  - 日本語
+extension_website: 'https://ec-magnet.com/'
+support_website: 'https://o-magnet.zendesk.com/'
+privacy_policy: 'https://ogaland.co.jp/policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Magnet拡張機能",
+  "description": "Magnetサービスご契約者さま専用の拡張機能です。Yahoo!ストアクリエイターを自動更新することができます。",
+  "version": "2.0.9",
+  "manifest_version": 3,
+  "icons": {
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "action": {
+    "default_title": "Magnet拡張機能",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "$comment": "拡張機能インストールチェック",
+      "matches": [
+        "http://localhost:3010/*",
+        "*://stg.ec-magnet.com/*",
+        "*://ec-magnet.com/*"
+      ],
+      "js": [
+        "site/pages/installed.js"
+      ]
+    },
+    {
+      "$comment": "ストクリログインチェック",
+      "matches": [
+        "https://login.yahoo.co.jp/config/login?*"
+      ],
+      "js": [
+        "site/pages/need_login.js"
+      ]
+    },
+    {
+      "$comment": "入り口ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*?magnet=*"
+      ],
+      "js": [
+        "site/pages/open.js"
+      ],
+      "css": [
+        "site/pages/open.css"
+      ]
+    },
+    {
+      "$comment": "ストア情報設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/index",
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/index?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/store/index.js"
+      ],
+      "css": [
+        "site/pages/set/store/index.css"
+      ]
+    },
+    {
+      "$comment": "ストア情報設定確認ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/index/confirm"
+      ],
+      "js": [
+        "site/pages/set/store/index_confirm.js"
+      ],
+      "css": [
+        "site/pages/set/store/index_confirm.css"
+      ]
+    },
+    {
+      "$comment": "カレンダー設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/calendar",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/calendar?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/cart/calendar/index.js"
+      ],
+      "css": [
+        "site/pages/set/cart/calendar/index.css"
+      ]
+    },
+    {
+      "$comment": "お買い物ガイド設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/guide",
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/guide?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/store/guide.js"
+      ],
+      "css": [
+        "site/pages/set/store/guide.css"
+      ]
+    },
+    {
+      "$comment": "お買い物ガイド設定確認ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/guide/confirm"
+      ],
+      "js": [
+        "site/pages/set/store/guide_confirm.js"
+      ],
+      "css": [
+        "site/pages/set/store/guide_confirm.css"
+      ]
+    },
+    {
+      "$comment": "会社情報設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/corp",
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/corp?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/store/corp.js"
+      ],
+      "css": [
+        "site/pages/set/store/corp.css"
+      ]
+    },
+    {
+      "$comment": "会社情報確認ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/corp/confirm"
+      ],
+      "js": [
+        "site/pages/set/store/corp_confirm.js"
+      ],
+      "css": [
+        "site/pages/set/store/corp_confirm.css"
+      ]
+    },
+    {
+      "$comment": "アラート・通知設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/setting/notify",
+        "https://*.store.yahoo.co.jp/pro.*/setting/notify?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/setting/notify.js"
+      ],
+      "css": [
+        "site/pages/set/setting/notify.css"
+      ]
+    },
+    {
+      "$comment": "アラート・通知設定編集ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/setting/notify/edit",
+        "https://*.store.yahoo.co.jp/pro.*/setting/notify/update"
+      ],
+      "js": [
+        "site/pages/set/setting/notify_edit.js"
+      ],
+      "css": [
+        "site/pages/set/setting/notify_edit.css"
+      ]
+    },
+    {
+      "$comment": "プライバシーポリシー設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/privacy_policy",
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/privacy_policy?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/store/privacy_policy/index.js"
+      ],
+      "css": [
+        "site/pages/set/store/privacy_policy/index.css"
+      ]
+    },
+    {
+      "$comment": "プライバシーポリシー確認ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/store/privacy_policy/confirm"
+      ],
+      "js": [
+        "site/pages/set/store/privacy_policy/index_confirm.js"
+      ],
+      "css": [
+        "site/pages/set/store/privacy_policy/index_confirm.css"
+      ]
+    },
+    {
+      "$comment": "支払い方法設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/pay_method/index",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/pay_method/index?*"
+      ],
+      "js": [
+        "site/pages/set/cart/pay_method/index.js"
+      ],
+      "css": [
+        "site/pages/set/cart/pay_method/index.css"
+      ]
+    },
+    {
+      "$comment": "支払い方法編集ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/pay_method/index/edit"
+      ],
+      "js": [
+        "site/pages/set/cart/pay_method/index_edit.js"
+      ],
+      "css": [
+        "site/pages/set/cart/pay_method/index_edit.css"
+      ]
+    },
+    {
+      "$comment": "支払い方法確認ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/pay_method/index/confirm"
+      ],
+      "js": [
+        "site/pages/set/cart/pay_method/index_confirm.js"
+      ],
+      "css": [
+        "site/pages/set/cart/pay_method/index_confirm.css"
+      ]
+    },
+    {
+      "$comment": "配送送料設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/index",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/index?*"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_method/index.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_method/index.css"
+      ]
+    },
+    {
+      "$comment": "配送送料設定ページ(条件付き送料無料設定)",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/base",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/base/update"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_method/base.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_method/base.css"
+      ]
+    },
+    {
+      "$comment": "配送送料設定ページ(支払い方法設定)",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/method",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/method/update"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_method/method.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_method/method.css"
+      ]
+    },
+    {
+      "$comment": "配送送料設定ページ(送料設定)",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/fee",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/fee/edit?*",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/fee/confirm",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/fee/update"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_method/fee.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_method/fee.css"
+      ]
+    },
+    {
+      "$comment": "配送送料設定ページ(配送スケジュール設定)",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/schedule",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_method/schedule/confirm"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_method/schedule.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_method/schedule.css"
+      ]
+    },
+    {
+      "$comment": "配送グループ設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/delivery/index",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/delivery/index?RMC=*",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/delivery/setting",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/delivery/setting/update"
+      ],
+      "js": [
+        "site/pages/set/cart/delivery.js"
+      ],
+      "css": [
+        "site/pages/set/cart/delivery.css"
+      ]
+    },
+    {
+      "$comment": "メールテンプレート設定（一覧・完了）ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/order/setting/mail/index",
+        "https://*.store.yahoo.co.jp/pro.*/order/setting/mail/index?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/mail/index.js"
+      ],
+      "css": [
+        "site/pages/set/mail/index.css"
+      ]
+    },
+    {
+      "$comment": "メールテンプレート設定(編集・エラー）ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/order/setting/mail/index/edit",
+        "https://*.store.yahoo.co.jp/pro.*/order/setting/mail/index/update"
+      ],
+      "js": [
+        "site/pages/set/mail/index_edit.js"
+      ],
+      "css": [
+        "site/pages/set/mail/index_edit.css"
+      ]
+    },
+    {
+      "$comment": "お届け情報設定ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_info/index",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_info/index?RMC=*"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_info/index.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_info/index.css"
+      ]
+    },
+    {
+      "$comment": "お届け発送日情報編集・追加ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_info/lead_time",
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_info/lead_time/edit"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_info/lead_time_edit.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_info/lead_time_edit.css"
+      ]
+    },
+    {
+      "$comment": "お届け発送日情報確認ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_info/lead_time/confirm"
+      ],
+      "js": [
+        "site/pages/set/cart/ship_info/lead_time_confirm.js"
+      ],
+      "css": [
+        "site/pages/set/cart/ship_info/lead_time_confirm.css"
+      ]
+    },
+    {
+      "$comment": "トップページフリースペース",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/PageEdit/index?page_key=index*"
+      ],
+      "js": [
+        "site/pages/set/editor/PageEdit.js"
+      ],
+      "css": [
+        "site/pages/set/editor/PageEdit.css"
+      ]
+    },
+    {
+      "$comment": "ヘッダー",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/StoreDesignManager/headerEdit*"
+      ],
+      "js": [
+        "site/pages/set/editor/StoreDesignManager/headerEdit.js"
+      ],
+      "css": [
+        "site/pages/set/editor/StoreDesignManager/headerEdit.css"
+      ]
+    },
+    {
+      "$comment": "フッター",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/StoreDesignManager/footerEdit*"
+      ],
+      "js": [
+        "site/pages/set/editor/StoreDesignManager/footerEdit.js"
+      ],
+      "css": [
+        "site/pages/set/editor/StoreDesignManager/footerEdit.css"
+      ]
+    },
+    {
+      "$comment": "反映管理ページ",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/PublishMgr*"
+      ],
+      "js": [
+        "site/pages/set/editor/PublishMgr.js"
+      ],
+      "css": [
+        "site/pages/set/editor/PublishMgr.css"
+      ]
+    },
+    {
+      "$comment": "開店フラグ取得",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/PageEdit/index?get=opening"
+      ],
+      "js": [
+        "site/pages/get/editor/PageEdit/index.js"
+      ],
+      "css": [
+        "site/pages/get/editor/PageEdit/index.css"
+      ]
+    },
+    {
+      "$comment": "TOPページ、開店までstep取得",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*?get=opening",
+        "https://*.store.yahoo.co.jp/pro.*?get=opening_step"
+      ],
+      "js": [
+        "site/pages/get/index.js"
+      ],
+      "css": [
+        "site/pages/get/index.css"
+      ]
+    },
+    {
+      "$comment": "配送グループ一覧ページのデータ取得",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/delivery/index?get=*"
+      ],
+      "js": [
+        "site/pages/get/seller/cart/delivery/index.js"
+      ],
+      "css": [
+        "site/pages/get/seller/cart/delivery/index.css"
+      ]
+    },
+    {
+      "$comment": "お届け情報設定ページのデータ取得",
+      "matches": [
+        "https://*.store.yahoo.co.jp/pro.*/seller/cart/ship_info/index?get=*"
+      ],
+      "js": [
+        "site/pages/get/seller/cart/ship_info/index.js"
+      ],
+      "css": [
+        "site/pages/get/seller/cart/ship_info/index.css"
+      ]
+    },
+    {
+      "$comment": "カテゴリ全取得",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/CategoryMgr/index?get=*"
+      ],
+      "js": [
+        "site/pages/get/editor/CategoryMgr/index.js"
+      ],
+      "css": [
+        "site/pages/get/editor/CategoryMgr/index.css"
+      ]
+    },
+    {
+      "$comment": "商品販売実績取得",
+      "matches": [
+        "https://*.store.yahoo.co.jp/RT/*/PageEdit/index?page_key=*&get=*"
+      ],
+      "js": [
+        "site/pages/get/editor/PageEdit/index.js"
+      ],
+      "css": [
+        "site/pages/get/editor/PageEdit/index.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.store.yahoo.co.jp/*"
+      ],
+      "resources": [
+        "site/wrap.html",
+        "site/pages/open.css",
+        "site/pages/set/store/index.css",
+        "site/pages/set/store/index_confirm.css",
+        "site/pages/set/cart/calendar/index.css",
+        "site/pages/set/store/guide.css",
+        "site/pages/set/store/guide_confirm.css",
+        "site/pages/set/store/corp.css",
+        "site/pages/set/store/corp_confirm.css",
+        "site/pages/set/setting/notify.css",
+        "site/pages/set/setting/notify_edit.css",
+        "site/pages/set/store/privacy_policy/index.css",
+        "site/pages/set/store/privacy_policy/index_confirm.css",
+        "site/pages/set/cart/pay_method/index.css",
+        "site/pages/set/cart/pay_method/index_edit.css",
+        "site/pages/set/cart/pay_method/index_confirm.css",
+        "site/pages/set/cart/ship_method/index.css",
+        "site/pages/set/cart/ship_method/base.css",
+        "site/pages/set/cart/ship_method/method.css",
+        "site/pages/set/cart/ship_method/fee.css",
+        "site/pages/set/cart/ship_method/schedule.css",
+        "site/pages/set/cart/delivery.css",
+        "site/pages/set/mail/index.css",
+        "site/pages/set/mail/index_edit.css",
+        "site/pages/set/cart/ship_info/index.css",
+        "site/pages/set/cart/ship_info/lead_time_edit.css",
+        "site/pages/set/cart/ship_info/lead_time_confirm.css",
+        "site/pages/set/editor/PageEdit.css",
+        "site/pages/set/editor/StoreDesignManager/headerEdit.css",
+        "site/pages/set/editor/StoreDesignManager/footerEdit.css",
+        "site/pages/set/editor/PublishMgr.css",
+        "site/pages/get/index.css",
+        "site/pages/get/seller/cart/delivery/index.css",
+        "site/pages/get/seller/cart/ship_info/index.css",
+        "site/pages/get/editor/CategoryMgr/index.css",
+        "site/pages/get/editor/PageEdit/index.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://ec-magnet.com/*",
+    "https://stg.ec-magnet.com/*"
+  ]
+}

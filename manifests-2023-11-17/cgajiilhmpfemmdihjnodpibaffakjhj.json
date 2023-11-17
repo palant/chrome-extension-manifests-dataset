@@ -1,0 +1,97 @@
+---
+slug: slid-smarter-video-note-t
+name: 'Slid: Smarter Video Note-taking with ChatGPT'
+description: Study App for video note-taking with ChatGPT
+version: 2.3.3
+release_date: 'November 7, 2023'
+publisher: dev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.746478873239437
+rating_count: 142
+user_count: '40,000+'
+size: 3.92MiB
+languages:
+  - English
+  - 한국어
+publisher_site: slid.cc
+extension_website: 'https://slid.cc/'
+support_website: 'http://slid.channel.io/'
+privacy_policy: 'https://slid.oopy.io/b94a5939-44f2-4b50-8d97-a497d1e91537'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "2.3.3",
+  "short_name": "Slid",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "browser_action": {
+    "default_title": "Slid",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["background.bundle.js"],
+    "persistent": true
+  },
+  "icons": {
+    "16": "img/slid_logo.png",
+    "48": "img/slid_logo.png",
+    "128": "img/slid_logo.png"
+  },
+  "options_ui": {
+    "page": "setting.html",
+    "open_in_tab": false
+  },
+  "externally_connectable": {
+    "matches": ["*://*.slid.cc/*", "http://localhost:3000/*", "http://localhost:3001/*"]
+  },
+  "permissions": ["activeTab", "cookies", "tabs", "tabCapture", "storage", "http://*/*.m3u8", "https://*/*.m3u8", "http://*/*.mp4", "https://*/*.mp4", "https://*.slid.cc/", "<all_urls>"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:3000/*", "http://localhost:3001/*", "*://*.slid.cc/*", "https://www.youtube.com/*", "https://mkyu.co.kr/*", "http://*/*", "https://*/*"],
+      "js": ["background/injectExtensionId.js"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["background/extensionOnboarding.js"],
+      "css": ["background/instantStartHoverButton.css", "background/global.css"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "exclude_matches": ["https://www.youtube.com/*"],
+      "js": ["background/injectHoverButton.js"]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["background/YouTubeInstantStartButton.js"],
+      "css": ["background/instantStartButton.css", "background/global.css"]
+    },
+    {
+      "matches": ["https://mkyu.co.kr/*", "https://www.mkyu.co.kr/*"],
+      "js": ["background/MKYUInstantStartButton.js"],
+      "css": ["background/instantStartButton.css", "background/global.css"]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/watch?v=TKwLx1MKQBo&t=12s*",
+        "https://www.youtube.com/watch?v=TKwLx1MKQBo*",
+        "https://www.youtube.com/watch?v=fSghyubwNkM&t=2s*",
+        "https://www.youtube.com/watch?v=fSghyubwNkM*"
+      ],
+      "js": ["background/ExtensionGuide/YoutubeExtensionGuide.js"],
+      "css": ["background/ExtensionGuide/ExtensionGuide.css", "background/global.css"]
+    },
+    {
+      "matches": ["https://vimeo.com/746434657", "https://vimeo.com/746757206"],
+      "js": ["background/ExtensionGuide/VimeoExtensionGuide.js"],
+      "css": ["background/ExtensionGuide/ExtensionGuide.css", "background/global.css"]
+    }
+  ],
+
+  "web_accessible_resources": ["design/assets/*"]
+}

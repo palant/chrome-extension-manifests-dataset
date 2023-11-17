@@ -1,0 +1,158 @@
+---
+slug: testbuddy-your-true-qa-bu
+name: TestBuddy - Your true QA buddy
+description: Your bug reporting helper
+version: 1.2.0
+release_date: 'October 15, 2023'
+publisher: Test Unity
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4.636363636363637
+rating_count: 11
+user_count: 175
+size: 7.02MiB
+languages:
+  - English
+extension_website: 'https://testbuddy.io/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "background": {
+    "service_worker": "./dist/bg.js"
+  },
+  "short_name": "TestBuddy",
+  "description": "Your bug reporting helper",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/dist/document_start.js"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./dist/fabric.min.js"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": ["/dist/contentScript.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": ["./dist/domEventListeners.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": ["./dist/recordingEventListeners.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "icons": {
+    "128": "/assets/images/icon/icon_128.png",
+    "16": "/assets/images/icon/icon_16.png",
+    "32": "/assets/images/icon/icon_32.png",
+    "48": "/assets/images/icon/icon_48.png"
+  },
+  "action": {
+    "default_title": "Open TestBuddy",
+    "default_popup": "/html/popup.html"
+  },
+  "manifest_version": 3,
+
+  "name": "TestBuddy - Your true QA buddy",
+  "oauth2": {
+    "client_id": "683428039698-9ofji43hi325u99soqc0hnam2oj7hpv3.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/chromewebe.readonly",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "externally_connectable": {
+    "matches": ["*://*.testbuddy.io/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["/assets/*"]
+    },
+
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["./dist/document_start.js"]
+    },
+    {
+      "resources": ["./dist/countDownHTML.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["./dist/contentScript.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["./dist/domEventListeners.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["./dist/recordingEventListeners.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["/dist/script.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["./dist/fabric.min.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["./css/annotation.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "background",
+    "management",
+    "tabs",
+    "desktopCapture",
+    "webRequest",
+    "scripting",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "version": "1.2.0"
+}

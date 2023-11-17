@@ -1,0 +1,119 @@
+---
+slug: bbo-helper
+name: BBO Helper
+description: Adds functionally to Bridge Base Online (BBO) website
+version: 1.4.8
+release_date: 'September 11, 2023'
+publisher: Matthew Kidd
+category: Fun
+category_slug: ext/14-fun
+rating: 0
+rating_count: 0
+user_count: '1,000+'
+size: 1.71MiB
+languages:
+  - Deutsch
+  - English
+  - dansk
+  - español
+  - italiano
+  - română
+  - 中文 (简体)
+extension_website: 'https://lajollabridge.com/Software/BBO-Helper/'
+support_website: 'https://lajollabridge.com/Software/BBO-Helper/'
+privacy_policy: 'https://lajollabridge.com/Software/BBO-Helper/privacy.htm'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "version": "1.4.8",
+
+  "description": "__MSG_appDesc__",
+  "homepage_url": "https://lajollabridge.com/Software/BBO-Helper/",
+  "default_locale": "en",
+  "incognito": "spanning",
+  
+  "icons": {
+    "96": "icons/B++96.png",
+    "48": "icons/B++48.png",
+    "32": "icons/B++32.png",
+    "24": "icons/B++24.png",
+    "16": "icons/B++16.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://www.bridgebase.com/myhands/hands.php?username=*"],
+      "css": ["global.css", "hands.css"],
+      "js": ["FileSaver.js", "common.js", "hands.js"]
+    },
+
+    {
+      "matches": ["*://www.bridgebase.com/myhands/hands.php?traveller=*"],
+      "css": ["global.css", "traveller.css"],
+      "js": ["FileSaver.js", "common.js", "traveller.js"]
+    },
+
+    {
+      "matches": ["*://www.bridgebase.com/tools/handviewer.html*"],
+      "css": ["global.css"],
+      "js": ["FileSaver.js", "common.js", "handviewer.js"]
+    },
+
+    {
+      "matches": ["*://www.bridgebase.com/v3/*"],
+      "css": ["global.css"],
+      "js": ["FileSaver.js", "common.js", "bbov3.js"],
+      "run_at": "document_end"
+    },
+
+    {
+      "matches": ["*://webutil.bridgebase.com/v2/tview.php*"],
+      "js": ["tview.js"],
+      "css": ["tview.css"]
+    },
+    
+    {
+      "matches": ["https://www.ebu.co.uk/ngs/search*"],
+      "js": ["ngssearch.js"]
+    }   
+    
+  ],
+
+  "permissions": [ "activeTab", "clipboardWrite", "storage", "unlimitedStorage" ],
+    
+  "host_permissions": [
+ "https://webutil.bridgebase.com/*", "https://dds.bridgewebs.com/bsol2/*",
+ "https://dds.bridgewebs.com/cgi-bin/bsol2/*"
+  ],
+  
+  "action": {
+    "default_icon": {
+       "16": "icons/B++16.png",
+       "24": "icons/B++24.png",
+       "32": "icons/B++32.png"      
+    },
+    "default_title": "BBO Helper",
+    "default_popup": "popupmenu.html"
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+
+  "background": {
+  "service_worker": "service.js",
+  "type": "module"
+  },
+
+  "web_accessible_resources": [ 
+ { "resources": ["injectedbbo.js", "buttons/*.png", "images/*.png", "icons/*.png", "sesshands/*"],
+   "matches": ["*://www.bridgebase.com/*"]
+ }
+ ]
+ 
+}

@@ -1,0 +1,87 @@
+---
+slug: forgecommander-integratio
+name: ForgeCommander Integration
+description: >-
+  Connects your Forge of Empires session with your ForgeCommander session and
+  optionally records your statistic data to ForgeCommander
+version: '1.107'
+release_date: 'July 18, 2021'
+publisher: forgecommander.com
+category: Fun
+category_slug: ext/14-fun
+rating: 4.2
+rating_count: 5
+user_count: '1,000+'
+size: 27.47KiB
+languages:
+  - English
+publisher_site: www.forgecommander.com
+extension_website: 'https://forgecommander.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "ForgeCommander Integration",
+    "short_name": "ForgeCommander",
+    "description": "Connects your Forge of Empires session with your ForgeCommander session and optionally records your statistic data to ForgeCommander",
+    "author": "ForgeCommander.com",
+    "icons": {
+        "16": "icon16.png",
+        "24": "icon24.png",
+        "48": "icon48.png",
+        "64": "icon64.png",
+        "128": "icon128.png"
+    },
+    "homepage_url": "https://forgecommander.com",
+    "version": "1.107",
+    "permissions": [
+        "cookies",
+        "webRequest",
+        "webRequestBlocking",
+        "*://forgecommander.com/",
+        "*://*.forgeofempires.com/game/index*",
+        "*://*.forgeofempires.com/page/"
+    ],
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [ "*://*.forgeofempires.com/page/" ],
+            "js": [ "foe_page_inject.js" ],
+            "all_frames": true
+        },
+        {
+            "run_at": "document_start",
+            "matches": [ "*://forgecommander.com/", "*://forgecommander.com/index*" ],
+            "js": [ "fc_index_inject.js" ],
+            "all_frames": true
+        },
+        {
+            "run_at": "document_end",
+            "matches": [ "*://*.forgeofempires.com/game/index*" ],
+            "js": [ "foe_game_index_inject.js" ],
+            "all_frames": true
+        },
+        {
+            "run_at": "document_start",
+            "matches": [ "*://*.forgeofempires.com/*","*://forgeofempires.com/*" ],
+            "js": [ "foe_secure_cookies_inject.js" ],
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "scripts": [ "background.js" ],
+        "persistent": true
+    },
+    "web_accessible_resources": [
+        "foe_page.js",
+        "foe_game_index.js",
+        "foe_secure_cookies.js",
+        "fc_index.js"
+    ],
+    "externally_connectable": {
+        "matches": [ "*://forgecommander.com/", "*://forgecommander.com/index*" ]
+    }
+}

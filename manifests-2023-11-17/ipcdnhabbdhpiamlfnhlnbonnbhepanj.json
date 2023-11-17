@@ -1,0 +1,72 @@
+---
+slug: grammy-wammy
+name: Grammy Wammy
+description: >-
+  Automate and scale your Instagram engagement and relationship management on
+  the fly
+version: 1.0.4
+release_date: 'November 17, 2023'
+publisher: Tier5 Technologies
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 3
+user_count: 203
+size: 3.6MiB
+languages:
+  - English
+publisher_site: grammywammy.com
+privacy_policy: 'https://www.tier5.us/chrome-extension-privacy-policies.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Grammy Wammy",
+  "version": "1.0.4",
+  "manifest_version": 2,
+  "description": "Automate and scale your Instagram engagement and relationship management on the fly",
+  "icons": {
+    "48": "48X48.png",
+    "128": "128X128.png"
+  },
+  "browser_action": {
+    "default_icon": "128X128.png",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": ["128X128.png"],
+  "background": {
+    "scripts": ["inject-helper/js/jquery-3.1.0.min.js", "background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "storage",
+    "clipboardRead",
+    "https://www.instagram.com/*",
+    "debugger"
+  ],
+
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "persistent": true,
+      "js": ["vendor.js", "profileGetter.js"],
+      "matches": ["https://www.instagram.com/"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "persistent": true,
+      "js": ["vendor.js", "ListingMessageChecker.js"],
+      "matches": ["https://www.instagram.com/direct/inbox/"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "persistent": true,
+      "js": ["vendor.js", "IndividualMessageChecker.js"],
+      "matches": ["https://www.instagram.com/direct/t/*"],
+      "run_at": "document_end"
+    }
+  ]
+}

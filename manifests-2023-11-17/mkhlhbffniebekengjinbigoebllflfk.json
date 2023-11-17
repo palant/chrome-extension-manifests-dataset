@@ -1,0 +1,115 @@
+---
+slug: adtranquility-spam-protec
+name: AdTranquility Spam Protection
+description: AdTranquility Spam extension blocks aggressive spam push/pop notifications.
+version: 1.2.5
+release_date: 'October 4, 2023'
+publisher: AdTranquility
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.2
+rating_count: 5
+user_count: '2,000+'
+size: 964KiB
+languages:
+  - English
+extension_website: 'https://adtranquility.com'
+support_website: 'https://adtranq.us'
+privacy_policy: 'https://www.iubenda.com/privacy-policy/59177745'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "name": "__MSG_appName__",
+  "version": "1.2.5",
+  "manifest_version": 3,
+  "description": "__MSG_appDescription__",
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": ["scripts/youtube-script.js"],
+      "run_at": "document_idle",
+      "type": "module"
+    },
+    {
+      "matches": ["https://adtranq.us/refund/"],
+      "js": ["scripts/cancelSupport.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "js": ["scripts/facebook.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/adblock-detection-script.js"],
+      "exclude_matches": [
+        "*://*.chrome.google.com/*"
+      ],
+      "run_at": "document_idle",
+      "type": "module"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "contentSettings",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequestWithHostAccess",
+    "proxy",
+    "scripting",
+    "storage",
+    "tabs",
+    "webRequest",
+    "webRequestAuthProvider"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
+    "default_title": "__MSG_appName__"
+  },
+  "declarative_net_request" : {
+    "rule_resources" : [
+      {
+        "id": "general_easylist",
+        "enabled": true,
+        "path": "rules/easylist.json"
+      }
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src https://api.adtranquility.com/api/v2/ https://api.adtranquility.com/api/v2/"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "installed.html",
+        "notificationList.html",
+        "whitelistedSitesList.html",
+        "support.html",
+        "verify.html"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

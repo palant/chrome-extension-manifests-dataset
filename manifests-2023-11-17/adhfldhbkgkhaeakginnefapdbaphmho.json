@@ -1,0 +1,86 @@
+---
+slug: fetchit
+name: Fetchit
+description: Fetchit Chrome Extension
+version: '0.8'
+release_date: 'May 19, 2023'
+publisher: Schultz Technology
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 279
+size: 53.58KiB
+languages:
+  - English (United States)
+extension_website: 'https://fetchitdata.com'
+support_website: 'https://fetchitdata.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Fetchit",
+  "description": "Fetchit Chrome Extension",
+  "version": "0.8",
+  "icons": {
+    "128": "/images/logo.png"
+  },
+  "permissions": [
+    "tabs",
+    "nativeMessaging",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.ezyvet.com/*",
+    "https://*.shepherd.vet/*",
+    "https://*.digitail.io/*",
+    "https://*.vetspire.com/*"
+  ],
+  "background": {
+    "service_worker": "service_worker/background.js",
+    "persistence": true,
+    "events": [
+      {
+        "name": "chrome.runtime.onStartup",
+        "filters": [ "persistent" ]
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "ezyvetfetch.js", "digitailScript.js", "vetspirefetch.js" ],
+      "matches": [ "https://*.ezyvet.com/*", "https://*.digitail.io/*", "https://*.vetspire.com/*" ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Open the popup",
+    "default_icon": {
+      "128": "/images/inactive-logo.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.ezyvet.com/*",
+        "https://*.shepherd.vet/*",
+        "https://*.digitail.io/*",
+        "https://*.vetspire.com/*"
+      ],
+      "js": ["messageRouter.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "options_page": "options.html",
+  "externally_connectable": {
+    "matches": [
+      "https://*.ezyvet.com/*",
+      "https://*.shepherd.vet/*",
+      "https://*.digitail.io/*",
+      "https://*.vetspire.com/*"
+    ]
+  }
+}

@@ -1,0 +1,101 @@
+---
+slug: revnote-highlighter
+name: RevNote Highlighter
+description: Organize your reading and highlights using tags
+version: 8.1.0
+release_date: 'July 2, 2023'
+publisher: RevNote
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.357142857142857
+rating_count: 28
+user_count: '1,000+'
+size: 9.71MiB
+languages:
+  - English
+publisher_site: revnote.io
+extension_website: 'https://www.revnote.io'
+privacy_policy: 'https://www.revnote.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RevNote Highlighter",
+  "version": "8.1.0",
+  "description": "Organize your reading and highlights using tags",
+  "short_name": "RevNote",
+  "author": "RevNote",
+  "action": {
+    "default_title": "Save to Revnote",
+    "default_icon": {
+      "32": "assets/img/revnote-icon--32-grey.png"
+    },
+    "default_popup": "modules/Login/login.html"
+  },
+  "background": {
+    "service_worker": "background.worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*/*.*",
+        "assets/**/*.*",
+        "assets/*/*/*.*",
+        "modules/Content/pdfSaver.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "modules/Content/clipper.js",
+        "modules/Content/annotate.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://web.revnote.io/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://revnote.io/*",
+        "https://web.revnote.io/*"
+      ],
+      "js": [
+        "modules/Content/import-clipper.js",
+        "modules/Content/import-annotate.js"
+      ],
+      "css": [
+        "modules/Content/content.css"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

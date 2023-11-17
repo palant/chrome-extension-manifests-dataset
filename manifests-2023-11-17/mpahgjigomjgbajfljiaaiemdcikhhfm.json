@@ -1,0 +1,89 @@
+---
+slug: etsy-heart-exchanger
+name: Etsy Heart Exchanger
+description: Tool for automatic exchanging of item views and hearts.
+version: 4.1.29
+release_date: 'August 16, 2023'
+publisher: Risto P.
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.714285714285714
+rating_count: 91
+user_count: '2,000+'
+size: 424KiB
+languages:
+  - English
+publisher_site: heartexchanger.com
+extension_website: 'https://www.heartexchanger.com'
+support_website: 'https://hex.heartexchanger.com/contact'
+privacy_policy: 'https://hex.heartexchanger.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Etsy Heart Exchanger",
+  "description": "Tool for automatic exchanging of item views and hearts.",
+  "version": "4.1.29",
+  "homepage_url": "http://heartexchanger.com",
+  "icons": {
+    "256": "/icons/icon.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.heartexchanger.com/*"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "*://*.etsy.com/*",
+    "*://*.heartexchanger.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "vendor.bundle.js",
+      "background.bundle.js"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.etsy.com/*"
+      ],
+      "js": [
+        "vendor.bundle.js",
+        "etsy.bundle.js"
+      ],
+      "css": []
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://*.heartexchanger.com/*",
+        "http://*.heartexchanger.com/*"
+      ],
+      "js": [
+        "vendor.bundle.js",
+        "hex.bundle.js"
+      ],
+      "css": []
+    }
+  ],
+  "web_accessible_resources": [
+    "/node_modules/**/*.*",
+    "/dist/**/*.js",
+    "/js/*.js",
+    "*.html",
+    "icons/*.*"
+  ]
+}

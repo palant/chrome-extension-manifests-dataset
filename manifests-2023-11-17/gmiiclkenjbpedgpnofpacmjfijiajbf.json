@@ -1,0 +1,92 @@
+---
+slug: ulav-fresh
+name: uLav FRESH
+description: La vie est trop courte pour se reconnecter constamment à Mon Portail.
+version: 1.0.6
+release_date: 'August 27, 2021'
+publisher: Frédéric Fortier-Chouinard
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 12
+user_count: 140
+size: 54.65KiB
+languages:
+  - Français
+extension_website: 'https://github.com/lefreud/ulav-fresh'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "uLav FRESH",
+  "author": "Frédéric Fortier-Chouinard",
+  "version": "1.0.6",
+  "description": "La vie est trop courte pour se reconnecter constamment à Mon Portail.",
+  "permissions": [
+    "alarms",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "webNavigation",
+    "https://*.ulaval.ca/*"
+  ],
+  "background": {
+    "scripts": [
+      "background/settingsManager.js",
+      "background/autoRefresh.js",
+      "background/browserAction.js",
+      "background/darkThemeManager.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://authentification.ulaval.ca/*"
+      ],
+      "js": [
+        "contentScripts/loginScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://authentification.ulaval.ca/index.html?*erreur*"
+      ],
+      "js": [
+        "contentScripts/failedLoginScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://monportail.ulaval.ca/*",
+        "https://*.monportail.ulaval.ca/*",
+        "https://authentification.ulaval.ca/*"
+      ],
+      "js": [
+        "contentScripts/darkThemeInjector.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "injectedStyles/dark-theme.css"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo48.png",
+      "128": "images/logo128.png"
+    },
+    "default_title": "uLav FRESH",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png",
+    "128": "images/logo128.png"
+  },
+  "manifest_version": 2
+}

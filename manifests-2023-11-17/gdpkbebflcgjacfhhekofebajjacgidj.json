@@ -1,0 +1,137 @@
+---
+slug: screenloop
+name: Screenloop
+description: >-
+  Screenloop will record, transcribe, provide real-time and post interview
+  data/analytics and also coach your team to ‘Make Every…
+version: 0.12.4
+release_date: 'October 31, 2023'
+publisher: Screenloop
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 8
+user_count: 231
+size: 1.15MiB
+languages:
+  - English (United States)
+publisher_site: screenloop.com
+extension_website: 'https://www.screenloop.com'
+privacy_policy: 'https://app.screenloop.com/privacy_policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Screenloop",
+  "version": "0.12.4",
+  "icons": {
+    "48": "logos/logo-dark-bg-48.png",
+    "96": "logos/logo-dark-bg-96.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "logos/logo-dark-bg-48.png",
+      "96": "logos/logo-dark-bg-96.png"
+    },
+    "default_title": "Screenloop",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "contentSettings",
+    "declarativeNetRequest",
+    "cookies",
+    "tabs",
+    "management",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://app.screenloop.com/*",
+    "https://calendly.com/",
+    "https://meet.google.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.screenloop.com/*"
+      ],
+      "css": [],
+      "js": [
+        "dist/presence.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://calendar.google.com/*"
+      ],
+      "all_frames": true,
+      "css": [],
+      "js": [
+        "dist/google_calendar.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://outlook.live.com/calendar/*",
+        "https://outlook.live.com/mail/*",
+        "https://outlook.office365.com/calendar/*",
+        "https://outlook.office365.com/mail/*",
+        "https://outlook.office.com/calendar/*",
+        "https://outlook.office.com/mail/*"
+      ],
+      "css": [],
+      "js": [
+        "dist/outlook_calendar.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.greenhouse.io/guides/*/people/*",
+        "https://*.workable.com/backend/jobs/*/browser/*",
+        "https://*.lever.co/interviews/*",
+        "https://*.ashbyhq.com/interview-briefings/*",
+        "https://*.pinpointhq.com/admin/interviews/*",
+        "https://*.teamtailor.com/companies/*/candidate/*"
+      ],
+      "css": [],
+      "js": [
+        "dist/scorecards.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.greenhouse.io/sdash/*",
+        "https://*.workable.com/backend/jobs/*",
+        "https://*.lever.co/reports/postings/*"
+      ],
+      "css": [],
+      "js": [
+        "dist/job_report.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "contentSecurityPolicyModifier",
+        "enabled": true,
+        "path": "dist/network_rules/contentSecurityPolicyModifier.json"
+      }
+    ]
+  }
+}

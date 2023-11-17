@@ -1,0 +1,99 @@
+---
+slug: arcacon+
+name: Arcacon+
+description: 아카라이브(arca.live) 아카콘 검색
+version: '1.4'
+release_date: 'November 8, 2023'
+publisher: CcRr0
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 3
+user_count: 172
+size: 87.6KiB
+languages:
+  - 한국어
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Arcacon+",
+    "description": "아카라이브(arca.live) 아카콘 검색",
+    "version": "1.4",
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "tabs"
+    ],
+    "action": {
+        "default_icon": "/assets/icon.png"
+    },
+    "background": {
+        "service_worker": "/background/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://arca.live/*"
+            ],
+            "js": [
+                "/scripts/jquery-3.6.1.min.js",
+                "/scripts/arrive.min.js",
+                "/scripts/sleep.js",
+                "/scripts/chromeEx.js",
+                "/contentScripts/contentScript.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://arca.live/b/*/*"
+            ],
+            "js": [
+                "/scripts/searcherModules.js"
+            ],
+            "css": [
+                "/contentScripts/ArcaconStore.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://arca.live/b/*/*"
+            ],
+            "exclude_matches": [
+                "https://arca.live/b/*/write*",
+                "https://arca.live/b/*/edit*"
+            ],
+            "js": [
+                "/contentScripts/onComment.js"
+            ],
+            "css": [
+                "/contentScripts/onComment.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://arca.live/b/*/write*",
+                "https://arca.live/b/*/edit*"
+            ],
+            "js": [
+                "/contentScripts/onWrite.js"
+            ],
+            "css": [
+                "/contentScripts/onWrite.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://arca.live/e/*"
+            ],
+            "exclude_matches": [
+                "https://arca.live/e/"
+            ],
+            "js": [
+                "/contentScripts/storeListener.js"
+            ]
+        }
+    ]
+}

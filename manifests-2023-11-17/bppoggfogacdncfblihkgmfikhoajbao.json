@@ -1,0 +1,69 @@
+---
+slug: standuply
+name: Standuply
+description: Automated Standups for Slack and Task Trackers
+version: 1.2.1
+release_date: 'January 9, 2017'
+publisher: a.borodin
+category: Accessibility
+category_slug: ext/22-accessibility
+rating: 5
+rating_count: 1
+user_count: 56
+size: 789KiB
+languages:
+  - English (United States)
+publisher_site: standuply.com
+extension_website: 'http://standuply.com/'
+support_website: 'https://standuply.kayako.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Standuply",
+    "description": "Automated Standups for Slack and Task Trackers",
+    "version": "1.2.1",
+    "icons": {
+        "16": "16.png",
+        "48": "48.png"
+    },
+    "browser_action": {
+        "default_icon": "16.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "activeTab",
+        "declarativeContent"
+    ],
+    "optional_permissions": ["*://*/"],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://trello.com/*",
+                "https://*.wrike.com/workspace.htm",
+                "https://*.basecamp.com/*",
+
+                "https://*.pivotaltracker.com/*",
+
+                "https://*.app.asana.com/*"
+            ],
+            "js": [
+                "polyfills.js",
+                "vendor.js",
+                "shared.js",
+                "app.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": ["polyfills.js",  "vendor.js", "chrome-event-page.js"],
+        "persistent": false
+    },
+    "web_accessible_resources": [
+        "/*"
+    ]
+}

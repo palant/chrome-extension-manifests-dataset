@@ -1,0 +1,108 @@
+---
+slug: aceifyai
+name: Aceify.ai
+description: 'A study tool, reimagined.'
+version: '1.57'
+release_date: 'November 15, 2023'
+publisher: aceify.ai
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.4166666666666665
+rating_count: 12
+user_count: '2,000+'
+size: 210KiB
+languages:
+  - English
+extension_website: 'https://aceify.ai'
+support_website: 'https://aceify.ai/support.php'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Aceify.ai",
+  "version": "1.57",
+  "description": "A study tool, reimagined.",
+  "icons": {
+    "48": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://aceify.ai/",
+    "<all_urls>"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "contextMenus"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "styles.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.aceify.ai/*"
+      ],
+      "js": [
+        "check.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "screenshot.js"
+      ]
+    }
+  ],
+  "commands": {
+    "aceify_keyboard_take_screenshot": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "MacCtrl+A"
+      },
+      "description": "Take screenshot"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; font-src 'self' https://aceify.ai https://fonts.gstatic.com"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "getGood.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

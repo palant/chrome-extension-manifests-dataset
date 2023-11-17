@@ -1,0 +1,83 @@
+---
+slug: 원신-플로우
+name: 원신 플로우
+description: 원신 맵스의 게임 속 맵핀 가져오기 및 원신 포럼 자동 출석 기능을 사용할 수 있어요!
+version: 0.3.0
+release_date: 'January 29, 2023'
+publisher: GAMEDOT
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.5
+rating_count: 30
+user_count: '40,000+'
+size: 92.86KiB
+languages:
+  - 한국어
+extension_website: 'https://genshin.gamedot.org/?mid=genshinmaps'
+support_website: 'https://genshin.gamedot.org/?mid=board&target=list&board=csboard'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "원신 플로우",
+  "description": "원신 맵스의 게임 속 맵핀 가져오기 및 원신 포럼 자동 출석 기능을 사용할 수 있어요!",
+  "version": "0.3.0",
+  "author": "GAMEDOT",
+
+  "icons": {
+    "16": "default-icon.png",
+    "48": "default-icon.png",
+    "128": "default-icon.png"
+  },
+
+  "background": {
+    "page": "background.html"
+  },
+
+  "browser_action": {
+    "default_icon": "default-icon.png",
+    "default_popup": "popup.html",
+    "default_title": "원신 커넥트"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://act.hoyolab.com/ys/event/signin-sea-v3/*&app=gamedot-forum-check"],
+      "all_frames": true,
+      "js": ["./js/click.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://webstatic-sea.mihoyo.com/app/community-game-records-sea*"],
+      "all_frames": true,
+      "js": ["./js/md5.js", "./js/test.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://genshin.gamedot.org/?*mid=genshinmaps*",
+        "http://test.genshin.gamedot.org/?*mid=genshinmaps*"
+      ],
+      "js": ["./js/maps.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "web_accessible_resources": ["js/function.js", "js/option.js", "js/background.js"],
+
+  "permissions": [
+    "storage",
+    "https://genshin.gamedot.org/*",
+    "https://webstatic-sea.mihoyo.com/ys/event/signin-sea/*",
+    "https://api-os-takumi.mihoyo.com/*",
+    "https://hk4e-api-os.mihoyo.com/*",
+    "https://bbs-api-os.hoyolab.com/*",
+    "https://sg-hk4e-api.hoyolab.com/*",
+    "https://sg-public-api.hoyolab.com/*",
+    "https://act.hoyolab.com/*",
+    "https://api-account-os.hoyolab.com/*"
+  ]
+}

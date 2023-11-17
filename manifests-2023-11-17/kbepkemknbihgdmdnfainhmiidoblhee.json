@@ -1,0 +1,85 @@
+---
+slug: openlink-youid
+name: OpenLink YouID
+description: YouID selector.
+version: 1.6.9
+release_date: 'March 18, 2023'
+publisher: OpenLink Software
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 0
+rating_count: 0
+user_count: 62
+size: 2.1MiB
+languages:
+  - English
+extension_website: 'http://youid.openlinksw.com/'
+support_website: 'http://support.openlinksw.com/'
+privacy_policy: 'https://www.openlinksw.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OpenLink YouID",
+  "short_name": "opl_youid",
+  "author":"OpenLink Software",
+  "version": "1.6.9",
+  "manifest_version": 2,
+  "minimum_chrome_version": "18",
+  "description": "YouID selector.",
+  "icons": {
+      "16":  "images/icon20.png",
+      "48":  "images/icon48.png",
+      "128": "images/icon128.png" },
+  "browser_action": {
+    "default_icon": "images/icon20.png",
+    "default_title": "YouID",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["file:///*/*","*://*/*"],
+      "js": ["browser.js","content-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*"],
+      "js": ["browser.js", "oidc-webid-inject.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.google.com/robots.txt*", 
+                  "http://www.facebook.com/robots.txt*",
+                  "https://login.live.com/oauth20_desktop.srf*", 
+                  "http://id.myopenlink.net/OAuthCallback*",
+                  "https://id.myopenlink.net/OAuthCallback*"],
+      "js": ["oauth2/oauth2_inject.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "options_page": "options.html",
+
+  "permissions": [
+    "storage", 
+    "webRequest", 
+    "webRequestBlocking",
+    "tabs", 
+    "http://*/",
+    "https://*/",
+    "*://*/*", 
+    "file:///*/*",
+    "https://accounts.google.com/o/oauth2/token"
+  ],
+
+  "web_accessible_resources": [
+    "oauth2/oauth2.html"
+  ],
+
+  "content_security_policy": 
+    "script-src 'self' 'unsafe-eval' chrome-extension://lib; object-src 'self' chrome-extension://lib; style-src 'self' 'unsafe-inline' chrome-extension://lib https://solid.openlinksw.com; media-src 'self' 'unsafe-inline' chrome-extension://lib ;"
+}

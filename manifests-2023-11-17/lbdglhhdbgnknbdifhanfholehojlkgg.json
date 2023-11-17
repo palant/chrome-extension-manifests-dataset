@@ -1,0 +1,120 @@
+---
+slug: salesql-b2b-email-finder
+name: SalesQL - B2B Email Finder
+description: Find verified email addresses and phone numbers of any prospect on LinkedIn.
+version: 1.2.16
+release_date: 'November 14, 2023'
+publisher: SalesQL
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4
+rating_count: 7
+user_count: '20,000+'
+size: 3.34MiB
+languages:
+  - English
+publisher_site: salesql.com
+extension_website: 'https://salesql.com/'
+support_website: 'https://helpcenter.salesql.com/'
+privacy_policy: 'https://salesql.com/legal/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_popup": "./popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content/free/init.js"
+      ],
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "exclude_matches": [
+        "https://*.linkedin.com/recruiter/*",
+        "https://*.linkedin.com/talent/*",
+        "https://*.linkedin.com/sales/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content/recruiter/init.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "https://*.linkedin.com/talent/*"
+      ]
+    },
+    {
+      "js": [
+        "content/sales/init.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "https://*.linkedin.com/sales/*"
+      ]
+    },
+    {
+      "js": [
+        "content/salesQL.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*.salesql.com/*"
+      ]
+    },
+    {
+      "js": [
+        "content/salesQLVersion.js"
+      ],
+      "run_at": "document_idle",
+      "matches": [
+        "https://*.salesql.com/*"
+      ]
+    },
+    {
+      "js": [
+        "content/salesQLVersion.js"
+      ],
+      "run_at": "document_idle",
+      "matches": [
+        "https://salesql.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "description": "Find verified email addresses and phone numbers of any prospect on LinkedIn.",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "96": "icons/icon_96.png",
+    "128": "icons/icon_128.png"
+  },
+  "manifest_version": 3,
+  "name": "SalesQL - B2B Email Finder",
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*.salesql.com/*",
+    "*://*.linkedin.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.salesql.com/*"
+    ]
+  },
+  "version": "1.2.16"
+}

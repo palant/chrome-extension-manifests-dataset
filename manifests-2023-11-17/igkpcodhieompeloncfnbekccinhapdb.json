@@ -1,0 +1,152 @@
+---
+slug: zoho-vault
+name: Zoho Vault
+description: >-
+  Online password manager for teams to securely store, share and manage
+  passwords and other sensitive data
+version: '3.8'
+release_date: 'October 11, 2023'
+publisher: Zoho Corporation
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.7333333333333334
+rating_count: 90
+user_count: '100,000+'
+size: 1.6MiB
+languages:
+  - English
+publisher_site: zoho.com
+privacy_policy: 'https://www.zoho.com/privacy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Zoho Vault",
+ "version": "3.8",
+ "action": {
+  "default_icon": {
+   "16": "/images/logo/vault-16-disable.png",
+   "32": "/images/logo/vault-32-disable.png",
+   "48": "/images/logo/vault-48-disable.png",
+   "64": "/images/logo/vault-64-disable.png",
+   "128": "/images/logo/vault-128-disable.png",
+   "256": "/images/logo/vault-256-disable.png",
+   "512": "/images/logo/vault-512-disable.png",
+   "1024": "/images/logo/vault-1024-disable.png"
+  },
+  "default_title": "Zoho Vault",
+  "default_popup": "/html/popup.html"
+ },
+ "default_locale": "en",
+ "description": "Online password manager for teams to securely store, share and manage passwords and other sensitive data",
+ "icons": {
+  "16": "/images/logo/vault-16.png",
+  "32": "/images/logo/vault-32.png",
+  "48": "/images/logo/vault-48.png",
+  "64": "/images/logo/vault-64.png",
+  "128": "/images/logo/vault-128.png",
+  "256": "/images/logo/vault-256.png",
+  "512": "/images/logo/vault-512.png",
+  "1024": "/images/logo/vault-1024.png"
+ },
+ "author": "Zoho Vault",
+ "background": {
+  "service_worker": "worker.js",
+  "type": "module"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "http://*/*",
+    "https://*/*"
+   ],
+   "exclude_matches": [
+    "https://vault.zoho.com/*",
+    "https://vault.zoho.eu/*",
+    "https://vault.zoho.in/*",
+    "https://vault.zoho.com.au/*",
+    "https://vault.zoho.com.cn/*",
+    "https://vault.zoho.jp/*"
+   ],
+   "js": [
+    "/lib/jquery-3.3.1.min.js",
+    "/js/content_scripts/cs_main.out.js"
+   ],
+   "run_at": "document_idle",
+   "all_frames": true
+  },
+  {
+   "matches": [
+    "https://vault.zoho.com/app",
+    "https://vault.zoho.eu/app",
+    "https://vault.zoho.in/app",
+    "https://vault.zoho.com.au/app",
+    "https://vault.zoho.com.cn/app",
+    "https://vault.zoho.jp/app",
+    "https://vault.zoho.com/app?*",
+    "https://vault.zoho.eu/app?*",
+    "https://vault.zoho.in/app?*",
+    "https://vault.zoho.com.au/app?*",
+    "https://vault.zoho.com.cn/app?*",
+    "https://vault.zoho.jp/app?*"
+   ],
+   "js": [
+    "/js/content_scripts/vault_web.out.js"
+   ],
+   "run_at": "document_start",
+   "all_frames": true
+  }
+ ],
+ "content_security_policy": {
+  "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src * data: blob:; connect-src https://accounts.zoho.com https://contacts.zoho.com https://vault.zoho.com  https://accounts.zoho.eu https://contacts.zoho.eu https://vault.zoho.eu  https://accounts.zoho.in https://contacts.zoho.in https://vault.zoho.in  https://accounts.zoho.com.au https://contacts.zoho.com.au https://vault.zoho.com.au  https://accounts.zoho.com.cn https://contacts.zoho.com.cn https://vault.zoho.com.cn https://accounts.zoho.jp https://contacts.zoho.jp https://vault.zoho.jp https://*.csez.zohocorpin.com https://*.csez.zohocorpin.com:* https://*.localzoho.com",
+  "sandbox": "sandbox allow-scripts; script-src 'self'; "
+ },
+ "homepage_url": "https://vault.zoho.com/app",
+ "optional_permissions": [],
+ "host_permissions": ["http://*/*", "https://*/*"],
+ "incognito": "spanning",
+ "permissions": [
+  "alarms",
+  "clipboardWrite",
+  "contextMenus",
+  "cookies",
+  "notifications",
+  "privacy",
+  "storage",
+  "tabs",
+  "unlimitedStorage",
+  "idle",
+  "webRequest",
+  "webRequestAuthProvider",
+  "offscreen"
+ ],
+ "sandbox": {
+  "pages": []
+ },
+ "devtools_page": "/html/tab/devtools.html",
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "/html/ZVaultGetPP.html"
+   ],
+   "matches": [
+    "https://vault.zoho.com/*",
+    "https://*.csez.zohocorpin.com/*",
+    "https://vault.localzoho.com/*"
+   ]
+  },
+  {
+   "resources": [
+    "/images/web_access/*",
+    "/html/tab/*"
+   ],
+   "matches": [
+    "http://*/*",
+    "https://*/*"
+   ],
+   "use_dynamic_url": true
+  }
+ ]
+}

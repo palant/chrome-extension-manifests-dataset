@@ -1,0 +1,99 @@
+---
+slug: shift-link-preview
+name: Shift Link Preview
+description: >-
+  Chrome Extension for creating URL preview snippets and sending previews with
+  Gmail, based on the meta content of the given webpage.
+version: 1.0.1
+release_date: 'February 24, 2019'
+publisher: Tim Marcher
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 6
+size: 454KiB
+languages:
+  - English (United States)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Shift Link Preview",
+  "short_name": "Link Preview",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApmiotJ9G+edfvOL+/JzOLdz6tyW93kHjMjPToAJ7zWITlzE2jpogUCV7HSodt6gK72SN1xfG/QnhD8xU8l6AA7cfw0vB8ltI+RfTBzD2DgMEjQ9clSXSILef9FKTXehZfkSRsGY/tSXJ/FQMjpWG4Xs8WNgkRLGEBhsJI2aQoDg+8LczdwNRI47LeXoQXf3hfhEK9BM2nITGmUR7rAI6/TciklBY/7qIs4aWDAixFofnA+uZSfNqizeT5QzZCpz0g1SE6okUUjc49z83eVL1mg3OZPKH/PNI9ptNfPWuOsoBPEsW8IqSt8pJj9hehIqbedeMkrM0atdr+29t4UYu2QIDAQAB",
+  "version": "1.0.1",
+  "description": "Chrome Extension for creating URL preview snippets and sending previews with Gmail, based on the meta content of the given webpage.",
+  "author": "tim.marcher@gmail.com",
+  "manifest_version": 2,
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "https://www.googleapis.com/"
+  ],
+  "oauth2": {
+    "client_id": "272044888243-6e0i53077v1h6c549jvcleep92bafscd.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/chromewebstore.readonly"
+    ]
+  },
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_title": "Shift Link Preview",
+    "default_icon": {
+      "16": "images/linkpreviewicon-16.png",
+      "48": "images/linkpreviewicon-48.png",
+      "128": "images/linkpreviewicon-128.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "metacontent.js",
+        "linkpreview.js",
+        "page.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "linkpreview.js",
+        "gmail.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "sandbox": {
+    "pages": [
+      "handlebars-frame.html",
+      "showdown-frame.html"
+    ]
+  },
+  "commands": {
+    "_execute_page_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "windows": "Alt+Shift+Y",
+        "mac": "Alt+Shift+Y"
+      }
+    }
+  }
+}

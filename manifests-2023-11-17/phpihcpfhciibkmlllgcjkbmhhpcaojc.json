@@ -1,0 +1,86 @@
+---
+slug: buzzsumo
+name: BuzzSumo
+description: Have all the BuzzSumo metrics to hand
+version: 2.0.9
+release_date: 'August 23, 2023'
+publisher: BuzzSumo
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: '3,000+'
+size: 535KiB
+languages:
+  - English (United States)
+publisher_site: buzzsumo.com
+extension_website: 'https://buzzsumo.com'
+support_website: 'https://help.buzzsumo.com'
+privacy_policy: 'https://buzzsumo.com/legal/user-privacy-statement'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BuzzSumo",
+  "version": "2.0.9",
+  "description": "Have all the BuzzSumo metrics to hand",
+  "action": {
+    "default_popup": "",
+    "default_icon": {
+      "16": "./assets/icons/16.png",
+      "32": "./assets/icons/32.png",
+      "48": "./assets/icons/48.png",
+      "128": "./assets/icons/128.png"
+    }
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icons/16.png",
+    "32": "./assets/icons/32.png",
+    "48": "./assets/icons/48.png",
+    "128": "./assets/icons/128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/contentScripts/main/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/main/style.css",
+        "dist/contentScripts/google/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

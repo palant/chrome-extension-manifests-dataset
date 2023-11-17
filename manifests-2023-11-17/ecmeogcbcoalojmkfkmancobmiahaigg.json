@@ -1,0 +1,127 @@
+---
+slug: 아이템스카우트
+name: 아이템스카우트
+description: 아이템스카우트 공식 확장 프로그램(스마트스토어 및 이커머스 키워드 분석 툴)
+version: 3.7.8
+release_date: 'November 9, 2023'
+publisher: 아이템스카우트 itemscout
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.4583333333333335
+rating_count: 24
+user_count: '200,000+'
+size: 370KiB
+languages:
+  - 한국어
+publisher_site: itemscout.io
+extension_website: 'https://itemscout.io'
+privacy_policy: 'https://itemscout.io/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "아이템스카우트",
+  "description": "아이템스카우트 공식 확장 프로그램(스마트스토어 및 이커머스 키워드 분석 툴)",
+  "version": "3.7.8",
+  "author": "아이템스카우트",
+  "permissions": [
+    "background",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "cookies",
+    "declarativeNetRequestWithHostAccess",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "https://smartstore.naver.com/*",
+    "https://*.smartstore.naver.com/*",
+    "https://manage.searchad.naver.com/*",
+    "https://brand.naver.com/*",
+    "https://*.brand.naver.com/*",
+    "https://shopping.naver.com/*",
+    "https://search.shopping.naver.com/*",
+    "https://domemedb.domeggook.com/*",
+    "https://datalab.naver.com/*",
+    "https://sell.smartstore.naver.com/*",
+    "*://11st.co.kr/*",
+    "*://*.11st.co.kr/*",
+    "https://coupang.com/*",
+    "https://interpark.com/*",
+    "https://front.wemakeprice.com/*",
+    "https://tmon.co.kr/*",
+    "https://m.tmon.co.kr/*",
+    "https://m.shop.interpark.com/*",
+    "https://m.11st.co.kr/*",
+    "https://mw.wemakeprice.com/*",
+    "https://mticket.wemakeprice.com/*",
+    "https://m.shopping.naver.com/*",
+    "*://itemscout.io/*",
+    "*://*.itemscout.io/*",
+    "https://detail.1688.com/*",
+    "https://detail.tmall.com/*",
+    "https://item.taobao.com/*"
+  ],
+  "icons": {
+    "48": "static/icons/icon_48.png",
+    "128": "static/icons/icon_128.png",
+    "1": "static/icons/itemscout_logo.png"
+  },
+  "action": {
+    "default_title": "itemscout",
+    "default_icon": {
+      "48": "static/icons/icon_48.png",
+      "128": "static/icons/icon_128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["inject/inject.js"]
+    },
+    {
+      "matches": ["https://detail.1688.com/offer/*", "https://item.taobao.com/item.htm*", "https://detail.tmall.com/item.htm*"],
+      "js": ["content_script/content_script.js", "margin_calculator_script/margin_calculator_script.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup/popup.html",
+        "keyword_analysis/keyword_analysis.html",
+        "product_analysis/product_analysis.html",
+        "product_analysis_extracting_page/product_analysis_extracting_page.html",
+        "margin_calculator/margin_calculator.html",
+        "static/icons/*.png",
+        "static/images/*.png",
+        "content_script/content_script.js",
+        "iframe_script/iframe_script.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://itemscout.io/*", "*://*.itemscout.io/*"]
+  },
+  "content_security_policy": {
+    "extension_page": "script-src 'self' 'wasm-unsafe-eval' 'unsafe-eval'; object-src 'self'; default-src 'self'"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

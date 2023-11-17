@@ -1,0 +1,121 @@
+---
+slug: fetchvvideo-downloaderhls
+name: 'FetchV:Video downloader(HLS/m3u8/mp4/blob)'
+description: >-
+  Download or record all kinds of video online, includes HLS, m3u8, blob, mp4,
+  webm...
+version: '1.4'
+release_date: 'November 8, 2023'
+publisher: addonx
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.731343283582089
+rating_count: 871
+user_count: '100,000+'
+size: 299KiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - Filipino
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - dansk
+  - eesti
+  - español
+  - italiano
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - български
+  - русский
+  - हिन्दी
+  - ไทย
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 한국어
+publisher_site: fetchv.net
+extension_website: 'https://fetchv.net/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_manifest_name__",
+  "short_name": "FetchV",
+  "version": "1.4",
+  "description": "__MSG_manifest_description__",
+  "icons":
+  {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "background":
+  {
+    "service_worker": "worker.js"
+  },
+  "action":
+  {
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png",
+      "128": "img/icon-128.png"
+    },
+    "default_title": "__MSG_manifest_browser_action__",
+    "default_popup": "popup.html"
+  },
+  "content_scripts":
+  [
+    {
+      "matches": [ "*://fetchv.net/videodownloader", "*://fetchv.net/*/videodownloader" ],
+      "js": ["libs/jquery-3.6.0.min.js","libs/mux.video.min.js","js/videodownloader.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://fetchv.net/m3u8downloader", "*://fetchv.net/*/m3u8downloader" ],
+      "js": ["libs/jquery-3.6.0.min.js","libs/hls.1.1.2.branch.min.js","libs/mux.m3u8.min.js","js/m3u8downloader.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://fetchv.net/bufferrecorder", "*://fetchv.net/*/bufferrecorder" ],
+      "js": ["libs/jquery-3.6.0.min.js","libs/mux.buffer.min.js","js/bufferrecorder.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "*://*/*" ],
+      "exclude_globs": [ "*//fetchv.net/*" ],
+      "js": ["js/content-script.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [ "js/injected.js" ],
+    "matches": [ "*://*/*" ],
+    "use_dynamic_url": true
+  }],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions":
+  [
+    "tabs",
+    "webRequest",
+ "declarativeNetRequest",
+    "storage"
+  ],
+  "homepage_url": "https://fetchv.net/",
+  "options_page": "./options.html",
+  "default_locale": "en"
+}

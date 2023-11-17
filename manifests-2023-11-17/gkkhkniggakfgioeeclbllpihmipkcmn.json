@@ -1,0 +1,67 @@
+---
+slug: seameet-take-chatgpt-meet
+name: 'SeaMeet: Take ChatGPT Meeting Note Real-Time'
+description: 'SeaMeet: Transcription, notes, follow-ups, coherence, valuable insights.'
+version: '0.8'
+release_date: 'November 5, 2023'
+publisher: chrome-ext-seasaltai
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 5
+user_count: 144
+size: 16.82KiB
+languages:
+  - English
+  - 中文 (繁體)
+publisher_site: meet.seasalt.ai
+extension_website: 'https://meet.seasalt.ai'
+support_website: 'https://seasalt.ai/'
+privacy_policy: 'https://seasalt.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "manifest_version": 3,
+  "version": "0.8",
+  "permissions": ["tabs", "activeTab", "storage"],
+  "icons": {
+    "128": "meet.png"
+  },
+  "action": {
+    "default_title": "Click to show an alert"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://meet.google.com/*"],
+      "run_at": "document_idle",
+      "js": ["meetScript.js"]
+    },
+    {
+      "matches": ["*://meet.seasalt.ai/*"],
+      "exclude_matches": ["*://meet.seasalt.ai/ext/*"],
+      "run_at": "document_idle",
+      "js": ["seaMeetScript.js"]
+    },
+    {
+      "matches": ["*://meet.seasalt.ai/ext/*"],
+      "run_at": "document_idle",
+      "js": ["seaMeetExtScript.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,99 @@
+---
+slug: lookup-in-popup
+name: Lookup In Popup
+description: >-
+  Lookup selected texts in the popup on your preferred search engine, and open
+  links in the popup
+version: 0.0.2
+release_date: 'May 19, 2021'
+publisher: HardeepTheDev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.7894736842105265
+rating_count: 19
+user_count: 460
+size: 118KiB
+languages:
+  - English
+extension_website: 'https://github.com/harry-private/lookup-in-popup'
+support_website: 'https://github.com/harry-private/lookup-in-popup/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Lookup In Popup",
+  "description": "Lookup selected texts in the popup on your preferred search engine, and open links in the popup",
+  "version": "0.0.2",
+  "permissions": [
+    "storage",
+    "<all_urls>",
+    "contextMenus"
+  ],
+  "background": {
+    "scripts": [
+      "data/internal_libs/lip_utility.js",
+      "data/internal_libs/lip_pre_installed_search_engines_data.js",
+      "data/background/background.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "data/icons/icon16.png",
+    "default_title": "Lookup In Popup",
+    "default_popup": "data/options/lip_from_toolbar/lip_from_toolbar.html"
+  },
+  "options_ui": {
+    "page": "data/options/options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "data/icons/icon16.png",
+    "24": "data/icons/icon24.png",
+    "32": "data/icons/icon32.png",
+    "48": "data/icons/icon48.png",
+    "64": "data/icons/icon64.png",
+    "128": "data/icons/icon128.png",
+    "256": "data/icons/icon256.png",
+    "512": "data/icons/icon512.png"
+  },
+  "web_accessible_resources": [],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "data/internal_libs/lip_utility.js",
+        "data/inject/lip.js"
+      ],
+      "css": [
+        "data/inject/lip.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "data/inject/lip_popup_window.js"
+      ],
+      "css": [
+        "data/inject/lip_popup_window.css"
+      ],
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+L"
+      },
+      "description": "Activate the extension"
+    }
+  }
+}

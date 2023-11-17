@@ -1,0 +1,131 @@
+---
+slug: migaku-legacy
+name: Migaku - Legacy
+description: >-
+  Learn from Netflix, YouTube, local videos, any website, ebooks, and more. By
+  language learners for language learners.
+version: 0.9.38.2
+release_date: 'November 17, 2023'
+publisher: Migaku
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.433333333333333
+rating_count: 30
+user_count: '9,000+'
+size: 330MiB
+languages:
+  - English (United States)
+publisher_site: migaku.io
+extension_website: 'https://www.migaku.io'
+support_website: 'https://www.migaku.io/contact'
+privacy_policy: 'https://www.migaku.io/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Migaku - Legacy",
+  "description": "Learn from Netflix, YouTube, local videos, any website, ebooks, and more. By language learners for language learners.",
+  "version": "0.9.38.2",
+  "manifest_version": 2,
+  "icons": {
+    "16": "imgs/migakufavicon.png",
+    "48": "imgs/migakufavicon.png",
+    "128": "imgs/migakufavicon.png"
+  },
+  "background": {
+    "scripts": [
+      "core/migaku-core.js",
+      "core/migaku-core-api-web.js",
+      "ffmpeg/ffmpeg.min.js",
+      "ffmpeg/ffmpeg-core.js",
+      "background-bundle.js",
+      "paginator-bundle.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "imgs/migakufavicon.png",
+    "default_popup": "extensionMenu.html"
+  },
+  "permissions": [
+    "tabs",
+    "tabCapture",
+    "storage",
+    "activeTab",
+    "downloads",
+    "clipboardRead",
+    "clipboardWrite",
+    "contextMenus",
+    "unlimitedStorage",
+    "<all_urls>",
+    "file://*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' blob:; object-src 'self'",
+  "content_scripts": [
+    {
+      "js": ["netflix-bundle.js"],
+      "matches": ["https://www.netflix.com/watch/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.youtube.com/watch*"],
+      "run_at": "document_idle",
+      "js": ["youtube-bundle.js"]
+    },
+    {
+      "matches": ["https://animelon.com/video/*"],
+      "run_at": "document_idle",
+      "js": ["animelon-bundle.js"]
+    },
+    {
+      "matches": ["https://www.viki.com/videos/*"],
+      "run_at": "document_idle",
+      "js": ["viki-bundle.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["webpage-bundle.js"],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://www.netflix.com/watch*",
+        "https://www.youtube.com/watch*",
+        "https://animelon.com/video/*",
+        "https://www.viki.com/videos/*"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "js": ["support-bundle.js"],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://www.netflix.com/watch*",
+        "https://www.youtube.com/watch*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "imgs/*",
+    "fonts/*",
+    "env/*",
+    "ffmpeg/ffmpeg-core.js",
+    "ffmpeg/ffmpeg-core.wasm",
+    "ffmpeg/ffmpeg-core.worker.js"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://www.netflix.com/*",
+      "https://www.youtube.com/watch*",
+      "https://animelon.com/video/*",
+      "https://www.viki.com/videos/*",
+      "https://study.dev.migaku.io/*",
+      "https://study.dev.migaku.com/*",
+      "https://study.next.migaku.io/*",
+      "https://study.next.migaku.com/*",
+      "https://study.migaku.io/*",
+      "https://study.migaku.com/*",
+      "*://localhost/*"
+    ]
+  }
+}

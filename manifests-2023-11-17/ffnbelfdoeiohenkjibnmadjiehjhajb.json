@@ -1,0 +1,101 @@
+---
+slug: yoroi
+name: Yoroi
+description: 'A simple, secure and fast Cardano ADA wallet.'
+version: 4.23.100
+release_date: 'November 10, 2023'
+publisher: EMURGO
+category: Productivity
+category_slug: ext/7-productivity
+rating: 3.7406015037593985
+rating_count: 266
+user_count: '300,000+'
+size: 24.55MiB
+languages:
+  - English (United States)
+publisher_site: yoroiwallet.com
+extension_website: 'https://yoroiwallet.com'
+support_website: 'https://yoroiwallet.com/#/faq/1'
+privacy_policy: 'https://yoroi-wallet.com/terms_and_conditions'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "version": "4.23.100",
+    "name": "Yoroi",
+    "manifest_version": 3,
+    "description": "A simple, secure and fast Cardano ADA wallet.",
+    "action": {
+        "default_title": "Yoroi",
+        "default_icon": {
+            "16": "img/icon-16.png",
+            "48": "img/icon-48.png",
+            "128": "img/icon-128.png"
+        }
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{530f7c6c-6077-4703-8f71-cb368c663e35}"
+        }
+    },
+    "icons": {
+        "16": "img/icon-16.png",
+        "48": "img/icon-48.png",
+        "128": "img/icon-128.png"
+    },
+    "background": {
+        "service_worker": "js/background-service-worker.js"
+    },
+    "permissions": [
+        "storage",
+        "system.display"
+    ],
+    "host_permissions": [
+        "*://connect.trezor.io/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://connect.trezor.io/*/popup.html"
+            ],
+            "js": [
+                "js/trezor-content-script.js"
+            ]
+        },
+        {
+            "matches": [
+                "file://*/*",
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "js/inject.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "default-src 'self' ; frame-src https://adapools.yoroiwallet.com https://widget.changelly.com/ https://connect.trezor.io/ https://emurgo.github.io/ https://www.youtube.com/; script-src 'self' 'wasm-unsafe-eval'; object-src 'self' ; connect-src https://*.yoroiwallet.com wss://*.yoroiwallet.com:443 https://*.emurgornd.com wss://*.emurgornd.com:443 https://analytics.emurgo-rnd.com/; style-src * 'unsafe-inline' 'self'  blob:; img-src 'self' https://static.adapools.org/ https://ipfs.io/ipfs/ https: data: ;"
+    },
+    "protocol_handlers": [
+        {
+            "protocol": "web+cardano",
+            "name": "Yoroi",
+            "uriTemplate": "main_window.html#/send-from-uri?q=%s"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "js/cardanoApiInject.js",
+                "js/ergoApiInject.js",
+                "js/initialInject.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

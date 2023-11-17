@@ -1,0 +1,84 @@
+---
+slug: connect
+name: Connect
+description: >-
+  Find new contacts and manage tasks and call steps in your sequences from
+  anywhere
+version: 0.6.13
+release_date: 'November 15, 2023'
+publisher: Maximilien Deconinck
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 4
+user_count: '1,000+'
+size: 6.18MiB
+languages:
+  - Français
+publisher_site: www.datananas.com
+extension_website: 'https://www.datananas.com'
+support_website: 'https://help.datananas.com'
+privacy_policy: 'https://www.datananas.com/conditions-dutilisation'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Connect",
+  "description": "Find new contacts and manage tasks and call steps in your sequences from anywhere",
+  "version": "0.6.13",
+  "manifest_version": 3,
+  "icons": {
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "background",
+    "tts",
+    "cookies",
+    "storage",
+    "app",
+    "tabs",
+    "system.display"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*",
+        "*://*.salesforce.com/*",
+        "*://*.force.com/*"
+      ],
+      "js": [
+        "content/contact.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "js": [
+        "content/linkedin_sn.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "child-src 'self' blob:; worker-src 'self'; script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "action": {
+    "default_title": "Connect",
+    "default_icon": "icons/icon_128.png"
+  },
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.datananas.com/*",
+    "*://*.sarbacane.com/*",
+    "*://*.salesforce.com/*"
+  ]
+}

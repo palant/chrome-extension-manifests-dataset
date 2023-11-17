@@ -1,0 +1,79 @@
+---
+slug: rwa-wallet
+name: RWA Wallet
+description: 'RWA-Wallet.com: The world''s first RWA Wallet.'
+version: 1.0.2
+release_date: 'August 31, 2023'
+publisher: RWA-Wallet.com
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '1,000+'
+size: 3.32MiB
+languages:
+  - English
+publisher_site: rwa-wallet.com
+extension_website: 'https://RWA-Wallet.com'
+support_website: 'https://RWA-Wallet.com'
+privacy_policy: 'https://RWA-Wallet.com/private'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RWA Wallet",
+  "version": "1.0.2",
+  "description": "RWA-Wallet.com: The world's first RWA Wallet.",
+  "action": {
+    "default_icon": "./assets/logo-r.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html#/options/",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/logo-r.png",
+    "48": "./assets/logo-r.png",
+    "128": "./assets/logo-r.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "https://twitter.com/*",
+    "http://localhost:3000/*"
+  ],
+  "host_permissions": [
+    "https://twitter.com/*",
+    "http://localhost:3000/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost/*",
+        "https://twitter.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

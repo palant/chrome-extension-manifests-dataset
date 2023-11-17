@@ -1,0 +1,63 @@
+---
+slug: rollshare
+name: RollShare
+description: Share your D&D dice rolls online
+version: '1.0'
+release_date: 'July 8, 2020'
+publisher: Jonathan Berling
+category: Fun
+category_slug: ext/14-fun
+rating: 0
+rating_count: 0
+user_count: 46
+size: 15.08KiB
+languages:
+  - English
+extension_website: 'https://github.com/jonberling/RollShare'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "RollShare",
+    "version": "1.0",
+    "description": "Share your D&D dice rolls online",
+    "manifest_version": 2,
+    "icons": {
+        "128": "icon/RollShareIcon.png"
+    },
+    "permissions": [
+        "*://www.dndbeyond.com/profile/*/characters/*",
+        "*://app.roll20.net/editor/*"
+    ],
+    "background": {
+        "persistent": false,
+        "scripts": [
+            "src/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.dndbeyond.com/profile/*/characters/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "src/ddb_roll_send.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://app.roll20.net/editor/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "src/r20_roll_receive.js"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_popup": "src/popup.html",
+        "default_title": "RollShare"
+    }
+}

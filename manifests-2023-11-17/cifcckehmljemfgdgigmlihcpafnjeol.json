@@ -1,0 +1,69 @@
+---
+slug: cda-downloader
+name: CDA Downloader
+description: Umożliwia pobieranie filmów/folderów z serwisu cda.pl
+version: 2.2.0
+release_date: 'December 21, 2021'
+publisher: Kamil Dev
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.173913043478261
+rating_count: 23
+user_count: '5,000+'
+size: 10.81MiB
+languages:
+  - polski
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CDA Downloader",
+  "description": "Umożliwia pobieranie filmów/folderów z serwisu cda.pl",
+  "version": "2.2.0",
+  "manifest_version": 3,
+
+  "icons": {
+    "16": "./assets/logo-16x16.png",
+    "32": "./assets/logo-32x32.png",
+    "48": "./assets/logo-48x48.png",
+    "128": "./assets/logo-128x128.png"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.cda.pl/*"],
+      "css": ["styles/download.css"],
+      "js": [
+        "scripts/utils/decoder.js",
+        "scripts/utils/sanitizer.js",
+        "scripts/utils/video.js",
+        "scripts/utils/folder.js",
+        "scripts/utils/downloadQueue.js"
+      ]
+    },
+    {
+      "matches": ["https://www.cda.pl/*"],
+      "js": [
+        "scripts/handlers/folderVideoDownload.js",
+        "scripts/handlers/defaultVideo.js"
+      ]
+    },
+    {
+      "matches": ["https://www.cda.pl/video/*"],
+      "js": ["scripts/handlers/insertDownload.js"]
+    },
+    {
+      "matches": ["https://www.cda.pl/*/folder/*"],
+      "js": ["scripts/handlers/folderDownload.js"]
+    }
+  ],
+
+  "permissions": ["downloads"],
+
+  "host_permissions": ["https://www.cda.pl/*"]
+}

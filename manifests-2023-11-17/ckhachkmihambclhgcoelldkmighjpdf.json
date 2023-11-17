@@ -1,0 +1,181 @@
+---
+slug: bestdealer-import-aliexpr
+name: BestDealer - Import Aliexpress Product
+description: Import any Aliexpress product to Shopify store with one click
+version: 2.0.1
+release_date: 'November 29, 2022'
+publisher: BestDealer
+category: Shopping
+category_slug: ext/12-shopping
+rating: 5
+rating_count: 2
+user_count: 914
+size: 948KiB
+languages:
+  - English (UK)
+extension_website: 'https://www.bestdealer.com'
+support_website: 'https://www.bestdealer.com'
+privacy_policy: 'https://www.bestdealer.com/privacyPolicy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BestDealer - Import Aliexpress Product",
+  "version": "2.0.1",
+  "description": "Import any Aliexpress product to Shopify store with one click",
+  "icons": {
+    "16": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png"
+  },
+  "action": {
+    "default_icon": "img/icon.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "./background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.aliexpress.com/*"],
+      "js": ["js/jquery-1.8.3.js", "js/activeWindow.js"],
+      "css": ["css/custom.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://trade.aliexpress.com/orderList.htm*",
+        "https://trade.aliexpress.com/order_list.htm*"
+      ],
+      "js": ["js/jquery-1.8.3.js", "js/sync-script.js"],
+      "css": ["css/custom.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/order/payResult.htm*"],
+      "js": ["js/jquery-1.8.3.js", "js/pay-result.js"],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["css/custom.css"],
+      "js": [
+        "js/jquery-1.8.3.js",
+        "js/importModal.js",
+        "js/category.js"
+      ],
+      "matches": [
+        "https://*.aliexpress.com/af/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.com/category/*",
+        "https://*.aliexpress.com/wholesale*",
+        "https://*.aliexpress.com/premium*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/item/*", "https://*.aliexpress.us/item/*"],
+      "css": ["css/custom.css"],
+      "js": [
+        "js/jquery-1.8.3.js",
+        "js/importModal.js",
+        "js/product.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://shoppingcart.aliexpress.com/shopcart/shopcartDetail.htm*"
+      ],
+      "css": ["css/custom.css"],
+      "js": ["js/jquery-1.8.3.js", "js/cart.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://shoppingcart.aliexpress.com/orders.htm*"],
+      "css": ["css/custom.css"],
+      "js": ["js/jquery-1.8.3.js", "js/checkout.js"],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/custom.css"],
+      "js": ["js/jquery-1.8.3.js", "js/oberlo.js"],
+      "matches": ["https://app.oberlo.com/my-products*"],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/custom.css"],
+      "js": ["js/jquery-1.8.3.js", "js/oberlo-order.js"],
+      "matches": ["https://app.oberlo.com/orders*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["js/jquery-1.8.3.js", "js/kfbuy-script.js"],
+      "matches": ["*://open.dev.kfbuy.com/*", "https://app.bestdealer.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/jquery-1.8.3.js"],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/custom.css"],
+      "js": [
+        "js/jquery-1.8.3.js",
+        "js/importModal.js",
+        "js/ae-dropshiping-center.js",
+        "js/ae-dropshiping-center-dashboard.js"
+      ],
+      "matches": [
+        "https://home.aliexpress.com/dropshippercenter/product_find.htm*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/custom.css"],
+      "js": [
+        "js/jquery-1.8.3.js",
+        "js/importModal.js",
+        "js/ae-dropshiping-center-dashboard.js"
+      ],
+      "matches": [
+        "https://home.aliexpress.com/dropshippercenter/dashboard.htm*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "notifications",
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://app.bestdealer.com/*",
+    "https://*.aliexpress.com/*",
+    "https://*.aliexpress.us/*",
+    "https://app.oberlo.com/*",
+    "https://open.dev.kfbuy.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*", "js/jquery-1.8.3.js", "js/script/run-param.js", "js/script/checkoutInject.js"],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://open.dev.kfbuy.com/*",
+      "https://app.bestdealer.com/*",
+      "https://app.bestdealer.us/*",
+      "*://*.aliexpress.com/*"
+    ]
+  },
+  "homepage_url": "https://app.bestdealer.com",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,71 @@
+---
+slug: flipword
+name: FlipWord
+description: Vocabulary learning tool
+version: '1.6'
+release_date: 'November 10, 2023'
+publisher: croquelois.adrien
+category: Productivity
+category_slug: ext/7-productivity
+rating: 5
+rating_count: 6
+user_count: 49
+size: 418KiB
+languages:
+  - Français
+publisher_site: flipword.io
+extension_website: 'https://flipword.io'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "FlipWord",
+  "description": "Vocabulary learning tool",
+  "version": "1.6",
+  "icons": {
+    "128": "icon.png"
+  },
+  "action": {
+    "default_title": "FlipWord",
+    "default_icon": "icon.png",
+    "default_popup": "home.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "css": ["styles/buttonPopup.css", "styles/hoverPopup.css"],
+      "js": ["content-scripts/buttonPopup.js", "content-scripts/hoverPopup.js"]
+    },
+    {
+      "matches": ["https://flipword.io/*"],
+      "js": ["content-scripts/authRequestFromWebsite.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "settings.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "contextMenus",
+    "cookies",
+    "activeTab",
+    "storage",
+    "identity",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": ["https://*/*"],
+  "oauth2": {
+    "client_id": "186673725150-65fhik7vcmmmtcfmheqqll0m368vagpc.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  }
+}

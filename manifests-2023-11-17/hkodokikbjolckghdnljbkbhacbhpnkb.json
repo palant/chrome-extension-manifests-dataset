@@ -1,0 +1,62 @@
+---
+slug: saml-ws-federation-and-oa
+name: 'SAML, WS-Federation and OAuth 2.0 tracer'
+description: 'Trace and decode all SAML, WS-Federation and OAuth 2.0 (OIDC) messages'
+version: 4.3.1
+release_date: 'September 15, 2022'
+publisher: Rasmus Christiansen
+category: Developer Tools
+category_slug: ext/11-web-development
+rating: 4
+rating_count: 7
+user_count: '10,000+'
+size: 128KiB
+languages:
+  - English
+publisher_site: rcfed.com
+extension_website: 'https://rcfed.com/Browser/Tracer'
+support_website: 'https://rcfed.com/Contact'
+privacy_policy: 'https://rcfed.com/Privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "SAML, WS-Federation and OAuth 2.0 tracer",
+  "short_name": "rcFederation tracer",
+  "description": "Trace and decode all SAML, WS-Federation and OAuth 2.0 (OIDC) messages",
+  "author": "Rasmus Christiansen (rcfed.com)",
+  "homepage_url": "https://rcfed.com/Browser/Tracer",
+  "version": "4.3.1",
+  "browser_action": {
+    "default_icon": "/icon/icon57.png",
+    "default_popup": "popup.html",
+    "default_title": "rcFederation SAML, WS-Federation and OAuth 2.0 tracer"
+  },
+  "permissions": [ "contextMenus", "webRequest", "*://*/*" ],
+  "background": {
+    "scripts": [ "eventPage.js", "common.js", "zipInflate.js", "ajaxIntercept.js" ],
+    "persistent": true
+  },
+  "icons": {
+    "57": "/icon/icon57.png",
+    "96": "/icon/icon96.png",
+    "128": "/icon/icon128.png",
+    "192": "/icon/icon192.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [ "<all_urls>" ],
+      "js": [ "ajaxInterceptInjector.js" ],
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [ "ajaxIntercept.js" ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}

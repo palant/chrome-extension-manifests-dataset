@@ -1,0 +1,92 @@
+---
+slug: remotehq-instant-cobrowsi
+name: RemoteHQ - Instant Cobrowsing
+description: Open links in Remote Browser and more
+version: 4.0.3
+release_date: 'October 28, 2022'
+publisher: RemoteHQ
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: 120
+size: 115KiB
+languages:
+  - English (United States)
+extension_website: 'https://www.remotehq.com'
+support_website: 'https://www.remotehq.com/faq'
+privacy_policy: 'https://www.remotehq.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RemoteHQ - Instant Cobrowsing",
+  "description": "Open links in Remote Browser and more",
+  "short_name": "Open links in Remote Browser and more",
+  "version": "4.0.3",
+  "minimum_chrome_version": "88",
+  "icons": {
+    "16": "assets/rhq-16x16.png",
+    "48": "assets/rhq-48x48.png"
+  },
+  "background": {
+    "service_worker": "/background/main.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "tabs",
+    "system.display"
+  ],
+  "host_permissions": [
+    "https://calendar.google.com/*",
+    "*://*.remotehq.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.remotehq.com/*",
+      "*://localhost:*/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://calendar.google.com/calendar/*"
+      ],
+      "js": [
+        "/content/jquery.js", "/content/rhq-calendar.js"
+      ],
+      "css": [
+        "/css/all.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://rooms.remotehq.com/*"
+      ],
+      "js": [
+        "/content/auth.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/rhq-sygnet.svg"
+      ],
+      "matches": [
+        "*://calendar.google.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "RemoteHQ",
+    "default_popup": "popup/popup.html"
+  }
+}

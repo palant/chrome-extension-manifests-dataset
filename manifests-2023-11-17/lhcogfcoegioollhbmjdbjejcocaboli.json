@@ -1,0 +1,91 @@
+---
+slug: free-marketplace-scraper
+name: Free Marketplace Scraper by Komplace
+description: 'Scrape Produk dari Jakmall dan Shopee dengan Mudah, Cepat, dan Gratis!'
+version: 1.1.0
+release_date: 'November 3, 2023'
+publisher: tech
+category: Productivity
+category_slug: ext/7-productivity
+rating: 4.428571428571429
+rating_count: 7
+user_count: 152
+size: 75.92KiB
+languages:
+  - Bahasa Indonesia
+publisher_site: komplace.id
+extension_website: 'https://komplace.id/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Free Marketplace Scraper by Komplace",
+  "description": "Scrape Produk dari Jakmall dan Shopee dengan Mudah, Cepat, dan Gratis!",
+  "version": "1.1.0",
+  "icons": {
+    "16": "images/icons/icon-16.png",
+    "32": "images/icons/icon-32.png",
+    "48": "images/icons/icon-48.png",
+    "128": "images/icons/icon-128.png"
+  },
+  "permissions": ["storage", "webRequest"],
+  "host_permissions": [
+    "*://komplace.id/*",
+    "*://api-komerce.boostr.id/*",
+    "*://staging-v2.komplace.id/*",
+    "*://staging-komerce.boostr.id/*",
+    "*://shopee.co.id/*",
+    "*://shopee.co.th/*",
+    "*://shopee.sg/*",
+    "*://shopee.tw/*",
+    "*://shopee.ph/*",
+    "*://shopee.vn/*",
+    "*://shopee.com.my/*",
+    "*://*.xiapibuy.com/*-i.*/",
+    "*://www.jakmall.com/*"
+  ],
+  "background": { "service_worker": "background.js" },
+  "content_scripts": [
+    {
+      "matches": ["*://komplace.id/*", "*://staging-v2.komplace.id/*"],
+      "js": ["platforms/komplace/content.js"]
+    },
+    {
+      "matches": [
+        "*://shopee.co.id/*",
+        "*://shopee.co.th/*",
+        "*://shopee.sg/*",
+        "*://shopee.tw/*",
+        "*://shopee.ph/*",
+        "*://shopee.vn/*",
+        "*://shopee.com.my/*",
+        "*://*.xiapibuy.com/*-i.*/"
+      ],
+      "js": ["platforms/shopee/content.js"],
+      "css": ["platforms/shopee/content.css"]
+    },
+    {
+      "matches": ["*://www.jakmall.com/*"],
+      "js": ["platforms/jakmall/content.js"],
+      "css": ["platforms/jakmall/content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://api-komerce.boostr.id/*",
+      "*://staging-komerce.boostr.id/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+}

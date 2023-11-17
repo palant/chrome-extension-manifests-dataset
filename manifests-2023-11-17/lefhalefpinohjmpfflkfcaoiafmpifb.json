@@ -1,0 +1,81 @@
+---
+slug: blurred-thumbnails
+name: Blurred thumbnails
+description: Blur thumbnails on YT page for whatever reason
+version: 1.4.1
+release_date: 'November 6, 2023'
+publisher: krzysiek.kurczewski
+category: Fun
+category_slug: ext/14-fun
+rating: 4.5
+rating_count: 4
+user_count: 396
+size: 23.97KiB
+languages:
+  - English
+extension_website: 'https://github.com/kkurczewski/blur-youtube-thumbnails'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Blurred thumbnails",
+  "version": "1.4.1",
+  "description": "Blur thumbnails on YT page for whatever reason",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": [
+    "https://www.youtube.com/*",
+    "https://m.youtube.com/*"
+  ],
+  "options_page": "options/index.html",
+  "background": {
+    "service_worker": "hook/onInstall.js"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content/selectors/home.js",
+        "content/selectors/watch.js",
+        "content/selectors/results.js",
+        "content/selectors/playlists.js",
+        "content/observer/mutationObserver.js",
+        "content/video.js",
+        "content/playlistVideo.js",
+        "content/playlistCover.js",
+        "content/blur.js",
+        "content/index.js"
+      ],
+      "css": [
+        "content/style.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://m.youtube.com/*"
+      ],
+      "js": [
+        "content/blur.js",
+        "content/observer/mutationObserver.js",
+        "content/selectors/home.m.js",
+        "content/selectors/watch.m.js",
+        "content/videoNode.js",
+        "content/index.m.js"
+      ],
+      "css": [
+        "content/style.m.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ]
+}

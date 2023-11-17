@@ -1,0 +1,86 @@
+---
+slug: shuffleme-beta
+name: ShuffleMe BETA
+description: >-
+  The extension captures user emotions and browsing content on social media in
+  order to be able to do behavioral analysis.
+version: '2.8'
+release_date: 'March 8, 2023'
+publisher: shufflemellc
+category: Social & Communication
+category_slug: ext/1-communication
+rating: 5
+rating_count: 1
+user_count: 35
+size: 59.19KiB
+languages:
+  - English
+extension_website: 'https://www.shuffleme.app/'
+privacy_policy: 'https://www.shuffleme.app/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name": "ShuffleMe BETA",
+    "description": "The extension captures user emotions and browsing content on social media in order to be able to do behavioral analysis.",
+    "version": "2.8",
+    "icons":
+    {
+        "128": "SM_chrome_ext_icon.png",
+        "48": "SM_chrome_ext_icon.png",
+        "16": "SM_chrome_ext_icon.png"
+    },
+
+    "action":
+    {
+        "default_icon": "SM_chrome_ext_icon.png",
+        "default_popup": "popup.html",
+        "default_title": "ShuffleMe Behavior Analysis"
+    },
+
+    "background":
+    {
+        "service_worker": "background_wrapper.js"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://*.twitter.com/*"],
+            "js": ["jquery-3.3.1.min.js", "constants.js", "cs_twitter.js", "video_capture.js"]
+        },
+        {
+            "matches": ["*://*/resend_verification_email"],
+            "js": ["cs_registration_final_steps.js"]
+        },
+        {
+            "matches": ["http://localhost/*", "https://dev.shuffleme.app/*", "https://beta.shuffleme.app/*"],
+            "js": ["cs_SM_dashboard.js"]
+        }
+    ],
+
+    "web_accessible_resources": [
+    {
+        "resources": [ "constants.js" ],
+        "matches": [ "https://*.twitter.com/*" ]
+    }
+    ],
+
+    "content_security_policy": { 
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+
+    "permissions": [
+        "tabs",
+        "storage",
+        "alarms"
+    ],
+    
+    "host_permissions" : [
+        "https://*.twitter.com/*",
+        "https://beta.shuffleme.app/*",
+        "https://apis.google.com/*"
+    ]
+}

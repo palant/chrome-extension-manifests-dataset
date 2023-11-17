@@ -1,0 +1,90 @@
+---
+slug: chess-rocket
+name: Chess Rocket
+description: >-
+  Supercharge your Chess matches & drastically improve your playing skills in
+  just 2 weeks with the #1 Real Time Move Calculator
+version: 1.0.1
+release_date: 'November 29, 2022'
+publisher: Chess Rocket
+category: Fun
+category_slug: ext/14-fun
+rating: 3
+rating_count: 5
+user_count: 278
+size: 587KiB
+languages:
+  - English
+extension_website: 'https://www.chessrocketbot.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appShortName__",
+  "description": "__MSG_appDescription__",
+  "version": "1.0.1",
+  "default_locale": "en",
+  "icons": {
+    "512": "images/512.png"
+  },
+  "action": {
+    "default_icon": "images/512.png",
+    "default_popup": "layouts/popup.html",
+    "default_title": "__MSG_appShortName__"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/jquery-3.6.1.min.js",
+        "scripts/jquery-ui.min.js",
+        "scripts/main.js",
+        "scripts/popup.js"
+      ],
+      "content_security_policy": "script-src * data: blob: 'unsafe-inline' 'unsafe-eval';",
+      "matches": [
+        "*://*.chess.com/*",
+        "*://*.lichess.org/*",
+        "*://lichess.org/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "rules",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "*://*.chess.com/*",
+    "*://*.lichess.org/*",
+    "*://lichess.org/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/stockfish/stockfish.wasm",
+        "scripts/stockfish/stockfish.js",
+        "scripts/stockfish/stockfish.worker.js"
+      ],
+      "matches": [
+        "*://*.chess.com/*",
+        "*://*.lichess.org/*",
+        "*://lichess.org/*"
+      ]
+    }
+  ]
+}

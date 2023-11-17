@@ -1,0 +1,86 @@
+---
+slug: chat-ai-search-ai-results
+name: 'Chat AI Search: AI results, Yahoo® & more'
+description: >-
+  Get search results from popular sources using quick commands from the browser
+  address bar offered by Chat AI Search.
+version: 1.0.0.6
+release_date: 'November 17, 2023'
+publisher: Chat AI Search
+category: Productivity
+category_slug: ext/7-productivity
+rating: 0
+rating_count: 0
+user_count: '10,000+'
+size: 83.38KiB
+languages:
+  - English (United States)
+publisher_site: chataisearch.com
+extension_website: 'https://chataisearch.com'
+privacy_policy: 'https://chataisearch.com/common/privacypolicy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Chat AI Search: AI results, Yahoo® & more",
+  "description": "Get search results from popular sources using quick commands from the browser address bar offered by Chat AI Search.",
+  "version": "1.0.0.6",
+  "manifest_version": 3,
+  "short_name": "Chat AI Search: AI results, Yahoo® & more",
+  "host_permissions": [
+    "*://chataisearch.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "alarms",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "background": {
+    "service_worker": "serviceWorker/serviceWorker.js"
+  },
+  "icons": {
+    "128": "icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chataisearch.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://search.yahoo.com/*",
+        "*://*.search.yahoo.com/*"
+      ],
+      "js": [
+        "keepChanges.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "browser_style": true,
+    "default_icon": {
+      "128": "icons/icon.png"
+    },
+    "default_title": "Chat AI Search: AI results, Yahoo® & more",
+    "default_popup": "popup/popup.html"
+  },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Chat AI",
+      "keyword": "Chat AI",
+      "favicon_url": "https://chataisearch.com/searchai/images/favicon_gpt4.ico",
+      "search_url": "https://chataisearch.com/search.html?q={searchTerms}",
+      "suggest_url": "https://chataisearch.com/apps/getChatGptSuggestion?q={searchTerms}",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  }
+}
