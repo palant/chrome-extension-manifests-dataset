@@ -1,0 +1,166 @@
+---
+name: CallCloud - Outreach & Salesloft Power Dialer
+version: 0.2.0.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 6
+user_count: 94
+release_date: '2023-11-28T02:02:40.000Z'
+size: 10.14MiB
+languages:
+  - English
+description: Boost your productivity and dial hands-free in Salesloft and Outreach.
+publisher: CallCloud LLC
+publisher_account: CallCloud
+publisher_address: |-
+  4 Pine Ridge Dr
+  East Brunswick, NJ 08816-1620
+  US
+privacy_policy: >-
+  https://app.termly.io/document/privacy-policy/aea6378b-cefa-4b1c-a329-da7ac5a2fdff
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "CallCloud - Outreach & Salesloft Power Dialer",
+  "description": "Boost your productivity and dial hands-free in Salesloft and Outreach.",
+  "version": "0.2.0.0",
+  "author": "CallCloud",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:3000/join/*",
+        "https://app.callcloud.app/join/*",
+        "https://callcloud-4a2fba024d80.herokuapp.com/join/*"
+      ],
+      "js": [
+        "libraries/js/jquery-3.3.1.js",
+        "callcloud-app/js/join.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.salesloft.com/*",
+        "https://*.outreach.io/*"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "libraries/css/jquery.notify.css",
+        "general/css/countdownTimer.css",
+        "general/css/general.css",
+        "general/css/loader/spinkit.css",
+        "general/css/loader/animated-check.css"
+      ],
+      "js": [
+        "testing/is-extension-in-test-mode.js",
+        "libraries/js/jquery-3.3.1.js",
+        "popup/assets/vendor/js/bootstrap.js",
+        "libraries/js/iconify.min.js",
+        "libraries/js/notify.js",
+        "libraries/js/confetti.js",
+        "general/js/helpers.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": [
+        "general/css/general.css",
+        "general/css/loaders.css",
+        "popup/assets/vendor/fonts/boxicons.css",
+        "libraries/css/jquery.notify.css",
+        "global-injection/global-injection.css"
+      ],
+      "js": [
+        "testing/is-extension-in-test-mode.js",
+        "libraries/js/jquery-3.3.1.js",
+        "libraries/js/jquery-ui.min.js",
+        "libraries/js/sweetalert.js",
+        "libraries/js/popper.js",
+        "libraries/js/tippy.js",
+        "libraries/js/bindly.js",
+        "libraries/js/notify.js",
+        "general/js/helpers.js",
+        "global-injection/global-injection.js",
+        "global-injection/on-storage-change.js",
+        "testing/global-messages.js",
+        "general/js/persistBackground.js",
+        "libraries/js/string-similarity.js"
+      ]
+    },
+    
+    {
+      "matches": ["https://app.salesloft.com/*"],
+      "css": [
+        "salesloft-app-main/css/salesloft.css"
+      ],
+      "js": [
+        "general/js/countdownTimer.js",
+        
+        "testing/add-back-to-cadence.js",
+        "salesloft-app-main/main.js"
+      ]
+    },
+
+    {
+      "matches": ["https://*.outreach.io/*"],
+      "css": [
+        "outreach-app-main/css/outreach.css"
+      ],
+      "js": [
+        "general/js/countdownTimer.js",
+
+        "outreach-app-main/main.js"
+      ]
+    },
+
+    {
+      "matches": ["https://web.outreach.io/*"],
+      "js": [
+        "outreach-app-main/session/set-user-token.js"
+      ]
+    },
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "js": [
+        "libraries/js/jquery-3.3.1.js",
+        "general/js/helpers.js",
+        "libraries/js/bindly.js",
+        "libraries/js/sweetalert.js",
+        "listen-while-you-dial/youtube/listen.js"
+      ]
+    }
+  ],
+
+
+  "web_accessible_resources": [
+    {
+      "resources": ["firebase-credentials.json", "jquery.notify.css", "uuidv4.min.js", "images/*", "global-injection/*", "general/*", "testing/*", "popup/*", "queries/*", "outreach-app-main/*", "salesloft-app-main/*", "callcloud-app/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "128": "images/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "webRequest",
+    "system.display"
+  ],
+  "host_permissions": [
+    "https://*.salesloft.com/*",
+    "https://*.outreach.io/*",
+    "https://*.twilio.com/*",
+    "https://api.segment.io/*",
+    "http://localhost:3000/*",
+    "https://*.callcloud.app/*",
+    "https://callcloud-4a2fba024d80.herokuapp.com/*"
+  ]
+}

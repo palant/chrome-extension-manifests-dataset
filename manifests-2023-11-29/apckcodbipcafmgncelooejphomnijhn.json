@@ -1,0 +1,104 @@
+---
+name: Panaya ForeSight - Salesforce Discovery
+version: 23.5.9
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 327
+release_date: '2023-05-09T06:10:15.000Z'
+size: 257KiB
+languages:
+  - English
+description: >-
+  Foresee dependencies and analyze the impact before making any change in your
+  Salesforce Org
+publisher: Panaya Inc.
+publisher_address: |-
+  Continental Plaza
+  411 Hackensack Ave.
+  Hackensack, New Jersey NJ 07601
+  United States
+privacy_policy: 'http://www.panaya.com/panaya-privacy-2'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "23.5.9",
+  "name": "__MSG_name__",
+  "short_name": "__MSG_short_name__",
+  "description": "__MSG_description__",
+  "homepage_url": "https://www.panaya.com",
+  "default_locale": "en",
+  "action": {
+    "default_title": "Click to show an analysis"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "cookies",
+    "activeTab",
+    "scripting",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "https://*.force.com/*",
+    "https://*.panaya.com/*",
+    "https://*.panaya.int/*"
+  ],
+  "icons": {
+    "16": "./icons/icon16.png",
+    "48": "./icons/icon48.png",
+    "128": "./icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "./background/service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.force.com/*"
+      ],
+      "css": ["./styles/discovery.css"],
+      "js": [
+        "./common/common.js",
+        "./common/discovery-content.js",
+        "./common/port-messages.js",
+        "./common/side-bar.js",
+        "./content/objects-manager/component-details.js",
+        "./content/objects-manager/sub-components-list.js",
+        "./content/objects-manager/objects-list.js",
+        "./content/objects-manager/extension-action.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "./options/options.html",
+    "open_in_tab": false
+  },
+  "commands": {
+    "toggle-discovery": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q",
+        "mac": "Command+Shift+D"
+      },
+      "description": "Send selected text to Panaya ForeSight discovery page."
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "discovery-iframe-view.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,81 @@
+---
+name: Brainly Homework Help
+version: 3.4.2
+category_slug: productivity/education
+rating: 4.3
+rating_count: 20
+user_count: 40000
+release_date: '2023-10-05T07:31:06.000Z'
+size: 402KiB
+languages:
+  - English
+description: >-
+  Find solutions for any school question with a Knowledge Base of over 250
+  million answers and explanations.
+publisher: BRAINLY SP. z O.O.
+publisher_account: Brainly
+publisher_address: |-
+  Krowoderska 63B/6
+  Kraków 31-158
+  PL
+extension_website: brainly.com
+privacy_policy: 'https://brainly.com/pages/privacy_policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Brainly Homework Help",
+  "version": "3.4.2",
+  "description": "Find solutions for any school question with a Knowledge Base of over 250 million answers and explanations.",
+  "icons": {
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["https://*.google.com/search?*"],
+      "js": ["prefetch-script.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.google.com/search?*"],
+      "css": ["content-script.css"],
+      "js": ["content-script.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["content-script-all.css", "global-styles.css"],
+      "js": ["content-script-all.js"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://*.brainly.com/*"],
+      "js": ["presence-script.js"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://docs.google.com/document/*"],
+      "js": ["google-docs-proxy.js"],
+      "world": "MAIN"
+    }
+  ],
+  "host_permissions": ["https://chrome-extensions.brainly.com/"],
+  "permissions": ["storage", "contextMenus", "scripting", "activeTab"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.woff2",
+        "*.woff",
+        "content-script-selection.css",
+        "content-script-all.css"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

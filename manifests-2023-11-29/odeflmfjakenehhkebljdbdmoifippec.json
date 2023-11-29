@@ -1,0 +1,90 @@
+---
+name: Hypeshot
+version: 2.1.1.12
+category_slug: lifestyle/entertainment
+rating: 4.851851851851852
+rating_count: 27
+user_count: 1000
+release_date: '2022-11-02T10:09:41.000Z'
+size: 13.46MiB
+languages:
+  - English (United States)
+description: Personalize the way you watch sports
+publisher_account: hypeshot
+extension_website: hypeshot.io
+support_website: 'https://www.hypeshot.io/faq'
+privacy_policy: >-
+  https://app.termly.io/document/privacy-policy/cadaf36a-81b6-4e14-9408-114dec3b140c
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+        "backgroundScript.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_icon": "icon_inactive.png",
+    "default_popup": "popup.html"
+  },
+  "name": "Hypeshot",
+  "description": "Personalize the way you watch sports",
+  "version": "2.1.1.12",
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["indexScript.js"],
+      "exclude_matches": [
+        "https://fantasy.espn.com/basketball/team?leagueId=*",
+        "*://*.espn.com/fantasy/basketball/*"
+      ]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["notificationScript.js"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["controlButtonScript.js"]
+    },
+    {
+      "matches": [
+        "*://*.espn.com/fantasy/football/*",
+        "*://*.espn.com/fantasy/basketball/*",
+        "*://*.hypeshot.io/*",
+        "*://*.hypeshot-test.com/*",
+        "*://master.d44kt561uoeud.amplifyapp.com/*",
+        "*://*.basketball.fantasysports.yahoo.com/*",
+        "*://*.sleeper.app/*"
+      ],
+      "exclude_matches": ["https://fantasy.espn.com/basketball/league*"],
+      "js": ["onboardingScript.js"]
+    }
+ ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://unpkg.com; object-src 'self'",
+  "externally_connectable": {
+    "matches": [
+      "*://hypeshot-test.com/*",
+      "*://master.d44kt561uoeud.amplifyapp.com/*",
+      "*://hypeshot.io/*",
+      "*://app.hypeshot.io/*"
+    ]
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "identity",
+    "identity.email",
+    "history",
+    "tabs"
+  ],
+  "web_accessible_resources": ["*.css"]
+}

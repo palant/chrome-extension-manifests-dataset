@@ -1,0 +1,123 @@
+---
+name: KosmoTime extension
+version: 0.1.20
+category_slug: productivity/workflow
+rating: 4.636363636363637
+rating_count: 11
+user_count: 1000
+release_date: '2021-10-25T07:04:45.000Z'
+size: 6.92MiB
+languages:
+  - English
+description: >-
+  Reduce tab clutter and mute distractions when you start a task: close tabs,
+  block notifications, and restore them all later.
+publisher_account: KosmoTime
+privacy_policy: 'https://kosmotime.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "KosmoTime extension",
+  "version": "0.1.20",
+  "description": "Reduce tab clutter and mute distractions when you start a task: close tabs, block notifications, and restore them all later.",
+  "manifest_version": 2,
+  "icons": {
+    "16": "GipsyZen16.png",
+    "48": "GipsyZen48.png",
+    "128": "GipsyZen128.png"
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "GipsyZen16.png",
+      "48": "GipsyZen48.png",
+      "128": "GipsyZen128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "static/js/background.js",
+      "static/js/hotreload.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://localhost/*",
+        "*://*.kosmodev.com/*",
+        "*://*.kosmocal.com/*",
+        "*://*.kosmotime.com/*",
+        "https://*.slack.com/oauth/*",
+        "https://accounts.google.com/o/oauth2/auth/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "static/js/distractionblockerscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*",
+        "*://inbox.google.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "inboxsdk.js",
+        "static/js/gmailContentScript.js"
+      ],
+      "css": [
+        "static/css/gmailContentScript.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://docs.google.com/document/d/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "static/js/suggestionPopupContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://localhost/*",
+        "*://*.kosmocal.com/*",
+        "*://*.kosmotime.com/*",
+        "*://*.kosmodev.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "static/js/appContentScript.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "storage",
+    "tabs",
+    "webRequest",
+    "<all_urls>"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.kosmocal.com/*",
+      "*://*.kosmotime.com/*",
+      "*://*.kosmodev.com/*",
+      "*://localhost/*"
+    ]
+  },
+  "web_accessible_resources": [
+    "icons/*",
+    "index.css",
+    "static/css/anysite.css",
+    "static/js/*.map",
+    "distractionblocker.html",
+    "closedtabs.html"
+  ]
+}

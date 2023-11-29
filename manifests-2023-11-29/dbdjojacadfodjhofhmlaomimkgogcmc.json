@@ -1,0 +1,115 @@
+---
+name: Steam Price Chart
+version: 1.0.2
+category_slug: lifestyle/shopping
+rating: 3.5
+rating_count: 2
+user_count: 192
+release_date: '2022-06-20T07:38:47.000Z'
+size: 195KiB
+languages:
+  - English
+  - 中文 (简体)
+description: >-
+  Adds price (sale) history charts for games and other items to the Steam
+  webpages.
+publisher_account: gingerax
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extensionName__",
+  "version": "1.0.2",
+  "manifest_version": 2,
+  "permissions": [
+    "https://isthereanydeal.com/*",
+    "https://howlongtobeat.com/*",
+    "https://steamspy.com/api.php*",
+    "declarativeContent",
+    "declarativeNetRequest",
+    "storage",
+    "tabs"
+  ],
+  "author": "gingerax",
+  "background": {
+    "scripts": [
+      "js/background/init.js",
+      "js/background/requests.js",
+      "js/background/background.js"
+    ],
+    "persistent": false
+  },
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "content_scripts": [
+    {
+      "js": [
+        "js/content/app.js"
+      ],
+      "matches": [
+        "*://store.steampowered.com/app/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "js/content/bundle.js"
+      ],
+      "matches": [
+        "*://store.steampowered.com/bundle/*",
+        "*://store.steampowered.com/sub/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": [
+        "css/modal.css"
+      ],
+      "js": [
+        "js/content/libs/jquery.min.js",
+        "js/content/libs/bootstrap.min.js",
+        "js/content/libs/highstock.js",
+        "js/content/modal.js",
+        "js/content/globals.js",
+        "js/content/requests.js",
+        "js/content/data.js",
+        "js/content/buttons.js",
+        "js/content/chart.js",
+        "js/content/update.js",
+        "js/content/content.js"
+      ],
+      "matches": [
+        "*://store.steampowered.com/app/*",
+        "*://store.steampowered.com/bundle/*",
+        "*://store.steampowered.com/sub/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "page_action": {
+    "default_icon": {
+      "19": "images/icon_19.png",
+      "38": "images/icon_38.png"
+    },
+    "default_title": "__MSG_extensionTitle__",
+    "default_popup": "html/popup.html"
+  },
+  "icons": {
+    "16": "images/icon_16.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "web_accessible_resources": [
+    "images/icon_16.png",
+    "images/isthereanydeal_icon.svg",
+    "images/howlongtobeat_icon.png"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "howLongToBeat",
+      "enabled": true,
+      "path": "json/howLongToBeat.json"
+    }]
+  }
+}

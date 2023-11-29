@@ -1,0 +1,103 @@
+---
+name: 115网盘离线下载
+version: 1.10.14
+category_slug: productivity/workflow
+rating: 2.630434782608696
+rating_count: 46
+user_count: 3000
+release_date: '2023-05-10T07:43:41.000Z'
+size: 1.9MiB
+languages:
+  - 中文 (简体)
+description: '针对115网盘会员用户,提供快速离线磁力和aria2导出功能；夸克网盘aria2导出功能'
+publisher_account: black.humour
+privacy_policy: 'https://sites.google.com/view/plugin-photo-privacy-policy'
+---
+
+{
+  "name": "115网盘离线下载",
+  "version": "1.10.14",
+  "manifest_version": 3,
+  "description": "针对115网盘会员用户,提供快速离线磁力和aria2导出功能；夸克网盘aria2导出功能",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "homepage_url": "https://115.aacc.in",
+  "icons": {
+    "16": "assets/img/icons/icon16.png",
+    "48": "assets/img/icons/icon48.png",
+    "128": "assets/img/icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "19": "assets/img/icons/icon48.png",
+      "38": "assets/img/icons/icon48.png"
+    },
+    "default_title": "115网盘离线下载"
+  },
+  "background": {
+    "service_worker": "background-wrapper.js"
+  },
+  "permissions": [
+    "cookies",
+    "downloads",
+    "storage",
+    "notifications",
+    "scripting",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "options_page": "option/index.html",
+  "content_scripts": [
+    {
+      "js": [
+        "dist/injectLogin.entry.js",
+        "dist/inject_export115_start.entry.js"
+      ],
+      "matches": [
+        "https://*.115.com/*"
+      ]
+    },
+    {
+      "js": [
+        "dist/inject_exportQuark_start.entry.js"
+      ],
+      "matches": [
+        "https://*.quark.cn/*"
+      ]
+    },
+    {
+      "css": [
+        "assets/css/export_style.css"
+      ],
+      "all_frames": true,
+      "matches": [
+        "https://*.115.com/*"
+      ]
+    },
+    {
+      "css": [
+        "assets/css/quark_export_style.css"
+      ],
+      "all_frames": true,
+      "matches": [
+        "https://*.quark.cn/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

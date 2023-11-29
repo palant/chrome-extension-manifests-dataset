@@ -1,0 +1,109 @@
+---
+name: SkrivaText
+version: 1.0.3
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 10000
+release_date: '2023-11-16T05:21:50.000Z'
+size: 1.2MiB
+languages:
+  - English
+  - svenska
+description: >-
+  Discover the spelling and grammar checker of the future, created by experts in
+  language, speech therapy and pedagogy.
+publisher: Oribi AB
+publisher_account: oribi-web-store-publishers
+publisher_address: |-
+  Bredgatan 2
+  Lund 222 21
+  SE
+extension_website: oribi.se
+support_website: 'https://oribi.se/support'
+privacy_policy: 'https://oribi.se/en/gdpr'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "minimum_chrome_version": "109",
+  "name": "SkrivaText",
+  "description": "__MSG_appDesc__",
+  "version": "1.0.3",
+  "version_name": "1.0.3",
+  "default_locale": "en",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "icons": {
+    "16": "assets/icon-16.png",
+    "24": "assets/icon-24.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "64": "assets/icon-64.png",
+    "128": "assets/icon-128.png"
+  },
+  "action": {
+    "default_popup": "action-popup.html",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "24": "assets/icon-24.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "64": "assets/icon-64.png",
+      "128": "assets/icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://docs.google.com/document/d/*",
+        "*://docs.google.com/document/u/*",
+        "*://docs.google.com/document/before*",
+        "*://docs.google.com/document/create*",
+        "*://*.officeapps.live.com/we/wordeditorframe.aspx",
+        "*://*.officeapps.live.com/we/wordeditorframe.aspx*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content-script.js"
+      ],
+      "css": [
+        "content-script.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://idp.texthelp.com/*",
+    "https://skrivatext.texthelp.com/*",
+    "https://dictionary.oribi.se/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "google-docs-integration.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "views/*.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

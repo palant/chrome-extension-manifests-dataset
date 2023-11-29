@@ -1,0 +1,129 @@
+---
+name: Vormats - Screen Recorder for the workplace
+version: 2.3.0
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 646
+release_date: '2023-10-31T14:54:43.000Z'
+size: 8.62MiB
+languages:
+  - English (United States)
+description: >-
+  Quickly and easily make and share videos for asynchronous communication.
+  Capture your screen. Share and track your engagement.
+publisher: Vormats
+publisher_address: |-
+  Prinseneiland, 12D
+  Amsterdam 1013LR
+  NL
+extension_website: vormats.com
+support_website: 'https://vormats.com/contact'
+privacy_policy: 'https://vormats.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Vormats - Screen Recorder for the workplace",
+  "version": "2.3.0",
+  "manifest_version": 3,
+  "description": "Quickly and easily make and share videos for asynchronous communication. Capture your screen. Share and track your engagement.",
+  "permissions": ["storage", "desktopCapture", "activeTab", "notifications", "tabs", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "minimum_chrome_version": "88",
+  "icons": {
+    "128": "asset/vormats32x32.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_icon": "asset/vormats32x32.png",
+    "default_title": "Vormats",
+    "default_popup": "popup-action.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["content.js", "extapp.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["inboxsdk.js", "gmail.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://secure.vormats.com/*"],
+      "js": ["accordium.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "js": ["google-docs.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content.css",
+        "gmail.css",
+        "content-frame.html",
+        "upload-file.html",
+        "asset/vormats32x32.png",
+        "shapes.png",
+        "popup.html",
+        "popup-action.html",
+        "asset/camera_permission.jpg",
+        "asset/microphone_permission.jpg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+V",
+        "mac": "Alt+Shift+V",
+        "linux": "Alt+Shift+V",
+        "default": "Alt+Shift+V"
+      }
+    },
+    "pause_and_resume": {
+      "suggested_key": {
+        "windows": "Alt+Shift+P",
+        "mac": "Alt+Shift+P",
+        "linux": "Alt+Shift+P",
+        "default": "Alt+Shift+P"
+      },
+      "description": "Pause & Resume Recording"
+    },
+    "cancel": {
+      "suggested_key": {
+        "windows": "Alt+Shift+C",
+        "mac": "Alt+Shift+C",
+        "linux": "Alt+Shift+C",
+        "default": "Alt+Shift+C"
+      },
+      "description": "Cancel Recording"
+    },
+    "restart_recording": {
+      "suggested_key": {
+        "windows": "Alt+Shift+R",
+        "mac": "Alt+Shift+R",
+        "linux": "Alt+Shift+R",
+        "default": "Alt+Shift+R"
+      },
+      "description": "Quick restart"
+    }
+  }
+}

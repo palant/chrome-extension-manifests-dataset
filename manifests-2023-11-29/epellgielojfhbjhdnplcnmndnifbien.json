@@ -1,0 +1,81 @@
+---
+name: 青葉のカメラ
+version: 0.9.0
+category_slug: make_chrome_yours/accessibility
+rating: 4.447368421052632
+rating_count: 38
+user_count: 2000
+release_date: '2022-06-30T04:48:44.000Z'
+size: 118KiB
+languages:
+  - 日本語
+description: 艦隊これくしょん～艦これ～ でプレイ画面のスクリーンショットを取得
+publisher_account: Komit
+support_website: 'https://twitter.com/AobaNoCamera'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "青葉のカメラ",
+ "version": "0.9.0",
+ "manifest_version": 3,
+ "description": "艦隊これくしょん～艦これ～ でプレイ画面のスクリーンショットを取得",
+ "icons": {
+  "128": "icon/icon128.png",
+  "48":  "icon/icon48.png",
+  "16":  "icon/icon16.png"
+ },
+ "options_page": "options.html",
+ "action": {
+  "default_title": "青葉のカメラ[取得不可]",
+  "default_icon":  {
+   "38":  "icon/icon38_disabled.png"
+  }
+ },
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "http://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/",
+    "http://osapi.dmm.com/gadgets/*"
+   ],
+   "js": [
+    "lib/canvas-to-blob.js",
+    "lib/FileSaver.min.js",
+    "lib/jquery-2.1.3.min.js",
+    "lib/Varlink.js",
+    "lib/Controller.js",
+    "lib/LogicMaster.js",
+    "logic/MyCanvas.js",
+    "logic/MyFrame.js",
+    "logic/MyMenu.js",
+    "const.js",
+    "contents_script.js"
+   ],
+   "css": [
+    "logic/MyMenu.css"
+   ],
+   "run_at" : "document_end",
+   "all_frames" : false
+  },
+  {
+   "matches": [
+    "http://*/kcs2/index.php*"
+   ],
+   "js": [
+    "intercept_canvas.js"
+   ],
+   "run_at" : "document_end",
+   "all_frames" : true
+  }
+ ],
+ "web_accessible_resources": [{
+  "resources": ["logic/MyMenu.html"],
+  "matches": ["<all_urls>"]
+   }
+ ],
+ "permissions": ["background", "tabs", "storage"]
+}

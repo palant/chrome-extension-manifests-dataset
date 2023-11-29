@@ -1,0 +1,129 @@
+---
+name: Patent Plus
+version: 1.7.15
+category_slug: productivity/workflow
+rating: 5
+rating_count: 12
+user_count: 258
+release_date: '2023-11-24T09:44:14.000Z'
+size: 3.0MiB
+languages:
+  - English (UK)
+description: Supercharge patent reading on Google Patents - Patent Plus
+publisher_account: Dev
+extension_website: getpatentplus.com
+support_website: 'https://getpatentplus.com/contact-us/'
+privacy_policy: 'https://getpatentplus.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Patent Plus",
+    "description": "Supercharge patent reading on Google Patents - Patent Plus",
+    "version": "1.7.15",
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "icons": {
+        "16": "/images/logo.png",
+        "32": "/images/logo.png",
+        "48": "/images/logo.png",
+        "128": "/images/logo.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://tryslate.greyb.com/*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/enhance-slate.js",
+                "content-script/minimize-slate-content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/build-taxonomy.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/patent-prior-art.js",
+                "content-script/ai-summary/suggest-document-summary.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/ai-summary/summary-in-list-view.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://patents.google.com/patent/*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/patentplusassitant.js",
+                "content-script/patent-prior-art.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://patents.google.com/*"
+            ],
+            "js": [
+                "content-script/enhance-google-patents.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/?utm_source=slate_extension*"
+            ],
+            "js": [
+                "content-script/login-with-slate.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/auto-interesting-insight.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/slate_popup.html",
+        "default_icon": {
+            "16": "/images/logo.png",
+            "32": "/images/logo.png",
+            "48": "/images/logo.png",
+            "128": "/images/logo.png"
+        }
+    },
+    "host_permissions": [
+        "https://tryslate.greyb.com/*",
+        "https://patents.google.com/*",
+        "https://usecatalyst.tech/*",
+        "https://getpatentplus.com/*"
+    ]
+}

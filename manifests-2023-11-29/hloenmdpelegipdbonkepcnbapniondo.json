@@ -1,0 +1,121 @@
+---
+name: DealCloud
+version: 7.4.0.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 1000
+release_date: '2023-11-20T18:50:13.000Z'
+size: 467KiB
+languages:
+  - English (United States)
+description: DealCloud Chrome extension for Google Mail.
+publisher: 'Integration Appliance, Inc'
+publisher_account: dealcloudapps
+publisher_address: |-
+  101 Hudson St
+  Suite 1201
+  Jersey City, NJ 07302
+  US
+extension_website: dealcloud.com
+support_website: 'https://www.dealclouduniversity.com/'
+privacy_policy: 'https://dealcloud.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4L4YfaOZadjm/bF3QXOeDawYvDQgjCsb7DqZSEJ/zHp5U2poe9vINIf/ef0JlS2O/obJ444FuruWbtsBmOA4pP1+g2QG5QJtTyOgj2g8VTDaYIIbwe8wfUo+8C0i1f10A3u3LXPfAoPRCB8ecvyeJ/YqR3mAWYm+e7rw5hGu+FV87JJlBY2YRu0U2A4cT/cazK5Z2I5iHct0N3wkZ0ZbuXxMMtbYxmtU/MW2GLpYGgUOemUlQPatDwdedWz5KLD8Tgf4xedavZd2vO7EQJz5qkrK2KTxJbce0U1k+RsuD+cT8R1FKVogWidsV77qUPiRlFVa9IfoS/yiQCkX4sJBSQIDAQAB",
+  "version": "7.4.0.2",
+  "name": "DealCloud",
+  "description": "DealCloud Chrome extension for Google Mail.",
+  "homepage_url": "https://www.dealcloud.com",
+  "icons": {
+    "16": "assets/img/dc_16x16.png",
+    "32": "assets/img/dc_32x32.png",
+    "48": "assets/img/dc_48x48.png",
+    "64": "assets/img/dc_64x64.png",
+    "128": "assets/img/dc_128x128.png",
+    "256": "assets/img/dc_256x256.png"
+  },
+    "action": {
+      "default_title": "DealCloud",
+      "default_icon": {
+        "16": "assets/img/dc_16x16.png",
+        "32": "assets/img/dc_32x32.png"
+      },
+      "default_popup": "html/sidePanel.html"
+    },
+  "background": {
+    "service_worker":"background-sw.js"
+  },
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "js/gmail_content_script.bundle.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://calendar.google.com/*"
+      ],
+      "js": [
+        "js/gcalendar_content_script.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://mail.google.com/*",
+      "https://*.dealcloud.com/*",
+      "https://*.dealcloud.eu/*",
+      "https://*.dealclouddev.com/*",
+      "https://*.dealclouduat.com/*",
+      "https://*.dcodev.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ 
+         "js/gmail_injection_script.bundle.js",
+        "html/gmail_infopane_proxy.html",
+        "assets/img/dc_32x32.png",
+        "assets/img/dc_32x32_log_out.png",
+        "environments.js"],
+        "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "webRequest",
+    "tabs",
+    "identity",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://*.dealcloud.com/*",
+    "https://*.dealcloud.eu/*",
+    "https://*.dealclouddev.com/*",
+    "https://*.dealclouduat.com/*",
+    "https://*.dcodev.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages":"default-src 'self'; connect-src https://localhost:3000 https://*.googleapis.com https://*.dealclouddev.com https://*.dealclouduat.com https://*.dcodev.com https://*.dealcloud.com https://*.dealcloud.eu; frame-src 'self' https://*.dealclouddev.com https://*.dealclouduat.com https://*.dcodev.com https://*.dealcloud.com https://*.dealcloud.eu; script-src 'self' ; style-src * 'unsafe-inline' 'self' https://localhost:3000 blob:; img-src 'self' https://localhost:3000 data:; font-src 'self' https://localhost:3000;"
+  },
+  "oauth2": {
+    "client_id": "795406838655-dvhbiiccannhg06ku01it4ptiquugove.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  }
+}

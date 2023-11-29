@@ -1,0 +1,108 @@
+---
+name: Mokuren for GitHub
+version: 2.4.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 10
+user_count: 385
+release_date: '2023-11-22T06:10:46.000Z'
+size: 1.36MiB
+languages:
+  - English
+  - 日本語
+description: Open GitHub Issues in the sidebar
+publisher_account: chinp.lab
+privacy_policy: 'https://www.notion.so/0a0d9c8627c546aa85e5857ef1eaadcd'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "2.4.1",
+  "description": "__MSG_extDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "identity",
+    "identity.email",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://github.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "js": [
+        "js/content-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": [
+        "js/iframe-content-script.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/images/*.png"
+      ],
+      "matches": [
+        "https://github.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "auth.html"
+      ],
+      "matches": [
+        "https://github.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com' 'https://github.githubassets.com'; object-src' self'"
+  },
+  "commands": {
+    "closeSidebar": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S"
+      },
+      "description": "Close sidebar"
+    }
+  },
+  "omnibox": {
+    "keyword": "mo"
+  }
+}

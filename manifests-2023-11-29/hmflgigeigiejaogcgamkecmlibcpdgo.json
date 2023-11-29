@@ -1,0 +1,140 @@
+---
+name: Improved Intra 42
+version: 4.1.1
+category_slug: productivity/education
+rating: 5
+rating_count: 10
+user_count: 6000
+release_date: '2023-08-28T05:22:05.000Z'
+size: 325KiB
+languages:
+  - English
+  - Français
+description: >-
+  The ultimate browser extension for 42's Intranet, adding many improvements,
+  such as dark mode, customizable profiles and much more!
+publisher_account: Freek Bes
+support_website: 'https://github.com/FreekBes/improved_intra/issues?q='
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "__MSG_appName__",
+ "short_name": "__MSG_shortAppName__",
+ "version": "4.1.1",
+ "version_name": "4.1.1",
+ "description": "__MSG_appDesc__",
+ "default_locale": "en",
+ "icons": {
+  "16": "images/logo16.png",
+  "32": "images/logo32.png",
+  "48": "images/logo48.png",
+  "64": "images/logo64.png",
+  "96": "images/logo96.png",
+  "128": "images/logo128.png",
+  "256": "images/logo256.png",
+  "512": "images/logo512.png"
+ },
+ "incognito": "spanning",
+ "options_page": "options/options.html",
+ "action": {
+  "default_popup": "generic/popup/popup.html"
+ },
+ "permissions": [
+  "storage", "scripting"
+ ],
+ "host_permissions": [
+  "https://iintra.freekb.es/*",
+  "https://*.intra.42.fr/*"
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "generic/inject.js",
+    "features/themes/apply.css",
+    "features/themes/light.css",
+    "features/themes/dark.css",
+    "features/themes/colors/cetus.css",
+    "features/themes/colors/green.css",
+    "features/themes/colors/pyxis.css",
+    "features/themes/colors/vela.css",
+    "features/themes/colors/windows.css",
+    "features/themes/colors/yellow.css",
+    "options/options.html"
+   ],
+   "matches": [ "*://*.intra.42.fr/*", "*://iintra.freekb.es/*", "*://darkintra.freekb.es/*" ]
+  }
+ ],
+ "content_scripts": [
+  {
+   "matches": [ "*://*.intra.42.fr/*" ],
+   "css": [ "generic/fonts.css", "fixes/improv.css", "fixes/animations.css", "features/themes/apply.css" ],
+   "js": [ "generic/useful.js", "generic/console.js", "generic/lib/storage.js", "generic/lib/network.js", "generic/init.js", "features/themes/loader.js" ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": [ "*://iintra.freekb.es/*" ],
+   "js": [ "generic/useful.js", "generic/console.js", "generic/lib/storage.js", "generic/lib/network.js", "generic/init.js" ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": [ "*://*.intra.42.fr/*" ],
+   "js": [ "features/externalclustermap.js", "fixes/blackhole.js", "fixes/banners.js", "fixes/general.js", "fixes/optional.js", "fixes/improv.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "*://profile.intra.42.fr/*", "*://projects.intra.42.fr/*", "*://elearning.intra.42.fr/*", "*://meta.intra.42.fr/*", "*://shop.intra.42.fr/*", "*://admin.intra.42.fr/*" ],
+   "js": [ "options/sync.js" ],
+   "run_at": "document_idle"
+  },
+  {
+   "matches": [ "*://signin.intra.42.fr/users/sign_in" ],
+   "js": [ "options/unsync.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "*://iintra.freekb.es/*" ],
+   "js": [ "options/auth2.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "*://iintra.freekb.es/options.php*", "*://iintra.freekb.es/connect.php*" ],
+   "js": [ "options/options.js" ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": [ "*://iintra.freekb.es/v2/options/*" ],
+   "js": [ "options/options2.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "https://admin.intra.42.fr/*" ],
+   "js": [ "features/admin.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "*://profile.intra.42.fr/", "*://*.intra.42.fr/users/*" ],
+   "exclude_matches": [ "*://signin.intra.42.fr/users/sign_in" ],
+   "js": [ "features/profiles.js", "features/logtimes.js", "features/campus/codam/coa-titles.js" ],
+   "run_at": "document_idle"
+  },
+  {
+   "matches": [ "https://projects.intra.42.fr/*" ],
+   "js": [ "features/projects.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "https://meta.intra.42.fr/clusters", "https://meta.intra.42.fr/campus/*/clusters" ],
+   "js": [ "features/clustermap.js" ],
+   "run_at": "document_end"
+  }
+ ],
+ "background": {
+  "service_worker": "sw.js"
+ },
+ "omnibox": {
+  "keyword": "intra"
+ }
+}

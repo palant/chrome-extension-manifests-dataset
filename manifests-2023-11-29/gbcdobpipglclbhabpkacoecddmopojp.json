@@ -1,0 +1,115 @@
+---
+name: Twitch Badge Collector V2 - Collect Chats
+version: 2.7.3
+category_slug: make_chrome_yours/functionality
+rating: 4.884146341463414
+rating_count: 164
+user_count: 10000
+release_date: '2023-08-24T16:39:47.000Z'
+size: 527KiB
+languages:
+  - English
+  - русский
+  - 한국어
+description: Collect only the chats you want in Twitch Chat!
+publisher_account: bluewarn
+extension_website: badgecollector.dev
+support_website: 'https://tbc2.bluewarn.dev'
+privacy_policy: 'https://privacy.badgecollector.dev'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_ExtensionName__",
+  "description": "__MSG_ExtensionDesc__",
+  "default_locale": "en",
+  "version": "2.7.3",
+  "action": {
+    "default_icon": {
+      "128": "src/assets/icon.png"
+    },
+    "default_popup": "src/popup/popup.html"
+  },
+  "icons": {
+    "128": "src/assets/icon.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/twitchContentScript.tsx-loader-e5ddc6bb.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "exclude_matches": [
+        "*://passport.twitch.tv/*",
+        "*://gql.twitch.tv/*"
+      ],
+      "all_frames": true,
+      "css": [
+        "twitchContentScript.css"
+      ]
+    },
+    {
+      "js": [
+        "assets/remoteContentScript.ts-loader-23b54b53.js"
+      ],
+      "matches": [
+        "https://*.badgecollector.dev/mini*",
+        "https://*.badgecollector.dev/replay*"
+      ],
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.twitch.tv/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "resources": [
+        "src/assets/icon.png",
+        "src/assets/bmc-button.svg"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "resources": [
+        "assets/useGlobalSettingExtension-b5d46122.js",
+        "assets/browser-polyfill-1dfe5e4e.js",
+        "assets/utils-24e8199b.js",
+        "assets/useArrayFilterExtension-dcce75a9.js",
+        "assets/broadcast-channel-e7d2e0ef.js",
+        "assets/overrideFetch.ts-961e18e3.js",
+        "assets/twitchContentScript.tsx-fe641d17.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://*.badgecollector.dev/*",
+        "https://*.badgecollector.dev/*"
+      ],
+      "resources": [
+        "assets/browser-polyfill-1dfe5e4e.js",
+        "assets/remoteContentScript.ts-66e5fccf.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

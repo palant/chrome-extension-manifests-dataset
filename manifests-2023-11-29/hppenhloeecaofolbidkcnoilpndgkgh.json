@@ -1,0 +1,80 @@
+---
+name: UNIVERGE BLUE™ CONNECT Chrome Extension
+version: '0.40'
+category_slug: lifestyle/social
+rating: 5
+rating_count: 3
+user_count: 3000
+release_date: '2023-04-03T13:03:56.000Z'
+size: 2.01MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - Nederlands
+  - italiano
+  - русский
+  - 日本語
+description: UNIVERGE BLUE™ CONNECT Chrome Extension
+publisher_account: NEC Corporation
+support_website: 'https://kb.univerge.blue'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxCYOEFRZsvIl3xIzUeVHqGaZRgd60gu3STKyw7gRhAr/mSqSETt78Z2k96mC7cTrlOE7J8AVgr8lB/nPooMBpKHYi+35kn27knJhPGanU2ygdszyiiD1ik6oa/gwMHudWaqsGI3bdOJCXLcGZ1yevcPbpbebUjQXlVUJE2K8ycSLD9RIpSRySvMzWZhXqCwgiuP4hGED/3ZJoK2Z6Eb/NmbDQGuZXSByydbxNT0RMUihC6++KHvh7AGAJAAv8VvjVsDU/X12/9WnBaFE/2q/A4pgAsUUMgah5qI6BZMCELscZONGkwHvdh0ocyxnsDqp5Qnpiykb1aCBJjZ23SQo4wIDAQAB",
+  "manifest_version": 2,
+
+  "name": "__MSG_manifest_name__",
+  "short_name": "__MSG_manifest_short_name__",
+  "description": "__MSG_manifest_description__",
+  "default_locale": "en",
+  "version": "0.40",
+
+  "icons": {
+    "64":  "assets/images/logo-64.png",
+    "128": "assets/images/logo-128.png"
+  },
+
+  "browser_action": {
+    "default_popup": "popup/index.html"
+  },
+
+  "background": {
+    "scripts": ["scripts/events.background.js"],
+    "persistent": false
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "https://*/*", "http://*/*" ],
+      "exclude_globs": [
+        "*://meeting.*anymeeting*.com/**", "*://webinar.*anymeeting*.com/**",
+        "*://meeting.gomeet*.com/**","*://webinar.meeting.gomeet*.com/**",
+        "*://meeting.rambomeet-*.com/**",  "*://webinar.meeting.rambomeet-*.com/**",
+        "*://meeting.meetuniverge.blue/**", "*://webinar.meetuniverge.blue/**"
+      ],
+      "js": [ "scripts/ctc.content.js" ],
+      "css": [ "assets/css/ctc.content.css" ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [ "https://www.google.com/calendar/*", "https://calendar.google.com/calendar/*" ],
+      "js": [ "scripts/gc.content.js" ],
+      "css": [ "assets/css/gc.content.css" ]
+    }
+  ],
+
+  "permissions": [
+    "storage",
+    "identity",
+    "https://elevate-api.serverdata.net/*"
+  ],
+
+  "web_accessible_resources": [ "assets/*" ],
+
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com 'unsafe-eval' 'sha256-rCs+PE9jSqXeEtt5LDTouGqlYo4ifJhnJA3Dqiji5h0='; object-src 'self'"
+}

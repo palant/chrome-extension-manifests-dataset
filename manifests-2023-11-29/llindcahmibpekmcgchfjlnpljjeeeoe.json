@@ -1,0 +1,70 @@
+---
+name: コンテキストガジェット ＜サテライトオフィス＞
+version: 1.2.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 10000
+release_date: '2022-12-10T10:09:18.000Z'
+size: 126KiB
+languages:
+  - 日本語
+description: LINE WORKS や Workplace by Facebook の画面にワークフローや既存システムなどを表示します
+publisher_account: Sateraito Office
+support_website: 'https://sites.sateraito.jp/sateraitooffice/site/manual/home/support'
+privacy_policy: 'https://www.sateraito.jp/privacy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "version": "1.2.2",
+  "default_locale": "ja",
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "icons": {
+    "16": "images/sateraito16.png",
+    "32": "images/sateraito32.png",
+    "48": "images/sateraito48.png",
+    "128": "images/sateraito128.png"
+  },
+  "host_permissions": [
+    "<all_urls>",
+    "https://*.worksmobile.com/*",
+    "https://*.facebook.com/*",
+    "https://*.workplace.com/*"
+  ],
+  "permissions": ["webNavigation"],
+  "background": {
+    "service_worker": "stcgfb_bg.js"
+  },
+
+  "content_scripts": [ {
+    "css"     : ["colorbox.css"],
+    "js"      : [
+      "jquery-2.2.4.min.js",
+      "jquery.colorbox-min.js",
+      "sifij_contents.js"
+    ],
+    "matches" : [
+      "https://*.worksmobile.com/*",
+      "https://*.microsoft.com/*",
+      "https://chat.google.com/*"
+    ],
+    "run_at"     : "document_idle"
+  },{
+    "css"     : ["colorbox.css"],
+    "js"      : ["jquery-2.2.4.min.js", "jquery.colorbox-min.js", "stcgfb_ct.js"],
+    "matches" : [
+      "https://*.facebook.com/*", "https://*.workplace.com/*"
+    ],
+    "run_at"     : "document_idle"
+  }],
+  "web_accessible_resources": [{
+    "resources": ["images/*"],
+    "matches": ["<all_urls>"],
+    "extension_ids": []
+  }]
+}

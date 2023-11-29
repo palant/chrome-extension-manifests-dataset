@@ -1,0 +1,144 @@
+---
+name: 'UWatcher: personalized Netflix stats'
+version: 1.1.0
+category_slug: lifestyle/social
+rating: 3.9775280898876404
+rating_count: 89
+user_count: 7000
+release_date: '2023-05-26T09:23:41.000Z'
+size: 6.55MiB
+languages:
+  - English
+description: >-
+  Extension analyzes your Netflix watching history and creates personalized
+  statistics dashboard.
+publisher: PlumResearch
+publisher_account: uwatcher.app
+publisher_address: |-
+  aleja Piastów 22
+  Szczecin 71-064
+  PL
+privacy_policy: 'https://uwatcher.app/privacy_policy_WS'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "UWatcher: personalized Netflix stats",
+  "version": "1.1.0",
+  "description": "Extension analyzes your Netflix watching history and creates personalized statistics dashboard.",
+  "manifest_version": 3,
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://*.amazon.co.jp/*",
+    "*://*.amazon.co.uk/*",
+    "*://*.amazon.com/*",
+    "*://*.amazon.de/*",
+    "*://*.apple.com/*",
+    "*://*.bamgrid.com/*",
+    "*://*.disneyplus.com/*",
+    "*://*.hbo.com/*",
+    "*://*.hbomax.com/*",
+    "*://*.max.com/*",
+    "*://*.hulu.com/*",
+    "*://*.netflix.com/*",
+    "*://*.paramountplus.com/*",
+    "*://*.peacocktv.com/*",
+    "*://*.primevideo.com/*",
+    "*://*.tubitv.com/*",
+    "*://*.pluto.tv/*",
+    "*://*.uwatcher.app/*",
+    "*://ip-api.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.netflix.com/settings/viewed?stats=true",
+        "https://www.netflix.com/browse/my-list",
+        "https://play.hbomax.com/*",
+        "https://*.max.com/*",
+        "https://www.netflix.com/*", 
+        "https://*.uwatcher.app/*"
+      ],
+      "js": [
+        "vendor/lodash.min.js",
+        "vendor/json2csv.min.js",
+        "vendor/jquery.min.js",
+        "vendor/purify.min.js",
+        "vendor/chart.min.js",
+        "utils/DaysMonthsConst.js",
+        "utils/waitForElm.js",
+        "utils/template.js",
+        "utils/loader.js",
+        "utils/db.js",
+        "utils/activity.js",
+        "utils/stats.js",
+        "utils/format.js",
+        "utils/debug.js",
+        "utils/globalStats.js",
+        "utils/charts.js",
+        "utils/hbostats.js",
+        "utils/hbomaxempty.js",
+        "utils/mylist.js",
+        "utils/copybtns.js",
+        "utils/netflixProfileTracker.js",
+        "utils/notification.js",
+        "utils/uwatcherApp.js",
+        "dashboard/dashboard.js",
+        "dashboard/hbomax.js",
+        "dashboard/uwatcher.js"
+      ],
+      "css": ["styles/styles.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dashboard/dashboard.html",
+        "empty.html",
+        "error.html",
+        "fonts/*",
+        "images/*",
+        "utils/*"
+      ],
+      "matches": ["https://*.netflix.com/*"]
+    },
+    {
+      "resources": [
+        "dashboard/dashboard.html",
+        "hbomaxstats.html",
+        "hbomaxempty.html",
+        "fonts/*",
+        "images/*"
+      ],
+      "matches": ["https://*.hbomax.com/*","https://*.max.com/*"]
+    },
+    {
+      "resources": ["svod.html"],
+      "matches": ["https://*.hbomax.com/*","https://*.max.com/*", "https://*.netflix.com/*"]
+    },
+    {
+      "resources": ["fonts/*"],
+      "matches": ["https://*.uwatcher.app/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo48.png",
+      "128": "images/logo128.png"
+    }
+  },
+  "icons": {
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png",
+    "128": "images/logo128.png"
+  }
+}

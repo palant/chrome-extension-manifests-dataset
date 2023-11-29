@@ -1,0 +1,137 @@
+---
+name: Wheebox RPaaS
+version: 1.0.8
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2023-02-17T09:40:48.000Z'
+size: 629KiB
+languages:
+  - English
+description: Extension to proctor candidate
+publisher_account: Wheebox
+support_website: 'https://wheebox.com/candidate-faq.obj'
+privacy_policy: 'https://wheebox.com/privacy.htm'
+---
+
+{
+   "background": {
+      "persistent": true,
+      "scripts": [ "plugins/bootstrap/js/jquery.min.js", "constants/rpaasPluginConstants.js", "js/background.js" ]
+   },
+   "browser_action": {
+      "default_icon": "assets/wheebox48.png",
+      "default_popup": "popup.html",
+      "default_title": "Wheebox RPaaS"
+   },
+   "content_scripts": [ {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/canvas/css/canvas.css" ],
+      "include_globs": [ "*/courses/*/quizzes/*/edit" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "js/sharedTemplate.js", "services/commonService.js", "apps/canvas/js/teacherView.js" ],
+      "matches": [ "*://*:*/courses/*/quizzes/*/edit" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/canvas/css/canvas.css" ],
+      "include_globs": [ "*/courses/*/*/*/take?*=*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "js/sharedTemplate.js", "services/commonService.js", "services/loginService.js", "apps/canvas/js/canvasTemplate.js", "apps/canvas/js/studentView.js" ],
+      "matches": [ "*://*:*/courses/*/*/*/take?*=*" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/canvas/css/canvas.css" ],
+      "include_globs": [ "*/courses/*/quizzes/*/take", "*/courses/*/quizzes/*/take/questions/*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "services/commonService.js", "apps/canvas/js/canvasTemplate.js", "apps/canvas/js/takeQuiz.js", "js/apiService.js" ],
+      "matches": [ "*://*:*/courses/*/quizzes/*/take", "*://*/courses/*/quizzes/*/take/questions/*" ]
+   }, {
+      "css": [ "css/custom.css", "plugins/toast/css/toast.css", "apps/canvas/css/canvas.css" ],
+      "include_globs": [ "*/courses/*/external_tools/*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/bootstrap/js/jqpage.js", "plugins/toast/js/toast.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "services/loginService.js", "services/commonService.js", "apps/canvas/js/mpaasTool.js" ],
+      "matches": [ "*://*:*/courses/*/external_tools/*" ]
+   }, {
+      "css": [ "css/custom.css", "apps/canvas/css/canvas.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "apps/canvas/js/canvasTemplate.js", "apps/canvas/js/mPaasIntalled.js" ],
+      "matches": [ "*://*/accounts/*/external_tools/*", "*://*/courses/*/external_tools/*" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/moodle/css/moodle.css" ],
+      "include_globs": [ "*/course/modedit.php*", "*/*/course/modedit.php*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "js/sharedTemplate.js", "services/commonService.js", "apps/moodle/js/moodleTemplate.js", "apps/moodle/js/teacherView.js" ],
+      "matches": [ "*://*/course/modedit.php*", "*://*/*/course/modedit.php*" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/moodle/css/moodle.css" ],
+      "include_globs": [ "*/mod/lti/view.php?id=*", "*/*/mod/lti/view.php?id=*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/bootstrap/js/jqpage.js", "plugins/toast/js/toast.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "services/loginService.js", "services/commonService.js", "apps/moodle/js/mpaasTool.js" ],
+      "matches": [ "*://*/mod/lti/view.php?id=*", "*://*/*/mod/lti/view.php?id=*" ]
+   }, {
+      "include_globs": [ "*/course/view.php?id=*", "*/mod/quiz/edit.php?cmid=*", "*/courses/*/quizzes/*", "*/mod/quiz/summary.php*", "*/mod/quiz/review.php*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "js/MP.js", "constants/rpaasPluginConstants.js", "apps/moodle/js/checkTool.js" ],
+      "matches": [ "*://*/course/view.php?id=*", "*://*/mod/quiz/review.php*", "*://*/mod/quiz/edit.php?cmid=*", "*://*/mod/quiz/summary.php*", "*://*/*/course/view.php?id=*", "*://*/*/mod/quiz/review.php*", "*://*/*/mod/quiz/edit.php?cmid=*", "*://*/*/mod/quiz/summary.php*" ]
+   }, {
+      "exclude_matches": [ "*://*/mod/quiz/summary.php*", "*://*/mod/quiz/review.php*", "*://*/courses/*/quizzes/*", "*://*/*/mod/quiz/summary.php*", "*://*/*/mod/quiz/review.php*", "*://*/*/mod/quiz/attempt*", "*://*/proctoring", "*://*/mod/quiz/attempt*", "*://*:*/courses/*/quizzes/*/take", "*://*/courses/*/quizzes/*/take/questions/*", "https://*/d2l/lms/quizzing/user/quiz_submissions.d2l*", "https://*/d2l/lms/quizzing/user/attempt/quiz_start_frame_auto.*", "https://*/webapps/assessment/take/take.jsp?course_assessment_id=*", "https://*/webapps/assessment/take/submitted.jsp?course_assessment_id=*&course_id=*&content_id=*&step=null", "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&content_id=*&isPasswordAttempted=true&password=*&step=*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "constants/rpaasPluginConstants.js", "js/checkNavigatedPage.js", "js/navigationOff.js" ],
+      "matches": [ "\u003Call_urls>" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/moodle/css/moodle.css" ],
+      "include_globs": [ "*/mod/quiz/view.php?id=*", "*/mod/quiz/view.php?id=*&forceview=*", "*/*/mod/quiz/view.php?id=*", "*/*/mod/quiz/view.php?id=*&forceview=*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "js/sharedTemplate.js", "services/loginService.js", "services/commonService.js", "apps/moodle/js/moodleTemplate.js", "apps/moodle/js/studentView.js" ],
+      "matches": [ "*://*/mod/quiz/view.php?id=*", "*://*/mod/quiz/view.php?id=*&forceview=*", "*://*/*/mod/quiz/view.php?id=*", "*://*/*/mod/quiz/view.php?id=*&forceview=*" ]
+   }, {
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "constants/rpaasPluginConstants.js", "js/dWindowCheck.js" ],
+      "matches": [ "*://*/proctoring" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/moodle/css/moodle.css" ],
+      "include_globs": [ "*/mod/quiz/attempt.php*", "*/mod/quiz/summary.php*", "*/*/mod/quiz/attempt.php*", "*/*/mod/quiz/summary.php*" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "services/commonService.js", "apps/moodle/js/moodleTemplate.js", "js/apiService.js", "apps/moodle/js/takeQuiz.js" ],
+      "matches": [ "*://*/mod/quiz/attempt.php*", "*://*/mod/quiz/summary.php*", "*://*/*/mod/quiz/attempt.php*", "*://*/*/mod/quiz/summary.php*" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/blackboard/css/blackboard.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/bootstrap/js/bootstrap.min.js", "plugins/bootstrap/js/popper.min.js", "plugins/toast/js/toast.js", "js/sharedTemplate.js", "js/apiService.js", "constants/rpaasPluginConstants.js", "services/commonService.js", "apps/blackboard/js/blackboardTemplate.js", "apps/blackboard/js/teacherView.js" ],
+      "matches": [ "https://*/webapps/assessment/do/content/addAssessment", "https://*/webapps/assessment/do/content/assessment?action=MODIFY*" ]
+   }, {
+      "css": [ "plugins/bootstrap/css/bootstrap.min.css", "plugins/toast/css/toast.css", "css/custom.css", "apps/blackboard/css/blackboard.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "services/loginService.js", "services/commonService.js", "apps/blackboard/js/mpaasTool.js" ],
+      "matches": [ "https://*/webapps/blackboard/content/contentWrapper.jsp*" ],
+      "run_at": "document_end"
+   }, {
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "constants/rpaasPluginConstants.js", "js/MP.js", "services/commonService.js", "apps/blackboard/js/checkTool.js" ],
+      "matches": [ "https://*/webapps/blackboard/content/listContentEditable.jsp*", "https://*/webapps/blackboard/content/listContent.jsp*", "https://*/webapps/assessment/take/submitted.jsp?course_assessment_id=*&course_id=*&content_id=*&step=null" ]
+   }, {
+      "css": [ "plugins/bootstrap/css/bootstrap.min.css", "plugins/toast/css/toast.css", "css/custom.css", "apps/blackboard/css/blackboard.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "js/sharedTemplate.js", "services/loginService.js", "services/commonService.js", "apps/blackboard/js/blackboardTemplate.js", "apps/blackboard/js/studentView.js" ],
+      "matches": [ "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&new_attempt=*&content_id=*&step=*", "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&content_id=*&step=null" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/blackboard/css/blackboard.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "services/commonService.js", "apps/blackboard/js/blackboardTemplate.js", "apps/blackboard/js/takeQuiz.js" ],
+      "matches": [ "https://*/webapps/assessment/take/take.jsp?course_assessment_id=*", "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&content_id=*&isPasswordAttempted=true&password=*&step=*" ]
+   }, {
+      "css": [ "plugins/bootstrap/css/bootstrap.min.css", "plugins/toast/css/toast.css", "css/custom.css", "apps/d2l/css/d2l.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/bootstrap/js/bootstrap.min.js", "plugins/bootstrap/js/popper.min.js", "plugins/toast/js/toast.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "services/loginService.js", "services/commonService.js", "apps/d2l/js/mpaasTool.js" ],
+      "matches": [ "https://*/d2l/le/lessons/*", "https://*/d2l/le/lessons/*/topics/*", "https://*/d2l/le/lessons/*/units/*", "https://*/d2l/le/content/*/viewContent/*/View" ],
+      "run_at": "document_end"
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/d2l/css/d2l.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/bootstrap/js/bootstrap.min.js", "plugins/bootstrap/js/popper.min.js", "plugins/toast/js/toast.js", "js/sharedTemplate.js", "js/apiService.js", "constants/rpaasPluginConstants.js", "services/commonService.js", "apps/d2l/js/d2lTemplate.js", "apps/d2l/js/teacherView.js" ],
+      "matches": [ "https://*/d2l/lms/quizzing/*/modify/*" ]
+   }, {
+      "css": [ "plugins/bootstrap/css/bootstrap.min.css", "plugins/toast/css/toast.css", "css/custom.css", "apps/d2l/css/d2l.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "constants/rpaasPluginConstants.js", "js/apiService.js", "js/sharedTemplate.js", "services/loginService.js", "services/commonService.js", "apps/d2l/js/d2lTemplate.js", "apps/d2l/js/studentView.js" ],
+      "matches": [ "https://*/d2l/le/content/*/viewContent/*", "https://*/d2l/lms/quizzing/user/quiz_summary*" ]
+   }, {
+      "css": [ "plugins/toast/css/toast.css", "css/custom.css", "apps/d2l/css/d2l.css" ],
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "plugins/toast/js/toast.js", "js/MP.js", "js/sharedTemplate.js", "constants/rpaasPluginConstants.js", "services/commonService.js", "apps/d2l/js/d2lTemplate.js", "apps/d2l/js/takeQuiz.js" ],
+      "matches": [ "https://*/d2l/lms/quizzing/user/attempt/quiz_start_frame_auto.*" ]
+   }, {
+      "js": [ "plugins/bootstrap/js/jquery.min.js", "constants/rpaasPluginConstants.js", "js/MP.js", "services/commonService.js", "js/apiService.js", "apps/d2l/js/checkTool.js" ],
+      "matches": [ "https://*/d2l/lms/quizzing/user/quiz_submissions.d2l*", "*://*/courses/*/quizzes/*" ]
+   } ],
+   "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+   "description": "Extension to proctor candidate",
+   "icons": {
+      "128": "assets/wheebox128.png",
+      "16": "assets/wheebox16.png",
+      "48": "assets/wheebox48.png"
+   },
+   "manifest_version": 2,
+   "name": "Wheebox RPaaS",
+   "permissions": [ "storage", "tabs", "browsingData", "contentSettings", "management", "https://*.wheebox.com/" ],
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "version": "1.0.8",
+   "web_accessible_resources": [ "assets/*.png", "assets/*.mp3", "assets/*.svg", "assets/*.gif" ]
+}

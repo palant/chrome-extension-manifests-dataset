@@ -1,0 +1,65 @@
+---
+name: Pandabuy Currency Converter
+version: 2.0.4
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 231
+release_date: '2023-11-23T05:08:21.000Z'
+size: 87.02KiB
+languages:
+  - English
+description: Convert all currencies into a selected one.
+publisher_account: Angus Paillaugue
+support_website: 'https://pcc.paillaugue.fr/help'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Pandabuy Currency Converter",
+    "description": "Convert all currencies into a selected one.",
+    "version": "2.0.4",
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "icons/16-icon.png",
+            "32": "icons/32-icon.png"
+        }
+    },
+    "icons": {
+        "16": "icons/16-icon.png",
+        "32": "icons/32-icon.png",
+        "48": "icons/48-icon.png",
+        "128": "icons/128-icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.pandabuy.com/*", "*://*.yupoo.com/*", "*://*.weidian.com/*", "*://weidian.com/*", "*://*.taobao.com/*", "*://*.1688.com/*", "*://*.tmall.com/*", "*://*.reddit.com/*"],
+            "exclude_matches" : ["https://docs.google.com/*"],
+            "js": ["content.js", "src/jquery-3.7.1.min.js"],
+            "run_at":"document_start"
+        }
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "tabs"
+    ],
+    "web_accessible_resources": [{
+        "resources":["currencies.json", "src/dark-theme.css", "src/Screamer.webp"],
+        "matches":["http://*/*", "https://*/*"]
+    }],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{b60b8911-e938-40b1-825b-672152eb48a1}"
+        }
+    }
+}

@@ -1,0 +1,66 @@
+---
+name: Youtube中文配音
+version: 1.0.2
+category_slug: productivity/tools
+rating: 4.628865979381444
+rating_count: 97
+user_count: 20000
+release_date: '2023-11-20T06:17:30.000Z'
+size: 2.41MiB
+languages:
+  - 中文 (简体)
+description: '在youtube看英文视频的时候，点击插件图标,会用自动进行翻译，然后用中文进行朗读。'
+publisher_account: zhiboli597
+extension_website: youtube-dubbing.com
+support_website: 'https://youtube-dubbing.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Youtube中文配音",
+  "description": "在youtube看英文视频的时候，点击插件图标,会用自动进行翻译，然后用中文进行朗读。",
+  "version": "1.0.2",
+  "icons": {
+    "16": "images/icon.png",
+    "32": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["BeforeContent.bundle.js"],
+      "run_at" : "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.bundle.js"],
+      "css": ["css/loading.css","css/loading.min.css", "css/introjs.min.css"],
+      "run_at" : "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon.png",
+      "32": "images/icon.png",
+      "48": "images/icon.png",
+      "128": "images/icon.png"
+    }
+  },
+  "permissions": ["tabs", "storage", "cookies", "contextMenus"],
+  "host_permissions": [
+    "https://yd.transduck.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}

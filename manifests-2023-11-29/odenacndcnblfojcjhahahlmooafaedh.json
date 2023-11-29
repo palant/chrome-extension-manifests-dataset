@@ -1,0 +1,227 @@
+---
+name: IMTFusion
+version: '1.6'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 856
+release_date: '2023-11-12T08:56:03.000Z'
+size: 470KiB
+languages:
+  - English
+description: >-
+  IMTLazarus Extension for Teachers, providing integration with decision-maker
+  education tools like Edpuzzle, Genially and others.
+publisher: IMTLazarus
+publisher_account: IMTCloud
+publisher_address: |-
+  Arteagabeitia, 41
+  Barakaldo, Vizcaya 48902
+  ES
+privacy_policy: 'https://www.imtlazarus.com/es/politica-de-privacidad'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "IMTFusion",
+  "description": "IMTLazarus Extension for Teachers, providing integration with decision-maker education tools like Edpuzzle, Genially and others.",
+  "version": "1.6",
+  "icons": {
+    "16": "logo/logo-16.png",
+    "48": "logo/logo-48.png",
+    "128": "logo/logo-128.png"
+  },
+  "action": {
+    "default_title": "IMTFusion",
+    "default_popup": "popup/popup.html"
+  },
+  "host_permissions": ["*://*/*"],
+  "permissions": ["bookmarks", "webRequest", "webNavigation", "storage", "unlimitedStorage"],
+  "externally_connectable": {
+    "matches": ["https://*.imtlazarus.com/*"]
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "css": ["styles/sweetalert2.min.css", "styles/style.css"],
+      "js": [
+        "shared/jq360min.js",
+        "shared/sweetalert2.all.min.js",
+        "shared/popper.min.js",
+        "shared/tippy-bundle.umd.min.js",
+        "shared/config.js",
+        "shared/common.js"
+      ],
+      "matches": [
+        "https://*.jamfcloud.com/*",
+        "https://*.alexiaedu.com/*",
+        "https://*.globaleduca.es/*",
+        "https://*.educamos.com/*",
+        "https://*.gosteamedelvives.com/*",
+        "https://classroom.google.com/*",
+        "https://web.additioapp.com/*",
+        "https://*.clickedu.eu/*",
+        "https://bfgh.aplicacions.ensenyament.gencat.cat/bfgh/matricula/fitxa/*",
+        "https://admin.google.com/ac/users*",
+        "https://admin.google.com/ac/chrome/apps/user*",
+        "https://admin.google.com/ac/apps/gmail/marketplace/apps*",
+        "https://ans.app/*",
+        "https://*.dashpassonline.net/*"
+      ],
+      "exclude_matches": ["*://*.globaleduca.es/*/informes/*"]
+    },
+    {
+      "css": ["styles/bootstrap-3.3.4.min.css"],
+      "js": ["shared/bootstrap-3.3.2.min.js"],
+      "matches": [
+        "https://*.globaleduca.es/*",
+        "https://*.educamos.com/*",
+        "https://*.gosteamedelvives.com/*",
+        "https://web.additioapp.com/*",
+        "https://*.clickedu.eu/*"
+      ],
+      "exclude_matches": ["*://*.globaleduca.es/*/informes/*"]
+    },
+
+    {
+      "css": ["features/google-classroom/bootstrap-3.3.4_classroom.css"],
+      "js": ["shared/jq360min.js", "shared/bootstrap-3.3.2.min.js"],
+      "matches": [
+        "https://classroom.google.com/*",
+        "https://admin.google.com/ac/users*",
+        "https://admin.google.com/ac/chrome/apps/user*",
+        "https://admin.google.com/ac/apps/gmail/marketplace/apps*",
+        "https://ans.app/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["features/google-classroom/google-classroom.css"],
+      "matches": ["https://classroom.google.com/*"],
+      "run_at": "document_end"
+    },
+
+    {
+      "css": ["styles/sweetalert2.min.css", "styles/style.css"],
+      "js": [
+        "shared/jq360min.js",
+        "shared/sweetalert2.all.min.js",
+        "shared/popper.min.js",
+        "shared/tippy-bundle.umd.min.js",
+        "shared/config.js",
+        "shared/common.js",
+        "features/edpuzzle/edpuzzle.js"
+      ],
+      "matches": [
+        "https://edpuzzle.com/classes/*",
+        "https://edpuzzle.com/content",
+        "https://edpuzzle.com/content/*",
+        "https://edpuzzle.com/discover",
+        "https://edpuzzle.com/notifications"
+      ],
+      "all_frames": true
+    },
+
+    {
+      "js": ["features/jamfcloud/jamfcloud.js", "shared/text_reviewer.js"],
+      "matches": ["https://*.jamfcloud.com/*"]
+    },
+
+    {
+      "js": ["features/alexia/alexia.js", "shared/text_reviewer.js"],
+      "matches": ["https://*.alexiaedu.com/*"]
+    },
+    {
+      "js": ["features/globaleduca-psp/globaleduca-psp.js", "shared/text_reviewer.js"],
+      "matches": ["https://*.globaleduca.es/*"],
+      "exclude_matches": ["*://*.globaleduca.es/*/informes/*"]
+    },
+    {
+      "js": ["features/gosteamedelvives/gosteamedelvives.js", "shared/text_reviewer.js"],
+      "matches": ["https://*.gosteamedelvives.com/*"]
+    },
+    {
+      "js": ["features/clickedu/clickedu.js", "shared/text_reviewer.js"],
+      "css": ["features/clickedu/clickedu.css"],
+      "matches": ["https://*.clickedu.eu/*"]
+    },
+    {
+      "js": ["features/gencat-esfera/gencat-esfera.js", "features/gencat-esfera/text_reviewer_gencat-esfera.js"],
+      "matches": ["https://bfgh.aplicacions.ensenyament.gencat.cat/bfgh/matricula/fitxa/*"]
+    },
+
+    {
+      "js": ["features/educamos/educamos.js", "shared/text_reviewer.js", "features/educamos/text_reviewer_educamos.js"],
+      "matches": ["https://*.TESTeducamos.com/*"]
+    },
+    {
+      "js": ["features/educamos/educamos.js", "shared/text_reviewer.js"],
+      "matches": ["https://*.educamos.com/*"]
+    },
+    {
+      "js": ["features/additio/additio.js", "features/additio/text_reviewer_additio.js"],
+      "matches": ["https://web.additioapp.com/*"]
+    },
+    {
+      "js": ["features/ans/ans.js", "shared/text_reviewer.js"],
+      "matches": ["https://ans.app/*"]
+    },
+    {
+      "css": ["styles/sweetalert2.min.css", "styles/bootstrap-3.3.4.min.css", "styles/style.css"],
+      "js": [
+        "shared/jq360min.js",
+        "shared/sweetalert2.all.min.js",
+        "shared/bootstrap-3.3.2.min.js",
+        "shared/popper.min.js",
+        "shared/tippy-bundle.umd.min.js",
+        "shared/config.js",
+        "shared/common.js",
+        "features/isams/isams.js"
+      ],
+      "all_frames": true,
+      "matches": ["https://sbcm.isams.cloud/*"]
+    },
+
+    {
+      "js": ["shared/text_reviewer.js", "features/google-classroom/google-classroom.js"],
+      "matches": ["https://classroom.google.com/*"]
+    },
+
+    {
+      "css": ["features/google-classroom/bootstrap-3.3.4_classroom.css"],
+      "js": ["shared/bootstrap-3.3.2.min.js", "features/google-workspace/google-workspace.js"],
+      "matches": [
+        "https://admin.google.com/ac/users*",
+        "https://admin.google.com/ac/chrome/apps/user*",
+        "https://admin.google.com/ac/apps/gmail/marketplace/apps*"
+      ]
+    },
+
+    {
+      "css": ["styles/imtfusion_active.css"],
+      "js": [
+        "shared/jq360min.js",
+        "shared/sweetalert2.all.min.js",
+        "shared/config.js",
+        "shared/common.js",
+        "shared/imtfusion_active.js"
+      ],
+      "all_frames": true,
+      "matches": ["https://*.imtlazarus.com/*"]
+    },
+    {
+      "js": ["features/dash-pass/dashpass.js", "features/dash-pass/text_reviewer_dashpass.js"],
+      "all_frames": true,
+      "matches": ["https://*.dashpassonline.net/*"]
+    },
+    {
+      "css": ["features/dash-pass/dashpass.css", "components/modal/modal.css"],
+      "matches": ["https://*.dashpassonline.net/*"],
+      "run_at": "document_end"
+    }
+  ]
+}

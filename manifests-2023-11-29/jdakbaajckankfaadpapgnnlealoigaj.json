@@ -1,0 +1,80 @@
+---
+name: Movie Finder
+version: 3.0.1
+category_slug: productivity/tools
+rating: 3.857142857142857
+rating_count: 14
+user_count: 100000
+release_date: '2022-04-13T05:22:38.000Z'
+size: 750KiB
+languages:
+  - English
+description: >-
+  Provides quick commands from your browser’s address bar to search on popular
+  movie sites.
+publisher_account: Movie Finder
+extension_website: moviefinderhub.com
+support_website: 'https://moviefinderhub.com/contact'
+privacy_policy: 'https://www.moviefinderhub.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Movie Finder",
+  "description": "Provides quick commands from your browser’s address bar to search on popular movie sites.",
+  "version": "3.0.1",
+  "action": {
+    "default_title": "Movie Finder",
+    "default_popup": "popup/popup.html"
+  },
+  "homepage_url": "https://www.moviefindersearch.com/wim/gotohub?s=dkds",
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "encoding": "UTF-8",
+      "favicon_url": "https://www.moviefindersearch.com/favicon.ico",
+      "is_default": true,
+      "name": "Movie Finder",
+      "keyword": "Movie Finder",
+      "search_url": "https://www.moviefindersearch.com/search/?category=web&s=dkds&vert=movie&q={searchTerms}",
+      "suggest_url": "https://sug.moviefindersearch.com/v1/sug/?s=dkds&vert=movie&q={searchTerms}"
+    }
+  },
+  "background": {
+    "service_worker": "bg/background.js",
+    "type": "module"
+  },
+  "manifest_version": 3,
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "content_security_policy": {"extension_pages":"script-src 'self'; object-src 'self'"},
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.yahoo.com/*"
+      ],
+      "js": [
+        "jquery.js",
+        "content_script/first_search/keep_changes.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "contextMenus",
+    "cookies",
+    "storage"
+  ],
+  "host_permissions":[  "*://*.moviefindersearch.com/*"],
+  
+  "web_accessible_resources": [{
+    "resources": ["img/icon16.png"],
+    "matches": ["<all_urls>"]    
+  },
+  {
+    "resources": ["content_script/first_search/*"],
+    "matches": ["*://*.yahoo.com/*"]
+  }]
+}

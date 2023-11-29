@@ -1,0 +1,75 @@
+---
+name: GetBot
+version: 1.2.3
+category_slug: productivity/workflow
+rating: 5
+rating_count: 19
+user_count: 71
+release_date: '2023-11-22T09:41:08.000Z'
+size: 855KiB
+languages:
+  - English (United States)
+description: >-
+  Your personal AI extension powered by OpenAI. Capable of addressing complex
+  inquiries, composing emails, scanning documents.
+publisher_account: GetBot
+privacy_policy: 'https://getbot.ai/privacy&policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2.3",
+  "name": "GetBot",
+  "description": "Your personal AI extension powered by OpenAI. Capable of addressing complex inquiries, composing emails, scanning documents.",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "assets/logo.png"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background/index.js"
+  },
+  "commands": {
+    "open-chat": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      },
+      "description": "Open a chat window on the current page or navigate to GetBot domain by pressing above commands"
+    }
+  },
+  "content_scripts": [
+    {
+      "js": ["content/injector.js", "content/quickActions/index.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.getbot.ai/*", "*://getbot.ai/*"]
+    },
+    {
+      "js": ["content/proxy.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content/mail-reader/index.js"]
+    }
+  ],
+  "permissions": ["activeTab", "storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["content/inject-extension-id.js"],
+      "matches": ["*://*.getbot.ai/*", "*://getbot.ai/*"]
+    }
+  ]
+}

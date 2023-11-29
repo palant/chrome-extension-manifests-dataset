@@ -1,0 +1,101 @@
+---
+name: VietNamAnToan
+version: 1.0.0.10
+category_slug: productivity/tools
+rating: 5
+rating_count: 19
+user_count: 134
+release_date: '2023-11-21T04:32:22.000Z'
+size: 1.89MiB
+languages:
+  - Tiếng Việt
+description: >-
+  Tiện ích giúp bảo vệ bạn khỏi các trang web, cá nhân, địa chỉ email và các
+  thông tin không an toàn trên không gian mạng
+publisher_account: writecode.one
+extension_website: vietnamantoan.com
+privacy_policy: 'https://vietnamantoan.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "VietNamAnToan",
+    "name": "VietNamAnToan",
+    "description": "Tiện ích giúp bảo vệ bạn khỏi các trang web, cá nhân, địa chỉ email và các thông tin không an toàn trên không gian mạng",
+    "icons": {
+        "16": "images/icon/16.png",
+        "32": "images/icon/32.png",
+        "48": "images/icon/48.png",
+        "128": "images/icon/128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "images/icon/16.png",
+            "32": "images/icon/32.png",
+            "48": "images/icon/48.png",
+            "128": "images/icon/128.png"
+        }
+    },
+    "manifest_version": 3,
+    "version": "1.0.0.10",
+    "host_permissions": ["https://*/*", "http://*/*"],
+    "permissions": ["tabs", "webRequest", "storage", "topSites", "declarativeNetRequest", "contextMenus"],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "blockLIST",
+                "enabled": false,
+                "path": "rules/default.json"
+            },
+            {
+                "id": "advLIST",
+                "enabled": false,
+                "path": "rules/adv.json"
+            },
+            {
+                "id": "antiprnLIST",
+                "enabled": false,
+                "path": "rules/antiprn.json"
+            },
+            {
+                "id": "gambleLIST",
+                "enabled": false,
+                "path": "rules/gamble.json"
+            },
+            {
+                "id":"antitrackLIST",
+                "enabled":false,
+                "path":"rules/antitrack.json"
+            }
+
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["static/content_scripts/main.js"],
+            "css": ["static/content_css/main.css"],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["images/*", "svg/*", "static/*", "pages/*", "data/*", "gifs/*", "fonts/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';script-src-elem 'self' "
+    },
+    "background": {
+        "service_worker": "scripts/background.bundle.js"
+    },
+    "externally_connectable": {
+        "matches": [
+            "http://localhost:1000/*",
+            "https://test.vietnamantoan.com/*",
+            "https://vietnamantoan.com/*"
+        ]
+    }
+}

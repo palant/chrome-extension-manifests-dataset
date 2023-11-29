@@ -1,0 +1,81 @@
+---
+name: BetterFloat
+version: 1.13.2
+category_slug: productivity/workflow
+rating: 4.8
+rating_count: 5
+user_count: 960
+release_date: '2023-11-19T23:42:51.000Z'
+size: 238KiB
+languages:
+  - English
+description: 'Enhance your experience on CSFloat.com, Skinport.com & Skinbid.com!'
+publisher_account: Rums
+extension_website: rums.dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "BetterFloat",
+    "author": "Rums",
+    "version": "1.13.2",
+    "version_name": "1.13.2",
+    "description": "Enhance your experience on CSFloat.com, Skinport.com & Skinbid.com!",
+    "manifest_version": 3,
+    "host_permissions": ["*://prices.csgotrader.app/*", "*://*.csfloat.com/*", "*://*.skinport.com/*", "*://*.skinbid.com/*"],
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.csfloat.com/*"],
+            "js": ["js/csfloat_script.js"],
+            "css": ["css/csfloat_styles.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://*.csfloat.com/*", "*://*.skinport.com/*", "*://*.skinbid.com/*"],
+            "js": ["js/injectionhandler.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["*://*.skinport.com/*"],
+            "js": ["js/skinport_script.js"],
+            "css": ["css/skinport_styles.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://*.skinbid.com/*"],
+            "js": ["js/skinbid_script.js"],
+            "css": ["css/skinbid_styles.css"],
+            "run_at": "document_end"
+        }
+    ],
+    "icons": {
+        "128": "public/betterfloat_logo128.png"
+    },
+    "action": {
+        "default_title": "BetterFloat",
+        "default_popup": "/html/index.html"
+    },
+    "permissions": ["storage"],
+    "web_accessible_resources": [
+        {
+            "matches": ["https://csfloat.com/*", "*://*.skinport.com/*", "*://*.skinbid.com/*"],
+            "resources": ["public/*.svg", "js/inject.js", "public/buff_favicon.png", "public/csfloat_logo.png"]
+        },
+        {
+            "matches": ["https://csfloat.com/*"],
+            "resources": ["public/icon-pricempire.png", "public/icon-csgostash.png"]
+        },
+        {
+            "matches": ["*://*.skinport.com/*"],
+            "resources": ["js/socketConnection.js", "public/socket.io_4.4.1.min.js"]
+        },
+        {
+            "matches": ["*://*.skinbid.com/*"],
+            "resources": []
+        }
+    ]
+}

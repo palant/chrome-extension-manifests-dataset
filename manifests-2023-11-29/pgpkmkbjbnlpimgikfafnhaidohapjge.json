@@ -1,0 +1,113 @@
+---
+name: we advocacy notification chrome extension
+version: '14.26'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 6000
+release_date: '2023-06-05T17:37:44.000Z'
+size: 938KiB
+languages:
+  - English (United States)
+description: We advocacy is the best productivity suite for Gmail
+publisher: we advocacy
+publisher_address: |-
+  3 rue Diodore rahoult
+  grenoble 38000
+  FR
+extension_website: weadvocacy.com
+support_website: 'https://www.weadvocacy.com/support'
+privacy_policy: 'https://www.weadvocacy.com/terms-of-service'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "we advocacy notification chrome extension",
+  "version": "14.26",
+  "description": "We advocacy is the best productivity suite for Gmail",
+  "homepage_url": "https://www.weadvocacy.fr",
+  "author": "we advocacy",
+  "icons": {
+    "16": "images/icons/16.png",
+    "48": "images/icons/48.png",
+    "128": "images/icons/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "images/icons/48-grey.png"
+    }
+  },
+  "background": {
+    "service_worker": "swbg.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "gmail/inject_gmail.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "frame/inject_frame.js",
+        "gmail/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://app.weadvocacy.com/userx",
+        "*://app.weadvocacy.fr/userx"
+      ],
+      "all_frames": false,
+      "js": [
+        "userx/index.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "gmail/gmail.js",
+        "gmail/index.js",
+        "static/files/notification_iframe.html",
+        "static/files/signatures.html",
+        "frame/frame.js",
+        "css/custom.css",
+        "css/smallnotif.css",
+        "js/bootstrap.min.js",
+        "js/jquery.js",
+        "js/popper.min.js",
+        "js/frame.js",
+        "js/signatures.js"
+      ],
+      "matches": [
+        "*://mail.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "userx/index.js"
+      ],
+      "matches": [
+        "*://app.weadvocacy.com/*",
+        "*://app.weadvocacy.fr/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "alarms",
+    "storage",
+    "notifications"
+  ]
+}

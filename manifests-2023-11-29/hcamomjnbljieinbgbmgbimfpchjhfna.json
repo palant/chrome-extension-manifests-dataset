@@ -1,0 +1,112 @@
+---
+name: MarketGuru - бесплатная аналитика Wildberries
+version: 1.0.12
+category_slug: productivity/workflow
+rating: 3.2444444444444445
+rating_count: 45
+user_count: 60000
+release_date: '2023-11-17T14:14:13.000Z'
+size: 1000KiB
+languages:
+  - русский
+description: >-
+  Бесплатный инструмент для аналитики любых карточек на Wildberries -
+  Анализируйте продажи, выручку и остатки любого товара
+publisher: ООО «МАРКЕТГУРУ»
+publisher_account: marketguru-dev
+publisher_address: |-
+  пл. Восстания, д. 3
+  к. 2, этаж/литер 2/А пом. 3
+  Таганрог, Ростовская область 347904
+  RU
+extension_website: marketguru.io
+support_website: 'https://marketguru.io/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MarketGuru - бесплатная аналитика Wildberries",
+  "description": "Бесплатный инструмент для аналитики любых карточек на Wildberries - Анализируйте продажи, выручку и остатки любого товара",
+  "version": "1.0.12",
+  "manifest_version": 3,
+  "homepage_url": "https://marketguru.io?utm_source=extension",
+  "icons": {
+    "128": "assets/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "https://*.wildberries.ru/*",
+    "https://marketguru.io/*",
+    "https://*.ozon.ru/*",
+    "https://*.wb.ru/*",
+    "https://*.wbstatic.net/*"
+  ],
+  "background": {
+    "service_worker": "workers/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.wildberries.ru/*",
+        "https://*.ozon.ru/*"
+      ],
+      "js": [
+        "marketplace/js/main.js"
+      ],
+      "css": [
+        "marketplace/css/main.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.wildberries.ru/*"
+      ],
+      "js": [
+        "core/wb/script_injector.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.my.marketguru.io/*"
+      ],
+      "js": [
+        "marketguru/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/core/wb/*"
+      ],
+      "matches": [
+        "https://*.wildberries.ru/*"
+      ]
+    },
+    {
+      "resources": [
+        "/assets/*"
+      ],
+      "matches": [
+        "https://*.wildberries.ru/*",
+        "https://*.ozon.ru/*"
+      ]
+    },
+    {
+      "resources": ["core/ky/*"],
+      "matches": [
+        "https://*.my.marketguru.io/*",
+        "https://*.wildberries.ru/*",
+        "https://*.ozon.ru/*"
+      ]
+    }
+  ]
+}

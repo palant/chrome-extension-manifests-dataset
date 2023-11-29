@@ -1,0 +1,131 @@
+---
+name: 'FunFluen: Fluency, Frame by Frame'
+version: 1.23.10.26
+category_slug: lifestyle/entertainment
+rating: null
+rating_count: null
+user_count: 156
+release_date: '2023-10-31T12:18:43.000Z'
+size: 3.74MiB
+languages:
+  - English (United States)
+description: 'Learning languages on Netflix, Disney plus and YouTube'
+publisher: FunFluen
+publisher_address: |-
+  N Bernardo Ave
+  Mountain View, CA 94043
+  US
+extension_website: funfluen.com
+privacy_policy: 'https://funfluen.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "FunFluen: Fluency, Frame by Frame",
+  "description": "Learning languages on Netflix, Disney plus and YouTube ",
+  "version": "1.23.10.26",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"],
+      "css": ["youtube/styles.css"],
+      "js": ["youtube/contentscript.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["http://www.netflix.com/*", "https://www.netflix.com/*"],
+      "css": ["netflix/styles.css"],
+      "js": ["netflix/contentscript.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "http://www.disneyplus.com/*",
+        "https://www.disneyplus.com/*"
+      ],
+      "css": ["disney/styles.css"],
+      "js": ["disney/contentscript.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://funfluen.com/subscription/auth/google*",
+        "http://funfluen.com/subscription/auth/google*"
+      ],
+      "js": ["appforlanguage/contentscript.js"]
+    },
+    {
+      "matches": [
+        "https://funfluen.com/loading/",
+        "https://funfluen.com/loading",
+        "http://www.funfluen.com/loading"
+      ],
+      "js": ["payment/contentscript.js"]
+    },
+    {
+      "matches": [
+        "https://funfluen.com/subscription/subscription-result*",
+        "http://www.funfluen.com/subscription/subscription-result*"
+      ],
+      "js": ["paymentpage/contentscript.js"]
+    },
+    {
+      "matches": [
+        "https://funfluen.com/cancelStripePage",
+        "https://funfluen.com/cancelStripePage/",
+        "http://www.funfluen.com/cancelStripePage"
+      ],
+      "js": ["cancelStripePage/contentscript.js"]
+    },
+    {
+      "matches": [
+        "https://funfluen.com/subscription/funfluen",
+        "https://funfluen.com/subscription/funfluen/",
+        "http://funfluen.com/subscription/funfluen"
+      ],
+      "js": ["packages/contentscript.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "backgroundscript.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "48": "images/icon_48.png",
+      "128": "images/icon_128.png",
+      "240": "images/icon_240.png"
+    },
+    "default_title": "Language Learning with FunFluen™",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/icon_16.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png",
+    "240": "images/icon_240.png"
+  },
+  "permissions": ["storage", "unlimitedStorage", "tts"],
+  "optional_permissions": ["activeTab"],
+  "host_permissions": [
+    "https://funfluen.com/*",
+    "https://appforlanguage.com/*",
+    "https://clients5.google.com/*",
+    "*://youtube.com/*",
+    "*://netflix.com/*",
+    "*://disneyplus.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.*"],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

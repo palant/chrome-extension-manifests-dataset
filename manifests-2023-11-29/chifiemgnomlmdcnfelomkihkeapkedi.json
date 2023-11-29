@@ -1,0 +1,76 @@
+---
+name: Orion NFT
+version: 0.0.4
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 50
+release_date: '2022-07-29T19:16:26.000Z'
+size: 584KiB
+languages:
+  - English
+description: >-
+  Visualize directly on the collection pages their evolution with sales and
+  listings, save collection to monitor them at a glance.
+publisher_account: sandgine
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Orion NFT",
+  "version": "0.0.4",
+  "description": "Visualize directly on the collection pages their evolution with sales and listings, save collection to monitor them at a glance.",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Orion NFT",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://opensea.io/collection/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-main.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://etherscan.io/address/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "etherscan-script/import-main.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js",
+        "etherscan-script/main.js"
+      ],
+      "matches": [
+        "https://opensea.io/*",
+        "https://etherscan.io/*"
+      ]
+    }
+  ]
+}

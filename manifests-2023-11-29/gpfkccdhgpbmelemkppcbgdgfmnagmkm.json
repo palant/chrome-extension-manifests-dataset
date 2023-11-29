@@ -1,0 +1,54 @@
+---
+name: Eater to Google Maps
+version: 0.0.4
+category_slug: lifestyle/fun
+rating: 1.5
+rating_count: 2
+user_count: 24
+release_date: '2022-11-05T04:47:24.000Z'
+size: 1.31MiB
+languages:
+  - English (United States)
+description: A Chrome extension to easily add Eater lists to your Google Maps saved places
+publisher_account: cetacean.dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Eater to Google Maps",
+    "description": "A Chrome extension to easily add Eater lists to your Google Maps saved places",
+    "version": "0.0.4",
+    "icons": {
+        "16": "logo/hamburger-logo-16.png",
+        "48": "logo/hamburger-logo-48.png",
+        "128": "logo/hamburger-logo-128.png"
+    },
+    "options_page": "settings/settings.html",
+    "action": {
+        "default_title": "Eater to Google Maps",
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": ["storage"],
+    "host_permissions": [],
+    "background": {
+        "service_worker": "background/service-worker.js"
+    },
+    "content_scripts": [{
+        "css": ["contentScripts/parseEaterListData.css"],
+        "js": ["contentScripts/parseEaterListData.js"],
+        "matches": ["https://*.eater.com/maps/*"],
+        "run_at": "document_end"
+    },
+    {
+        "js": ["contentScripts/createMapsList.js"],
+        "matches": ["https://www.google.com/maps/*/data=!4m2!10m1!1e1"],
+        "run_at": "document_start"
+    },
+    {
+        "js": ["contentScripts/addPlaceToList.js"],
+        "matches": ["https://www.google.com/maps/search/*"],
+        "run_at": "document_start"
+    }]
+}

@@ -1,0 +1,174 @@
+---
+name: Talent - Immersive & AI Translator
+version: 1.4.1
+category_slug: productivity/tools
+rating: 4.636363636363637
+rating_count: 22
+user_count: 7000
+release_date: '2023-11-28T07:30:18.000Z'
+size: 2.24MiB
+languages:
+  - English
+  - 中文 (简体)
+description: >-
+  Professional aggregate translation, support Google, Baidu, Deepl, OpenAI and
+  many other translation sources.
+publisher_account: talentranslate
+privacy_policy: 'https://www.freeprivacypolicy.com/live/3273275d-2a5f-4848-a70a-ba2bf99982b3'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_default_title__",
+  "default_locale": "en",
+  "version": "1.4.1",
+  "description": "__MSG_description__",
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/logo/logo_x48.png"
+  },
+  "options_page": "setting/setting.html",
+  "icons": {
+    "16": "assets/logo/logo_x16.png",
+    "48": "assets/logo/logo_x48.png",
+    "128": "assets/logo/logo_x128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+D",
+        "mac": "Command+D"
+      }
+    },
+    "openWindow": {
+      "description": "__MSG_OpenTranslationWindow__",
+      "suggested_key": {
+        "default": "Ctrl+Shift+8",
+        "mac": "Command+Shift+8"
+      },
+      "global": true
+    },
+    "toggleScribble": {
+      "description": "__MSG_TranslationSwitch__",
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content/extract.js"
+      ],
+      "css": [
+        "content/font.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content/compareTra.js"
+      ],
+      "css": [
+        "content/compareTra.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content/talent.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*/*.pdf",
+        "*://*/*.PDF",
+        "*://*/*.pdf?*",
+        "*://*/*.PDF?*",
+        "ftp://*/*.pdf",
+        "ftp://*/*.PDF",
+        "ftp://*/*.pdf?*",
+        "ftp://*/*.PDF?*",
+        "file://*/*.pdf",
+        "file://*/*.PDF",
+        "file://*/*.pdf?*",
+        "file://*/*.PDF?*"
+      ],
+      "js": [
+        "assets/pdf-viewer/web/openViewer.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "externally_connectable": {
+    "matches": [ "https://*.talentranslate.com/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/extract.css",
+        "content/compareTra.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "video/video.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "assets/pdf-viewer/web/viewer.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "clipboardWrite",
+    "clipboardRead",
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "tts"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ]
+}

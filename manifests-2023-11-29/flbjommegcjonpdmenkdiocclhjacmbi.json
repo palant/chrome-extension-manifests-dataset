@@ -1,0 +1,102 @@
+---
+name: HeadingsMap
+version: 4.5.8
+category_slug: productivity/developer
+rating: 4.583333333333333
+rating_count: 60
+user_count: 90000
+release_date: '2023-11-17T09:09:26.000Z'
+size: 418KiB
+languages:
+  - English
+  - Français
+  - español
+  - polski
+description: 'To show, browse and audit (for accessibility and SEO) the headings structure'
+publisher_account: Jorge Rumoroso
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "author": "Jorge Rumoroso",
+  "manifest_version": 2,
+  "version": "4.5.8",
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "activeTab",
+    "storage",
+    "webNavigation"
+    ],
+  "browser_action": {
+    "default_icon": {
+      "48": "icons/headingsMap48.png"
+    },
+    "default_title": "headingsMap"
+  },
+  "icons": {
+    "48": "icons/headingsMap48.png",
+    "128": "icons/headingsMap128_with_margin.png"
+  },
+  "web_accessible_resources": [
+    "html/*",
+    "modules/*",
+    "getFrameId",
+    "_locales/*"
+  ],
+  "default_locale": "en",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O"
+      }
+    }
+  },
+  "applications": {
+    "gecko": {
+      "id": "headings@niquelheadings.net",
+      "strict_min_version": "58.0a1"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_scripts/utilsService.js",
+        "content_scripts/tooltipService.js",
+        "content_scripts/algorithms/commonFunctionalitiesService.js",
+        "content_scripts/algorithms/headingsMapService.js",
+        "content_scripts/algorithms/HTML5OutlineService.js",
+        "content_scripts/inAllDocuments.js",
+        "content_scripts/contextMenuService.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "modules/documentSelectorService.js",
+        "content_scripts/resizerService.js",
+        "content_scripts/treeService.js",
+        "content_scripts/pinPanelService.js",
+        "content_scripts/copyService.js",
+        "content_scripts/main.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ]
+}

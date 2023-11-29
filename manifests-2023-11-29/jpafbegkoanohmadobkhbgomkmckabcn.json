@@ -1,0 +1,114 @@
+---
+name: HaulEx Importer
+version: 0.2.26
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 45
+release_date: '2023-10-19T05:06:42.000Z'
+size: 249KiB
+languages:
+  - English
+description: Import/Parse orders into HaulEx System
+publisher: 'HaulEx, Inc'
+publisher_address: |-
+  12711 NE 95th St
+  Vancouver, WA 98682
+  US
+extension_website: haulex.com
+support_website: 'https://haulex.com'
+privacy_policy: 'https://haulex.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "HaulEx Importer",
+  "description": "Import/Parse orders into HaulEx System",
+  "homepage_url": "https://haulex.com",
+  "version": "0.2.26",
+  "author": "HaulEx",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions":[
+    "*://www.centraldispatch.com/*",
+    "*://www.carsarrive.com/*",
+    "*://1dispatch.com/*",
+    "*://www.1dispatch.com/*",
+    "*://carrierbeta.ratloads.com/*",
+    "*://www.uship.com/*",
+    "*://metroloads.com/*",
+    "*://transportation.carmax.com/*",
+    "*://ship.cars/*",
+    "*://media.ship.cars/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://haulex.com/*",
+      "*://*.haulex.com/*",
+      "http://localhost:3000/*",
+      "http://localhost:4200/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "icons/sdIcon.png","src/options/options.html"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "css": ["css/styles.css"],
+      "js": ["js/jquery-2.1.1.min.js", "js/content.js"],
+      "matches": [
+        "*://www.centraldispatch.com/protected/dispatch/view?dsid=*",
+        "*://www.carsarrive.com/tab/Transport/ViewLoadComplete.asp?nload_id=*",
+        "*://www.carsarrive.com/tab/Transport/ViewLoadShort.asp?nload_id=*",
+        "*://1dispatch.com/Admin/LoadDetails",
+        "*://www.1dispatch.com/Admin/LoadDetails",
+        "*://carrierbeta.ratloads.com/Admin/LoadDetails",
+        "*://www.uship.com/listing/*/*",
+        "*://metroloads.com/myloads/*",
+        "*://transportation.carmax.com/Carrier/*",
+        "*://ship.cars/*",
+        "*://media.ship.cars/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/styles.css"],
+      "js": ["js/jquery-2.1.1.min.js", "js/status.js"],
+      "matches": [
+        "*://www.centraldispatch.com/protected/cargo/dispatched-to-me*",
+        "*://ship.cars/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/styles.css"],
+      "js": ["js/jquery-2.1.1.min.js", "js/redirect.js"],
+      "matches": [
+        "*://www.centraldispatch.com/protected/listing/post-listing*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_icon": "icons/48.png",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html"
+}

@@ -1,0 +1,150 @@
+---
+name: FaniMani.pl Donation Reminder
+version: 4.7.2
+category_slug: lifestyle/shopping
+rating: 4.819444444444445
+rating_count: 144
+user_count: 20000
+release_date: '2023-09-11T05:46:14.000Z'
+size: 1.7MiB
+languages:
+  - English
+  - polski
+  - українська
+description: >-
+  Thanks to our Donation Reminder, on avareage 2.5% of your online shopping will
+  be donated to the chosen NGO.
+publisher: Fundacja FaniMani
+publisher_account: FaniMani.pl
+publisher_address: |-
+  Czesława Miłosza 3
+  Poznań 60-461
+  PL
+extension_website: fanimani.pl
+support_website: 'https://fanimani.pl/pomoc/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_manifest_name__",
+  "description": "__MSG_manifest_description_short__",
+  "author": "FaniMani.pl",
+  "version": "4.7.2",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "default_locale": "en",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/widget.js",
+        "content_scripts/pitdonation.js"
+      ],
+      "css": [
+        "assets/css/vars.css",
+        "assets/css/widget.css",
+        "assets/css/widget_theme.css",
+        "assets/css/pitdonation.css",
+        "assets/css/pitdonation_theme.css"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://google.??",
+        "*://google.??/*",
+        "*://google.???",
+        "*://google.???/*",
+        "*://google.co.uk",
+        "*://google.co.uk/*",
+        "*://www.google.??",
+        "*://www.google.??/*",
+        "*://www.google.???",
+        "*://www.google.???/*",
+        "*://www.google.co.uk",
+        "*://www.google.co.uk/*",
+        "*://bing.com/*",
+        "*://www.bing.com/*",
+        "*://szukaj.wp.pl/*",
+        "*://szukaj.onet.pl/*",
+        "*://szukaj.interia.pl/*",
+        "*://yandex.com/*",
+        "*://www.yandex.com/*",
+        "*://duckduckgo.com/*",
+        "*://search.yahoo.com/*",
+        "*://search.brave.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/serp.js",
+        "content_scripts/pitdonation.js"
+      ],
+      "css": [
+        "assets/css/vars.css",
+        "assets/css/serp.css",
+        "assets/css/serp_theme.css",
+        "assets/css/pitdonation.css",
+        "assets/css/pitdonation_theme.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://fanimani.pl/*",
+        "*://*.fanimani.pl/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/fanimani_pl.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs"
+  ],
+  "icons": {
+    "16": "assets/img/extension-icon/status-default-16.png",
+    "32": "assets/img/extension-icon/status-default.png",
+    "48": "assets/img/extension-icon/status-default-48.png",
+    "128": "assets/img/extension-icon/status-default-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://fanimani.pl/*",
+      "*://*.fanimani.pl/*"
+    ]
+  },
+  "host_permissions": [
+    "https://fanimani.pl/",
+    "*://*/*"
+  ],
+  "action": {
+    "default_popup": "content_scripts/popup.html",
+    "default_icon": {
+      "32": "assets/img/extension-icon/status-default.png"
+    }
+  },
+  "incognito": "split"
+}

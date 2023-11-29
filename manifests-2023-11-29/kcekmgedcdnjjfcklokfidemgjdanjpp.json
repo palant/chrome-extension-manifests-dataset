@@ -1,0 +1,88 @@
+---
+name: Turrex Explorer - Turo Analytics
+version: '1.95'
+category_slug: productivity/tools
+rating: 3.5
+rating_count: 12
+user_count: 2000
+release_date: '2023-11-15T06:28:24.000Z'
+size: 1.58MiB
+languages:
+  - English
+description: >-
+  Turrex Explorer is a Chrome extension for Turo market research. Search for
+  profitable cars and make smarter decisions.
+publisher: Tasiev LLC
+publisher_account: Turrex
+publisher_address: |-
+  2901 Rosewood Dr
+  Columbia, SC 29205-3430
+  US
+extension_website: turrex.com
+support_website: 'https://turrex.com/#s_faq'
+privacy_policy: 'https://turrex.com/privacy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.95",
+  "name": "Turrex Explorer - Turo Analytics",
+  "description": "Turrex Explorer is a Chrome extension for Turo market research. Search for profitable cars and make smarter decisions.",
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/pages/background/index.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/turrex-icon16.png",
+      "48": "images/turrex-icon48.png",
+      "128": "images/turrex-icon128.png"
+    },
+    "default_title": "Turrex Explorer - Turo Analytics"
+  },
+  "icons": {
+    "16": "images/turrex-icon16.png",
+    "48": "images/turrex-icon48.png",
+    "128": "images/turrex-icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://turo.com/*"
+      ],
+      "js": [
+        "src/pages/fetch_start/index.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://turo.com/*",
+        "https://turrex.com/*"
+      ],
+      "js": [
+        "src/pages/loadSearch/index.js"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "assets/css/loadSearchStyle.chunk.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "src/pages/fetch/index.js",
+        "assets/css/ordersStyle.chunk.css",
+        "images/*"
+      ],
+      "matches": [
+        "https://turo.com/*",
+        "https://turrex.com/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+---
+name: 听书助手
+version: 0.0.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 208
+release_date: '2020-03-25T11:54:13.000Z'
+size: 78.95KiB
+languages:
+  - English
+  - 中文 (简体)
+description: 热门小说听书神器
+publisher_account: 'https://weread.qnmlgb.tech'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "听书助手",
+  "version": "0.0.2",
+  "manifest_version": 2,
+  "description": "热门小说听书神器",
+  "homepage_url": "https://webook.qnmlgb.tech",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "zh_CN",
+  "options_page": "src/options.html",
+  "background": {
+    "page": "src/background/bg.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "src/popup/popup.html"
+  },
+  "permissions": [
+    "*://*.biquge.com.cn/*",
+    "*://*.qidian.com/*",
+    "*://*.zongheng.com/*",
+    "*://*.qnmlgb.tech/*",
+    "storage",
+    "ttsEngine",
+    "tts"
+  ],
+  "tts_engine": {
+    "voices": [
+      {
+        "voice_name": "Alice",
+        "lang": "en-US",
+        "event_types": ["start", "marker", "end"]
+      },
+      {
+        "voice_name": "Pat",
+        "lang": "en-US",
+        "event_types": ["end"]
+      }
+    ]
+  },
+  "content_scripts": [{
+    "matches": ["*://www.biquge.com.cn/*", "*://*.qidian.com/*", "*://*.zongheng.com/*"],
+    "js": ["assets/js/jquery.min.js", "assets/js/lodash.min.js", "src/ui.js"],
+    "run_at": "document_end"
+  }],
+  "content_security_policy": "script-src 'self' 'sha256-NeK5uABt0EHXknKz0Fuhb7a5Zbb44aQ0yGE+wP/uoBo='; object-src 'self'"
+}

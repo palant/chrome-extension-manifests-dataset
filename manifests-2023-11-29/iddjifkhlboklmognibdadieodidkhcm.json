@@ -1,0 +1,358 @@
+---
+name: Ali Invoice
+version: 0.8.2.9
+category_slug: productivity/workflow
+rating: 2.6296296296296298
+rating_count: 54
+user_count: 10000
+release_date: '2023-07-10T23:59:47.000Z'
+size: 622KiB
+languages:
+  - English
+description: Converts AliExpress order details into an invoice ready to print
+publisher: MEDIA 019
+publisher_account: Dropshipping Store
+publisher_address: |-
+  JNA 1a
+  Negotin 19300
+  Serbia, Europe
+extension_website: www.dropshipping.store
+support_website: 'https://www.dropshipping.store/ali-invoice-instructions'
+privacy_policy: 'https://www.dropshipping.store/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Ali Invoice",
+    "version": "0.8.2.9",
+    "manifest_version": 2,
+    "description": "Converts AliExpress order details into an invoice ready to print",
+    "author": "Ivan Matic",
+    "background": {
+        "scripts": [
+            "./lib/jquery.min.js",
+            "./js/components/utilities.js",
+            "./js/models/OrderItem.js",
+            "./js/models/Order.js",
+            "./js/models/Invoice.js",
+            "./js/models/DataStorage.js",
+            "./js/services/scrape.js",
+            "./js/background.js"
+        ],
+        "persistent": true
+    },
+    "icons": {
+        "16": "./img/icon16.png",
+        "32": "./img/icon32.png",
+        "48": "./img/icon48.png",
+        "64": "./img/icon64.png",
+        "128": "./img/icon128.png"
+    },
+    "browser_action": {
+        "default_title": "Ali Invoice",
+        "default_icon": "./img/icon128.png",
+        "default_popup": "./html/popup.html",
+        "scripts": "./js/popup.js"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./lib/accounting.min.js",
+                "./js/basicVariables.js",
+                "./js/components/utilities.js",
+                "./js/models/OrderItem.js",
+                "./js/models/Order.js",
+                "./js/models/Invoice.js",
+                "./js/models/DataStorage.js",
+                "./js/components/validator.js",
+                "./js/services/scrape.js",
+                "./js/components/interface.js",
+                "./js/refunds.js"
+            ],
+            "css": [
+                "./css/orderList.css",
+                "./css/custom.css",
+                "./css/refunds.css"
+            ],
+            "matches": [
+                "http://*.aliexpress.com/p/refund-dispute/list.html*",
+                "https://*.aliexpress.com/p/refund-dispute/list.html*",
+                "http://*.aliexpress.us/p/refund-dispute/list.html*",
+                "https://*.aliexpress.us/p/refund-dispute/list.html*",
+
+                "http://trade.aliexpress.com/issue/issue_list.htm*",
+                "https://trade.aliexpress.com/issue/issue_list.htm*",
+                "http://trade1.aliexpress.com/issue/issue_list.htm*",
+                "https://trade1.aliexpress.com/issue/issue_list.htm*",
+                "http://trade.aliexpress.com/issue/fastissue/Detail.htm*",
+                "https://trade.aliexpress.com/issue/fastissue/Detail.htm*",
+                "http://trade1.aliexpress.com/issue/fastissue/Detail.htm*",
+                "https://trade1.aliexpress.com/issue/fastissue/Detail.htm*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js"
+            ],
+            "css": [
+                "./css/orderList.css"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js"
+            ],
+            "css": [
+                "./css/custom.css"
+            ],
+            "matches": [
+                "http://trade.aliexpress.com/order_detail.htm*",
+                "http://trade1.aliexpress.com/order_detail.htm*",
+                "https://trade.aliexpress.com/order_detail.htm*",
+                "https://trade1.aliexpress.com/order_detail.htm*",
+                "https://trade.aliexpress.com/*",
+                "https://trade1.aliexpress.com/*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/JsBarcode.all.min.js",
+                "./lib/jquery.min.js",
+                "./js/basicVariables.js",
+                "./js/models/OrderItem.js",
+                "./js/models/Order.js",
+                "./js/models/Invoice.js",
+                "./js/models/DataStorage.js",
+                "./js/components/validator.js",
+                "./js/services/scrape.js",
+                "./js/orders-page.js",
+                "./js/components/interface.js"
+            ],
+            "css": [
+                "./css/custom.css",
+                "./css/orderList.css"
+            ],
+            "matches": [
+                "http://trade.aliexpress.com/order_list.htm*",
+                "http://trade1.aliexpress.com/order_list.htm*",
+                "https://trade.aliexpress.com/order_list.htm*",
+                "https://trade1.aliexpress.com/order_list.htm*",
+                "http://trade.aliexpress.com/orderList.htm*",
+                "http://trade1.aliexpress.com/orderList.htm*",
+                "https://trade.aliexpress.com/orderList.htm*",
+                "https://trade1.aliexpress.com/orderList.htm*",
+                "http://trade.aliexpress.com/ordertrash/orderTrash.htm*",
+                "http://trade1.aliexpress.com/ordertrash/orderTrash.htm*",
+                "https://trade.aliexpress.com/ordertrash/orderTrash.htm*",
+                "https://trade1.aliexpress.com/ordertrash/orderTrash.htm*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/aliinvoice.js",
+                "./lib/JsBarcode.all.min.js"
+            ],
+            "css": [
+                "./css/custom.css"
+            ],
+            "matches": [
+                "http://trade.aliexpress.com/order_detail.htm*&inv=1",
+                "https://trade.aliexpress.com/order_detail.htm*&inv=1",
+                "http://trade1.aliexpress.com/order_detail.htm*&inv=1",
+                "https://trade1.aliexpress.com/order_detail.htm*&inv=1",
+                "http://trade.aliexpress.com/order_detail.htm?inv=1*",
+                "https://trade.aliexpress.com/order_detail.htm?inv=1*",
+                "http://trade1.aliexpress.com/order_detail.htm?inv=1*",
+                "https://trade1.aliexpress.com/order_detail.htm?inv=1*",
+                "http://trade.aliexpress.com/order_detail.htm*&inv=ref",
+                "https://trade.aliexpress.com/order_detail.htm*&inv=ref",
+                "http://trade1.aliexpress.com/order_detail.htm*&inv=ref",
+                "https://trade1.aliexpress.com/order_detail.htm*&inv=ref",
+                "http://trade.aliexpress.com/order_detail.htm?inv=ref*",
+                "https://trade.aliexpress.com/order_detail.htm?inv=ref*",
+                "http://trade1.aliexpress.com/order_detail.htm?inv=ref*",
+                "https://trade1.aliexpress.com/order_detail.htm?inv=ref*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/aliinvoice2.js",
+                "./lib/download.min.js",
+                "./lib/JsBarcode.all.min.js",
+                "./lib/html2canvas.min.js",
+                "./lib/jspdf.min.js"
+            ],
+            "css": [
+                "./css/custom.css"
+            ],
+            "matches": [
+                "http://trade.aliexpress.com/order_detail.htm*&inv=2",
+                "https://trade.aliexpress.com/order_detail.htm*&inv=2",
+                "http://trade1.aliexpress.com/order_detail.htm*&inv=2",
+                "https://trade1.aliexpress.com/order_detail.htm*&inv=2",
+                "http://trade.aliexpress.com/order_detail.htm?inv=2*",
+                "https://trade.aliexpress.com/order_detail.htm?inv=2*",
+                "http://trade1.aliexpress.com/order_detail.htm?inv=2*",
+                "https://trade1.aliexpress.com/order_detail.htm?inv=2*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/singlebutton.js"
+            ],
+            "css": [
+                "./css/custom.css"
+            ],
+            "matches": [
+                "http://trade.aliexpress.com/order_detail.htm*",
+                "https://trade.aliexpress.com/order_detail.htm*",
+                "http://trade1.aliexpress.com/order_detail.htm*",
+                "https://trade1.aliexpress.com/order_detail.htm*",
+                "http://trade.aliexpress.com/order_detail.htm*",
+                "https://trade.aliexpress.com/order_detail.htm*",
+                "http://trade1.aliexpress.com/order_detail.htm*",
+                "https://trade1.aliexpress.com/order_detail.htm*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/activate.js"
+            ],
+            "css": [
+                "./css/custom.css"
+            ],
+            "matches": [
+                "https://www.dropshipping.store/checkout/order-received/*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/error.js"
+            ],
+            "matches": [
+                "https://trade.aliexpress.com/error.htm*",
+                "http://trade.aliexpress.com/error.htm*",
+                "https://trade.aliexpress.com/noPrivilege.htm*",
+                "http://trade.aliexpress.com/noPrivilege.htm*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/shipping.js"
+            ],
+            "css": [
+                "./css/custom.css"
+            ],
+            "matches": [
+                "https://www.dropshipping.store/my-account/edit-address/shipping/*",
+                "https://www.dropshipping.store/my-account/edit-address/*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/aliexpress.js"
+            ],
+            "matches": [
+                "https://*.aliexpress.com/*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./lib/accounting.min.js",
+                "./js/basicVariables.js",
+                "./js/models/DataStorage.js",
+                "./js/models/OrderItem.js",
+                "./js/models/Order.js",
+                "./js/models/Invoice.js",
+                "./js/services/scrape.js",
+                "./js/components/utilities.js",
+                "./js/components/newView/newInterface.js",
+                "./js/components/newView/ordersPage.js"
+            ],
+            "css": [
+                "./css/custom.css",
+                "./css/orderList.css"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/p/order/index.html*",
+                "*://*.aliexpress.us/p/order/index.html*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./lib/accounting.min.js",
+                "./js/components/modal.js",
+                "./js/models/DataStorage.js",
+                "./js/models/OrderItem.js",
+                "./js/models/Order.js",
+                "./js/services/scrape.js",
+                "./js/components/utilities.js",
+                "./js/components/newView/orderDetail.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/p/order/detail.html*",
+                "*://*.aliexpress.us/p/order/detail.html*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/jquery.min.js",
+                "./js/components/modal.js",
+                "./js/models/DataStorage.js",
+                "./js/models/OrderItem.js",
+                "./js/models/Order.js",
+                "./js/components/newView/logisticDetail.js"
+            ],
+            "matches": [
+                "*://track.aliexpress.com/logisticsdetail.htm*",
+                "*://track.aliexpress.us/logisticsdetail.htm*"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "/*.png",
+        "/css/*",
+        "/img/*.png",
+        "/*.gif",
+        "/img/*.gif",
+        "/options.html",
+        "/bulk-invoice.html"
+    ],
+    "permissions": [
+        "https://trade.aliexpress.com/*",
+        "https://trade1.aliexpress.com/*",
+        "https://*.aliexpress.com/*",
+        "http://my.dropshipping.store/*",
+        "https://my.dropshipping.store/*",
+        "https://www.dropshipping.store/*",
+        "*://*.dropshipping.store/*",
+        "activeTab",
+        "contextMenus",
+        "notifications",
+        "unlimitedStorage",
+        "storage",
+        "downloads",
+        "tabs"
+    ],
+    "optional_permissions": [
+        "*://*.aliexpress.us/*"
+    ]
+}

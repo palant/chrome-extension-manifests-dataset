@@ -1,0 +1,84 @@
+---
+name: Messenger Bot - Bulk Message Sender
+version: 1.4.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 70
+release_date: '2023-11-21T12:42:44.000Z'
+size: 806KiB
+languages:
+  - English
+description: >-
+  Facebook Auto Message tool, Send mass private messages to users and pages from
+  your user account.
+publisher_account: sinthata manna
+privacy_policy: 'https://fb-messenger-bot.getgrowthup.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.4.0",
+  "homepage_url": "https://fb-messenger-bot.getgrowthup.com/",
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_icon": "./assets/icon-512.png"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "unlimitedStorage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.facebook.com/*",
+    "*://*.getgrowthup.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "assets/rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://*.facebook.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

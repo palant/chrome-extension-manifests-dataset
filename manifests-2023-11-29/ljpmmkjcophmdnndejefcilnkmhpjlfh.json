@@ -1,0 +1,96 @@
+---
+name: CodeSignal
+version: 0.7.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 673
+release_date: '2023-10-04T11:00:21.000Z'
+size: 22.63KiB
+languages:
+  - English
+description: >-
+  CodeSignal Chrome Extension: Generate CodeSignal interview links and easily
+  add them to your ATS.
+publisher: CodeSignal
+publisher_address: |-
+  201 California Street
+  Suite 1240
+  San Francisco, California 94111
+  USA
+support_website: >-
+  https://support.codesignal.com/hc/en-us/categories/360003411653-ATS-Integrations
+privacy_policy: 'https://codesignal.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "CodeSignal",
+  "description": "CodeSignal Chrome Extension: Generate CodeSignal interview links and easily add them to your ATS.",
+  "version": "0.7.0",
+
+  "icons": {
+    "48": "assets/logo-48.png",
+    "128": "assets/logo-128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*.png", "/views/login-frame.html"],
+      "matches": [
+        "https://*.codesignal.com/*",
+        "http://localhost:3000/*",
+        "https://*.greenhouse.io/*",
+        "https://*.lever.co/*"
+      ]
+    }
+  ],
+
+  "action": {
+    "default_title": "CodeSignal",
+    "default_icon": "assets/logo-48.png",
+    "default_popup": "views/popup.html"
+  },
+
+  "permissions": ["tabs"],
+
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+
+  "host_permissions": [
+    "https://*.codesignal.com/*",
+    "http://localhost:3000/*",
+    "https://*.greenhouse.io/*",
+    "https://*.lever.co/candidates/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.greenhouse.io/interviews/scheduler/legacy*"],
+      "js": ["scripts/greenhouse-create-interview-legacy.js"],
+      "css": ["styles/iframe-sidebar.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://*.greenhouse.io/interviews/scheduler?*"],
+      "js": ["scripts/greenhouse-create-interview.js"],
+      "css": ["styles/iframe-sidebar.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*/cfr-extension/connect"],
+      "all_frames": true,
+      "js": ["scripts/codesignal-connect.js"]
+    },
+    {
+      "matches": ["https://*.lever.co/candidates/*", "https://*.lever.co/inbox/*"],
+      "js": ["scripts/lever-create-interview.js"],
+      "run_at": "document_idle",
+      "css": ["styles/lever-create-interview.css", "styles/iframe-sidebar.css"]
+    }
+  ]
+}

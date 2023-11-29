@@ -1,0 +1,154 @@
+---
+name: Execo
+version: 0.2.9
+category_slug: productivity/workflow
+rating: 4
+rating_count: 8
+user_count: 3000
+release_date: '2023-10-10T06:20:15.000Z'
+size: 1.27MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - dansk
+  - español
+  - italiano
+  - polski
+  - suomi
+  - svenska
+  - čeština
+  - русский
+  - 日本語
+  - 한국어
+description: AI-powered productivity for professionals.
+publisher: NeoIQ
+publisher_account: NeoIQ Inc.
+extension_website: execo.ai
+support_website: 'https://execo.ai'
+privacy_policy: 'https://execo.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Execo",
+  "description": "__MSG_manifestDescription__",
+  "version": "0.2.9",
+  "manifest_version": 3,
+  "icons": {
+    "16": "/imgs/icon-16.png",
+    "48": "/imgs/icon-48.png",
+    "128": "/imgs/icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "tabs",
+    "storage",
+    "sidePanel"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html",
+    "openPanelOnActionClick": true
+  },
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+  "default_locale": "en",
+  "externally_connectable": {
+    "matches": [
+      "https://*.execo.ai/*",
+      "http://localhost/*"
+    ]
+  },
+  "chrome_url_overrides": {
+    "newtab": "newTab.html"
+  },
+  "action": {
+    "default_icon": "/imgs/icon-16.png",
+    "default_title": "__MSG_manifestOpenOverlay__"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "Command+Shift+L"
+      }
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts;  object-src 'self';"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "imgs/*",
+        "overlay.html",
+        "scOverlay.html",
+        "sidepanel.bundle.js",
+        "/css/highlights.css",
+        "newTab.html",
+        "styles.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "js/gmail.js",
+        "gmailJsLoader.bundle.js",
+        "scEmail.html"
+      ],
+      "matches": [
+        "*://mail.google.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "newTab.bundle.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "/js/gmail.js",
+        "gmailInjector.bundle.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "scEmail.bundle.js"
+      ]
+    }
+  ]
+}

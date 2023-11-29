@@ -1,0 +1,74 @@
+---
+name: InsE - Instagram email finder & exporter
+version: 4.6.11
+category_slug: lifestyle/social
+rating: 3.3333333333333335
+rating_count: 3
+user_count: 546
+release_date: '2023-11-26T09:06:54.000Z'
+size: 891KiB
+languages:
+  - English
+description: Scrape pubilc email and phone of instagram followers and export to csv/excel
+publisher_account: ListMore
+privacy_policy: 'https://listmore.notion.site/Privacy-Policy-1b8454dbdaa54b4590b3b8988b4c2e08'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "InsE - Instagram email finder & exporter",
+  "version": "4.6.11",
+  "description": "Scrape pubilc email and phone of instagram followers and export to csv/excel",
+  "action": {
+    "default_icon": "./assets/icon-128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "cookies",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.instagram.com/*",
+    "*://*.listmore.info/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.instagram.com/*?ext=E&cmd=export&uuid=*"
+      ],
+      "js": [
+        "dist/exportPanel/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/exportPanel/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "*://*.instagram.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

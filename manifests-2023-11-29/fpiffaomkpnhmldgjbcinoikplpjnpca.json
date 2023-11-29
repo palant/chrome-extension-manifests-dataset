@@ -1,0 +1,75 @@
+---
+name: dSaver - Export Discord user list to CSV
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 3.75
+rating_count: 4
+user_count: 524
+release_date: '2023-11-04T07:43:05.000Z'
+size: 724KiB
+languages:
+  - English
+description: >-
+  Extract all discord members, contains userid, username, discriminator, roles,
+  activity, avatar, join date, save as CSV/EXCEL/JSON.
+publisher_account: Digi Fish
+privacy_policy: 'https://discordsaver.extensionsfox.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.1.0",
+  "homepage_url": "https://discord-user-exporter.extensionsfox.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://*.discord.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.discord.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "./assets/reaction.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

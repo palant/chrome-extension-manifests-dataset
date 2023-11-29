@@ -1,0 +1,129 @@
+---
+name: Skinplace Trademanager
+version: 0.0.4
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 327
+release_date: '2022-05-11T18:17:07.000Z'
+size: 72.02KiB
+languages:
+  - English
+description: 'Trade CS:GO skins with ease on SkinPlace.'
+publisher_account: Skin Place Industries
+extension_website: skin.place
+support_website: 'https://support.skin.place'
+privacy_policy: 'https://skin.place/en/privacypolicy'
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "icons": {
+    "128": "assets/images/logo.png"
+  },
+  "name": "Skinplace Trademanager",
+  "version": "0.0.4",
+  "description": "Trade CS:GO skins with ease on SkinPlace.",
+  "manifest_version": 2,
+  "permissions": [
+    "notifications",
+    "background",
+    "webRequest",
+    "webRequestBlocking",
+    "*://steamcommunity.com/*",
+    "*://*.steampowered.com/*",
+    "http://*.steamstatic.com/*",
+    "*://steamrep.com/*",
+    "*://steamcdn-a.akamaihd.net/*"
+  ],
+  "web_accessible_resources": [
+    "/libs/injected.js"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://skin.place/*",
+      "*://*.steampowered.com/*",
+      "*://steamcommunity.com/*"
+    ],
+    "accepts_tls_channel_id": true
+  },
+  "background": {
+    "scripts": [
+      "third_party/zepto.min.js",
+      "third_party/deferred.js",
+      "third_party/callbacks.js",
+      "third_party/centrifuge.min.js",
+      "libs/config.js",
+      "libs/websocket/ws_client.js",
+      "libs/websocket/swoole_client.js",
+      "libs/websocket/centrifuge_client.js",
+      "libs/shadow.js",
+      "libs/ext.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.skin.place/*/tradeoffers*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "css": [
+        "assets/shadow.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.skin.place/tradeoffer/*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.skin.place/profiles/*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "css": [
+        "assets/shadow.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.skin.place/login*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "css": [
+        "assets/shadow.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://skin.place/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "libs/inject.js"
+      ]
+    }
+  ]
+}

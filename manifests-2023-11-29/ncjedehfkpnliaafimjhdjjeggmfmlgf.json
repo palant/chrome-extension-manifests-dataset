@@ -1,0 +1,64 @@
+---
+name: Copilot sidebar for Chrome
+version: 1.8.0
+category_slug: productivity/workflow
+rating: 3.8461538461538463
+rating_count: 13
+user_count: 4000
+release_date: '2023-11-18T10:40:57.000Z'
+size: 387KiB
+languages:
+  - English
+description: Microsoft Copilot sidebar ported from Edge to Chrome
+publisher_account: wong2
+extension_website: bing-sidebar.com
+support_website: 'https://github.com/wong2/bing-sidebar-for-chrome/issues'
+privacy_policy: 'https://chathub.gg/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Copilot sidebar for Chrome",
+  "description": "Microsoft Copilot sidebar ported from Edge to Chrome",
+  "version": "1.8.0",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Click to open sidebar"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["sidePanel", "declarativeNetRequest", "tabs", "notifications"],
+  "content_scripts": [
+    {
+      "js": ["shell/inject.js"],
+      "matches": ["https://*.bing.com/edgesvc/shell*"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "js": ["libs/pdf.min.js", "content-script.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      }
+    }
+  }
+}

@@ -1,0 +1,64 @@
+---
+name: Clean-Spam-Link-Tweet
+version: 1.8.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 1000
+release_date: '2023-11-06T10:31:14.000Z'
+size: 41.0KiB
+languages:
+  - 日本語
+description: ツイート(返信)からスパム系ツイートを可視化してアフィ系スパムリンクを踏む事を阻止します。
+publisher_account: kawa-nobu
+support_website: 'https://github.com/kawa-nobu/Clean-Spam-Link-Tweet'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Clean-Spam-Link-Tweet",
+  "version": "1.8.2",
+  "manifest_version": 3,
+  "description": "ツイート(返信)からスパム系ツイートを可視化してアフィ系スパムリンクを踏む事を阻止します。",
+  "icons" : {
+    "128" : "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "filter.json",
+      "stealth_icon.svg"
+    ],
+    "matches": [
+      "https://twitter.com/*",
+      "https://t.co/*",
+      "https://cdn.jsdelivr.net/*"
+    ]
+  }],
+  "background" : {
+    "service_worker" : "background.js"
+  },
+  "permissions" : [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [{
+    "matches": ["https://twitter.com/*"],
+    "js": ["content.js"],
+    "all_frames": true
+    }]
+  }

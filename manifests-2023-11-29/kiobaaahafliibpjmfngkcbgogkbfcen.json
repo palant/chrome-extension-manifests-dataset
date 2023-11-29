@@ -1,0 +1,78 @@
+---
+name: Quora Marketing Tool - Q-Stats
+version: 3.1.0.0
+category_slug: productivity/workflow
+rating: 4.913043478260869
+rating_count: 23
+user_count: 2000
+release_date: '2023-07-24T09:40:08.000Z'
+size: 1.33MiB
+languages:
+  - English
+description: Get free Quora marketing insights for every question on Quora.
+publisher: Q-answers
+publisher_account: dev-team
+publisher_address: |-
+  Rothschild Boulevard 45
+  3
+  Tel Aviv-Yafo 5358418
+  IL
+extension_website: q-answers.com
+support_website: 'https://q-answers.com/q-stats-feedback/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Quora Marketing Tool - Q-Stats",
+  "description": "Get free Quora marketing insights for every question on Quora.",
+  "version": "3.1.0.0",
+  "action": {
+    "default_title": "Quora Marketing Tool - Q-Stats",
+    "default_popup": "popup.html",
+    "default_icons": {
+      "128": "./images/icon.png",
+      "48": "./images/icon.png",
+      "16": "./images/icon.png"
+    }
+  },
+  "icons": {
+    "128": "./images/icon.png",
+    "48": "./images/icon.png",
+    "16": "./images/icon.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": ["tabs", "activeTab", "scripting"],
+  "host_permissions": [
+    "https://*.googleapis.com/*",
+    "https://q-answers-app.herokuapp.com/*",
+    "https://ssl.google-analytics.com/*",
+    "https://www.googletagmanager.com/*",
+    "https://snap.licdn.com/*"
+  ],
+  "background": {
+    "service_worker": "./js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.quora.com/*"],
+      "exclude_matches": [
+        "https://www.quora.com/*/log*",
+        "https://www.quora.com/"
+      ],
+      "css": ["/static/css/main.css"],
+      "js": ["/static/js/main.js", "./js/content.js"],
+      "runAt": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*.gif", "images/*.png", "fonts/*.ttf"],
+      "matches": ["https://*/*"]
+    }
+  ]
+}

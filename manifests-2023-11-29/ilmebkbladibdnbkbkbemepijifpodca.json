@@ -1,0 +1,80 @@
+---
+name: حاضر | Hadir
+version: 1.0.29
+category_slug: productivity/developer
+rating: 3.8536585365853657
+rating_count: 82
+user_count: 3000
+release_date: '2023-09-21T08:18:45.000Z'
+size: 524KiB
+languages:
+  - ‫العربية
+description: >-
+  اداة مساعدة للمعلمين في متابعة الواجبات والأنشطة والاختبارات وطباعة سجل متابعة
+  مادة وسجل الغياب ورصد غياب الطلاب في منصة مدرستي
+publisher_account: hadir.tech
+support_website: 'https://hadirtech.com/'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "manifest_version": 3,
+ 
+   "name": "حاضر | Hadir",
+   "description": "اداة مساعدة للمعلمين في متابعة الواجبات والأنشطة والاختبارات وطباعة سجل متابعة مادة وسجل الغياب ورصد غياب الطلاب في منصة مدرستي",
+   "version": "1.0.29",
+   "icons": {
+     "128": "images/icon128.png",
+     "48": "images/icon48.png",
+     "16": "images/icon16.png"
+   },
+   "action": {
+     "default_icon": "images/icon16.png",
+     "default_popup": "html/popup.html"
+   },
+   "content_scripts":[
+     {
+      "all_frames": true,
+       "matches": ["*://schools.madrasati.sa/*"],
+       "run_at": "document_idle",
+       "js": ["js/content.js", "js/utility.js", "js/jquery-3.5.1.min.js", "js/xlsx.full.min.js"]
+     },     
+     {
+      "all_frames": true,
+       "matches": ["*://schools.madrasati.sa/Teacher/Assignments/Index/*"],
+       "run_at": "document_idle",
+       "js": ["js/assignments.js"]
+     },
+     {
+      "all_frames": true,
+       "matches": ["*://schools.madrasati.sa/Projects/Projects/Index/*"],
+       "run_at": "document_idle",
+       "js": ["js/projects.js"]
+     },
+     {
+      "all_frames": true,
+       "matches": ["*://schools.madrasati.sa/Teacher/Exams/Index/*"],
+       "run_at": "document_idle",
+       "js": ["js/exams.js"]
+     }
+   ],
+   
+  "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'",
+      "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+   "host_permissions": [     
+     "*://hadirtech.com/*" 
+   ],
+   "permissions": [
+    "storage",
+    "tabs"
+    ],
+   "web_accessible_resources": [
+    {
+        "matches": ["*://schools.madrasati.sa/*"],
+        "resources": ["fonts/Tajawal-Regular.ttf", "js/*" ]
+    }
+  ]
+ }

@@ -1,0 +1,107 @@
+---
+name: Bulk Texter Pro
+version: 2.5.4
+category_slug: productivity/communication
+rating: 4.857142857142857
+rating_count: 7
+user_count: 3000
+release_date: '2023-11-23T00:40:28.000Z'
+size: 789KiB
+languages:
+  - English (United States)
+description: >-
+  Send texts with a personal touch, at scale, using the phone number you already
+  have.
+publisher_account: 'Brismuth Apps, LLC'
+extension_website: bulktexterpro.com
+privacy_policy: 'https://www.bulktexterpro.com/docs/terms/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Bulk Texter Pro",
+
+  "short_name": "Bulk Texter+",
+
+  "description": "Send texts with a personal touch, at scale, using the phone number you already have.",
+
+  "version": "2.5.4",
+
+  "background": {
+    "service_worker": "background.js"  
+  },
+
+  "action": {
+    "default_title": "Bulk Texter Pro",
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://voice.google.com/*"],
+      "js": [
+        "contentScripts/utilities.js",
+        "lib/store.js",
+        "contentScripts/sendQueueManager.js",
+        "contentScripts/googleVoiceManager.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://messages.google.com/*"],
+      "js": [
+        "contentScripts/utilities.js",
+        "lib/store.js",
+        "contentScripts/sendQueueManager.js",
+        "contentScripts/googleMessagesManager.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://billing.bulktexterpro.com/*"],
+      "js": [
+        "contentScripts/utilities.js",
+        "contentScripts/bulkTexterProBilling.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://docs.google.com/picker*"],
+      "js": [
+        "contentScripts/utilities.js",
+        "contentScripts/googleDocsFileUploadManager.js"
+      ],
+      "all_frames": true
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [     
+        "contentScripts/injectedModal.html"
+      ],
+      "matches": [ "https://voice.google.com/*", "https://messages.google.com/*" ]
+    }
+  ],
+  
+  "icons": { "48": "icon48.png",
+             "128": "icon.png" },
+
+  "permissions": [
+    "alarms",
+    "storage",
+    "unlimitedStorage"
+  ],
+
+  "host_permissions": [
+    "https://messages.google.com/*",
+    "https://voice.google.com/*",
+    "https://billing.bulktexterpro.com/*",
+    "https://docs.google.com/picker*"
+  ]
+
+}

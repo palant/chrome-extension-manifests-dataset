@@ -1,0 +1,76 @@
+---
+name: '雅婷逐字稿: 即時字幕，會議紀錄'
+version: 1.0.10
+category_slug: productivity/workflow
+rating: 4.833333333333333
+rating_count: 6
+user_count: 6000
+release_date: '2022-03-18T02:07:47.000Z'
+size: 98.02KiB
+languages:
+  - 中文 (繁體)
+description: 讓你在 Google 簡報與 Google 視訊會議時使用雅婷逐字稿，打上字幕，並於結束後得到完整的紀錄
+publisher_account: Taiwan AI Labs
+support_website: 'https://asr.yating.tw/faq'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "雅婷逐字稿: 即時字幕，會議紀錄",
+  "description": "讓你在 Google 簡報與 Google 視訊會議時使用雅婷逐字稿，打上字幕，並於結束後得到完整的紀錄",
+  "version": "1.0.10",
+  "icons": {
+    "16": "icon_16.png",
+    "48": "icon_48.png",
+    "128": "icon_128.png"
+  },
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://cdn.amplitude.com; object-src 'self'",
+
+  "content_scripts": [
+      {
+        "matches": ["https://meet.google.com/*"],
+        "exclude_matches": ["https://meet.google.com/", "https://meet.google.com/?*"],
+        "js": [
+          "js/vendor.js",
+          "js/content_script_meet.js"
+        ],
+        "css": ["google_meet.css"]
+      },
+      {
+        "matches": ["https://docs.google.com/presentation/*"],
+        "js": [
+          "js/vendor.js",
+          "js/content_script_presentation.js"
+        ]
+      }
+  ],
+
+  "background": {
+    "scripts": ["js/vendor.js", "js/tracking.js", "js/background.js"],
+    "persistent": false
+  },
+
+  "web_accessible_resources": [
+    "icon.png",
+    "icon_normal.png",
+    "icon_pressed.png",
+    "icon_hover.png",
+    "button-meet.png",
+    "icon-dropdown.svg",
+    "iframe.html"
+  ],
+
+  "permissions": [
+    "cookies",
+    "https://asr.yating.tw/"
+  ]
+}

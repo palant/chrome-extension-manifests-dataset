@@ -1,0 +1,74 @@
+---
+name: TR-Line FSA Integration
+version: 0.2.1
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 731
+release_date: '2021-04-05T11:30:52.000Z'
+size: 66.33KiB
+languages:
+  - русский
+description: >-
+  Расширение для экспорта и публикации деклараций в системе ФГИС РОСАККРЕДИТАЦИЯ
+  с помощью сервиса TR-LINE.RU
+
+  Благодаря этому…
+publisher_account: tr-line.ru
+extension_website: tr-line.ru
+privacy_policy: 'https://tr-line.ru/privacy_policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "TR-Line FSA Integration",
+  "version": "0.2.1",
+  "icons": {
+    "16": "./icons/favicon-16x16.png",
+    "48": "./icons/favicon-48x48.png",
+    "128": "./icons/favicon-128x128.png"
+  },
+  "permissions": [
+    "*://*.tr-line.ru/*",
+    "*://srd.fsa.gov.ru/*",
+    "*://esep.fsa.gov.ru/*",
+    "storage",
+    "webRequest"
+  ],
+  "background": {
+    "scripts": [
+      "browser-polyfill.js",
+      "fgis/token.js",
+      "fgis/sign.js",
+      "fgis/fgis.js",
+      "classes/notifier.js",
+      "classes/declaration.js",
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://esep.fsa.gov.ru/ESEP-WebApp/sign/preview/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "browser-polyfill.js",
+        "content/esep.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.tr-line.ru/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true,
+      "js": [
+        "browser-polyfill.js",
+        "content/lk.js"
+      ]
+    }
+  ]
+}

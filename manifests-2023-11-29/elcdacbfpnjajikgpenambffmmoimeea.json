@@ -1,0 +1,71 @@
+---
+name: XCAD
+version: 3.3.0
+category_slug: lifestyle/social
+rating: 4.4941176470588236
+rating_count: 170
+user_count: 60000
+release_date: '2023-10-31T20:38:07.000Z'
+size: 14.71MiB
+languages:
+  - English
+description: XCAD Browser Extension
+publisher: Woodwick Capitol
+publisher_account: XCAD Network
+publisher_address: |-
+  Intershore Chambers,
+  Road Town
+  Tortola VG1110
+  VG
+extension_website: xcadnetwork.com
+support_website: 'https://support.xcadnetwork.com'
+privacy_policy: 'https://terms.xcadnetwork.com'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "XCAD Browser Extension",
+  "version": "3.3.0",
+  "manifest_version": 3,
+  "name": "XCAD",
+  "short_name": "XCAD",
+  "permissions": ["storage", "unlimitedStorage"],
+  "host_permissions": ["*://*.youtube.com/*", "*://*.xcademy.com/*"],
+  "externally_connectable": {
+    "matches": ["*://*.xcademy.com/*"]
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "/assets/x.png"
+  },
+  "display": "standalone",
+  "icons": {
+    "128": "/assets/x.png"
+  },
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["static/js/content.js"],
+      "matches": ["https://*.youtube.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "css": ["assets/css/content.styles.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*", "inject.js"],
+      "matches": ["https://*.youtube.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

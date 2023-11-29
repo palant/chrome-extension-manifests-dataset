@@ -1,0 +1,108 @@
+---
+name: Vận chuyển Việt Trung - 1688online.vn
+version: 1.0.0.0
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2023-04-02T07:02:25.000Z'
+size: 656KiB
+languages:
+  - Tiếng Việt
+description: >-
+  Dịch vụ hỗ trợ mua hàng taobao, 1688, tmall, quảng châu uy tín, chất lượng,
+  giá rẻ, đảm bảo.
+publisher: 1688Online
+publisher_account: 1688onlinevn
+publisher_address: |-
+  GS2 Vinhome smartcity
+  Nam Từ Liêm, Hanoi City 100000
+  VN
+extension_website: 1688online.vn
+support_website: 'https://1688online.vn/details/cau-hoi-thuong-gap'
+privacy_policy: 'https://1688online.vn/details/chinh-sach-bao-mat-thong-tin'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Vận chuyển Việt Trung - 1688online.vn",
+  "description": "Dịch vụ hỗ trợ mua hàng taobao, 1688, tmall, quảng châu uy tín, chất lượng, giá rẻ, đảm bảo.",
+  "version": "1.0.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "128": "images/logo_128.png"
+  },
+  "background": {
+      "service_worker": "scripts/background.js"
+  },
+  "action": {
+      "default_icon": {
+          "128": "/images/logo_128.png"
+      }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.1688.com/*",
+        "*://*.taobao.com/*",
+        "*://*.tmall.com/*",
+        "*://*.tmall.hk/*"
+      ],
+      "js":[
+        "scripts/runatStart.js"
+      ],
+      "css": ["style.css"],
+      "run_at":"document_start"
+    },
+    {
+      "matches": [
+          "*://*.1688.com/*",
+          "*://*.taobao.com/*",
+          "*://*.tmall.com/*",
+          "*://*.tmall.hk/*"
+      ],
+      "js": [
+          "lib/jquery.10.2.min.js",
+          "alertifyjs/alertify.min.js",
+          "scripts/content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.1688online.vn/*"
+      ],
+      "css": ["showextens.css"],
+      "run_at":"document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "*"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.1688.com/",
+    "*://*.alicdn.com/",
+    "*://*.taobao.com/",
+    "*://*.tmall.com/",
+    "*://*.tmall.hk/",
+    "*://*.1688online.vn/",
+    "*://*.google.com/"
+  ]
+}

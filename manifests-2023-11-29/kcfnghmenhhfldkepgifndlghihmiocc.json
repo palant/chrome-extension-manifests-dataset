@@ -1,0 +1,71 @@
+---
+name: BiliOB Chrome Extension
+version: 0.2.3
+category_slug: lifestyle/fun
+rating: 5
+rating_count: 1
+user_count: 83
+release_date: '2020-05-18T04:12:10.000Z'
+size: 249KiB
+languages:
+  - 中文 (简体)
+description: 在B站页面中显示BiliOB统计数据，并提供实时粉丝显示等功能
+publisher_account: MiracleXYZ
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "BiliOB Chrome Extension",
+  "description": "在B站页面中显示BiliOB统计数据，并提供实时粉丝显示等功能",
+  "version": "0.2.3",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_icon": {
+      "20": "img/icons/icon16.png",
+      "40": "img/icons/icon48.png"
+    },
+    "default_title": "BiliOB"
+  },
+  "icons": {
+    "16": "img/icons/icon16.png",
+    "48": "img/icons/icon48.png",
+    "128": "img/icons/icon128.png"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "*://*.bilibili.com/*",
+    "*://*.biliob.com/*",
+    "storage"
+  ],
+  "content_scripts": [{
+    "all_frames": true,
+    "js": ["app.js"],
+    "matches": ["*://*.bilibili.com/*"],
+    "run_at": "document_start"
+  }, {
+    "all_frames": true,
+    "js": ["live_count/injector.js"],
+    "matches": ["*://space.bilibili.com/*"],
+    "run_at": "document_end"
+  }],
+  "web_accessible_resources": [
+    "img/*.png",
+    "img/icons/*.png",
+    "stats.html",
+    "stats-page.html",
+    "live_count/index.*",
+    "live_count/highcharts.js",
+    "live_count/odometer.js",
+    "fonts/*.woff2"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}

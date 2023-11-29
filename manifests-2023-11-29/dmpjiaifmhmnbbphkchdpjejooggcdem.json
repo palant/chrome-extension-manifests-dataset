@@ -1,0 +1,97 @@
+---
+name: Ship.Cars Loadboard Extension
+version: 2.3.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 1000
+release_date: '2021-08-13T14:30:17.000Z'
+size: 1.99MiB
+languages:
+  - English (United States)
+description: >-
+  Take your auto transport business to the next level with Ship.Cars Loadboard
+  Extension for Central Dispatch and jTracker
+publisher: 'Ship.Cars USA, LLC'
+publisher_address: |-
+  1515 East Woodfield Road
+  Suite 770
+  Schaumburg, IL 60173
+  USA
+extension_website: ship.cars
+support_website: 'https://help.ship.cars/'
+privacy_policy: 'https://legal.ship.cars/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Ship.Cars Loadboard Extension",
+    "description": "Take your auto transport business to the next level with Ship.Cars Loadboard Extension for Central Dispatch and jTracker",
+    "version": "2.3.0",
+    "page_action": {
+        "default_icon": "icons/icon.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": ["identity", "tabs", "storage", "identity.email", "https://api.rollbar.com/"],
+    "content_security_policy": "script-src 'self'; object-src 'self' https://cdnjs.cloudflare.com https://api.rollbar.com;",
+    "content_scripts": [
+        {
+            "js": ["cd.main.bundle.js"],
+            "matches": [
+                "*://www.centraldispatch.com/protected/dispatch/view?dsid=*",
+                "*://www.centraldispatch.com/protected/cargo/dispatched-to-me*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": ["cd.listing-search.bundle.js"],
+            "matches": ["*://www.centraldispatch.com/protected/listing-search/result*"],
+            "run_at": "document_idle"
+        },
+        {
+            "js": ["cd.listing-along-route.bundle.js"],
+            "matches": ["*://www.centraldispatch.com/protected/listing-along-route/result*"]
+        },
+        {
+            "js": ["jtracker.main.bundle.js"],
+            "matches": ["*://www.jtracker.com/account*"],
+            "exclude_matches": ["*://www.jtracker.com/account/login.php*"],
+            "run_at": "document_idle"
+        },
+        {
+            "js": ["jtracker.order-detail.bundle.js"],
+            "matches": ["*://www.jtracker.com/account/order/detail.php*"],
+            "run_at": "document_idle"
+        },
+        {
+            "js": ["jtracker.order-form.bundle.js"],
+            "matches": ["*://www.jtracker.com/account/order/form.php*"],
+            "run_at": "document_idle"
+        },
+        {
+            "js": ["jtracker.order-listing.bundle.js"],
+            "matches": ["*://www.jtracker.com/account/order/listing.php*"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["*://*/*"],
+            "js": ["config.bundle.js", "rollbar.min.js"]
+        }
+    ],
+    "background": {
+        "scripts": ["config.bundle.js", "rollbar.min.js", "background.bundle.js"],
+        "persistent": false
+    },
+    "web_accessible_resources": [
+        "icons/icon.png",
+        "icons/logomark.svg",
+        "icons/logomark-full.svg",
+        "error_message.html",
+        "success_message.html"
+    ],
+    "externally_connectable": {
+        "matches": ["*://ship.cars/*", "*://*.ship.cars/*", "http://localhost:3000/*"]
+    }
+}

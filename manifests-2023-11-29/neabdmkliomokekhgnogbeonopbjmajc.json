@@ -1,0 +1,106 @@
+---
+name: Guideflow
+version: 1.0.21
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 795
+release_date: '2023-09-27T05:03:24.000Z'
+size: 7.49MiB
+languages:
+  - English
+description: Guideflow
+publisher: Guideflow
+publisher_account: Guideflow - Interactive demos
+publisher_address: |-
+  92 Av. Charles de Gaulle
+  Neuilly-sur-Seine 92200
+  FR
+support_website: 'https://guideflow.com'
+privacy_policy: 'https://link.guideflow.com/privacy_policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Guideflow",
+  "short_name": "Guideflow",
+  "version": "1.0.21",
+  "description": "Guideflow",
+  "permissions": [
+    "tabs",
+    "background",
+    "activeTab",
+    "tabCapture",
+    "storage",
+    "scripting",
+    "system.display"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["controller.html"],
+      "matches": ["chrome-extension://*/*"]
+    },
+    {
+      "resources": ["controllerTab.js"],
+      "matches": ["chrome-extension://*/*"]
+    },
+    {
+      "resources": ["/content/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["recording-panel/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["recording-panel/*/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Angular Chrome Extension"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://app.guideflow.com/*",
+      "https://stage.guideflow.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "recording-panel/runtime.js",
+        "recording-panel/polyfills.js",
+        "recording-panel/vendor.js",
+        "recording-panel/main.js",
+        "contentPage.js"
+      ],
+      "matches": ["<all_urls>"],
+      "exclude_globs": ["*://*.guideflow.com/*"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": ["guideflowAppScript.js"],
+      "matches": ["*://*.guideflow.com/*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "assets/icons/icon27.png",
+    "48": "assets/icons/icon53.png",
+    "128": "assets/icons/icon79.png"
+  }
+}

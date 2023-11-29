@@ -1,0 +1,77 @@
+---
+name: WonderSwitcher
+version: 5.1.2
+category_slug: productivity/workflow
+rating: 4.333333333333333
+rating_count: 3
+user_count: 7000
+release_date: '2023-11-21T11:18:58.000Z'
+size: 297KiB
+languages:
+  - English
+description: Switch between HTTP proxies quickly and easily
+publisher: WonderNetwork
+publisher_account: wondernetwork
+publisher_address: |-
+  465 Rue McGill suite 700
+  Montréal, QC H2Y 2H1
+  CA
+support_website: 'https://wonderproxy.com/docs/setup/proxy/add-ons'
+privacy_policy: 'https://wonderproxy.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "WonderSwitcher",
+    "description": "Switch between HTTP proxies quickly and easily",
+    "version": "5.1.2",
+
+    "icons": {
+      "16": "icons/16x16.png",
+      "32": "icons/32x32.png",
+      "48": "icons/48x48.png",
+      "128": "icons/128x128.png"
+    },
+
+    "browser_action": {
+      "default_popup": "popup/popup.html",
+      "default_title": "WonderSwitcher",
+      "default_icon": "icons/48x48-inactive.png"
+    },
+
+    "background" : {
+      "scripts" : ["background.js"]
+    },
+
+    "content_scripts": [
+      {
+        "matches": ["https://*.wonderproxy.com/*"],
+        "js": ["content_scripts/wp-site.js"],
+        "run_at": "document_end"
+      },
+      {
+        "matches": ["<all_urls>"],
+        "js": ["content_scripts/geo.js"],
+        "all_frames": true,
+        "run_at": "document_start",
+        "match_about_blank": true
+      }
+    ],
+
+    "options_ui": {
+      "page": "options/options.html#account",
+      "open_in_tab": true
+    },
+
+    "permissions": [
+      "tabs",
+      "<all_urls>",
+      "storage",
+      "proxy",
+      "webRequest",
+      "webRequestBlocking"
+    ]
+  }

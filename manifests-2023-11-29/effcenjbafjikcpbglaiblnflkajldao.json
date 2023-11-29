@@ -1,0 +1,71 @@
+---
+name: itsmydata
+version: 1.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 156
+release_date: '2023-01-17T15:20:16.000Z'
+size: 874KiB
+languages:
+  - Deutsch
+  - English
+description: A tool to increase the awareness of your digital data traces.
+publisher: itsmydata GmbH
+publisher_account: it's my data GmbH
+publisher_address: |-
+  Birkenleiten 41
+  München 81543
+  DE
+extension_website: itsmydata.de
+privacy_policy: 'https://portal.itsmydata.de/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extensionTitle__",
+  "version": "1.0.1",
+  "description": "__MSG_extensionDescription__",
+  "manifest_version": 2,
+  "homepage_url": "https://itsmydata.de",
+  "default_locale": "en",
+
+  "icons": {
+    "16": "logo_16.png",
+    "48": "logo_48.png",
+    "128": "logo.png"
+  },
+  "web_accessible_resources": ["manifest.json"],
+
+  "permissions": [
+    "storage",
+    "tabs",
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "api.js",
+      "background.js",
+      "vendors.js"
+    ]
+  },
+
+  "browser_action": {
+    "default_icon": "logo-off.png",
+    "default_title": "It's my data",
+    "default_popup": "login.html"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["vendors.js", "content.js"]
+  },
+    {
+      "matches": ["*://*/*"],
+      "exclude_matches": ["*://*/_/chrome/newtab*"],
+      "js": ["content.js"],
+      "all_frames": false,
+      "run_at": "document_idle"
+    }]
+}

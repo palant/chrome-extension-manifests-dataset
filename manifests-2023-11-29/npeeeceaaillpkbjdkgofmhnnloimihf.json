@@ -1,0 +1,94 @@
+---
+name: Vowel
+version: 1.1.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 14
+user_count: 3000
+release_date: '2023-05-24T03:53:03.000Z'
+size: 431KiB
+languages:
+  - English (United States)
+description: Allows you to schedule Vowel meetings easily from Google Calendar.
+publisher: Vowel
+publisher_address: |-
+  335 Madison Ave
+  4th FL
+  New York, NY 10017
+  US
+extension_website: vowel.com
+support_website: 'https://help.vowel.com/en/collections/2059983-vowel-faq'
+privacy_policy: 'https://www.vowel.com/legal/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.1.5",
+  "name": "Vowel",
+  "manifest_version": 3,
+  "description": "Allows you to schedule Vowel meetings easily from Google Calendar.",
+  "icons": {
+    "16": "images/logo_16.png",
+    "32": "images/logo_32.png",
+    "48": "images/logo_48.png",
+    "128": "images/logo_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "*://*.vowel.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "cookies"
+  ],
+  "omnibox": {
+    "keyword": "vowel"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://calendar.google.com/calendar/*"
+      ],
+      "js": [
+        "calendar.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.vowel.com/*"
+      ],
+      "js": [
+        "vowelWebAppInject.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/images/logo.svg"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "/vowelWebApp.js"
+      ],
+      "matches": [
+        "*://*.vowel.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "minimum_chrome_version": "88"
+}

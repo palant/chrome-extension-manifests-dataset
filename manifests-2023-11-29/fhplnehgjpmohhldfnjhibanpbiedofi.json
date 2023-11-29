@@ -1,0 +1,91 @@
+---
+name: 'You.com | Search, chat, and create with AI'
+version: 0.0.0.6
+category_slug: productivity/workflow
+rating: 4.132075471698113
+rating_count: 53
+user_count: 200000
+release_date: '2023-10-26T09:40:21.000Z'
+size: 239KiB
+languages:
+  - English
+description: Experience the future of search with generative AI
+publisher_account: You.com
+extension_website: you.com
+support_website: 'https://about.you.com'
+privacy_policy: 'https://you.com/legal/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "You.com | Search, chat, and create with AI",
+  "manifest_version": 3,
+  "version": "0.0.0.6",
+  "description" : "Experience the future of search with generative AI",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/content.js"]
+    }
+  ], 
+  "declarative_net_request" : {
+    "rule_resources" : [
+        {
+        "id": "ruleset_1",
+        "enabled": false,
+        "path": "rules_1.json"
+        },
+        {
+          "id": "ruleset_2",
+          "enabled": true,
+          "path": "rules_2.json"
+        },
+        {
+          "id": "ruleset_3",
+          "enabled": false,
+          "path": "rules_3.json"
+        },
+        {
+          "id": "ruleset_4",
+          "enabled": false,
+          "path": "rules_4.json"
+        }
+      ]
+    },
+  "permissions": [
+    "declarativeNetRequestWithHostAccess", "storage"
+  ], 
+  "host_permissions": [
+  "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "icons": {
+      "16": "icons/favicon-16x16.png",
+      "48": "icons/favicon-48x48.png",
+      "128": "icons/favicon-128x128.png"
+    },
+
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "you.com",
+      "keyword": "you.com",
+      "search_url": "https://you.com/default/search?q={searchTerms}",
+      "suggest_url": "https://you.com/api/ac?q={searchTerms}",
+      "favicon_url": "https://you.com/favicon/favicon.ico",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  },
+
+  "externally_connectable": {
+      "matches": ["*://localhost/*", "*://you.com/*", "*://*.you.com/*"]
+  }
+}

@@ -1,0 +1,137 @@
+---
+name: Undock
+version: 3.0.6.9
+category_slug: productivity/workflow
+rating: 4.785714285714286
+rating_count: 14
+user_count: 1000
+release_date: '2023-08-30T04:41:16.000Z'
+size: 1.45MiB
+languages:
+  - English
+description: Instantly schedule meetings without ever having to look at a calendar
+publisher_account: Undock Chrome Development
+extension_website: undock.com
+support_website: 'https://undock.com/privacypolicy'
+privacy_policy: 'https://www.undock.com/privacypolicy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Undock",
+  "short_name": "Undock",
+  "version": "3.0.6.9",
+  "description": "Instantly schedule meetings without ever having to look at a calendar",
+  "homepage_url": "https://undock.com",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAibH8tZxg3LOXaR6VzbfMuxj3nz2tKvnRSahx8T8vlWK+VAhxngL1LcJqi3fRX6vSjudIBbYMR4gNEidRVZe9i0xDUODaxFHLvVY9iHcipI7WBqC/3Y+2/mC0LDv9pR6fAuWAOyi6/wfHM1y9T/Ue93RPf5U/dqr9OdZvOoYzbA0I78aX2x+nCSCCBSkm9s5yjsG1DWM/4CDV31D3eBpoZDtzyFL1MhHJCOvSu17BDInDp1CbfQzKowvZDdaJHLe+kCX8DtqrCJI8F75YKJsyub14exuNlxGHXphR6kBKx1ic5ryd9nu8NsLVFpl4bwb7ox0U4PpCbBgbY+r5z75bDwIDAQAB",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "alarms"
+  ],
+  "optional_permissions": [
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "https://*.undock.com/",
+    "https://undock-development.appspot.com/",
+    "https://undock-staging.appspot.com/",
+    "https://undock-193015.appspot.com/",
+    "https://us-east4-undock-development.cloudfunctions.net/",
+    "https://us-east4-undock-staging.cloudfunctions.net/",
+    "https://us-east4-undock-193015.cloudfunctions.net/",
+    "https://time-dot-undock-development.appspot.com/",
+    "https://time-dot-undock-staging.appspot.com/",
+    "https://time-dot-undock-193015.appspot.com/"
+  ],
+  "action": {
+    "default_title": "Undock",
+    "default_icon": {
+      "16": "assets/img/undock-gold-icon-16.png",
+      "32": "assets/img/undock-gray-icon-32-round.png",
+      "48": "assets/img/undock-gold-icon-48.png",
+      "128": "assets/img/undock-gold-icon-128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/img/undock-gold-icon-16.png",
+    "32": "assets/img/undock-gold-icon-32.png",
+    "48": "assets/img/undock-gold-icon-48.png",
+    "128": "assets/img/undock-gold-icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://*.zoom.us/*",
+        "*://*.superhuman.com/*"
+      ],
+      "all_frames": false,
+      "match_about_blank": true,
+      "run_at": "document_end",
+      "js": [
+        "assets/scripts/custom-elements.min.js",
+        "main.js",
+        "content-loader.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.superhuman.com/*"
+      ],
+      "all_frames": false,
+      "match_about_blank": true,
+      "run_at": "document_start",
+      "js": [
+        "assets/scripts/custom-elements.min.js",
+        "main.js",
+        "content-loader.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/img/*.svg",
+        "assets/img/*.png",
+        "main.js.map"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "assets/scripts/gmailjs.js",
+        "assets/scripts/gmail.js"
+      ],
+      "matches": [
+        "*://mail.google.com/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://mail.google.com/*",
+      "*://outlook.live.com/*",
+      "*://outlook.office365.com/*",
+      "*://outlook.office.com/*",
+      "*://*.undock.com/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

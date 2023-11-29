@@ -1,0 +1,81 @@
+---
+name: CaptainFact
+version: 2.0.0
+category_slug: lifestyle/news
+rating: 4.888888888888889
+rating_count: 9
+user_count: 4000
+release_date: '2023-04-19T11:39:20.000Z'
+size: 1.34MiB
+languages:
+  - English
+  - Français
+description: 'Collaborative, real-time fact checking. Free and open source.'
+publisher_account: CaptainFact
+publisher_address: |-
+  Les Halles Civiques
+  27 Rue Piat
+  Paris 75020
+  France
+extension_website: captainfact.io
+support_website: 'https://captainfact.io/help/extension'
+privacy_policy: 'https://captainfact.io/help/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "2.0.0",
+  "name": "CaptainFact",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvj2HRDAsx3qXl66tfidXZRcQbw7RHG1YwNSgrbFDyvmKL0jP5dpxqD7Y6WpRgUeMYT93sg7hgIt6JHpY3ZOv/HRZII9SYxy6DT4iTkQknQ+5JaJZvnKosvAnU/gRZkwTBDSOnGvc9THirpKtLlEKLsvG8apJWtBzBuCEAuTDpwrapDVu+JM6VPCh+MCWHYfjDd8agbhK6SOPnC81NcqQXOWG3n0/AHTY4g/9PbNwm96f+ymUuFbBYsN4eIzq/wZktf417SnzxMqSIlfdeyTST1xZ74bSCLOi4+XgYI+UaDAQZUNFiZINXojnJrkPo2g3maHqJb+0ZQdggQyS3C9lswIDAQAB",
+  "description": "Collaborative, real-time fact checking. Free and open source.",
+  "default_locale": "en",
+  "author": "contact@captainfact.io",
+  "browser_specific_settings": {
+    "gecko": { "id": "extension@captainfact.io" }
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png",
+      "128": "img/icon-128.png"
+    },
+    "default_title": "CaptainFact",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*", "https://m.youtube.com/*"],
+      "js": ["/js/inject.bundle.js"]
+    },
+    {
+      "matches": ["https://captainfact.io/*"],
+      "js": ["/js/installation_notifier.bundle.js"]
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://m.youtube.com/*",
+    "*://www.youtube.com/*",
+    "*://*.captainfact.io/*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; style-src * 'unsafe-inline'; img-src 'self' https://img.youtube.com data:; connect-src 'self' https://captainfact.io https://graphql.captainfact.io;"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "resources": ["img/*"]
+    },
+    {
+      "matches": ["https://m.youtube.com/*"],
+      "resources": ["img/*"]
+    }
+  ]
+}

@@ -1,0 +1,68 @@
+---
+name: Web Vitals Tester
+version: 0.2.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 1000
+release_date: '2022-01-18T09:09:44.000Z'
+size: 1.07MiB
+languages:
+  - English
+description: Analyze Web Vitals score and diagnostic
+publisher: dunp scpl
+publisher_account: dunp
+publisher_address: |-
+  Largo Nino Franchellucci, 61 - 00155
+  Roma, RM 00156
+  IT
+extension_website: seochecker.it
+support_website: 'https://www.seochecker.it/report-bug'
+privacy_policy: 'https://www.dunp.it/policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Web Vitals Tester",
+  "version": "0.2.0",
+  "manifest_version": 2,
+  "description": "Analyze Web Vitals score and diagnostic",
+  "homepage_url": "https://www.seochecker.it/web-vitals-tester",
+  "icons": {
+    "128": "icons/vitals128w.png",
+    "256": "icons/vitals256w.png",
+    "512": "icons/vitals512w.png"
+  },
+  "browser_action": {
+    "default_icon": "icons/default256w.png",
+    "default_title": "Web Vitals",
+    "default_popup": "src/browser_action/popup.html"
+  },
+  "options_page": "src/options/options.html",
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "http://localhost/",
+    "http://*/*",
+    "https://*/*",
+    "https://www.googleapis.com/pagespeedonline/v5/runPagespeed?*"
+  ],
+  "web_accessible_resources": [
+    "src/browser_action/viewer.css",
+    "/node_modules/web-vitals/dist/web-vitals.es5.min.js"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "css": ["src/browser_action/viewer.css"],
+      "js": ["src/browser_action/lodash-debounce-custom.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["src/bg/background.js"],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' https://www.googleapis.com; object-src 'self'"
+}

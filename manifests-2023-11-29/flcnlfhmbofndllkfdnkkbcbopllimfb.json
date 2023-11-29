@@ -1,0 +1,113 @@
+---
+name: YouTube Summary and Views with ChatGPT
+version: 1.4.5
+category_slug: lifestyle/social
+rating: 4.823529411764706
+rating_count: 17
+user_count: 5000
+release_date: '2023-11-29T07:37:35.000Z'
+size: 1.13MiB
+languages:
+  - English (United States)
+description: >-
+  Track YouTube title/thumbnail changes, view history, get AI summaries & full
+  transcripts.
+publisher: Antifragile Research
+publisher_account: Antifragile Research Group
+publisher_address: |-
+  85 Fulton St. Unit 8
+  Boonton, NJ 07005
+  US
+extension_website: creatorml.com
+support_website: 'https://creatorml.com/faq'
+privacy_policy: 'https://app.creatorml.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "YouTube Summary and Views with ChatGPT",
+  "description": "Track YouTube title/thumbnail changes, view history, get AI summaries & full transcripts.",
+  "version": "1.4.5",
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/favicon-32x32.png"
+  },
+
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src https://* data: blob: filesystem:; style-src 'unsafe-inline'; img-src https://* "
+  },
+
+  "background": {
+    "service_worker": "service_workers/api_worker.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.creatorml.com/*"
+    ],
+    "ids": [
+      "*"
+    ]
+  },
+   "icons": {
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "48": "images/favicon-48x48.png",
+    "128": "images/favicon-128x128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "images/loader.svg",
+        "images/logo.svg",
+        "images/copy.svg",
+        "images/retry.svg",
+        "images/list-right.svg",
+        "images/trending-up.svg",
+        "images/not-available.svg",
+        "images/settings.svg"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://*.creatorml.com/*"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/api_helpers.js",
+        "scripts/transcript_summary.js",
+        "scripts/statistics.js",
+        "scripts/vph_service.js",
+        "scripts/jquery-3.6.1.min.js",
+        "scripts/plotly-2.16.1.min.js",
+        "scripts/global_extension_settings.js",
+        "scripts/extension_html_provider.js",
+        "scripts/user_extension_settings.js",
+        "scripts/dark_mode.js",
+        "scripts/user_service.js",
+        "scripts/yt_video_player.js",
+        "scripts/api_worker_client.js",
+        "scripts/creatorml_client_exception.js",
+        "scripts/background.js"
+      ],
+      "css": [
+        "stylesheets/background.css"
+      ],
+      "matches": [
+        "http://*.youtube.com/*",
+        "https://*.youtube.com/*"
+      ]
+    }
+  ]
+}

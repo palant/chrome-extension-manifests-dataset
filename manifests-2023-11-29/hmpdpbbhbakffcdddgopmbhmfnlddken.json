@@ -1,0 +1,97 @@
+---
+name: Publicate Chrome extension
+version: 2.4.4
+category_slug: lifestyle/social
+rating: 4.571428571428571
+rating_count: 7
+user_count: 5000
+release_date: '2022-07-06T06:09:59.000Z'
+size: 3.18MiB
+languages:
+  - English
+description: >-
+  Publicate - Create Beautiful Email Newsletters and Web Roundups in minutes,
+  from content you find online.
+publisher: Startup Seeds Limited
+publisher_account: Caedmon Mullin
+publisher_address: |-
+  5 Clayton Court
+  Mold CH7 1TW
+  GB
+extension_website: publicate.it
+support_website: >-
+  https://help.publicate.it/en/articles/3512390-how-to-install-and-use-the-chrome-extension
+privacy_policy: 'https://publicate.it/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Publicate Chrome extension",
+    "version": "2.4.4",
+    "manifest_version": 2,
+    "description": "Publicate - Create Beautiful Email Newsletters and Web Roundups in minutes, from content you find online.",
+    "homepage_url": "https://publicate.it",
+    "icons": {
+        "16": "icons/publicate_16.png",
+        "48": "icons/publicate_48.png",
+        "128": "icons/publicate_128.png"
+    },
+    "browser_action": {
+        "default_icon": "icons/publicate_48.png",
+        "default_title": "Publicate"
+    },
+    "background": {
+        "scripts": [
+            "src/jquery-3.4.1.min.js",
+            "dist/background.js"
+        ],
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://mail.google.com/*"
+            ],
+            "js": [
+                "src/extensionInjector_gmail.js"
+            ],
+            "css": [
+                "css/gmail.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://outlook.live.com/*",
+                "*://outlook.office.com/*",
+                "*://outlook.office365.com/mail",
+                "*://outlook.office365.com/mail/*"
+            ],
+            "css": [
+                "css/gmail.css"
+            ],
+            "js": [
+                "src/outlook.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "src/jquery-3.4.1.min.js",
+                "src/extensionInjector_save.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        "dist/extension_gmail.js"
+    ],
+    "permissions": [
+        "https://*/*",
+        "storage"
+    ]
+}

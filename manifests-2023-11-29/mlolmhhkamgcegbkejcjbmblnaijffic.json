@@ -1,0 +1,96 @@
+---
+name: GetTilo
+version: 1.0.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 50
+release_date: '2021-12-26T03:43:57.000Z'
+size: 3.59MiB
+languages:
+  - English
+  - español
+  - português (Brasil)
+description: The smart and personalisable wellness app for everyone in your company.
+publisher_account: GetTilo
+extension_website: gettilo.com
+support_website: 'https://gettilo.com/support'
+privacy_policy: 'https://gettilo.com/data-privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 2,
+ "name": "__MSG_appName__",
+ "description": "__MSG_appDesc__",
+ "default_locale": "en",
+ "version": "1.0.6",
+
+ "browser_action": {
+  "default_title": "GetTilo",
+  "default_icon": "./images/GetTilo-icon.png"
+ },
+
+ "icons": {
+  "128": "./images/GetTilo-icon.png",
+  "48": "./images/GetTilo-icon.png",
+    "24": "./images/GetTilo-icon.png",
+  "16": "./images/GetTilo-icon.png"
+  },
+
+ "background": {
+  "scripts": ["./js/config.js", "./js/jquery.min.js", "./js/core.js", "./js/oauth.js", "./js/background.js"],
+  "persistent": false
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://calendar.google.com/*"],
+   "js": [
+    "./js/jquery.min.js",
+    "./js/font-awesome.js",
+    "./html/libraries/bootstrap.bundle.min.js",
+    "./html/libraries/chart.min.js",
+    "./html/libraries/chartjs-plugin-datalabels.js",
+    "./js/config.js",
+    "./js/core.js",
+    "./js/google-sign-in.js",
+    "./js/oauth.js",
+    "./js/simpleNotify.js",
+    "./js/content.js"
+   ],
+   "css": ["./css/simpleNotifyStyle.css", "./css/content.css", "./css/google-sign-in.css",
+              "./css/sideBarMain.css", "./html/libraries/toggle-switch.css",
+              "./html/_login.css", "./html/_upgrade.css", "./css/calendar-inject.css"],
+   "exclude_matches":["https://www.quora.com/*/log*", "https://www.quora.com/"],
+   "run_at": "document_end"
+
+  },
+  {
+   "matches": ["https://accounts.google.com/o/oauth2/approval/v2?auto=false&response=state%3Dextension_token*"],
+   "js": ["./js/core.js", "./js/oauth.js", "./js/oauthContent.js"],
+   "run_at": "document_end"
+  },
+    {
+      "matches": ["<all_urls>"],
+   "js": ["./js/core.js", "./js/config.js", "./js/jquery.min.js"],
+      "all_frames": true,
+   "run_at": "document_start"
+    }
+],
+
+ "client_id": "113135632102-71pcqd622j6ec6dm52j45otr2410nfii.apps.googleusercontent.com",
+ "web_accessible_resources": [
+  "images/*.gif", "images/*.png", "images/*.svg", "images/*.jpg",
+    "html/sideBarLogin.html", "html/sideBarMinimize.html", "html/sideBarContinueOnboard.html",
+    "html/onboarding.html", "html/onboardingSpain.html", "html/onboardingPorto.html",
+    "html/sideBarMain.html", "html/sideBarMainSpain.html", "html/sideBarMainPorto.html",
+    "html/adjustProfile.html", "html/adjustProfileSpain.html", "html/adjustProfilePorto.html"
+ ],
+ "permissions": [
+  "storage",
+    "https://*.googleapis.com/*"
+ ],
+
+  "content_security_policy": "script-src 'self' https://cdn.jsdelivr.net https://code.jquery.com https://cdn.paddle.com 'sha256-TXIP3bl5ks0mTE2keSISKl0ay+QOCIbPoA+IA8wBWqw=' ; object-src 'self'"
+}

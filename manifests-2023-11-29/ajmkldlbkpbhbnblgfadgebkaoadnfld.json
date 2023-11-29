@@ -1,0 +1,90 @@
+---
+name: Table as CSV - Table Capture
+version: 1.0.4
+category_slug: productivity/workflow
+rating: 1
+rating_count: 2
+user_count: 283
+release_date: '2023-09-12T04:09:41.000Z'
+size: 1.1MiB
+languages:
+  - English (United States)
+description: >-
+  Allows to copy, select, export HTML tables to Microsoft Excel, CSV, Google
+  Sheets, etc
+publisher_account: Solutions For People
+privacy_policy: 'https://twittertomp4.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.0.4",
+  "description": "Allows to copy, select, export HTML tables to Microsoft Excel, CSV, Google Sheets, etc",
+  "author": "vlaex <t.me/vlaex>",
+  "name": "Table as CSV - Table Capture",
+  "background": {
+    "service_worker": "background/worker.js"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "lib/html2canvas.min.js",
+      "lib/jspdf-2.5.1.min.js",
+      "lib/jspdf-3.5.31.plugin.autotable.min.js",
+      "lib/regenerator-runtime.min.js",
+      "lib/exceljs.min.js",
+      "lib/html-docx.min.js",
+      "lib/filesaver.js",
+      "shared/keepBackgroundAlive.js",
+      "content-scripts/proxy.js"
+    ]
+  }, {
+    "matches": ["<all_urls>"],
+    "js": [
+      "shared/config.js",
+      "shared/storage.js",
+      "content-scripts/localStorageWrapper.js",
+      "content-scripts/GSheetsAPI.js",
+
+      "content-scripts/download.js",
+      "content-scripts/TableUtil.js",
+
+      "content-scripts/getUserConfig.js",
+      "content-scripts/utils.js",
+      "content-scripts/TableWrapper.js",
+      "content-scripts/TableWithExtraDataWrapper.js",
+      "content-scripts/TableFinder.js",
+
+      "content-scripts/SyncModal.js",
+      "content-scripts/WorkPanel.js",
+      "content-scripts/index.js",
+      "content-scripts/selectTables.js"
+    ],
+    "css": ["content-scripts/styles/index.css"]
+  }],
+  "icons": {
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "icons/128.png"
+    },
+    "default_popup": "popup/index.html",
+    "default_title": "Table as CSV - Table Capture"
+  },
+  "permissions": [
+    "clipboardWrite",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "scripting",
+    "identity"
+  ],
+  "manifest_version": 3,
+  "minimum_chrome_version": "109",
+  "web_accessible_resources": [{
+    "resources": ["icons/128.png", "fonts/*", "images/*"],
+    "matches": ["<all_urls>"]
+  }]
+}

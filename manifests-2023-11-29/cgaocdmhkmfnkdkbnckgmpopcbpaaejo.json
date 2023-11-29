@@ -1,0 +1,66 @@
+---
+name: Library Detector
+version: 6.2.0
+category_slug: productivity/developer
+rating: 4.021739130434782
+rating_count: 46
+user_count: 10000
+release_date: '2020-08-02T18:13:48.000Z'
+size: 232KiB
+languages:
+  - English
+description: >-
+  Detects the Javascript libraries running on a page and displays their icons in
+  the address bar.
+publisher_account: library-detector-for-chrome
+support_website: 'https://github.com/johnmichel/Library-Detector-for-Chrome/issues'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Library Detector",
+    "short_name": "Library Detector",
+    "version": "6.2.0",
+    "web_accessible_resources": [
+        "library/libraries.js",
+        "content_scripts/lib_detect.js"
+    ],
+    "description": "Detects the Javascript libraries running on a page and displays their icons in the address bar.",
+    "icons": {
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "background": {
+        "scripts": [
+            "library/libraries.js",
+            "background_scripts/main.js"
+        ],
+        "persistent": false
+    },
+    "page_action": {
+        "default_icon": {
+            "19": "icons/icon19.png",
+            "38": "icons/icon38.png"
+        },
+        "default_title": "Library Detector"
+    },
+    "permissions": [
+        "tabs",
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["content_scripts/inject.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["content_scripts/detect.js"],
+            "run_at": "document_idle"
+        }
+    ]
+}

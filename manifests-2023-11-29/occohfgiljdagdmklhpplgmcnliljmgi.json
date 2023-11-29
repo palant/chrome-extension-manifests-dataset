@@ -1,0 +1,116 @@
+---
+name: dewey.
+version: 4.0.2
+category_slug: productivity/workflow
+rating: 3.7115384615384617
+rating_count: 52
+user_count: 6000
+release_date: '2023-09-22T08:33:46.000Z'
+size: 3.22MiB
+languages:
+  - English (United States)
+description: Save your favorite X (Twitter) and Bluesky bookmarks in one place
+publisher_account: dewey.
+publisher_address: |-
+  Emek HaYarden St 6
+  Kiryat Ono, Israel 5502706
+  Israel
+extension_website: getdewey.co
+support_website: 'https://getdewey.co/how-to-use/'
+privacy_policy: 'https://getdewey.co/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "dewey.",
+  "description": "Save your favorite X (Twitter) and Bluesky bookmarks in one place",
+  "version": "4.0.2",
+  "manifest_version": 3,
+  "icons": {
+    "128": "images/symbol.png"
+  },
+  "background": {
+    "service_worker": "scripts/grabber/sw.js"
+  },
+  "action": {
+    "default_popup": "templates/login.html",
+    "default_icon": {
+      "128": "images/symbol.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "plugins/jquery/jquery-3.5.1.min.js",
+        "scripts/site/global.js",
+        "scripts/grabber/content_handler.js",
+        "scripts/floating_tweets/content_handler.js"
+      ],
+      "css": [
+        "style/injected.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://x.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "plugins/jquery/jquery-3.5.1.min.js",
+        "scripts/site/global.js",
+        "scripts/grabber/content_handler.js",
+        "scripts/floating_tweets/content_handler.js"
+      ],
+      "css": [
+        "style/injected.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://bsky.app/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "plugins/jquery/jquery-3.5.1.min.js",
+        "scripts/site/global.js",
+        "scripts/grabber/bsky/content_handler.js"
+      ],
+      "css": [
+        "style/injected.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "templates/notes_popup.html",
+        "templates/popup.html",
+        "templates/floating.html",
+        "scripts/grabber/grab_likes_count.js",
+        "scripts/grabber/grab_tweet_context.js",
+        "scripts/grabber/grab_global_context.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "scripting",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "http://127.0.0.1:9000/*",
+    "https://getdewey.co/*",
+    "https://api.twitter.com/*",
+    "https://twitter.com/*",
+    "https://bsky.social/*",
+    "https://bsky.app/*",
+    "https://api.x.com/*",
+    "https://x.com/*"
+  ]
+}

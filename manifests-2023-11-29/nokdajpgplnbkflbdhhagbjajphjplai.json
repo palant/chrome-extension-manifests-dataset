@@ -1,0 +1,68 @@
+---
+name: Twitch Ad Blocker
+version: '1.0'
+category_slug: productivity/workflow
+rating: 3.275
+rating_count: 40
+user_count: 8000
+release_date: '2023-04-17T13:03:13.000Z'
+size: 120KiB
+languages:
+  - English
+description: Block Twitch Ads and Enjoy Ad-Free Streaming
+publisher_account: zoneoneextension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Twitch Ad Blocker",
+  "description": "Block Twitch Ads and Enjoy Ad-Free Streaming",
+  "version": "1.0",
+  "icons": {
+    "16": "icons/Icon_16.png",
+    "32": "icons/Icon_32.png",
+    "64": "icons/Icon_64.png",
+    "128": "icons/Icon_128.png",
+    "2000": "icons/Icon_2000.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/Icon_16.png",
+      "32": "icons/Icon_32.png",
+      "64": "icons/Icon_64.png",
+      "128": "icons/Icon_128.png",
+      "2000": "icons/Icon_2000.png"
+    },
+    "default_title": "Twitch Adblock",
+    "default_popup": "popup/index.html"
+  },
+  "permissions": ["declarativeNetRequest", "storage", "notifications"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "block_rules.json"
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": ["content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["https://*.twitch.tv/*"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"]
+}

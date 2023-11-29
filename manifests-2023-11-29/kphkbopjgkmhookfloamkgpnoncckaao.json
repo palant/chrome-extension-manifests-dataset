@@ -1,0 +1,87 @@
+---
+name: LoadConnect
+version: 2.2.3
+category_slug: productivity/workflow
+rating: 4.804347826086956
+rating_count: 46
+user_count: 4000
+release_date: '2023-11-21T16:56:43.000Z'
+size: 1.74MiB
+languages:
+  - English
+description: >-
+  Plugin that simplifies communication between carriers and brokers by allowing
+  carriers to send emails with one click from loadboard
+publisher_account: LoadConnect
+extension_website: loadconnect.io
+support_website: 'https://loadconnect.io/PrivacyPolicy'
+privacy_policy: 'https://loadconnect.io/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "LoadConnect",
+    "short_name": "LoadConnect send emails with one click from the power dat",
+    "version": "2.2.3",
+    "author": "samakovuluk",
+    "description": "Plugin that simplifies communication between carriers and brokers by allowing carriers to send emails with one click from loadboard",
+    "icons" : { 
+        "128": "images/icon128.png" 
+      },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://datconnect.carrierify.com/**", "https://dev.datconnect.carrierify.com/**", "https://loadconnect.io/**", "https://app.loadconnect.io/**"],
+        "js":["datconnect.js"],
+        "run_at": "document_end"
+      },
+
+      {
+        "matches": ["https://one.dat.com/**"],
+        "js":["scripts/jquery.min.js","onecontent.js"],
+        "css": ["css/content.css"],
+        "run_at": "document_end"
+      },
+
+      {
+        "matches": ["https://truckersedge.dat.com/search-loads", "https://truckersedge.dat.com/search-trucks", "https://truckersedge.dat.com/private-loads"],
+        "js":["scripts/jquery.min.js","truckcontent.js"],
+        "css": ["css/content.css"],
+        "run_at": "document_end"
+      },
+        
+      {
+          "matches": ["https://power.dat.com/search/loads", "https://power.dat.com/postings/trucks"],
+          "js": [ "scripts/jquery.min.js",
+            "content.js", "filter.js", "map.js", "rpm.js", "loadconnect.js"],
+            "css": ["css/content.css"],
+          "run_at": "document_end"
+      },
+      {
+        "matches": ["https://main.truckstop.com/**"],
+        "js": [ "scripts/jquery.min.js",
+         "truckstop.js"],
+        "css": ["css/content.css"],
+        "run_at": "document_end"
+      }
+        
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "host_permissions":[
+        "https://power.dat.com/**", "https://one.dat.com/**", "https://main.truckstop.com/**"
+      ],
+      "web_accessible_resources": [{
+        "resources": ["scripts/*.js", "img/*.png", "popup.js"],
+        "matches": ["https://power.dat.com/*"]
+      }],
+      
+    "permissions": ["storage"]
+   
+}
+

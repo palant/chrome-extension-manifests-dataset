@@ -1,0 +1,92 @@
+---
+name: PLANERGY CheckOut
+version: '1.4'
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 227
+release_date: '2023-10-30T08:41:48.000Z'
+size: 6.67MiB
+languages:
+  - English
+description: The extension submits products from shopping cart to PLANERGY
+publisher: 'PLANERGY, Inc.'
+publisher_account: planergydeveloper
+publisher_address: |-
+  550 Cochituate Rd., Suite 25
+  Framingham, MA 01701
+  US
+extension_website: planergy.com
+support_website: 'https://help.planergy.com/knowledge-base/how-do-i-setup-planergy-checkout/'
+privacy_policy: 'https://planergy.com/privacy-statement'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PLANERGY CheckOut",
+  "version": "1.4",
+  "description": "The extension submits products from shopping cart to PLANERGY",
+  "author": "PLANERGY",
+  "background": {
+    "service_worker": "bg-wrapper.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "./assets/img/planergy16.png",
+      "24": "./assets/img/planergy24.png",
+      "36": "./assets/img/planergy36.png"
+    },
+    "default_title": "PLANERGY CheckOut",
+    "default_popup": "./popup.html"
+  },
+  "icons": {
+    "16": "./assets/img/planergy16.png",
+    "24": "./assets/img/planergy24.png",
+    "36": "./assets/img/planergy36.png",
+    "48": "./assets/img/planergy48.png",
+    "128": "./assets/img/planergy128.png"
+  },
+  "permissions": [ "cookies", "storage", "scripting" ],
+  "host_permissions": [
+    "*://*.purchasecontrol.com/*",
+    "*://*.purchasecontrol/*",
+    "*://*.planergy.com/*",
+    "*://*.planergy/*",
+    "*://*.goplanergy.com/*",
+    "*://*.goplanergy/*",
+    "*://*.cart.planergy.com/*"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://klunk.purchasecontrol.com/api'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./assets/js/jquery-3.3.1.min.js",
+        "./content_script/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/config/config.js",
+        "/CMS/configCMS.js",
+        "/CMS/setCMS/*",
+        "/customSite/*",
+        "customMadeDivCart.js",
+        "/assets/js/jquery-3.3.1.min.js",
+        "/assets/img/*"
+      ],
+      "matches": [ "<all_urls>" ]
+    }
+  ]
+}

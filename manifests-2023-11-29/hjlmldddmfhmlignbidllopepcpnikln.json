@@ -1,0 +1,159 @@
+---
+name: SellerTools Amazon Product & Keyword Research
+version: 23.5.16
+category_slug: productivity/workflow
+rating: 5
+rating_count: 13
+user_count: 10000
+release_date: '2023-05-16T12:28:04.000Z'
+size: 3.48MiB
+languages:
+  - English (United States)
+description: >-
+  SellerTools: Amazon Product Research, Suggestions Expander, Search Keyword
+  Volume, Automated Reviews, Sales, Listing Optimization
+publisher_account: Seller.Tools
+privacy_policy: 'https://seller.tools/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "SellerTools Amazon Product & Keyword Research",
+  "short_name": "ST Chrome Extension",
+  "version": "23.5.16",
+  "description": "SellerTools: Amazon Product Research, Suggestions Expander, Search Keyword Volume, Automated Reviews, Sales, Listing Optimization",
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "https://fonts.googleapis.com/"
+  ],
+  "browser_action": {
+    "default_icon": "icons/logo128.png",
+    "default_popup": "popup/index.html?#/popup",
+    "default_title": "SellerTools: Amazon Product Research, Suggestions Expander, Search Keyword Volume, Automated Reviews, Sales, Listing Optimization"
+  },
+  "homepage_url": "https://seller.tools/",
+  "icons": {
+    "48": "icons/logo48.png",
+    "128": "icons/logo128.png"
+  },
+  "background": {
+    "scripts": [
+      "backgroundPage.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "injectors/instructions-injector.js",
+        "injectors/ticker-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://www.amazon.*/*",
+        "https://sellercentral.amazon.*",
+        "https://sellercentral-europe.amazon.*"
+      ]
+    },
+    {
+      "js": [
+        "injectors/search-results-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://www.amazon.*/s?*"
+      ]
+    },
+    {
+      "js": [
+        "injectors/product-page-buttons-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://www.amazon.*/*dp/*",
+        "https://www.amazon.*/*gp/*"
+      ]
+    },
+    {
+      "js": [
+        "injectors/request-review-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://sellercentral.amazon.*/orders*",
+        "https://sellercentral-europe.amazon.*/orders*"
+      ]
+    },
+    {
+      "js": [
+        "injectors/oep-niche-injector.js",
+        "injectors/oep-product-injector.js",
+        "injectors/oep-keyword-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://sellercentral.amazon.*/opportunity-explorer/*",
+        "https://sellercentral-europe.amazon.*/opportunity-explorer/*"
+      ]
+    },
+    {
+      "js": [
+        "injectors/search-suggestion-expander-injector.js",
+        "injectors/keyword-suggestion-harvester-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://www.amazon.*/*"
+      ]
+    },
+    {
+      "js": [
+        "injectors/sellercentral-product-page-buttons-injector.js",
+        "elements/elements.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*"
+      ],
+      "include_globs": [
+        "https://sellercentral.amazon.*/abis/listing/edit*",
+        "https://sellercentral-europe.amazon.*/abis/listing/edit*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "frames/*",
+    "elements/*",
+    "icons/*"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

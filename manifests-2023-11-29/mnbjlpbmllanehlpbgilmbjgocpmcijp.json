@@ -1,0 +1,109 @@
+---
+name: ZoomInfo Engage Chrome Extension
+version: 1.10.9
+category_slug: productivity/workflow
+rating: 3
+rating_count: 9
+user_count: 20000
+release_date: '2023-08-15T04:43:06.000Z'
+size: 2.06MiB
+languages:
+  - English
+description: Call and email contacts from ZoomInfo or Salesforce with one click.
+publisher: ZoomInfo
+publisher_account: zoominfo
+publisher_address: |-
+  275 Wyman St
+  Waltham, MA 02451-1200
+  US
+privacy_policy: 'https://www.zoominfo.com/business/about-zoominfo/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ZoomInfo Engage Chrome Extension",
+  "version": "1.10.9",
+  "description": "Call and email contacts from ZoomInfo or Salesforce with one click.",
+  "icons": {
+    "16": "assets/images/16x16.png",
+    "48": "assets/images/48x48.png",
+    "128": "assets/images/128x128.png"
+  },
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "action": {
+    "default_icon": "assets/images/16x16.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.salesforce.com/*",
+    "https://*.dynamics.com/*",
+    "https://*.force.com/*",
+    "https://app.zoominfo.com/*",
+    "https://dozi-staging.zoominfo.com/*",
+    "https://app-preprod.zoominfo.com/*",
+    "https://recruiter-app-staging.zoominfo.com/*",
+    "https://recruiter-app.zoominfo.com/*",
+    "https://mail.google.com/",
+    "https://inbox.google.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.salesforce.com/*",
+        "https://*.dynamics.com/*",
+        "https://*.force.com/*",
+        "https://app.zoominfo.com/*",
+        "https://dozi-staging.zoominfo.com/*",
+        "https://app-preprod.zoominfo.com/*",
+        "https://recruiter-app-staging.zoominfo.com/*",
+        "https://recruiter-app.zoominfo.com/*"
+      ],
+      "js": [
+        "main.js",
+        "polyfills.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": [
+        "inboxsdk.js",
+        "main.js",
+        "polyfills.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "https://*.salesforce.com/*",
+        "https://*.dynamics.com/*",
+        "https://*.force.com/*",
+        "https://app.zoominfo.com/*",
+        "https://dozi-staging.zoominfo.com/*",
+        "https://app-preprod.zoominfo.com/*",
+        "https://recruiter-app-staging.zoominfo.com/*",
+        "https://recruiter-app.zoominfo.com/*",
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

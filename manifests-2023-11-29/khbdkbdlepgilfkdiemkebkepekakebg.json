@@ -1,0 +1,75 @@
+---
+name: 'PageProof. Online proofing, review & approval'
+version: 1.6.5
+category_slug: productivity/workflow
+rating: 4.842105263157895
+rating_count: 19
+user_count: 10000
+release_date: '2023-10-18T10:03:45.000Z'
+size: 197KiB
+languages:
+  - English
+description: >-
+  The perfect extension to PageProof. Let’s make reviewing and approving
+  creative work effortless.
+publisher: PageProof
+publisher_address: |-
+  80 Hinemoa Street
+  Auckland 0626
+  NZ
+extension_website: pageproof.com
+support_website: 'https://help.pageproof.com'
+privacy_policy: 'https://pageproof.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "PageProof. Online proofing, review & approval",
+  "short_name": "PageProof",
+  "description": "The perfect extension to PageProof. Let’s make reviewing and approving creative work effortless.",
+  "version": "1.6.5",
+  "homepage_url": "https://app.pageproof.com",
+  "icons": {
+    "16": "assets/images/icon16-production.png",
+    "32": "assets/images/icon32-production.png",
+    "48": "assets/images/icon48-production.png",
+    "128": "assets/images/icon128-production.png"
+  },
+  "browser_action": {
+    "default_icon": "assets/images/icon32-production.png"
+  },
+  "web_accessible_resources": [
+    "worker.*.js"
+  ],
+  "content_scripts": [{
+    "matches": ["https://app.pageproof.com/*"],
+    "js": ["pageproof.bundle.js"]
+  }, {
+    "matches": ["*://www.canva.com/design/*/*/edit*"],
+    "js": ["patch-worker.js", "canva.bundle.js"]
+  }, {
+    "matches": ["https://app.pageproof.com/_private/embed-login/*"],
+    "js": ["pageproof-embed-login.bundle.js"],
+    "all_frames": true,
+    "run_at": "document_end"
+  }],
+  "background": {
+    "scripts": [
+      "event.bundle.js",
+      "web-url-proofing.bundle.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "tabs",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "cookies",
+    "http://*/",
+    "https://*/",
+    "<all_urls>"
+  ]
+}

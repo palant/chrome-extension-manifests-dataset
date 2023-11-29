@@ -1,0 +1,77 @@
+---
+name: Save to Readmoo
+version: 1.6.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 58
+release_date: '2019-11-02T09:36:57.000Z'
+size: 53.82KiB
+languages:
+  - 中文 (繁體)
+description: Save current page url to readmoo bookshelf.
+publisher_account: wildsky
+privacy_policy: 'https://readmoo.com/terms/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "save-to-readmoo@wildsky.cc",
+      "strict_min_version": "55.0"
+    }
+  },
+
+  "name": "Save to Readmoo",
+  "version": "1.6.0",
+  "description": "Save current page url to readmoo bookshelf.",
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+      "browser-polyfill.min.js",
+      "background.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://member.readmoo.com/*", "https://read.readmoo.com/*"],
+      "css": [
+        "notification.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://member.readmoo.com/*"],
+      "js": [
+        "browser-polyfill.min.js",
+        "login-hint.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://read.readmoo.com/*"],
+      "js": [
+        "browser-polyfill.min.js",
+        "save-token.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_title": "Save to Readmoo"
+  },
+  "icons": {
+    "48": "icon-48.png",
+    "96": "icon-96.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "https://api.readmoo.com/store/v3"
+  ]
+}

@@ -1,0 +1,90 @@
+---
+name: KBB Car Value for Craigslist
+version: 0.6.8
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 35
+release_date: '2023-06-16T18:14:46.000Z'
+size: 212KiB
+languages:
+  - English (United States)
+description: >-
+  Get used car's value from Kelly Blue Book automatically instead of copy &
+  paste to search on KBB.com
+publisher_account: History+
+support_website: 'https://sites.google.com/view/kbb-car-value-tools/contact-us'
+privacy_policy: 'https://sites.google.com/view/history-plus-extension/privacy-policy'
+---
+
+{
+   "name": "KBB Car Value for Craigslist",
+   "short_name": "KBB for Craigslist",
+   "description": "Get used car's value from Kelly Blue Book automatically instead of copy & paste to search on KBB.com",
+   "version": "0.6.8", 
+   "manifest_version": 3,
+   "author": "Tom Zenho",
+   "action": {
+       "default_icon": {
+         "128": "assets/icons/car$value_128.png",
+         "16": "assets/icons/car$value_16.png",
+         "32": "assets/icons/car$value_32.png",
+         "48": "assets/icons/car$value_48.png",
+         "64": "assets/icons/car$value_64.png"
+       },
+       "default_popup": "popup.html",
+       "default_title": "KBB for Craigslist"
+    },
+    "icons": {
+      "128": "assets/icons/car$value_128.png",
+      "16": "assets/icons/car$value_16.png",
+      "32": "assets/icons/car$value_32.png",
+      "48": "assets/icons/car$value_48.png",
+      "64": "assets/icons/car$value_64.png"
+    },
+    "permissions": [ "storage"],
+    "host_permissions": ["https://upa.syndication.kbb.com/*","*://*.kbb.com/*"],
+    "background": {
+        "service_worker": "assets/js/background.js"
+    },
+    "content_scripts": [ {
+      "all_frames": true,
+      "css": [ "assets/css/bootstrap-small.css","assets/css/content.css" ],
+      "js": [ "assets/js/external/jquery-3.6.4.min.js", "config.js", "assets/data/cars-worst-car-to-avoid.js","assets/data/cars-blocked-by-insurance.js", "assets/js/utils.js","assets/js/content_script.js"],
+      "matches": [ 
+        "*://*.craigslist.org/ct*/*.html", 
+        "*://*.craigslist.org/*/ct*/*.html", 
+        "*://*.craigslist.ca/ct*/*.html", 
+        "*://*.craigslist.com/ct*/*.html"
+      ],
+      "run_at": "document_end"
+    } ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "cross_origin_embedder_policy": {
+        "value": "require-corp"
+    },
+    "cross_origin_opener_policy": {
+        "value": "same-origin"
+    },
+    "incognito": "not_allowed",
+    "offline_enabled": false,
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "assets/icons/*",
+          "assets/css/*", 
+          "assets/data/*", 
+          "config.js",
+          "assets/js/*.js", 
+          "pages/*.html",
+          "https://upa.syndication.kbb.com/*"
+        ],
+        "matches": ["<all_urls>"],
+        "extension_ids": ["*"]
+      }
+    ],
+    "update_url": "https://clients2.google.com/service/update2/crx"
+ }
+ 

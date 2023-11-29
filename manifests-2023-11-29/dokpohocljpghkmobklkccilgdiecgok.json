@@ -1,0 +1,114 @@
+---
+name: Scandium Test Scenario Recorder
+version: 0.0.44 private beta
+category_slug: productivity/developer
+rating: 5
+rating_count: 11
+user_count: 158
+release_date: '2023-11-27T07:06:29.000Z'
+size: 283KiB
+languages:
+  - English
+description: Turn your site interactions into actionable steps that can be repeated
+publisher: Scandium Systems Inc
+publisher_account: Scandium Systems
+publisher_address: |-
+  48 Sunmola Street
+  Lagos, Lagos 105102
+  NG
+privacy_policy: 'https://getscandium.com/scandium-privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Scandium Test Scenario Recorder",
+    "description": "Turn your site interactions into actionable steps that can be repeated",
+    "version": "0.0.44",
+    "version_name": "0.0.44 private beta",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "incognito": "spanning",
+    "permissions": [
+        "storage",
+        "webNavigation", 
+        "scripting",
+        "notifications"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/content.js"],
+            "css": ["css/content.css"],
+            "all_frames": true,
+            "run_at": "document_start",
+            "match_about_blank": true
+        },
+        {
+            "matches": ["http://*.getscandium.com/*", "https://*.getscandium.com/*", "http://localhost/*", "https://*.pages.dev/*", "http://*.pages.dev/*"],
+            "run_at": "document_start",
+            "js": ["js/activate.js"]
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/playback.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true
+        }
+    ],
+    "background": {
+        "service_worker": "background.js", "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "js/hackDialogBoxes.js",
+                "icons/stop.png",
+                "icons/assertion.png",
+                "icons/mail.png",
+                "icons/sms.png",
+                "icons/move.png",
+                "icons/dropdown.png",
+                "frames/overlayFrame/frame.html",
+                "frames/overlayFrame/toolbar.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "http://*.getscandium.com/*",
+            "https://*.getscandium.com/*",
+            "http://localhost/*",
+            "http://127.0.0.1/*",
+            "https://*.draft-scandium-controller.pages.dev/*",
+            "http://*.draft-scandium-controller.pages.dev/*",
+            "https://draft-scandium-controller.pages.dev/app/*",
+            "http://draft-scandium-controller.pages.dev/*"
+        ]
+    }
+}

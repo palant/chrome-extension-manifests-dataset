@@ -1,0 +1,78 @@
+---
+name: DevConnect
+version: '0.2'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 66
+release_date: '2021-01-27T12:25:52.000Z'
+size: 74.15KiB
+languages:
+  - English (United States)
+description: DevConnect Web Extension to facilitate the authN of a user.
+publisher_account: CN DevConnect Team
+support_website: 'https://www.devgraph.com/'
+privacy_policy: 'https://devfactory.com/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "DevConnect",
+    "description": "DevConnect Web Extension to facilitate the authN of a user.",
+    "version": "0.2",
+    "author": "Viswak Hanumanth, Aman Chandra, Vicky Biswas",
+
+    "icons": {
+      "38": "icon.png",
+      "128": "icon128.png"
+    },
+    "browser_action": {
+          "default_title": "DevConnect",
+          "default_icon": {
+            "1":"icon.png"
+          },
+      "default_popup": "popup/index.html"
+    },
+    "background": {
+      "scripts": ["background/background.js"],
+      "persistent": false
+    },
+    "options_ui": {
+      "page": "options/options.html",
+      "open_in_tab": false
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://*.devconnect-df.com/*"
+        ],
+        "js": ["content/login_content.js"]
+      },
+      {
+        "matches": [
+          "https://*.devconnect-df.com/auth/realms/*/account/applications"
+        ],
+        "js": ["content/console_content.js"]
+      },
+      {
+        "matches": [
+          "<all_urls>"
+        ],
+        "js": ["content/sp.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      "content/modal.html",
+      "images/*",
+      "content/sp_icons/*"
+    ],
+    "permissions": [
+      "cookies",
+      "http://*/",
+      "https://*/",
+      "storage"
+    ]
+}

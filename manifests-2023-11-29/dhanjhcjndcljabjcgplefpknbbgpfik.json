@@ -1,0 +1,71 @@
+---
+name: 'Quack: Record bugs & capture developer logs'
+version: 0.6.5
+category_slug: productivity/developer
+rating: 5
+rating_count: 3
+user_count: 52
+release_date: '2023-06-02T04:33:12.000Z'
+size: 4.09MiB
+languages:
+  - English
+description: Tackle your bugs with full context.
+publisher: Quack AI CO
+publisher_account: QuackAdmin
+publisher_address: |-
+  251 Little Falls Dr
+  Wilmington, DE 19808
+  US
+privacy_policy: 'https://www.thequack.ai/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Quack: Record bugs & capture developer logs",
+  "description": "Tackle your bugs with full context.",
+  "version": "0.6.5",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Quack ",
+    "default_icon": "icon.png"
+  },
+ "permissions": [
+  "storage",
+  "background",
+  "tabs",
+    "identity",
+    "alarms",
+    "identity.email"
+ ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "ids": ["dhanjhcjndcljabjcgplefpknbbgpfik","ddhgifilbplebgnkogbippbbfieagldj"],
+    "matches": ["http://localhost:3001/*","https://app.thequack.io/*","https://www.app.thequack.io/*"],
+    "accepts_tls_channel_id": false
+  },
+  "web_accessible_resources": [{
+    "resources": ["injected_script.js","report.html","record.html","injected_autopilot.js"],
+    "matches": ["<all_urls>"]
+  }],
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches":["http://localhost:3001/*","https://app.thequack.io/*","https://www.app.thequack.io/*"],
+      "js":["recordContentScript.js"]
+    }
+  ]
+}

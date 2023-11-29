@@ -1,0 +1,64 @@
+---
+name: Spotify adblocker
+version: 1.0.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 57
+release_date: '2023-09-28T11:07:33.000Z'
+size: 123KiB
+languages:
+  - English (United States)
+description: Listen to your favorite music without any ads with spotify adblocker
+publisher_account: Prime Extensions
+support_website: 'https://www.spotifyadblocker.co/support'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Spotify adblocker",
+  "description": "Listen to your favorite music without any ads with spotify adblocker",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "spotify16x16.png",
+    "48": "spotify48x48.png",
+    "128": "spotify128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "spotify adblocker",
+    "default_icon": "spotify16x16.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": ["declarativeNetRequest"],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["contentScript.js"]
+    },{
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["contentScriptSpotify.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+  "resources": ["contentScriptSpotify.js","adsSweetalertSpotify.js", "adsAdsRemoveSpotify.js","adswsHooksSpotify.js"],
+  "matches": ["https://open.spotify.com/*"]
+}
+
+]
+}

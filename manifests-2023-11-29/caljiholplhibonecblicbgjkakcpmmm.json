@@ -1,0 +1,176 @@
+---
+name: RotoWire
+version: 3.0.3
+category_slug: lifestyle/entertainment
+rating: 3.6666666666666665
+rating_count: 6
+user_count: 8000
+release_date: '2023-05-04T16:30:41.000Z'
+size: 127KiB
+languages:
+  - English (United States)
+description: Get quick access analysis for your fantasy sport leagues.
+publisher: RotoWire
+publisher_address: |-
+  740 Regent St
+  Madison, WI 53715-2647
+  US
+support_website: 'https://www.rotowire.com/contact.php'
+privacy_policy: 'https://rotowire.com/privacy.php'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.3",
+  "name": "RotoWire",
+  "description": "Get quick access analysis for your fantasy sport leagues.",
+  "icons": {
+    "16": "images/RW16.png",
+    "32": "images/RW32.png",
+    "48": "images/RW48.png",
+    "128": "images/RW128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*.rotowire.com/*",
+    "*://*.espn.com/*",
+    "*://*.cbssports.com/*",
+    "*://fanduel.com/history*",
+    "https://fanduel.com/pg/MyContests/showCSV/*",
+    "https://draftkings.com/mycontests*"
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.rotowire.com/myleagues/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.espn.com/login",
+        "*://*.espn.com/",
+        "*://*.cbssports.com/login",
+        "*://*.cbssports.com/?tid*",
+        "*://*.rotowire.com/myleagues/*"
+      ],
+      "js": [
+        "jquery.js",
+        "authentification.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>",
+        "*://sports.yahoo.com/nfl/scoreboard*",
+        "*://sports.yahoo.com/mlb/scoreboard*",
+        "*://sports.yahoo.com/nba/scoreboard*",
+        "*://sports.yahoo.com/nhl/scoreboard*",
+        "*://www.espn.com/nfl/scoreboard*",
+        "*://www.espn.com/mlb/scoreboard*",
+        "*://www.espn.com/nba/scoreboard*",
+        "*://www.espn.com/nhl/scoreboard*",
+        "*://www.cbssports.com/nfl/scoreboard*",
+        "*://www.cbssports.com/mlb/scoreboard*",
+        "*://www.cbssports.com/nba/scoreboard*",
+        "*://www.cbssports.com/nhl/scoreboard*",
+        "*://www.nfl.com/scores*",
+        "*://www.mlb.com/scores*",
+        "*://www.nba.com/games*",
+        "*://www.nhl.com/scores*"
+      ],
+      "js": [
+        "jquery.js",
+        "content.js",
+        "filter-tabs.js",
+        "player-panel.js",
+        "player-search.js",
+        "player-icons.js",
+        "sports-betting.js"
+      ],
+      "css": [
+        "css/module.css",
+        "css/player-panel.css",
+        "css/player-search.css",
+        "css/modal.css",
+        "css/universal.css",
+        "css/nav.css",
+        "css/news.css",
+        "css/switch.css",
+        "css/loader.css",
+        "css/filter-tabs.css",
+        "css/stats.css",
+        "css/schedule.css",
+        "css/game-panel.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.fanduel.com/history",
+        "https://www.draftkings.com/mycontests",
+        "https://www.rotowire.com/daily/tracker/extension.php"
+      ],
+      "js": [
+        "/dfs/js/jquery-3.3.1.min.js", 
+        "/dfs/js/jquery.csv.js", 
+        "/dfs/content_scripts/import-fanduel.js", 
+        "/dfs/content_scripts/import-draftkings.js"
+      ],
+      "css": [
+        "/dfs/css/form.css"
+      ]
+    },
+    {      
+      "matches": [
+        "<all_urls>",
+        "*://*.fantasysports.yahoo.com/*",
+        "*://fantasy.espn.com/*",
+        "*://*.cbssports.com/*",
+        "*://*.fantrax.com/*",
+        "*://*.nfc.shgn.com/*",
+        "*://*.fleaflicker.com/*",
+        "*://*.ottoneu.fangraphs.com/*",
+        "*://*.rtsports.com/*",
+        "*://*.myfantasyleague.com/*",
+        "*://*.fantasy.nfl.com/*",
+        "*://*.sleeper.app/*",
+        "*://*.scoresheet.com/*",
+        "*://*.fanduel.com/*",
+        "*://*.draftkings.com/*"
+      ],
+      "css": [
+        "css/module.css",
+        "css/player-panel.css",
+        "css/player-search.css",
+        "css/modal.css",
+        "css/universal.css",
+        "css/nav.css",
+        "css/news.css",
+        "css/switch.css",
+        "css/loader.css",
+        "css/filter-tabs.css",
+        "css/stats.css"
+      ],
+      "js" : [
+        "jquery.js",
+        "content.js",
+        "player-search.js",
+        "player-icons.js",
+        "player-panel.js",
+        "filter-tabs.js",
+        "dfs.js",
+        "/myleagues/best-lineup.js",
+        "/myleagues/my-leagues.js",
+        "/myleagues/top-free-agents.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {}
+}

@@ -1,0 +1,68 @@
+---
+name: Quizit.online
+version: 0.1.1
+category_slug: make_chrome_yours/accessibility
+rating: 3.7
+rating_count: 10
+user_count: 10000
+release_date: '2022-02-08T07:12:36.000Z'
+size: 128KiB
+languages:
+  - English
+description: Quizit official browser extension
+publisher_account: quizit
+support_website: 'https://quizit.online/docs'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "0.1.1",
+  "name": "Quizit.online",
+  "homepage_url": "https://quizit.online",
+  "description": "Quizit official browser extension",
+  "default_locale": "en",
+  "permissions": ["webRequest", "tabs", "cookies", "scripting"],
+  "host_permissions": ["https://*.quizizz.com/*", "https://*.edpuzzle.com/*", "https://*.testportal.pl/*"],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.brainly.com/*",
+        "https://*.brainly.pl/*",
+        "https://*.brainly.in/*",
+        "https://*.brainly.com.br/*",
+        "https://*.brainly.ph/*",
+        "https://*.brainly.lat/*"
+      ],
+      "js": ["content-scripts/brainly.js"]
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Popup",
+    "default_icon": {
+      "16": "icons/16.png",
+      "128": "icons/128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["content-scripts/quizizz.js"],
+      "matches": ["https://*.quizizz.com/*"]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline'"
+  }
+}

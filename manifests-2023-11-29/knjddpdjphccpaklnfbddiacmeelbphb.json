@@ -1,0 +1,70 @@
+---
+name: Catastro WMS Fixer
+version: 1.1.9
+category_slug: productivity/workflow
+rating: 2.25
+rating_count: 4
+user_count: 1000
+release_date: '2023-11-10T09:41:38.000Z'
+size: 21.31KiB
+languages:
+  - español
+description: Corrige errores del servidor WMS de Catastro.
+publisher: GoolInvent SLU
+publisher_account: Goolzoom
+publisher_address: |-
+  C/ Castillo de Fuensaldaña 4
+  Oficina 10
+  Rozas de Madrid, Las, Madrid 28232
+  ES
+extension_website: goolzoom.com
+privacy_policy: 'https://www.goolzoom.com/es/privacidad'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Catastro WMS Fixer",
+  "description": "Corrige errores del servidor WMS de Catastro.",
+  "version": "1.1.9",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": ["declarativeNetRequest"],
+  "host_permissions": [
+    "https://www1.sedecatastro.gob.es/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "https://ovc.catastro.meh.es/Cartografia/WMS/ServidorWMS.aspx?*" ],
+      "js": [ "ServidorWMS.js" ],
+      "all_frames": true
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "RemoveClassElements.js" ],
+      "all_frames": true
+    },
+    {
+      "matches": [ "https://www1.sedecatastro.gob.es/*" ],
+      "world": "MAIN",
+      "js": [ "RemoveTarget.js" ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  }
+}

@@ -1,0 +1,181 @@
+---
+name: Turn Off the Lights
+version: 4.2.6.0
+category_slug: make_chrome_yours/accessibility
+rating: 4.597669902912622
+rating_count: 33475
+user_count: 1000000
+release_date: '2023-10-12T13:17:21.000Z'
+size: 3.25MiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Kiswahili
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - मराठी
+  - हिन्दी
+  - বাংলা
+  - ગુજરાતી
+  - தமிழ்
+  - తెలుగు
+  - ಕನ್ನಡ
+  - മലയാളം
+  - ไทย
+  - አማርኛ
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  The entire page will be fading to dark, so you can watch the videos as if you
+  were in the cinema. Works for YouTube™ and beyond.
+publisher: Stefan vd
+publisher_address: |-
+  github.com/turnoffthelights
+  github.com/stefanvd
+  Antwerp 2000
+  BE
+extension_website: www.turnoffthelights.com
+support_website: 'https://www.turnoffthelights.com/support/'
+privacy_policy: 'https://www.stefanvd.net/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_name__",
+  "short_name": "Turn Off the Lights",
+  "version": "4.2.6.0",
+  "description": "__MSG_description__",
+  "author": "Stefan vd",
+  "homepage_url": "https://www.turnoffthelights.com/support/",
+  "omnibox": { "keyword" : "totl" },
+  "icons": {
+      "16": "icons/icon16.png",
+      "24": "icons/icon24.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "96": "icons/icon96.png",
+      "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "browser_action": {
+      "default_title": "__MSG_pageatitle__",
+      "default_icon": {
+        "19": "icons/iconstick19.png",
+        "38": "icons/iconstick38.png"
+      }
+  },
+  "background": {
+    "page": "background.html",
+   "persistent": false
+  },
+  "content_security_policy": "default-src 'none'; style-src 'self'; media-src https://www.turnoffthelights.com; child-src https://www.youtube.com https://www.turnoffthelights.com; connect-src https://www.turnoffthelights.com; script-src 'self'; img-src 'self' * data:; object-src 'none'",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["*://*.turnoffthelights.com/extension/options.html"],
+      "js": ["js/constants.js", "js/content.js", "js/eco.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["*://*.mycinema.pro/*", "*://*.turnoffthelights.com/extension/options.html"],
+      "css" : ["css/light.css"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/screenshader.js"],
+      "exclude_matches": ["*://*.turnoffthelights.com/extension/options.html"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": [ "js/fps.js" ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["*://*.turnoffthelights.com/extension/options.html"],
+      "js": ["js/autostop.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://*.youtube.com/*"], 
+      "css" : ["css/youtube.css"]
+    },
+    {
+      "matches": ["*://*.turnoffthelights.com/extension/options.html"],
+      "js": ["js/constants.js","js/options.js","js/Chart.js","js/eco-preview.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "MacCtrl+Shift+L"
+      }
+    },
+    "toggle-feature-nightmode": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+N",
+        "mac": "MacCtrl+Shift+N"
+      },
+      "description": "__MSG_titelnighttheme__"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "offline_enabled": true,
+  "minimum_chrome_version": "33",
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "permissions": [ "contextMenus", "tabs", "<all_urls>", "storage" ]
+}

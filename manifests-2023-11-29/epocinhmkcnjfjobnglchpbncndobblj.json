@@ -1,0 +1,66 @@
+---
+name: Graze for Mastodon
+version: 1.4.2
+category_slug: lifestyle/social
+rating: 3.923076923076923
+rating_count: 13
+user_count: 1000
+release_date: '2023-06-22T09:56:08.000Z'
+size: 548KiB
+languages:
+  - English (United States)
+  - português (Brasil)
+  - português (Portugal)
+  - 中文 (简体)
+  - 中文 (繁體)
+description: >-
+  Graze is 1-click follow, favorite, boost, bookmark, and reply for Mastodon, no
+  matter what instance you call home.
+publisher_account: Jared Zimmerman
+extension_website: jaredzimmerman.com
+support_website: 'https://faqabout.me/iam/graze'
+privacy_policy: 'https://graze.jaredzimmerman.com/.well-known/privacypolicy.html'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Graze for Mastodon",
+  "version": "1.4.2",
+  "description": "Graze is 1-click follow, favorite, boost, bookmark, and reply for Mastodon, no matter what instance you call home. ",
+  "author": "Jared Zimmerman",
+  "default_locale": "en_US",
+  "background": {
+    "service_worker": "src/Js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/HTML/popup.html",
+    "default_title": "Graze"
+  },
+  "icons": {
+    "16": "assets/Toolbar Icons/global/toolbar_icon_selected_16_default.png",
+    "32": "assets/Toolbar Icons/global/toolbar_icon_selected_32_default.png",
+    "48": "assets/Toolbar Icons/global/toolbar_icon_selected_48_default.png",
+    "128": "assets/Toolbar Icons/global/toolbar_icon_selected_128_default.png"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["src/Js/helper/purify.min.js", "src/Js/content/content-script.js", "src/Js/content/injectToot-script.js"],
+      "css": ["src/CSS/content.css"],
+      "matches": ["https://*/*"],
+      "run_at": "document_start",
+      "type": "module"
+    }
+  ],
+  "permissions": ["storage", "alarms", "contextMenus"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/HTML/options.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

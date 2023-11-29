@@ -1,0 +1,82 @@
+---
+name: Discord Radio
+version: 0.9.9
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 99
+release_date: '2022-11-04T06:14:53.000Z'
+size: 8.41MiB
+languages:
+  - English
+description: >-
+  Creates a Discord Rich Presence and allows friends to listen along to the
+  YouTube page that has been selected.
+publisher_account: discordradio.devs
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Discord Radio",
+  "description": "Creates a Discord Rich Presence and allows friends to listen along to the YouTube page that has been selected.",
+  "version": "0.9.9",
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "tabs",
+    "alarms"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "js": [
+        "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
+        "src/yt-content.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*.discordradio.tk/*"
+      ],
+      "js": [
+        "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
+        "src/dr-content.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "node_modules/webextension-polyfill/dist/browser-polyfill.min.js",
+      "node_modules/pure-uuid/uuid.min.js",
+      "src/background/discord-rpc.js",
+      "src/background/server.js",
+      "src/background/logic.js",
+      "src/background/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_popup": "src/popup/moodpicker.html",
+    "default_title": "Discord Radio",
+    "default_icon": {
+      "16": "assets/logo/icon16.png",
+      "32": "assets/logo/icon32.png",
+      "48": "assets/logo/icon48.png",
+      "128": "assets/logo/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/logo/icon16.png",
+    "32": "assets/logo/icon32.png",
+    "48": "assets/logo/icon48.png",
+    "128": "assets/logo/icon128.png"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@discordradio.tk"
+    }
+  }
+}

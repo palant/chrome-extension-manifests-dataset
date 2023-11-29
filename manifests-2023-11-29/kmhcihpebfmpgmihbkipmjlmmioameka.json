@@ -1,0 +1,93 @@
+---
+name: Eternl
+version: 1.11.15
+category_slug: productivity/workflow
+rating: 4.754716981132075
+rating_count: 53
+user_count: 90000
+release_date: '2023-11-29T06:38:53.000Z'
+size: 15.73MiB
+languages:
+  - English
+description: A Cardano light wallet.
+publisher: Tastenkunst GmbH
+publisher_account: marcel.baumberg
+publisher_address: |-
+  Grassistr. 12
+  Leipzig 04107
+  DE
+extension_website: eternl.io
+privacy_policy: 'https://ccvault.io/app/mainnet/imprint'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Eternl",
+  "description": "A Cardano light wallet.",
+  "version": "1.11.15",
+  "manifest_version": 2,
+  "icons": {
+    "16": "icons/favicon-16x16.png",
+    "32": "icons/favicon-32x32.png",
+    "48": "icons/favicon-48x48.png",
+    "96": "icons/favicon-96x96.png",
+    "128": "icons/favicon-128x128.png"
+  },
+  "author": "Tastenkunst GmbH",
+  "browser_action": {
+    "default_title": "Eternl"
+  },
+  "background": {
+    "scripts": [
+      "vendor/trezor-connect.js",
+      "www/js/bex-background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://miro.com/*"
+      ],
+      "js": [
+        "www/js/bex-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.eternl.io/*",
+      "https://*.ccvault.io/*",
+      "https://*.trezor.io/*",
+      "https://*.coingecko.com/*",
+      "https://*.eternl.nftcdn.io/*",
+      "http://localhost:*/",
+      "https://localhost:*/"
+    ]
+  },
+  "homepage_url": "https://eternl.io",
+  "permissions": [
+    "tabs",
+    "*://connect.trezor.io/9/*"
+  ],
+  "web_accessible_resources": [
+    "www/*",
+    "js/*",
+    "vendor/*",
+    "trezor-usb-permissions.html"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-inline' 'unsafe-eval' blob:; object-src 'self';"
+}

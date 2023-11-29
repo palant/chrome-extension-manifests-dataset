@@ -1,0 +1,72 @@
+---
+name: 'Mailpanion: Email Tracking & Tracker Blocking'
+version: 2.2.0
+category_slug: productivity/workflow
+rating: 4.478260869565218
+rating_count: 23
+user_count: 2000
+release_date: '2022-01-03T07:06:24.000Z'
+size: 360KiB
+languages:
+  - English
+  - español
+description: 'Track your emails and block email trackers for FREE, forever.'
+publisher: Mailpanion
+publisher_address: |-
+  360 Huntington Ave
+  Boston, MA 02115
+  US
+extension_website: mailpanion.com
+support_website: 'https://help.mailpanion.com'
+privacy_policy: 'https://mailpanion.com/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "version": "2.2.0",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "/images/icon16.png",
+    "48": "/images/icon48.png",
+    "128": "/images/icon128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "/images/icon16.png",
+      "48": "/images/icon48.png",
+      "128": "/images/icon128.png"
+    },
+    "default_title": "Mailpanion",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["/lib/inboxsdk.js", "/bundles/content.bundle.js"]
+    },
+    {
+      "matches": ["https://mailpanion.com/success*"],
+      "js": ["/bundles/success.bundle.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["/bundles/background.bundle.js"]
+  },
+  "web_accessible_resources": ["/images/*"],
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "*://mail.google.com/*",
+    "*://mailpanion.com/*",
+    "*://*.mailpanion.com/*",
+    "*://*.googleusercontent.com/*",
+    "storage",
+    "notifications",
+    "tabs"
+  ]
+}

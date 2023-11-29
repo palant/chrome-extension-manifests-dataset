@@ -1,0 +1,111 @@
+---
+name: TC Manager
+version: 0.1.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 51
+release_date: '2021-07-11T04:21:31.000Z'
+size: 822KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - български
+  - русский
+  - 日本語
+description: >-
+  Manage consents to the processing of personal data at websites that use IAB
+  Europe's TCF v2.0.
+publisher_account: nesatfit
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "default_locale": "en",
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "version": "0.1.4",
+  "author": "Aleš Postulka",
+  "permissions": [
+    "storage",
+    "cookies",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "icons": {
+    "48": "resources/img/icon-48.png",
+    "64": "resources/img/icon-64.png",
+    "96": "resources/img/icon-96.png",
+    "128": "resources/img/icon-128.png",
+    "256": "resources/img/icon-256.png",
+    "512": "resources/img/icon-512.png"
+  },
+  "browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "TC Manager",
+    "default_icon": {
+      "48": "resources/img/icon-48.png",
+      "64": "resources/img/icon-64.png",
+      "96": "resources/img/icon-96.png",
+      "128": "resources/img/icon-128.png",
+      "256": "resources/img/icon-256.png",
+      "512": "resources/img/icon-512.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "node_modules/webextension-polyfill/dist/browser-polyfill.js",
+      "node_modules/tc-string-parse/tc-string-parse.js",
+      "common/common.js",
+      "common/bit_field_conversion.js",
+      "background_scripts/consent_string_creation.js",
+      "background_scripts/web_request_listeners.js",
+      "background_scripts/background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "node_modules/webextension-polyfill/dist/browser-polyfill.js",
+        "common/common.js",
+        "content_scripts/inject.js",
+        "content_scripts/__tcfapi.js",
+        "content_scripts/local_storage.js",
+        "content_scripts/create_consent_request.js",
+        "content_scripts/message_listener.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,84 @@
+---
+name: Voice Search
+version: 2.3.1
+category_slug: productivity/tools
+rating: 3.6087489779231396
+rating_count: 2446
+user_count: 100000
+release_date: '2021-07-01T11:44:45.000Z'
+size: 1.51MiB
+languages:
+  - English
+  - español
+  - русский
+description: Search by speaking.
+publisher: iSpeech Inc
+publisher_account: iSpeech
+publisher_address: |-
+  211 Warren Street
+  Newark, NJ 07103
+  US
+extension_website: www.ispeech.org
+privacy_policy: 'https://www.ispeech.org/policies.php'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_name__",
+    "version": "2.3.1",
+    "content_security_policy": "script-src 'self' 'unsafe-eval' https://ssl.google-analytics.com; object-src 'self'",
+    "manifest_version": 2,
+    "description": "__MSG_extension_description__",
+    "permissions": [
+        "storage"
+    ],
+    "default_locale": "en",
+    "options_page": "options.html",
+    "background": {
+        "page": "background.html",
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": "images/chromium-speech_input_mic_full-19.png",
+        "default_title": "__MSG_popup_title__",
+        "default_popup": "views/popup.xhtml"
+    },
+    "icons": {
+        "16": "images/chromium-speech_input_mic_full-16.png",
+        "48": "images/chromium-speech_input_mic_full-48.png",
+        "68": "images/chromium-speech_input_mic_full-68.png",
+        "128": "images/chromium-speech_input_mic_full-128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [ "https://docs.google.com/*"],
+            "js": ["lib/iSpeechRecognizer.min.js", "lib/iSpeechWorker.min.js", "js/dj.js"]
+        },
+        {
+            "matches": ["https://duckduckgo.com/*"],
+            "css": ["css/ddg.css"]
+        },
+        {
+            "matches": ["https://*.slack.com/*"],
+            "css": ["css/slack.css"]
+        },
+        {
+            "matches": ["https://*.google.com/*"],
+            "css": ["css/google.css"]
+        },
+        {
+            "matches": [ "http://*/*", "https://*/*"],
+            "exclude_matches": [ "https://docs.google.com/*"],
+            "css": ["css/indicator.css"],
+            "js": ["lib/iSpeechRecognizer.min.js", "lib/iSpeechWorker.min.js","js/utils/utils.js", "js/asr-tools.js", "js/indicator.js", "js/asr-inject.js"]
+        },
+        {
+            "matches": [ "http://*/*", "https://*/*"],
+            "js": ["lib/iSpeechRecognizer.min.js", "lib/iSpeechWorker.min.js","js/utils/date.js", "js/revManager.js", "js/pixel.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        "lib/iSpeechRecognizer.min.js", "lib/iSpeechWorker.min.js", "js/utils/utils.js", "js/asr-tools.js", "js/indicator.js", "js/docs-inject.js", "js/start-asr-docs.js", "css/indicator.css", "img/*", "css/ddg.css"
+    ]
+}

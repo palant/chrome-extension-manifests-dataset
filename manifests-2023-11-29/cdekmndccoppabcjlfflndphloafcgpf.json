@@ -1,0 +1,123 @@
+---
+name: 'Driveway: AI Screenshot Guides, SOPs, & Demos'
+version: 1.20.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 6
+user_count: 1000
+release_date: '2023-10-08T13:10:48.000Z'
+size: 1.7MiB
+languages:
+  - English (United States)
+description: >-
+  Automatically create step-by-step training guides with screenshots by
+  recording your browser-based workflows.
+publisher: 'Lotus Software, Inc.'
+publisher_account: Driveway
+publisher_address: |-
+  122 E 42ND ST
+  FL 18
+  New York, NY 10168
+  US
+extension_website: driveway.app
+privacy_policy: 'https://www.driveway.app/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Driveway: AI Screenshot Guides, SOPs, & Demos",
+  "short_name": "Driveway",
+  "description": "Automatically create step-by-step training guides with screenshots by recording your browser-based workflows.",
+  "version": "1.20.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["capture.js", "setUpCaptureHighlight.js", "setUpLiveViewHighlight.js"],
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
+      "all_frames": true
+    },
+    {
+      "js": ["setUpCaptureUI.js"],
+      "run_at": "document_end",
+      "matches": [
+        "https://on.driveway.app/*",
+        "http://localhost:8000/*",
+        "https://stg.driveway.app/*"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "setUpLiveViewUI.js",
+        "setUpCaptureCountdown.js",
+        "setUpTriggerUI.js",
+        "setUpGuidanceUI.js"
+      ],
+      "run_at": "document_end",
+      "matches": ["<all_urls>"],
+      "all_frames": false
+    },
+    {
+      "css": ["extensionFonts.css", "reset.css"],
+      "matches": ["<all_urls>"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/Inter-roman.var.woff2",
+        "images/pointer_cursor.svg",
+        "images/pointer_cursor_transparent.svg",
+        "icons/*.svg",
+        "images/pin_extension.png",
+        "images/emoji-*.png",
+        "images/driveway_logo32.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["storage", "activeTab", "unlimitedStorage", "scripting", "cookies", "alarms"],
+  "host_permissions": ["<all_urls>"],
+  "externally_connectable": {
+    "matches": [
+      "https://on.driveway.app/*",
+      "http://localhost:8000/*",
+      "https://stg.driveway.app/*"
+    ]
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/driveway_logo16.png",
+      "32": "/images/driveway_logo32.png",
+      "48": "/images/driveway_logo48.png",
+      "128": "/images/driveway_logo128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/driveway_logo16.png",
+    "32": "/images/driveway_logo32.png",
+    "48": "/images/driveway_logo48.png",
+    "128": "/images/driveway_logo128.png"
+  },
+  "commands": {
+    "toggle-capture": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+G"
+      },
+      "description": "Capture or complete a guide."
+    },
+    "advance-guide": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Period"
+      },
+      "description": "Click the highlighted element."
+    }
+  }
+}

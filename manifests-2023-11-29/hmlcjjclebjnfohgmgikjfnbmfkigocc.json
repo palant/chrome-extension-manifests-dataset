@@ -1,0 +1,234 @@
+---
+name: J2TEAM Security
+version: 1.4.10
+category_slug: productivity/tools
+rating: 4.88927495946259
+rating_count: 21585
+user_count: 300000
+release_date: '2023-10-25T08:30:42.000Z'
+size: 269KiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Tiếng Việt
+  - Türkçe
+  - español
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+description: J2TEAM Security helps protect against phishing attacks.
+publisher_account: JUNO_OKYO
+publisher_address: |-
+  486 Đường Láng, Đống Đa
+  Ha Noi 10000
+  Việt Nam
+extension_website: junookyo.blogspot.com
+support_website: 'https://j2team.org/'
+privacy_policy: 'https://j2team.org/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "__MSG_appName__",
+ "version": "1.4.10",
+ "manifest_version": 2,
+ "description": "__MSG_appDescription__",
+ "author": "JUNO_OKYO",
+ "homepage_url": "https://j2team.org/",
+ "icons": {
+  "16": "images/icon-16.png",
+  "128": "images/icon-128.png"
+ },
+ "default_locale": "en",
+ "background": {
+  "scripts": [
+   "scripts/background.js"
+  ]
+ },
+ "permissions": [
+  "tabs",
+  "http://*/*",
+  "https://*/*",
+  "notifications",
+  "contextMenus",
+  "cookies",
+  "storage",
+  "unlimitedStorage",
+  "webRequest",
+  "webRequestBlocking",
+  "alarms"
+ ],
+ "content_scripts": [
+  {
+   "matches": [
+    "https://www.facebook.com/*",
+    "https://www.messenger.com/t/*"
+   ],
+   "js": [
+    "scripts/facebook-middleware.js"
+   ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": [
+    "http://*/*",
+    "https://*/*"
+   ],
+   "include_globs": [
+    "https://*/*fbclid=*"
+   ],
+   "js": [
+    "scripts/contentscript.js"
+   ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": [
+    "http://*/*",
+    "https://*/*"
+   ],
+   "js": [
+    "scripts/anti-fb-phishing.js",
+    "scripts/anti-clickjacking.js"
+   ],
+   "run_at": "document_idle",
+   "all_frames": true
+  },
+  {
+   "matches": [
+    "https://*.facebook.com/*"
+   ],
+   "exclude_matches": [
+    "https://m.facebook.com/*",
+    "https://touch.facebook.com/*",
+    "https://mobile.facebook.com/*",
+    "https://mbasic.facebook.com/*",
+    "https://graph.facebook.com/*",
+    "https://developers.facebook.com/*",
+    "https://code.facebook.com/*"
+   ],
+   "js": [
+    "scripts/fb-timer.js"
+   ],
+   "run_at": "document_idle",
+   "all_frames": false
+  },
+  {
+   "matches": [
+    "https://*.facebook.com/*"
+   ],
+   "exclude_matches": [
+    "https://m.facebook.com/*",
+    "https://touch.facebook.com/*",
+    "https://mobile.facebook.com/*",
+    "https://mbasic.facebook.com/*",
+    "https://graph.facebook.com/*",
+    "https://developers.facebook.com/*",
+    "https://code.facebook.com/*"
+   ],
+   "js": [
+    "scripts/dark-theme-base.js",
+    "scripts/facebook-dark-theme.js"
+   ],
+   "run_at": "document_start",
+   "all_frames": false
+  },
+  {
+   "matches": [
+    "https://www.google.com/*",
+    "https://www.google.com.vn/*",
+    "https://www.google.com.co/*",
+    "https://www.google.com.bz/*",
+    "https://www.google.co.uk/*",
+    "https://encrypted.google.com/*"
+   ],
+   "exclude_matches": [
+    "https://www.google.com/maps/*"
+   ],
+   "js": [
+    "scripts/dark-theme-base.js"
+   ],
+   "run_at": "document_start",
+   "all_frames": false
+  },
+  {
+   "matches": [
+    "https://shopeefood.vn/*"
+   ],
+   "js": [
+    "scripts/shopeefood-analytics-loader.js"
+   ],
+   "run_at": "document_start",
+   "all_frames": false
+  },
+  {
+   "matches": [
+    "https://*.medium.com/*"
+   ],
+   "css": [
+    "styles/medium-fix-vietnamese-font.css"
+   ],
+   "run_at": "document_start",
+   "all_frames": false
+  },
+  {
+   "matches": [
+    "https://*.instagram.com/*"
+   ],
+   "css": [
+    "styles/instagram.css"
+   ],
+   "run_at": "document_idle",
+   "all_frames": false
+  }
+ ],
+ "browser_action": {
+  "default_icon": {
+   "19": "images/icon-19.png",
+   "38": "images/icon-38.png"
+  },
+  "default_title": "__MSG_appName__"
+ },
+ "web_accessible_resources": [
+  "images/icon-16.png",
+  "images/icon-48.png",
+  "images/facebook-group.png",
+  "scripts/facebook-content-script.js",
+  "scripts/shopeefood-analytics.js"
+ ],
+ "commands": {
+  "_execute_browser_action": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+S",
+    "mac": "Command+Shift+S"
+   }
+  },
+  "toggle_block_seen": {
+   "suggested_key": {
+    "default": "Alt+S"
+   },
+   "description": "__MSG_toggle_block_seen_chat__",
+   "global": false
+  },
+  "toggle_block_typing": {
+   "suggested_key": {
+    "default": "Alt+T"
+   },
+   "description": "__MSG_toggle_block_typing_chat__",
+   "global": false
+  }
+ },
+ "externally_connectable": {
+  "matches": [
+   "https://j2team.dev/*",
+   "https://j2team.org/*",
+   "https://www.j2team.org/*",
+   "https://giamgia.to/*",
+   "http://localhost:3000/*"
+  ]
+ },
+ "content_security_policy": "script-src 'self' 'unsafe-eval' https://www.google-analytics.com https://ssl.google-analytics.com https://www.googletagmanager.com https://ajax.googleapis.com https://cdnjs.cloudflare.com; object-src 'self'"
+}

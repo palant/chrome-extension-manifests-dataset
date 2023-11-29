@@ -1,0 +1,118 @@
+---
+name: Netus AI
+version: 1.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 13
+user_count: 146
+release_date: '2023-05-09T05:02:04.000Z'
+size: 319KiB
+languages:
+  - English
+description: NetusAI paraphrasing tool - for 10x faster content creation
+publisher_account: Netus AI
+privacy_policy: 'https://netus.ai/privacy-policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "description": "NetusAI paraphrasing tool - for 10x faster content creation",
+    "version": "1.0.1",
+    "manifest_version": 3,
+    "name": "Netus AI",
+    "icons": {
+        "16": "/static/img/icon16.png",
+        "48": "/static/img/icon48.png",
+        "128": "/static/img/icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "/static/img/icon16-2.png",
+            "48": "/static/img/icon48-2.png",
+            "128": "/static/img/icon128-2.png"
+        },
+        "default_popup": "popup.html",
+        "default_title": "Netus AI"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "scripting",
+        "contextMenus"
+    ],
+    "host_permissions": [
+        "https://app.netus.ai/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/static/img/*",
+                "/static/css/*",
+                "loader.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "commands": {
+        "run-detector": {
+            "suggested_key": {
+                "default": "Ctrl+D",
+                "mac": "Command+D"
+            },
+            "description": "AI Detector"
+        },
+        "run-bypasser": {
+            "suggested_key": {
+                "default": "Ctrl+B",
+                "mac": "Command+B"
+            },
+            "description": "AI Bypasser"
+        },
+        "run-paraphraser": {
+            "suggested_key": {
+                "default": "Ctrl+P",
+                "mac": "Command+P"
+            },
+            "description": "AI Paraphraser"
+        },
+        "_execute_action": {
+            "suggested_key": {
+                "windows": "Ctrl+Shift+Y",
+                "mac": "Command+Shift+Y",
+                "chromeos": "Ctrl+Shift+U",
+                "linux": "Ctrl+Shift+J"
+            }
+        }
+    },
+    "options_page": "options.html",
+    "minimum_chrome_version": "88",
+    "background": {
+        "service_worker": "static/js/background.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://app.netus.ai/login",
+                "https://app.netus.ai/"
+            ],
+            "js": [
+                "static/js/captureLogin.js"
+            ]
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "static/js/all.js",
+                "js/contentScript.bundle.js"
+            ]
+        }
+    ]
+}

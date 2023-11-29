@@ -1,0 +1,55 @@
+---
+name: Better Twitch Adblock
+version: 3.0.3
+category_slug: productivity/developer
+rating: 2.6875
+rating_count: 48
+user_count: 6000
+release_date: '2023-01-02T06:24:06.000Z'
+size: 67.08KiB
+languages:
+  - English
+description: Blocks Video and Content Ads on Twitch.tv
+publisher_account: DonnyJones
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "Blocks Video and Content Ads on Twitch.tv",
+  "manifest_version": 3,
+  "name": "Better Twitch Adblock",
+  "version": "3.0.3",
+  "icons": {
+    "48": "icons/adblock-48x48.png",
+    "96": "icons/adblock-96x96.png"
+  },
+  "action": {
+    "default_icon": "icons/adblock-32x32.png",
+    "default_title": "Better Twitch Adblock",
+    "default_popup": "dropdown/index.html"
+  },
+  "options_ui": {
+    "page": "dropdown/index.html"
+  },
+  "permissions": ["declarativeNetRequest", "storage"],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "block_rules.json"
+    }]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["https://*.twitch.tv/*"],
+    "run_at": "document_start",
+    "js": ["content.js"]
+  }],
+  "web_accessible_resources": [{
+    "resources": ["remove_ads.js"],
+    "matches": ["https://*.twitch.tv/*"]
+  }]
+}

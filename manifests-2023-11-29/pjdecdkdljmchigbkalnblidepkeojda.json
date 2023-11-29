@@ -1,0 +1,76 @@
+---
+name: JSON -> TABLE
+version: '1.39'
+category_slug: productivity/tools
+rating: 5
+rating_count: 6
+user_count: 1000
+release_date: '2023-10-09T10:34:50.000Z'
+size: 313KiB
+languages:
+  - English
+description: >-
+  Viewer for XLSX, JSON, XML REST responses or files as HTML table with
+  detection nested columns and tables
+publisher_account: Jes
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "JSON -> TABLE",
+  "description": "Viewer for XLSX, JSON, XML REST responses or files as HTML table with detection nested columns and tables",
+  "version": "1.39",
+  "manifest_version": 3,
+  "permissions": [
+    "webRequest",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "recent-tab": {
+      "description": "Switch between Recent Tabs",
+      "suggested_key": {
+        "chromeos": "Ctrl+Q",
+        "default": "Ctrl+Q",
+        "linux": "Ctrl+Q",
+        "mac": "Command+Q",
+        "windows": "Ctrl+Q"
+      }
+    }
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "json128.png"
+  },
+  "offline_enabled": true,
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "json128.png", "libs/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+        "matches": ["<all_urls>"],
+        "css": ["contents.css", "dropdown.css", "libs/jsoneditor/jsoneditor.min.css", "skins.css"],
+        "all_frames": true,
+        "match_about_blank": true,
+        "js": [
+            "options.js",
+            "store.js",
+            "contents.js"
+        ],
+        "run_at": "document_start"
+    }
+  ]
+}

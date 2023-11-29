@@ -1,0 +1,63 @@
+---
+name: Hurt Blocker
+version: 4.12.1
+category_slug: lifestyle/fun
+rating: 3.5
+rating_count: 10
+user_count: 84
+release_date: '2020-02-17T13:42:12.000Z'
+size: 2.48MiB
+languages:
+  - English
+description: Transform hurtful words into fun-loving emojis.
+privacy_policy: 'https://www.anz.com.au/privacy/centre/policy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Hurt Blocker",
+  "version": "4.12.1",
+  "description": "Transform hurtful words into fun-loving emojis.",
+  "browser_action" :
+  {
+    "default_icon" : "images/icon-128x128.png",
+    "default_title" : "Hurt Blocker",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+ ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_globs": [
+        "*://*github.com*"
+      ],
+      "js": ["js/findAndReplaceDOMText.js","js/emoji.js","js/wordsList.js","js/filter.js"],
+      "css": ["css/hate-blocker.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "assets/fonts/*.woff2",
+    "images/block-tooltip.png"
+  ],
+  "icons" : {
+   "16": "images/icon-16x16.png",
+    "19": "images/icon-19x19.png",
+    "48": "images/icon-48x48.png",
+    "128": "images/icon-128x128.png"
+  },
+  "background": {
+    "persistent": false,
+    "page": "background.html"
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+}

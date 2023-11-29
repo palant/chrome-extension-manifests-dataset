@@ -1,0 +1,85 @@
+---
+name: 'Re:GPT — AI-Powered Email Assistant'
+version: 1.0.8
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 3000
+release_date: '2023-11-15T21:38:52.000Z'
+size: 464KiB
+languages:
+  - English
+description: >-
+  OpenAI ChatGPT integration for Gmail & Outlook — Prefill email replies and
+  leverage GPT's power to write quality emails faster.
+publisher_account: '@ybouane'
+privacy_policy: 'https://re-gpt.email/privacy'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Re:GPT — AI-Powered Email Assistant",
+  "version": "1.0.8",
+  "manifest_version": 3,
+  "description": "OpenAI ChatGPT integration for Gmail & Outlook — Prefill email replies and leverage GPT's power to write quality emails faster.",
+  "homepage_url": "http://re-gpt.email",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_icon": "icons/icon128-transparent.png",
+    "default_popup": "src/popup/popup.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "src/background/service_worker.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+ "matches": [
+   "https://mail.google.com/*",
+   "https://outlook.live.com/*"
+ ]
+  },
+  "content_scripts": [
+ {
+  "matches": [
+    "https://mail.google.com/*",
+    "https://outlook.live.com/*"
+  ],
+  "js": [
+    "src/inject/idInjector.js"
+  ]
+ },
+    {
+      "matches": [
+  "https://mail.google.com/*"
+      ],
+      "js": [
+        "src/inject/common.js",
+        "src/inject/injectGmail.js"
+      ],
+      "css": [
+        "src/inject/inject.css"
+      ],
+      "world" : "MAIN"
+    },
+    {
+      "matches": [
+  "https://outlook.live.com/*"
+      ],
+      "js": [
+        "src/inject/common.js",
+        "src/inject/injectOutlook.js"
+      ],
+      "css": [
+        "src/inject/inject.css"
+      ],
+      "world" : "MAIN"
+    }
+  ]
+}

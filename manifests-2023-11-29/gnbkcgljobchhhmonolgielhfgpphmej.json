@@ -1,0 +1,76 @@
+---
+name: EncounterBeyond
+version: '0.8'
+category_slug: lifestyle/fun
+rating: 5
+rating_count: 3
+user_count: 568
+release_date: '2022-06-23T21:26:45.000Z'
+size: 20.22KiB
+languages:
+  - English
+description: A simple extension to send digital rolls from D&D Beyond to EncounterPlus
+publisher_account: Robert R George
+support_website: 'https://github.com/rrgeorge/EncounterBeyond'
+privacy_policy: 'https://github.com/rrgeorge/EncounterBeyond/blob/master/privacypolicy.md'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "EncounterBeyond",
+    "description": "A simple extension to send digital rolls from D&D Beyond to EncounterPlus",
+    "manifest_version": 3,
+    "version": "0.8",
+    "icons": {
+        "48": "encounter48.png",
+        "96": "encounter96.png"
+    },
+    "host_permissions": [
+      "*://*/api/messages"
+    ],
+    "permissions": [
+      "storage",
+      "declarativeContent"
+      ],
+    "background": {
+    "service_worker": "background.js"
+  },
+    "options_ui": {
+      "page": "options.html"
+    },
+    "action": {
+        "default_icon": {
+          "19": "encounter19.png",
+          "38": "encounter38.png"
+        },
+        "default_title": "EncounterBeyond",
+        "browser_style": true,
+        "default_popup": "options.html",
+        "show_matches": [
+            "https://*.dndbeyond.com/profile/*/characters/*",
+            "https://*.dndbeyond.com/characters/*"
+            ]
+    },
+    "content_scripts": [
+      {
+        "matches": [
+            "https://*.dndbeyond.com/profile/*/characters/*",
+            "https://*.dndbeyond.com/characters/*"
+            ],
+        "run_at": "document_end",
+        "js": [
+            "rollgrabber.js"
+            ]
+      },
+      {
+        "matches": [
+            "*://*/client/"
+            ],
+        "run_at": "document_end",
+        "js": [
+            "hostgrab.js"
+            ]
+      }
+      ]
+}

@@ -1,0 +1,101 @@
+---
+name: ESET Password Manager
+version: 3.6.0
+category_slug: productivity/workflow
+rating: 3.2409638554216866
+rating_count: 83
+user_count: 40000
+release_date: '2023-11-15T09:59:24.000Z'
+size: 7.56MiB
+languages:
+  - English (United States)
+description: >-
+  Never forget a password again! ESET Password Manager will make your life
+  easier and passwords safer.
+publisher: 'ESET, spol. s r.o.'
+publisher_account: ESET
+publisher_address: |-
+  Einsteinova 24
+  Bratislava 851 01
+  SK
+support_website: 'http://support.eset.com/?segment=home'
+privacy_policy: >-
+  http://help.eset.com/getHelp?product=essp&version=latest&lang=1033&topic=privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ESET Password Manager",
+  "short_name": "ESET PWM",
+  "description": "Never forget a password again! ESET Password Manager will make your life easier and passwords safer.",
+  "version": "3.6.0",
+  "author": "Eset",
+  "homepage_url": "https://www.eset.com",
+  "background": {
+    "service_worker": "src/background/service-worker-wrapper.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "src/forge/forge.js",
+        "src/content_scripts/content-script.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "src/images/icons/icon-16.png",
+    "48": "src/images/icons/icon-48.png",
+    "128": "src/images/icons/icon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "browsingData",
+    "storage",
+    "cookies",
+    "activeTab",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "bookmarks"
+  ],
+  "optional_permissions": [
+    "contextMenus",
+    "privacy"
+  ],
+  "action": {
+    "default_icon": {
+      "128": "src/images/icons/icon-128.png"
+    },
+    "default_popup": "src/ui/index.html",
+    "default_title": "ESET Password Manager"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "src/images/icons/blank.png",
+        "src/content_scripts/popup.html",
+        "src/content_scripts/notification.html",
+        "src/images/icons/icon-32.png",
+        "src/images/icons/icon-32-i.png",
+        "src/images/icons/iconForce-32.png"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; img-src * data: ; object-src 'self'"
+  }
+}
