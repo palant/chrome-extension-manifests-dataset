@@ -1,0 +1,69 @@
+---
+name: ZradloApp Chrome extension
+version: 0.0.0.3
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2022-12-14T03:19:53.000Z'
+size: 24.28KiB
+languages:
+  - English
+description: Extension to connect with online grocery shops
+publisher: Nákupátor s.r.o.
+publisher_account: digi2food
+publisher_address: |-
+  Rybná 716/24
+  Praha 1-Staré Město 110 00
+  CZ
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ZradloApp Chrome extension",
+  "description": "Extension to connect with online grocery shops",
+  "version": "0.0.0.3",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "tabs", "activeTab", "scripting"],
+  "externally_connectable": {
+    "matches": ["http://localhost:3000/*", "http://localhost:3800/*", "http://3.69.94.90/*", "https://*.nakupator.cz/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "/images/foodicon32.png" ],
+      "matches": [ "http://localhost:3000/*", "http://localhost:3800/*", "http://3.69.94.90/*", "https://*.nakupator.cz/*" ]
+    }
+  ],
+  "host_permissions": [
+    "https://www.kosik.cz/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.kosik.cz/*"],
+      "js": ["shops/generic.js", "shops/kosik.js"]
+    }, 
+    {
+      "matches": ["*://*.potravinydomu.cz/*"],
+      "js": ["shops/generic.js", "shops/potravinydomu.js"]
+    },  
+    {
+      "matches": ["*://*.tomato.cz/*"],
+      "js": ["shops/generic.js", "shops/tomato.js"]
+    },          
+    {
+      "matches": ["http://localhost:3000/*","http://localhost:3800/*", "http://3.69.94.90/*", "https://*.nakupator.cz/*"],
+      "js": ["zradlo.js"]    
+    }
+  ],  
+  "icons": {
+    "16": "/images/foodicon16.png",
+    "32": "/images/foodicon32.png",
+    "48": "/images/foodicon48.png",
+    "64": "/images/foodicon64.png",
+    "128": "/images/foodicon128.png"
+  }
+}

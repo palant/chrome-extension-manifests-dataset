@@ -1,0 +1,53 @@
+---
+name: TwittEreum
+version: '1.0'
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 8
+release_date: '2023-03-28T09:39:46.000Z'
+size: 264KiB
+languages:
+  - English
+description: >-
+  Quickly see peoples Ethereum balance on Twitter. Based on ENS domains and
+  owner of NFT pfp.
+publisher_account: Xtensions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TwittEreum",
+  "version": "1.0",
+  "description": "Quickly see peoples Ethereum balance on Twitter. Based on ENS domains and owner of NFT pfp.",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["browser-polyfill.js", "jquery.js", "ExtPay.js", "ethers-5.2.umd.min.js", "content.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["ExtPay.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "*://*.twitter.com/*"
+  ]
+}

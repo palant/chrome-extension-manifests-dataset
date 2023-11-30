@@ -1,0 +1,61 @@
+---
+name: Show My Ranks
+version: 1.0.9
+category_slug: productivity/communication
+rating: 5
+rating_count: 3
+user_count: 11
+release_date: '2023-11-14T22:01:50.000Z'
+size: 4.07MiB
+languages:
+  - English
+description: Shows the users rank next to their twitch name.
+publisher_account: showmyranks
+privacy_policy: https://www.showmyranks.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Show My Ranks",
+  "description": "Shows the users rank next to their twitch name.",
+  "version": "1.0.9",
+  "permissions": ["tabs"],
+  "icons": {
+    "16": "images/Logos/ShowmyranksEmblem16.png",
+    "48": "images/Logos/ShowmyranksEmblem48.png",
+    "128": "images/Logos/ShowmyranksEmblem128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Show My Ranks",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.png"],
+      "matches": ["https://www.twitch.tv/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": ["displayrank.js"],
+      "matches": ["https://www.twitch.tv/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["getTrackerUsername.js"],
+      "matches": ["https://tracker.gg/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["getChessUsername.js"],
+      "matches": ["https://www.chess.com/*"],
+      "run_at": "document_end"
+    }
+  ]
+}

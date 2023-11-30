@@ -1,0 +1,74 @@
+---
+name: Chat Companion
+version: 1.1.3
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2023-09-28T07:48:47.000Z'
+size: 1022KiB
+languages:
+  - español
+description: Asistente de chat para Fintual
+publisher_account: Fintual
+support_website: https://sr.fintual.in
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Chat Companion",
+    "description": "Asistente de chat para Fintual",
+    "version": "1.1.3",
+    "background": {
+        "service_worker": "dist/service-worker.js",
+        "type": "module"
+    },
+    "permissions": ["tabs", "management", "sidePanel"],
+    "web_accessible_resources" : [
+        {
+            "resources": [ "src/Modal/modal.html" ],
+            "matches": [ "https://app.intercom.com/*", "https://sr.fintual.in/*", "https://local.fintual.in/*", "http://localhost:8000/*" ]
+        }
+    ],
+    "host_permissions": [
+        "http://localhost:8000/*",
+        "https://local.fintual.in/*",
+        "https://sr.fintual.in/*",
+        "https://app.intercom.com/*"
+    ],
+    "commands": {
+        "toggle_modal": {
+            "suggested_key": {
+                "default": "Ctrl+M",
+                "mac": "MacCtrl+M"
+            },
+            "description": "Open customer modal"
+        }
+    },
+    "side_panel": {
+        "default_path": "src/SidePanel/side-panel.html"
+    },
+    "content_scripts": [
+        {
+            "js": ["dist/Content/content.js"],
+            "css": ["dist/Content/content.css"],
+            "matches": [
+                "http://localhost:8000/*",
+                "https://local.fintual.in/*",
+                "https://app.intercom.com/a/*"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "images/fintual16.png",
+        "32": "images/fintual32.png",
+        "48": "images/fintual48.png",
+        "128": "images/fintual128.png"
+    },
+    "action": {
+        "default_title": "Abrir Chat Companion",
+        "default_popup": "src/Popup/popup.html"
+    }
+}

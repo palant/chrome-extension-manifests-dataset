@@ -1,0 +1,112 @@
+---
+name: Instructive
+version: 1.0.0
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-11-29T11:13:16.000Z'
+size: 1.15MiB
+languages:
+  - English (United States)
+description: Instructive Extension
+publisher: Instructive LLC
+publisher_account: Instructive
+publisher_address: |-
+  2261 Market St
+  STE 5560
+  San Francisco, CA 94114-1612
+  US
+extension_website: instructive.app
+support_website: https://www.instructive.app/contact
+privacy_policy: https://www.instructive.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Instructive",
+  "version": "1.0.0",
+  "description": "Instructive Extension",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "background/index.js"
+  },
+  "action": {
+    "default_popup": "react/index.html",
+    "default_icon": "logo.png"
+  },
+  "icons": {
+    "16": "logo.png",
+    "34": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "commands": {
+    "instructive_image_search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+1",
+        "mac": "Command+Shift+1"
+      },
+      "description": "Take a screenshot"
+    },
+    "instructive_select_search": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+2",
+        "mac": "Command+Shift+2"
+      },
+      "description": "Search selected text"
+    },
+    "instructive_select_ai": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+3",
+        "mac": "Command+Shift+3"
+      },
+      "description": "Ask AI about selected text"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "background/inject.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "modules/preferences.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "logo.png",
+        "react/*",
+        "modules/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.instructive.app/*"
+    ]
+  }
+}

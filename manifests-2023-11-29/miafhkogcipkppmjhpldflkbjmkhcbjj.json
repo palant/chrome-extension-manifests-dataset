@@ -1,0 +1,85 @@
+---
+name: Gesys
+version: 1.0.11
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 12
+release_date: '2023-09-12T11:40:50.000Z'
+size: 13.42MiB
+languages:
+  - English
+description: Control your browser with gestures
+publisher_account: a.letyagin1
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Gesys",
+    "short_name": "gesys",
+    "version": "1.0.11",
+    "description": "Control your browser with gestures",
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
+
+    "background": {
+        "service_worker": "./src/service_worker.js"
+    },
+    "action": {
+      "default_popup": "./src/popup/popup.html"
+    },
+    "content_scripts": [
+        {
+          "matches": ["https://web-pi-lilac.vercel.app/"],
+          "js": ["./src/content.js"],
+          "all_frames": false,
+          "run_at": "document_end"
+        },
+        {
+          "matches": ["https://web-pi-lilac.vercel.app/gestures"],
+          "js": ["./src/main_scripts/tutorial/tutorial.js"],
+          "all_frames": false,
+          "run_at": "document_end"
+        },
+        {
+          "matches": ["https://www.youtube.com/*"],
+          "js": ["./src/main_scripts/youtube/youtube_content3.js"],
+          "all_frames": false,
+          "run_at": "document_end"
+        },
+        {
+          "matches": ["http://*/*", "https://*/*"],
+          "js": ["./src/main_scripts/all_urls/all_url_content.js"],
+          "all_frames": false,
+          "run_at": "document_end",
+          "exclude_matches": [
+            "https://www.youtube.com/*", "https://web-pi-lilac.vercel.app/gestures", "https://vc.ru/*"
+          ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+          "resources": ["keras_files/model.json", "src/iframe.html",
+            "./src/iframe.js", "./@mediapipe", "./hand_landmarker.task",
+            "./src/popup/popup.css", "./src/popup/popup.js",
+
+            "src/svgs/*",
+
+            "src/main_scripts/all_urls/only_hand_black128.svg", "src/main_scripts/all_urls/right_arrow.svg",
+            "src/main_scripts/all_urls/left_arrow.svg",
+
+
+            "src/main_scripts/youtube/*"],
+          "matches": ["<all_urls>"],
+          "use_dynamic_url": true
+        }
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval' http://localhost:* http://127.0.0.1:*; script-src-elem 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' https://cdn.jsdelivr.net; object-src 'self'"
+      },
+    
+    "manifest_version": 3
+}

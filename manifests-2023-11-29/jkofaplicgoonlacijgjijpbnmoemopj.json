@@ -1,0 +1,82 @@
+---
+name: 'Lingvis: Вивчайте польську мову з TV та вебом'
+version: 1.1.8
+category_slug: productivity/education
+rating: 5
+rating_count: 3
+user_count: 19
+release_date: '2023-09-05T05:33:13.000Z'
+size: 19.46MiB
+languages:
+  - English
+  - українська
+description: >-
+  Вивчайте та вдосконалюйте польську без нудних занять, дивлячись TV чи читаючи
+  статті
+publisher: Foundation
+publisher_account: extension
+publisher_address: |-
+  Bergsgatan 59
+  Stockholm 112 31
+  SE
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extension_name__",
+  "version": "1.1.8",
+  "manifest_version": 3,
+  "default_locale": "uk",
+  "description": "__MSG_extension_description__",
+  "icons": {
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/toolbar-icon-16.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "content_scripts": [{
+    "js": ["contentScript.bundle.js"],
+    "matches": ["<all_urls>"],
+    "exclude_matches": [
+      "*://vod.tvp.pl/*"
+    ],
+    "all_frames": true,
+    "run_at": "document_end"
+  }, {
+    "js": ["contentScript.bundle.js"],
+    "matches": [
+      "*://vod.tvp.pl/*"
+    ],
+    "css": ["content.styles.css"],
+    "run_at": "document_start"
+  },{
+    "js": ["libs/lingVisSDK.js", "libs/lingVisSDK-subtitles.js", "libs/vtt-parser.js", "players/tvp/tvp.bundle.js"],
+    "matches": [
+      "*://vod.tvp.pl/*"
+    ],
+    "css": ["players/tvp/tvp.css"],
+    "run_at": "document_end"
+  }, {
+    "js": ["companion-script.bundle.js"],
+    "matches": ["https://sprakkraft.org/companion/comp.html"],
+    "run_at": "document_end"
+  }
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["libs/lingVisSDK.js", "int-script.bundle.js", "activate.bundle.js", "images/*"],
+    "matches": ["<all_urls>"]
+  }]
+}

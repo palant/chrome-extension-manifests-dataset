@@ -1,0 +1,132 @@
+---
+name: Bweb-tool
+version: 2.7.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 44
+release_date: '2022-06-16T08:20:00.000Z'
+size: 233KiB
+languages:
+  - Norsk
+description: >-
+  Denne utvidelsen gjør det enklere å bruke NTE Marked's Bestillingsweb ved å
+  legge til ekstra funksjonalitet.
+publisher_account: Tom Andre Munkhaug
+support_website: https://github.com/tombayo/bweb-tool
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bweb-tool",
+  "version": "2.7.1",
+  "author": "Tom Andre Munkhaug",
+  "description": "Denne utvidelsen gjør det enklere å bruke NTE Marked's Bestillingsweb ved å legge til ekstra funksjonalitet.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://bweb2.nteb.no/*"
+  ],
+  "action": {
+    "default_title": "Bweb-tool",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://bweb2.nteb.no/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "bweb-tool.darkmode.js",
+        "bweb-tool.lib.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://bweb2.nteb.no/",
+        "https://bweb2.nteb.no/arkivert/"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/jQuery-3.4.1/jquery-3.4.1.min.js",
+        "lib/DataTables-1.10.20/js/jquery.dataTables.min.js",
+        "lib/Chosen-1.8.7/chosen.jquery.min.js",
+        "lib/Moment-2.29.3/moment.min.js",
+        "lib/DataTables-1.10.20/plugins/datetime-moment.js",
+        "bweb-tool.database.js",
+        "bweb-tool.js",
+        "poststed-til-kommune.js"        
+      ],
+      "css": [
+        "lib/DataTables-1.10.20/css/jquery.dataTables.min.css",
+        "lib/Chosen-1.8.7/chosen.min.css",
+        "bweb-tool.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://bweb2.nteb.no/endre/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/jQuery-3.4.1/jquery-3.4.1.min.js",
+        "bweb-tool.database.js",
+        "bweb-tool.workorder.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://bweb2.nteb.no/kommentar/*"  
+      ],
+      "js": [
+        "lib/jQuery-3.4.1/jquery-3.4.1.min.js",
+        "bweb-tool.workorder.comment.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://bweb2.nteb.no/upload/*"
+      ],
+      "js": [
+        "lib/jQuery-3.4.1/jquery-3.4.1.min.js",
+        "bweb-tool.workorder.upload.js"
+      ],
+      "css": [
+        "bweb-tool.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://bweb2.nteb.no/rapport/frister/"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/jQuery-3.4.1/jquery-3.4.1.min.js",
+        "bweb-tool.database.js",
+        "bweb-tool.reports.deadlines.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "bweb-tool-dark.css"
+    ],
+    "matches": [
+      "https://bweb2.nteb.no/*"
+    ]
+  }]
+}

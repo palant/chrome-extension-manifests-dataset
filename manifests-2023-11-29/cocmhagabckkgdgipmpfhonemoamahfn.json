@@ -1,0 +1,75 @@
+---
+name: Distracted Reader
+version: 1.5.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 16
+release_date: '2021-07-12T13:04:56.000Z'
+size: 21.31KiB
+languages:
+  - English
+description: Select any text, learn something new.
+publisher_account: Patrick Juchli
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Distracted Reader",
+    "description": "Select any text, learn something new.",
+    "version": "1.5.2",
+    "manifest_version": 2,
+    "background": {
+        "scripts": [
+            "background/background.js"
+        ],
+        "persistent": true
+    },
+    "browser_action": {},
+    "commands": {
+        "toggle-extension": {
+            "suggested_key": {
+                "default": "Alt+D",
+                "mac": "Alt+D"
+            },
+            "description": "Enable/disable extension"
+        }
+    },
+    "permissions": [
+        "tabs",
+        "webRequest",
+        "webRequestBlocking",
+        "<all_urls>"
+    ],
+    "icons": {
+        "16": "icons/app16.png",
+        "48": "icons/app48.png",
+        "128": "icons/app128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "all_frames": true,
+            "js": [
+                "content/content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.m.wikipedia.org/*",
+                "https://*.m.wiktionary.org/*"
+            ],
+            "all_frames": true,
+            "css": [
+                "wiki.css"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        "content/content.css"
+    ]
+}

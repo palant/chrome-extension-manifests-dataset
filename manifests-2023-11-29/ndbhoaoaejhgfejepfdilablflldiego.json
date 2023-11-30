@@ -1,0 +1,75 @@
+---
+name: IFBS
+version: 1.9.1
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-07-11T09:30:27.000Z'
+size: 400KiB
+languages:
+  - Tiếng Việt
+description: |-
+  Công cụ hỗ trợ tạo tệp đối tượng Facebook, phân tích insight tệp khách hàng.
+  IFBS là công cụ trên nền tảng Facebook hỗ trợ bán hàng…
+publisher_account: fbsai
+support_website: https://i.fbs.ai
+---
+
+{
+ "update_url": "https://clients2.google.com/service/update2/crx",
+ "name": "IFBS",
+ "manifest_version": 3,
+ "version": "1.9.1",
+ "icons": {
+  "48": "img/48.png"
+ },
+ "permissions": [
+  "storage",
+  "scripting",
+  "tabs",
+  "declarativeNetRequest"
+ ],
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "id": "ruleset_1",
+    "enabled": true,
+    "path": "rules.json"
+   }
+  ]
+ },
+ "host_permissions": [
+  "*://*.facebook.com/"
+ ],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "action": {
+  "default_icon": {
+   "48": "img/48.png"
+  },
+  "default_popup": "popup.html"
+ },
+ "content_scripts": [
+  {
+   "all_frames": true,
+   "matches": [
+    "https://*.facebook.com/*"
+   ],
+   "js": [
+    "scripts/newfeed.js",
+    "./libs/jquery.js",
+    "./libs/noti.var.js",
+    "./libs/sweetalert2@11.js"
+   ],
+   "css": [
+    "css/newfeed.css",
+    "css/noti.css"
+   ]
+  }
+ ],
+ "background": {
+  "service_worker": "scripts/background.min.js"
+ }
+}

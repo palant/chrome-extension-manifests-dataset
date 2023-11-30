@@ -1,0 +1,88 @@
+---
+name: Swipefield
+version: 0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2023-10-08T04:42:58.000Z'
+size: 201KiB
+languages:
+  - English
+description: Save your ads
+publisher: Swipefiled
+publisher_account: swipefiled.com
+publisher_address: |-
+  Melbourne, Australia
+  Melbourne, VIC 3000
+  AU
+extension_website: www.swipefiled.com
+support_website: https://www.swipefiled.com/
+privacy_policy: https://swipefiled.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Swipefield",
+    "version": "0.0.1",
+    "manifest_version": 3,
+    "description": "Save your ads",
+    "background": {
+        "service_worker": "src/js/background.js",
+        "type": "module"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';",
+        "sandbox": "sandbox allow-scripts; script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com"
+    },
+    "sandbox": {
+        "pages": ["sandbox.html"]
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "run_at" : "document_end",
+            "matches": [
+                "https://*.facebook.com/*",
+                "https://*.swipefiled.com/*"
+            ],
+            "js": [
+                "src/jQuery_3_6/jQuery.min.js",
+                "src/js/contentScript.js"
+            ],
+            "css": [
+                "src/css/style.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": [
+            "src/css/style.css",
+            "src/assets/loader.svg",
+            "src/firebase/lib/firebase-app.js",
+            "src/firebase/lib/firebase-auth.js",
+            "src/firebase/lib/firebase-ui-auth.js"
+        ],
+        "matches": ["https://*.swipefiled.com/*","https://*.facebook.com/*","https://*.apis.google.com/*","<all_urls>"]
+    }],
+    "icons": {
+        "16": "logo/16x16.png",
+        "48": "logo/48x48.png",
+        "128": "logo/128x128.png"
+    },
+    "permissions": [
+        "storage",
+        "identity",
+        "activeTab"
+    ]
+    ,
+    "oauth2": {
+      "client_id": "292351826679-eq3dabfiud6al1dttcls5541r11vsfdp.apps.googleusercontent.com",
+      "scopes": [  
+        "https://www.googleapis.com/auth/userinfo.email"
+      ]
+    }    
+}

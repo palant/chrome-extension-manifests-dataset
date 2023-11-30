@@ -1,0 +1,68 @@
+---
+name: Clardo.io
+version: 1.0.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 8
+release_date: '2023-06-23T11:26:38.000Z'
+size: 1.1MiB
+languages:
+  - English
+description: Clardo.io Target Account external data loader.
+publisher: Clardo.io
+publisher_account: tim
+publisher_address: |-
+  Bogert 1
+  Eindhoven 5612 LX
+  NL
+extension_website: clardo.io
+support_website: https://www.clardo.io/
+privacy_policy: https://www.clardo.io/terms-of-service
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Clardo.io",
+  "description": "Clardo.io Target Account external data loader.",
+  "version": "1.0.4",
+  "icons": {
+    "16": "icons/Clardo icon.png",
+    "32": "icons/Clardo icon.png",
+    "48": "icons/Clardo icon.png",
+    "128": "icons/Clardo icon.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": ["https://www.linkedin.com/*", "https://app.clardo.io/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*","https://app.clardo.io/*"],
+      "run_at": "document_start",
+      "all_frames": false,
+      "js": ["lib/scripts/scraperXPath.js", "constantMessage.js", "config.js"],
+      "css": ["lib/css/loader.css"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "scripts/*.js", "lib/css/*"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://code.jquery.com/ https://stackpath.bootstrapcdn.com/ https://cdn.jsdelivr.net/ https://kit.fontawesome.com/;"
+  }
+}

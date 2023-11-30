@@ -1,0 +1,110 @@
+---
+name: BitciChain Wallet
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 16
+release_date: '2022-12-07T17:13:50.000Z'
+size: 5.62MiB
+languages:
+  - English
+description: BitciChain Wallet
+publisher: Bitci Teknoloji A.Ş.
+publisher_address: |-
+  Ortakent Yahşi Mah. Hortma Cad. No: 9
+  Bodrum, Muğla 48400
+  TR
+extension_website: bitcichain.com
+support_website: https://support.bitci.com/hc/tr/requests/new
+privacy_policy: https://www.bitci.com/legals/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "https://www.bitcichain.com",
+  "homepage_url": "https://www.bitcichain.com",
+  "version": "1.0.2",
+  "name": "BitciChain Wallet",
+  "short_name": "BitciWallet",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E",
+        "chromeos": "Alt+Shift+E",
+        "linux": "Alt+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "BitciChain Wallet",
+  "icons": {
+    "16": "assets/img/icons/icon16.png",
+    "32": "assets/img/icons/icon32.png",
+    "64": "assets/img/icons/icon64.png",
+    "192": "assets/img/icons/icon192.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/img/icons/icon16.png",
+      "32": "assets/img/icons/icon32.png",
+      "64": "assets/img/icons/icon64.png",
+      "192": "assets/img/icons/icon192.png"
+    },
+    "default_title": "BitciWallet",
+    "default_popup": "action.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/inject.js",
+        "scripts/*.js.map"
+      ],
+      "use_dynamic_url": false,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "95",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

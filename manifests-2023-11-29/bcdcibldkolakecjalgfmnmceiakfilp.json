@@ -1,0 +1,136 @@
+---
+name: MindYourPass Beta
+version: 4.8.1.1
+category_slug: make_chrome_yours/privacy
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2023-11-29T05:20:17.000Z'
+size: 4.25MiB
+languages:
+  - English
+  - Nederlands
+description: MindYourPass makes authentication safe and easy.
+publisher: MindYourPass BV
+publisher_account: mindyourpass.com
+publisher_address: |-
+  High Tech campus
+  12
+  Eindhoven 5656AE
+  NL
+extension_website: mindyourpass.io
+support_website: https://www.mindyourpass.io
+privacy_policy: https://www.mindyourpass.io/privacy-en
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MindYourPass Beta",
+  "description": "__MSG_description__",
+  "version": "4.8.1.1",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "minimum_chrome_version": "92",
+  "author": "MindYourPass",
+  "action": {
+    "default_icon": {
+      "20": "assets/MindYourPassIcon_20.png",
+      "40": "assets/MindYourPassIcon_40.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.mindyourpass.io/app",
+        "https://www.mindyourpass.io/app/*",
+        "https://mindyourpass.io/app",
+        "https://mindyourpass.io/app/*"
+      ],
+      "js": [
+        "contentFIDO2AuthenticationPage.js",
+        "contentFIDO2RegistrationPage.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://login.mindyourpass.io/*",
+        "https://web.mindyourpass.io/*",
+        "https://localhost:5001/*"
+      ],
+      "js": [
+        "contentEntry.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://login.mindyourpass.io/*",
+        "https://web.mindyourpass.io/*",
+        "https://localhost:5001/*"
+      ],
+      "js": [
+        "contentWebAuthn.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "contentEntryMainWorld.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "backgroundEntry.js"
+  },
+  "icons": {
+    "16": "icon_16.png",
+    "48": "icon_48.png",
+    "128": "icon_128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/securelogin2/signin.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "/assets/securelogin2/index.html",
+        "/assets/securelogin2/index3.html"
+      ],
+      "matches": [
+        "https://mindyourpass.io/*",
+        "https://www.mindyourpass.io/*"
+      ]
+    }
+  ]
+}

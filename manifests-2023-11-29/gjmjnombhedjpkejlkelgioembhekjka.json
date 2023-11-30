@@ -1,0 +1,95 @@
+---
+name: vidyaNote - video notes and highlighter
+version: 0.0.4
+category_slug: productivity/education
+rating: 5
+rating_count: 2
+user_count: 3
+release_date: '2023-10-23T09:01:32.000Z'
+size: 112KiB
+languages:
+  - English (United States)
+description: >-
+  video notes in side panel with live markdown preview. video highlighter,
+  screenshot. Record video. auto-sync notes with local disk
+publisher: Anil electronic
+publisher_account: brahmastra
+publisher_address: |-
+  Paryavaran Complex Main Rd
+  Block D, Paryavaran Complex, Sainik Farm
+  New Delhi, Delhi 110030
+  IN
+extension_website: noterail.site
+privacy_policy: https://brahmastra.vercel.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "minimum_chrome_version": "114",
+ "offline_enabled": true,
+ "name": "vidyaNote - video notes and highlighter",
+ "short_name": "vidyaNote",
+ "description": "video notes in side panel with live markdown preview. video highlighter, screenshot. Record video. auto-sync notes with local disk",
+ "version": "0.0.4",
+ "author": "NoteRail",
+ "icons": {
+  "128": "icon_128.png",
+  "48": "icon_48.png",
+  "16": "icon.png"
+ },
+ "action": {
+  "default_title": "Open vidyaNote"
+ },
+ "options_page": "options/index.html",
+
+ "side_panel": {
+  "default_path": "panel/index.html"
+ },
+
+ "background": {
+  "service_worker": "background/background.js",
+  "type": "module"
+ },
+
+ "content_scripts": [
+  {
+   "matches": [
+    "https://www.youtube.com/watch?v=*",
+    "https://www.udemy.com/course/*",
+    "https://www.coursera.org/learn/*",
+    "https://learn.udacity.com/courses/*",
+    "https://courses.edx.org/xblock/*",
+    "https://learn.365datascience.com/courses/*"
+   ],
+   "all_frames": true,
+   "js": ["scripts/marker/video-marker.js"],
+   "css": ["scripts/marker/marker.css"],
+   "run_at": "document_end"
+  }
+ ],
+
+ "web_accessible_resources": [
+  {
+   "resources": ["scripts/cropper/crop-box-APK63IKP.js", "scripts/cropper/shot-cropper-QS2WOHXT.css"],
+   "matches": ["<all_urls>"]
+  }
+ ],
+
+ "permissions": ["sidePanel", "storage", "tabs", "scripting"],
+ "host_permissions": [
+  "https://www.youtube.com/watch?v=*",
+  "https://www.udemy.com/course/*",
+  "https://www.coursera.org/learn/*",
+  "https://learn.udacity.com/courses/*",
+  "https://learning.edx.org/course/*",
+  "https://courses.edx.org/xblock/*",
+  "https://learn.365datascience.com/courses/*"
+ ],
+ "optional_host_permissions": ["<all_urls>"],
+
+ "externally_connectable": {
+  "matches": ["https://cloud.vidyanote.noterail.site/*"]
+ }
+}

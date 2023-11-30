@@ -1,0 +1,141 @@
+---
+name: Altais for Athena Health
+version: 1.170 prod
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 49
+release_date: '2020-12-29T18:10:40.000Z'
+size: 2.28MiB
+languages:
+  - English
+description: >-
+  Easily navigate your Athena Health EHR to access your patient’s records all on
+  one simple to use screen.
+publisher: Altais
+publisher_account: Altais Health
+publisher_address: |-
+  601 12th Street
+  16th Floor
+  Oakland, CA 94607
+  USA
+support_website: https://altais.com
+privacy_policy: https://altais.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Altais for Athena Health",
+  "version": "1.170",
+  "description": "Easily navigate your Athena Health EHR to access your patient’s records all on one simple to use screen. ",
+  "manifest_version": 2,
+  "permissions": [
+    "https://athenahealth.com/*",
+    "https://*.athenahealth.com/*",
+    "https://*.altaisenable.com/*",
+    "https://*.altaisdev.io/*",
+    "https://*.altaishealth.io/*",
+    "browsingData",
+    "tabs",
+    "storage",
+    "webNavigation"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.altaisenable.com/*",
+      "https://*.altaishealth.io/*",
+      "https://*.altaisdev.io/*"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "altaisStarGray.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://athenanet.athenahealth.com/*",
+        "https://preview.athenahealth.com/*"
+      ],
+      "css": [
+        "contentScripts/windowManager/styles.css"
+      ],
+      "js": [
+        "contentScripts/windowManager/contentScript.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://athenanet.athenahealth.com/*",
+        "https://preview.athenahealth.com/*"
+      ],
+      "js": [
+        "contentScripts/context/athena.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://preview.athenahealth.com/*"
+      ],
+      "js": [
+        "contentScripts/webdriver/webdriver.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.altaisenable.com/callback/extension",
+        "https://*.altaisdev.io/callback/extension",
+        "https://practice-management.altaishealth.io/callback/extension"
+      ],
+      "js": [
+        "contentScripts/auth/closeTab.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.altaisenable.com/*",
+        "https://*.altaisdev.io/*",
+        "https://*.altaishealth.io/*"
+      ],
+      "js": [
+        "contentScripts/auth/logout.js"
+      ],
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "web_accessible_resources": [
+    "index.html",
+    "images/closer.svg",
+    "images/minimize.svg",
+    "images/popout.svg",
+    "athenaRecon.js"
+  ],
+  "background": {
+    "scripts": [
+      "lib/dataDog.js",
+      "lib/socket.io.js",
+      "lib/auth0.js",
+      "lib/okta.js",
+      "lib/launchdarkly.js",
+      "background/altais.js",
+      "background/env.js",
+      "background/initLogger.js",
+      "background/wsClient.js",
+      "background/session.js",
+      "background/overlay.js",
+      "background/index.js"
+    ],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' 'sha256-W4lSyuma2uRGb+4bb7Fmskjyp/KNq+m38MdrM+CQQP0='; object-src 'self'",
+  "version_name": "1.170 prod"
+}

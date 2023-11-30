@@ -1,0 +1,100 @@
+---
+name: noted
+version: 1.1.12
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2022-12-09T02:09:00.000Z'
+size: 3.18MiB
+languages:
+  - English
+description: noted scraper to get user orders
+publisher: limited liability companies
+publisher_account: noted
+publisher_address: |-
+  3820 Charlotte Ave
+  Suite 146
+  Nashville, TN 37209
+  US
+extension_website: notedreturns.com
+support_website: http://notedreturns.com/
+privacy_policy: https://www.notedreturns.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "noted",
+  "description": "noted scraper to get user orders",
+  "version": "1.1.12",
+  "icons": {
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "Open Popup"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O",
+        "mac": "MacCtrl+Shift+O"
+      },
+      "description": "Toggle Popup"
+    }
+  },
+  "permissions": ["tabs", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.amazon.com/your-orders/orders*", "https://www.amazon.com/gp/css/order-history*", "https://www.amazon.com/gp/your-account/order-history*"],
+      "css": ["css/index.css"],
+      "js": ["js/jquery.min.js", "js/moment.min.js", "js/amazon.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "cross_origin_embedder_policy": {
+    "value": "require-corp"
+  },
+  "cross_origin_opener_policy": {
+    "value": "same-origin"
+  },
+  "externally_connectable": {
+    "matches": ["https://app.notedreturns.com/*", "https://staging-app.notedreturns.com/*", "https://staging-api.notedreturns.com/*", "https://api.notedreturns.com/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["css/*.css", "js/jquery.min.js", "js/moment.min.js", "js/amazon.js", "images/*"],
+      "matches": [
+        "https://app.notedreturns.com/*",
+        "https://staging-app.notedreturns.com/*",
+        "https://amazon.com/*",
+        "https://www.amazon.com/*",
+        "https://staging-api.notedreturns.com/*",
+        "https://api.notedreturns.com/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://staging-app.notedreturns.com/*",
+    "https://app.notedreturns.com/*",
+    "https://www.amazon.com/*",
+    "http://localhost:3000/*",
+    "https://staging-api.notedreturns.com/*",
+    "https://api.notedreturns.com/*"
+  ],
+  "content_security_policy": {
+    "extension_page": "script-src 'self'; object-src 'self'"
+  }
+}

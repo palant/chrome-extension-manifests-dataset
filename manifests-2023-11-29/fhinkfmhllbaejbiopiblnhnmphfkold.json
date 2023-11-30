@@ -1,0 +1,59 @@
+---
+name: Redscope.ai chrome plugin
+version: '1.1'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2023-11-04T08:16:07.000Z'
+size: 86.14KiB
+languages:
+  - English
+description: Redscope.ai chrome plugin
+publisher: redscope.ai
+publisher_address: |-
+  474 Morse Ave
+  Sunnyvale, CA 94085-4331
+  US
+extension_website: redscope.ai
+privacy_policy: http://redscope.ai/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Redscope.ai chrome plugin",
+  "description": "Redscope.ai chrome plugin",
+  "version": "1.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background-scripts/service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["lib/rrweb.js",  "content-scripts/dom-mutation/bundler.js"],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/flag-html-nodes/flag_clickable_nodes.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/pass_through_custom_events.js"],
+      "run_at": "document_end",
+      "world": "ISOLATED"
+    }
+  ],
+  "action": {
+    "default_icon": "icons/server_down.png"
+  },
+  "permissions": [
+    "tabs"
+  ]
+}

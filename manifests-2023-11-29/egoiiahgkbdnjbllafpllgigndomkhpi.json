@@ -1,0 +1,77 @@
+---
+name: Quirkbench
+version: '0.5'
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 16
+release_date: '2019-09-14T12:32:26.000Z'
+size: 36.96KiB
+languages:
+  - English
+description: One click access to enhanced Workbench™ for Salesforce™
+publisher_account: quirkdev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Quirkbench",
+    "version": "0.5",
+    "manifest_version" : 2,
+    "description": "One click access to enhanced Workbench™ for Salesforce™",
+    "icons": { "16": "res/icon16.png",
+              "20": "res/icon20.png",
+              "32": "res/icon32.png",
+              "48": "res/icon48.png",
+              "64": "res/icon64.png",
+              "128": "res/icon128.png" },
+    "background" : {
+      "scripts" : ["qbUtil.js", "sfdcStandardObjects.js", "background.js"]
+    },
+    "browser_action": {},
+    "content_scripts": 
+      [
+        { 
+          "matches":["https://workbench.developerforce.com/login.php*"],
+          "js":["qb.js", "qbLogin.js"],
+          "run_at": "document_end"
+        },
+        { 
+          "matches":["https://workbench.developerforce.com/retrieve.php*"],
+          "js":["qb.js", "qbRetrieve.js"],
+          "run_at": "document_end"
+        },
+        {
+          "matches":["https://workbench.developerforce.com/describe.php*"],
+          "js":["qb.js", "qbDescribe.js"],
+          "run_at": "document_end"
+        },
+        {
+          "matches":["https://workbench.developerforce.com/query.php?qbObjName=*"],
+          "js":["qb.js", "qbQuery.js"],
+          "run_at": "document_end"
+        },
+        {
+          "matches":["https://workbench.developerforce.com/insert.php*"],
+          "js":["qb.js", "qbInsert.js"],
+          "run_at": "document_end"
+        }
+      ],
+    "web_accessible_resources": ["res/quirking.png"],
+    "permissions": ["clipboardRead", "contextMenus", "storage"],
+    "commands": {
+      "clipboard-to-workbench": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+0",
+          "mac": "Command+Shift+0"
+        },
+        "description": "Explore clipboard value with Workbench",
+        "global" : true
+      }
+    },
+    "options_ui": {
+      "page": "options.html",
+      "chrome_style": true
+    }
+  }

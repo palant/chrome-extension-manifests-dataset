@@ -1,0 +1,106 @@
+---
+name: Profiler — Twitter & Reddit Profile Analyzer
+version: 1.0.2
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-11-30T06:26:27.000Z'
+size: 1.98MiB
+languages:
+  - English
+description: >-
+  Profiler is a tool that leverages AI to dissect and interpret social media
+  behavior, creating rich, detailed profiles of users.
+publisher_account: '@ybouane'
+extension_website: ybouane.com
+support_website: https://ybouane.com/contact
+privacy_policy: https://profiler.ybouane.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Profiler — Twitter & Reddit Profile Analyzer",
+  "version": "1.0.2",
+  "manifest_version": 3,
+  "description": "Profiler is a tool that leverages AI to dissect and interpret social media behavior, creating rich, detailed profiles of users.",
+  "homepage_url": "https://profiler.ybouane.com",
+  "icons": {
+    "128": "icons/icon.png"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_icon": "icons/icon.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "src/background/service_worker.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+ "matches": [
+   "https://old.reddit.com/*",
+   "https://www.reddit.com/*",
+   "https://i.reddit.com/*",
+   "https://reddit.com/*",
+
+   "https://www.twitter.com/*",
+   "https://twitter.com/*",
+   "https://www.x.com/*",
+   "https://x.com/*"
+ ]
+  },
+  "content_scripts": [
+ {
+  "matches": [
+   "https://old.reddit.com/*",
+   "https://www.reddit.com/*",
+   "https://i.reddit.com/*",
+   "https://reddit.com/*",
+   
+   "https://www.twitter.com/*",
+   "https://twitter.com/*",
+   "https://www.x.com/*",
+   "https://x.com/*"
+  ],
+  "js": [
+    "src/inject/idInjector.js"
+  ]
+ },
+    {
+      "matches": [
+  "https://old.reddit.com/*",
+  "https://www.reddit.com/*",
+  "https://i.reddit.com/*",
+  "https://reddit.com/*"
+      ],
+      "js": [
+        "src/inject/common.js",
+        "src/inject/injectReddit.js"
+      ],
+      "css": [
+        "src/inject/inject.css"
+      ],
+      "world" : "MAIN"
+    },
+    {
+      "matches": [
+  "https://www.twitter.com/*",
+  "https://twitter.com/*",
+  "https://www.x.com/*",
+  "https://x.com/*"
+      ],
+      "js": [
+        "src/inject/common.js",
+        "src/inject/injectX.js"
+      ],
+      "css": [
+        "src/inject/inject.css"
+      ],
+      "world" : "MAIN"
+    }
+  ]
+}

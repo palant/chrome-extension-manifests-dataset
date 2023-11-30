@@ -1,0 +1,128 @@
+---
+name: Akina
+version: 1.2.2
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 2
+user_count: 5
+release_date: '2022-10-03T11:25:22.000Z'
+size: 88.01KiB
+languages:
+  - English
+description: Digital healthcare meets gamification
+publisher: Akina AG
+publisher_account: akinahealth.dev
+publisher_address: |-
+  Lengghalde 5
+  Zurich 8008
+  CH
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2.2",
+  "name": "Akina",
+  "description": "Digital healthcare meets gamification",
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "https://*.akina.app/*",
+    "https://akina.health/*",
+    "*://127.0.0.1/*",
+    "*://*.facebook.com/*",
+    "*://*.instagram.com/*",
+    "*://*.xbox.com/*",
+    "*://*.live.com/*",
+    "https://*.akina.cloud/*"
+  ],
+  "icons": {
+    "48": "icons/48.png",
+    "128": "icons/128.png",
+    "256": "icons/256.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.facebook.com/*"
+      ],
+      "js": [
+        "js/constants.js",
+        "js/connectors/facebook.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.instagram.com/*"
+      ],
+      "js": [
+        "js/constants.js",
+        "js/connectors/instagram.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.xbox.com/*"
+      ],
+      "js": [
+        "js/connectors/xbox-injector.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/*",
+        "https://*.instagram.com/*",
+        "https://*.xbox.com/*"
+      ],
+      "js": [
+        "js/akina-origin.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.akina.app/*",
+        "https://*.akina.health/*",
+        "http://localhost:3000/*",
+        "http://127.0.0.1:3000/*",
+        "https://*.akina.cloud/*"
+      ],
+      "js": [
+        "js/akina.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/constants",
+        "js/connectors/xbox.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "homepage_url": "https://akina.health"
+}

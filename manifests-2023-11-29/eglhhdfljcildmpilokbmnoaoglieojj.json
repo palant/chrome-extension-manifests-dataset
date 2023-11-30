@@ -1,0 +1,72 @@
+---
+name: Bring Back the BlueBird
+version: '2'
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-08-01T17:23:04.000Z'
+size: 1.93MiB
+languages:
+  - English
+description: Restore Bird favicon on Twitter.com
+publisher: AppLabs
+publisher_address: |-
+  Noida
+  Noida, Uttar Pradesh 201301
+  IN
+extension_website: geetpurwar.com
+support_website: https://geetpurwar.com/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Bring Back the BlueBird",
+    "options_ui": {
+        "page": "popup.html",
+        "open_in_tab": false
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "version": "2",
+    "description": "Restore Bird favicon on Twitter.com",
+    "icons": {
+        "16": "icon-16.png",
+        "48": "icon-48.png",
+        "128": "icon-128.png",
+        "512": "icon-512.png",
+        "16": "icon-16@2x.png",
+        "48": "icon-48@2x.png",
+        "128": "icon-128@2x.png",
+        "512": "icon-512@2x.png"
+    },
+    "permissions": ["webRequest", "tabs", "declarativeContent", "storage"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.twitter.com/*"],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "type": "declarativeContent",
+        "conditions": [
+            {
+                "hostContains": "twitter.com"
+            }
+        ],
+        "actions": [
+            {
+                "type": "removeResponseHeader",
+                "responseHeaders": ["location"]
+            }
+        ]
+    }
+}

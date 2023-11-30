@@ -1,0 +1,96 @@
+---
+name: ChatGPT for WASend Plus
+version: 0.0.2
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 10
+release_date: '2023-11-09T11:15:53.000Z'
+size: 323KiB
+languages:
+  - English
+description: Enhance Your WhatsApp Conversations with WA Send Plus!
+publisher_account: wasenderplus
+support_website: https://wasendplus.com/contact
+privacy_policy: >-
+  https://docs.google.com/document/d/1tv3FP4dZ-LoefXOaKuyhS1wipOgXpSGXclEtM49B49g/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatGPT for WASend Plus",
+  "version": "0.0.2",
+  "default_locale": "en",
+  "description": "__MSG_appDesc__",
+  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhSnLinTGaplhmEZCH1InwfAUbimbRAzQdJxmj6rhFEmH2gYW+pYebriLDyt++wS/P99XK0SmLHd+Ai0F6J4s9CHw7CxMemaf8OA1q8B/S/gt17nnO0mtwGy2iqJEJBZXdf7viDOuToSrI6hFwaIe3W++0hc4eYAnFMrVOaCfvpGdL3BpwD6bj+4ceIQZSZOeqQz26rZATHxxeMemJ2igtIaqVTZMQCHWtTDwkyfNOSplPU5RN31ChlzjZu1QkMijnoIz4+R88j87CkIrCTVPnzrMep9PXnzJBUBruU4nYGzSOVdKhtDnjS5xfRorSQtB/F7y8rrOS9qeILn4oz6MVwIDAQAB",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "host_permissions": [
+    "https://*.openai.com/" 
+  ],
+  "background": {
+    "service_worker": "./background/background.js"
+  },
+  "action": {
+    "default_title": "WA Send Plus",
+    "default_popup": "./popup/popup.html"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "identity"
+  ],
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "./opt/options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./lib/firebase-app.js",
+        "./lib/firebase-auth.js",
+        "./lib/firebase-firestore.js",
+        "./lib/firebase_init.js",
+        "./lib/toastify-js.js",
+        "./content/contentScript.js"
+      ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "173562241398-igoo1up5gomc21jno9jj2eianmpitjpd.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "web_accessible_resources": [ {
+    "matches": [ "https://web.whatsapp.com/*"],
+    "resources": [ "lib/*",
+    "icons/*",
+    "content/*" ,  
+    "css/toastify.min.css",
+    "css/all.min.css",
+    "css/content.css",
+    "css/messages.css",
+    "css/messagesPreview.css",
+    "css/mediaPreview.css",
+    "css/mediaGallery.css",
+    "css/textInput.css",
+    "css/profilePic.css",
+    "css/name.css",
+    "css/noDelay.css",
+    "css/unblurActive.css"]
+ } ]
+}

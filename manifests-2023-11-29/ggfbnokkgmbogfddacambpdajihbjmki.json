@@ -1,0 +1,118 @@
+---
+name: Công cụ mua hàng được phát hành bởi SaboMall
+version: 1.0.0
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 53
+release_date: '2023-11-19T10:17:34.000Z'
+size: 12.53MiB
+languages:
+  - Tiếng Việt
+description: >-
+  Công cụ này giúp bạn đặt hàng về Việt Nam ngay trên website 1688.com.
+  SaboMall.com là đối tác chính thức của 1688 tại Việt Nam
+publisher_account: Sabo Extension Developer
+extension_website: sabomall.com
+support_website: https://help.sabomall.com
+privacy_policy: https://help.sabomall.com/quy-dinh-chinh-sach/chinh-sach-bao-mat
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Công cụ mua hàng được phát hành bởi SaboMall",
+    "short_name": "SaboMall Chrome Extension",
+    "description": "Công cụ này giúp bạn đặt hàng về Việt Nam ngay trên website 1688.com. SaboMall.com là đối tác chính thức của 1688 tại Việt Nam",
+    "version": "1.0.0",
+    "icons": {
+        "16": "logo-16x16.png",
+        "48": "logo-48x48.png",
+        "128": "logo-128x128.png"
+    },
+    "action": {
+        "default_icon": {
+            "32": "logo-32x32.png",
+            "64": "logo-64x64.png",
+            "128": "logo-128x128.png"
+        },
+        "name": "Sabo Mall",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://detail.1688.com/*",
+                "*://order.1688.com/*",
+                "*://order.1688.com/*",
+                "*://work.1688.com/home/*",
+                "*://buyertrade.taobao.com/trade/*",
+                "*://buy.taobao.com/auction/*",
+                "*://item.taobao.com/*",
+                "*://*.detail.tmall/*",
+                "*://*.detail.tmall.hk/*",
+                "*://*.tmall.com/item/*",
+                "*://*.tmall.com/order/*",
+                "*://*.detail.liangxinyao.com/*",
+                "*://*.detail.tmall.com/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["contentCommon.js"],
+            "css": ["contentCommon.css"]
+        },
+        {
+            "matches": ["*://amaterasu.gobizdev.com/*", "*://sabomall.com/*"],
+            "run_at": "document_idle",
+            "js": ["contentGetAccessToken.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentProduct.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentScript.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://member1.taobao.com/*"],
+            "run_at": "document_idle",
+            "js": ["contentTaobao.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://order.1688.com/order/*"],
+            "run_at": "document_idle",
+            "js": ["content1688.js"],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://trade.tmall.com/*",
+                "*://buyertrade.taobao.com/*",
+                "*://trade.taobao.com/*",
+                "*://trade.tmall.com/detail/*",
+                "*://trade.1688.com/order/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["contentOrderDetailTaobao.js"],
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["injector.js", "all.css", "font-awesome.css", "/images/*", "/icons/*"],
+            "matches": ["<all_urls>"],
+            "extension_ids": []
+        }
+    ],
+    "permissions": ["storage", "activeTab", "tabs"],
+    "options_page": "options.html"
+}

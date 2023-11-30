@@ -1,0 +1,81 @@
+---
+name: SocialAppFarm Tiktok and Instagram Downloader
+version: 0.0.1
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-05-05T08:35:32.000Z'
+size: 205KiB
+languages:
+  - English
+description: >-
+  Download TikTok videos and Instagram content. Get content for your
+  socialappfarm account.
+publisher_account: socialappfarm
+support_website: https://socialappfarm.com/support
+privacy_policy: https://socialappfarm.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "SocialAppFarm Tiktok and Instagram Downloader",
+ "description": "Download TikTok videos and Instagram content. Get content for your socialappfarm account.",
+ "author": "SocialAppFarm",
+ "manifest_version": 3,
+ "version": "0.0.1",
+ "homepage_url": "https://socialappfarm.com",
+ "icons": {
+  "48": "48.png",
+  "128": "128.png"
+ },
+ "action": {
+  "default_popup": "tiktok/popup.html"
+ },
+ "background": {
+  "service_worker": "tiktok/service.js"
+ },
+ "content_scripts": [{
+  "matches": [
+   "https://tiktok.com/*",
+   "https://www.tiktok.com/*"
+  ],
+  "js": ["uploader.js",  "tiktok/main.js"],
+  "css": ["tiktok/main.css"],
+  "run_at": "document_idle"
+ }, {
+  "matches": ["*://*.instagram.com/*"],
+  "css": ["instagram/style.css", "tiktok/main.css"],
+  "js": ["uploader.js", "instagram/content.js"]
+ }
+ ],
+ "declarative_net_request": {
+  "rule_resources": [{
+   "id": "ruleset_1",
+   "enabled": true,
+   "path": "tiktok/ruleset.json"
+  }]
+ },
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "assets/download.png"
+   ],
+   "matches": ["*://*.instagram.com/*", "*://*.tiktok.com/*"]
+  }
+ ],
+ "permissions": [
+  "downloads",
+  "storage",
+  "declarativeNetRequestWithHostAccess"
+ ],
+ "host_permissions": [
+  "*://*.tiktok.com/*",
+  "https://tiktok.com/*",
+  "https://*.tiktokcdn.com/*",
+  "https://*.tiktokv.com/*",
+  "*://*.instagram.com/*",
+  "file:///"
+ ]
+}

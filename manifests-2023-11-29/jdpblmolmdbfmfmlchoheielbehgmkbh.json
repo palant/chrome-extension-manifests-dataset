@@ -1,0 +1,59 @@
+---
+name: SPOTV Enhancer
+version: 0.3.0
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 1
+user_count: 50
+release_date: '2023-11-19T10:29:49.000Z'
+size: 6.5MiB
+languages:
+  - 한국어
+description: 더 넓은 화면과 편한 기능으로 SPOTV를 즐겨보세요.
+publisher: bb-in-hoodie
+publisher_address: |-
+  정자동
+  성남시, 경기도 13560
+  KR
+support_website: https://forms.gle/sGUi4e8qrioJNA4GA
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SPOTV Enhancer",
+  "description": "더 넓은 화면과 편한 기능으로 SPOTV를 즐겨보세요.",
+  "version": "0.3.0",
+  "icons": {
+    "16": "public/images/logo-64.png",
+    "32": "public/images/logo-64.png",
+    "48": "public/images/logo-64.png",
+    "128": "public/images/logo-128.png"
+  },
+  "action": {
+    "default_popup": "public/popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.spotvnow.co.kr/live*"],
+      "run_at": "document_idle",
+      "js": ["dist/live.js"],
+      "css": ["dist/live.css"]
+    },
+    {
+      "matches": ["https://*.spotvnow.co.kr/*"],
+      "run_at": "document_idle",
+      "js": ["dist/home.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["public/images/folding.svg", "public/images/close.svg"],
+      "matches": ["https://*/*", "http://*/*"]
+    }
+  ],
+  "permissions": ["storage", "scripting"],
+  "background": { "service_worker": "dist/background.js" },
+  "host_permissions": ["https://*.spotvnow.co.kr/*"]
+}

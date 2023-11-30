@@ -1,0 +1,80 @@
+---
+name: MailSeen
+version: '2.1'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 6
+user_count: 21
+release_date: '2023-11-28T07:58:49.000Z'
+size: 239KiB
+languages:
+  - English
+description: Know when important emails are Seen.
+publisher: Red Numbers srl
+publisher_account: Onepaper.ai
+publisher_address: |-
+  Stefan cel Mare 2
+  radauti, Suceava 725400
+  RO
+extension_website: mailseen.com
+support_website: https://www.mailseen.com/
+privacy_policy: >-
+  https://docs.google.com/document/d/10AAlucs3J2I4LshQ_5axZXJHYa74-_ZHWw-SfkATe4M/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MailSeen",
+  "version": "2.1",
+  "description": "Know when important emails are Seen.",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/",
+    "https://email-tracker-service-q2yhylknja-uc.a.run.app/",
+    "https://email-tracker-pulldata-service-q2yhylknja-uc.a.run.app/*"
+  ],
+  "oauth2": {
+    "client_id": "930588345463-b25t2s35uqjbg3a83ncnf69qqu6a1ldt.apps.googleusercontent.com",
+    "scopes": ["email", "profile", "openid"]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["UIcomponents.js", "content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["static/firebase-app.js", "static/firebase-firestore.js","static/eyewhite.png","static/eye.png","static/file.png","pdfGenerator.js","static/refreshwhite.png","static/close.png","static/speed.png","static/date.png","static/eyecrossed.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

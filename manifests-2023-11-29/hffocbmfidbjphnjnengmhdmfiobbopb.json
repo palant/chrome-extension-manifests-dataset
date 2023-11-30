@@ -1,0 +1,73 @@
+---
+name: ONYX istudent (preview)
+version: '0.4'
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-07-15T18:17:26.000Z'
+size: 48.45KiB
+languages:
+  - русский
+description: Концепт переработанного интерфейса личного кабинета УрФУ (istudent.urfu.ru).
+publisher_account: z.brevnyakov
+support_website: https://vk.me/gosanon.onyx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ONYX istudent (preview)",
+  "version": "0.4",
+  "description": "Концепт переработанного интерфейса личного кабинета УрФУ (istudent.urfu.ru).",
+  "permissions": [ "scripting" ],
+  "host_permissions": [ "https://istudent.urfu.ru/*", "https://sts.urfu.ru/adfs/OAuth2/authorize" ],
+  "icons": {
+    "256": "./img/extlogo.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "https://istudent.urfu.ru/" ],
+      "css": [ "css/clear.css" ],
+      "js": [ "./js/redirect-to-student-auth-ok.js" ]
+    },
+
+    {
+      "matches": [ "https://istudent.urfu.ru/*" ],
+      "css": [],
+      "js": [ "js/main.js" ]
+    },
+
+    {
+      "matches": [ "https://sts.urfu.ru/adfs/OAuth2/*" ],
+      "css": [ "css/auth.css", "css/urfu-onyx-svg.css" ],
+      "js": [ "js/lib/dom-utils.js", "js/auth.js" ]
+    },
+
+    {
+      "matches": [ "https://istudent.urfu.ru/student?auth-ok" ],
+      "css": [ "css/panel.css", "css/snackbar.css", "css/urfu-onyx-svg.css" ],
+      "js": [ "js/lib/dom-utils.js", "js/afterauth.js" ]
+    },
+
+    {
+      "matches": [ "https://sts.urfu.ru/adfs/ls*" ],
+      "css": [ "css/clear.css" ],
+      "js": [ "js/signout.js" ]
+    },
+
+    {
+      "matches": [ "https://istudent.urfu.ru/?auth*" ],
+      "css": [],
+      "js": [ "./js/redirect-to-student-auth-ok.js" ]
+    }
+  ],
+
+  "web_accessible_resources": [{
+    "resources": [ "img/urfu-onyx.svg", "img/bgpattern1.svg", "img/link-icon.svg", "img/favicon.ico" ],
+    "matches": [ "<all_urls>" ]
+  }],
+
+  "manifest_version": 3
+}

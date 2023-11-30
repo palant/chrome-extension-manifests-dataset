@@ -1,0 +1,64 @@
+---
+name: Aptorder
+version: 1.0.5
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2022-04-28T01:54:03.000Z'
+size: 474KiB
+languages:
+  - Tiếng Việt
+description: Công cụ hỗ trợ đặt hàng order trên Tabao, 1688, Tmall.
+support_website: https://aptorder.vn/blog/category/helps
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Aptorder",
+  "version": "1.0.5",
+  "manifest_version": 3,
+  "description": "Công cụ hỗ trợ đặt hàng order trên Tabao, 1688, Tmall. ",
+  "homepage_url": "https://aptorder.vn/",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "vi",
+  "action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "About",
+    "default_popup": "src/browser_action/browser_action_login.html"
+  },
+  "host_permissions": [
+    "*://*.aptorder.vn/*"
+  ],
+  "background" : {
+    "service_worker" :"js/bg-loader.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "https://*.1688.com/*", "http://*.1688.com/*", "https://*.taobao.com/*", "http://*.taobao.com/*", "https://*.tmall.com/*", "http://*.tmall.com/*", "https://*.tmall.hk/*", "http://*.tmall.hk/*" ],
+      "css": [ "css/style.css" ],
+      "js": [
+        "js/jquery/jquery.min.js",
+        "src/inject/main.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "templates/*.html"
+    ],
+    "matches": ["<all_urls>"],
+    "extension_ids": []
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*.firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com'; object-src 'self'"
+  }
+}

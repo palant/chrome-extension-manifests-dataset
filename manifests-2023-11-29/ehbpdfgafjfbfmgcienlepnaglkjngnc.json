@@ -1,0 +1,87 @@
+---
+name: Job Explorer
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 53
+release_date: '2023-07-12T09:36:24.000Z'
+size: 262KiB
+languages:
+  - English
+  - Français
+description: >-
+  Job explorer - Thanks to our extension, directly export relevant profiles from
+  Linkedin to job explorer in one click.
+publisher: 'Le Trèfle '
+publisher_account: Job Explorer
+publisher_address: |-
+  22 Boulevard Gambetta 
+  Issy-les-Moulineaux 92130
+  France
+extension_website: job-explorer.fr
+support_website: https://job-explorer.fr/mentions-legales/
+privacy_policy: https://job-explorer.fr/mentions-legales
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extName__",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "cookies",
+    "activeTab",
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "optional_permissions": [
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "https://www.linkedin.com/",
+    "https://*.job-explorer.fr/"
+  ],
+  "optional_host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": [ "assets/vendor/xml2json/xml2json.js","assets/vendor/selectr/js/selectr.min.js", "assets/js/common.js", "assets/js/index.js"
+      ,"assets/js/step1-login.js","assets/js/step3-form.js","contentScript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+  "icons": {
+    "16": "assets/img/apple-touch-icon-16x16.png",
+    "32": "assets/img/apple-touch-icon-32x32.png",
+    "48": "assets/img/apple-touch-icon-48x48.png",
+    "132": "assets/img/apple-touch-icon.png"
+  },
+  "action": {
+    "default_icon": "assets/img/apple-touch-icon.png",
+    "default_title": "__MSG_defaultTitle__"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "index.html",
+        "screens/*.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }]
+}

@@ -1,0 +1,104 @@
+---
+name: Voodoo Clipper
+version: 1.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 11
+release_date: '2019-02-24T16:04:02.000Z'
+size: 1.6MiB
+languages:
+  - English (UK)
+description: >-
+  Google Chrome extension for creating link previews and sending previews with
+  Gmail, based on the meta content of the given webpage.
+publisher: Voodoo Marketing SL
+publisher_address: |-
+  Avenida Tivoli s/n,
+  Centro Commercial Las Ventas 48a,
+  Arroyo de la Miel, Malaga 29631
+  Spain
+privacy_policy: https://voodoointernetmarketing.com/privacy.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Voodoo Clipper",
+  "short_name": "Clipper",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhCDWNnxXWcZ86fH9jDpLeegAWcXPVnhUXelG2HErbqSK0ZiPL9O0yQALfebrvbUvB9P8mFsUvUb2I1tYWwpyp7fw4wdTOlLRGgi20FKVaZCh3EmLG7n2eWIlE7t97h7Cfi5Wgerfnorj5mOm3VatamjiZSKqrQQ6ba1qEKsvfNFWHB4T6yjQcBz1ZmF+mVEbkTTPrviICUlKlHRTaiYtGEeXjUzhHsgURucnxyX1kwNNdiyuqup7WEo+0i/C5tLRvJ+WtvhjZkX83wFZLukZCThUI/nnMZA72Fx/1QW7HJNrm22FRRcxkbGAynUQC4BWPoIcD1VMARIn1+KUuZvH1QIDAQAB",
+  "version": "1.0.1",
+  "description": "Google Chrome extension for creating link previews and sending previews with Gmail, based on the meta content of the given webpage.",
+  "author": "tim.marcher@gmail.com",
+  "manifest_version": 2,
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "https://www.googleapis.com/"
+  ],
+  "oauth2": {
+    "client_id": "131660590460-b6mk3m39ekq27r5k0qoq0i53ee735mg1.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/chromewebstore.readonly"
+    ]
+  },
+  "page_action": {
+    "default_popup": "popup.html",
+    "default_title": "Voodoo Clipper",
+    "default_icon": {
+      "16": "images/voodoo-icon-16.png",
+      "48": "images/voodoo-icon-48.png",
+      "64": "images/voodoo-icon-64.png",
+      "128": "images/voodoo-icon-128.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "metacontent.js",
+        "voodooclipper.js",
+        "page.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "voodooclipper.js",
+        "gmail.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "sandbox": {
+    "pages": [
+      "handlebars-frame.html",
+      "showdown-frame.html"
+    ]
+  },
+  "commands": {
+    "_execute_page_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "windows": "Alt+Shift+Y",
+        "mac": "Alt+Shift+Y"
+      }
+    }
+  }
+}

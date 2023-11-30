@@ -1,0 +1,61 @@
+---
+name: Kattis Tracker
+version: 0.2.2
+category_slug: productivity/developer
+rating: 5
+rating_count: 3
+user_count: 20
+release_date: '2022-08-31T11:29:58.000Z'
+size: 2.37MiB
+languages:
+  - English
+description: >-
+  Automatically upload Kattis problem solutions to a GitHub repository of your
+  choice and track your progress with this extension!
+publisher_account: Ahmed Siadomar
+support_website: https://github.com/ahmedsiad/KattisTracker
+privacy_policy: https://www.privacypolicies.com/live/aaf4170a-f2ca-436a-9996-432e491502ca
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kattis Tracker",
+  "description": "Automatically upload Kattis problem solutions to a GitHub repository of your choice and track your progress with this extension!",
+  "version": "0.2.2",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open dashboard"
+  },
+  "icons": {
+    "48": "logo48.png",
+    "128": "logo128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/?code*"
+      ],
+      "js": [
+        "auth.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://open.kattis.com/submissions/*"
+      ],
+      "js": [
+        "kattis.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_page": "script-src 'self' https://github.com/login/oauth/authorize; object-src 'self'"
+  }
+}

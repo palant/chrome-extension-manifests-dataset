@@ -1,0 +1,63 @@
+---
+name: Graphlan Copilot
+version: 0.2.10
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2023-10-06T12:58:33.000Z'
+size: 340KiB
+languages:
+  - English (United States)
+description: Help sync your contacts and connections data for Graphlan
+publisher: Graphlan Inc.
+publisher_account: Graphlan, Inc.
+publisher_address: |-
+  838 Walker Rd suite 21 2
+  Dover, DE 19904
+  US
+privacy_policy: https://github.com/graphlan/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Graphlan Copilot",
+  "version": "0.2.10",
+  "description": "Help sync your contacts and connections data for Graphlan",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "downloads",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://*.graphlan.com/*",
+    "http://localhost:3000/*"
+  ],
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "service_worker": "background/bg.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content-scripts/linkedin.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.graphlan.com/*", "http://localhost:3000/*"],
+      "js": ["content-scripts/install-notifier.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "128": "icon.png"
+  }
+}

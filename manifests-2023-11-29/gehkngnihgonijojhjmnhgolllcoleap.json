@@ -1,0 +1,67 @@
+---
+name: Myflix
+version: '3.0'
+category_slug: lifestyle/entertainment
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2023-09-22T12:59:27.000Z'
+size: 26.01KiB
+languages:
+  - English
+description: >-
+  Removes ads, saves shows and skip episodes with a shortcut key (default:
+  Ctrl+Shift+K)
+publisher: Jules' Software Development
+publisher_account: Software By Jules
+publisher_address: |-
+  Vincent van Goghlaan
+  Utrecht 3451JN
+  NL
+privacy_policy: https://softwarebyjules.com/index.php/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Myflix",
+    "description": "Removes ads, saves shows and skip episodes with a shortcut key (default: Ctrl+Shift+K)",
+    "version": "3.0",
+    "icons": {
+        "16": "/images/logo_16.png",
+        "48": "/images/logo_48.png",
+        "128": "/images/logo_128.png"
+    },
+    "content_scripts": [{
+        "matches": ["https://bingewatch.to/*"],
+        "js": ["content.js"],
+        "run_at": "document_start",
+        "world": "MAIN"
+    }, {
+        "matches": ["https://bingewatch.to/*"],
+        "js": ["ExtPay.js", "TrialManager.js", "contentt.js"],
+        "world": "ISOLATED"
+    }],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Myflix",
+        "default_icon": {
+            "16": "/images/logo_16.png",
+            "48": "/images/logo_48.png",
+            "128": "/images/logo_128.png"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "commands": {
+        "inject-script": {
+            "suggested_key": "Ctrl+Shift+K",
+            "description": "Next Episode"
+        }
+    },
+    "permissions": [
+        "storage"
+    ]
+}

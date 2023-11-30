@@ -1,0 +1,62 @@
+---
+name: Bitbucket Pull Request Sharing
+version: 1.5.1
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 17
+release_date: '2021-10-07T07:03:37.000Z'
+size: 9.95KiB
+languages:
+  - English
+description: Copies pull request links from bitbucket page.
+publisher_account: factoryworkman
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Bitbucket Pull Request Sharing",
+  "description": "Copies pull request links from bitbucket page.",
+  "version": "1.5.1",
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": "copy128px.png"
+  },
+  "manifest_version": 2,
+  "icons": {
+    "128": "copy128px.png"
+  },
+  "commands": {
+    "copy_prs": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V",
+        "mac": "MacCtrl+Shift+V"
+      },
+      "description": "Copy pull requests from the page"
+    }
+  },
+  "background": {
+    "scripts": [
+      "shortcut.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://bitbucket.org/dashboard/overview",
+        "https://bitbucket.org/dashboard/pullrequests*"
+      ],
+      "js": [
+        "script/processing.js",
+        "script/message-generator.js",
+        "script/background.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite",
+    "storage"
+  ]
+}

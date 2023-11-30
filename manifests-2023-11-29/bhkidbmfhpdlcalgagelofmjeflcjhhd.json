@@ -1,0 +1,67 @@
+---
+name: WIOCC Hub's NetSuite Extension v2
+version: 2.0.0
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2023-06-28T05:13:21.000Z'
+size: 34.07KiB
+languages:
+  - English (UK)
+description: This Chrome extension enables the connection of WIOCC Hub to NetSuite
+publisher: WIOCC
+publisher_account: WIOCC Systems
+publisher_address: |-
+  Level 2, Alexander House, Silicon Avenue
+  Ebène
+  Cybercity 72201
+  MU
+support_website: https://hub.wiocc.net
+privacy_policy: https://wiocc.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "WIOCC Hub's NetSuite Extension v2",
+ "description": "This Chrome extension enables the connection of WIOCC Hub to NetSuite",
+ "version": "2.0.0",
+ "browser_action": {
+  "default_popup": "index.html",
+  "default_title": "WIOCC Hub's NetSuite Extension v2"
+ },
+ "icons": {
+  "16": "logo-small.png",
+  "48": "logo-small.png",
+  "128": "logo-small.png"
+ },
+ "permissions": ["*://3398896.app.netsuite.com/*", "https://20.90.110.141*", "https://hub.wiocc.net*", "webRequest", "storage"],
+ "background": {
+  "service_worker": "app/background.js"
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://20.90.110.141/netsuite", "https://hub.wiocc.net/netsuite"],
+   "js": ["app/hub_content.js"],
+   "run_at": "document_start"
+  },
+  {
+   "matches": ["https://3398896.app.netsuite.com/app/login/secure/enterpriselogin.nl"],
+   "js": ["app/netsuite_login_content.js"],
+   "run_at": "document_start",
+   "all_frames": true
+  },
+  {
+   "matches": ["*://3398896.app.netsuite.com/*"],
+   "js": ["app/netsuite_content.js"],
+   "run_at": "document_start",
+   "all_frames": true
+  }
+ ],
+ "content_security_policy": {
+  "script-src": "self",
+  "object-src": "self"
+ }
+}

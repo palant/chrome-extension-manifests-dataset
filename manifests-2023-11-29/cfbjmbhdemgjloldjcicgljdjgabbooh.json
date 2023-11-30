@@ -1,0 +1,81 @@
+---
+name: Sprkl Extension
+version: 0.0.70
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-03-23T12:02:48.000Z'
+size: 167KiB
+languages:
+  - English
+description: Apply Sprkl instrumentation on chrome browser.
+publisher: Fireflies
+publisher_account: Sprkl
+privacy_policy: https://sprkl.dev/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sprkl Extension",
+  "description": "Apply Sprkl instrumentation on chrome browser.",
+  "version": "0.0.70",
+  "action": {
+    "default_popup": "assets/popup.html",
+    "default_icon": "assets/icon.png"
+  },
+  "options_page": "assets/options.html",
+  "background": {
+    "service_worker": "./build/bin/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./build/bin/postload-content-script.js"
+      ],
+      "all_frames": true,
+      "persistAcrossSessions": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./build/bin/preload-content-script.js"
+      ],
+      "all_frames": true,
+      "persistAcrossSessions": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "build/content-script/require-sprkl.js",
+        "build/content-script/init-sprkl.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "permissions": [
+    "background",
+    "cookies",
+    "storage",
+    "tabs",
+    "debugger"
+  ]
+}

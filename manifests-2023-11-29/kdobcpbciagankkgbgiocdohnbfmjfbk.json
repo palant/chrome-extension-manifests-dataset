@@ -1,0 +1,69 @@
+---
+name: Filtru
+version: 0.0.1
+category_slug: lifestyle/well_being
+rating: 5
+rating_count: 1
+user_count: 25
+release_date: '2023-11-13T12:06:27.000Z'
+size: 308KiB
+languages:
+  - English (United States)
+description: 'Make your web clean: AI nsfw blocker for your browser.'
+publisher_account: thejimi
+support_website: https://filtru.xyz/link/discord
+privacy_policy: https://www.freeprivacypolicy.com/live/167abc39-d54a-42db-a896-b68be8e773b4
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Filtru",
+    "description": "Make your web clean: AI nsfw blocker for your browser.",
+    "version": "0.0.1",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "./renders/popup/main_popup.html"
+    },
+    "icons": {
+        "16": "./cdn/16.png",
+        "48": "./cdn/48.png",
+        "128": "./cdn/128.png" 
+    },
+    "background": {
+        "service_worker": "./dist/service_worker.js",
+        "type": "module"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab"
+    ],
+    "content_security_policy":{
+        "extension_page":"script-src 'self' 'unsafe-eval'; object-src 'self'"
+    },
+    "host_permissions":[
+        "<all_urls>"
+    ],
+    "web_accessible_resources": [{ 
+        "resources": ["src/injectorScript.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "externally_connectable": {
+        "matches": ["https://filtru.xyz/*", "https://*.filtru.xyz/*", "http://127.0.0.1:5500/*", "http://localhost:3000/*", "<all_urls>"]
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+Shift+P",
+                "mac": "MacCtrl+Command+P"
+            }
+        }
+    },
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "run_at": "document_start",
+          "js": ["./src/injectorScript.js"]
+        }
+    ]
+}

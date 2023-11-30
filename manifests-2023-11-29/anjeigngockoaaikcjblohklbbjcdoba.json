@@ -1,0 +1,93 @@
+---
+name: TornMarket+
+version: 0.1.3
+category_slug: lifestyle/fun
+rating: 1
+rating_count: 1
+user_count: 4
+release_date: '2022-11-08T04:19:53.000Z'
+size: 69.65KiB
+languages:
+  - English
+description: >-
+  Provides additional information and features on the market pages of the game
+  Torn.
+publisher_account: Ricardo Osorio
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TornMarket+",
+  "version": "0.1.3",
+  "description": "Provides additional information and features on the market pages of the game Torn.",
+  "author": "Ricardo Osorio - BOTLoki [2742316]",
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://www.torn.com/*",
+    "https://api.torn.com/*"
+  ],
+
+  "action": {
+    "default_icon": {
+      "32": "resources/icons/icon.png"
+    },
+    "default_title": "Torn Market+",
+    "default_popup": "popup/popup.html"
+  },    
+
+  "background": {
+    "service_worker": "scripts/background/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.torn.com/shops.php?step=*",
+        "https://www.torn.com/bigalgunshop.php"
+      ],
+      "js": [
+        "scripts/content/utils/utils.js",
+        "scripts/content/sidebar/bar.js"
+      ],
+      "css": ["scripts/content/sidebar/bar.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.torn.com/imarket.php*"],
+      "js": [
+        "scripts/content/utils/utils.js",
+        "scripts/content/sidebar/bar.js",
+        "scripts/content/market/highlight.js",
+        "scripts/content/listings/update.js"
+      ],
+      "css": [
+        "scripts/content/sidebar/bar.css",
+        "scripts/content/market/highlight.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.torn.com/bazaar.php?userId=*"],
+      "js": [
+        "scripts/content/utils/utils.js",
+        "scripts/content/sidebar/bar.js",
+        "scripts/content/bazaar/highlight.js"
+      ],
+      "css": [
+        "scripts/content/sidebar/bar.css",
+        "scripts/content/bazaar/highlight.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "web_accessible_resources": [{
+    "resources": ["resources/*", "scripts/content/intercept/xhr-requests.js"],
+    "matches": ["https://www.torn.com/*"]
+  }]
+}

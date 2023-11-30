@@ -1,0 +1,73 @@
+---
+name: Script Injector
+version: 1.0.0
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2023-11-18T05:50:15.000Z'
+size: 241KiB
+languages:
+  - English
+  - Français
+description: Allow to inject script at page start.
+publisher_account: Dorian Rouby
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "action": {
+    "default_icon" : "assets/icons/icon.png",        
+   "default_popup" : "popup.html",         
+    "default_title": "__MSG_extension_name__"
+  },
+  "icons": { 
+    "128" : "assets/icons/icon.png" 
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type" : "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources" : ["assets/*"],
+      "matches" : ["<all_urls>"]
+    },
+    {
+      "resources" : ["libs/*.js"],
+      "matches" : ["<all_urls>"]
+    },
+    {
+      "resources" : ["*.js"],
+      "matches" : ["<all_urls>"]
+    },
+    {
+      "resources" : ["popup.html"],
+      "matches" : ["<all_urls>"]
+    },
+    {
+      "resources" : ["switch.css"],
+      "matches" : ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self'"
+  },
+  "permissions": ["tabs", "storage"]
+}

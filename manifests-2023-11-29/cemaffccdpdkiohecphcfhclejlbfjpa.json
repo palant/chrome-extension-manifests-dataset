@@ -1,0 +1,165 @@
+---
+name: Wander Garden
+version: 0.1.3
+category_slug: lifestyle/entertainment
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-11-27T10:20:51.000Z'
+size: 58.39KiB
+languages:
+  - English
+description: Companion extension for wander.garden website.
+publisher_account: rabursky
+privacy_policy: https://wander.garden/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Wander Garden",
+    "version": "0.1.3",
+    "description": "Companion extension for wander.garden website.",
+    "icons": {
+      "16": "icon/16.png",
+      "32": "icon/32.png",
+      "48": "icon/48.png",
+      "128": "icon/128.png"
+    },
+    "content_scripts":[
+      {
+        "matches":[
+            "*://*.booking.com/*"
+        ],
+        "run_at": "document_start",
+        "js":[
+          "js/consts.js",
+          "js/utils.js",
+          "js/ui.js",
+          "js/core.js",
+          "js/country.js",
+          "js/capture/booking/archived.js",
+          "js/capture/booking/confirmation.js",
+          "js/capture/booking/login.js",
+          "js/capture/booking/trips.js",
+          "js/capture/booking/index.js"
+        ]
+      },
+      {
+        "matches":[
+            "*://*.airbnb.com/*",
+            "*://*.airbnb.co.uk/*",
+            "*://*.airbnb.com.sg/*",
+            "*://*.airbnb.pl/*",
+            "*://*.airbnb.hu/*"
+        ],
+        "js":[
+          "js/consts.js",
+          "js/ui.js",
+          "js/core.js", 
+          "js/country.js",
+          "js/capture/airbnb/login.js",
+          "js/capture/airbnb/trip.js",
+          "js/capture/airbnb/trips.js",
+          "js/capture/airbnb/index.js"
+        ]
+      },
+      {
+        "matches":[
+            "*://*.agoda.com/*"
+        ],
+        "run_at": "document_start",
+        "world": "MAIN",
+        "js":["inject/locationExtract.js"]
+      },
+      {
+        "matches":[
+            "*://*.agoda.com/*"
+        ],
+        "run_at": "document_start",
+        "js":[
+          "js/consts.js",
+          "js/ui.js",
+          "js/core.js",
+          "js/country.js",
+          "js/capture/agoda/signin.js",
+          "js/capture/agoda/edit.js",
+          "js/capture/agoda/bookings.js",
+          "js/capture/agoda/index.js"
+        ]
+      },
+      {
+        "matches":[
+            "*://*.travala.com/*",
+            "*://*.agoda.com/*"
+        ],
+        "run_at": "document_start",
+        "world": "MAIN",
+        "js":["inject/XMLExtract.js"]
+      },
+      {
+        "matches":[
+            "*://*.travala.com/*"
+        ],
+        "run_at": "document_start",
+        "js":[
+          "js/consts.js",
+          "js/ui.js",
+          "js/core.js",
+          "js/country.js",
+          "js/capture/travala/bookings.js",
+          "js/capture/travala/index.js"
+        ]
+      },
+      {
+        "matches":[
+            "*://*.tripadvisor.com/*"
+        ],
+        "run_at": "document_start",
+        "js":[
+          "js/consts.js",
+          "js/ui.js",
+          "js/core.js",
+          "js/country.js",
+          "js/capture/tripAdvisor/bookings.js",
+          "js/capture/tripAdvisor/booking.js",
+          "js/capture/tripAdvisor/index.js"
+        ]
+      },
+      {
+        "matches":[
+            "*://*.getyourguide.com/*"
+        ],
+        "run_at": "document_start",
+        "js":[
+          "js/consts.js",
+          "js/ui.js",
+          "js/core.js",
+          "js/country.js",
+          "js/capture/getYourGuide/bookings.js",
+          "js/capture/getYourGuide/booking.js",
+          "js/capture/getYourGuide/account.js",
+          "js/capture/getYourGuide/index.js"
+        ]
+      },
+      {
+          "matches":[
+              "*://*.wander.garden/*",
+              "*://127.0.0.1/*"
+          ],
+          "js":["js/consts.js", "js/garden.js"]
+      }
+    ],
+    "background": {
+      "service_worker": "js/background.js"
+    },
+    "web_accessible_resources": [{
+      "resources": ["inject/XMLExtract.js"],
+      "matches": ["*://*.travala.com/*"]
+    },
+    {
+      "resources": ["inject/windowExtract.js", "inject/locationExtract.js"],
+      "matches": ["*://*.agoda.com/*"]
+    }]
+}

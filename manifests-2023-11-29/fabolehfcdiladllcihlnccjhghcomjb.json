@@ -1,0 +1,124 @@
+---
+name: Gobiz - Công cụ hỗ trợ người mua hàng
+version: 3.0427.0942
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2023-06-29T11:34:02.000Z'
+size: 8.63MiB
+languages:
+  - Tiếng Việt
+description: Gobiz - Công cụ hỗ trợ người mua hàng
+publisher_account: Gobiz Ext Developer
+privacy_policy: https://gobiz.vn/gobiz-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Gobiz - Công cụ hỗ trợ người mua hàng",
+    "short_name": "Gobiz - Công cụ hỗ trợ người mua hàng",
+    "description": "Gobiz - Công cụ hỗ trợ người mua hàng",
+    "version": "3.0427.0942",
+    "icons": {
+        "16": "logo-small.png",
+        "48": "logo-small.png",
+        "128": "logo-small.png"
+    },
+    "action": {
+        "default_icon": {
+            "32": "logo-small.png",
+            "64": "logo-small.png",
+            "128": "logo-small.png"
+        },
+        "name": "Gobiz"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://detail.1688.com/*",
+                "*://order.1688.com/*",
+                "*://order.1688.com/*",
+                "*://work.1688.com/home/*",
+                "*://buyertrade.taobao.com/trade/*",
+                "*://buy.taobao.com/auction/*",
+                "*://item.taobao.com/*",
+                "*://*.detail.tmall/*",
+                "*://*.detail.tmall.hk/*",
+                "*://*.tmall.com/item/*",
+                "*://*.tmall.com/order/*",
+                "*://*.detail.liangxinyao.com/*",
+                "*://*.detail.tmall.com/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["contentCommon.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["localStorageGetItem.js"]
+        },
+        {
+            "matches": [
+                "*://*.dota.gobizdev.com/*",
+                "*://localhost/*",
+                "*://gsa.gobiz.vn/*",
+                "*://drug.gobizdev.com/*",
+                "*://my.sabo.asia/*",
+                "*://taobao.gobiz.vn/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["localStorageGetItemM22.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentSupported.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["contentScript.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://member1.taobao.com/*"],
+            "run_at": "document_idle",
+            "js": ["contentTaobao.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["*://order.1688.com/order/*"],
+            "run_at": "document_idle",
+            "js": ["content1688.js"],
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://trade.tmall.com/*",
+                "*://buyertrade.taobao.com/*",
+                "*://trade.taobao.com/*",
+                "*://trade.tmall.com/detail/*",
+                "*://trade.1688.com/order/*"
+            ],
+            "run_at": "document_idle",
+            "js": ["contentOrderDetailTaobao.js"],
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["injector.js", "all.css"],
+            "matches": ["<all_urls>"],
+            "extension_ids": []
+        }
+    ],
+    "permissions": ["storage", "activeTab", "tabs"]
+}

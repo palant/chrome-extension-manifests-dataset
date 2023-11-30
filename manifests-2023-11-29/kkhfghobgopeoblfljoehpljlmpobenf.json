@@ -1,0 +1,104 @@
+---
+name: Salespal
+version: 1.0.5
+category_slug: productivity/communication
+rating: 5
+rating_count: 8
+user_count: 38
+release_date: '2023-10-26T00:23:07.000Z'
+size: 373KiB
+languages:
+  - English
+description: Automate sales follow ups directly through your Gmail.
+publisher_account: Salespal
+extension_website: salespal.io
+support_website: https://salespal.io
+privacy_policy: https://salespal.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Salespal",
+    "version": "1.0.5",
+    "description": "Automate sales follow ups directly through your Gmail.",
+    "permissions": ["storage"],
+    "externally_connectable": {
+        "ids": ["*"],
+        "matches:": [
+            "https://mail.google.com/*"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "js": [
+                "inject.js"
+            ],
+            "css": [
+                "assets/style.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://app.salespal.io/*",
+                "http://localhost:5173/*"
+            ],
+            "js": [
+                "injectFE.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_title": "Salespal",
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "images/sp_16.png",
+            "32": "images/sp_32.png",
+            "48": "images/sp_48.png",
+            "128": "images/sp_128.png"
+        }
+    },
+    "icons": {
+        "16": "images/sp_16.png",
+        "32": "images/sp_32.png",
+        "48": "images/sp_48.png",
+        "128": "images/sp_128.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*",
+                "assets/*",
+                "gmail.js",
+                "extension.js",
+                "constants.js"
+            ],
+            "matches": [
+                "https://mail.google.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "constants.js"
+            ],
+            "matches": [
+                "https://app.salespal.io/*",
+                "http://localhost:5173/*"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://mail.google.com/*",
+        "https://v1.api.salespal.io/*",
+        "http://localhost:4000/*"
+    ],
+    "manifest_version": 3
+}

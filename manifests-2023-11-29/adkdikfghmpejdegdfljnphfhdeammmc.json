@@ -1,0 +1,60 @@
+---
+name: Delivery Slot Monitoring
+version: 0.0.0.6
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2020-04-19T13:21:50.000Z'
+size: 417KiB
+languages:
+  - English
+description: Monitors Whole Foods and Fresh Direct for open delivery slots
+publisher_account: sekerniv
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Delivery Slot Monitoring",
+  "version": "0.0.0.6",
+  "description": "Monitors Whole Foods and Fresh Direct for open delivery slots",
+  "permissions": [
+    "notifications",
+    "tabs",
+    "storage",
+    "*://*.amazon.com/gp/buy/shipoptionselect/handlers/*",
+    "*://*.freshdirect.com/your_account/reserve_timeslot*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "page_action": {
+    "default_icon": {
+      "32": "images/icon_non_eligible_16.png"
+    }
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "icons": {
+    "16": "images/icon_non_eligible_16.png",
+    "32": "images/icon_monitoring_square.png",
+    "48": "images/icon_monitoring_square.png",
+    "128": "images/icon_monitoring_square.png"
+  },
+  "manifest_version": 2,
+  "content_scripts": [
+    {
+      "matches": ["*://*.amazon.com/*"],
+      "js": ["jquery-3.5.0.js", "whole_foods_content_script.js"]
+    },
+    {
+      "matches": ["*://*.freshdirect.com/your_account/reserve_timeslot*"],
+      "js": ["jquery-3.5.0.js", "fresh_direct_content_script.js"]
+    }
+  ]
+}
