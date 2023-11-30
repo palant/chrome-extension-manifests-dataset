@@ -43,3 +43,12 @@ query.js -m "user_count < 1000" "permissions =? /activeTab/i"
 # *://*/* or https://*/* permissions)
 query.js "permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i || host_permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i"
 ```
+
+Results example:
+```sh
+$ query.js -m "user_count >= 10000000" "content_security_policy =? /unsafe-eval/i"
+aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 34000000
+hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
+nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 15000000
+Matched 3 out of 30 manifests (10.00%).
+```
