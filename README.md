@@ -30,7 +30,7 @@ query.js -m "user_count >= 10000" "manifest_version == 3"
 
 ```sh
 # List all extensions using 'unsafe-eval' Content Security Policy
-query.js "content_security_policy =? /unsafe-eval/i"
+query.js "content_security_policy =? /unsafe-eval/i || content_security_policy.extension_pages =? /unsafe-eval/i"
 ```
 
 ```sh
@@ -41,5 +41,5 @@ query.js -m "user_count < 1000" "permissions =? /activeTab/i"
 ```sh
 # List all extensions requesting permissions for all websites (<all_urls>,
 # *://*/* or https://*/* permissions)
-query.js "permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i"
+query.js "permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i || host_permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i"
 ```
