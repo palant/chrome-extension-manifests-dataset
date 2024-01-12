@@ -8,9 +8,9 @@ This has been inspired by a [similar repository](https://github.com/mandatorypro
 
 ## Querying the dataset
 
-The repository contains a `query.js` script allowing running queries against the dataset. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
+The convenience script `query.js` in this repository allows running queries against the dataset. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
 
-The script uses [matchme queries](https://github.com/DamonOehlman/matchme) and lists matching extensions. You can pass a manifest query and optionally a metadata query on the command line:
+The queries are JavaScript code that will be executed sandboxed, with extension metadata/manifest as context. You can pass a manifest query and optionally a metadata query on the command line:
 
 ```sh
 query.js [-m metadata-query] manifest-query
@@ -30,25 +30,52 @@ query.js -m "user_count >= 10000" "manifest_version == 3"
 
 ```sh
 # List all extensions using 'unsafe-eval' Content Security Policy
-query.js "content_security_policy =? /unsafe-eval/i || content_security_policy.extension_pages =? /unsafe-eval/i"
+query.js "this.content_security_policy && /unsafe-eval/i.test(content_security_policy.extension_pages || content_security_policy)"
 ```
 
 ```sh
 # List all extensions with less than 1.000 users using activeTab permission
-query.js -m "user_count < 1000" "permissions =? /activeTab/i"
+query.js -m "user_count < 1000" "[this.permissions].flat().includes('activeTab')"
 ```
 
 ```sh
 # List all extensions requesting permissions for all websites (<all_urls>,
 # *://*/* or https://*/* permissions)
-query.js "permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i || host_permissions =? /(<all_urls>|\*:\/\/\*\/\*|https:\/\/\*\/\*)/i"
+query.js "[this.host_permissions, this.permissions].flat().filter(permission => ['<all_urls>', '*://*/*', 'https://*/*'].includes(permission)).length"
 ```
 
 Results example:
 ```sh
-$ query.js -m "user_count >= 10000000" "content_security_policy =? /unsafe-eval/i"
-aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 34000000
+$ query.js -m "user_count >= 10000000" "this.content_security_policy && /unsafe-eval/i.test(content_security_policy.extension_pages || content_security_policy)"
+aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
+fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
 hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
-nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 15000000
-Matched 3 out of 30 manifests (10.00%).
+mmeijimgabbpbgpdklnllpncmdofkcpn Screencastify - Screen Video Recorder 12000000
+nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 16000000
+Matched 5 out of 31 manifests (16.13%).
+```
+
+## Comparing datasets
+
+The convenience script `compare.js` in this repository allows comparing extension data between two datasets. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
+
+The query is JavaScript code that will be executed sandboxed, with four variables as context: `metadata1`, `manifest1`, `metadata2`, `manifest2`. The variables `metadata1` and `manifest1` will be set to the extension’s metadata/manifest in the first directory, `metadata2` and `manifest2` to the same extension’s metadata/manifest in the second directory. By default, the second directory is the current dataset and the first directory the dataset preceding it.
+
+By passing `-i` command line option, extensions missing from one of the directories can be included in the comparison. The context variables for the directory where the extension is missing will be set to `null` then.
+
+Examples:
+
+```sh
+# List popular extensions that changed their name recently
+compare.js "metadata2.user_count >= 1000000 && metadata1.name != metadata2.name"
+```
+
+```sh
+# List popular extensions more than doubling their previous user count
+compare.js "metadata2.user_count >= 1000000 && metadata1.user_count * 2 < metadata2.user_count"
+```
+
+```sh
+# List new extensions with a high user count
+compare.js -i "metadata1 == null && metadata2.user_count >= 100000"
 ```
