@@ -1,0 +1,130 @@
+---
+name: Fly Fox
+version: '1.0'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-04-12T09:41:16.000Z'
+size: 4.08MiB
+languages:
+  - 中文 (简体)
+description: 飞狐chrome版
+publisher: 张方涛
+publisher_account: zjb525435
+publisher_address: |-
+  余杭街道融创金成英特学府7幢1201
+  杭州市, 浙江省 311100
+  CN
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Fly Fox",
+  "description": "飞狐chrome版",
+  "homepage_url": "https://pmxuntian.taobao.com/index.htm",
+  "version": "1.0",
+
+  "__action_comment": "popup页面配置",
+  "action": {
+    "__default_popup_comment": "popup页面的路径（根目录为最终build生成的插件包目录）",
+    "default_popup": "index.html",
+
+    "__default_icon_comment": "浏览器插件按钮的图标",
+    "default_icon": {
+      "16": "/images/app.png",
+      "32": "/images/app.png",
+      "48": "/images/app.png",
+      "128": "/images/app.png"
+    },
+
+    "__default_title_comment": "浏览器插件按钮hover显示的文字",
+    "default_title": "飞狐"
+  },
+  
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  
+  "content_scripts": [
+    {
+      "all_frames": true,
+
+      "__matches_comment": "应用于哪些页面地址（可以使用正则，<all_urls>表示匹配所有地址）",
+      "matches": ["<all_urls>"],
+
+      "__css_comment": "注入到目标页面的css，注意不要污染目标页面的样式",
+      "css": ["static/css/content.css"],
+
+      "__js_comment": "注入到目标页面js，在沙盒里运行，与目标页面是隔离的，没有污染问题",
+      "js": ["static/js/content.js"],
+
+      "__run_at_comment": "代码注入的时机，可选document_start、document_end、document_idle（默认）",
+      "run_at": "document_end"
+    }
+  ],
+
+  "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'",
+      "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval'; object-src 'self'"
+  },
+
+  "devtools_page": "pages/devtools.html",
+
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
+
+  "__permissions_comment": "申请chrome extension API权限",
+  "permissions": [
+    "activeTab",
+    "clipboardRead",
+    "clipboardWrite",
+    "debugger",
+    "declarativeContent",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage",
+    "tabs",
+    "unlimitedStorage"
+  ],
+
+  "__host_permissions_comment": "插件涉及的外部请求地址，暂未发现影响跨域请求，猜测是用于上架商店时方便审核人员查阅",
+  "host_permissions":[
+    "https://*/*"
+  ],
+
+  "__web_accessible_resources_comment": "如果向目标页面插入图片或者js，需要在这里授权插件本地资源",
+  "web_accessible_resources": [
+    {
+      "resources": [ "/images/app.png" ],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [ "static/js/inject.js" ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "declarativeNetRequestRuleset",
+      "enabled": false,
+      "path": "rules/declarativeNetRequestRuleset.json"
+    }]
+  },
+
+  "__icons_comment": "插件图标",
+  "icons": {
+    "16": "/images/app.png",
+    "32": "/images/app.png",
+    "48": "/images/app.png",
+    "128": "/images/app.png"
+  },
+
+  "__omnibox_comment": "向地址栏注册一个关键字以提供搜索建议，只能设置一个关键字",
+  "omnibox": { "keyword" : "飞狐" }
+}

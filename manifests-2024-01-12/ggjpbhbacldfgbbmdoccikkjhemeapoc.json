@@ -1,0 +1,71 @@
+---
+name: Easy NIJISANJI Store
+version: 0.2.1
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 27
+release_date: '2023-07-09T13:49:34.000Z'
+size: 3.0MiB
+languages:
+  - 日本語
+description: にじさんじオフィシャルストアを使いやすくする拡張機能です。
+publisher_account: BokeRinGo
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Easy NIJISANJI Store",
+  "version": "0.2.1",
+  "description": "にじさんじオフィシャルストアを使いやすくする拡張機能です。",
+  "permissions": ["tabs", "storage", "cookies"],
+  "icons": {
+    "16": "./icon16.jpg",
+    "32": "./icon32.jpg",
+    "48": "./icon48.jpg",
+    "128": "./icon128.jpg"
+  },
+  "action": {
+    "default_icon": {
+      "16": "./icon16.jpg",
+      "32": "./icon32.jpg"
+    },
+    "default_title": "Easy NIJISANJI Store",
+    "default_popup": "./popup.html"
+  },
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "host_permissions": ["*://*.nijisanji.jp/"],
+  "content_scripts": [
+    {
+      "matches": ["https://shop.nijisanji.jp/s/niji/item/detail/*"],
+      "js": ["./detail.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://shop.nijisanji.jp/s/niji/item/list*"],
+      "js": ["./list.js"],
+      "css": ["./list.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://shop.nijisanji.jp/s/niji/*"],
+      "js": ["./common.js"],
+      "css": ["./common.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injectedScript.js", "common.css"],
+      "matches": ["https://shop.nijisanji.jp/*"]
+    }
+  ],
+  "options_page": "./options.html"
+}

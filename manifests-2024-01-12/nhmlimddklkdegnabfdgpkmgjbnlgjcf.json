@@ -1,0 +1,86 @@
+---
+name: MyPrompts
+version: 1.1.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 93
+release_date: '2023-01-31T05:29:30.000Z'
+size: 5.89MiB
+languages:
+  - English
+description: >-
+  Easily save, manage, and share your artificial intelligence prompts from any
+  website with MyPrompts.
+publisher_account: info.avivpaz
+support_website: https://discord.gg/SEVHwZ4n
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.1.1",
+  "manifest_version": 3,
+  "name": "MyPrompts",
+  "description": "Easily save, manage, and share your artificial intelligence prompts from any website with MyPrompts.",
+  "icons": {
+    "128": "myprmopts_icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "myprmopts_icon.png"
+  },
+  "web_accessible_resources": [
+  ],
+  "background": {
+    "matches": [
+      "https://beta.dreamstudio.ai/*",
+      "https://labs.openai.com/*"
+    ],
+    "service_worker": "background.js"
+  },
+  "all_frames": false,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://beta.dreamstudio.ai/*"
+      ],
+      "js": [
+        "dreamstudio_content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://labs.openai.com/*"
+      ],
+      "js": [
+        "dalle_content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://discord.com/channels/662267976984297473*"
+      ],
+      "js": [
+        "midjourney_content.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://discord.com/channels/662267976984297473*",
+        "https://labs.openai.com/*",
+        "https://beta.dreamstudio.ai/*"
+      ],
+      "js": [
+        "general_content.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "https://cdn.discordapp.com/*"
+  ]
+}

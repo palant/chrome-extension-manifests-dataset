@@ -1,0 +1,100 @@
+---
+name: CLIK TRACKER
+version: '1.333'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 89
+release_date: '2023-12-21T05:32:56.000Z'
+size: 11.44MiB
+languages:
+  - English (United States)
+description: Create tracking links that will help your marketing to get to the next level
+publisher_account: BOS
+support_website: https://cliktracker.com/support
+privacy_policy: https://app.mysocial360.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CLIK TRACKER",
+  "short_name": "Clik Tracker",
+  "version": "1.333",
+  "description": "Create tracking links that will help your marketing to get to the next level",
+  "manifest_version": 3,
+  "homepage_url": "https://cliktracker.com",
+  "minimum_chrome_version": "88",
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "gcm", 
+    "identity",
+    "identity.email",
+    "tabs",
+    "storage",
+    "notifications",
+    "contextMenus"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo16.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.mysocial360.com/oauth/*", "https://beta.app.cliktracker.com/cliktracker/*", "https://app.mysocial360.com/cliktracker/*"],
+      "js": ["./messages/auth.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://accountscenter.facebook.com/profiles/",
+        "https://accountscenter.facebook.com/personal_info/",
+        "https://accountscenter.facebook.com/profiles/*",
+        "https://accountscenter.facebook.com/personal_info/*"
+      ],
+      "js": [
+        "./content/facebook.login.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "logo16.png",
+    "32": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

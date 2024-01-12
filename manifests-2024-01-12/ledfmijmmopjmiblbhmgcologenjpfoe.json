@@ -1,0 +1,178 @@
+---
+name: Reachdog
+version: 2.0.8
+category_slug: lifestyle/social
+rating: 5
+rating_count: 7
+user_count: 224
+release_date: '2023-03-17T06:29:11.000Z'
+size: 2.33MiB
+languages:
+  - English (United States)
+description: >-
+  Reach Dog is a free research tool that saves time with searching for
+  influencers and hashtags.
+publisher: Reachdog
+publisher_account: reachdog
+publisher_address: |-
+  1225 Ponce De León
+  Ste. M-12
+  San Juan 00907
+  PR
+extension_website: reach.dog
+support_website: https://reach.dog/
+privacy_policy: https://reach.dog/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Reachdog",
+    "description": "Reach Dog is a free research tool that saves time with searching for influencers and hashtags.",
+    "version": "2.0.8",
+    "background": {
+        "service_worker": "/background.js"
+    },
+    "options_page": "options.html",
+    "permissions": [
+        "*://reach.dog/",
+        "*://*.reach.dog/",
+        "tabs",
+        "storage",
+        "http://dev.api/*",
+        "https://qavalidationapi.reach.dog/*",
+        "https://validationapi.reach.dog/*",
+        "http://localhost/*"
+    ],
+    "host_permissions": [
+        "*://reach.dog/",
+        "*://*.reach.dog/",
+        "https://*.tiktokcdn.com/",
+        "https://*.ytimg.com/",
+        "http://dev.api/*",
+        "https://qavalidationapi.reach.dog/*",
+        "https://validationapi.reach.dog/*"
+    ],
+    "icons": {
+        "48": "img/icon48.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.instagram.com/*",
+                "https://*.twitter.com/*",
+                "https://*.tiktok.com/*",
+                "https://*.youtube.com/*",
+                "https://*.twitch.tv/*",
+                "https://*.facebook.com/*",
+                "https://*.pinterest.com/*",
+                "https://podcasts.google.com/*",
+                "https://podcasts.apple.com/*",
+                "https://*.spotify.com/*"
+            ],
+            "js": ["injectScript.js"],
+            "css": ["fonts/fontawesome/css/all.min.css"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://*.instagram.com/*",
+                "https://*.twitter.com/*",
+                "https://*.tiktok.com/*",
+                "https://*.youtube.com/*",
+                "https://*.twitch.tv/*",
+                "https://*.facebook.com/*",
+                "https://*.pinterest.com/*",
+                "https://podcasts.google.com/*",
+                "https://podcasts.apple.com/*",
+                "https://*.spotify.com/*"
+            ],
+            "js": ["urlactions.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://*.instagram.com/*"],
+            "js": ["IGContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.instagram.com/*"],
+            "js": ["instagram/pageObserver.js", "overlay.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.twitter.com/*"],
+            "js": ["TwitterContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.twitter.com/*"],
+            "js": ["twitter/pageObserver.js", "overlay.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.tiktok.com/*"],
+            "js": ["TiktokContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.tiktok.com/*"],
+            "js": ["tiktok/pageObserver.js", "overlay.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.youtube.com/*"],
+            "js": ["YoutubeContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.youtube.com/*"],
+            "js": ["youtube/pageObserver.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.twitch.tv/*"],
+            "js": ["TwitchContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.twitch.tv/*", "https://*.youtube.com/*", "https://*.spotify.com/*", "https://*.tiktok.com/*"],
+            "js": ["injectFetch.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://*.facebook.com/*"],
+            "js": ["facebook/index.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.facebook.com/*"],
+            "js": ["facebook/pageObserver.js", "overlay.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.pinterest.com/*"],
+            "js": ["PinterestContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://podcasts.google.com/*"],
+            "js": ["GooglePodcastsContentScript.js"]
+        },
+        {
+            "matches": ["https://podcasts.apple.com/*"],
+            "js": ["ApplePodcastsContentScript.js"]
+        },
+        {
+            "matches": ["https://*.spotify.com/*"],
+            "js": ["SpotifyPodcastsContentScript.js"]
+        }
+    ],
+
+    "web_accessible_resources": [{
+        "resources": [
+            "xhr.js",
+            "IGPageScript.js",
+            "tiktok/TiktokPageScript.js",
+            "YouTubePageScript.js",
+            "fetch.js",
+            "fonts/fontawesome/webfonts/*",
+            "img/*"
+        ],
+        "matches": ["<all_urls>"]
+    }]
+}

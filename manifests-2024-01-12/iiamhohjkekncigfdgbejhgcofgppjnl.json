@@ -1,0 +1,132 @@
+---
+name: AliExpress Invoice Generator - AliInvoice™️
+version: 1.4.5
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 33
+release_date: '2023-05-10T11:26:25.000Z'
+size: 256KiB
+languages:
+  - English
+description: AliInvoice™️ Converts AliExpress order details into an invoice ready to print!
+publisher_account: Wizard_Pekka
+support_website: https://sites.google.com/view/avengercontactmail/home
+privacy_policy: https://sites.google.com/view/avengerprivacypolicy/home
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "AliExpress Invoice Generator - AliInvoice™️",
+    "version": "1.4.5",
+    "manifest_version": 2,
+    "description": "AliInvoice™️ Converts AliExpress order details into an invoice ready to print!",
+    "background": {
+        "scripts": [
+            "./src/lib/jquery.min.js",
+            "./src/content/dataStorage.js",
+            "background.js"
+        ],
+        "persistent": true
+    },
+    "icons": {
+        "16": "./logo/icon16.png",
+        "48": "./logo/icon48.png",
+        "128": "./logo/icon128.png"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "browser_action": {
+        "default_title": "Ali Invoice",
+        "default_icon": "./logo/icon128.png",
+        "default_popup": "popup.html",
+        "scripts": "popup.js"
+    },
+    "options_ui": {
+        "page": "opt.html", 
+        "open_in_tab": true
+    },
+    "web_accessible_resources": [
+        "/logo/*",
+        "/src/*",
+        "/invoice.js",
+        "/opt.html",
+        "/src/css/global.css",
+        "/src/bulma/bulma.css",
+        "/src/elements/modal.html"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "./src/lib/jquery.min.js",
+                "./src/content/orderDetails.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/order_detail.htm*",
+                "*://*.aliexpress.ru/order_detail.htm*",
+                "*://*.aliexpress.us/order_detail.htm*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/css/single.css"
+            ]
+        },
+        {
+            "js": [
+                "./src/lib/accounting.min.js",
+                "./src/lib/jquery.min.js",
+                "./src/content/components/newOrderList.js",
+                "./src/content/ui.js",
+                "./src/content/services/scrape.js",
+                "./src/content/models/Invoice.js",
+                "./src/content/models/Options.js",
+                "./src/content/models/Order.js",
+                "./src/content/orderDetails.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/order_list.htm*",
+                "*://*.aliexpress.ru/order_list.htm*",
+                "*://*.aliexpress.com/orderList.htm*",
+                "*://*.aliexpress.ru/orderList.htm*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/bulma/bulma-mod.css"
+            ]
+        },
+        {
+            "js": [
+                "./src/lib/accounting.min.js",
+                "./src/lib/jquery.min.js",
+                "./src/content/ui.js",
+                "./src/content/models/Order.js",
+                "./src/content/components/utilities.js",
+                "./src/content/dataStorage.js",
+                "./src/content/components/newOrderList.js",
+                "./src/content/extra.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.ru/*",
+                "*://*.aliexpress.us/*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/bulma/bulma-mod.css"
+            ]
+        }
+    ],
+    "optional_permissions": [
+        "*://*.aliexpress.us/*",
+        "downloads"
+    ],
+    "permissions": [
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.ru/*",
+        "*://*.mmstat.com/*",
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "unlimitedStorage"
+    ]
+}

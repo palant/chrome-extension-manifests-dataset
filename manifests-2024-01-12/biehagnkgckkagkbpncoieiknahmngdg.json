@@ -1,0 +1,154 @@
+---
+name: ASIFY
+version: 11.0.0.4
+category_slug: lifestyle/shopping
+rating: 3.9217391304347826
+rating_count: 115
+user_count: 50000
+release_date: '2023-12-15T07:38:15.000Z'
+size: 3.78MiB
+languages:
+  - English
+  - Français
+  - español
+description: The all-in-one extension for dropshipping with Aliexpress
+publisher_account: Asify
+extension_website: asify.tools
+support_website: https://www.facebook.com/asify.io
+privacy_policy: http://asify.tools/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "ASIFY",
+    "description": "__MSG_appDesc__",
+    "default_locale": "en",
+
+    "version": "11.0.0.4",
+    "manifest_version": 3,
+    "homepage_url": "https://www.asify.io",
+
+    "icons": {
+        "128": "/images/asify_128.png"
+    },
+
+    "background": {
+        "service_worker": "/js/worker.js"
+  
+    },
+
+    "action": {
+        "default_popup": "/popup.html",
+        "default_icon": {
+            "128": "/images/asify_128.png"
+        }
+    },
+
+    "options_page": "/options.html",
+
+    "permissions": [
+        "storage"
+    ],
+
+    "host_permissions": [
+        "https://*/*"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["https://*.aliexpress.com/*","https://www.aliexpress.us/*"],
+            "exclude_matches": ["*://m.aliexpress.com/*", "*://m.aliexpress.us/*", "*://m.aliexpress.ru/*"],
+            "run_at":  "document_start",
+            "js": [
+                "/js/lib/jquery-3.7.0.min.js",
+                "/js/lib/bootstrap.bundle.min.js",
+                "/js/mapdata.js",
+                "/js/worldmap.js",
+                "/js/class/class.common.js",
+                "/js/class/class.aliexpress.js",
+                "/js/class/class.asify.js"
+            ],  
+            "css": [
+                "/css/bootstrap.min.css",
+                "/css/asify.css",
+                "/css/bx.boxicons.min.css",
+                "/css/bx.transformations.css",
+                "/css/bx.animations.css",
+                "/css/materialdesignicons.min.css"
+   ]
+        },
+        {
+            "matches": ["https://*.aliexpress.com/*","https://www.aliexpress.us/*"],
+            "exclude_matches": ["*://m.aliexpress.com/*", "*://m.aliexpress.us/*"],
+            "run_at":  "document_idle",
+            "js": [
+                "/js/aliexpress.comus.item.loader.js",
+                "/js/aliexpress.cwl.js"
+            ]
+        },
+        {
+            "matches": ["https://*.aliexpress.com/store/all-wholesale-products/*.html*", "https://*.aliexpress.com/store/*/search*", "https://*.aliexpress.com/store/group/*/*.html*","https://*.aliexpress.com/store/*/*.html*"],
+            "exclude_matches": ["*://m.aliexpress.com/*"],
+            "run_at":  "document_idle",
+            "js": [
+                "/js/aliexpress.com.seller.js",
+                "/js/aliexpress.comus.seller.events.js"
+            ]
+        },
+        {
+   "matches": ["https://*.aliexpress.com/item/*.html*","https://www.aliexpress.us/item/*.html*"],
+   "exclude_matches": ["*://m.aliexpress.com/*", "*://m.aliexpress.us/*", "*://m.aliexpress.ru/*"],
+   "run_at":  "document_idle",
+   "js": [
+                "/js/aliexpress.comus.item.js",
+                "/js/aliexpress.comus.item.events.js"
+
+   ]
+  },
+        {
+   "matches": ["https://*.aliexpress.com/category/*/*.html*","https://*.aliexpress.us/category/*/*.html*","https://www.aliexpress.us/w/wholesale*.html*","https://*.aliexpress.com/w/wholesale*.html*"],
+   "exclude_matches": ["*://m.aliexpress.com/*", "*://m.aliexpress.us/*", "*://m.aliexpress.ru/*"],
+   "run_at":  "document_idle",
+   "js": [
+                "/js/aliexpress.comus.category.js"
+
+   ]
+  },
+        {
+            "all_frames": false,
+            "matches": ["<all_urls>"],
+            "exclude_matches": ["*://*.aliexpress.com/*", "*://*.aliexpress.us/*", "*://*.aliexpress.ru/*"],
+            "run_at": "document_end",
+            "js": [
+                "/js/lib/jquery-3.7.0.min.js",
+                "/ma_payload.js"
+            ]
+        },
+        {
+            "all_frames": false,
+            "matches": ["<all_urls>"],
+            "exclude_matches": ["*://*.aliexpress.com/*", "*://*.aliexpress.us/*", "*://*.aliexpress.ru/*"],
+            "run_at": "document_start",
+            "js": [
+                "/ma_inj.js"
+            ]
+        }
+    ],
+
+    "web_accessible_resources": [{
+        "resources": [
+            "/images/country/*.png",
+            "/images/*.png",
+            "/images/*.svg",
+            "/images/*.gif",
+            "/webfonts/*.eot",
+            "/webfonts/*.svg",
+            "/webfonts/*.woff",
+            "/webfonts/*.woff2",
+            "/webfonts/*.ttf",
+            "/ma_injtd.js"
+        ],
+        "matches": ["<all_urls>"]
+    }]
+}

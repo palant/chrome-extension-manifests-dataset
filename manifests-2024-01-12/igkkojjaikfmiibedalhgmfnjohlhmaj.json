@@ -1,0 +1,156 @@
+---
+name: Lindle
+version: '1.005'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2024-01-07T15:29:40.000Z'
+size: 3.16MiB
+languages:
+  - English
+description: Welcome to Lindle, all your links all in one place
+publisher_account: M2K Developments
+extension_website: m2kdevelopments.com
+support_website: https://lindle.m2kdevelopments.com/support
+privacy_policy: https://m2kdevelopments.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Lindle",
+  "short_name": "Lindle",
+  "version": "1.005",
+  "description": "Welcome to Lindle, all your links all in one place",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "homepage_url": "https://lindle.m2kdevelopments.com",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Lindle",
+    "default_icon": {
+      "16": "logo192.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo192.png"
+    }
+  },
+  "permissions": [
+    "alarms",
+    "bookmarks",
+    "contextMenus",
+    "identity",
+    "gcm",
+    "notifications",
+    "storage",
+    "tabs"
+  ],
+  "icons": {
+    "16": "logo192.png",
+    "32": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png",
+    "512": "logo192.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lindle.m2kdevelopments.com/extension/oauth/",
+        "https://lindle.m2kdevelopments.com/extension/oauth/*",
+        "https://lindle.m2kdevelopments.com/extension/*",
+        "https://lindle.com/extension/*"
+      ],
+      "js": [
+        "./content/oauth.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://lindle.m2kdevelopments.com/api/integrations/*",
+        "https://lindle.m2kdevelopments.com/integrations/*",
+        "https://lindle.com/api/integrations/*",
+        "https://lindle.com/integrations/*"
+      ],
+      "js": [
+        "./content/integrations.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://lindle.m2kdevelopments.com/",
+        "https://lindle.com/"
+      ],
+      "js": [
+        "./content/website.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./libs/toastr.js",
+        "./libs/toastify.js",
+        "./libs/sweetalert.js",
+        "./libs/qrcode.js",
+        "./libs/jquery-3.7.0.min.js",
+        "./content.js"
+      ],
+      "css": [
+        "./libs/toastify.css",
+        "./libs/toastr.css",
+        "./libs/bootstrap.css",
+        "./styles.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/messages/*",
+        "https://*.messenger.com/t/*"
+      ],
+      "js": [
+        "./content/facebook.messenger.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.youtube.com/watch/*",
+        "https://*.youtube.com/*"
+      ],
+      "js": [
+        "./content/youtube.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

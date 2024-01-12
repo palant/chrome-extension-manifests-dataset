@@ -1,0 +1,95 @@
+---
+name: Callvoip Click-to-dial
+version: 1.5.11
+category_slug: productivity/workflow
+rating: 4
+rating_count: 7
+user_count: 2000
+release_date: '2024-01-11T17:07:44.000Z'
+size: 850KiB
+languages:
+  - Nederlands
+description: Click-to-Dial Chrome extensie voor de Hosted Telefooncentrale van Callvoip
+publisher: Digifoon Group BV
+publisher_address: |-
+  Modemstraat 1
+  Amsterdam 1033 RW
+  NL
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Callvoip Click-to-dial",
+    "short_name": "Callvoip C2D",
+    "manifest_version": 2,
+    "description": "Click-to-Dial Chrome extensie voor de Hosted Telefooncentrale van Callvoip",
+    "version": "1.5.11",
+    "background": {
+        "scripts": [
+            "index.js"
+        ]
+    },
+    "icons": {
+        "16": "img/simmpl/icon16.png",
+        "48": "img/simmpl/icon48.png",
+        "128": "img/simmpl/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": "img/simmpl/icon128.png",
+        "default_title": "Simmpl Click-to-dial",
+        "default_popup": "panel.html"
+    },
+    "permissions": [
+        "https://realtime.api.kwebbl.net/*",
+        "https://simmpl.c2d.qaller.net/*",
+        "https://api.simmpl.nl/*",
+        "<all_urls>",
+        "contextMenus",
+        "notifications",
+        "storage",
+        "alarms",
+        "gcm"
+    ],
+    "commands": {
+        "toggle-feature": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+K"
+            },
+            "description": "Plaats een oproep dmv selecteren van tekst en vervolgens de hotkey te gebruiken."
+        }
+    },
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://unpkg.com https://ssl.google-analytics.com; object-src 'self'",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "parser.js",
+                "observer.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://api.simmpl.nl/*",
+                "https://simmpl.c2d.qaller.net/*",
+                "https://c2d.qaller.net/*"
+            ],
+            "js": [
+                "sync.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        "img/inline-phone.png",
+        "i18n/en/en.json",
+        "i18n/en/simmpl.json",
+        "i18n/nl/nl.json",
+        "i18n/nl/simmpl.json"
+    ]
+}

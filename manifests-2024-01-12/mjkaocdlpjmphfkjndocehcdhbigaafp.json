@@ -1,0 +1,90 @@
+---
+name: C2PA Content Credentials
+version: 0.0.2
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 58
+release_date: '2023-12-19T08:21:58.000Z'
+size: 22.89MiB
+languages:
+  - English
+description: Verify and display manifests for images embedding C2PA Content Credentials.
+publisher: Digimarc
+publisher_account: Digimarc Labs
+publisher_address: |-
+  8500 SW Creekside Pl
+  Beaverton, OR 97008-7101
+  US
+support_website: https://github.com/digimarc-corp/c2pa-content-credentials-extension/issues
+privacy_policy: https://www.digimarc.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "C2PA Content Credentials",
+    "version": "0.0.2",
+    "description": "Verify and display manifests for images embedding C2PA Content Credentials.",
+    "icons": {
+        "16": "images/icons/info.png",
+        "32": "images/icons/info.png",
+        "48": "images/icons/info.png",
+        "128": "images/icons/info.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_matches": [
+                "*://*.linkedin.com/*"
+            ],
+            "js": [
+                "./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+                "contentScript.js"
+            ],
+            "css": [
+                "content.css"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "images/icons/info.png"
+    },
+    "permissions": [
+        "tabs",
+        "scripting",
+        "storage"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "sandbox": {
+        "pages": [
+            "sandbox.html"
+        ]
+    },
+    "content_security_policy": {
+        "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self'; worker-src 'self' blob: chrome-extension:;"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "sandbox.html",
+                "*.js",
+                "c2pa/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

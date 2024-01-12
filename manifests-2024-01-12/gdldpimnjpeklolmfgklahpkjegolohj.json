@@ -1,0 +1,80 @@
+---
+name: Google Meet - Call eXplorer
+version: 1.2.0
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-01-12T08:54:46.000Z'
+size: 1.05MiB
+languages:
+  - English
+description: >-
+  Enhance your Google Meet with Call eXplorer: a Chrome app for live
+  transcripts, summaries, and instant meeting-related answers.
+publisher_account: Manu
+support_website: http://www.manu.ws
+privacy_policy: >-
+  https://docs.google.com/document/d/1hPdHYANZLXPuV4atjknj5BRxWerh_SARMmGrR_Ehy9g/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Google Meet - Call eXplorer",
+  "version": "1.2.0",
+  "description": "Enhance your Google Meet with Call eXplorer: a Chrome app for live transcripts, summaries, and instant meeting-related answers.",
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+   "icons": {
+        "16" : "icon16.png",
+        "24" : "icon24.png",
+        "38" : "icon38.png",
+        "48" : "icon48.png",
+        "128" : "icon128.png"
+  },
+  "content_scripts": [
+    {
+        "matches": [
+            "*://meet.google.com/*-*-*"
+        ],
+        "js": [
+            "./static/js/content.js"
+        ]
+    },
+    {
+      "matches": [
+          "*://meet.google.com/*-*-*"
+      ],
+      "js": [
+          "./static/js/rtcinjector.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon.png"
+  },
+  "permissions": [ 
+          "activeTab",
+          "storage",
+          "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://meet.google.com/*-*-*",
+    "*://*.openai.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+        "resources": [
+            "/static/js/googlemeet.js"
+        ],
+        "matches": [
+            "*://*/*"
+        ]
+    }
+  ]
+}

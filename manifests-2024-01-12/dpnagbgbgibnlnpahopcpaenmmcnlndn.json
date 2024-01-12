@@ -1,0 +1,86 @@
+---
+name: Extension Against Phishing
+version: '0.5'
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-01-08T07:39:42.000Z'
+size: 76.99KiB
+languages:
+  - English
+description: >-
+  Against Phishing browser extension prevents you against phishing based on
+  blacklisted and whitelisted crypto related resources.
+publisher_account: Against Phishing
+extension_website: againstphishing.org
+support_website: https://github.com/AgainstPhishing/extension-against-phishing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Extension Against Phishing",
+  "description": "Against Phishing browser extension prevents you against phishing based on blacklisted and whitelisted crypto related resources.",
+  "version": "0.5",
+  "homepage_url": "https://github.com/AgainstPhishing/extension-against-phishing",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms",
+    "webRequest",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://twitter.com/*", "https://phishing-blocked.surge.sh/*"],
+      "js": [
+        "lib/psl.min.js",
+        "lib/resemble.js",
+        "against-blacklist.js",
+        "against-whitelist.js"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://twitter.com/*"],
+      "js": [
+        "against-whitelist-twitter.js"
+      ],
+      "css": [
+        "against-whitelist-twitter.css"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "matches": ["https://phishing-blocked.surge.sh/*"],
+      "js": [
+        "redirect-to-user-managed-exception.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "resources": ["icons/logo-32x32.png"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/logo-16x16.png",
+      "32": "icons/logo-32x32.png"
+    }
+  },
+  "icons": {
+    "48": "icons/logo-48x48.png",
+    "96": "icons/logo-96x96.png"
+  }
+}

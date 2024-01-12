@@ -1,0 +1,65 @@
+---
+name: ETSY Reviews Downloader
+version: '1.5'
+category_slug: productivity/workflow
+rating: 2.9285714285714284
+rating_count: 14
+user_count: 487
+release_date: '2023-02-02T00:26:55.000Z'
+size: 42.38KiB
+languages:
+  - English
+description: Download Etsy Product Reviews Automatically!
+publisher_account: etsy-review-group
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "ETSY Reviews Downloader",
+    "version": "1.5",
+    "description": "Download Etsy Product Reviews Automatically!",
+    "manifest_version": 3,
+    "action": {
+        "default_icon": {
+            "16": "images/icons/16.png",
+            "32": "images/icons/32.png",
+            "48": "images/icons/48.png",
+            "128": "images/icons/100.png"
+        },
+        "default_title": "ETSY Reviews Downloader",
+        "default_popup": "html/login.html"
+    },
+    "icons": {
+        "16": "images/icons/16.png",
+        "32": "images/icons/32.png",
+        "48": "images/icons/48.png",
+        "128": "images/icons/100.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["*://etsyreviews.com/*"],
+    "externally_connectable": {
+        "matches": ["*://*.etsyreviews.com/*"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.etsy.com/*"],
+            "include_globs": ["*listing*"],
+            "js": ["js/etsyDownloader.js"]
+        },
+        {
+            "matches": ["*://*.etsyreviews.com/subscribe-with-paypal*"],
+            "js": ["js/subscription.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["images/icons/cancel.png", "images/icons/save.png", "images/icons/loading.gif"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

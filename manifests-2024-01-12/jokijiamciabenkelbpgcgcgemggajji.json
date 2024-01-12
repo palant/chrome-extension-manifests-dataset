@@ -1,0 +1,90 @@
+---
+name: plaash
+version: 0.0.4
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2022-01-21T05:16:30.000Z'
+size: 1.05MiB
+languages:
+  - English
+description: cashback extension
+publisher_account: Plaash
+support_website: https://plaash.com/contact
+privacy_policy: https://plaash.com/datenschutz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "plaash",
+  "version": "0.0.4",
+  "manifest_version": 2,
+  "description": "cashback extension",
+  "homepage_url": "https://app.plaash.com",
+  "icons": {
+    "16": "icons/store_icon_16.png",
+    "48": "icons/store_icon_48.png",
+    "128": "icons/store_icon_128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "src/bg/init.js",
+      "src/bg/reload.js",
+      "src/bg/bg_support_functions.js",
+      "src/config.js",
+      "src/commonJS/dataProvider.js",
+      "src/commonJS/apiService.js",
+      "lib/i18/i18next.min.js",
+      "src/commonJS/utils_global.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "icons/default-16.png",
+    "default_title": "plaash",
+    "default_popup": "src/browser_action/browser_action.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/config.js",
+        "lib/jquery/jquery.min.js",
+        "src/contentScripts/temp_coupons.js",
+        "src/contentScripts/inject_events.js",
+        "lib/i18/i18next.min.js",
+        "src/commonJS/utils_global.js",
+        "lib/mustache/mustache.min.js",
+        "src/contentScripts/get_token.js",
+        "src/contentScripts/inject_activate_cashback.js",
+        "src/contentScripts/inject_apply_coupons.js"
+      ],
+      "css": ["css/inject_root.css"]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite",
+    "cookies",
+    "storage",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "webNavigation"
+  ],
+  "web_accessible_resources": [
+    "src/partials/*.*",
+    "./resources/*",
+    "resources/images/plaash-icon.png",
+    "resources/images/plaash_plastic.png",
+    "resources/images/ex_normal.png",
+    "resources/images/activated.png",
+    "resources/fonts/AvenirNextLTPro-Regular.otf",
+    "src/contentScripts/*.*",
+    "icons/store_icon_16.png",
+    "src/commonJS/utils_global.js"
+  ],
+  "content_security_policy": "object-src 'self' 'unsafe-eval'; script-src 'self' 'unsafe-eval';"
+}

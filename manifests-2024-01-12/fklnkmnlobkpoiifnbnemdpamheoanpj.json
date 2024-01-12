@@ -1,0 +1,84 @@
+---
+name: Project verses from bible.com
+version: 1.20.0
+category_slug: lifestyle/social
+rating: 5
+rating_count: 3
+user_count: 588
+release_date: '2024-01-03T04:52:09.000Z'
+size: 92.14KiB
+languages:
+  - English (United States)
+description: >-
+  Project selected Bible verses (works for parallel as well) from YouVersion
+  bible.com
+publisher_account: nmatei
+support_website: https://github.com/nmatei/chrome-bible-utilities/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Project verses from bible.com",
+  "version": "1.20.0",
+  "description": "Project selected Bible verses (works for parallel as well) from YouVersion bible.com",
+  "manifest_version": 3,
+  "author": "Matei Nicolae",
+  "background": {
+    "service_worker": "views/background.js"
+  },
+  "action": {},
+  "permissions": ["activeTab", "tabs", "storage"],
+  "host_permissions": [
+    "https://my.bible.com/bible*",
+    "https://my.bible.com/*/bible*",
+    "https://www.bible.com/bible*",
+    "https://www.bible.com/*/bible*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://my.bible.com/bible*",
+        "https://my.bible.com/*/bible*",
+        "https://www.bible.com/bible*",
+        "https://www.bible.com/*/bible*"
+      ],
+      "js": [
+        "views/common/utilities.js",
+        "views/common/tooltip/tooltip.js",
+        "views/common/latinizeText.js",
+        "views/common/bible-mappings.js",
+        "views/common/cache-verses.js",
+        "views/bibles/mappings.js",
+        "views/main/runtime-messages.js",
+        "views/main/actions/settings.js",
+        "views/main/actions/help.js",
+        "views/main/actions/pin-verses.js",
+        "views/main/actions.js",
+        "views/main/index.js"
+      ],
+      "css": [
+        "views/common/tooltip/tooltip.css",
+        "views/common/CustomScrollChrome.css",
+        "views/bibles/colors.css",
+        "views/main/actions.css",
+        "views/bibles/bible.com/common-overrides.css"
+      ]
+    },
+    {
+      "matches": ["https://my.bible.com/bible*", "https://my.bible.com/*/bible*"],
+      "css": ["views/bibles/my.bible.com/overrides.css"],
+      "js": ["views/bibles/bible.com/common.js", "views/bibles/my.bible.com/selectors.js"]
+    },
+    {
+      "matches": ["https://www.bible.com/bible*", "https://www.bible.com/*/bible*"],
+      "css": ["views/bibles/bible.com/overrides.css"],
+      "js": ["views/bibles/bible.com/common.js", "views/bibles/bible.com/selectors.js"]
+    }
+  ],
+  "icons": {
+    "16": "views/icons/icon-16.png",
+    "48": "views/icons/icon-48.png",
+    "128": "views/icons/icon-128.png"
+  }
+}

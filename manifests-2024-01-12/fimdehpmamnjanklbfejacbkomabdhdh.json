@@ -1,0 +1,93 @@
+---
+name: Banafo | Transcribe & Record Meetings
+version: 1.6.3
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 245
+release_date: '2023-09-27T14:03:42.000Z'
+size: 588KiB
+languages:
+  - English
+description: >-
+  Record the audio of all your video meetings with one click. Generate automatic
+  transcriptions.
+publisher: Banafo EOOD
+publisher_account: Banafo
+publisher_address: |-
+  Gen. Ivan Kolev 11
+  Sofia 1407
+  BG
+privacy_policy: https://banafo.com/en/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "version": "1.6.3",
+  "version_name": "1.6.3",
+  "description": "__MSG_extensionDescription__",
+  "default_locale": "en",
+  "icons": {
+    "16": "images/banafo-icon-16x16.png",
+    "48": "images/banafo-icon-48x48.png",
+    "64": "images/banafo-icon-64x64.png",
+    "128": "images/banafo-icon-128x128.png",
+    "256": "images/banafo-icon-256x256.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.banafo.com/*"
+      ],
+      "js": [
+        "dashboard-monitor.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "detached-audio-fix-injector.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "notifications",
+    "storage",
+    "activeTab",
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://app.banafo.com/*",
+    "https://sentry.zoiper.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "css/*",
+        "fonts/*",
+        "i18n/*",
+        "images/*",
+        "detached-audio-fix.js"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "92"
+}

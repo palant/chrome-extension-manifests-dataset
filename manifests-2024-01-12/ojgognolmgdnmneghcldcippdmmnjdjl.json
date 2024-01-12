@@ -1,0 +1,127 @@
+---
+name: noAd for myself
+version: 2.0 beta (1.63.0)
+category_slug: make_chrome_yours/functionality
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-12-30T10:45:17.000Z'
+size: 47.14KiB
+languages:
+  - 日本語
+description: This extension removes some Ad on Youtube, Twitter and more.
+publisher_account: mirai.takahashi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "noAd for myself",
+  "version": "1.63.0",
+  "version_name": "2.0 beta (1.63.0)",
+  "manifest_version": 3,
+  "minimum_chrome_version": "105.0",
+  "description": "This extension removes some Ad on Youtube, Twitter and more.",
+  "permissions": ["declarativeNetRequest", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "icons": {
+    "48": "icon48.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ElementsPicker.js",
+        "noad.css",
+        "twitter/Callback.js",
+        "twitter/Curator.js",
+        "twitter/DisplaySettingsObserver.js",
+        "twitter/HeaderObserver.js",
+        "twitter/LayersObserver.js",
+        "twitter/MainObserver.js",
+        "twitter/MutationRecord.js",
+        "twitter/QuickBlocker.js",
+        "twitter/SwipeObserver.js",
+        "twitter/TabControler.js",
+        "twitter/TouchObserver.js",
+        "twitter/TwitterContaminate.js",
+        "twitter/TwitterEventSource.js",
+        "twitter/TwitterJSON.js",
+        "twitter/TwitterOverride.js",
+        "twitter/TwitterView.js",
+        "twitter/TwitterXHR.js",
+        "twitter/WheelObserver.js"
+      ],
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "ElementsPicker.js",
+        "noad.css",
+        "youtube/YoutubeOverride.js"
+      ],
+      "matches": ["*://www.youtube.com/*", "*://m.youtube.com/*"],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["*://www.youtube.com/*", "*://m.youtube.com/*"],
+      "js": [
+        "youtube/initial_data_polluter.js",
+        "youtube/youtube_json.js",
+        "youtube/youtube_fetch.js",
+        "youtube/youtube_contaminate.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["*://www.youtube.com/*", "*://m.youtube.com/*"],
+      "js": ["youtube/youtube_loader.js"],
+      "css": ["noad.css"],
+      "world": "ISOLATED"
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["twitter/loader_MAIN.js"],
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["twitter/loader_ISOLATED.js"],
+      "css": ["noad.css"],
+      "world": "ISOLATED"
+    }
+  ]
+}

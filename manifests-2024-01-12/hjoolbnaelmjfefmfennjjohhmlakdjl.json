@@ -1,0 +1,79 @@
+---
+name: GMAT Tracker
+version: 0.0.0.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 55
+release_date: '2021-04-11T22:37:02.000Z'
+size: 362KiB
+languages:
+  - English
+description: Track your MBA.com practice test!
+publisher_account: Devin Jones
+extension_website: gmattracker.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "GMAT Tracker",
+  "version": "0.0.0.5",
+  "description": "Track your MBA.com practice test!",
+  "permissions": [
+    "storage" 
+  ],
+  "host_permissions": [
+    "https://www.mba.com/*",
+    "https://gmatofficialprep.mba.com/TestPlayer/PlayTest*",
+    "https://gmatofficialprep.mba.com/SarasExamPrep*",
+    "https://gmattracker.com/*"
+  ],
+  "background": {
+    "service_worker": "firebase.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/gt_16.ico",
+      "32": "images/gt_32.ico",
+      "48": "images/gt_48.ico",
+      "128": "images/gt_128.ico"
+    }
+  },
+  "icons": { 
+    "16": "images/gt_16.ico",
+    "32": "images/gt_32.ico",
+    "48": "images/gt_48.ico",
+    "128": "images/gt_128.ico"
+  },
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": ["*://*.gmatofficialprep.mba.com/TestPlayer/PlayTest*"],
+      "js": ["firebase/firebase-app.js", "firebase/firebase-firestore.js", "firebase/firebase-auth.js", "firebase/firebase-ui-auth.js", "jquery-3.5.1.min.js","livetest.js", "chart.min.js"],
+      "css": ["gmat_tracker_styles.css"]
+    }, {
+      "matches": ["https://gmatofficialprep.mba.com/SarasExamPrep*"],
+      "js": ["jquery-3.5.1.min.js","homescreen.js"],
+      "css": ["gmat_tracker_homescreen_styles.css"]
+    },{
+      "matches": ["https://gmattracker.com/*"],
+      "js": ["firebase/firebase-app.js", "firebase/firebase-firestore.js", "firebase/firebase-auth.js", "firebase/firebase-ui-auth.js", "login.js"]
+    }, {
+      "matches": ["https://gmatofficialprep.mba.com/TestPlayer/TestReview*"],
+      "js": ["firebase/firebase-app.js", "firebase/firebase-firestore.js", "firebase/firebase-auth.js", "firebase/firebase-ui-auth.js", "jquery-3.5.1.min.js","reviewtest.js", "chart.min.js"],
+      "css": ["gmat_tracker_review_styles.css"]
+    }, {
+      "matches": ["https://gmatofficialprep.mba.com/AdvancedReportInterface/Home/FullLengthExamIndex#/fulllengthexamreport"],
+      "js": ["firebase/firebase-app.js", "firebase/firebase-firestore.js", "firebase/firebase-auth.js", "firebase/firebase-ui-auth.js", "jquery-3.5.1.min.js", "chart.min.js"],
+      "css": ["gmat_tracker_styles.css"]
+    }
+  ],
+  "options_page": "options.html",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'",
+    "content_scripts": "script-src 'self'; object-src 'none'"
+  }
+
+}

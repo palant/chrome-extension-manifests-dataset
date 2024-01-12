@@ -1,0 +1,95 @@
+---
+name: Parsifal - SRS Data Parser
+version: '0.5'
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2021-09-13T08:06:54.000Z'
+size: 428KiB
+languages:
+  - English
+description: Extract race and driver data from SimRacingSystem's results
+publisher_account: Sk Tf Panda
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Parsifal - SRS Data Parser",
+ "description": "Extract race and driver data from SimRacingSystem's results",
+ "version": "0.5",
+ "manifest_version": 2,
+ "icons": {
+  "16": "icons/favicon-16x16.png",
+  "32": "icons/favicon-32x32.png",
+  "48": "icons/favicon-48x48.png",
+  "128": "icons/chrome-icon-128x128.png",
+  "192": "icons/android-chrome-192x192.png",
+  "512": "icons/android-chrome-512x512.png"
+ },
+ "background": {
+  "scripts": [ 
+   "js/messageHandler.js",
+   "background.js" 
+  ],
+  "persistent": false
+ },
+ "content_scripts": [
+  {
+   "matches": [ 
+    "*://www.simracingsystem.com/raceresultssrs.php?*", 
+    "*://www.simracingsystem.com/raceresultssrshis.php?*" 
+   ],
+   "css": [
+    "css/parsifal-extension-style.css"
+   ],
+   "js": [ 
+    "js/ui/utils.js", 
+    "js/messageHandler.js", 
+    "js/pageAnalyzer.js", 
+    "contentScript-raceResults.js" 
+   ]
+  },
+  {
+   "matches": [
+    "*://www.simracingsystem.com/myracessrs.php?*",
+    "*://www.simracingsystem.com/myracessrshis.php?*"
+   ],
+   "js": [
+    "js/libs/luxon.min.js",
+    "js/ui/utils.js", 
+    "js/messageHandler.js", 
+    "js/pageAnalyzer.js", 
+    "contentScript-raceResultsList.js"
+   ]
+  },
+  {
+   "matches": [
+    "*://www.simracingsystem.com/lapscoresrs.php?*",
+    "*://www.simracingsystem.com/lapscoresrshis.php?*"
+   ],
+   "js": [
+    "js/ui/utils.js", 
+    "js/messageHandler.js", 
+    "js/pageAnalyzer.js", 
+    "contentScript-fastestLaps.js"
+   ]
+  }
+ ],
+ "web_accessible_resources": [
+  "gfx/*"
+ ],
+ "page_action": {
+  "default_popup": "popup.html",
+  "default_icon": {
+   "16": "icons/favicon-16x16.png",
+   "32": "icons/favicon-32x32.png",
+   "48": "icons/favicon-48x48.png"
+  }
+ },
+ "permissions": [
+  "declarativeContent",
+  "tabs"
+ ]
+}

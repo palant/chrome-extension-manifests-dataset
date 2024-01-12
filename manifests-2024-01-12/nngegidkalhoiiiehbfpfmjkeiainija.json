@@ -1,0 +1,85 @@
+---
+name: ThumbnailTest.com Analytics Processor
+version: 1.5.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 1000
+release_date: '2023-12-19T17:42:50.000Z'
+size: 121KiB
+languages:
+  - English
+description: >-
+  Automatically grab analytics from youtube studio to track your A/B testing
+  results. For use with ThumbnailTest.com only.
+publisher: Rox Works LLC
+publisher_account: RoxCodes
+publisher_address: |-
+  273 Walt Whitman Road
+  #174
+  Huntington Sattion, NY 11746
+  US
+privacy_policy: https://app.thumbnailtest.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "ThumbnailTest.com Analytics Processor",
+  "description": "Automatically grab analytics from youtube studio to track your A/B testing results. For use with ThumbnailTest.com only.",
+  "version": "1.5.1",
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+      {
+          "matches": [
+            "*://app.thumbnailtest.com/*",
+            "*://youtube.com/*",
+            "*://studio.youtube.com/*"
+          ],
+          "exclude_matches": [
+            "*://studio.youtube.com/video/*/editor"
+          ],
+          "js": ["js/content_script.js", "js/inject.js"],
+          "run_at": "document_start",
+          "all_frames": true
+      }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["js/sendConfig.js", "js/sweet.js"],
+      "matches": [
+        "*://app.thumbnailtest.com/*",
+        "*://youtube.com/*",
+        "*://studio.youtube.com/*"
+      ]
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://app.thumbnailtest.com/*",
+    "*://youtube.com/*",
+    "*://studio.youtube.com/*"
+  ]
+}

@@ -1,0 +1,77 @@
+---
+name: Cocktel
+version: '1.10'
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 41
+release_date: '2023-03-03T10:53:00.000Z'
+size: 237KiB
+languages:
+  - Français
+description: >-
+  Permet de faire des appels depuis cocktel vers des numéros de téléphone
+  présents sur des pages web
+publisher_account: WBTS
+privacy_policy: http://cocktel.fr/Privacy%20Policy%20for%20Cocktel.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+    "manifest_version": 3,
+    "name": "Cocktel",
+    "version": "1.10",
+
+    "description": "Permet de faire des appels depuis cocktel vers des numéros de téléphone présents sur des pages web",
+
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "128": "icons/icon128.png"
+    },
+  
+    "background": {
+        "service_worker":"background.js"
+    },
+
+    "action": {
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png"
+        },
+        "default_title":"Cocktel",
+        "default_popup":"popup.html"
+    },
+    
+    "commands": {
+        "toggle-feature": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Space"
+            },
+            "description": "Ouvre le panneau Cocktel"
+        }
+    },
+    
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["page.js","lib/cocktel.js","lib/user.js","lib/extension.js","lib/call.js","lib/annuaire.js","lib/contact.js","lib/sms.js"],
+            "css": ["cocktel.css","api.css"],
+            "all_frames":true
+        }
+    ],
+  
+    "options_page": "options.html",
+    
+    "web_accessible_resources": [
+        {
+            "resources":["api.css","lib/cocktel.js","lib/user.js","lib/extension.js","lib/call.js","lib/sms.js","images/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    
+    "permissions": ["cookies","tabs","activeTab","storage","notifications","history"]
+
+}

@@ -1,0 +1,59 @@
+---
+name: Postgres Docs Redirect
+version: 1.2.1
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 84
+release_date: '2020-05-10T12:56:49.000Z'
+size: 23.15KiB
+languages:
+  - English (United States)
+description: >-
+  Automatically redirects to current postgreSQL documentation when a docs page
+  is requested
+publisher_account: tommaso.amici
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Postgres Docs Redirect",
+  "description": "Automatically redirects to current postgreSQL documentation when a docs page is requested",
+  "author": "Tommaso Amici",
+  "version": "1.2.1",
+  "icons": {
+    "64": "icon.png",
+    "128": "icon128.png"
+  },
+
+  "page_action": {
+    "default_icon": "icon.png",
+    "default_title": "Postgres docs page",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["browser-wrapper.js", "background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.postgresql.org/docs/*"],
+      "js": ["browser-wrapper.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "permissions": [
+    "*://postgresql.org/docs/*",
+    "webRequest",
+    "webRequestBlocking",
+    "storage"
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "postgres@docs.redirect",
+      "strict_min_version": "60.0"
+    }
+  }
+}

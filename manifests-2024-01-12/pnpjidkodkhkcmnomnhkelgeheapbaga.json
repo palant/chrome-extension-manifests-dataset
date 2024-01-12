@@ -1,0 +1,99 @@
+---
+name: Kind Search
+version: 2.0.13
+category_slug: productivity/tools
+rating: 4.866666666666666
+rating_count: 15
+user_count: 12
+release_date: '2023-06-29T10:16:01.000Z'
+size: 171KiB
+languages:
+  - English
+description: >-
+  Kind Search replaces your search engine so you can plant trees with every
+  search
+publisher: Kind Search
+publisher_account: Kind Seach
+publisher_address: |-
+  Bethlen utca 49
+  Debrecen 4026
+  HU
+privacy_policy: https://lampabar.com/etc/pages/privacy.html
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "2.0.13",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icons/16.png",
+    "32": "images/icons/32.png",
+    "48": "images/icons/48.png",
+    "64": "images/icons/64.png",
+    "128": "images/icons/128.png",
+    "256": "images/icons/256.png"
+  },
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "src/background/index.js",
+    "type": "module"
+  },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Kind Search",
+      "keyword": "ks",
+      "is_default": true,
+      "encoding": "UTF-8",
+      "favicon_url": "https://service.kindsearch.me/extensions/kindsearchfeed/favicon.ico",
+      "search_url": "https://kindsearch.me?gd=SY1004015&searchsource=58&q={searchTerms}",
+      "suggest_url": "https://service.kindsearch.me/extensions/kindsearchfeed/suggest.php?q={searchTerms}"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "/src/content/fonts/inject.js",
+        "/src/common/libs/jquery.min.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "/src/common/jquery-plugins/sticky/index.js",
+        "/src/common/jquery-plugins/side-bar/index.js",
+        "/src/common/jquery-plugins/meowModal/MeowModal.js",
+        "/src/common/jquery-plugins/meowModal/index.js",
+        "/src/common/utils.js",
+        "/src/content/getValueSelector.js",
+        "/src/content/SideBarController.js",
+        "/src/content/MeowBackgroundClient.js",
+        "/src/content/index.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": ["unlimitedStorage", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/engines.json",
+        "/images/*",
+        "/src/common/styles.css",
+        "/src/common/jquery-plugins/sticky/styles.css",
+        "/src/common/jquery-plugins/side-bar/styles.css",
+        "/src/content/fonts/flUhRq6tzZclQEJ-Vdg-IuiaDsNcIhQ8tQ.woff2",
+        "/src/content/fonts/fonts.css",
+        "/src/content/styles.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

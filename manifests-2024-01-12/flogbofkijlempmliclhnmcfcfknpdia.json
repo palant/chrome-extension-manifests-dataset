@@ -1,0 +1,87 @@
+---
+name: ProtonDB Community Extension
+version: 1.3.0
+category_slug: lifestyle/games
+rating: 5
+rating_count: 1
+user_count: 27
+release_date: '2023-12-09T15:17:32.000Z'
+size: 206KiB
+languages:
+  - English
+description: Elevate Your Linux Gaming Experience with ProtonDB Community Extension!
+publisher_account: trsnaqe
+support_website: https://github.com/Trsnaqe/protondb-community-extension/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ProtonDB Community Extension",
+  "description": "Elevate Your Linux Gaming Experience with ProtonDB Community Extension!",
+  "version": "1.3.0",
+  "permissions": ["storage"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://store.steampowered.com/*",
+        "https://steamcommunity.com/id/*/games/*",
+        "https://steamcommunity.com/profiles/*/games/*"
+      ],
+      "exclude_matches": [
+        "*://store.steampowered.com/dynamicstore/*",
+        "*://store.steampowered.com/login/*",
+        "*://store.steampowered.com/join/*",
+        "*://steamcommunity.com/login/*",
+        "*://checkout.steampowered.com/*",
+        "*://store.steampowered.com/charts/*"
+
+      ],
+      "js": [
+        "./utils/globals.js",
+        "./utils/observers.js",
+        "./utils/helpers.js",
+        "./utils/items.js",
+        "./utils/dom_handlers.js",
+        "./scripts/store.script.js"
+      ],
+
+      "css": ["./styles/store.style.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://store.steampowered.com/app/*"],
+      "js": ["./scripts/app_page.script.js"],
+      "css": ["./styles/app_page.style.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": [
+        "https://store.steampowered.com/*",
+        "https://steamcommunity.com/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://store.steampowered.com/*",
+    "https://www.protondb.com/*"
+  ]
+}

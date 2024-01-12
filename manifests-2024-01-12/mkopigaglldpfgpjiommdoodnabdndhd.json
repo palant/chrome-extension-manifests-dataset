@@ -1,0 +1,70 @@
+---
+name: WeImpactCarbon Ext
+version: 0.1.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 44
+release_date: '2023-11-23T13:26:31.000Z'
+size: 32.2KiB
+languages:
+  - English
+  - Français
+description: Analyse Internet usage carbon footprint
+publisher_account: weimpactcarbon
+privacy_policy: https://weimpactcarbon-dev.wizardstech.io/cgu
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "WeImpactCarbon Ext",
+  "version": "0.1.5",
+  "description": "Analyse Internet usage carbon footprint",
+  "action": {
+    "default_icon": {
+      "48": "public/icons/icon-48.png",
+      "128": "public/icons/icon-128.png"
+    },
+    "default_title": "WeImpactCarbon",
+    "default_popup": "public/popups/popup.html"
+  },
+  "default_locale": "en",
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "webRequest",
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://weimpactcarbon.wizardstech.io//*"
+      ],
+      "js": [
+        "src/import-detector.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "src/detector.js"
+      ],
+      "matches": [
+        "https://weimpactcarbon.wizardstech.io/*",
+        "*://*/*"
+      ]
+    }
+  ]
+}

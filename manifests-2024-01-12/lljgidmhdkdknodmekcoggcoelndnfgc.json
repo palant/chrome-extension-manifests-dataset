@@ -1,0 +1,71 @@
+---
+name: Montville GPA Calculator
+version: '5.3'
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 6
+user_count: 2000
+release_date: '2023-09-07T19:11:59.000Z'
+size: 141KiB
+languages:
+  - English (United States)
+description: This extension calculates the GPA for Montville HS Students
+publisher_account: Pepi Martinez
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Montville GPA Calculator",
+  "description": "This extension calculates the GPA for Montville HS Students",
+  "version": "5.3",
+  "author": "Pepi Martinez",
+  "permissions": ["activeTab", "storage", "tabs"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://parents.montville.net/*",
+      "https://parents.genesisedu.com/*",
+      "https://students.c1.genesisedu.net/*",
+      "https://parents.c1.genesisedu.net/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://parents.montville.net/*",
+        "https://parents.genesisedu.com/*",
+        "https://students.c1.genesisedu.net/*",
+        "https://parents.c1.genesisedu.net/*"
+      ],
+      "js": [
+        "ExtPay.js",
+        "./src/jquery.min.js",
+        "./src/content_script.js",
+        "umami.js"
+      ],
+      "css": ["./styles/loader.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["ExtPay.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["umami.js"]
+    }
+  ],
+  "action": {
+    "default_icon": "./images/icon.png",
+    "default_title": "Montville GPA",
+    "default_popup": "./popup.html"
+  }
+}

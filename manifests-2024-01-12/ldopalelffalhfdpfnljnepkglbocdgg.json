@@ -1,0 +1,62 @@
+---
+name: Lichess Opponent Information
+version: 1.1.0
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-01-10T06:43:30.000Z'
+size: 625KiB
+languages:
+  - English
+description: >-
+  Professional chess players spend a lot of time researching their opponents
+  before a match, so why is it any different online?
+publisher_account: Cristian Greco
+support_website: https://github.com/cristianrgreco/lichess-opponent-information/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Lichess Opponent Information",
+  "version": "1.1.0",
+  "description": "Professional chess players spend a lot of time researching their opponents before a match, so why is it any different online?",
+  "icons": {
+    "16": "icons/logo_16x16.png",
+    "32": "icons/logo_32x32.png",
+    "48": "icons/logo_48x48.png",
+    "128": "icons/logo_128x128.png"
+  },
+  "manifest_version": 3,
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "cristianrgreco@gmail.com",
+      "strict_min_version": "42.0"
+    }
+  },
+  "background": {
+    "service_worker": "./service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://lichess.org/*"],
+      "js": [
+        "./utils.js",
+        "./script.js",
+        "./lib/chess.js",
+        "./lib/chart.umd.js",
+        "./lib/chartjs-plugin-datalabels.min.js"
+      ],
+      "css": ["./view.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["view.html", "icons/*.png", "./lib/chart.umd.js.map"],
+      "matches": ["https://lichess.org/*"]
+    }
+  ],
+  "permissions": ["identity", "storage"],
+  "host_permissions": ["https://rlabb3msg0.execute-api.eu-west-2.amazonaws.com/prod/*"]
+}

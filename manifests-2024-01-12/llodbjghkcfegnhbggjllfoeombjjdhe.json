@@ -1,0 +1,80 @@
+---
+name: Matador.ai Extension
+version: 2.0.5
+category_slug: productivity/workflow
+rating: 4.333333333333333
+rating_count: 6
+user_count: 4000
+release_date: '2023-12-12T07:31:24.000Z'
+size: 453KiB
+languages:
+  - English (United States)
+description: Matador.ai Extension
+publisher_account: Matador.ai
+extension_website: matador.ai
+privacy_policy: https://www.matador.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Matador.ai Extension",
+  "version": "2.0.5",
+  "description": "Matador.ai Extension",
+  "icons": {
+    "128": "img/Matador Logo - 128x128.png"
+  },
+  "action": {
+    "default_icon": "img/Matador Logo - 128x128.png",
+    "default_title": "Matador.ai Extension",
+    "default_popup": "popup/options.html"
+  },
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["content_script.js"],
+      "css": ["content_css.css"],
+      "matches": ["*://*/*"],
+      "exclude_matches": [
+        "https://stg.matador.ai/*",
+        "https://app.matador.ai/*",
+        "https://apps.vinmanager.com/vinconnect/#/CarDashboard"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": ["matador_script.js"],
+      "matches": [
+        "https://app.matador.ai/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

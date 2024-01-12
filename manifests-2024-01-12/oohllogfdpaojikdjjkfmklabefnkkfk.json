@@ -1,0 +1,82 @@
+---
+name: Jigstack Wallet
+version: 0.1.0
+category_slug: productivity/workflow
+rating: 4.5
+rating_count: 2
+user_count: 108
+release_date: '2023-06-09T03:00:56.000Z'
+size: 33.39MiB
+languages:
+  - English
+  - 中文 (简体)
+description: The most user-friendly EVM wallet for Ethereum and all EVM chains
+publisher: IKAG Technologies
+publisher_account: Jigstack
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Jigstack Wallet",
+  "short_name": "jWallet",
+  "version": "0.1.0",
+  "default_locale": "en",
+  "description": "The most user-friendly EVM wallet for Ethereum and all EVM chains",
+  "icons": {
+    "16": "images/icon-16.png",
+    "19": "images/icon-19.png",
+    "32": "images/icon-32.png",
+    "38": "images/icon-38.png",
+    "48": "images/icon-48.png",
+    "64": "images/icon-64.png",
+    "128": "images/icon-128.png",
+    "512": "images/icon-512.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "19": "images/icon-19.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "jWallet"
+  },
+  "author": "https://jigstack.org/",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["webextension-polyfill.js", "content-script.js"],
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://connect.trezor.io/*/popup.html"],
+      "js": ["vendor/trezor/trezor-content-script.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "activeTab",
+    "notifications",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": ["https://wallet.gridplus.io/*", "<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["user-media-permission.html", "pageProvider.js"],
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "extension_ids": []
+    }
+  ]
+}

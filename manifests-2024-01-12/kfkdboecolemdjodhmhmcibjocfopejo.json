@@ -1,0 +1,123 @@
+---
+name: CSDN·浏览器助手
+version: 3.0.5
+category_slug: productivity/tools
+rating: 3.7564102564102564
+rating_count: 156
+user_count: 70000
+release_date: '2023-07-13T06:37:31.000Z'
+size: 3.03MiB
+languages:
+  - English
+  - 中文 (简体)
+description: 一款集成本地书签、历史记录与 CSDN搜索(so.csdn.net) 的搜索工具
+publisher_account: CSDN
+support_website: https://plugin.csdn.net
+privacy_policy: https://plugin.csdn.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "homepage_url": "https://plugin.csdn.net/",
+  "version": "3.0.5",
+  "default_locale": "zh_CN",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/icon-logo-16.png",
+    "48": "icons/icon-logo-48.png",
+    "128": "icons/icon-logo-128.png"
+  },
+  "minimum_chrome_version": "88.0",
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "history",
+    "contextMenus",
+    "storage",
+    "webNavigation",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "cookies",
+    "topSites",
+    "scripting"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "bizModifyHeader",
+        "enabled": true,
+        "path": "json/bizModifyHeader.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/content.js",
+        "packages/json-format/js/json_utils.js"
+      ],
+      "css": [],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.runoob.com/*__mode__=frame*"
+      ],
+      "all_frames": true,
+      "css": [
+        "plugins/doc/index.css"
+      ],
+      "js": [
+        "js/jquery-3.5.1.min.js",
+        "plugins/doc/index.js"
+      ]
+    }
+  ],
+  "chrome_url_overrides": {
+    "newtab": "pages/newTab.html"
+  },
+  "options_page": "pages/options.html",
+  "action": {
+    "default_popup": "pages/popup.html",
+    "default_icon": "icons/icon-logo.png",
+    "default_title": "CSDN-搜索"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "packages/*",
+        "svg/*",
+        "images/*",
+        "icons/*",
+        "pages/*",
+        "js/*",
+        "css/jsonPages.css",
+        "vendor/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.csdn.net/*"
+    ]
+  }
+}

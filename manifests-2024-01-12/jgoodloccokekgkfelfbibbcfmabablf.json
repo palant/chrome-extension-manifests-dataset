@@ -1,0 +1,157 @@
+---
+name: 'BeTimeFul: News Feed Eradicator'
+version: 5.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-12-08T09:50:57.000Z'
+size: 9.76MiB
+languages:
+  - English (United States)
+description: Stay Connected, Not Distracted.
+publisher: BeTimeful Inc.
+publisher_account: BeTimeful Inc
+publisher_address: |-
+  Bogert Ave
+  Toronto, ON M2N0H3
+  CA
+support_website: https://www.betimeful.com/?support
+privacy_policy: https://www.betimeful.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BeTimeFul: News Feed Eradicator ",
+  "description": "Stay Connected, Not Distracted.",
+  "version": "5.0.0",
+  "permissions": ["storage", "cookies", "identity", "identity.email"],
+  "host_permissions": ["*://*.betimeful.com/*"],
+  "icons": {
+    "16": "images/16.png",
+    "48": "images/48.png",
+    "128": "images/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "*"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/Pro.html",
+    "default_title": "Betimeful",
+    "default_icon": {
+      "16": "images/16.png",
+      "48": "images/48.png",
+      "128": "images/128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_security_policy": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.betimeful.com/cancel",
+        "*://www.betimeful.com/success"
+      ],
+      "js": ["js/success.js"]
+    },
+    {
+      "matches": [
+        "*://www.betimeful.com/helpafriend",
+        "*://www.betimeful.com/emailSuccess"
+      ],
+      "js": ["Libraries/raygun.min.js", "js/helpfriend.js"]
+    },
+    {
+      "matches": ["*://calendar.google.com/*"],
+      "js": [
+        "Libraries/jquery.js",
+        "Libraries/party.min.js",
+        "Libraries/popper.min.js",
+        "Libraries/bootstrap.min.js",
+        "Libraries/purify.min.js",
+        "js/quotes.js"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "styles/content.css",
+        "styles/Socialstyles.css",
+        "styles/bootstrap.min.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/sharer.php?u=betimeful.com",
+        "https://twitter.com/intent/tweet?text=Shout%20out%20to%20beTimeful.com%20for%20making%20my%20social%20media%20less%20additive!",
+        "https://www.linkedin.com/shareArticle?mini=true&url=betimeful.com",
+        "https://www.reddit.com/submit?url=betimeful.com&title=Shout out to beTimeful.com for making my social media less additive! #beTimeful"
+      ],
+      "js": ["Libraries/raygun.min.js", "js/shared.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://twitter.com/intent/tweet?url=betimeful.com/?Shared&text=*"
+      ],
+      "js": [
+        "Libraries/raygun.min.js",
+        "Libraries/partyShare.js",
+        "js/twitter.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://www.linkedin.com/feed/?BT-share"],
+      "js": [
+        "Libraries/jquery.js",
+        "Libraries/raygun.min.js",
+        "Libraries/partyShare.js",
+        "js/linkedin.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://www.reddit.com/*"],
+      "js": ["Libraries/raygun.min.js", "Libraries/jquery.js", "js/reddit.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.facebook.com/*",
+        "*://m.facebook.com/*",
+        "*://www.linkedin.com/*",
+        "*://m.linkedin.com/*",
+        "*://twitter.com/*",
+        "*://m.twitter.com/*",
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*",
+        "*://www.reddit.com/*",
+        "*://www.tiktok.com/*",
+        "*://www.instagram.com/*",
+        "*://m.instagram.com/*"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "styles/subscribe.css",
+        "styles/popup.css",
+        "styles/timer2.css",
+        "styles/propopup.css"
+      ],
+      "js": [
+        "Libraries/jquery.js",
+        "Libraries/raygun.min.js",
+        "Libraries/purify.min.js",
+        "js/quotes.js",
+        "Libraries/partyShare.js",
+        "js/social_handler.js",
+        "Libraries/stripe.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+---
+name: Academics
+version: '4.0'
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-01-11T10:54:08.000Z'
+size: 33.0KiB
+languages:
+  - română
+description: Chrome extention for Gscholar
+publisher: SC Scream SRL
+publisher_account: sc.scream.srl
+publisher_address: |-
+  Str. Măgura Nr. 22
+  Maramures, Maramureș 430153
+  RO
+privacy_policy: https://simacplus.utcluj.ro/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Academics",
+    "version": "4.0",
+  "description": "Chrome extention for Gscholar",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "./popup/hello.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://scholar.google.com/citations*user=*",
+                  "*://scholar.google.ro/citations*user=*", 
+                  "*://scholar.google.hu/citations*user=*",
+                  "*://scholar.google.en/citations*user=*"],
+      "exclude_matches": ["*://scholar.google.com/citations*view_op=view_citation*", 
+                  "*://scholar.google.ro/citations*view_op=view_citation*", 
+                  "*://scholar.google.hu/citations*view_op=view_citation*",
+                  "*://scholar.google.en/citations*view_op=view_citation*"], 
+
+      "js": ["./injections/ArticleListClasses/ServerProfilePublicationsMessanger.js",
+             "./injections/ArticleListClasses/Author_profile_publications.js",
+             "./injections/ArticleListClasses/Author_profile.js",
+             "./injections/utils/utils.js",
+             "./injections/ArticleListButtons.js"]
+    },
+    {
+      "matches": ["*://scholar.google.com/citations*view_op=view_citation*", 
+                  "*://scholar.google.ro/citations*view_op=view_citation*", 
+                  "*://scholar.google.hu/citations*view_op=view_citation*",
+                  "*://scholar.google.en/citations*view_op=view_citation*"], 
+
+      "js": [ "./injections/ArticleDetailsClasses/ServerDetailsMessanger.js",
+              "./injections/ArticleDetailsClasses/Aca_google_scholar_publications.js",
+              "./injections/utils/utils.js",
+              "./injections/ArticleDetails.js"]
+
+    },
+    {
+      "matches": ["*://scholar.google.com/scholar*cites=*",
+                  "*://scholar.google.ro/scholar*cites=*",
+                  "*://scholar.google.hun/scholar*cites=*",
+                  "*://scholar.google.en/scholar*cites=*"], 
+      "js": [ "./injections/CitationsClasses/ServerCitationsMessanger.js",
+              "./injections/CitationsClasses/Aca_google_scholar_publications_citations.js",
+              "./injections/utils/utils.js",
+              "./injections/Citations.js"]
+
+    }
+  ]
+
+}

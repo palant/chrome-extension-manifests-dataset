@@ -1,0 +1,107 @@
+---
+name: PhoneMondo - CallerID and Click2Call
+version: 3.1.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 1000
+release_date: '2023-12-22T08:37:32.000Z'
+size: 338KiB
+languages:
+  - Deutsch
+  - English
+description: The PhoneMondo extension connects your browser to the PhoneMondo service.
+publisher: Scavix Software GmbH & Co. KG
+publisher_account: Scavix Software
+publisher_address: |-
+  Dörmter Straße 6
+  Oetzen 29588
+  DE
+extension_website: www.phonemondo.com
+support_website: https://www.phonemondo.com/support/
+privacy_policy: https://www.phonemondo.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "default_locale": "en",
+ "version": "3.1.6",
+ "name": "__MSG_appname__",
+ "short_name": "PhoneMondo",
+ "description": "__MSG_extensionDescription__",
+ "author": "Scavix Software",
+ "homepage_url": "https://www.phonemondo.com",
+ "icons":
+ {
+  "24": "res/pm-24.png",
+  "38": "res/pm-38.png",
+  "48": "res/pm-48.png",
+  "64": "res/pm-64.png",
+  "128": "res/pm-128.png",
+  "256": "res/pm-256.png",
+  "512": "res/pm-512.png"
+ },
+ "action":
+ {
+  "default_icon": "res/pm-38.png",
+  "default_title": "PhoneMondo",
+  "default_popup": "popup/login.html"
+ },
+ "background":
+ {
+  "service_worker": "js/phonemondo-sw.js"
+ },
+ "content_scripts": [
+        {
+            "js": ["js/libphonenumber-max.js","js/jquery.js","js/phonemondo-ext.js","js/phonemondo-handler.js","js/content.js"],
+   "css": ["css/content.css"],
+            "matches": ["<all_urls>"],
+            "run_at": "document_end",
+   "all_frames": false
+        },
+  {
+            "js": ["js/jquery.js","js/phonemondo-ext.js","js/phonemondo-handler.js","js/content.js"],
+   "css": ["css/content.css"],
+            "matches": ["*://*.phonemondo.com/*", "*://phonemondo.scavix.net/*"],
+            "run_at": "document_end",
+   "all_frames": true
+        },
+  {
+            "js": ["js/libphonenumber-max.js","js/jquery.js","js/phonemondo-ext.js","js/phonemondo-handler.js","js/content.js"],
+   "css": ["css/content.css"],
+            "matches": ["https://crm.zoho.com/*", "https://crm.zoho.eu/*", "https://crm.zoho.au/*", "https://crm.zoho.com.cn/*", "https://crm.zoho.in/*", "https://crm.zoho.jp/*", "https://bigin.zoho.eu/*", "https://bigin.zoho.com/*"],
+            "run_at": "document_end",
+   "all_frames": true
+        }
+    ],
+ "content_security_policy": {"extension_pages":"script-src 'self'; object-src 'self'"},
+    "web_accessible_resources":[
+  {
+   "resources":["popup/*.html*", "js/*.js", "css/*.css","res/*.png"],
+   "matches":["<all_urls>"]
+  }],
+ "host_permissions":["<all_urls>"],
+ "permissions": [
+        "tabs",
+        "storage",
+        "contextMenus",
+  "scripting",
+        "notifications"
+ ],
+    "commands": {
+        "phonemondo_start_call": {
+            "description": "__MSG_startcallshortcutdesc__",
+            "suggested_key": {
+                "default": "Alt+P"
+            }
+        },
+        "_execute_action":
+        {
+            "suggested_key": {
+                "default": "Alt+Shift+P"
+            }
+        }
+    }
+}

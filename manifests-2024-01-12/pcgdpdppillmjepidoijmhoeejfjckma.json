@@ -1,0 +1,62 @@
+---
+name: Collector Extension
+version: 1.0.1
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2023-10-19T07:16:12.000Z'
+size: 92.42KiB
+languages:
+  - español (Latinoamérica)
+description: Extension for Pokemon TCG Collectors
+publisher_account: Juan Elfers
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Collector Extension",
+    "description": "Extension for Pokemon TCG Collectors",
+    "version": "1.0.1",
+    "action": {
+        "default_popup": "collector.html",
+        "default_icon": "src/img/lapras.webp"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "activeTab",
+        "scripting",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "https://www.pokellector.com/*"
+    ],
+    "background": {
+        "service_worker": "scripts/lib/service-worker.js"
+    },
+    "content_scripts": [{
+        "matches": [
+            "https://www.pokellector.com/*",
+            "https://www.misatocomics.com.ar/*",
+            "https://www.magiclair.com.ar/*",
+            "https://www.pokemoncard.com.ar/*",
+            "https://pokemoncard.com.ar/*"
+        ],
+        "js": ["scripts/lib/storage.js", "scripts/lib/manipulator.js", "scripts/controllers/tcg-premium.js"]
+    }, {
+        "matches": ["https://www.pokellector.com/*"],
+        "js": ["scripts/controllers/pokellector.js"]
+    }, {
+        "matches": ["https://www.misatocomics.com.ar/*"],
+        "js": ["scripts/controllers/misatocomics.js"]
+    }, {
+        "matches": ["https://www.magiclair.com.ar/*"],
+        "js": ["scripts/controllers/magiclair.js"]
+    }, {
+        "matches": ["https://www.pokemoncard.com.ar/*", "https://pokemoncard.com.ar/*"],
+        "js": ["scripts/controllers/pokemoncard.js"]
+    }]
+}

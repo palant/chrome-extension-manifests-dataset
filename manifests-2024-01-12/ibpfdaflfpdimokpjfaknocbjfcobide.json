@@ -1,0 +1,69 @@
+---
+name: NTU_ScoreSharing
+version: 2.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 417
+release_date: '2021-07-14T05:50:58.000Z'
+size: 916KiB
+languages:
+  - 中文 (繁體)
+description: A community sharing score distributions
+publisher_account: MINS
+privacy_policy: https://sites.google.com/view/mins-policy/home
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "NTU_ScoreSharing",
+  "description": "A community sharing score distributions",
+  "version": "2.1.0",
+  "manifest_version": 2,
+  "permissions": [
+    "https://*.ifsel3.aca.ntu.edu.tw/*",
+    "https://mighty-woodland-62500.herokuapp.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "src/background/handler.js",
+      "src/background/ntu/parseNtuTranscriptToJson.js",
+      "src/background/ntu/loadNtuTranscript.js",
+      "src/background/fetchEnrollments.js",
+      "src/background/addListener.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://nol.ntu.edu.tw/nol/coursesearch/*"
+      ],
+      "css": [
+        "lib/swiper-bundle.min.css"
+      ],
+      "js": [
+        "lib/swiper-bundle.min.js",
+        "lib/Chart.min.js",
+        "lib/popper.min.js",
+        "src/content_script/fetchMessage.js",
+        "src/content_script/fetchTranscript.js",
+        "src/content_script/loadCourses.js",
+        "src/content_script/ntu/course_search/getAllRows.js",
+        "src/content_script/ntu/course_search/parseRow.js",
+        "src/content_script/ntu/course_search/insertPieChart.js",
+        "src/content_script/ntu/course_search/insertPopper.js",
+        "src/content_script/ntu/course_search/insertListenerToDom.js",
+        "src/content_script/ntu/course_search/main.js"
+        ],
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "128": "images/mins128_b.png"
+  }
+}

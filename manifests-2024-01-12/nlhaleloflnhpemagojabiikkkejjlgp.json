@@ -1,0 +1,662 @@
+---
+name: Mettl Proctoring
+version: 8.0.11
+category_slug: productivity/workflow
+rating: 2.9285714285714284
+rating_count: 14
+user_count: 10000
+release_date: '2024-01-08T10:41:37.000Z'
+size: 7.85MiB
+languages:
+  - English (United States)
+description: Extension to proctor candidate
+publisher_account: android
+extension_website: mettl.com
+support_website: https://mettl.com/privacy-notice/
+privacy_policy: https://mettl.com/privacy-notice
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Mettl Proctoring",
+    "version": "8.0.11",
+    "description": "Extension to proctor candidate",
+    "manifest_version": 2,
+    "permissions": [
+        "storage",
+        "tabs",
+        "browsingData",
+        "contentSettings",
+        "management",
+        "https://lti-mpaas.mettl.xyz/",
+        "https://lti-mpaas.mettl.pro/",
+        "https://lti-mpaas.mettl.com/",
+        "https://lti-mpaas.mercermettl.com/",
+        "https://lti-mpaas.mercermettl.eu/",
+        "https://mpaas-api.mettl.xyz/",
+        "https://mpaas-api.mettl.pro/",
+        "https://mpaas-api.mettl.com/",
+        "https://mpaas-api.mercermettl.com/",
+        "https://mpaas-api.mercermettl.eu/",
+        "<all_urls>"
+    ],
+    "background": {
+        "persistent": true,
+        "scripts": [
+            "plugins/bootstrap/js/jquery.min.js",
+            "constants/mpaasPluginConstants.js",
+            "apps/deepIntegration/deepIntegrationConstants.js",
+            "js/background.js"
+        ]
+    },
+    "icons": {
+        "16": "assets/mercer16.png",
+       "48": "assets/mercer48.png",
+      "128": "assets/mercer128.png" 
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*:*/courses/*/quizzes/*/edit"
+            ],
+            "include_globs": [
+                "*/courses/*/quizzes/*/edit"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/commonService.js",
+                "apps/canvas/js/teacherView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/canvas/css/canvas.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*:*/courses/*/*/*/take?*=*"
+            ],
+            "include_globs": [
+                "*/courses/*/*/*/take?*=*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "js/MP.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/commonService.js",
+                "services/loginService.js",
+                "apps/canvas/js/canvasTemplate.js",
+                "apps/canvas/js/studentView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/canvas/css/canvas.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*:*/courses/*/quizzes/*/take",
+                "*://*/courses/*/quizzes/*/take/questions/*"
+            ],
+            "include_globs": [
+                "*/courses/*/quizzes/*/take",
+                "*/courses/*/quizzes/*/take/questions/*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "js/MP.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "services/commonService.js",
+                "services/testerrorHandler.js",
+                "apps/canvas/js/canvasTemplate.js",
+                "apps/canvas/js/takeQuiz.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/canvas/css/canvas.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*:*/courses/*/external_tools/*"
+            ],
+            "include_globs": [
+                "*/courses/*/external_tools/*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "plugins/toast/js/toast.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/canvas/js/mpaasTool.js"
+            ],
+            "css": [
+                "css/custom.css",
+                "plugins/toast/css/toast.css",
+                "apps/canvas/css/canvas.css"
+            ]
+        },{
+            "matches": [
+                "*://*/accounts/*/external_tools/*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "apps/canvas/js/canvasTemplate.js",
+                "apps/canvas/js/mPaasIntalled.js"
+            ],
+            "css": [
+                "css/custom.css",
+                "apps/canvas/css/canvas.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/course/modedit.php?add=quiz*",
+                "*://*/*/course/modedit.php?add=quiz*",
+                "*://*/course/modedit.php?update*",
+                "*://*/*/course/modedit.php?update*"
+
+            ],
+            "include_globs": [
+                "*/course/modedit.php?add=quiz*",
+                "*/*/course/modedit.php?add=quiz*",
+                "*/course/modedit.php?update*",
+                "*/*/course/modedit.php?update*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/commonService.js",
+                "apps/moodle/js/moodleTemplate.js",
+                "apps/moodle/js/teacherView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/moodle/css/moodle.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/mod/lti/view.php?id=*",
+                "*://*/*/mod/lti/view.php?id=*"
+            ],
+            "include_globs": [
+                "*/mod/lti/view.php?id=*",
+                "*/*/mod/lti/view.php?id=*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "plugins/toast/js/toast.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/moodle/js/mpaasTool.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/moodle/css/moodle.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/mod/lti/instructor_edit_tool_type.php*",
+                "*://*/mod/lti/typessettings.php*"
+            ],
+            "js": [
+                "constants/mpaasPluginConstants.js",
+                "plugins/bootstrap/js/jquery.min.js",
+                "apps/moodle/js/handleCreateEditTool.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/course/view.php?id=*",
+                "*://*/mod/quiz/review.php*",
+                "*://*/mod/quiz/edit.php?cmid=*",
+                "*://*/mod/quiz/summary.php*",
+                "*://*/*/course/view.php?id=*",
+                "*://*/*/mod/quiz/review.php*",
+                "*://*/*/mod/quiz/edit.php?cmid=*",
+                "*://*/*/mod/quiz/summary.php*"
+            ],
+            "include_globs": [
+                "*/course/view.php?id=*",
+                "*/mod/quiz/edit.php?cmid=*",
+                "*/courses/*/quizzes/*",
+                "*/mod/quiz/summary.php*",
+                "*/mod/quiz/review.php*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "js/MP.js",
+                "constants/mpaasPluginConstants.js",
+                "services/commonService.js",
+                "apps/moodle/js/checkTool.js"
+            ]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "constants/mpaasPluginConstants.js",
+                "apps/deepIntegration/deepIntegrationConstants.js",
+                "services/commonService.js",
+                "services/testerrorHandler.js",
+                "js/sharedTemplate.js",
+                "js/checkNavigatedPage.js",
+                "apps/d2l/js/mpaasTool.js"
+            ],
+            "css": [
+                "css/custom.css"
+            ],
+            "exclude_matches": [
+                "*://*/mod/quiz/summary.php*",
+                "*://*/mod/quiz/review.php*",
+                "*://*/courses/*/quizzes/*",
+                "*://*/*/mod/quiz/summary.php*",
+                "*://*/*/mod/quiz/review.php*",
+                "*://*/*/mod/quiz/attempt*",
+                "*://*/proctoring",
+                "*://*/v2/proctoring/*",
+                "*://*/mod/quiz/attempt*",
+                "*://*:*/courses/*/quizzes/*/take",
+                "*://*/courses/*/quizzes/*/take/questions/*",
+                "https://*/d2l/lms/quizzing/user/quiz_submissions.d2l*",
+                "https://*/d2l/lms/quizzing/user/attempt/quiz_start_frame_auto.*",
+                "https://*/webapps/assessment/take/take.jsp?course_assessment_id=*",
+                "https://*/webapps/assessment/take/submitted.jsp?course_assessment_id=*&course_id=*&content_id=*&step=null",
+                "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&content_id=*&isPasswordAttempted=true&password=*&step=*"
+            ]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "js/logoutService.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/mod/quiz/view.php?id=*",
+                "*://*/mod/quiz/view.php?id=*&forceview=*",
+                "*://*/*/mod/quiz/view.php?id=*",
+                "*://*/*/mod/quiz/view.php?id=*&forceview=*"
+            ],
+            "include_globs": [
+                "*/mod/quiz/view.php?id=*",
+                "*/mod/quiz/view.php?id=*&forceview=*",
+                "*/*/mod/quiz/view.php?id=*",
+                "*/*/mod/quiz/view.php?id=*&forceview=*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "js/MP.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/moodle/js/moodleTemplate.js",
+                "apps/moodle/js/studentView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/moodle/css/moodle.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/proctoring",
+                "*://*/v2/proctoring/*",
+                "*://*/systemCheck?token*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "constants/mpaasPluginConstants.js",
+                "js/sharedTemplate.js",
+                "js/dWindowCheck.js",
+                "apps/deepIntegration/deepIntegrationConstants.js",
+                "apps/deepIntegration/Main.js"
+            ],
+            "css": [
+                "css/custom.css",
+                "apps/moodle/css/moodle.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/mod/quiz/attempt.php*",
+                "*://*/mod/quiz/summary.php*",
+                "*://*/*/mod/quiz/attempt.php*",
+                "*://*/*/mod/quiz/summary.php*",
+                "*://*/*/mod/quiz/processattempt.php*"
+            ],
+            "include_globs": [
+                "*/mod/quiz/attempt.php*",
+                "*/mod/quiz/summary.php*",
+                "*/*/mod/quiz/attempt.php*",
+                "*/*/mod/quiz/summary.php*",
+                "*/*/mod/quiz/processattempt.php*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "js/MP.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "services/commonService.js",
+                "services/testerrorHandler.js",
+                "apps/moodle/js/moodleTemplate.js",
+                "apps/moodle/js/takeQuiz.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/moodle/css/moodle.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/webapps/assessment/do/content/addAssessment",
+                "https://*/webapps/assessment/do/content/assessment?action=MODIFY*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/bootstrap.min.js",
+                "plugins/bootstrap/js/popper.min.js",
+                "plugins/toast/js/toast.js",
+                "constants/mpaasPluginConstants.js",
+                "js/sharedTemplate.js",
+                "js/apiService.js",
+                "services/commonService.js",
+                "apps/blackboard/js/blackboardTemplate.js",
+                "apps/blackboard/js/teacherView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/blackboard/css/blackboard.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/webapps/blackboard/content/contentWrapper.jsp*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/blackboard/js/mpaasTool.js"
+            ],
+            "css": [
+                "plugins/bootstrap/css/bootstrap.min.css",
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/blackboard/css/blackboard.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://*/webapps/blackboard/content/listContentEditable.jsp*",
+                "https://*/webapps/blackboard/content/listContent.jsp*",
+                "https://*/webapps/assessment/take/submitted.jsp?course_assessment_id=*&course_id=*&content_id=*&step=null"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "constants/mpaasPluginConstants.js",
+                "js/MP.js",
+                "services/commonService.js",
+                "apps/blackboard/js/checkTool.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&new_attempt=*&content_id=*&step=*",
+                "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&content_id=*&step=null"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "js/MP.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/blackboard/js/blackboardTemplate.js",
+                "apps/blackboard/js/studentView.js"
+            ],
+            "css": [
+                "plugins/bootstrap/css/bootstrap.min.css",
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/blackboard/css/blackboard.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/webapps/assessment/take/take.jsp?course_assessment_id=*",
+                "https://*/webapps/assessment/take/launch.jsp?course_assessment_id=*&course_id=*&content_id=*&isPasswordAttempted=true&password=*&step=*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "js/MP.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "services/commonService.js",
+                "services/testerrorHandler.js",
+                "apps/blackboard/js/blackboardTemplate.js",
+                "apps/blackboard/js/takeQuiz.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/blackboard/css/blackboard.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/d2l/le/lessons/*",
+                "https://*/d2l/le/lessons/*/topics/*",
+                "https://*/d2l/le/lessons/*/units/*",
+                "https://*/d2l/le/content/*/viewContent/*/View"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/bootstrap.min.js",
+                "plugins/bootstrap/js/popper.min.js",
+                "plugins/toast/js/toast.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/d2l/js/mpaasTool.js"
+            ],
+            "css": [
+                "plugins/bootstrap/css/bootstrap.min.css",
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/d2l/css/d2l.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://*/d2l/lms/quizzing/*/modify/*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/bootstrap.min.js",
+                "plugins/bootstrap/js/popper.min.js",
+                "plugins/toast/js/toast.js",
+                "constants/mpaasPluginConstants.js",
+                "js/sharedTemplate.js",
+                "js/apiService.js",
+                "services/commonService.js",
+                "apps/d2l/js/d2lTemplate.js",
+                "apps/d2l/js/teacherView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/d2l/css/d2l.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/d2l/le/activities/edit/*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/bootstrap/js/bootstrap.min.js",
+                "plugins/bootstrap/js/popper.min.js",
+                "plugins/toast/js/toast.js",
+                "constants/mpaasPluginConstants.js",
+                "js/sharedTemplate.js",
+                "js/apiService.js",
+                "services/commonService.js",
+                "apps/d2l/js/d2lTemplate.js",
+                "apps/d2l/js/teacherNewEditView.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/d2l/css/d2l.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/d2l/lms/quizzing/user/quiz_summary*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "js/MP.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/loginService.js",
+                "services/commonService.js",
+                "apps/d2l/js/d2lTemplate.js",
+                "apps/d2l/js/studentView.js"
+            ],
+            "css": [
+                "plugins/bootstrap/css/bootstrap.min.css",
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/d2l/css/d2l.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/d2l/lms/quizzing/user/attempt/quiz_start_frame_auto.*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "js/MP.js",
+                "js/sharedTemplate.js",
+                "constants/mpaasPluginConstants.js",
+                "services/commonService.js",
+                "services/testerrorHandler.js",
+                "apps/d2l/js/d2lTemplate.js",
+                "apps/d2l/js/takeQuiz.js"
+            ],
+            "css": [
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/d2l/css/d2l.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/d2l/lms/quizzing/user/quiz_submissions.d2l*",
+                "*://*/courses/*/quizzes/*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "constants/mpaasPluginConstants.js",
+                "js/MP.js",
+                "services/commonService.js",
+                "apps/d2l/js/checkTool.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/d2l/le/enhancedSequenceViewer/*?url=*"
+            ],
+            "js": [
+                "plugins/bootstrap/js/jquery.min.js",
+                "plugins/toast/js/toast.js",
+                "plugins/bootstrap/js/jqpage.js",
+                "js/MP.js",
+                "constants/mpaasPluginConstants.js",
+                "js/apiService.js",
+                "js/sharedTemplate.js",
+                "services/commonService.js",
+                "apps/d2l/js/sltakeQuiz.js",
+                "apps/d2l/js/slstudentView.js"
+            ],
+            "css": [
+                "plugins/bootstrap/css/bootstrap.min.css",
+                "plugins/toast/css/toast.css",
+                "css/custom.css",
+                "apps/d2l/css/d2l.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "assets/*.png",
+        "assets/*.mp3",
+        "assets/*.svg",
+        "assets/*.gif",
+        "apps/deepIntegration/deepIntegrationConstants.js",
+        "apps/deepIntegration/Main.js"
+    ],
+    "browser_action": {
+        "default_title": "Mettl Proctoring",
+        "default_popup": "popup.html",
+        "default_icon": "assets/mercer48.png"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

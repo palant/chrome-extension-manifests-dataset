@@ -1,0 +1,111 @@
+---
+name: Canned Replies
+version: 3.0.0
+category_slug: productivity/workflow
+rating: 3.8947368421052633
+rating_count: 57
+user_count: 10000
+release_date: '2022-12-18T12:50:51.000Z'
+size: 2.87MiB
+languages:
+  - English
+description: Helps you manage canned replies in Gmail and everywhere else on the web
+publisher_account: Tinacious Design
+support_website: https://tinaciousdesign.com/contact
+privacy_policy: https://privacy.tinaciousdesign.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Canned Replies",
+  "version": "3.0.0",
+  "author": "Tinacious Design",
+  "description": "Helps you manage canned replies in Gmail and everywhere else on the web",
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; script-src 'self'; connect-src 'self' https://my.cannedreplies.com"
+  },
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "index.html"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "clipboardWrite",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+  "optional_permissions": [],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "48": "img/canned-replies-icon-48.png",
+    "128": "img/canned-replies-icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "38": "img/canned-replies-icon-38.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*.png",
+        "angular.min.js.map",
+        "index.html",
+        "page-detector.js.map",
+        "context-menu.js.map"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "pageWorld.js",
+        "pageWorld.js.map"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "insert-text-at-cursor.js",
+        "pageWorld.js",
+        "page-detector.js"
+      ],
+      "css": [
+        "page-detector.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "insert-text-at-cursor.js",
+        "context-menu.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

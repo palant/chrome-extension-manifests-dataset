@@ -1,0 +1,75 @@
+---
+name: 3Liner - 원클릭으로 확인하는 세줄요약
+version: 0.3.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 232
+release_date: '2022-03-22T07:32:21.000Z'
+size: 580KiB
+languages:
+  - 한국어
+description: 원클릭으로 확인하는 세줄요약
+publisher_account: 3 Liner
+privacy_policy: https://www.freeprivacypolicy.com/live/48260021-a498-4ed2-a841-21c1b69cdda9
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "3Liner - 원클릭으로 확인하는 세줄요약",
+  "description": "원클릭으로 확인하는 세줄요약",
+  "version": "0.3.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "logo128.png",
+    "48": "logo128.png",
+    "128": "logo128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["Readability.js", "content-script.js"]
+    },
+    {
+      "matches": ["https://www.facebook.com/sharer/sharer.php*"],
+      "js": ["share-facebook.js"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/sharing/share-offsite/*"],
+      "js": ["share-linkedin.js"]
+    },
+    {
+      "matches": ["https://careerly.co.kr/posts/create*"],
+      "js": ["share-careerly.js"]
+    },
+    {
+      "matches": ["https://www.google.com/*", "https://www.google.co.kr/*"],
+      "css": ["bootstrap-5.1.3.min.css", "preview.css"],
+      "js": ["env.js", "amplitude.js", "helper-functions.js", "content-script-google.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://search.naver.com/search.naver*"],
+      "css": ["bootstrap-5.1.3.min.css", "preview.css"],
+      "js": ["env.js", "amplitude.js", "helper-functions.js", "content-script-google.js"],
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["https://api.3-liner.com:5000/*"],
+  "action": {
+    "default_popup": "default-popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "popup.html", "preview.html", "logo.png", "NanumSquareOTF_acB.otf", "NanumSquareOTF_acR.otf"],
+      "matches": [ "<all_urls>" ]
+    }
+  ]
+}

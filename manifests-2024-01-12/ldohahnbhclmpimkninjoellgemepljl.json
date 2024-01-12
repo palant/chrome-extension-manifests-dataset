@@ -1,0 +1,86 @@
+---
+name: oViSwitch
+version: 2.2.0
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 93
+release_date: '2023-05-15T10:24:57.000Z'
+size: 69.32KiB
+languages:
+  - 日本語
+description: Focus your oVice tab with one click.
+publisher_account: punkshiraishi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "oViSwitch",
+  "version": "2.2.0",
+  "description": "Focus your oVice tab with one click.",
+  "action": {
+    "default_icon": "./assets/black512.png"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/black32.png",
+    "32": "./assets/black32.png",
+    "48": "./assets/black512.png",
+    "128": "./assets/black512.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.ovice.in/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "commands": {
+    "execute_main": {
+      "description": "Jump to ovice or toggle mute state.",
+      "suggested_key": {
+        "default": "Alt+O",
+        "mac": "Alt+O"
+      }
+    },
+    "back_to_previous": {
+      "description": "Back to previous tab.",
+      "suggested_key": {
+        "default": "Alt+P",
+        "mac": "Alt+P"
+      }
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

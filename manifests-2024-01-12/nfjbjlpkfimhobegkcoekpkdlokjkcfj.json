@@ -1,0 +1,116 @@
+---
+name: Save and search bookmarks with Stacks
+version: 2.4.1
+category_slug: productivity/tools
+rating: 4.2
+rating_count: 10
+user_count: 1000
+release_date: '2023-12-14T05:49:46.000Z'
+size: 1.89MiB
+languages:
+  - English (United States)
+description: Stacks is your personal search engine. Recall bookmarks automatically.
+publisher_account: Better Stacks
+extension_website: betterstacks.com
+support_website: https://airtable.com/shrNknmfzfl56Aqpe
+privacy_policy: https://betterstacks.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Save and search bookmarks with Stacks",
+  "description": "Stacks is your personal search engine. Recall bookmarks automatically. ",
+  "version": "2.4.1",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Stacks - save, search and share bookmarks instantly",
+    "default_icon": "logo.png"
+  },
+  "permissions": [
+    "favicon",
+    "activeTab",
+    "tabs",
+    "bookmarks",
+    "storage",
+    "contextMenus",
+    "scripting",
+    "webRequest"
+  ],
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "commands": {
+    "StackSearchCommand": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Shift+Command+K"
+      },
+      "description": "Search with Stacks"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://betterstacks.com/*"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "jquery-2.1.3.min.js",
+        "contentScriptPage.js",
+        "annotationCommentsScript.js",
+        "annotationCommentsPage.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["githubScript.js"]
+    },
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["twitterScript.js"]
+    },
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "js": ["instagramScript.js"]
+    },
+    {
+      "js": ["contentScriptForTwitter.js"],
+      "matches": ["https://twitter.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["contentScriptForLinkedIn.js"],
+      "matches": ["https://www.linkedin.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["linkedInSciptPage.js"]
+    },
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["facebookSciptPage.js"]
+    }
+  ],
+
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://www.linkedin.com/*",
+    "https://github.com/*",
+    "https://www.instagram.com/*"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline'"
+  }
+}

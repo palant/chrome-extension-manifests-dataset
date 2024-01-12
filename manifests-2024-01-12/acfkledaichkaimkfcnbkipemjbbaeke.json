@@ -1,0 +1,83 @@
+---
+name: PageOptimus - website speed optimizer
+version: 0.1.1
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 170
+release_date: '2021-10-16T20:59:38.000Z'
+size: 3.08MiB
+languages:
+  - English
+description: Website speed and performance optimization tool
+publisher_account: devunion
+extension_website: pageoptimus.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.1.1",
+  "default_locale": "en",
+  "icons": {
+    "16": "img/Icon-16.png",
+    "19": "img/Icon-19.png",
+    "32": "img/Icon-32.png",
+    "48": "img/Icon-48.png",
+    "64": "img/Icon-64.png",
+    "128": "img/Icon-128.png"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ]
+  },
+
+  "browser_action": {
+    "default_icon": {
+      "16": "img/Icon-16.png",
+      "19": "img/Icon-19.png",
+      "32": "img/Icon-32.png",
+      "48": "img/Icon-48.png",
+      "64": "img/Icon-64.png",
+      "128": "img/Icon-128.png"
+    },
+    "default_title": "__MSG_popupTitle__",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/content.js"],
+      "css": ["css/content.css", "css/lib/tippy.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://localhost:8080/ru/pages/oplata-zavershena",
+        "http://localhost:8080/pages/transaction-completed",
+        "http://localhost:8080/en/pages/transaction-completed",
+
+        "http://pageoptimus.com/ru/pages/oplata-zavershena", "https://pageoptimus.com/ru/pages/oplata-zavershena",
+        "http://pageoptimus.com/pages/transaction-completed", "https://pageoptimus.com/pages/transaction-completed",
+        "http://pageoptimus.com/en/pages/transaction-completed", "https://pageoptimus.com/en/pages/transaction-completed"
+      ],
+      "js": ["js/check-balance.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": ["img/shared/*"],
+  "permissions": [
+    "<all_urls>",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "webRequest",
+    "downloads",
+    "browsingData"
+  ],
+  "content_security_policy": "script-src 'self' https://www.googletagmanager.com 'unsafe-eval'; object-src 'self'"
+}

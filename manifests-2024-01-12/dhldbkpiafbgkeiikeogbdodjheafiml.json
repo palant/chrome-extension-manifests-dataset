@@ -1,0 +1,158 @@
+---
+name: FanDuel bookmarklet manager
+version: 4.13.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 60
+release_date: '2020-05-18T16:01:40.000Z'
+size: 65.98KiB
+languages:
+  - English
+description: Bookmarklet heaven for Engineering and Customer Support
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "Michael Sholty & Bernard Debecker",
+  "manifest_version": 2,
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appShortName__",
+  "description": "__MSG_appDescription__",
+  "version": "4.13.2",
+  "default_locale": "en",
+  "browser_action": {
+    "default_icon": {
+      "16": "images/fd-16.png",
+      "24": "images/fd-24.png",
+      "32": "images/fd-32.png"
+    },
+    "default_title": "__MSG_browserActionTitle__",
+    "default_popup": "html/popup.html"
+  },
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": false
+  },
+  "icons": {
+    "16": "images/fd-16.png",
+    "32": "images/fd-32.png",
+    "48": "images/fd-48.png",
+    "128": "images/fd-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "https://github.com/*",
+    "*://*/*",
+    "<all_urls>",
+    "storage",
+    "nativeMessaging"
+  ],
+  "background": {
+    "scripts": [
+      "js/background.js",
+      "js/utils.js"
+    ]
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+F",
+        "linux": "Alt+Shift+F",
+        "windows": "Alt+Shift+F",
+        "mac": "Alt+Shift+F"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/constants.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://github.com/*"
+      ],
+      "js": [
+        "js/cs-github-pr-collapse.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://github.com/fanduel/*/pull/*"
+      ],
+      "js": [
+        "js/cs-github.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://github.com/fanduel/intl-web-app/*"
+      ],
+      "js": [
+        "js/cs-issues.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.use1.dev.us.fdbox.net/login*",
+        "http://*.use1.dev.us.fdbox.net/login*",
+        "http://localhost:3000/login*",
+        "http://localhost:3000/login",
+        "https://*.fndl.dev/login*"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/cs-login.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.use1.dev.us.fdbox.net/join*",
+        "http://*.use1.dev.us.fdbox.net/join*",
+        "http://localhost:3000/join*",
+        "https://*.fndl.dev/join*"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/cs-join.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://github.com/fanduel/ui/compare/*?expand=1",
+        "https://github.com/fanduel/intl-web-app/compare/*?expand=1"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/cs-pr-filler.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://fanduel.atlassian.net/secure/RapidBoard.jspa*",
+        "https://fanduel.atlassian.net/browse/*"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/constants.js",
+        "js/cs-jira.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,74 @@
+---
+name: VW Reservation Assistant
+version: 1.3.8
+category_slug: lifestyle/fun
+rating: 4.916666666666667
+rating_count: 12
+user_count: 2000
+release_date: '2023-07-27T06:08:33.000Z'
+size: 201KiB
+languages:
+  - English
+description: >-
+  VW Reservation Assistant shows you more detailed information about your ID.4
+  reservation.
+publisher_account: Justin Williams
+privacy_policy: https://id4.misc.ws/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "VW Reservation Assistant",
+  "short_name": "VW Reservation Assistant",
+  "version": "1.3.8",
+  "manifest_version": 3,
+  "description": "VW Reservation Assistant shows you more detailed information about your ID.4 reservation.",
+  "homepage_url": "https://misc.ws",
+  "icons": {
+    "16": "icons/vwra16.png",
+    "48": "icons/vwra48.png",
+ "64": "icons/vwra64.png",
+    "128": "icons/vwra128.png"
+  },
+  "action": {
+ "default_popup": "src/popup/index.html"
+  },
+  "options_ui": {
+        "page": "src/options/index.html",
+        "open_in_tab": true
+    },
+  "permissions": [
+    "storage" 
+  ],
+  "host_permissions": [
+ "https://*.vw.com/",
+ "https://*.misc.ws/"
+  ],
+  "background": {
+ "service_worker": "src/bg/service_worker.js"
+  },  
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.vw.com/myVW/myreservations/*"
+      ],
+   "run_at": "document_start",
+      "js": [
+        "src/inject/inject.js",
+  "src/inject/domtoimage.js",
+  "src/inject/notifications.js",
+  "src/inject/moment.min.js",
+  "src/inject/error_inject.js"
+      ],
+      "css": [
+       "src/inject/inject.css",
+  "src/inject/notifications.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+   "resources": ["src/inject/*", "icons/*", "images/*"],   
+   "matches": ["<all_urls>"]
+  }]
+}

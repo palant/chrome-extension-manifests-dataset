@@ -1,0 +1,62 @@
+---
+name: Promyze for Code Review
+version: 3.3.3
+category_slug: productivity/developer
+rating: 5
+rating_count: 3
+user_count: 490
+release_date: '2023-12-15T13:41:33.000Z'
+size: 1.75MiB
+languages:
+  - English
+description: Skyrocket your code review experience with all Promyze capabilities.
+publisher: Promyze
+publisher_address: |-
+  11 Cr du 30 Juillet
+  Bordeaux 33000
+  FR
+support_website: https://intercom.help/promyze
+privacy_policy: https://www.promyze.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Promyze for Code Review",
+  "version": "3.3.3",
+  "description": "Skyrocket your code review experience with all Promyze capabilities.",
+  "permissions": ["activeTab", "contextMenus", "storage", "notifications"],
+  "web_accessible_resources": [
+    "browser-polyfill.js.map",
+    "popup/popup.html",
+    "contentscript/css/contentscript.css",
+    "contentscript/img/*",
+    "contentscript/css/*",
+    "contentscript/fonts/*"
+  ],
+  "icons": {
+    "128": "./promyze.png"
+  },
+  "browser_action": {
+    "default_title": "Promyze",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": ["browser-polyfill.js", "index.js"]
+  },
+  "options_page": "options/index.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*merge_requests*",
+        "*://*/*pull*",
+        "*://*.github.com/*",
+        "*://*/*reviews*"
+      ],
+      "js": ["browser-polyfill.js", "codeReviewDecoration.js"],
+      "css": ["contentscript/css/contentscript.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

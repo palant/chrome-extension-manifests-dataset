@@ -1,0 +1,61 @@
+---
+name: Fanmark Orders Collector
+version: '0.40'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-10-08T10:42:52.000Z'
+size: 160KiB
+languages:
+  - English (United States)
+description: Send Etsy Order Numbers to Fanmark
+publisher_account: billzajac
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Fanmark Orders Collector",
+  "action": {},
+  "version": "0.40",
+  "description": "Send Etsy Order Numbers to Fanmark",
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:3000/me",
+        "https://fanmark.net/me"
+      ],
+      "js": [
+        "api-key-content-script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.etsy.com/your/shops/me/stats",
+        "https://www.etsy.com/your/shops/me/stats?date_range=all_time"
+      ],
+      "js": [
+        "etsy-orders-content-script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "http://localhost:3000/me",
+    "https://fanmark.net/me",
+    "https://www.etsy.com/your/shops/me/stats"
+  ],
+  "icons": {
+    "16": "images/FANMark_Logo_Favicon.png",
+    "32": "images/FANMark_Logo_32x32.png",
+    "48": "images/FANMark_Logo_48x48.png",
+    "128": "images/FANMark_Logo_128x128.png"
+  }
+}

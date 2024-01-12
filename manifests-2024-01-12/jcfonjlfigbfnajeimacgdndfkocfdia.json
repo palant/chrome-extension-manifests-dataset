@@ -1,0 +1,71 @@
+---
+name: Scout Manager
+version: 1.2.0.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 258
+release_date: '2023-02-24T08:54:58.000Z'
+size: 469KiB
+languages:
+  - English (United States)
+description: >-
+  Connects Scoutbook to Scout Manager to enable bi-directonal synchronization of
+  scouting records.
+publisher_account: Scout Manager
+extension_website: www.scoutmanager.com
+support_website: https://www.scoutmanager.com/docs
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Scout Manager",
+ "version" : "1.2.0.0",
+ "description" : "Connects Scoutbook to Scout Manager to enable bi-directonal synchronization of scouting records.",
+ "background": {
+  "xscripts": ["third-party/jquery.3.4.1.min.js", "om/User.js", "om/Award.js","background.js"],
+  "xpersistent": false,
+  "service_worker": "background.js",
+  "type": "module"
+ },
+ "action": {
+  "default_popup":"popup.html",
+  "default_icon": {
+         "16": "images/sm-icon-16.png",
+         "32": "images/sm-icon-32.png",
+         "48": "images/sm-icon-48.png",
+         "128": "images/sm-icon-128.png"   
+  }
+ },
+    "icons": {
+      "16": "images/sm-icon-16.png",
+      "32": "images/sm-icon-32.png",
+      "48": "images/sm-icon-48.png",
+      "128": "images/sm-icon-128.png"
+    },
+ "web_accessible_resources": [
+  {
+   "matches": ["<all_urls>"],
+   "resources": ["/view/*", "/view/main.html", "/view/logs.html","/view/sync-to-mod.html"]
+  }
+ ],
+    "content_scripts": [
+     {
+      "matches": ["https://scoutbook.scouting.org/*"],
+      "js": ["third-party/jquery.3.4.1.min.js", "third-party/bootstrap.4.3.1.min.js", "third-party/moment.2.24.0.min.js","delegate/LogDelegate.js","delegate/RosterDelegate.js","delegate/AwardDelegate.js","delegate/UserAwardDelegate.js","delegate/AdvancementExportDelegate.js","om/User.js","om/Award.js","sm_integration.js"],
+            "css" : ["third-party/bootstrap.4.3.1.min.css"]
+     }
+    ],
+ "permissions": [
+     "declarativeContent",
+     "storage"
+ ],
+    "host_permissions": [
+     "https://www.scoutmanager.com/*",
+     "https://scoutbook.scouting.org/*",
+     "http://localhost/*"
+    ],
+    "options_page": "options.html"
+}

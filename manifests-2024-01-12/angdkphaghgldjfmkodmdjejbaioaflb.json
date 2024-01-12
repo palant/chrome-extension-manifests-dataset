@@ -1,0 +1,114 @@
+---
+name: frnd.ai
+version: 1.1.13
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 53
+release_date: '2023-12-23T09:35:16.000Z'
+size: 1.41MiB
+languages:
+  - English (United States)
+description: Enabling Salespeople to share contextual content with buyers in one click
+publisher: Frnd Inc
+publisher_account: frnd.ai
+publisher_address: |-
+  2055 Limestone Rd STE 200-C
+  Wilmington, DE, New Castle, US
+  Wilmington, DE 19808
+  US
+extension_website: frnd.ai
+privacy_policy: https://frnd.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "frnd.ai",
+  "description": "Enabling Salespeople to share contextual content with buyers in one click",
+  "version": "1.1.13",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/logo192.png",
+    "48": "images/logo192.png",
+    "128": "images/logo192.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "webRequest"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["gmail/gmail.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://outlook.live.com/mail/*", "https://outlook.office.com/mail/*", "https://outlook.office365.com/mail/*"],
+      "js": ["outlook/outlook.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["linkedin/linkedin.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://app.hubspot.com/*"],
+      "js": ["hubspot/hubspot.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://frnd.ai/*", "https://beta.frnd.ai/*"],
+      "js": ["frnd-ai/frnd-ai.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["global/global.js"],
+      "runt_at": "document_end",
+      "exclude_matches": [
+        "https://mail.google.com/*",
+        "https://outlook.live.com/mail/*",
+        "https://outlook.office.com/mail/*",
+        "https://outlook.office365.com/mail/*",
+        "https://www.linkedin.com/*",
+        "https://frnd.ai/*",
+        "https://beta.frnd.ai/*"
+      ]
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "global/ai-chat.js"
+      ],
+      "runt_at": "document_end"
+    },
+    {
+      "matches": ["https://google.com/*", "https://www.google.com/*"],
+      "js": ["google/google-ask-ai.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_icon": "images/app-logo.png",
+    "default_popup": "index.html",
+    "default_title": "frnd.ai"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": [
+    "https://mail.google.com/",
+    "*://outlook.live.com/*",
+    "*://outlook.office.com/*",
+    "*://outlook.office365.com/*",
+    "<all_urls>"
+  ]
+}

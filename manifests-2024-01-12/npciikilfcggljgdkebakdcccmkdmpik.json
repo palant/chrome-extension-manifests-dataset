@@ -1,0 +1,149 @@
+---
+name: Super Dispatch Importer
+version: 1.18.3
+category_slug: productivity/workflow
+rating: 4.947368421052632
+rating_count: 19
+user_count: 9000
+release_date: '2024-01-11T10:47:26.000Z'
+size: 1.1MiB
+languages:
+  - English (United States)
+description: Import Dispatch Sheet to Super Dispatch
+publisher: Super Dispatch, Inc
+publisher_account: Super Dispatch
+publisher_address: |-
+  4436 State Line Road
+  Kansas City, KS 66103
+  US
+extension_website: superdispatch.com
+support_website: https://support.superdispatch.com
+privacy_policy: https://superdispatch.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAon0G6rKYEhjrN/MbH9gnanVnog6/4pUISO47XiGOz4CbEoKnogW8mEKBBzSKHSjQ2CWibx4olCod6a+Od8XtIdvyR3Ma4gqFA+cQjUbIHHkiWjhKG6ssZWkgXIgL/GFmvW4Ui4gfsnwveZRROmOEiw9NpqrLpNVna4qKd/vV9wA5rEWt1U3Vev3PHy1md+rstVUT2oYa1fM6bsH2KGM0ImqGuFCoDIsFv/9p1/jXBTyiF27eo3o509USiHDMWhQ5HDUf9/bjbqKYzR747HLZmCE/Yy8MMmB3jhA4be+B1eZ2zMCDTq4eoyLO3cqHh+LpyCE5Tg1ywovg+3fbXwuULwIDAQAB",
+  "name": "Super Dispatch Importer",
+  "author": "Super Dispatch",
+  "homepage_url": "https://superdispatch.com/",
+  "description": "Import Dispatch Sheet to Super Dispatch",
+  "version": "1.18.3",
+  "background": {
+    "service_worker": "background/index.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.msgplane.com/index.php?*module=Orders*action=detailview*",
+        "https://*.msgplane.com/index.php?*action=detailview*module=Orders*"
+      ],
+      "js": ["content/message-plane/message-plane.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.centraldispatch.com/protected/dispatch/view?dsid=*",
+        "http://www.centraldispatch.com/protected/dispatch/view?dsid=*",
+        "https://www.centraldispatch.com/protected/cargo/dispatched-to-me*",
+        "http://www.centraldispatch.com/protected/cargo/dispatched-to-me*",
+        "https://canada.carsarrive.com/Carrier/*",
+        "https://www.carsarrive.com/tab/Transport/ViewLoadComplete.asp?nload_id=*",
+        "https://www.carsarrive.com/tab/Transport/ViewLoadShort.asp?nload_id=*",
+        "https://transportation.carmax.com/Carrier/*"
+      ],
+      "js": ["content/content.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://can.drivetime-carsarrive.com/tab/Transport/ViewLoadComplete.asp?nload_id=*"
+      ],
+      "js": ["content/content.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.centraldispatch.com/protected/listing/post-listing?id=*"
+      ],
+      "js": ["content/centraldispatch-listing-import.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.centraldispatch.com/protected/listing-along-route/result*",
+        "https://www.centraldispatch.com/protected/listing-search/result*",
+        "https://www.centraldispatch.com/protected/cargo/my-vehicles*",
+        "https://search.centraldispatch.com/*",
+        "https://app.centraldispatch.com/*"
+      ],
+      "js": ["content/book-now-cd.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://staging.broker.superdispatch.org/*",
+        "https://staging.shipper.superdispatch.org/*",
+        "https://broker.superdispatch.com/*",
+        "https://shipper.superdispatch.com/*"
+      ],
+      "js": ["content/tms.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://staging.carrier.superdispatch.org/*",
+        "https://carrier.superdispatch.com/*",
+        "https://dashboard.mysuperdispatch.com/*"
+      ],
+      "js": ["content/ctms-update-token.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "icons/*.png",
+        "css/*.css",
+        "html/*.html",
+        "img/*.png",
+        "lib/*.js"
+      ]
+    }
+  ],
+  "permissions": ["storage", "notifications"],
+  "host_permissions": [
+    "https://*.msgplane.com/*",
+    "https://*.super-lb.com/*",
+    "https://dashboard.mysuperdispatch.com/*",
+    "https://broker.superdispatch.com/*",
+    "https://www.carsarrive.com/*",
+    "https://modules.carsarrive.com/*",
+    "https://canserv.drivetime-carsarrive.com/*",
+    "https://api.mysuperdispatch.com/*",
+    "https://*.superdispatch.org/*",
+    "https://carrier.superdispatch.com/*",
+    "https://*.carsarrive.com/*"
+  ],
+  "action": {
+    "default_icon": "icons/48.png",
+    "default_popup": "popup.html"
+  },
+  "oauth2": {
+    "client_id": "909133020380-ser17kncg2egcg8ikltuplti4evdori2.apps.googleusercontent.com",
+    "scopes": ["profile"]
+  }
+}

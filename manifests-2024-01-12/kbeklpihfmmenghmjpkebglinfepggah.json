@@ -1,0 +1,82 @@
+---
+name: Draft Guru
+version: '0.41'
+category_slug: lifestyle/entertainment
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-04-28T08:45:14.000Z'
+size: 11.12KiB
+languages:
+  - English (United States)
+description: Expert rankings that automatically update as you draft.
+publisher: Draft Guru
+publisher_account: The Sneaky Athletic
+publisher_address: |-
+  3408 59TH ST CT
+  GIG HARBOR, WA 98335
+  US
+extension_website: thesneakyathletic.com
+support_website: https://thesneakyathletic.com
+privacy_policy: https://thesneakyathletic.com/privacy.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Draft Guru",
+  "version": "0.41",
+
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "24": "assets/icon24.png",
+      "32": "assets/icon32.png"
+    }
+  },
+  "author": "Justin Shaw",
+  "description": "Expert rankings that automatically update as you draft.",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "externally_connectable": {
+    "matches": [
+      "https://draftguru.thesneakyathletic.com/draft/*",
+      "https://thesneakyathletic.com/draft/*",
+      "*://localhost/*"
+    ]
+  },
+
+  "permissions": ["storage", "tabs"],
+
+  "host_permissions": [
+    "https://fantasy.espn.com/football/draft?*",
+    "https://sleeper.app/draft/nfl*",
+    "https://draftguru.thesneakyathletic.com/draft/*",
+    "https://thesneakyathletic.com/draft/*",
+    "*://localhost/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["https://fantasy.espn.com/football/draft*"],
+      "js": ["espn/index.js"]
+    },
+    {
+      "matches": ["https://sleeper.app/draft/nfl*"],
+      "js": ["sleeper/index.js"]
+    },
+    {
+      "matches": [
+        "https://draftguru.thesneakyathletic.com/draft/*",
+        "https://thesneakyathletic.com/draft/*",
+        "*://localhost/*"
+      ],
+      "js": ["guru/index.js"]
+    }
+  ]
+}

@@ -1,0 +1,72 @@
+---
+name: AI Email Assistant for Gmail - Letty
+version: 0.0.6
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 224
+release_date: '2024-01-08T05:10:15.000Z'
+size: 3.01MiB
+languages:
+  - English
+description: Reply and Compose Emails In Seconds with Your Personal AI Email Assistant
+publisher_account: Softcore Labs
+extension_website: useletty.com
+privacy_policy: https://www.useletty.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AI Email Assistant for Gmail - Letty",
+  "description": "Reply and Compose Emails In Seconds with Your Personal AI Email Assistant",
+  "version": "0.0.6",
+  "manifest_version": 3,
+  "permissions": ["tabs", "storage"],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "images/icon128.png"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://api.useletty.com/*"],
+  "externally_connectable": {
+    "matches": [
+      "https://app.useletty.com/*",
+      "https://useletty.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": [
+        "scripts/libs/sentry.js",
+        "scripts/config.js",
+        "scripts/utils.js",
+        "scripts/service/event.service.js",
+        "scripts/service/user.service.js",
+        "scripts/service/message.service.js",
+        "scripts/widget.js",
+        "scripts/platform/gmail.js"
+      ],
+      "css": ["style/app.css"]
+    },
+    {
+      "matches": ["https://app.useletty.com/*"],
+      "js": ["scripts/installation-indicator.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/logo.png", "images/icon128.png"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ]
+}

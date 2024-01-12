@@ -1,0 +1,78 @@
+---
+name: Favourites.io Search Twitter Likes/Bookmarks
+version: 1.2.2
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 402
+release_date: '2023-12-18T10:23:17.000Z'
+size: 57.37KiB
+languages:
+  - English
+description: >-
+  Searching and organizing your Twitter Likes and Bookmarks is a pain.
+  Favourites.io makes it so much easier!
+publisher: Solutionware Technologies Ltd
+publisher_account: Favourites.io
+extension_website: favourites.io
+support_website: https://favourites.io
+privacy_policy: https://www.favourites.io/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Favourites.io Search Twitter Likes/Bookmarks",
+  "description": "Searching and organizing your Twitter Likes and Bookmarks is a pain. Favourites.io makes it so much easier!",
+  "manifest_version": 3,
+  "version": "1.2.2",
+  "icons": {
+    "16": "./public/images/icon16.png",
+    "24": "./public/images/icon24.png",
+    "32": "./public/images/icon32.png",
+    "48": "./public/images/icon48.png",
+    "128": "./public/images/icon128.png"
+  },
+  "permissions": ["activeTab", "cookies", "tabs"],
+  "host_permissions": [
+    "https://twitter.com/*",
+    "https://api.twitter.com/*",
+    "https://www.favourites.io/*",
+    "https://test.favourites.io/*"
+  ],
+  "background": {
+    "service_worker": "./public/background.js"
+  },
+  "action": {
+    "default_popup": "./src/popup.html",
+    "default_icon": {
+      "16": "./public/images/icon16.png",
+      "24": "./public/images/icon24.png",
+      "32": "./public/images/icon32.png"
+    },
+    "default_title": "Favouritesio Bookmark"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/",
+        "https://twitter.com/*",
+        "https://www.favourites.io/*",
+        "https://test.favourites.io/*"
+      ],
+      "all_frames": true,
+      "js": ["./public/content.js"],
+      "css": ["./public/content.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/public/grab_favourites_bookmarks.js",
+        "/public/grab_favourites_likes.js",
+        "/public/grab_favourites_userID.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

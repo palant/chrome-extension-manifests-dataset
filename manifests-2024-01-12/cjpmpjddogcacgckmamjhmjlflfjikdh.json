@@ -1,0 +1,83 @@
+---
+name: Quizwiz - Ace Your HW & Exams, Now With AI
+version: 2.0.7
+category_slug: productivity/education
+rating: 3.3333333333333335
+rating_count: 27
+user_count: 10000
+release_date: '2023-11-27T20:05:58.000Z'
+size: 2.58MiB
+languages:
+  - English
+description: Ask ChatGPT and rapidly search those last-minute homework and exam questions!
+publisher_account: Quizwiz
+support_website: https://quizwizapp.com/contact
+privacy_policy: https://quizwizapp.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name" : "Quizwiz - Ace Your HW & Exams, Now With AI",
+ "short_name": "Quizwiz",
+ "author": "Quizwiz",
+ "version" : "2.0.7",
+ "description" : "Ask ChatGPT and rapidly search those last-minute homework and exam questions!",
+ "icons": {
+  "16": "images/icon16.png",
+  "32": "images/icon32.png",
+  "48": "images/icon48.png",
+  "128": "images/icon96_128.png"
+ },
+ "permissions": ["contextMenus", "storage", "scripting", "cookies", "identity", "identity.email", "offscreen"],
+ "host_permissions": ["<all_urls>"],
+ "commands": {
+  "_execute_action": {
+   "suggested_key": {
+    "default": "Ctrl+Q"
+   }
+  },
+  "search": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+Q"
+   },
+   "description": "Search highlighted question"
+  }
+ },
+ "omnibox": {
+  "keyword" : "quizwiz"
+ },
+ "action": {
+    "default_icon": {
+     "16": "images/icon16.png",
+     "32": "images/icon32.png",
+     "48": "images/icon48.png",
+     "128": "images/icon128.png"
+    },
+    "default_popup": "index.html"
+ },
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [
+  {
+   "matches": ["<all_urls>"],
+   "js": ["content.js"],
+   "run_at": "document_end"
+  },
+  {
+   "matches": ["https://example.com/*"],
+   "js": ["js/token-content.js"],
+   "run_at": "document_start",
+   "all_frames": true,
+   "world": "MAIN"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": ["js/*", "images/icon.svg", "static/media/*.woff", "static/media/*.woff2", "static/media/icon.*.svg", "index.html", "static/js/*.js", "static/css/*.css"],
+   "matches": ["<all_urls>"]
+  }
+ ],
+ "manifest_version": 3
+}

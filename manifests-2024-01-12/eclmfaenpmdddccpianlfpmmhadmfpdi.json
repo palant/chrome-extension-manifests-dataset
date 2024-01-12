@@ -1,0 +1,104 @@
+---
+name: Dteckt Vault - Password Manager
+version: 1.0.0.0
+category_slug: lifestyle/household
+rating: 5
+rating_count: 1
+user_count: 5
+release_date: '2023-12-07T07:14:24.000Z'
+size: 1.21MiB
+languages:
+  - English (United States)
+description: >-
+  Dteckt Vault allows users to easily & securely store, and use their passwords
+  in their web browsers.
+publisher: Dteckt Inc.
+publisher_account: Dteckt
+publisher_address: |-
+  4760 S Highland Dr
+  Holladay, UT 84117
+  US
+extension_website: dteckt.com
+support_website: https://support.dteckt.com
+privacy_policy: https://www.dteckt.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dteckt Vault - Password Manager",
+  "short_name": "Dteckt Vault",
+  "version": "1.0.0.0",
+  "description": "Dteckt Vault allows users to easily & securely store, and use their passwords in their web browsers.",
+  "action": {
+    "default_title": "Store your passwords",
+    "default_popup": "popup.html"
+  },
+  "author": "Dteckt Inc.",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "exclude_matches": ["https://googletagmanager.com/*", "https://www.google.com/recaptcha/*"],
+      "js": ["autofill.js"],
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "alarms",
+    "idle",
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://portal.dteckt.com/",
+    "https://cp-api.dteckt.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "assets/*",
+        "style/extension.css",
+        "script/extension.js",
+        "autofill.css",
+        "*.woff2"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "88",
+  "icons": {
+    "16": "assets/dteckt-vault-icon-blue.png",
+    "48": "assets/dteckt-vault-icon-blue.png"
+  },
+  "externally_connectable": {
+    "ids": ["eclmfaenpmdddccpianlfpmmhadmfpdi"],
+    "matches": ["https://cp-api.dteckt.com/*", "https://cp-api.dev.dteckt.com/*"],
+    "accepts_tls_channel_id": true
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "devtools_page": "devtools.html",
+  "commands": {
+    "autofill_login": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      },
+      "description": "Auto-fill the last used login for the current website"
+    },
+    "lock_vault": {
+      "description": "Lock the vault"
+    }
+  }
+}

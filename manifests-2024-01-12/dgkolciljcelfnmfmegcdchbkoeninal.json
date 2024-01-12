@@ -1,0 +1,112 @@
+---
+name: Sabo - Công cụ hỗ trợ người mua hàng
+version: 4.2010.1800
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 56
+release_date: '2023-10-23T04:15:13.000Z'
+size: 4.06MiB
+languages:
+  - Tiếng Việt
+description: Sabo - Công cụ hỗ trợ người mua hàng
+publisher_account: 123Gobiz
+privacy_policy: https://gobiz.vn/gobiz-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Sabo - Công cụ hỗ trợ người mua hàng",
+ "short_name": "Sabo - Công cụ hỗ trợ người mua hàng",
+ "description": "Sabo - Công cụ hỗ trợ người mua hàng",
+    "version": "4.2010.1800",
+ "icons": {
+        "16": "sapo-logo.png",
+        "48": "sapo-logo.png",
+        "128": "sapo-logo.png"
+    },
+    "action": {
+        "default_icon": {
+            "32": "sapo-logo.png",
+            "64": "sapo-logo.png",
+            "128": "sapo-logo.png"
+        },
+        "name": "Gobiz"
+    },
+
+ "content_scripts": [
+  {
+   "matches": [
+    "*://detail.1688.com/*",
+    "*://cart.1688.com/*",
+    "*://order.1688.com/*",
+    "*://cart.taobao.com/*",
+    "*://work.1688.com/home/*",
+    "*://buyertrade.taobao.com/trade/*",
+    "*://buy.taobao.com/auction/*",
+    "*://item.taobao.com/*",
+    "*://trade.taobao.com/detail/*",
+    "*://*.detail.tmall/*",
+    "*://*.detail.tmall.hk/*",
+    "*://*.tmall.com/item/*",
+    "*://*.tmall.com/order/*",
+    "*://*.tmall.com/detail/*",
+    "*://*.detail.liangxinyao.com/*",
+    "*://*.detail.tmall.com/*"
+   ],
+   "run_at": "document_idle",
+   "js": ["contentCommon.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["<all_urls>"],
+   "run_at": "document_idle",
+   "js": ["contentScriptLink.js", "contentShop.js", "contentProduct.js", "contentProducts.js"]
+  },
+  {
+   "matches": ["<all_urls>"],
+   "css": ["contentScript.css"],
+   "run_at": "document_idle",
+   "js": ["contentScript.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://member1.taobao.com/*"],
+   "run_at": "document_idle",
+   "js": ["contentTaobao.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://order.1688.com/order/*"],
+   "run_at": "document_idle",
+   "js": ["content1688.js"],
+   "all_frames": true
+  },
+  {
+   "matches": [
+    "*://trade.tmall.com/*",
+    "*://buyertrade.taobao.com/*",
+    "*://trade.taobao.com/*",
+    "*://trade.tmall.com/detail/*",
+    "*://trade.1688.com/order/*"
+   ],
+   "run_at": "document_idle",
+   "js": ["contentOrderDetailTaobao.js"],
+   "all_frames": true
+  }
+ ],
+ "background": {
+  "service_worker": "background.js",
+  "type": "module"
+ },
+ "web_accessible_resources": [
+  {
+   "resources": ["injector.js"],
+   "matches": ["<all_urls>"],
+   "extension_ids": []
+  }
+ ],
+ "permissions": ["storage", "activeTab"]
+}

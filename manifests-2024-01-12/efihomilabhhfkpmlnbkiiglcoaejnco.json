@@ -1,0 +1,49 @@
+---
+name: Password Reuse Detector
+version: 0.0.4
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 19
+release_date: '2022-11-23T04:40:03.000Z'
+size: 95.61KiB
+languages:
+  - English (United States)
+description: Simple Chrome extension for detecting password reuse and phishing attacks.
+publisher_account: b38911
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Password Reuse Detector",
+    "version": "0.0.4",
+    "description": "Simple Chrome extension for detecting password reuse and phishing attacks.",
+    "manifest_version": 3,
+    "author": "Luca Famà",
+    "background": {
+        "service_worker": "background.js"
+      },
+    "permissions": ["storage", "notifications"],
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "Password Reuse Detector",
+        "default_icon": {
+            "32":"images/fish.png"
+        }
+    },
+    "web_accessible_resources": [{
+        "resources": ["detected.html"],
+        "matches": ["<all_urls>"]
+    }],
+    "content_scripts": [
+        {
+          "matches": ["<all_urls>"],
+          "all_frames": true,
+          "js": ["buffer.js", "scrypt.js", "insideIframe-content.js", "common.js"]
+        }
+    ], 
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net 'unsafe-inline'; connect-src 'self' https://api.pwnedpasswords.com"
+    }
+}

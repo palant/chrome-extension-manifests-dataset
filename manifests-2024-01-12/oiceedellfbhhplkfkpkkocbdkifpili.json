@@ -1,0 +1,61 @@
+---
+name: Kambani
+version: 0.1.3
+category_slug: productivity/workflow
+rating: 5
+rating_count: 10
+user_count: 478
+release_date: '2020-01-15T00:09:47.000Z'
+size: 2.15MiB
+languages:
+  - English
+description: A Factom addresses and identity management system in your browser.
+publisher_account: sanchopansa
+extension_website: factomatic.io
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name":"Kambani",
+  "description": "A Factom addresses and identity management system in your browser.",
+  "version": "0.1.3",
+  "permissions": [
+    "activeTab",
+    "notifications",
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "https://testnet-api.factomatic.io/write-did"
+  ],
+  "browser_action": {
+    "default_title": "Kambani",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["signerContentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://localhost/*",
+        "https://factomatic.io/*"
+      ],
+      "js": ["factomAddressesContentScript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "assets/kambani-logo.png",
+    "48": "assets/kambani-logo.png",
+    "128": "assets/kambani-logo.png"
+  }
+}

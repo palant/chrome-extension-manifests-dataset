@@ -1,0 +1,92 @@
+---
+name: QLU Connect
+version: '1.7'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 97
+release_date: '2024-01-10T12:32:01.000Z'
+size: 768KiB
+languages:
+  - English
+description: >-
+  Introducing QLU Connect, the ultimate extension that seamlessly integrates QLU
+  with LinkedIn to revolutionize your hiring process!
+publisher: DNNae Inc
+publisher_address: |-
+  149 New Montgomery Street, Fourth Floor
+  San Francisco, CA 94111
+  US
+extension_website: dnnae.com
+privacy_policy: https://www.dnnae.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "QLU Connect",
+  "short_name": "Qlu",
+  "description": "Introducing QLU Connect, the ultimate extension that seamlessly integrates QLU with LinkedIn to revolutionize your hiring process!",
+  "version": "1.7",
+  "permissions": [
+    "tabs",
+    "unlimitedStorage",
+    "storage",
+    "alarms",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": ["https://*/*"],
+  "action": {
+    "default_title": "Qlu - Test",
+    "default_popup": "html/popup.html",
+    "default_icon": "img/qlu-icon.png"
+  },
+  "icons": {
+    "128": "img/qlu-icon.png",
+    "64": "img/qlu-icon-1.png",
+    "32": "img/qlu-icon-2.png",
+    "16": "img/qlu-icon-3.png"
+  },
+  "author": [
+    {
+      "name": "Qlu",
+      "email": "admin@dnnae.com"
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://www.linkedin.com/*"],
+      "js": ["js/content_scripts/cs_linkedin2.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://beta.qlu.ai/*"],
+      "js": ["js/content_scripts/cs_qlu.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://outreach.theqlu.com/*"],
+      "js": ["js/content_scripts/cs_outreach.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; default-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com https://fonts.googleapis.com 'unsafe-inline'; connect-src 'self' https://www.linkedin.com https://api.theqlu.com wss://rss.theqlu.com https://rss.theqlu.com https://api.outreach.theqlu.com;  img-src 'self' data: https://media-exp1.licdn.com/ https://media.licdn.com/;"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://mail.qlu.ai/*",
+      "*://beta.qlu.ai/*",
+      "*://outreach.theqlu.com/*"
+    ]
+  },
+  "background": {
+    "service_worker": "bgServiceWorker.js",
+    "type": "module"
+  }
+}

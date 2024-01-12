@@ -1,0 +1,80 @@
+---
+name: SMO NF-e Plugin
+version: '1.0'
+category_slug: productivity/workflow
+rating: 4.2
+rating_count: 5
+user_count: 982
+release_date: '2020-11-29T16:02:39.000Z'
+size: 38.36KiB
+languages:
+  - português (Brasil)
+description: Download dos dados da NF-e para uso nos produtos da M&O Sistemas
+publisher: M&O Sistemas
+publisher_address: |-
+  Rua Joaquim Nabuco, 80
+  Joinville, SC 89203-404
+  Brasil
+extension_website: mosistemas.com
+support_website: https://atendimento.mosistemas.com
+privacy_policy: https://mosistemas.com/privacidade.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SMO NF-e Plugin",
+  "short_name": "SMO NF-e Plugin",
+  "description": "Download dos dados da NF-e para uso nos produtos da M&O Sistemas",
+  "version": "1.0",
+  "author": "M&O Sistemas",
+  "permissions": 
+     ["nativeMessaging",
+      "*://*.mosistemas.com/", "*://*.mosistemas.com/*", "*://*.mosistemas.com/*/*", 
+      "*://localhost/", "*://localhost/*", "*://localhost/*/*",
+      "*://www.nfe.fazenda.gov.br/portal/*/*",
+      "*://*.atdata.com.br/", "*://*.atdata.com.br/*", "*://*.atdata.com.br/*/*",
+      "*://*.atdata.net.br/", "*://*.atdata.net.br/*", "*://*.atdata.net.br/*/*",
+      "*://*.pointpack.com.br/", "*://*.pointpack.com.br/*", "*://*.pointpack.com.br/*/*"],
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "icons": {
+    "16": "logo_16p.png",
+    "32": "logo_32p.png",
+    "48": "logo_48p.png",
+    "128": "logo_128p.png"
+  },
+  "browser_action": {
+    "default_title": "Buscador NF-e",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+         "*://*.mosistemas.com/", "*://*.mosistemas.com/*", "*://*.mosistemas.com/*/*", "*://mosistemas.com/*.*",
+         "*://*.mosistemas.com.br/", "*://*.mosistemas.com.br/*", "*://*.mosistemas.com.br/*/*", "*://mosistemas.com.br/*.*",
+         "*://*.atdata.com.br/", "*://*.atdata.com.br/*", "*://*.atdata.com.br/*/*", "*://*.atdata.com.br/*.*",
+         "*://*.atdata.net.br/", "*://*.atdata.net.br/*", "*://*.atdata.net.br/*/*", "*://*.atdata.net.br/*.*",
+         "*://*.pointpack.com.br/", "*://*.pointpack.com.br/*", "*://*.pointpack.com.br/*/*", "*://*.pointpack.com.br/*.*",
+         "*://localhost/", "*://localhost/*", "*://localhost/*/*", "*://localhost/*.*",
+         "*://127.0.0.1/", "*://127.0.0.1/*", "*://127.0.0.1/*/*", "*://127.0.0.1/*.*",
+         "file://*/*", "file://*"],
+      "js": ["receive_nfe.js"]
+    },
+    {
+      "matches": ["*://www.nfe.fazenda.gov.br/portal/consultaCompleta.aspx*"],
+      "js": ["parse_nfe_br.js"]
+    },
+    {
+      "matches": ["*://www.nfe.fazenda.gov.br/portal/consultaRecaptcha.aspx*"],
+      "js": ["init_ws.js"]
+    },
+    {
+      "matches": ["*://www.nfe.fazenda.gov.br/portal/consultaResumoCompletaAntiga.aspx*"],
+      "js": ["init_ws.js"]
+    }
+  ],
+  "manifest_version": 2
+}

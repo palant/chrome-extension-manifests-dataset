@@ -1,0 +1,141 @@
+---
+name: ClassInTheBox
+version: 2.2.3
+category_slug: lifestyle/social
+rating: 5
+rating_count: 8
+user_count: 2000
+release_date: '2023-05-20T13:44:49.000Z'
+size: 10.68MiB
+languages:
+  - español
+description: >-
+  A través de la extensión citbREC, puedes grabar una videoconferencia, un
+  videotutorial, una clase o parte de ella.
+publisher: Aotech Security
+publisher_account: therealclassinthebox
+publisher_address: |-
+  C. del Empecinado, 4
+  Alcalá de Henares, Madrid 28801
+  ES
+privacy_policy: https://classinthebox.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ClassInTheBox",
+  "version": "2.2.3",
+  "description": "A través de la extensión citbREC, puedes grabar una videoconferencia, un videotutorial, una clase o parte de ella.",
+  "manifest_version": 3,
+  "minimum_chrome_version": "94.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsiTbtsAQszcqFHIwUEJLC6vW9nYMajp2Cd4pqb2+HZUoZx1yCZwkJfrGFvEBQXmZCDSy/SNgjROdnDxrVtgYi/w8a7fBZBN77jt6QNpUQohHhkvSgCv+YPifbutyXbz6V4MBa4uLiOp0nUUVdrb6d6U1hxdthiuyW1C9+gDkB/Esxrr8vw94pmkvPjD0dWN7i89Zj1aEw9wk2lEseK+nSYE8xid3SnmWF1ijSmy8pT+eYLser6WJtcc7G7OIOd25lYgLnyFGYtlEupU40IgIBu9Gnbpbde+fagVmkST3pbofVEalWUIXttBNhQUeNX8/XjYwKUxbxmjJh+MdWXMBxwIDAQAB",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "550302001460-0n04rinv35kaus6au65472c653rdd8ie.apps.googleusercontent.com",
+    "scopes": []
+  },
+  "permissions": [
+    "tabs",
+    "desktopCapture",
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/*",
+    "https://zoom.us/*",
+    "https://*.zoom.us/*",
+    "https://meet.jit.si/*",
+    "https://teams.live.com/*",
+    "https://*/*",
+    "http://*/*"
+
+  ],
+  "action": {
+    "default_title": "CITB Rec",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "assets/favicon.png",
+      "48": "assets/favicon.png",
+      "64": "assets/favicon.png",
+      "128": "assets/favicon.png"
+    }
+  },
+  "icons": {
+    "16": "assets/favicon.png",
+    "48": "assets/favicon.png",
+    "128": "assets/favicon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "app/CITB/*",
+        "citbRecPopup/dist/citb-rec-popup/*",
+        "app/SOCKET/*",
+        "libraries/socket.io.js",
+        "app/recControl/*",
+        "app/permissionsPage/*",
+        "assets/*",
+        "app/extensionPage/*",
+        "app/TabPIP/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["app/SOCKET/uuidInject.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://zoom.us/*",
+        "https://*.zoom.us/*",
+        "https://meet.jit.si/*",
+        "https://teams.live.com/*",
+        "https://teams.microsoft.com/*"
+      ],
+      "js": ["app/SOCKET/socketInject.js", "app/CITB/inject.js", "app/CITB/material.min.js"],
+      "css": ["app/CITB/floatinbuttons.css", "app/CITB/material.min.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://editor.classinthebox.io/*"],
+      "js": ["app/EditVideoContentScript/inject.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["app/recControl/injectRecControl.js"],
+      "css": ["app/recControl/recControlStyles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "ids": [
+      "pgloinlccpmhpgbnccfecikdjgdhneof",
+      "ijbdnbhhklnlmdpldichdlknfaibceaf"
+    ],
+    "matches": [
+      "https://meet.google.com/*",
+      "https://zoom.us/*",
+      "https://*.zoom.us/*",
+      "https://meet.jit.si/*",
+      "https://teams.live.com/*",
+      "https://teams.microsoft.com/*",
+      "https://classinthebox.io/*",
+      "https://www.google.com/",
+      "http://localhost:4200/*",
+      "https://classinthebox.io/video/*",
+      "https://editor.classinthebox.io/*"
+    ],
+    "accepts_tls_channel_id": true
+  }
+}

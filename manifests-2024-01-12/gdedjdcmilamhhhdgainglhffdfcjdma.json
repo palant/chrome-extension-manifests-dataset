@@ -1,0 +1,86 @@
+---
+name: Speak Text
+version: 1.0.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 20000
+release_date: '2022-04-12T10:56:06.000Z'
+size: 932KiB
+languages:
+  - English
+description: Speak Text converts selected text into speech.
+publisher: Start Media
+publisher_address: |-
+  9 Potts St
+  Oran Park, NSW 2570
+  Australia
+extension_website: speak-text-tab.com
+privacy_policy: https://cosmica-tab.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Speak Text",
+    "short_name": "Speak Text",
+    "version": "1.0.2",
+    "description": "Speak Text converts selected text into speech.",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "128": "speak-text-icon.png"
+    },
+    "action": {
+        "browser_style": true,
+        "default_title": "Speak Text",
+        "default_popup": "index.html"
+    },
+    "author": "Speak Text",
+    "permissions": [
+        "contextMenus",
+        "storage",
+        "tts",
+        "ttsEngine"
+    ],
+    "content_scripts": [{
+        "matches": [
+            "*://*/*"
+        ],
+        "run_at": "document_start",
+        "js": ["assets/js/jquery.min.js", "assets/js/content_scripts.js", "assets/js/tab_script.js"],
+        "css": ["assets/css/speak_text.css"]
+    }],
+    "tts_engine": {
+        "voices": [{
+                "voice_name": "Alice",
+                "lang": "en-US",
+                "event_types": ["start", "marker", "end"]
+            },
+            {
+                "voice_name": "Pat",
+                "lang": "en-US",
+                "event_types": ["end"]
+            }
+        ]
+    },
+    "web_accessible_resources": [{
+        "resources": ["/assets/images/*", "speak-text-icon.png"],
+        "matches": ["<all_urls>"]
+    }],
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "encoding": "UTF-8",
+            "favicon_url": "https://speak-text-tab.com/wp-content/uploads/2021/10/64x64.png",
+            "is_default": true,
+            "keyword": "Keyword",
+            "name": "Speak Text",
+            "search_url": "https://search.speak-text-tab.com/search?q={searchTerms}"
+        }
+    },
+    "chrome_url_overrides": {
+        "newtab": "new-tab.html"
+    }
+}

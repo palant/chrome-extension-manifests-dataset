@@ -1,0 +1,90 @@
+---
+name: Collabwriting - Shareable Notes on Web Pages
+version: 3.11.3.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 26
+user_count: 1000
+release_date: '2023-12-14T10:52:48.000Z'
+size: 1.68MiB
+languages:
+  - English (United States)
+description: >-
+  Collabwriting is a browser extension that helps you create shareable notes and
+  highlights on any web page online.
+publisher: Collabwriting
+publisher_address: |-
+  Veljka Dugosevica 54
+  Collabwriting
+  Belgrade 11000
+  RS
+extension_website: collabwriting.com
+privacy_policy: https://collabwriting.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Collabwriting - Shareable Notes on Web Pages",
+    "description": "Collabwriting is a browser extension that helps you create shareable notes and highlights on any web page online.",
+    "version": "3.11.3.0",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3NMx7QTQJZlUEpKoNu4NDiuHnkhqRUVvDqL5bviS2dOaBDRAVO3Cdd13SSSMMw6ReSF6KhKqFVdizPLiugjeTCSYYm5i00oEaNKI31lriOyA9oiFKuuagHbGE71ceIFoD23+ypx9gnVvR71j+bPAi+iQkG8qown6OBdT12ZiG4NbIbqybO2O9MlHFfWMu4WnfayzW7FoWl298D7qgwCmas13BY5A3fGXcRfV+j8AAdBUFauwh+HsZlnNI4A2eYwrLriUuWarZL3krIwe1344ErnQJv80s61WinGMTtJUWdmFOeFjMMLBwFjocfDPoNP9RbNEn9MjAD9WOJqlUg7AVwIDAQAB",
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png" 
+    },
+    "action": {   
+        "default_icon": {
+            "16": "images/icon16.png",
+            "24": "images/icon24.png",
+            "32": "images/icon32.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["scripts/load.listener.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["scripts/popup.js"],
+            "exclude_matches": [
+                "https://app.collabwriting.com/*",
+                "https://cowrite.me/*",
+                "https://www.cowrite.me/*",
+                "http://localhost/*"
+            ]
+        },
+        {
+            "matches": ["https://collabwriting.com/v0.9/snippet**", "https://www.collabwriting.com/v0.9/snippet/**"],
+            "js": ["build/bundle.js"]
+        },
+        {
+            "matches": ["https://collabwriting.com/authorizing/**", "https://www.collabwriting.com/authorizing/**"],
+            "js": ["scripts/login.listener.js"]
+        }
+    ],
+    "background": {
+        "service_worker": "scripts/background.js",
+        "type": "module"
+    },
+    "externally_connectable": {
+        "matches": [
+            "http://localhost:5000/v/*", "http://localhost:5000/auth**",
+            "*://app.collabwriting.com/v/**", "*://app.collabwriting.com/auth**",
+            "*://cowrite.me/v/**", "*://cowrite.me/auth**"
+        ]
+    },
+    "host_permissions": [
+        "https://*/"
+    ],
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "alarms",
+        "contextMenus"
+    ]
+}

@@ -1,0 +1,71 @@
+---
+name: Ocean-MA Extension
+version: 1.0.12
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 896
+release_date: '2023-06-23T17:01:16.000Z'
+size: 74.48KiB
+languages:
+  - English
+description: >-
+  Allows Med Access users to send chart files directly to Ocean without
+  requiring a download and upload from the user's machine.
+publisher_account: Marc Carvalho Consulting
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ocean-MA Extension",
+  "version": "1.0.12",
+  "description": "Allows Med Access users to send chart files directly to Ocean without requiring a download and upload from the user's machine.",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["ocean-page-shared.js"],
+      "matches": [
+        "https://ocean.cognisantmd.com/*",
+        "https://staging.cognisantmd.com/*",
+        "https://test.cognisantmd.com/*"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "js": ["ocean-page-extension.js"],
+      "matches": [
+        "https://ocean.cognisantmd.com/*",
+        "https://staging.cognisantmd.com/*",
+        "https://test.cognisantmd.com/*"
+      ],
+      "world": "ISOLATED"
+    },
+    {
+      "js": ["attachment-viewer.js"],
+      "matches": ["https://*.med-access.net/*"],
+      "world": "ISOLATED",
+      "all_frames": true
+    },
+    {
+      "js": ["telus-launcher.js"],
+      "matches": ["https://*.telusemrmobile.com/*"],
+      "world": "ISOLATED",
+      "all_frames": true
+    }
+  ],
+  "permissions": ["webRequest"],
+  "host_permissions": [
+    "https://*.med-access.net/",
+    "https://ocean.cognisantmd.com/",
+    "https://staging.cognisantmd.com/",
+    "https://test.cognisantmd.com/"
+  ],
+  "icons": {
+    "128": "icons/Attachment128.png"
+  }
+}

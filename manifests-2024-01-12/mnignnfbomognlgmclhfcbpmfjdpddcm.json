@@ -1,0 +1,122 @@
+---
+name: Workstream Concierge
+version: 2.14.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 194
+release_date: '2023-11-07T18:16:05.000Z'
+size: 974KiB
+languages:
+  - English
+description: Workstream is the hub for your analytical work.
+publisher: Workstream Analytics, Inc
+publisher_account: apps@workstream
+publisher_address: |-
+  115 E 23rd St
+  3rd Floor -1515
+  New York, NY 10010
+  US
+extension_website: workstream.io
+support_website: https://support.workstream.io
+privacy_policy: https://www.workstream.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Workstream Concierge",
+  "version": "2.14.0",
+  "description": "Workstream is the hub for your analytical work.",
+  "short_name": "WS Concierge",
+  "homepage_url": "http://workstream.io",
+  "author": "Workstream.io",
+  "minimum_chrome_version": "101",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlvD2MQtjGk2qA1nEeoyKDAmxOjbaiGx7CcoPUvUHKGKyTLWQNrflHq22UN+l/eVcBTGqm5ansL8jr/YUmkLtVVpWAEnKpWSR8jIWQjoPTLELM23G8DsbkPzwrr1bfSojD5XfjtWb7kKrpH4Rf+pS8R/lzzI8YRR8iv0ICUd5dGA04spE9DK7AQs1zE6nBGAfkHvI8as/YcPUT7w/fF8AXu4jUWkHyx3nNQGgbo2LgEP+JlsHzr1InMcKnl+sOi0c9UYEjDcHgh3dscfWm8mKTtCObJkLbj+1ceCBvWMMZYTduFxMSRrpYkwHRSfLhbE0JgmbEjCDnpdYQ8iLAaCrMQIDAQAB",
+  "icons": {
+    "16": "assets/icons/16x16-BI.png",
+    "32": "assets/icons/32x32-BI.png",
+    "48": "assets/icons/48x48-BI.png",
+    "96": "assets/icons/96x96-BI.png"
+  },
+  "permissions": [
+    "storage",
+    "identity",
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "*://localhost/*",
+    "*://*.workstream.io/*"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/16x16-BI.png",
+      "32": "assets/icons/32x32-BI.png",
+      "48": "assets/icons/48x48-BI.png",
+      "96": "assets/icons/96x96-BI.png"
+    },
+    "default_title": "Workstream Concierge",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "service_workers/background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.workstream.io/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://app.workstream.io/*",
+        "*://app-qa.workstream.io/*",
+        "*://app-stage.workstream.io/*",
+        "http://localhost/*"
+      ],
+      "js": [
+        "content/import-workstream.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/fonts/*",
+        "assets/html/*",
+        "assets/styles/*",
+        "assets/icons/*",
+        "shared/*"
+      ],
+      "matches": [
+        "*://*/*",
+        "http://localhost/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content/workstream.js"
+      ],
+      "matches": [
+        "*://app.workstream.io/*",
+        "*://app-qa.workstream.io/*",
+        "*://app-stage.workstream.io/*",
+        "http://localhost/*",
+        "<all_urls>",
+        "*://localhost/*",
+        "*://*.workstream.io/*"
+      ]
+    }
+  ]
+}

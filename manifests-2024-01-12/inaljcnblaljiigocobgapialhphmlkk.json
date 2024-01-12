@@ -1,0 +1,74 @@
+---
+name: Monitoring Plus シナリオ監視作成
+version: 1.0.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 55
+release_date: '2021-12-03T09:58:23.000Z'
+size: 41.84KiB
+languages:
+  - 日本語
+description: Monitoring Plusの監視用シナリオを作成、投稿する拡張機能です。
+publisher_account: Startup Plus
+support_website: https://www.monitoring-plus.jp/help/scenario/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "Monitoring Plus シナリオ監視作成",
+  "description": "Monitoring Plusの監視用シナリオを作成、投稿する拡張機能です。",
+  "version": "1.0.3",
+
+  "icons": {
+    "16": "src/ui/img/mtps_icon_16.png",
+    "32": "src/ui/img/mtps_icon_32.png",
+    "48": "src/ui/img/mtps_icon_48.png",
+    "128": "src/ui/img/mtps_icon_128.png"
+  },
+
+  "browser_action": {
+    "default_title": "シナリオ作成",
+    "default_popup": "src/ui/html/popup.html"
+  },
+
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": [
+      "src/common/js/predicate.js",
+      "src/common/js/array.js",
+      "src/common/js/storage.js",
+      "src/common/js/scenarioData.js",
+      "src/contentScript/js/contentScript.js"
+    ],
+    "run_at": "document_end"
+  }],
+
+  "background": {
+    "scripts": [
+      "src/common/js/predicate.js",
+      "src/common/js/chromeAPI.js",
+      "src/common/js/storage.js",
+      "src/common/js/scenarioData.js",
+      "src/common/config/webapiConf.js",
+      "src/common/js/webapi.js",
+      "src/backgroundPage/js/background.js"
+    ],
+    "persistent": false
+  },
+
+  "options_ui": {
+    "page": "src/optionsPage/html/options.html",
+    "chrome_style": true,
+    "open_in_tab": false
+  },
+
+  "permissions": [
+    "storage",
+    "identity",
+    "https://api.mp.startup-plus.jp/v1/*"
+  ]
+}

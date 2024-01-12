@@ -1,0 +1,112 @@
+---
+name: Waldo – Search like a pro.
+version: 4.18.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 47
+user_count: 5000
+release_date: '2024-01-11T09:50:31.000Z'
+size: 4.67MiB
+languages:
+  - English
+description: Waldo is the fastest way to find high quality data and insights on the web.
+publisher: Waldo
+publisher_address: |-
+  11700 Preston Rd
+  Dallas, TX 75230
+  US
+extension_website: waldo.fyi
+privacy_policy: https://waldo.fyi/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Waldo – Search like a pro.",
+  "short_name": "Waldo",
+  "version": "4.18.0",
+  "description": "Waldo is the fastest way to find high quality data and insights on the web.",
+  "permissions": [
+    "storage",
+    "cookies",
+    "declarativeNetRequest",
+    "contextMenus",
+    "tabGroups"
+  ],
+  "omnibox": {
+    "keyword": "w"
+  },
+  "icons": {
+    "48": "./assets/icon.48.png",
+    "128": "./assets/icon.128.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "js": [
+        "./contentScript.bundle.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "js": [
+        "./extractorScript.bundle.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "js": [
+        "./waldoSiteScript.bundle.js"
+      ],
+      "matches": [
+        "*://*.waldo.fyi/*",
+        "*://*.waldo.run/*",
+        "*://localhost/*"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*",
+        "popup.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://*.waldo.fyi/*",
+      "*://*.waldo.run/*"
+    ]
+  },
+  "action": {
+    "default_title": "Waldo"
+  },
+  "content_security_policy": {},
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

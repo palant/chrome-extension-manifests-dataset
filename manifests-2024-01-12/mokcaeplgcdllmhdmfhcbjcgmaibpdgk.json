@@ -1,0 +1,110 @@
+---
+name: Scholarscope
+version: 4.2.1
+category_slug: productivity/education
+rating: 3.9285714285714284
+rating_count: 28
+user_count: 100000
+release_date: '2023-10-09T05:10:23.000Z'
+size: 154KiB
+languages:
+  - 中文 (简体)
+description: 自动加载PubMed搜索结果中期刊的信息，助力科学研究，加快科研进展
+publisher_account: Scholarscope
+publisher_address: |-
+  227 South Chongqing Road
+  Shanghai 200025
+  China
+support_website: http://blog.scholarscope.online/feedback/
+privacy_policy: https://account.scholarscope.online/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "author": "Scholarscope",
+    "name": "Scholarscope",
+    "version": "4.2.1",
+    "description": "自动加载PubMed搜索结果中期刊的信息，助力科学研究，加快科研进展",
+    "homepage_url": "https://www.scholarscope.online",
+    "icons": {
+        "128": "/images/icon128.png",
+        "96": "/images/icon96.png",
+        "48": "/images/icon48.png",
+        "16": "/images/icon16.png"
+    },
+    "default_locale": "zh_CN",
+    "action": {
+        "default_icon": "/images/icon19.png",
+        "default_title": "Scholarscope",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://pubmed.ncbi.nlm.nih.gov/*",
+                "https://pubmed.scholarscope.online/*",
+                "*://*.edu.cn/*"
+            ],
+            "css": [
+                "css/style.css"
+            ],
+            "js": [
+                "js/SearchEngine.js",
+                "js/MessageQueue.js",
+                "js/qrcode.js",
+                "js/purify.min.js",
+                "js/Highlight.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://blog.scholarscope.online/wizard/"
+            ],
+            "js": [
+                "js/Feedback.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.scholarscope.online/Settings.php"
+            ],
+            "js": [
+                "js/UpdateSettings.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "Background.js"
+    },
+    "incognito": "spanning",
+    "permissions": [
+        "tabs",
+        "storage",
+        "contextMenus"
+    ],
+    "host_permissions": [
+        "*://*.edu.cn/*",
+        "https://*.scholarscope.online/",
+        "https://pubmed.ncbi.nlm.nih.gov/",
+        "https://eutils.ncbi.nlm.nih.gov/"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*.png",
+                "images/*.gif"
+            ],
+            "matches": [
+                "https://*.scholarscope.online/*",
+                "https://pubmed.ncbi.nlm.nih.gov/*",
+                "https://eutils.ncbi.nlm.nih.gov/*",
+                "*://*.edu.cn/*"
+            ]
+        }
+    ]
+}

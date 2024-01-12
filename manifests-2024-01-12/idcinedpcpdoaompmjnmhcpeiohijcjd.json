@@ -1,0 +1,88 @@
+---
+name: Portd
+version: 1.0.52
+category_slug: productivity/workflow
+rating: 5
+rating_count: 13
+user_count: 85
+release_date: '2022-11-28T11:51:25.000Z'
+size: 656KiB
+languages:
+  - English
+description: Speed dial to your remote meetings.
+publisher_account: Dovetail Applications, Inc
+privacy_policy: https://portd.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Portd",
+  "version": "1.0.52",
+  "manifest_version": 2,
+  "description": "Speed dial to your remote meetings.",
+  "author": "Piyush Santwani",
+  "domain_url": "https://portd.io",
+  "icons": {
+    "16": "icons/new_logo_high.png",
+    "48": "icons/new_logo_high.png",
+    "128": "icons/new_logo_high.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": ["js/utils.js", "src/bg/background.js"],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "icons/new_logo_high.png",
+    "default_title": "Portd",
+    "default_popup": "src/browser_action/popup.html"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "notifications",
+    "https://*.zoom.us/j/*",
+    "https://*.portd.io/*"
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Alt+Z"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.portd.io/auth/*"],
+      "js": ["src/inject/utils.js", "src/inject/transfer-auth-tokens.js"]
+    },
+    {
+      "matches": ["*://*.portd.io/view-event-details?*"],
+      "js": [
+        "src/inject/utils.js",
+        "src/inject/transfer-multi-calendar-workflow-setting.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.zoom.us/*",
+        "*://teams.microsoft.com/*",
+        "*://meet.google.com/*",
+        "*://*.calendly.com/*"
+      ],
+      "js": ["src/inject/utils.js", "src/inject/sidebar.js"]
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://portd.io; object-src 'self'",
+  "web_accessible_resources": [
+    "src/inject/sidebar.html",
+    "src/inject/notes.html",
+    "src/inject/notes.js",
+    "src/inject/utils.js",
+    "src/inject/toggle-sidebar-btn.png",
+    "src/inject/notes_theme.css",
+    "src/inject/notes.css",
+    "src/inject/rte.js"
+  ]
+}

@@ -1,0 +1,90 @@
+---
+name: Rapid Form Assistant
+version: 0.0.0.3
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 104
+release_date: '2023-05-18T04:59:22.000Z'
+size: 212KiB
+languages:
+  - English (United States)
+description: Assists in populating NICS E-Check and other state required forms
+publisher: RapidPOS
+publisher_account: rapidposdev
+publisher_address: |-
+  3333 Camino del Rio S
+  Suite #310
+  San Diego, CA 92108-3808
+  US
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Rapid Form Assistant",
+ "description": "Assists in populating NICS E-Check and other state required forms",
+ "version": "0.0.0.3",
+ "manifest_version": 3,
+ "background": {
+  "service_worker": "background.js"
+ },
+ "permissions": [
+  "storage",
+  "activeTab",
+  "scripting",
+  "tabs",
+  "webNavigation"
+ ],
+ "host_permissions": [
+  "http://*/",
+  "https://*/"
+ ],
+ "action": {
+  "default_popup": "form-assistant.html",
+  "default_icon": {
+   "16": "/images/Checkbox 16px.png",
+   "32": "/images/Checkbox 32px.png",
+   "48": "/images/Checkbox 48px.png",
+   "128": "/images/Checkbox 128px.png"
+  }
+ },
+ "icons": {
+  "16": "/images/Checkbox 16px.png",
+  "32": "/images/Checkbox 32px.png",
+  "48": "/images/Checkbox 48px.png",
+  "128": "/images/Checkbox 128px.png"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "https://www.cjis.gov/*"
+   ],
+   "all_frames": false,
+   "js": [
+    "nics/nics-content-script.js",
+    "lib/jquery/jquery.min.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://www.cjis.gov/nics/PRServletSSO/*!TABTHREAD*"
+   ],
+   "all_frames": true,
+   "js": [
+    "nics/nics-content-script.js",
+    "lib/jquery/jquery.min.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://*.rapid4473.com/*"
+   ],
+   "all_frames": false,
+   "js": [
+    "rapidpos/rapidpos.js",
+    "lib/jquery/jquery.min.js"
+   ]
+  }
+ ]
+}

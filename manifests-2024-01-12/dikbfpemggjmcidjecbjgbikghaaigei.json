@@ -1,0 +1,86 @@
+---
+name: Petal Cite Web Importer
+version: 0.0.24
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 12
+user_count: 1000
+release_date: '2023-06-28T03:32:44.000Z'
+size: 1.93MiB
+languages:
+  - English (United States)
+description: Save PDFs and capture web pages directly to your Petal Cite library.
+publisher: Paladin Max, Inc
+publisher_account: Petal.org
+publisher_address: |-
+  712 Bancroft Rd, Ste. 925
+  Walnut Creek, CA 94598
+  US
+extension_website: petal.org
+support_website: https://www.petal.org/faqs
+privacy_policy: https://www.petal.org/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Petal Cite Web Importer",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjHvxYKsFLOCCsqG/ed3d/BP5gZVCd41lisdlE/1mG2UVNI7e8CBTvrk1Wu6aRUSvpnAHBqHVquCMZx21Deq+AAW7GGp/HRi1xqDc7JE7O4ZHoc0qAOqwj+F4yMqiM+LOPP6RCWz/9Pp36TKz5dVAartGxFWDDwwEnnzldgyBNmLyzFNTQHWlpMzehvu+VwIxEscoBJdFae3q2wB9FMyTxGKhIIt9mHsrydlYy1646+K+hEt6Oy5ehQbEg17kfmDr4BVw3jgwGfb/WX/mkkkAswSCOMFPMqSkdCOw2s3fGIxuj+H7mjCy1M07Dov64DVUloXzHtVGsFVZ367MLABpQQIDAQAB",
+  "description": "Save PDFs and capture web pages directly to your Petal Cite library.",
+  "version": "0.0.24",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "icons": {
+    "16": "16.png",
+    "48": "128.png",
+    "128": "128.png"
+  },
+  "permissions": ["webRequest", "storage", "activeTab", "<all_urls>"],
+  "background": {
+    "scripts": [
+      "./static/js/background.js",
+      "./lib/chrome-browser-polyfill.js",
+      "./lib/single-file-background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-frames.js",
+        "lib/single-file-extension-frames.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-bootstrap.js",
+        "lib/single-file-extension-core.js",
+        "lib/single-file.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["./static/js/content.js"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "lib/single-file-hooks-frames.js"
+  ],
+  "externally_connectable": {
+    "matches": ["https://cite.petal.org/*"]
+  }
+}

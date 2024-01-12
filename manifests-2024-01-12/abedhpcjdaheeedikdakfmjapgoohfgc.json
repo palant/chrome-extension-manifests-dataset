@@ -1,0 +1,94 @@
+---
+name: Ask The Video
+version: 1.0.17
+category_slug: productivity/workflow
+rating: 4
+rating_count: 4
+user_count: 61
+release_date: '2023-07-05T07:18:29.000Z'
+size: 500KiB
+languages:
+  - English (United States)
+description: >-
+  AI-powered Chrome extension that summarizes YouTube videos, saving time &
+  boosting productivity. Get key points in a click!
+publisher_account: AI Ocean
+extension_website: askthe.video
+support_website: https://askthe.video
+privacy_policy: https://aiocean.io/pages/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ask The Video",
+  "description": "AI-powered Chrome extension that summarizes YouTube videos, saving time & boosting productivity. Get key points in a click!",
+  "version": "1.0.17",
+  "author": "nguyenvanduocit@gmail.com",
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content-script-loader.content.ts.js"
+      ],
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "run_at": "document_idle",
+      "css": [
+        "assets/content.css"
+      ]
+    },
+    {
+      "js": [
+        "assets/content-script-loader.content-chatgpt.ts.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "run_at": "document_idle",
+      "css": [
+        "assets/content-chatgpt.css"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://askthevideo.web.app/*"
+    ]
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "resources": [
+        "assets/content.ts.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "resources": [
+        "assets/content-chatgpt.ts.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+---
+name: Suki
+version: 1.1.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 18
+release_date: '2024-01-02T16:19:11.000Z'
+size: 240KiB
+languages:
+  - English (United States)
+description: Suki AI-powered clinical documentation app in your Chrome browser
+publisher: Suki AI, Inc.
+publisher_account: Suki
+publisher_address: |-
+  1823 El Camino Real
+  Redwood City, CA 94063
+  US
+privacy_policy: https://www.suki.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Suki",
+  "version": "1.1.0",
+  "description": "Suki AI-powered clinical documentation app in your Chrome browser",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webNavigation"
+  ],
+  "icons": {
+    "16": "sukiAgent.png",
+    "48": "sukiAgent.png",
+    "128": "sukiAgent.png"
+  },
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Suki",
+    "default_popup": "src/pages/popup/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "assets/js/injector.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "src/pages/content/index.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "src/pages/**/*.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

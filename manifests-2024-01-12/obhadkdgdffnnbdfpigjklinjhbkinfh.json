@@ -1,0 +1,129 @@
+---
+name: ShadowPay Trademanager
+version: 0.3.2
+category_slug: lifestyle/fun
+rating: 2.8380281690140845
+rating_count: 142
+user_count: 80000
+release_date: '2022-05-11T18:59:32.000Z'
+size: 69.96KiB
+languages:
+  - English
+description: Trade CS:GO skins with ease on ShadowPay.
+publisher_account: SP Industries
+extension_website: shadowpay.com
+support_website: https://shadowpay.com/faq
+privacy_policy: https://shadowpay.com/tos
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "icons": {
+    "128": "assets/images/logo.png"
+  },
+  "name": "ShadowPay Trademanager",
+  "version": "0.3.2",
+  "description": "Trade CS:GO skins with ease on ShadowPay.",
+  "manifest_version": 2,
+  "permissions": [
+    "notifications",
+    "background",
+    "webRequest",
+    "webRequestBlocking",
+    "*://steamcommunity.com/*",
+    "*://*.steampowered.com/*",
+    "http://*.steamstatic.com/*",
+    "*://steamrep.com/*",
+    "*://steamcdn-a.akamaihd.net/*"
+  ],
+  "web_accessible_resources": [
+    "/libs/injected.js"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://shadowpay.com/*",
+      "*://*.steampowered.com/*",
+      "*://steamcommunity.com/*"
+    ],
+    "accepts_tls_channel_id": true
+  },
+  "background": {
+    "scripts": [
+      "third_party/zepto.min.js",
+      "third_party/deferred.js",
+      "third_party/callbacks.js",
+      "third_party/centrifuge.min.js",
+      "libs/config.js",
+      "libs/websocket/ws_client.js",
+      "libs/websocket/swoole_client.js",
+      "libs/websocket/centrifuge_client.js",
+      "libs/shadow.js",
+      "libs/ext.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "content_security_policy": "script-src 'self' https://ajax.googleapis.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.shadowpay.com/*/tradeoffers*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "css": [
+        "assets/shadow.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.shadowpay.com/tradeoffer/*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.shadowpay.com/profiles/*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "css": [
+        "assets/shadow.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.shadowpay.com/login*"
+      ],
+      "js": [
+        "third_party/zepto.min.js",
+        "libs/steam_inject.js"
+      ],
+      "css": [
+        "assets/shadow.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://shadowpay.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "libs/inject.js"
+      ]
+    }
+  ]
+}

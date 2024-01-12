@@ -1,0 +1,68 @@
+---
+name: Launch and DTM Switch
+version: 3.0.2
+category_slug: productivity/developer
+rating: 3.134020618556701
+rating_count: 194
+user_count: 30000
+release_date: '2023-01-24T10:25:03.000Z'
+size: 215KiB
+languages:
+  - English
+description: >-
+  Enables the developer to locally override the embedded Launch or DTM library
+  for testing.
+publisher: Search Discovery Inc.
+publisher_account: Search Discovery
+publisher_address: |-
+  271 17th Street NW Suite 1700
+  Atlanta, GA 30363
+  US
+support_website: >-
+  https://www.searchdiscovery.com/solutions/partners/adobe/adobe-launch/launch-dtm-switch/
+privacy_policy: https://www.searchdiscovery.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Launch and DTM Switch",
+  "short_name": "Launch Switch",
+  "description": "Enables the developer to locally override the embedded Launch or DTM library for testing.",
+  "version": "3.0.2",
+  "permissions": ["activeTab", "storage", "declarativeNetRequest"],
+  "host_permissions": ["https://www.google-analytics.com/", "*://*/*"],
+  "icons": {
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "Launch Switch",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://experience.adobe.com/*"],
+      "js": ["adobe-content-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*"],
+      "exclude_matches": ["https://experience.adobe.com/*"],
+      "js": ["site-content-script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "script-src": "'self' https://www.google-analytics.com",
+    "object-src": "'self'"
+  },
+  "manifest_version": 3
+}

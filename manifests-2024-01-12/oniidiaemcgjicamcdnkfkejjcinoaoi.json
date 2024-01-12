@@ -1,0 +1,86 @@
+---
+name: Lever - Maximize Credit Card Rewards
+version: 6.0.6
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 18
+user_count: 553
+release_date: '2022-11-14T13:03:56.000Z'
+size: 1.41MiB
+languages:
+  - English (United States)
+description: >-
+  Lever optimizes credit card rewards and saves money by automatically using the
+  best rewards card when shopping online.
+publisher: Lever Technologies, corp
+publisher_account: Lever Technologies, Corp
+publisher_address: |-
+  138 E 12th St
+  New York, NY 10003
+  US
+extension_website: levercard.com
+privacy_policy: https://app.levercard.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Lever - Maximize Credit Card Rewards",
+  "description": "Lever optimizes credit card rewards and saves money by automatically using the best rewards card when shopping online.",
+  "version": "6.0.6",
+  "manifest_version": 3,
+  "icons": {
+    "16": "lever_icon16.png",
+    "32": "lever_icon32.png",
+    "48": "lever_icon48.png",
+    "128": "lever_icon128.png"
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "options_page": "./options.html",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://test.levercard.com/*",
+      "*://app.levercard.com/*",
+      "http://localhost:3000/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["foreground.html"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "linux": "Ctrl+Shift+X",
+        "windows": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
+      }
+    }
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["http://localhost:3000/*"],
+      "all_frames": true,
+      "js": ["inject_script.js", "foreground.bundle.js"]
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": [
+        "http://localhost:3000/*",
+        "https://app.levercard.com/*"
+      ],
+      "js": ["inject_iframe.js", "iframe.bundle.js"]
+    }
+  ]
+}

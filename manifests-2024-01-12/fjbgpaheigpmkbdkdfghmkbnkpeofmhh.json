@@ -1,0 +1,143 @@
+---
+name: Aura
+version: 3.7.4
+category_slug: make_chrome_yours/privacy
+rating: 3.4210526315789473
+rating_count: 19
+user_count: 30000
+release_date: '2024-01-04T12:58:01.000Z'
+size: 6.53MiB
+languages:
+  - English (United States)
+description: >-
+  Aura secures your passwords and helps you browse online more securely and
+  privately.
+publisher: Aura Sub, LLC
+publisher_account: https://www.aura.com/
+publisher_address: |-
+  15 Network Dr
+  FL 3
+  Burlington, MA 01803-2766
+  US
+extension_website: aura.com
+support_website: https://www.aura.com/contact
+privacy_policy: https://www.aura.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAy1sYmfFRJaQahUt3/BztgNEz2AZTYcDCXD+ex+uvF2iSWEXoco27GOU1XTi4a9YWhPEt368LRwnCNM1mK46PK9qSQt2F7HzzJpqP8+0hw3Vbo4ep64K4m/zlvlfB0fx7GWXi9ioh0b3LTU8lIZuKl3nEbCUVR2XdNw+NeGZx84IEm3kJDCLVntjjp8H+TfIYEFVxC6qws2JatqzfYvVl2UNbSFd1KOcojXE4XbE256Ilc0m1OQCV6gehgr7ZzykGnb5CBhpH14KBvzUrqI45mjksUzSSb3P/r3ULW1SyVx1RINUAXXCwFxaqkrEc/iPVWezloyn4JUNt986CKyXqjwIDAQAB",
+  "manifest_version": 3,
+  "name": "Aura",
+  "author": "Aura",
+  "version": "3.7.4",
+  "minimum_chrome_version": "109",
+  "description": "Aura secures your passwords and helps you browse online more securely and privately.",
+  "icons": {
+    "16": "images/store-icon-16.png",
+    "48": "images/store-icon-48.png",
+    "128": "images/store-icon-128.png"
+  },
+  "background": {
+    "service_worker": "js/background-chrome.js"
+  },
+  "action": {
+    "default_popup": "",
+    "default_icon": {
+      "16": "images/action-icon/active_16.png",
+      "32": "images/action-icon/active_32.png",
+      "64": "images/action-icon/active_64.png"
+    },
+    "default_title": "Aura"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "at",
+        "enabled": true,
+        "path": "ruleset/easy-tracking.json"
+      },
+      {
+        "id": "ads",
+        "enabled": true,
+        "path": "ruleset/easy-base.json"
+      },
+      {
+        "id": "allow",
+        "enabled": true,
+        "path": "ruleset/allowing-rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "alarms",
+    "privacy",
+    "webNavigation",
+    "storage",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "incognito": "spanning",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "images/*.svg",
+        "fonts/*.woff",
+        "fonts/*.woff2",
+        "videos/*.mp4",
+        "_locales/**/*.json",
+        "css/**/*.css",
+        "js/*.js",
+        "js/*.js.map",
+        "html/*.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/main-app-content-chrome.js"
+      ],
+      "css": [
+        "css/fonts/style.css"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/other-content-chrome.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.aura.com/*",
+        "*://localhost/*"
+      ],
+      "js": [
+        "js/specific-webpage-content-chrome.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src * data: blob: filesystem:; img-src *;",
+    "sandbox": "sandbox allow-scripts; script-src 'sha256-2CJto13C7lQhHpApD0uFGrC+zH0IkPGBnXMFOGJHp9o=' 'unsafe-inline'"
+  }
+}

@@ -1,0 +1,97 @@
+---
+name: Property Address Scanner
+version: '1.4'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 1000
+release_date: '2023-05-31T00:13:02.000Z'
+size: 9.45MiB
+languages:
+  - English (United States)
+description: >-
+  Extract property addresses from any web page to CSV or Excel. See full
+  property and owner details with a PropertyRadar subscription
+publisher: PropertyRadar, Inc.
+publisher_account: PropertyRadar.com
+publisher_address: |-
+  12242 Business Park Dr
+  Suite 20
+  Truckee, CA 96161
+  US
+extension_website: propertyradar.com
+support_website: https://help.propertyradar.com/en/articles/6980776-adding-the-chrome-extension
+privacy_policy: https://www.propertyradar.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Property Address Scanner",
+    "description": "Extract property addresses from any web page to CSV or Excel. See full property and owner details with a PropertyRadar subscription",
+    "version": "1.4",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'self' https://s3.amazonaws.com/ https://files.propertyradar.com/;"
+    },
+    "icons": {
+        "16": "assets/images/16.png",
+        "32": "assets/images/32.png",
+        "48": "assets/images/48.png",
+        "64": "assets/images/64.png",
+        "128": "assets/images/128.png"
+    },
+    "action": {
+        "default_title": "PropertyRadar",
+        "default_icon": "assets/images/favicon.png"
+    },
+    "host_permissions": [
+        "*://*.propertyradar.com/"
+      ],
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "tabs",
+        "clipboardWrite",
+        "cookies"
+    ],
+    "background": {
+        "service_worker": "lib/background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [],
+            "run_at": "document_start",
+            "all_frames": true,
+            "css": [
+                "lib/background.css",
+                "lib/content.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "flutter_service_worker.js",
+                "sidebar.html",
+                "main.dart.js",
+                "logo.gif",
+                "lib/background.css",
+                "lib/content.css",
+                "lib/content.js",
+                "vendor/fingerprint.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "use_dynamic_url": true
+        }
+    ]
+}

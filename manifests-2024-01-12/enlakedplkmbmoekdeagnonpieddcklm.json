@@ -1,0 +1,72 @@
+---
+name: Live messenger
+version: 1.6.2
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-07-07T05:12:54.000Z'
+size: 122KiB
+languages:
+  - 日本語
+description: FANZA Live Chat お仕事ページ内でメッセージ送信を便利にするためのツールです。
+publisher_account: まつたけ
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Live messenger",
+  "version": "1.6.2",
+  "manifest_version": 3,
+  "description": "FANZA Live Chat お仕事ページ内でメッセージ送信を便利にするためのツールです。",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://live-messenger-admin.herokuapp.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatmodels.dmm.co.jp/message_box/new_message*"],
+      "js": ["js/fanza/messenger.js"]
+    },
+    {
+      "matches": ["https://chatmodels.dmm.co.jp/chatgirl_info/index"],
+      "js": ["js/fanza/account_info.js"]
+    },
+    {
+      "matches": ["https://chatmodels.dmm.co.jp/message_box/input"],
+      "js": ["js/fanza/check_send_complete.js"]
+    },
+    {
+      "matches": ["https://chatmodels.dmm.co.jp/user_note/index*"],
+      "js": ["js/fanza/send_by_note.js"]
+    },
+    {
+      "matches": [
+        "https://www.madamlive.tv/operator/mail.favorite.me.php",
+        "https://www.madamlive.tv/operator/mail.make.php",
+        "https://www.madamlive.tv/operator/mail.send.php?send=1",
+        "https://www.madamlive.tv/operator/mail.send.php",
+        "https://www.madamlive.tv/operator/mail.favorite.me.php?page_num=*"
+      ],
+      "js": ["js/madam_live/send_all.js"]
+    },
+    {
+      "matches": ["https://www.madamlive.tv/operator/"],
+      "js": ["js/madam_live/auth_check.js"]
+    }
+  ],
+  "action": {
+    "default_icon": "icons/icon128.png",
+    "default_popup": "html/popup.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

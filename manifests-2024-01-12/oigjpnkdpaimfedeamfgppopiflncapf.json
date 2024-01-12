@@ -1,0 +1,73 @@
+---
+name: Preferred JS package manager
+version: '1.6'
+category_slug: productivity/developer
+rating: 4
+rating_count: 1
+user_count: 0
+release_date: '2021-06-03T13:28:12.000Z'
+size: 404KiB
+languages:
+  - English
+description: >-
+  Modify displayed install instructions on npmjs and yarnpkg website, also add
+  useful features
+publisher_account: tag9724
+support_website: https://gitlab.com/tag9724/preferred-js-package-manager/-/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Preferred JS package manager",
+
+  "version": "1.6",
+  "description": "Modify displayed install instructions on npmjs and yarnpkg website, also add useful features",
+  "manifest_version": 2,
+
+  "permissions": ["contextMenus", "storage"],
+
+  "web_accessible_resources": ["/assets/*", "/dist/*.map"],
+
+  "browser_action": {
+    "default_icon": {
+      "32": "/assets/pjpm-32.png",
+      "64": "/assets/pjpm-64.png",
+      "128": "/assets/pjpm-128.png"
+    }
+  },
+
+  "icons": {
+    "32": "/assets/pjpm-32.png",
+    "64": "/assets/pjpm-64.png",
+    "128": "/assets/pjpm-128.png"
+  },
+
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true,
+    "open_in_tab": false
+  },
+
+  "background": {
+    "scripts": ["./dist/background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.npmjs.com/*"],
+      "run_at": "document_end",
+
+      "js": ["./dist/npmJsPackage.js", "./dist/injectFontAwesomeFontFace.js"],
+      "css": ["./dist/npmJsPackage.css"]
+    },
+
+    {
+      "matches": ["https://classic.yarnpkg.com/en/package/*", "https://yarnpkg.com/*"],
+      "run_at": "document_end",
+
+      "js": ["./dist/yarnpkgJsPackage.js", "./dist/injectFontAwesomeFontFace.js"],
+      "css": ["/dist/yarnpkgJsPackage.css"]
+    }
+  ]
+}

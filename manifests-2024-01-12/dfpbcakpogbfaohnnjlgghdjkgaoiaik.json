@@ -1,0 +1,83 @@
+---
+name: Taplio X
+version: 2.5.0
+category_slug: lifestyle/social
+rating: 4.14
+rating_count: 50
+user_count: 20000
+release_date: '2023-11-09T12:08:04.000Z'
+size: 443KiB
+languages:
+  - English (United States)
+description: >-
+  Supercharge your LinkedIn experience: find post inspirations, consult your
+  stats, get relevant info on people.
+publisher: Pony Express Studio
+publisher_address: |-
+  128 rue de la Boétie
+  Paris 75008
+  FR
+extension_website: taplio.com
+support_website: https://taplio.com/
+privacy_policy: https://taplio.com/our-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Taplio X",
+  "name": "Taplio X",
+  "description": "Supercharge your LinkedIn experience: find post inspirations, consult your stats, get relevant info on people.",
+  "version": "2.5.0",
+  "manifest_version": 3,
+  "icons": {
+      "16": "logo_16.png",
+      "48": "logo_48.png",
+      "128": "logo_128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts" : [
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+        
+      ],
+      "css": ["/css/root.css"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": [
+        "*://*.taplio.com/*", "http://localhost:3003/*"
+      ],
+      "js": ["apibridge.js"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": [
+      "storage",
+      "cookies",
+      "webRequest",
+      "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/", "*://app.taplio.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "logo_taplio_500.png", "closeicon.png", "logo_48.png", "/front-end/*"],
+      "matches": [  "*://*.linkedin.com/*", "*://linkedin.com/*" ]
+    }
+  ]
+}

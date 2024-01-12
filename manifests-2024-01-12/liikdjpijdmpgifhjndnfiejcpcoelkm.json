@@ -1,0 +1,81 @@
+---
+name: 'Manuals Aid: Free Manuals & Repair Guides'
+version: 1.0.0.4
+category_slug: productivity/tools
+rating: 3
+rating_count: 2
+user_count: 30000
+release_date: '2023-12-01T11:29:48.000Z'
+size: 39.59KiB
+languages:
+  - English
+description: >-
+  This extension sets the default search to manualsaid.com in order to provide
+  quick suggested results for product manuals.
+publisher_account: Manuals Aid
+extension_website: manualsaid.com
+privacy_policy: https://manualsaid.com/common/privacypolicy.html
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "background": {
+    "service_worker": "serviceWorker/serviceWorker.js"
+  },
+  "name": "Manuals Aid: Free Manuals & Repair Guides",
+  "short_name": "Manuals Aid: Free Manuals & Repair Guides",
+  "icons": {
+    "128": "icons/coloured.png"
+  },
+  "description": "This extension sets the default search to manualsaid.com in order to provide quick suggested results for product manuals.",
+  "version": "1.0.0.4",
+  "manifest_version": 3,
+  "action": {
+    "browser_style": true,
+    "default_icon": {
+      "128": "icons/coloured.png"
+    },
+    "default_title": "Manuals Aid: Free Manuals & Repair Guides"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "declarativeNetRequestWithHostAccess",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://manualsaid.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://manualsaid.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://manualsaid.com/manualsaidwebsite/*",
+        "*://*.search.yahoo.com/*"
+      ],
+      "js": [
+        "keepChanges.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "web search by Yahoo",
+      "keyword": "Manuals Aid",
+      "favicon_url": "https://manualsaid.com/newsdemo/images/searchico.png",
+      "search_url": "https://manualsaid.com/search.html?q={searchTerms}",
+      "suggest_url": "https://manualsaid.com/apps/omniboxManualsSuggestion?q={searchTerms}",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  }
+}

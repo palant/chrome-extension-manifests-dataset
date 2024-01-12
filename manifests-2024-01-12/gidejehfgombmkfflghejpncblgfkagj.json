@@ -1,0 +1,100 @@
+---
+name: Cuponomia - Cupom e Cashback
+version: 4.0.0
+category_slug: lifestyle/shopping
+rating: 4.869805075395366
+rating_count: 2719
+user_count: 600000
+release_date: '2024-01-11T08:18:19.000Z'
+size: 4.24MiB
+languages:
+  - português (Brasil)
+description: >-
+  O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que
+  estiver comprando. Economia em apenas um clique!
+publisher_account: Cuponomia
+publisher_address: |-
+  Av. Sao Joao, 2405
+  2102
+  Sao Jose dos Campos, SP 12242000
+  Brazil
+extension_website: cuponomia.com.br
+support_website: https://www.cuponomia.com.br/perguntas-frequentes
+privacy_policy: https://www.cuponomia.com.br/privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cuponomia - Cupom e Cashback",
+  "description": "O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que estiver comprando. Economia em apenas um clique!",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://www.cuponomia.com.br",
+  "icons": {
+    "128": "assets/img/icons/main-icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/img/icons/main-icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/check-website.js",
+        "content-scripts/inject-store-scrapers.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "content-scripts/cuponomia.js"
+      ],
+      "matches": [
+        "*://*.cuponomia.com.br/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.json",
+        "*.css",
+        "*.html",
+        "*.png",
+        "*.svg",
+        "*.js",
+        "*.woff",
+        "*.woff2",
+        "*.mp4"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version": "4.0.0"
+}

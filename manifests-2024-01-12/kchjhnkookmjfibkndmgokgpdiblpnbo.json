@@ -1,0 +1,65 @@
+---
+name: Map to Map HK
+version: 0.2.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 42
+release_date: '2023-12-21T08:13:52.000Z'
+size: 88.0KiB
+languages:
+  - English
+description: >-
+  Switch between Outline Zoning Plan, GeoInfo Map, GIS on Hong Kong Heritage,
+  Tree Register, CED, Google Map and Google Earth
+publisher_account: kentsui.dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Map to Map HK",
+    "version": "0.2.1",
+    "description": "Switch between Outline Zoning Plan, GeoInfo Map, GIS on Hong Kong Heritage, Tree Register, CED, Google Map and Google Earth",
+    "icons": {
+        "16": "./images/logo16.png",
+        "48": "./images/logo48.png",
+        "128": "./images/logo128.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "32": "./images/logo32.png"
+        }
+    },
+    "background": {
+        "service_worker": "background.js"
+        
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.ozp.tpb.gov.hk/*",
+                "*://*.map.gov.hk/*",
+                "*://*.gish.amo.gov.hk/*",
+                "*://*.greening.gov.hk/map/*",
+                "*://*.cedmap.epd.gov.hk/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "content_script.js"
+            ]
+        }
+    ],
+    "options_page": "about.html",
+    "web_accessible_resources": [
+        {
+            "resources": ["/inject.js"],
+            "matches": ["*://*/*"]
+        }
+    ],
+    "permissions": [
+        "tabs"
+    ]
+}

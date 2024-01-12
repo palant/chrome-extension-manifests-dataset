@@ -1,0 +1,145 @@
+---
+name: MuseDAM 素材收集器
+version: 2.1.7
+category_slug: productivity/workflow
+rating: 4.55
+rating_count: 20
+user_count: 3000
+release_date: '2023-11-21T07:39:16.000Z'
+size: 1.27MiB
+languages:
+  - English
+  - 中文 (简体)
+  - 日本語
+description: 这个扩展是可以让你轻松的收集任意网页中的 图片 / 视频 / 网页本身 / 网页截图到MuseDAM内。
+publisher_account: tezign018
+extension_website: musedam.cc
+support_website: https://musedam.cc/landing
+privacy_policy: https://musedam.cc/link/3
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_museDamName__",
+  "default_locale": "zh_CN",
+  "description": "__MSG_museDamDescription__",
+  "version": "2.1.7",
+  "commands": {
+    "save-web-link": {
+      "suggested_key": {
+        "default": "Alt+0"
+      },
+      "description": "__MSG_saveWebLink__"
+    },
+    "batch-save": {
+      "suggested_key": {
+        "default": "Alt+1"
+      },
+      "description": "__MSG_batchSave__"
+    },
+    "cropped-area-capture": {
+      "suggested_key": {
+        "default": "Alt+2"
+      },
+      "description": "__MSG_croppedArea__"
+    },
+    "whole-page-capture": {
+      "description": "__MSG_wholePage__"
+    },
+    "visible-area-capture": {
+      "suggested_key": {
+        "default": "Alt+3"
+      },
+      "description": "__MSG_visibleArea__"
+    }
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_icon": "logo.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["static/*"],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "css": [
+        "static/css/minidam-extension.light.css",
+        "static/css/minidam.css",
+        "static/css/nprogress.css",
+        "static/css/index.css"
+      ],
+      "js": ["js/vendor.js", "js/content_script.js"],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["plugins/weibo/weibo.css"],
+      "matches": ["https://weibo.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["plugins/instagram/instagram.css"],
+      "js": ["js/instagram.js"],
+      "matches": ["https://www.instagram.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["js/500px.js"],
+      "matches": ["https://500px.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["plugins/zcool/zcool.css"],
+      "matches": ["https://www.zcool.com.cn/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["static/js/jquery.min.js", "js/pinterest.js"],
+      "matches": [
+        "https://*.pinterest.com/*",
+        "https://*.pinterest.com.au/*",
+        "https://*.pinterest.jp/*",
+        "https://*.pinterest.de/*",
+        "https://*.pinterest.dk/*",
+        "https://*.pinterest.se/*",
+        "https://*.pinterest.pt/*",
+        "https://*.pinterest.es/*",
+        "https://*.pinterest.cl/*",
+        "https://*.pinterest.fr/*",
+        "https://*.pinterest.nz/*",
+        "https://*.pinterest.co.kr/*",
+        "https://*.pinterest.co.uk/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["plugins/behance/behance.css"],
+      "matches": ["https://*.behance.net/*"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": ["contextMenus", "tabs", "activeTab", "notifications", "storage", "scripting"],
+  "host_permissions": ["*://*/*"],
+  "externally_connectable": {
+    "matches": [
+      "https://dam.musetransfer.com/*",
+      "https://musedam.test.tezign.com/*",
+      "https://musedam.cc/*",
+      "https://musedam.top/*"
+    ]
+  }
+}

@@ -1,0 +1,64 @@
+---
+name: るーんてらのカード画像を表示するやつ
+version: 1.6.1
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 14
+release_date: '2023-12-06T20:00:52.000Z'
+size: 91.74KiB
+languages:
+  - 日本語
+description: noteに投稿された『レジェンド・オブ・ルーンテラ』記事の、特定フォーマットで書かれたカード名をマウスオーバーするとカード画像を表示します。
+publisher_account: mimizu
+support_website: https://twitter.com/mimizu0117_LoR
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3, 
+    "name": "るーんてらのカード画像を表示するやつ",
+    "version": "1.6.1",
+
+    "description": "noteに投稿された『レジェンド・オブ・ルーンテラ』記事の、特定フォーマットで書かれたカード名をマウスオーバーするとカード画像を表示します。",
+    "icons":{
+        "48": "./public/images/icon48.png"
+    },
+
+    "action":{
+        "default_icon": {
+            "48": "./public/images/icon48.png"
+        },
+        "default_title": "カード画像を表示します！"
+    },
+    "author": {
+        "email": "advancezero.ad@gmail.com"
+    },
+
+    "content_scripts":[
+        {
+            "matches": ["https://note.com/*"],
+            "js": ["./content_scripts.js"],
+            "css": ["./public/css/content_styles.css"],
+            "run_at" : "document_end"
+        }
+    ],
+    "background":{
+        "service_worker": "background.js"
+    },
+    "permissions": [
+        "tabs"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["cards.json"],
+            "matches": ["https://note.com/*"]
+        },
+        {
+            "resources": ["/public/images/*"],
+            "matches": ["https://note.com/*"],
+            "use_dynamic_url": true
+        }
+    ]
+}

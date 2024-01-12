@@ -1,0 +1,112 @@
+---
+name: FRAK - Earn Money Watching YouTube
+version: 1.0.32
+category_slug: lifestyle/social
+rating: 3.96875
+rating_count: 32
+user_count: 6000
+release_date: '2023-11-29T08:15:41.000Z'
+size: 717KiB
+languages:
+  - English
+description: Discover FRAK, the Defi protocol for earning money by watching YouTube videos!
+publisher: Frak
+publisher_account: tech
+publisher_address: |-
+  40 Rue Bezout
+  Paris 75014
+  FR
+extension_website: frak.id
+support_website: https://help.frak.id
+privacy_policy: https://privacy.frak.id
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "FRAK - Earn Money Watching YouTube",
+    "description": "Discover FRAK, the Defi protocol for earning money by watching YouTube videos!",
+    "version": "1.0.32",
+    "manifest_version": 3,
+    "icons": {
+        "16": "inactive_logged_16.png",
+        "48": "inactive_logged_48.png",
+        "128": "inactive_logged_128.png"
+    },
+    "action": {
+        "default_popup": "index.html"
+    },
+    "background": {
+        "minimum_chrome_version": "93",
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Alt+Shift+F",
+                "mac": "Alt+Shift+F"
+            },
+            "description": "Open extension"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["fonts/*.*", "*.woff2", "index.html"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "matches": [
+                "*://*.youtube.com/*",
+                "*://*.m.youtube.com/*",
+                "*://youtube.com/*",
+                "*://m.youtube.com/*"
+            ],
+            "resources": ["content.js"]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.youtube.com/*",
+                "*://*.m.youtube.com/*",
+                "*://youtube.com/*",
+                "*://m.youtube.com/*"
+            ],
+            "js": ["./video.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://*.youtube.com/*",
+                "*://*.m.youtube.com/*",
+                "*://youtube.com/*",
+                "*://m.youtube.com/*"
+            ],
+            "js": ["./content.js"],
+            "css": ["./content.css"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://dashboard-dev.frak.id/*",
+                "*://dashboard.frak.id/*",
+                "*://localhost/*"
+            ],
+            "js": ["./dashboard.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "permissions": ["notifications", "storage", "webRequest", "alarms"],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
+    },
+    "host_permissions": [
+        "https://api.frak.id/*",
+        "https://api-dev.frak.id/*",
+        "*://*.youtube.com/*",
+        "*://localhost/*",
+        "https://www.google-analytics.com/*"
+    ]
+}

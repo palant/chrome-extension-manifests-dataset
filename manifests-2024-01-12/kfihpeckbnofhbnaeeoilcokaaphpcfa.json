@@ -1,0 +1,66 @@
+---
+name: LeadLoft Prospector
+version: 4.1.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 19
+user_count: 204
+release_date: '2023-12-17T06:57:35.000Z'
+size: 82.06KiB
+languages:
+  - English (United States)
+description: Find emails from LinkedIn and websites.
+publisher: LeadLoft
+publisher_address: |-
+  4712 Admiralty Way #1116
+  Marina Del rey, CA 90292
+  US
+extension_website: leadloft.com
+support_website: https://www.leadloft.com/contact-us
+privacy_policy: https://www.leadloft.com/user-agreements/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "LeadLoft Prospector",
+  "description": "Find emails from LinkedIn and websites.",
+  "version": "4.1.5",
+  "action": {
+    "name": "Manipulate DOM",
+    "default_icon": "logo48.png",
+    "default_popup": "popup.html",
+    "default_title": "LeadLoft Prospector"
+  },
+  "icons": {
+    "16": "logo16.png",
+    "48": "logo48.png",
+    "128": "logo128.png"
+  },
+  "host_permissions": ["https://*.leadloft.com/*", "https://*.linkedin.com/*"],
+  "permissions": ["tabs", "scripting", "storage", "cookies"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["inject.js"],
+      "run_at": "document_start",
+      "matches": ["*://*.linkedin.com/*"]
+    },
+    {
+      "js": ["profile.js", "config.js", "jquery-2.1.1.min.js", "sha256.js", "content.js"],
+      "css": ["toolbar.css"],
+      "matches": ["*://*.linkedin.com/*", "*://*.leadloft.com/*"]
+    }
+  ],
+  "web_accessible_resources": [{ "resources": ["injected.js"], "matches": ["https://*.linkedin.com/*"] }],
+  "externally_connectable": {
+    "matches": ["*://*.linkedin.com/*", "*://*.leadloft.com/*"]
+  },
+  "content_security_policy": {
+    "script-srcs": "self",
+    "object-src": "self"
+  }
+}

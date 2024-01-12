@@ -1,0 +1,66 @@
+---
+name: Chessconnect
+version: 0.0.2.4
+category_slug: lifestyle/games
+rating: 4.8
+rating_count: 10
+user_count: 386
+release_date: '2024-01-11T11:10:55.000Z'
+size: 190KiB
+languages:
+  - English
+description: Connects smart boards with the chess.com website
+publisher_account: grosserjoern
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chessconnect",
+  "description": "Connects smart boards with the chess.com website",
+  "version": "0.0.2.4",
+  "icons": {
+    "128": "res/icon128.png"
+  },
+  "action": {
+    "default_icon": "res/icon128.png",
+    "default_popup": "scripts/options/optiondlg.html",
+    "default_title": "Chessconnect"
+  },
+  "content_scripts": [
+    {
+      "js": ["dist/chesscomcontent.js"],
+      "matches": ["https://www.chess.com/*"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["dist/background.js"],
+      "matches": ["https://www.chess.com/*"],
+      "world": "ISOLATED",
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "dist/serviceworker.js"
+  },
+  "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "res/beep.mp3",
+        "res/icon128up.png",
+        "res/icon128down.png",
+        "res/icon128upred.png",
+        "res/icon128downyellow.png",
+        "res/icon128upgreen.png"
+      ],
+      "matches": ["https://www.chess.com/*"]
+    }
+  ],
+  "options_ui": {
+    "page": "scripts/options/optiondlg.html",
+    "open_in_tab": false
+  }
+}

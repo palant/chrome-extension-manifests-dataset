@@ -1,0 +1,80 @@
+---
+name: Google Meet Tweak (Emojis, Text, Cam Effects)
+version: '10.00'
+category_slug: lifestyle/social
+rating: 3.587219343696028
+rating_count: 579
+user_count: 1000000
+release_date: '2023-04-22T10:24:08.000Z'
+size: 278KiB
+languages:
+  - English
+description: >-
+  Send emojis, Text Overlay, Cam Effects and layout tweaks in Google Meet +
+  record meetings with Zoomcorder
+publisher: Zoomcorder
+publisher_account: Zoomcorder.com
+publisher_address: |-
+  6450 Lusk Blvd
+  San Diego, CA 92121
+  US
+extension_website: www.zoomcorder.com
+privacy_policy: https://zoomcorder.com/extension/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Google Meet Tweak (Emojis, Text, Cam Effects)",
+  "description": "Send emojis, Text Overlay, Cam Effects and layout tweaks in Google Meet + record meetings with Zoomcorder",
+  "version": "10.00",
+  "author": "Simone Marullo",
+  "icons": {
+    "24": "icons/icon24.png",
+    "36": "icons/icon36.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "24": "icons/icon24.png",
+      "36": "icons/icon36.png",
+      "48": "icons/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Google Meet Tweak"
+  },
+  "background": {
+    "service_worker": "update_worker.js"
+  },
+  "permissions": [
+    "storage" 
+  ],
+  "host_permissions": [
+      "<all_urls>"
+  ],
+  "options_page": "raw_options.html",
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*", "https://*.zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"],
+      "js": ["browser-polyfill.js", "content.js", "mutesync.js"],
+      "run_at": "document_idle"
+    },
+    {
+ "css":["raw_styles.css"],
+  "js": ["raw_content.js"],
+   "matches": ["https://meet.google.com/*", "https://*.zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"]
+
+    }
+  ],
+
+  "web_accessible_resources": [
+   {"resources":["grid.user.js","cam_script.js", "/images/howto.jpg"], "matches":["https://meet.google.com/*"]},
+    {
+      "resources": ["/images/record.png", "/images/recimage.png", "/images/howto.jpg", "/images/download.png"],
+      "matches": ["https://*.zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"]
+    }
+  ],
+  "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'self'"}
+}

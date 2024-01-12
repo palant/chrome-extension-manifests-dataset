@@ -1,0 +1,139 @@
+---
+name: Job Robo
+version: 2.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 160
+release_date: '2023-12-28T19:38:30.000Z'
+size: 2.21MiB
+languages:
+  - English (United States)
+description: Job Automation Bot
+publisher: JobRobo
+publisher_address: |-
+  2840 Hilltop Rd
+  Clermont, FL 34711-7542
+  US
+privacy_policy: https://app.jobrobo.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Job Robo - Automation Bot for Job",
+  "name": "Job Robo",
+  "description": "Job Automation Bot",
+  "version": "2.1.0",
+  "manifest_version": 3,
+  "homepage_url": "https://app.jobrobo.io/",
+  "background": {
+    "service_worker": "backgroundServiceWorker.js"
+  },
+  "icons": {
+    "16": "images/icons/tray_16.png",
+    "48": "images/icons/tray_48.png",
+    "128": "images/icons/tray_128.png"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/icons/tray_19.png",
+      "38": "images/icons/tray_38.png"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "user_agent_rule",
+        "enabled": true,
+        "path": "userAgentRules.json"
+      }
+    ]
+  },
+  "commands": {
+    "START_LINKED_IN_AUTOMATION": {
+      "suggested_key": {
+        "default": "Shift+Ctrl+1",
+        "mac": "Shift+Command+1",
+        "windows": "Shift+Ctrl+1"
+      },
+      "description": "To start the linked in automation"
+    },
+    "START_INDEED_AUTOMATION": {
+      "suggested_key": {
+        "default": "Shift+Ctrl+2",
+        "mac": "Shift+Command+2",
+        "windows": "Shift+Ctrl+2"
+      },
+      "description": "To start the indeed in automation"
+    },
+    "START_ZIPRECRUITER_AUTOMATION": {
+      "suggested_key": {
+        "default": "Shift+Ctrl+3",
+        "mac": "Shift+Command+3",
+        "windows": "Shift+Ctrl+3"
+      },
+      "description": "To start the zip recruiter in automation"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["/css/root.css"],
+      "js": ["/static/js/content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["/static/js/context.js"],
+      "matches": [
+        "https://*.indeed.com/*",
+        "https://*.linkedin.com/*",
+        "https://*.ziprecruiter.com/*"
+      ]
+    },
+    {
+      "js": [ "/static/js/keepAlive.js"],
+      "matches": ["https://*.linkedin.com/jobs/*"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "js": ["/static/js/linkedInAutomation.js"],
+      "matches": ["https://*.linkedin.com/jobs/*"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "js": ["/static/js/indeedAutomation.js"],
+      "matches": ["https://*.indeed.com/*"],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "all_frames": false
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "scripting",
+    "activeTab",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/static/css/content.css",
+        "/static/media/*",
+        "/static/js/*.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "*://*.jobrobo.io/*"]
+  }
+}

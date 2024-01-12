@@ -1,0 +1,80 @@
+---
+name: Lace - Asynchronous Video Collaboration
+version: 0.4.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2022-09-21T05:56:09.000Z'
+size: 616KiB
+languages:
+  - English (United States)
+description: Record your screen or camera to collaborate asynchronously.
+publisher: Lace Software Inc.
+publisher_address: |-
+  772 Luce Ct
+  Mountain View, CA 94041-2508
+  US
+extension_website: lace.video
+support_website: https://www.lace.video
+privacy_policy: https://www.lace.video/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Lace - Asynchronous Video Collaboration",
+  "description": "Record your screen or camera to collaborate asynchronously.",
+  "version": "0.4.0",
+
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/vendor.js", "js/content-host-page.js"]
+    },
+    {
+      "matches": [
+        "https://*.startlace.com/extension-upload/*",
+        "https://*.lace.video/app/extension-upload/*",
+        "http://localhost:3000/app/extension-upload/*",
+        "http://localhost:3000/extension-upload/*"
+      ],
+      "js": ["js/content-laceapp-uploader.js"],
+      "all_frames": true
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
+  "permissions": ["desktopCapture", "storage", "system.display"],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["selector-view.html", "js/selector-view.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "externally_connectable": {
+    "matches": [
+      "https://*.startlace.com/*",
+      "https://*.lace.video/*",
+      "http://localhost:3000/*"
+    ]
+  },
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAosbNzUcj74i5ALi347RGxr7cbFOeLPkpH9W7NTxKm8qig/V6ZT+3eHOyF2eC6PVDq5jyJmPIcLjL1q0rrhQtZgNqrmyx/DKIW1cKeVyaAoxRJhiFDuKYalz87pY/z+gN34R1DvmFKbjW2UpPnBl1dLAJjyXNg87UwAQBFxngohNlnLbaVtdebZXYskJxH4OoNMEC86JBcVT/L1PemkOgGeOEgeGDp+BSSrQuBp1WrIoc6WnA62udT+fu/f/vDRitIXQE6PatBrkfmpz9Lx8czey6Y+fdce+083ZOM/q1IP5AFSV6IUi93qlG5AB62ysJC2ZJ/okh7KjHO2tT1HhTrQIDAQAB"
+}

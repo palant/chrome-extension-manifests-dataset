@@ -1,0 +1,74 @@
+---
+name: Followers Everywhere for LinkedIn™️
+version: 1.0.1
+category_slug: productivity/tools
+rating: 1
+rating_count: 1
+user_count: 2
+release_date: '2023-12-12T11:36:29.000Z'
+size: 566KiB
+languages:
+  - English
+description: >-
+  Show the LinkedIn profile's followers and connections everywhere. On LinkedIn
+  search results, feeds, reactions and comments.
+publisher_account: Link Buddy
+privacy_policy: https://linkedin-follower-insights.niomaker.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.0.1",
+  "homepage_url": "https://linkedin-follower-insights.niomaker.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "./dist/contentScripts/style.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

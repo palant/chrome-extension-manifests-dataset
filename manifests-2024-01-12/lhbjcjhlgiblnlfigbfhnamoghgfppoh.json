@@ -1,0 +1,80 @@
+---
+name: Integrito Plagiarism & AI Checker
+version: 1.2.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 12
+user_count: 218
+release_date: '2023-12-13T09:39:05.000Z'
+size: 296KiB
+languages:
+  - English
+description: >-
+  Integrito by PlagiarismCheck.org helps teachers, students, and content
+  creators check for plagiarism and AI-generated content.
+publisher: Teaching Writing Online Limited
+publisher_account: PlagiarismCheck.org Support
+publisher_address: |-
+  160 City Road
+  London EC1V 2NX
+  GB
+extension_website: plagiarismcheck.org
+support_website: https://plagiarismcheck.org/contact-us/
+privacy_policy: https://plagiarismcheck.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Integrito",
+  "name": "Integrito Plagiarism & AI Checker",
+  "description": "Integrito by PlagiarismCheck.org helps teachers, students, and content creators check for plagiarism and AI-generated content.",
+  "manifest_version": 3,
+  "version": "1.2.0",
+  "icons": {
+    "16": "images/logo.ico",
+    "32": "images/logo32.png",
+    "48": "images/logo192.png",
+    "128": "images/logo512.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "notifications",
+    "scripting",
+    "webRequest",
+    "webNavigation"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Integrito Plagiarism & AI Checker",
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo192.png",
+      "128": "images/logo512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://plagcheck.local/*", "*://plagiarismcheck.org/*"],
+      "js": ["browser-polyfill.js", "inject.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["canvas-inject.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://docs.google.com/document/d/*"],
+      "js": ["googledocs-inject.js"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com"
+  }
+}

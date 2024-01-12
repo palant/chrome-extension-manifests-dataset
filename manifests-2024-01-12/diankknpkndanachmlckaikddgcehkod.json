@@ -1,0 +1,133 @@
+---
+name: TickTick - Todo & Task List
+version: 1.2.1.1
+category_slug: productivity/workflow
+rating: 4.195876288659794
+rating_count: 679
+user_count: 100000
+release_date: '2023-10-27T10:14:14.000Z'
+size: 195KiB
+languages:
+  - English
+  - 中文 (简体)
+description: >-
+  Your wonderful to-do & task list to make all things done and get life well
+  organized.
+publisher_account: Appest Inc
+extension_website: ticktick.com
+support_website: https://support.ticktick.com
+privacy_policy: https://ticktick.com/about/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "1.2.1.1",
+  "short_name": "__MSG_appShortName__",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "options_page": "options.html",
+  "icons": {
+    "16": "./images/icon-16.png",
+    "48": "./images/icon-48.png",
+    "128": "./images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icons": {
+      "16": "./images/icon-16.png",
+      "48": "./images/icon-48.png",
+      "128": "./images/icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://dida365.com/*",
+        "https://www.dida365.com/*",
+        "https://ticktick.com/*",
+        "https://www.ticktick.com/*",
+        "https://365dida.com/*",
+        "https://test.365dida.com/*",
+        "https://dev.365dida.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false,
+      "js": [
+        "scripts/contentscript-webapp.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://dida365.com/*",
+        "https://www.dida365.com/*",
+        "https://ticktick.com/*",
+        "https://www.ticktick.com/*",
+        "https://365dida.com/*",
+        "https://test.365dida.com/*",
+        "https://dev.365dida.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": [
+        "scripts/contentscript-sidepanel-app.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/scripts/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "ids": [],
+    "matches": [
+      "https://dida365.com/*",
+      "https://ticktick.com/*"
+    ]
+  },
+  "permissions": [
+    "scripting",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "cookies",
+    "sidePanel"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "commands": {
+    "add-task": {
+      "description": "__MSG_commandAddTo__"
+    }
+  },
+  "minimum_chrome_version": "114"
+}

@@ -1,0 +1,77 @@
+---
+name: NoCaptcha Solver
+version: 0.1.6
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 182
+release_date: '2023-12-13T21:34:57.000Z'
+size: 377KiB
+languages:
+  - 中文 (简体)
+description: Solve your captcha problem, like reCAPTCHA/hCAPTCHA and more
+publisher_account: youpaichris
+support_website: https://nocaptcha.io
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "NoCaptcha Solver",
+    "version": "0.1.6",
+    "description": "Solve your captcha problem, like reCAPTCHA/hCAPTCHA and more",
+    "author": "NoCaptcha",
+    "homepage_url": "https://nocaptcha.io",
+    "icons": {
+        "48": "icon.png"
+    },
+    "action": {
+        "default_popup": "index.html"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "permissions": ["background", "storage"],
+    "optional_host_permissions": ["*://*/*"],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": [
+                "https://google.com/recaptcha/api2/*",
+                "https://google.com/recaptcha/enterprise/*",
+                "https://recaptcha.net/recaptcha/api2/*",
+                "https://recaptcha.net/recaptcha/enterprise/*",
+                "https://www.google.com/recaptcha/api2/*",
+                "https://www.google.com/recaptcha/enterprise/*",
+                "https://www.recaptcha.net/recaptcha/api2/*",
+                "https://www.recaptcha.net/recaptcha/enterprise/*",
+                "https://recaptcha.google.cn/recaptcha/api2/*",
+                "https://recaptcha.google.cn/recaptcha/enterprise/*",
+                "https://*/captcha/v1/*"
+            ],
+            "js": ["content.js"],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": true,
+            "matches": ["<all_urls>"],
+            "js": ["content-msg.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/inject-recaptcha.js",
+                "/inject-hcaptcha.js",
+                "/inject-msg.js"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

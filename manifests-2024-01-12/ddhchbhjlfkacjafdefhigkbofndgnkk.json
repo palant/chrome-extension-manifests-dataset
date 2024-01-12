@@ -1,0 +1,64 @@
+---
+name: G11n Previewer
+version: 2.2.14
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2024-01-03T11:11:17.000Z'
+size: 162KiB
+languages:
+  - English
+description: >-
+  G11n Previewer is an internal tool that provides machine translation and Web
+  UI layout issue detection.
+publisher_account: g11npreviewer_dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "G11n Previewer",
+  "description": "G11n Previewer is an internal tool that provides machine translation and Web UI layout issue detection.",
+  "version": "2.2.14",
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["thirdparty/jquery.min.js", "thirdparty/jquery-ui.min.js", "js/preFrameContent.js", "js/coreDetectContent.js", "js/uiWorkerContent.js"],
+      "css": ["css/content.css", "css/status.css"],
+      "all_frames": true
+    }
+  ],
+
+  "background": { 
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "assets/icons-view-128.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16" : "assets/icons-view-16.png",
+    "48" : "assets/icons-view-48.png",
+    "128": "assets/icons-view-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "webNavigation",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["assets/*"],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ;object-src 'self'"}
+}

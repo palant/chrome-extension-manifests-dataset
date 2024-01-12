@@ -1,0 +1,92 @@
+---
+name: Leonar
+version: '3.15'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 7
+user_count: 288
+release_date: '2024-01-09T11:16:29.000Z'
+size: 152KiB
+languages:
+  - English
+description: Automation tool 100% dedicated to talent sourcing
+publisher: Leonar
+publisher_address: |-
+  19a rue du Rocher
+  PARIS 75008
+  FR
+extension_website: leonar.app
+privacy_policy: http://leonar.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Leonar",
+  "description": "Automation tool 100% dedicated to talent sourcing",
+  "version": "3.15",
+  "manifest_version": 3,
+  "background": { "service_worker": "background_wrapper.js"},
+  "permissions": [
+    "storage",
+    "activeTab",
+    "cookies",
+    "alarms",
+    "management",
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://www.linkedin.com/",
+    "*://*.linkedin.com/",
+    "*://leonar.app/",
+    "*://dashboard.leonar.app/",
+    "https://.dashboard.leonar.app/",
+    "https://.leonar.app/",
+    "*://t2o8bchsh6.execute-api.eu-west-1.amazonaws.com/*",
+    "https://www.crunchbase.com/*"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "/images/logo16.png",
+      "32": "/images/logo32.png",
+      "48": "/images/logo48.png",
+      "128": "/images/logo128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/logo16.png",
+    "32": "/images/logo32.png",
+    "48": "/images/logo48.png",
+    "128": "/images/logo128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/talent*", "https://www.linkedin.com/sales/*", "https://www.linkedin.com/search/*"],
+      "js": ["scripts/contentScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.linkedin.com/in/*"],
+      "js": ["scripts/contentScript_in.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://dashboard.leonar.app/campaign*","https://dashboard.leonar.app/version-test/campaign*"],
+      "js": ["scripts/leonarContentScript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources" : [
+    {
+      "resources":["scripts/*"],
+      "matches" : ["<all_urls>"]
+    }
+  ],
+  "options_page": "options.html",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnjZpHAtDbW6ldD7wD60ZTnEKpDkj9s3qj8Rk2F52PjnuIzBT/S55rjuLngJ9UoBE0i/9ht3fS+MWq8et/4Wpl1JJC3CCZVyoEzTLo0nLaKIjV6L8TaCQ/XO/mVpAZf2FIWHwXXFi3a7ESqjb5Ci2fP441yZkS4+Hajyq4/r5/257rqOOVpnk72dx2XcOXVH/HwUFvA+SxhSsNq1T0j0n2cMRmeBP88OVQeucjEAnXxuIZwj2n9e1Up83mksd4VXhJnL+g7hkaUBF5YVZ6H327Zeg0jUAkNlp8yWsexWD/jw4t1aU/M2GblpwDSUY4zlR0QPjCbL21RtXBRK7EabGDwIDAQAB",  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self';  object-src 'self'"}
+  }
+    

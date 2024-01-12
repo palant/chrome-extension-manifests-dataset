@@ -1,0 +1,180 @@
+---
+name: BibNext
+version: 1.0.52
+category_slug: productivity/workflow
+rating: 4.083333333333333
+rating_count: 12
+user_count: 986
+release_date: '2023-09-05T05:04:32.000Z'
+size: 6.34MiB
+languages:
+  - English
+  - español
+  - Ελληνικά
+  - 中文 (简体)
+description: Manage your references with ease where you write and cite.
+publisher: Citasion LLC
+publisher_account: Citasion
+publisher_address: |-
+  1901 Cornwall Ave #1076
+  Bellingham, WA 98226
+  US
+extension_website: bibnext.com
+support_website: https://bibnext.com/support
+privacy_policy: https://bibnext.com/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "version": "1.0.52",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "support@bibnext.com",
+      "strict_min_version": "81.0"
+    }
+  },
+  "oauth2": {
+    "client_id": "1086335444463-tb57hd4gf904as7t618ru5r1mcibqgqh.apps.googleusercontent.com",
+    "scopes": [
+      "email",
+      "https://bibnext.com/*",
+      "profile",
+      "openid",
+      "https://www.googleapis.com/auth/documents",
+      "https://www.googleapis.com/auth/script.external_request"
+    ]
+  },
+  "permissions": [
+    "identity",
+    "cookies",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://bibnext.com/*",
+    "http://bibnext.com/*",
+    "https://scholar.google.com/*",
+    "https://www.google-analytics.com/*",
+    "https://citation-needed.springer.com/*",
+    "https://scholar.googleusercontent.com/*",
+    "https://us-central1-citasion-35277.cloudfunctions.net/*",
+    "https://cdn.jsdelivr.net/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "include_globs": [
+        "*://scholar.google.*/*",
+        "*://ieeexplore.ieee.org/*",
+        "*://pubmed.ncbi.nlm.nih.gov/*",
+        "*://dl.acm.org/*",
+        "*://link.springer.com/*",
+        "*://*.cnki.net/*",
+        "*://www.emerald.com/*",
+        "*://*.wiley.com/*",
+        "*://*.mdpi.com/*"
+      ],
+      "css": [
+        "css/bootstrap.css"
+      ],
+      "js": [
+        "citation-import.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://docs.google.com/document/*"
+      ],
+      "js": [
+        "cnt-google-docs-preload.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/document/*",
+        "https://www.overleaf.com/project/*"
+      ],
+      "exclude_globs": [
+        "https://www.overleaf.com/project"
+      ],
+      "css": [
+        "css/bootstrap-citasion.css",
+        "css/selectize.css"
+      ],
+      "js": [
+        "citation-manager.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://scholar.googleusercontent.com/*"
+      ],
+      "js": [
+        "cnt-tab-retrieval.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://bibnext.com/*"
+      ],
+      "js": [
+        "citasion-com.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "images/*.gif",
+        "images/*.svg",
+        "css/*.less",
+        "css/*.css",
+        "*.js",
+        "*.txt"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/logo-16.png",
+      "32": "images/logo-32.png",
+      "48": "images/logo-48.png",
+      "128": "images/logo-128.png"
+    }
+  },
+  "icons": {
+    "16": "images/logo-16.png",
+    "32": "images/logo-32.png",
+    "48": "images/logo-48.png",
+    "128": "images/logo-128.png"
+  },
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://us-central1-citasion-35277.cloudfunctions.net/' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*.firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://bibnext.com/*",
+      "https://us-central1-citasion-35277.cloudfunctions.net/*",
+      "https://www.google-analytics.com/*"
+    ]
+  }
+}

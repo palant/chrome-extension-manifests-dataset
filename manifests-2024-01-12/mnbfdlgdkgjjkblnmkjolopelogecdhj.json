@@ -1,0 +1,99 @@
+---
+name: DotmetricsScriptTest
+version: '3.1'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 32
+release_date: '2023-09-12T21:37:31.000Z'
+size: 254KiB
+languages:
+  - English (UK)
+description: Browser extension to test Dotmetrics script
+publisher: Dotmetrics
+publisher_address: |-
+  Aleja lipa 1b
+  Zagreb 10000
+  HR
+support_website: https://www.dotmetrics.net/contact.html
+privacy_policy: https://www.dotmetrics.net/documents/policy_eng.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+  "manifest_version": 3,
+  "name": "DotmetricsScriptTest",
+  "version": "3.1",
+
+  "description": "Browser extension to test Dotmetrics script",
+
+  "background": {
+    "service_worker": "js/background-script.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/content-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "declarativeNetRequest",
+    "webRequest",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://*.dotmetrics.net/*",
+    "*://*.dotmetrics.rocks/*",
+    "*://*/*"
+  ],
+
+  "action": {
+    "default_icon": "images/icon.png",
+    "default_title": "Dotmetrics Script Test",
+    "default_popup": "DotmetricsPopup.html"
+  },
+
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": false,
+      "path": "rules/rule-1.json"
+    },{
+      "id": "ruleset_2",
+      "enabled": false,
+      "path": "rules/rule-2.json"
+    },{
+      "id": "ruleset_3",
+      "enabled": false,
+      "path": "rules/rule-3.json"
+    }
+    ]
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject-scripts/sendMessageToExtension.js",
+        "inject-scripts/sendMessageToExtensionFromIframes.js",
+        "inject-scripts/startRequestingTimeOnPageData.js",
+        "inject-scripts/injectAdex.js",
+        "inject-scripts/stressTestAjax.js",
+        "rules/rule-1.json",
+        "rules/rule-2.json",
+        "rules/rule-3.json"
+      ],
+      "matches": [ "https://*/*" ]
+    }]
+
+
+
+}

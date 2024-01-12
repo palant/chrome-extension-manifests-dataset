@@ -1,0 +1,88 @@
+---
+name: BuzzSumo
+version: 2.0.9
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 4000
+release_date: '2023-08-23T08:34:20.000Z'
+size: 535KiB
+languages:
+  - English (United States)
+description: Have all the BuzzSumo metrics to hand
+publisher: BuzzSumo
+publisher_address: |-
+  Sovereign House
+  Church Street
+  Brighton BN1 1UJ
+  GB
+extension_website: buzzsumo.com
+support_website: https://help.buzzsumo.com
+privacy_policy: https://buzzsumo.com/legal/user-privacy-statement
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BuzzSumo",
+  "version": "2.0.9",
+  "description": "Have all the BuzzSumo metrics to hand",
+  "action": {
+    "default_popup": "",
+    "default_icon": {
+      "16": "./assets/icons/16.png",
+      "32": "./assets/icons/32.png",
+      "48": "./assets/icons/48.png",
+      "128": "./assets/icons/128.png"
+    }
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icons/16.png",
+    "32": "./assets/icons/32.png",
+    "48": "./assets/icons/48.png",
+    "128": "./assets/icons/128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/contentScripts/main/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/main/style.css",
+        "dist/contentScripts/google/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

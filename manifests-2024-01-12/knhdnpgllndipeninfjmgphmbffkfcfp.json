@@ -1,0 +1,94 @@
+---
+name: SoftTrain Cloud Call Recording Controller
+version: 1.1.4
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 112
+release_date: '2023-10-19T03:28:50.000Z'
+size: 71.06KiB
+languages:
+  - English (UK)
+description: Extension allowing call recordings to be paused and resumed
+publisher: SoftTrain Cloud
+publisher_account: james.claytonsmith
+publisher_address: |-
+  2 Cotton End Road
+  Exning
+  Newmarket CB8 7NN
+  GB
+extension_website: softtrain.co.uk
+support_website: https://www.softtrain.co.uk/contact-us
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SoftTrain Cloud Call Recording Controller",
+  "description": "Extension allowing call recordings to be paused and resumed",
+  "version": "1.1.4",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "bg-loader.js"
+  },
+  "permissions": [ "storage", "notifications" ],
+  "host_permissions": [
+    "https://*.wildixin.com/",
+    "https://localhost:44380/*",
+    "https://crm-dev.softtrain.co.uk/Extension/*",
+    "https://crm-preprod.softtrain.co.uk/ExtCRC/*",
+    "https://crm.softtrain.co.uk/ExtCRC/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/ic-chromeExtension-16.png",
+      "32": "/images/ic-chromeExtension-32.png",
+      "48": "/images/ic-chromeExtension-48.png",
+      "128": "/images/ic-chromeExtension-128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/ic-chromeExtension-16.png",
+    "32": "/images/ic-chromeExtension-32.png",
+    "48": "/images/ic-chromeExtension-48.png",
+    "128": "/images/ic-chromeExtension-128.png"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.softtrain.co.uk/contact-us*",
+        "https://www.softtrain.co.uk/payment-gateway*",
+        "https://*.stripe.com/*"
+      ],
+      "js": [ "sites/softtrain-co-uk.js" ]
+    },
+    {
+      "matches": [
+        "https://prod.choiceadmin.co.uk/*/sales/order_create/processData/key/*",
+        "https://assets.braintreegateway.com/web/*/html/hosted-fields-frame.min.html*"
+      ],
+      "all_frames": true,
+      "js": [ "sites/prod-choiceadmin-co-uk.js" ]
+    },
+    {
+      "matches": [
+        "https://secure.ogone.com/*"
+      ],
+      "js": [ "sites/secure-ogone-com.js" ]
+    },
+    {
+      "matches": [
+        "https://hpp.realexpayments.com/*"
+      ],
+      "js": [ "sites/hpp-realexpayments-com.js" ]
+    },
+    {
+      "matches": [
+        "https://portal.allpay.cloud/CreateDdi/Create"
+      ],
+      "js": [ "sites/allpay-directdebit.js" ]
+    }
+  ]
+}

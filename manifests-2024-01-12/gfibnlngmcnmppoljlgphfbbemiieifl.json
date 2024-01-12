@@ -1,0 +1,54 @@
+---
+name: unbait
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 4.8
+rating_count: 35
+user_count: 2000
+release_date: '2023-06-10T07:27:22.000Z'
+size: 50.43KiB
+languages:
+  - English (United States)
+description: Using AI to replace clickbait headlines - one news site at a time.
+publisher_account: unbaitextension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "unbait",
+  "version": "1.1.0",
+  "description": "Using AI to replace clickbait headlines - one news site at a time.",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["*://*.eb.dk/*", "https://*.ekstrabladet.dk/*", "*://*.bt.dk/*", "*://*.tv2.dk/*", "https://us-central1-better-news-with-ai.cloudfunctions.net/*"],
+  "web_accessible_resources": [{
+    "matches": ["<all_urls>"],
+    "resources": ["lightbulb.svg", "content.js.map"]
+  }],
+  "action": {
+    "default_icon": {
+      "16": "off-16-bw.png",
+      "48": "off-48-bw.png",
+      "128": "off-128-bw.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ekstrabladet.dk/*",
+        "*://*.eb.dk/*",
+        "*://*.bt.dk/*",
+        "*://*.tv2.dk/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}
+

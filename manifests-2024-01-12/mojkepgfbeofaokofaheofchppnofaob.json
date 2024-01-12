@@ -1,0 +1,91 @@
+---
+name: PowerApply
+version: '1.97'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 110
+release_date: '2023-04-09T06:30:17.000Z'
+size: 101KiB
+languages:
+  - English
+description: >-
+  PowerApply simplifies job applications. This little addon helps you obtain
+  more job offers faster.
+publisher_account: PowerApply
+extension_website: powerapply.io
+support_website: https://powerapply.app/
+privacy_policy: https://www.powerapply.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "PowerApply",
+ "description": "PowerApply simplifies job applications. This little addon helps you obtain more job offers faster.",
+ "version": "1.97",
+ "manifest_version": 3,
+ "background": {
+  "service_worker": "background.js"},
+ "icons": {
+  "16": "/images/16.png",
+  "32": "/images/32.png",
+  "48": "/images/48.png",
+  "128": "/images/128.png"
+ },
+ "action": {
+  "default_popup": "popup.html"
+ },
+ "externally_connectable": {
+  "matches": ["https://powerapply.app/chrome*"]
+ },
+ "host_permissions": ["<all_urls>"],
+ "permissions": ["tabs", "scripting", "activeTab"],
+ "content_scripts": [
+  {
+    "matches": ["https://www.linkedin.com/jobs/*", "https://www.linkedin.com/jobs/view/*"],
+    "js": ["CustomJavaScript/linkedin.js"],
+    "run_at": "document_start"
+  },
+  {
+   "matches": ["https://www.linkedin.com/in/*", "https://www.linkedin.com/mynetwork/*"],
+   "js": ["CustomJavaScript/get_emails.js", "CustomJavaScript/linkedin_connect.js"],
+   "run_at": "document_end"
+  },
+  {
+    "matches": ["https://powerapply.app/linkedin_initializer*"],
+    "js": ["CustomJavaScript/linkedin_initializer.js"],
+    "run_at": "document_end"
+  },
+  {
+    "matches": ["https://powerapply.app/abuse_checkpoint*"],
+    "js": ["CustomJavaScript/abuse_checkpoint.js"],
+    "run_at": "document_end"
+  },
+  {
+   "matches": ["https://powerapply.app/get_emails_initializer*"],
+   "js": ["CustomJavaScript/get_email_initializer.js"],
+   "run_at": "document_end"
+  },
+  {
+   "matches": ["https://powerapply.app/linkedin_connect_init*"],
+   "js": ["CustomJavaScript/linkedin_connect_initializer.js"],
+   "run_at": "document_end"
+  },
+  {
+   "matches": ["https://www.linkedin.com/search/*"],
+   "js": ["CustomJavaScript/linkedin_connect.js"],
+   "run_at": "document_end"
+  },
+  {
+   "matches": ["https://powerapply.app/indeed_initializer*"],
+   "js": ["CustomJavaScript/indeed_initializer.js"],
+   "run_at": "document_end"
+  },
+  {
+   "matches": ["https://www.indeed.com/jobs*", "https://www.indeed.com/viewjob*", "https://m5.apply.indeed.com/*", "https://www.indeed.com/*"],
+   "js": ["CustomJavaScript/indeed.js"],
+   "run_at": "document_end"
+  }
+ ]
+}

@@ -1,0 +1,122 @@
+---
+name: GoTeacher
+version: 2.0.22
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 45
+release_date: '2024-01-09T13:07:56.000Z'
+size: 815KiB
+languages:
+  - English (United States)
+description: >-
+  GoTeacher is a Google Classroom add-on that automates sharing and feedback
+  collection.
+publisher: Go Teacher
+publisher_account: Goteacher Inc
+publisher_address: |-
+  Massachusetts Ave
+  Boston, MA 02108
+  US
+extension_website: goteacher.com
+support_website: https://www.app.goteacher.com/
+privacy_policy: https://app.goteacher.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "GoTeacher",
+    "description": "GoTeacher is a Google Classroom add-on that automates sharing and feedback collection.",
+    "version": "2.0.22",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAj05eZQnDycoyblZr1EdeDOnoNHNups26rrKvPUZeVTtDIsCnfnPY20uprSUjy7KVm+NJc4PePDMMp55pSJQj9MkbM9pBp0mcx0co1yrHZjrBwSkxi9MtFDWa4ccEc4endvO6lq5vZs9rkbr2WVRi90qRE9MLoxU/JUwOVItHGTgfX2NB8byKX5ECRqbrDIeUgKXNHK05RxbvhNmJUCZj7bC9OOvqvFXR91VdkyAv6IPCD4gTC+pPoHv/IZKG8IwGbJe0Vx/83cjnVptHKU5PfvfJQTuHR3Xw8N6F+NMGNYo1osNhYhDkJkhWb8KCiuHZaSJsk+kZhDW0ZbQa+1qIYQIDAQAB",
+    "action": {
+        "default_title": "GoTeacher",
+        "default_icon": "./assets/go_icon_128.png"
+    },
+    "permissions": [
+        "alarms",
+        "storage",
+        "tabs",
+        "notifications",
+        "activeTab",
+        "unlimitedStorage",
+        "identity",
+        "identity.email"
+    ],
+    "oauth2": {
+        "client_id": "324906402902-uiuivt83baelj0rbjvd8jcho8dieqrdr.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "https://www.googleapis.com/auth/userinfo.email"
+        ]
+    },
+    "icons": {
+        "16": "./assets/go_icon_16.png",
+        "32": "./assets/go_icon_32.png",
+        "48": "./assets/go_icon_48.png",
+        "128": "./assets/go_icon_128.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "feedback.js"
+            ],
+            "css": [
+                "styles/shared/base.css",
+                "styles/shared/button.css",
+                "styles/shared/iframe_wrapper.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "interaction.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "video.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://classroom.google.com/*"
+            ],
+            "js": [
+                "googleClassroom.js"
+            ],
+            "css": [
+                "styles/shared/base.css",
+                "styles/shared/button.css",
+                "styles/shared/iframe_wrapper.css",
+                "styles/google-classroom/analytics_button.css"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://app.goteacher.com/*"
+        ]
+    }
+}

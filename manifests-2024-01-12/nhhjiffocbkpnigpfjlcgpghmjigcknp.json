@@ -1,0 +1,322 @@
+---
+name: TestBox
+version: 1.28.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 9
+user_count: 69
+release_date: '2023-11-28T05:03:14.000Z'
+size: 316KiB
+languages:
+  - English
+description: Try software for yourself, side-by-side, before you buy it
+publisher: TestBox, Inc
+publisher_account: TestBox
+publisher_address: |-
+  4148 Autumn Ct
+  Boulder, CO 80304-0953
+  US
+extension_website: testbox.com
+privacy_policy: https://www.testbox.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "TestBox",
+  "version": "1.28.0",
+  "description": "Try software for yourself, side-by-side, before you buy it",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "cookies",
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "https://*.zendesk.com/*",
+    "https://*.zdassets.com/*",
+    "https://*.freshdesk.com/*",
+    "https://*.myfreshworks.com/*",
+    "https://*.freshchat.com/*",
+    "https://*.freshcaller.com/*",
+    "https://*.hubspot.com/*",
+    "https://*.hs-sites.com/*",
+    "https://*.dixa.com/*",
+    "https://*.dixa.io/*",
+    "https://*.elev.io/*",
+    "https://*.helpscout.net/*",
+    "https://*.helpscout.com/*",
+    "https://*.helpscoutdocs.com/*",
+    "https://trengo.com/*",
+    "https://*.trengo.com/*",
+    "https://*.trengohelp.com/*",
+    "https://*.frontapp.com/*",
+    "https://*.launchdarkly.com/*",
+    "https://*.gorgias.com/*",
+    "https://*.intercom.com/*",
+    "https://*.constantcontact.com/*",
+    "https://*.constantcontact.online/*",
+    "https://*.ctctcdn.com/*",
+    "https://*.pendo.io/*",
+    "https://*.pipedrive.com/*",
+    "https://*.nimble.com/*",
+    "https://*.nutshell.com/*",
+    "https://*.zapier.com/*",
+    "https://*.groovehq.com/*",
+    "https://*.atlassian.com/*",
+    "https://*.atlassian.net/*",
+    "https://trello.com/*",
+    "https://*.asana.com/*",
+    "https://*.monday.com/*",
+    "https://*.zoho.com/*",
+    "https://*.zohodesk.com/*",
+    "https://*.syncari.com/*",
+    "https://*.notion.so/*",
+    "https://*.clickup.com/*",
+    "https://*.hightouch.com/*",
+    "https://*.coda.io/*",
+    "https://*.calibermind.com/*",
+    "https://*.auth0.com/*",
+    "https://*.getwarmly.com/*",
+    "https://*.catalyst.io/*",
+    "https://*.keap.app/*",
+    "https://*.keapapis.com/*",
+    "https://*.infusionsoft.com/*",
+    "https://*.drata.com/*",
+    "https://*.assignar.com/*",
+    "https://*.assignar.com.au/*",
+    "https://*.hootsuite.com/*",
+    "https://*.spiff.com/*",
+    "https://*.kore.ai/*",
+    "https://*.drift.com/*",
+    "https://*.webflow.io/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://*.testbox.com/*"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "zendesk",
+        "enabled": true,
+        "path": "zendesk.json"
+      },
+      {
+        "id": "freshdesk",
+        "enabled": true,
+        "path": "freshdesk.json"
+      },
+      {
+        "id": "dixa",
+        "enabled": true,
+        "path": "dixa.json"
+      },
+      {
+        "id": "groove",
+        "enabled": true,
+        "path": "groove.json"
+      },
+      {
+        "id": "monday",
+        "enabled": true,
+        "path": "monday.json"
+      },
+      {
+        "id": "hubspot",
+        "enabled": true,
+        "path": "hubspot.json"
+      },
+      {
+        "id": "zoho",
+        "enabled": true,
+        "path": "zoho.json"
+      },
+      {
+        "id": "constantcontact",
+        "enabled": true,
+        "path": "constant-contact.json"
+      },
+      {
+        "id": "generic",
+        "enabled": true,
+        "path": "genericRewrite.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.testbox.com/*"
+      ],
+      "js": [
+        "testbox.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.zendesk.com/*"
+      ],
+      "include_globs": [
+        "https://pdi-testboxlab.zendesk.com/*",
+        "https://tbx-*.zendesk.com/*"
+      ],
+      "js": [
+        "htmlReplacements.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://hootsuite.com/*"
+      ],
+      "include_globs": [
+        "https://hootsuite.com/*"
+      ],
+      "js": [
+        "mutationObserver.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.zendesk.com/*",
+        "https://*.freshdesk.com/*",
+        "https://*.myfreshworks.com/*",
+        "https://*.hubspot.com/*",
+        "https://*.hs-sites.com/*",
+        "https://*.dixa.com/*",
+        "https://elev.io/*",
+        "https://*.helpscout.net/*",
+        "https://*.helpscout.com/*",
+        "https://*.helpscoutdocs.com/*",
+        "https://trengo.com/*",
+        "https://*.trengo.com/*",
+        "https://*.trengohelp.com/*",
+        "https://*.frontapp.com/*",
+        "https://*.gorgias.com/*",
+        "https://*.intercom.com/*",
+        "https://*.constantcontact.com/*",
+        "https://*.constantcontact.online/*",
+        "https://*.ctctcdn.com/*",
+        "https://*.pendo.io/*",
+        "https://*.pipedrive.com/*",
+        "https://*.nimble.com/*",
+        "https://*.nutshell.com/*",
+        "https://*.zapier.com/*",
+        "https://zapier.com/*",
+        "https://*.groovehq.com/*",
+        "https://*.atlassian.com/*",
+        "https://*.atlassian.net/*",
+        "https://trello.com/*",
+        "https://*.asana.com/*",
+        "https://*.monday.com/*",
+        "https://*.zoho.com/*",
+        "https://*.zohodesk.com/*",
+        "https://*.syncari.com/*",
+        "https://*.notion.so/*",
+        "https://*.clickup.com/*",
+        "https://*.hightouch.com/*",
+        "https://coda.io/*",
+        "https://*.calibermind.com/*",
+        "https://*.auth0.com/*",
+        "https://*.getwarmly.com/*",
+        "https://*.catalyst.io/*",
+        "https://keap.app/*",
+        "https://*.keapapis.com/*",
+        "https://*.infusionsoft.com/*",
+        "https://*.drata.com/*",
+        "https://*.assignar.com/*",
+        "https://*.assignar.com.au/*",
+        "https://*.hootsuite.com/*",
+        "https://hootsuite.com/*",
+        "https://*.spiff.com/*",
+        "https://*.kore.ai/*",
+        "https://*.drift.com/*",
+        "https://*.webflow.io/*"
+      ],
+      "include_globs": [
+        "https://pdi-testboxlab.zendesk.com/*",
+        "https://tbx-*.zendesk.com/*",
+        "https://tbx-*.freshdesk.com/*",
+        "https://tbx-*.myfreshworks.com/*",
+        "https://*.hubspot.com/*",
+        "https://*.hs-sites.com/*",
+        "https://tbx-*.dixa.com/*",
+        "https://elev.io/*",
+        "https://*.helpscout.net/*",
+        "https://*.helpscout.com/*",
+        "https://*.helpscoutdocs.com/*",
+        "https://trengo.com/*",
+        "https://*.trengo.com/*",
+        "https://*.trengohelp.com/*",
+        "https://app.frontapp.com/*",
+        "https://*.gorgias.com/*",
+        "https://app.intercom.com/*",
+        "https://*.constantcontact.com/*",
+        "https://*.constantcontact.online/*",
+        "https://*.ctctcdn.com/*",
+        "https://*.pendo.io/*",
+        "https://*.pipedrive.com/*",
+        "https://*.nutshell.com/*",
+        "https://*.nimble.com/*",
+        "https://*.zapier.com/*",
+        "https://zapier.com/*",
+        "https://*.groovehq.com/*",
+        "https://*.atlassian.com/*",
+        "https://*.atlassian.net/*",
+        "https://trello.com/*",
+        "https://*.asana.com/*",
+        "https://*.monday.com/*",
+        "https://*.zoho.com/*",
+        "https://*.zohodesk.com/*",
+        "https://*.syncari.com/*",
+        "https://*.notion.so/*",
+        "https://*.clickup.com/*",
+        "https://*.hightouch.com/*",
+        "https://coda.io/*",
+        "https://*.calibermind.com/*",
+        "https://*.auth0.com/*",
+        "https://*.getwarmly.com/*",
+        "https://*.catalyst.io/*",
+        "https://keap.app/*",
+        "https://*.keapapis.com/*",
+        "https://*.infusionsoft.com/*",
+        "https://*.drata.com/*",
+        "https://*.assignar.com/*",
+        "https://*.assignar.com.au/*",
+        "https://*.hootsuite.com/*",
+        "https://hootsuite.com/*",
+        "https://*.spiff.com/*",
+        "https://*.kore.ai/*",
+        "https://*.drift.com/*",
+        "https://*.webflow.io/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "injectedScript.js"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx3HWhM948F1Ki4spx3sVEPL6zP041IfPAMXUs0NOEtj4HjR+uetfdLbnIeGL+bbPi3C/0r4JYo3sEqHbcUAnmeoowViId/N2QBJXWlcB6zYnQ7wKLN0c6c0NITSu7+jBt1FDto26DCTG7q5BLpUUYp+91pXrBKzATpRj+beKbegZXcIMRAMalvcfc70tovDg1IMmKzTit11aXcof9XZiV+eSYCHc+wOcWAqadAStNc/8DDkftbL5L9YKMj5vdTxilcwvfQ9zD8WjY7T4IxCNLFwRhkIqCgs33E663zOo+XCY5nzHR1Er16qwD4prNh1PQJmU5kPhuxO6OdfwW+qz8wIDAQAB"
+}

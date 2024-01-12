@@ -1,0 +1,131 @@
+---
+name: Correkt — Autonomous AI Agent For Every Task
+version: 1.0.1.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 29
+release_date: '2023-11-08T09:37:08.000Z'
+size: 2.83MiB
+languages:
+  - English
+description: >-
+  Automatically summarize articles/videos/PDFs, answer complex questions,
+  schedule repeating tasks, detect misinformation, and more!
+publisher_account: admin
+extension_website: correkt.ai
+support_website: https://discord.gg/Hj9ffKm9ny
+privacy_policy: https://correkt.ai/privacypolicy
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Correkt — Autonomous AI Agent For Every Task",
+  "description": "Automatically summarize articles/videos/PDFs, answer complex questions, schedule repeating tasks, detect misinformation, and more!",
+  "version": "1.0.1.0",
+  "minimum_chrome_version": "101",
+  "icons": {
+    "16": "images/favicon.png",
+    "32": "images/favicon.png",
+    "48": "images/favicon.png",
+    "128": "images/favicon.png"
+  },
+  "content_security_policy": {
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  },
+  "host_permissions": [
+    "http://127.0.0.1:8000/", "https://correkt.ai/", "http://localhost/", "<all_urls>"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "cookies",
+    "geolocation",
+    "offscreen",
+    "alarms",
+    "scripting",
+    "declarativeNetRequestWithHostAccess",
+    "browsingData"
+  ],
+  "background": {
+    "service_worker": "background.js", 
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "css" : [
+        "correkt/dom.css",
+        "correkt/flatpickr.css",
+        "correkt/material_blue.css",
+        "correkt/error-tooltip.css"
+      ],
+      "js": [
+        "correkt/flatpickr.min.js",
+        "correkt/highlight.min.js",
+        "correkt/markdown-it.js",
+        "correkt/interact.js",
+        "correkt/correkt.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ],
+      "exclude_matches": [
+        "*://drive.google.com/*",
+        "*://correkt.ai/*"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "css": [
+        "correkt/correkt.css",
+        "correkt/image-explanation.css",
+        "correkt/text-explanation.css",
+        "correkt/error-tooltip.css",
+        "correkt/colors.css",
+        "twitter/twitter.css"
+      ],
+      "js": [
+        "twitter/twitter.js"
+      ],
+      "matches": [
+        "https://twitter.com/*"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "css": [
+        "correkt/correkt.css",
+        "correkt/error-tooltip.css",
+        "correkt/image-explanation.css",
+        "correkt/text-explanation.css",
+        "correkt/colors.css",
+        "facebook/facebook.css"
+      ],
+      "js": [
+        "facebook/facebook.js"
+      ],
+      "matches": [
+        "https://www.facebook.com/*"
+      ]
+    }
+
+  ],
+  "web_accessible_resources": [{
+    "resources": ["correkt/correkt.css", "fonts/Inter.ttf", "fonts/*.woff2", "correkt/sidebar.css", "correkt/colors.css", "correkt/error-tooltip.css", "correkt/image-explanation.css", "correkt/loader.css", "correkt/text-explanation.css", "images/default-link-image.svg", "images/book.svg", "images/*", "extension-popup/*", "correkt/tokyo-night-dark.min.css", "offscreen.html", "offscreen.js", "scrape.js"],
+    "matches": [
+      "<all_urls>"
+    ]
+  }],
+  "action": {
+    "default_title": "Correkt \nHas access to all websites",   
+    "default_popup": "extension-popup/popup.html"
+  }
+}

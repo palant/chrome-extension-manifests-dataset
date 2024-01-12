@@ -1,0 +1,56 @@
+---
+name: YCLIENTS + ABSOLUTKARTA
+version: 1.0.4
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2022-05-22T04:35:00.000Z'
+size: 412KiB
+languages:
+  - русский
+description: Интеграция программы лояльности АбсолютКарта с системой YCLIENTS
+publisher_account: absolutkarta.ru
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "YCLIENTS + ABSOLUTKARTA",
+  "description": "Интеграция программы лояльности АбсолютКарта с системой YCLIENTS",
+  "version": "1.0.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./icons/active_icon_16.png",
+    "32": "./icons/active_icon_32.png",
+    "48": "./icons/active_icon_48.png",
+    "64": "./icons/active_icon_64.png",
+    "128": "./icons/active_icon_128.png"
+  },
+  "permissions": ["tabs", "storage"],
+  "action": {
+    "default_popup": "./popup.html",
+    "default_title": "АбсолютКарта"
+  },
+  "background": {
+    "service_worker": "./background-scripts.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://yclients.com/*"],
+      "run_at": "document_idle",
+      "js": ["./content-scripts.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject-scripts.js", "*.png"],
+      "matches": ["https://yclients.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://yclients.com/*"]
+  }
+}

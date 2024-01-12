@@ -1,0 +1,62 @@
+---
+name: 即レスbot君
+version: 1.0.0
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-03-18T08:35:56.000Z'
+size: 138KiB
+languages:
+  - 日本語
+description: メルカリ内でのいいね・商品売却を監視し自動でメッセージ送信してくれるbotです。
+publisher_account: まつたけ
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "即レスbot君",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "description": "メルカリ内でのいいね・商品売却を監視し自動でメッセージ送信してくれるbotです。",
+  "permissions": ["storage", "tabs"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://jp.mercari.com/mypage/listings/in_progress*"],
+      "js": ["js/auto_listing.js"]
+    },
+    {
+      "matches": ["https://jp.mercari.com/item/m*"],
+      "js": [
+        "js/observe_like_notification.js"
+      ]
+    },
+    {
+      "matches": ["https://jp.mercari.com/notifications"],
+      "js": ["js/observe_like_notification.js"]
+    },
+    {
+      "matches": [
+        "https://jp.mercari.com/transaction/m*",
+        "https://jp.mercari.com/mypage/listings/in_progress"
+      ],
+      "js": ["js/observe_item_in_progress.js"]
+    },
+    {
+      "matches": ["https://jp.mercari.com/mypage?faauthcheck*"],
+      "js": ["js/common/auth_check.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "html/popup.html"
+  },
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  }
+}

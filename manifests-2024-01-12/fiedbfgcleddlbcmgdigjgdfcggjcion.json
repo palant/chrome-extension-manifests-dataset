@@ -1,0 +1,283 @@
+---
+name: Microsoft Autofill
+version: 2.0.5
+category_slug: productivity/workflow
+rating: 4.619212962962963
+rating_count: 1728
+user_count: 100000
+release_date: '2023-11-23T10:57:07.000Z'
+size: 18.14MiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - हिन्दी
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Save your passwords, addresses and payment info, and automatically fill them
+  on sites you visit.
+publisher: Microsoft Corporation
+publisher_address: |-
+  One Microsoft Way
+  Redmond, WA 98052
+  US
+privacy_policy: http://aka.ms/privacy
+---
+
+{
+  "author": "Microsoft Corporation",
+  "description": "__MSG_extDescription__",
+  "background": {
+    "service_worker": "backgroundWrapper.js"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/popup/signout_128.png",
+      "32": "assets/icons/popup/signout_128.png",
+      "48": "assets/icons/popup/signout_128.png",
+      "64": "assets/icons/popup/signout_128.png",
+      "128": "assets/icons/popup/signout_128.png"
+    },
+    "default_title": "__MSG_extPopupDescription__",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "vendors/chromium/base.js",
+        "vendors/chromium/common.js",
+        "vendors/chromium/message.js",
+        "vendors/chromium/form.js",
+        "vendors/chromium/fill.js",
+        "vendors/chromium/autofill_controller.js",
+        "vendors/chromium/password_controller.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "content_scripts/oauth.js"
+      ],
+      "matches": [
+        "https://login.live.com/oauth20_desktop.srf*",
+        "https://login.microsoftonline.com/common/oauth2/nativeclient*"
+      ],
+      "exclude_matches": [
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "content_scripts/autofill/edgeLabellingProtobuf.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://login.live.com/oauth20_token.srf*",
+        "https://login.live.com/oauth20_authorize.srf",
+        "https://login.microsoftonline.com/consumers/oauth2/v2.0/token*",
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "content_scripts/autofill.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://login.live.com/oauth20_token.srf*",
+        "https://login.live.com/oauth20_authorize.srf",
+        "https://login.microsoftonline.com/consumers/oauth2/v2.0/token*",
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "content_scripts/sendfeedback.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "content_scripts/content_scripts.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://login.live.com/oauth20_token.srf*",
+        "https://login.microsoftonline.com/consumers/oauth2/v2.0/token*",
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "content_scripts/signout.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "content_scripts/signinnudge.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://chrome.google.com/webstore*",
+        "https://login.microsoftonline.com/consumers/oauth2/v2.0/token*",
+        "https://login.live.com/oauth20_token.srf*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "content_scripts/ratingreminder.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://chrome.google.com/webstore*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "2.0.5",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webNavigation",
+    "management",
+    "privacy",
+    "notifications",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content_scripts/passwordsdropdown.html",
+        "content_scripts/addressdropdown.html",
+        "content_scripts/paymentsdropdown.html",
+        "content_scripts/saveitemprompt.html",
+        "content_scripts/savecardprompt.html",
+        "content_scripts/savegeneratedpasswordprompt.html",
+        "content_scripts/addcardtagprompt.html",
+        "content_scripts/passwordgeneratordropdown.html",
+        "content_scripts/filledgeneratedpasswordtoast.html",
+        "content_scripts/successfulcopynotification.html",
+        "content_scripts/addpasswordnotification.html",
+        "sendfeedback/sendfeedback.html",
+        "ratingreminder/ratingreminder.html",
+        "sendfeedback/sendfeedbackresponse.html",
+        "signout/signoutmodal.html",
+        "signin/signinnudgemodal.html",
+        "assets/favicons/*",
+        "autofill_auth_controls/autofill_auth_settings_dialog.html",
+        "autofill_auth_page/autofill_auth_page.html"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "icons": {
+    "128": "assets/icons/icon_128.png",
+    "64": "assets/icons/icon_128.png",
+    "48": "assets/icons/icon_128.png",
+    "32": "assets/icons/icon_128.png",
+    "24": "assets/icons/icon_128.png",
+    "20": "assets/icons/icon_128.png",
+    "16": "assets/icons/icon_128.png"
+  },
+  "incognito": "split",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

@@ -1,0 +1,67 @@
+---
+name: Kadai-Portal
+version: 2.0.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 99
+release_date: '2023-11-12T10:12:57.000Z'
+size: 18.49MiB
+languages:
+  - 日本語
+description: Chrome Extension for Students of Kagawa-Univ by SETOKU
+publisher_account: mimimimineko
+extension_website: kadai-portal.mimimimineko.com
+support_website: https://mimimimineko.com
+privacy_policy: https://kadai-portal.mimimimineko.com/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name":"Kadai-Portal",
+    "manifest_version":3,
+    "version":"2.0.5",
+    "permissions": ["storage","downloads","activeTab","contextMenus","tabs"],
+    "description": "Chrome Extension for Students of Kagawa-Univ by SETOKU",
+    "icons": {
+        "16": "src/icon/icon16.png",
+        "48": "src/icon/icon48.png",
+        "128": "src/icon/icon128.png"
+    },
+    "action":{
+        "default_icon":{
+            "16": "src/icon/icon16.png",
+            "48": "src/icon/icon48.png",
+            "128": "src/icon/icon128.png"
+            },
+        "default_title":"【隊員募集中】SETOKU サイバー防犯ボランティア",
+        "default_popup":"src/popup/popup.html"
+    },
+    "homepage_url":"https://kadai-portal.mimimimineko.com/",
+    "background": {
+        "service_worker": "src/scripts/background.js"
+    },
+    "content_scripts":[
+        {
+            "matches": ["<all_urls>"],
+            "run_at":"document_start",
+            "js":["src/scripts/allsites/copyURLTrigger.js","src/scripts/allsites/scanphishing.js"]
+        },
+        {
+            "matches": ["https://kadai-moodle.kagawa-u.ac.jp/*","https://lms-sp.itc.kagawa-u.ac.jp/*"],
+            "run_at":"document_start",
+            "js":["src/scripts/kadai-moodle/calculateNumberOfChar.js","src/scripts/kadai-moodle/changeMainColor.js"]
+        }
+    ],
+    "commands": {
+        "_execute_action": {
+          "suggested_key": {
+            "default": "Ctrl+Shift+H",
+            "mac": "MacCtrl+Shift+H"
+          },
+          "description": "Run extension."
+        }
+      }
+    
+}

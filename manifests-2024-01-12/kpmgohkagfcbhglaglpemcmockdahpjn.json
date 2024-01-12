@@ -1,0 +1,90 @@
+---
+name: TrendSpider
+version: 1.0.3.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 1000
+release_date: '2022-08-23T05:07:11.000Z'
+size: 95.31KiB
+languages:
+  - English
+description: >-
+  An extension that enables TrendSpider users to quickly see a chart whenever
+  they encounter a ticker on a webpage.
+publisher: TrendSpider LLC
+publisher_account: TrendSpider
+publisher_address: |-
+  790 Estate Dr
+  2nd Floor, Suite #7950
+  Deerfield, IL 60015-4878
+  US
+extension_website: trendspider.com
+support_website: https://help.trendspider.com
+privacy_policy: https://trendspider.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TrendSpider",
+  "description": "An extension that enables TrendSpider users to quickly see a chart whenever they encounter a ticker on a webpage.",
+  "version": "1.0.3.1",
+
+  "icons": {
+    "128": "/img/logo.png",
+    "512": "/img/logo.png"
+  },
+
+  "action": {
+    "default_popup": "/pages/popup/index.html"
+  },
+
+  "background": {
+    "service_worker": "/js/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "all_frames": false,
+
+      "run_at": "document_start",
+
+      "matches": ["*://*/*"],
+
+      "js": [
+        "/lib/jquery.min.js",
+        "/js/classes/Chromane.js",
+        "/js/classes/Util.js",
+        "/ts/Log.js",
+        "/ts/Content.js",
+        "/ts/Handlers.js",
+        "/ts/Parser.js",
+        "/js/content_script.js"
+      ]
+    },
+
+    {
+      "all_frames": true,
+
+      "run_at": "document_start",
+
+      "matches": ["https://charts.trendspider.com/mobile_chart*"],
+
+      "js": ["/js/mobile_chart_content_script.js"]
+    }
+  ],
+
+  "permissions": ["storage", "unlimitedStorage", "alarms", "cookies"],
+
+  "host_permissions": ["https://charts.trendspider.com/*"],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["https://*/*", "http://*/*"],
+      "extension_ids": ["gcicjfgfahmcilbgpmkalhhkopobkdah"]
+    }
+  ]
+}

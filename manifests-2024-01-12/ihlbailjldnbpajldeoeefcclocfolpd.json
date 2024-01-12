@@ -1,0 +1,78 @@
+---
+name: Comeet Sourcing for Chrome
+version: 0.1.7.2
+category_slug: productivity/workflow
+rating: 3.6666666666666665
+rating_count: 3
+user_count: 2000
+release_date: '2022-02-09T04:28:35.000Z'
+size: 73.56KiB
+languages:
+  - English
+description: Source candidates from LinkedIn with just the click of a button!
+publisher_account: Comeet
+publisher_address: |-
+  109 S 5th St
+  Brooklyn, New York 11249
+  United States
+extension_website: www.comeet.co
+support_website: https://help.comeet.com/en/articles/3112493-comeet-sourcing-for-chrome
+privacy_policy: https://help.comeet.com/en/articles/5968370-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Comeet Sourcing for Chrome",
+  "short_name": "Comeet",
+  "version": "0.1.7.2",
+  "description": "Source candidates from LinkedIn with just the click of a button!",
+  "homepage_url": "https://www.comeet.co",
+  "icons": {
+      "16": "common/img/co-16-blue.png",
+      "48": "common/img/co-48-blue.png",
+      "128": "common/img/co-128-blue.png"
+  },
+  "browser_action": {
+    "default_title": "Comeet"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "common/js/extensionConfig.js", 
+      "background/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*.linkedin.com/*", "https://*.linkedin.com/*"],
+      "css": ["content_scripts/styles.css"],
+      "js": [
+        "common/lib/jquery-3.1.1.min.js",
+        "common/lib/iframeResizer.min.js",
+        "common/js/extensionConfig.js",
+        "content_scripts/config.js",
+        "content_scripts/linkedinUtils.js",
+        "content_scripts/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://*.comeet.co; object-src 'self'",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "*://*.comeet.co/*",
+    "http://*.linkedin.com/*",
+    "https://*.linkedin.com/*"
+  ],
+  "web_accessible_resources": [
+    "common/img/*"
+  ],
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "https://*.comeet.co/*"]
+  }
+}

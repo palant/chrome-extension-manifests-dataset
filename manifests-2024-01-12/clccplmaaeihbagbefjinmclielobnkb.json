@@ -1,0 +1,122 @@
+---
+name: Cerby's browser extension
+version: 1.0.268
+category_slug: productivity/workflow
+rating: 5
+rating_count: 14
+user_count: 5000
+release_date: '2024-01-10T23:30:27.000Z'
+size: 5.41MiB
+languages:
+  - English (United States)
+description: The Cerby extension allows you to quickly and easily manage your accounts.
+publisher: Cerby Inc
+publisher_account: Cerby, Inc.
+publisher_address: |-
+  1272 Caroline Street
+  Alameda, CA 94501
+  US
+privacy_policy: https://www.cerby.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cerby's browser extension",
+  "author": "Cerby inc.",
+  "version": "1.0.268",
+  "manifest_version": 3,
+  "description": "The Cerby extension allows you to quickly and easily manage your accounts.",
+  "icons": {
+    "16": "icons/icon_on_16px.png",
+    "32": "icons/icon_on_32px.png",
+    "48": "icons/icon_on_48px.png",
+    "128": "icons/icon_on_128px.png",
+    "512": "icons/icon_on_512px.png"
+  },
+  "action": {
+    "default_icon": "icons/icon_on_48px.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "build/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "build/contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "build/collectV2.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.cerby.com/*"
+      ],
+      "js": [
+        "build/cerbyCS.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "build/inContextNotifications.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "webRequest",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/",
+    "http://*/",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "menu.html",
+        "in-context-notifications.html",
+        "feedback-loop-notifications.html",
+        "ui-module-dialog.html",
+        "create-account.html",
+        "suggest-request-seat.html",
+        "/oauth2/*",
+        "assets/*",
+        "fonts/*",
+        "icons/cerby.svg",
+        "icons/ic_any_error.svg",
+        "build/unsafeClick.js",
+        "signup-menu.html"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ]
+}

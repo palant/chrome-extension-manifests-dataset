@@ -1,0 +1,79 @@
+---
+name: PSI Bridge Online Proctoring Extension
+version: 2.7.1.0
+category_slug: make_chrome_yours/accessibility
+rating: 1.032258064516129
+rating_count: 31
+user_count: 30000
+release_date: '2023-12-19T14:41:22.000Z'
+size: 4.95MiB
+languages:
+  - English
+description: The fast, secure way to take remote proctored exams from PSI.
+publisher: PSI
+publisher_account: psiservicesdev
+publisher_address: |-
+  18000 W 105th St
+  Olathe, KS 66061
+  US
+privacy_policy: https://www.psiexams.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "PSI Bridge Online Proctoring Extension",
+  "version": "2.7.1.0",
+  "description": "The fast, secure way to take remote proctored exams from PSI.",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "psi-background-worker.js"
+  },
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": [
+    "desktopCapture",
+    "storage",
+    "scripting",
+    "tabs",
+    "webNavigation",
+    "management",
+    "declarativeNetRequest",
+    "history"
+  ],
+  "icons": {
+    "16": "assets/icon/psi_icon16.png",
+    "32": "assets/icon/psi_icon32.png",
+    "48": "assets/icon/psi_icon48.png",
+    "128": "assets/icon/psi_icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": [],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["assets/scripts/before-unload.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ui/index.html",
+        "assets/image/required-settings.png",
+        "assets/image/all-site-access-example.png",
+        "assets/image/logo-PSIBridge-color.svg",
+        "assets/image/psi-logo-small.png",
+        "assets/image/mac_screen_permission.png",
+        "assets/image/mac_security.png",
+        "assets/image/mac_security_quit.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost/*", "http://localhost:50161/*"]
+  }
+}

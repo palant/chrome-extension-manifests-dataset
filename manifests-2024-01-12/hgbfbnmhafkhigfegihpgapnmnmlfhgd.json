@@ -1,0 +1,107 @@
+---
+name: Backlog Watch Notifications
+version: 2.0.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 923
+release_date: '2023-05-31T09:48:41.000Z'
+size: 46.35KiB
+languages:
+  - 日本語
+description: Backlogでウォッチした課題やお知らせに更新があった際にデスクトップ通知を表示します
+publisher_account: ongaq
+support_website: https://github.com/ongaq/backlogWatch
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Backlog Watch Notifications",
+  "version": "2.0.4",
+  "description": "Backlogでウォッチした課題やお知らせに更新があった際にデスクトップ通知を表示します",
+  "minimum_chrome_version": "90.0",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_title": "Backlog Watch Notifications",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.backlog.jp/*",
+        "*://*.backlog.com/*"
+      ],
+      "css": [
+        "css/contents_style.css"
+      ],
+      "js": [
+        "import-storage.js",
+        "import-common.js",
+        "import-issues.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*.backlog.jp/*",
+        "*://*.backlog.com/*"
+      ],
+      "resources": [
+        "storage.js",
+        "common.js",
+        "issues.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "images/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "storage.js",
+        "common.js",
+        "issues.js"
+      ],
+      "matches": [
+        "*://*.backlog.jp/*",
+        "*://*.backlog.com/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "notifications",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.backlog.jp/*",
+    "*://*.backlog.com/*"
+  ]
+}

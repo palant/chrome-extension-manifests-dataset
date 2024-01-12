@@ -1,0 +1,110 @@
+---
+name: Novalya
+version: 1.3.19
+category_slug: lifestyle/social
+rating: 4.96875
+rating_count: 64
+user_count: 2000
+release_date: '2024-01-07T19:29:44.000Z'
+size: 267KiB
+languages:
+  - Français
+description: >-
+  Novalya est la plateforme simple et intuitive d’automatisation de la
+  prospection. Démarrez maintenant sur www.novalya.com
+publisher: Novalya
+publisher_address: |-
+  POD 2, the old Station House, 15a main Street
+  Blackrock, Co. Louth A94T8P8
+  IE
+extension_website: novalya.com
+privacy_policy: >-
+  https://novalya.com/wp-content/uploads/2023/05/CGUV-23.05.12-Conditions-generales-dutili-sation-et-de-vente-v2.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Novalya",
+    "description": "Novalya est la plateforme simple et intuitive d’automatisation de la prospection. Démarrez maintenant sur www.novalya.com",
+    "version": "1.3.19",
+    "icons": {
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+    "background": {
+        "service_worker": "background/background.js"
+    },
+    "action": { 
+        "browser_style": false,
+        "default_title": "Novalya"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "alarms",
+        "cookies",        
+        "clipboardRead",
+        "clipboardWrite",
+        "management",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [
+        "*://*.novalya.com/*",
+        "*://*.facebook.com/*"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [ {
+           "enabled": true,
+           "id": "ruleset_1",
+           "path": "rules.json"
+        } ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.facebook.com/*",
+                "*://*.novalya.com/*",
+                "*://*.messenger.com/*",
+                "https://z7c5j0fjy8.execute-api.us-east-2.amazonaws.com/dev/tiersai"
+            ],
+            "js": [                
+                "assets/js/jquery-3.4.1.min.js",
+                "assets/js/toastr.min.js",
+                "helper.js",
+                "content_script/nova_data.js",
+                "content_script/content_script.js",
+                "content_script/add_target_friend_group.js",
+                "content_script/send_message_members.js",
+                "content_script/add_new_friend.js",
+                "content_script/add_label_crm.js",
+                "content_script/custom_toastr.js"
+                
+            ],
+            "css": [                
+                "content_script/toastr.min.css",
+                "content_script/content_script.css",
+                "content_script/font-awesome.min.css"
+            ],
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/image/filter.png",
+                "assets/images/post.png",
+                "assets/images/message.png",
+                "assets/images/loading-forever.gif",
+                "assets/images/like.png",
+                "assets/images/play_submit.png",
+                "assets/images/dislike.png",
+                "assets/images/reload.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

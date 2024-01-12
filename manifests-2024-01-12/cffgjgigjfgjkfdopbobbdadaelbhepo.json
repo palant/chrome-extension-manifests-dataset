@@ -1,0 +1,125 @@
+---
+name: SalesLoft Connect
+version: 4.71.21
+category_slug: productivity/workflow
+rating: 1.8571428571428572
+rating_count: 154
+user_count: 100000
+release_date: '2024-01-11T06:12:10.000Z'
+size: 60.45MiB
+languages:
+  - English (United States)
+description: >-
+  Salesloft Connect enables users to more easily track communication and add
+  people to workflows using Salesforce.com and Gmail.
+publisher: SalesLoft
+publisher_account: Salesloft Extensions
+publisher_address: |-
+  1180 W Peachtree Street
+  Atlanta, GA 30309
+  US
+extension_website: salesloft.com
+support_website: https://help.salesloft.com/
+privacy_policy: https://salesloft.com/platform-privacy-notice
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SalesLoft Connect",
+  "short_name": "SalesLoft",
+  "version": "4.71.21",
+  "minimum_chrome_version": "35",
+  "manifest_version": 2,
+  "description": "Salesloft Connect enables users to more easily track communication and add people to workflows using Salesforce.com and Gmail.",
+  "icons": {
+    "16": "images/SL-icon-16.png",
+    "48": "images/SL-icon-48.png",
+    "128": "images/SL-icon-128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAugp7XC36e1dXUPDgEEO5wiY631Gg0RKNoKGsGWZzP1mNzySq1GhlHv7RffUZCnCS2iwO7vhE25g7N49vkHselN4ezF3Wy6spdtbH76s7WjrLxoeCkmMPNaRLhFBS59YDDbsEMoBE+PUu4CEca9jLXVXcLejvA579d3F2Jy5tYlToQeaFfYxVhPADA4XU60grPmyh/Wvuye43dkGa+qWooXu3gFsB5O9jTuhAUK3LjvLedm8QW7ron4kVrFdwQQfEf10p7IXHgU4pyiHav6R4dVmt7ayLD7pPDRGsalv1tZj6PP1OP2bhpXODcek10XLtIdZyqkbONjZJOmfggn8SXwIDAQAB",
+  "background": {
+    "page": "pages/background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "css": ["styles/gmail.css"],
+      "js": [
+        "inboxsdk.js",
+        "shim.bundle.js",
+        "vendor.js",
+        "bundle.js",
+        "content/gmail.js"
+      ]
+    },
+    {
+      "matches": ["*://*.lightning.force.com/*"],
+      "css": ["styles/sfdc-lightning.css"],
+      "js": ["vendor.js", "bundle.js"]
+    },
+    {
+      "matches": ["*://*.calendar.google.com/calendar/*"],
+      "css": ["styles/loft_calendar_events.css"],
+      "js": ["vendor.js", "bundle.js", "loft_calendar_events.bundle.js"]
+    },
+    {
+      "matches": ["*://*.dynamics.com/*"],
+      "css": ["styles/dynamics.css"],
+      "js": [
+        "vendor.js",
+        "bundle.js",
+        "dialer_widget.bundle.js",
+        "composer_widget.bundle.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "pages/options.html",
+    "default_title": "Salesloft Connect"
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "chrome_style": true,
+    "open_in_tab": true
+  },
+  "content_security_policy": "default-src 'self'; connect-src 'self' https://*.salesloft.com wss://*.salesloft.com https://*.qasalesloft.com wss://*.qasalesloft.com wss://*.devsalesloft.com https://*.devsalesloft.com https://salesloftzqpsn.dataplane.rudderstack.com https://*.bugsnag.com https://media.twiliocdn.com wss://*.twilio.com https://*.twilio.com https://*.s3.amazonaws.com http://127.0.0.1:8080 https://localhost.salesloft.com:9898 https://localhost.salesloft.com:9999  https://www.inboxsdk.com https://*.storage.googleapis.com; style-src 'self' 'unsafe-inline'; media-src 'self' https://media.twiliocdn.com;",
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "storage",
+    "notifications",
+    "webRequest",
+    "webNavigation",
+    "<all_urls>",
+    "system.cpu",
+    "system.memory",
+    "webRequestBlocking",
+    "idle"
+  ],
+  "web_accessible_resources": [
+    "vendor/*",
+    "styles/*",
+    "images/*",
+    "r_images/*",
+    "content/sfdc_iframe.js",
+    "fonts/*",
+    "pages/options.html"
+  ],
+  "externally_connectable": {
+    "ids": [
+      "ejgmneenioanldgngdomlfnbcbffmchf",
+      "cbkelcfhlgpgfgijpblchalaiiamahkl"
+    ],
+    "matches": [
+      "*://localhost.salesloft.com/*",
+      "*://sdr.salesloft.com/*",
+      "*://sdr.qasalesloft.com/*",
+      "*://app.salesloft.com/*",
+      "*://deals.salesloft.com/*",
+      "*://*.qasalesloft.com/*",
+      "*://deals.devsalesloft.com/*",
+      "*://sidecar-cdn.salesloft.com/*"
+    ]
+  }
+}

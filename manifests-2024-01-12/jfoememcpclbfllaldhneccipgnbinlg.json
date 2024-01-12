@@ -1,0 +1,104 @@
+---
+name: InlineMedia
+version: 0.0.0.16
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 45
+release_date: '2023-08-09T20:50:17.000Z'
+size: 2.39MiB
+languages:
+  - English (United States)
+description: Browser Extension for the Inline Media Platform
+publisher: Red Ventures
+publisher_account: myfinancerv
+publisher_address: |-
+  1101 Red Ventures Drive
+  Fort Mill, SC 29707
+  US
+privacy_policy: https://www.redventures.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "InlineMedia",
+  "description": "Browser Extension for the Inline Media Platform",
+  "version": "0.0.0.16",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgsrG9GldtfFumBm5JPUIwEMX/uNuN8V0kD2gdbX/B5imGk9eizLCP3uFHj9bJMk0lLybQgapXikfOQdYeF4eSolCnpKr7/vDOkCAfiI66v2u+To8jjFcV9+nu4ElyGl8Ptpm5xuHpe1ZzoPajCoR4xcG+is5ErWhsw2GnoHZ/a2WRLx/Ez+X4S7M15xQwEUdein0Zw9aoxObs/IvcjRANbxMeR84ohlGj8gbfOAovuEltZC2HBuG92PZZy+gK6B94v5kZZdA8KxcdLfapj8h8NOxRIJ0xFWTomWCqp7SIImkHdr/LgYjwSyTcc+xG4bcgj1UZNFEPNulfSRLgbJ1RwIDAQAB",
+  "background": {
+    "service_worker": "assets/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [ "assets/inlineMediaExt.js" ]
+    },
+    {
+      "all_frames": true,
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "*://*.widgets.myfinance.com/",
+        "*://*.widgets.local.myfinance.com/"
+      ],
+      "include_globs": [
+        "*/r/*",
+        "*/w/*",
+        "*/as/*",
+        "*/c/*"
+      ],
+      "js": [ "assets/inlineMediaAdExt.js" ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "assets/inlineMediaAdMeta.js" ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_page": "options.html",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+I",
+        "mac": "Command+Shift+I",
+        "chromeos": "Ctrl+Shift+I",
+        "linux": "Ctrl+Shift+I"
+      }
+    }
+  },
+  "icons": {
+    "16": "icons/inlineMediaDisabled_16.png",
+    "48": "icons/inlineMediaDisabled_48.png",
+    "128": "icons/inlineMediaDisabled_128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "background",
+    "cookies",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.myfinance.com/",
+    "*://*.bankrate.com/",
+    "*://*.cnet.com/",
+    "*://*.greatist.com/",
+    "*://*.nextadvisor.com/",
+    "*://*.healthline.com/",
+    "*://*.myslumberyard.com/",
+    "*://*.medicalnewstoday.com/",
+    "*://*.psychcentral.com/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost; object-src 'self'"
+  }
+}

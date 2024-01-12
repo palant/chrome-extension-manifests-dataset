@@ -1,0 +1,102 @@
+---
+name: Bravura Safe
+version: '2023.13'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 120
+release_date: '2023-12-15T19:58:56.000Z'
+size: 8.0MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - español
+  - português (Brasil)
+  - 中文 (简体)
+  - 日本語
+description: A secure password manager for all of your devices.
+publisher_account: Bravura Security ( formerly Hitachi ID Systems )
+support_website: https://www.bravurasecurity.com/support/
+privacy_policy: https://www.bravurasecurity.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_appName__",
+  "version": "2023.13",
+  "description": "__MSG_extDesc__",
+  "default_locale": "en",
+  "author": "Bravura Security",
+  "homepage_url": "https://www.bravurasecurity.com/",
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "96": "images/icon96.png",
+    "128": "images/icon128.png"
+  },
+  "content_scripts": [{
+    "all_frames": true,
+    "js": ["content/autofill.js", "content/autofiller.js", "content/notificationBar.js", "content/contextMenuHandler.js"],
+    "matches": ["http://*/*", "https://*/*", "file:///*"],
+    "run_at": "document_start"
+  }, {
+    "all_frames": false,
+    "js": ["content/message_handler.js"],
+    "matches": ["http://*/*", "https://*/*", "file:///*"],
+    "run_at": "document_start"
+  }, {
+    "all_frames": true,
+    "css": ["content/autofill.css"],
+    "matches": ["http://*/*", "https://*/*", "file:///*"],
+    "run_at": "document_end"
+  }],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon19.png",
+      "38": "images/icon38.png"
+    },
+    "default_title": "Bravura Safe",
+    "default_popup": "popup/index.html"
+  },
+  "permissions": ["tabs", "contextMenus", "storage", "unlimitedStorage", "clipboardRead", "clipboardWrite", "idle", "http://*/*", "https://*/*", "webRequest", "webRequestBlocking"],
+  "optional_permissions": ["nativeMessaging"],
+  "content_security_policy": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "linux": "Ctrl+Shift+U"
+      },
+      "description": "__MSG_commandOpenPopup__"
+    },
+    "autofill_login": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      },
+      "description": "__MSG_commandAutofillDesc__"
+    },
+    "generate_password": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+9"
+      },
+      "description": "__MSG_commandGeneratePasswordDesc__"
+    },
+    "lock_vault": {
+      "description": "__MSG_commandLockVaultDesc__"
+    }
+  },
+  "web_accessible_resources": ["notification/bar.html", "images/icon38.png", "images/icon38_locked.png"],
+  "storage": {
+    "managed_schema": "managed_schema.json"
+  }
+}

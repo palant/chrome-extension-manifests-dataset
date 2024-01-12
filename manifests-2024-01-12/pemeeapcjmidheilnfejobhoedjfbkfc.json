@@ -1,0 +1,63 @@
+---
+name: Kalami
+version: 1.0.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 30
+release_date: '2023-08-20T07:49:04.000Z'
+size: 1.69MiB
+languages:
+  - English
+description: This is a Chrome extension for Kalami
+publisher: Kalami
+publisher_account: omerhassan299
+publisher_address: |-
+  4479 Lee Avenue
+  Niagara Falls, ON L2H 3B7
+  CA
+privacy_policy: https://splendorous-conkies-65e735.netlify.app
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "name": "Kalami",
+  "description": "This is a Chrome extension for Kalami",
+  "action": {
+    "default_popup": "app/popup/popup.html",
+    "default_title": "Mellon",
+    "default_icon": {
+      "16": "./assets/logo.png",
+      "32": "./assets/logo.png",
+      "48": "./assets/logo.png",
+      "128": "./assets/logo.png"
+    }
+  },
+  "permissions": ["tabs", "activeTab", "scripting", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "run_at": "document_end",
+      "js": ["./static/js/main.js"],
+      "css": ["./templates/daisyui_v2.51.5.css", "./templates/index.min.css"]
+    },
+    {
+      "matches": ["https://kalami.ai/*"],
+      "run_at": "document_end",
+      "js": ["./auth/checkSession.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "resources": ["linkedin/templates/*", "assets/*", "static/*"]
+    }
+  ],
+  "host_permissions": ["https://*/*", "http://*/*"]
+}

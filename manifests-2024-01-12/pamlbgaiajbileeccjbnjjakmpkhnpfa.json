@@ -1,0 +1,68 @@
+---
+name: Mudcat Browser Tools
+version: 3.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 9
+release_date: '2023-12-23T15:05:38.000Z'
+size: 38.49KiB
+languages:
+  - English
+description: |-
+  Adds features to Mudcat pages. 
+  See Description in Preferences/Options for more details.
+publisher_account: DaveRo
+privacy_policy: https://revad.github.io/mudcat_privacy.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mudcat Browser Tools",
+  "description": "Adds features to Mudcat pages. \nSee Description in Preferences/Options for more details.",
+  "version": "3.0.1",
+  "author": "DaveRo",
+  "content_scripts": [
+    {
+      "matches": ["*://*.mudcat.org/*"],
+      "js": ["mudcat_origin_check.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.mudcat.org/","*://*.mudcat.org/?*","*://*.mudcat.org/index.cfm*","*://*.mudcat.org/threads.cfm*"],
+      "js": ["mudcat_italicize_new_posts.user.js"],
+      "run_at": "document_idle"
+    }, 
+    {
+      "matches": ["*://*.mudcat.org/thread.cfm?thread*"],
+      "js": ["mudcat_next_unread.user.js","mudcat_archiver.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.mudcat.org/thread.cfm?thread*","*://*.mudcat.org/ThreadNewMess-Sub.cfm","*://*.mudcat.org/newmess.cfm","*://*.mudcat.org/NewMess-Sub.cfm"],
+      "js": ["mudcat_username.user.js","mudcat_buttons.js","store_textarea.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.mudcat.org/NewMessage.cfm*","*://*.mudcat.org/ProcessNewMessage.cfm"],
+      "js": ["mudcat_buttons.js","store_textarea.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "index.js"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "host_permissions": [
+    "*://*.mudcat.org/*"
+  ],
+  "permissions": 
+    [ "storage", "webNavigation","scripting"], 
+  "optional_permissions":
+    ["nativeMessaging"],  
+  "icons": { "128": "mudcat128.png" }
+}

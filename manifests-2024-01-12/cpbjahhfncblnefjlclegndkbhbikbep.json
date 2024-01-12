@@ -1,0 +1,54 @@
+---
+name: 나무위키 문서추천
+version: '1.0'
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2021-09-25T06:56:23.000Z'
+size: 255MiB
+languages:
+  - 한국어
+description: Namu wiki recommendation
+publisher_account: WeKia
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name" : "나무위키 문서추천",
+    "version" : "1.0",
+    "description" : "Namu wiki recommendation",
+    "permissions" : ["storage"],
+    "background" : {
+        "persistent": false,
+        "page" : "src/background.html"
+
+    },
+    "browser_action": {
+        "default_popup": "src/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://namu.wiki/w/*"
+            ],
+            "js": [
+                "src/main.js",
+                "src/recommender.js"
+            ],
+            "css" : [
+                "css/tables.css"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "content_security_policy":  "script-src 'self' 'unsafe-eval' https://cdn.jsdelivr.net; object-src 'self'; script-src-elem 'self' https://cdn.jsdelivr.net 'self' https://ajax.googleapis.com data: blob:;",
+    "web_accessible_resources": [
+        "data/*.json",
+        "model/*.bin",
+        "model/model.json"
+    ],
+    "manifest_version" : 2
+}

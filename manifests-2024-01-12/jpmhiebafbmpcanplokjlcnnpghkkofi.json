@@ -1,0 +1,88 @@
+---
+name: PhishArm
+version: 0.0.0.8
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4000
+release_date: '2022-04-19T17:15:14.000Z'
+size: 326KiB
+languages:
+  - English
+description: >-
+  PhishArm allows your employees to report phishing emails directly to your
+  security and incident response teams.
+extension_website: right-hand.ai
+support_website: https://right-hand.ai
+---
+
+{
+  "manifest_version": 2,
+
+  "name": "PhishArm",
+  "short_name": "PhishArm",
+  "description": "PhishArm allows your employees to report phishing emails directly to your security and incident response teams.",
+  "version": "0.0.0.8",
+
+  "icons":
+  {
+    "128": "images/iconx128.png",
+    "16": "images/iconx16.png",
+    "48": "images/iconx48.png"
+  },
+  "homepage_url": "https://right-hand.ai",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/mail/*",
+        "https://inbox.google.com/*"
+      ],
+      "run_at": "document_start",
+      "css" :[
+        "/css/main.css"
+      ],
+      "js": ["js/jquery-1.12.3.min.js", "js/lib/loglevel.js", "js/lib/chrome-promise.js", "js/inboxsdk.js", "js/content.js"],
+      "all_frames" : true
+    }
+  ],
+
+  "browser_action": {
+    "default_title": "PhishArm",
+    "default_icon": "images/icon.png",
+    "default_popup": "index.html"
+  },
+  "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
+  "permissions": [
+    "storage",
+    "identity",
+    "identity.email",
+    "https://alpha-api.right-hand.ai/*",
+    "https://www.googleapis.com/gmail/*"
+  ],
+  "storage": {
+      "managed_schema": "schema.json"
+   },
+  "background": {
+    "scripts": [
+      "js/jquery-1.12.3.min.js",
+      "js/lib/chrome-promise.js",
+      "js/lib/base64.js",
+      "js/lib/mime.js",
+      "js/lib/loglevel.js",
+      "js/lib/uaparser.js",
+      "/js/background.js"
+    ]
+  },
+  "oauth2": {
+    "client_id": "711269600075-8giic07oa6n54go7rneue7baihlcsgba.apps.googleusercontent.com",
+    "scopes":[
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/gmail.send",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "web_accessible_resources": [
+    "*.png"
+  ],
+  "update_url": "https://clients2.google.com/service/update2/crx"
+}

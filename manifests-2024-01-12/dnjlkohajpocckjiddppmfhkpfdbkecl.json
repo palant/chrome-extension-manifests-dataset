@@ -1,0 +1,80 @@
+---
+name: SEI+Trello
+version: 1.6.5
+category_slug: productivity/workflow
+rating: 4.269230769230769
+rating_count: 26
+user_count: 7000
+release_date: '2021-11-24T01:04:03.000Z'
+size: 477KiB
+languages:
+  - português (Brasil)
+description: >-
+  Permite a integração entre o Sistema Eletrônico de Informações (SEI) e o
+  Trello.
+publisher_account: luiscrjunior
+support_website: https://luiscrjunior.github.io/sei-trello/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "SEI+Trello",
+  "short_name": "SEI+Trello",
+  "description": "Permite a integração entre o Sistema Eletrônico de Informações (SEI) e o Trello.",
+  "version": "1.6.5",
+  "author": "Luís Carlos Reischak Júnior",
+  "homepage_url": "https://luiscrjunior.github.io/sei-trello/",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sei-trello@luiscrjunior",
+      "strict_min_version": "52.0"
+    }
+  },
+
+  "page_action": {
+    "default_icon": "icons/icon.png"
+  },
+
+  "icons": {
+    "128": "icons/icon.png"
+  },
+
+  "background": {
+    "scripts": ["js/background.js"]
+  },
+
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.br/sei/*"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["js/common.js"],
+      "css": ["css/common.css"]
+    },
+    {
+      "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_controlar*"],
+      "run_at": "document_end",
+      "css": ["css/process_list.css"],
+      "js": ["js/process_list.js"]
+    },
+    {
+      "matches": ["*://*.br/sei/*controlador.php?acao=procedimento_visualizar*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "css": ["css/process_content.css"],
+      "js": ["js/process_content.js"]
+    }
+  ],
+
+  "permissions": ["*://api.trello.com/*", "storage"],
+  "web_accessible_resources": ["vendor/webfonts/*"],
+  "content_security_policy": "default-src 'self' https://*.bootstrapcdn.com; object-src 'self';"
+}

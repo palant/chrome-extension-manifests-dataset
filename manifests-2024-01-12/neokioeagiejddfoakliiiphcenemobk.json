@@ -1,0 +1,151 @@
+---
+name: 'Zopi: AliExpress & Temu Product Importer'
+version: 3.1.1.1
+category_slug: lifestyle/shopping
+rating: 3.735294117647059
+rating_count: 34
+user_count: 40000
+release_date: '2023-12-22T08:27:23.000Z'
+size: 2.91MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Tiếng Việt
+  - italiano
+  - svenska
+  - русский
+  - ‫العربية
+  - 日本語
+  - 한국어
+description: >-
+  Effortlessly track and analyze AliExpress products and Shopify stores to gain
+  decisive insights.
+publisher_account: AliHunter
+support_website: https://aliorders.crisp.help/en/
+privacy_policy: https://alihunter.crisp.help/en/category/policy-19vfynn
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Zopi: AliExpress & Temu Product Importer",
+  "version": "3.1.1.1",
+  "default_locale": "en",
+  "description": "Effortlessly track and analyze AliExpress products and Shopify stores to gain decisive insights.",
+  "externally_connectable": {
+    "matches": [
+      "https://*.amazon.com/*",
+      "https://*.amazon.com.au/*",
+      "https://*.amazon.com.br/*",
+      "https://*.amazon.ca/*",
+      "https://*.amazon.cn/*",
+      "https://*.amazon.fr/*",
+      "https://*.amazon.de/*",
+      "https://*.amazon.in/*",
+      "https://*.amazon.it/*",
+      "https://*.amazon.com.mx/*",
+      "https://*.amazon.nl/*",
+      "https://*.amazon.sg/*",
+      "https://*.amazon.es/*",
+      "https://*.amazon.com.tr/*",
+      "https://*.amazon.ae/*",
+      "https://*.amazon.co.uk/*",
+      "https://*.amazon.se/*",
+      "https://*.amazon.sa/*",
+      "https://*.amazon.pl/*",
+      "https://*.amazon.eg/*",
+      "https://*.amazon.co.jp/*",
+      "https://*.amazon.com.be/*",
+      "https://*.aliexpress.com/*",
+      "https://*.aliexpress.us/*",
+      "https://*.aliorders.io/*",
+      "https://*.temu.com/*",
+      "https://*.etsy.com/*",
+      "https://*.fireapps.io/*"
+    ]
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/js/vendors.js", "assets/js/content_script.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/js/content_script_ao_old.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.com.au/*",
+        "https://*.amazon.com.br/*",
+        "https://*.amazon.ca/*",
+        "https://*.amazon.cn/*",
+        "https://*.amazon.fr/*",
+        "https://*.amazon.de/*",
+        "https://*.amazon.in/*",
+        "https://*.amazon.it/*",
+        "https://*.amazon.com.mx/*",
+        "https://*.amazon.nl/*",
+        "https://*.amazon.sg/*",
+        "https://*.amazon.es/*",
+        "https://*.amazon.com.tr/*",
+        "https://*.amazon.ae/*",
+        "https://*.amazon.co.uk/*",
+        "https://*.amazon.se/*",
+        "https://*.amazon.sa/*",
+        "https://*.amazon.pl/*",
+        "https://*.amazon.eg/*",
+        "https://*.amazon.co.jp/*",
+        "https://*.amazon.com.be/*",
+        "https://*.aliexpress.com/*",
+        "https://*.aliexpress.us/*",
+        "https://*.temu.com/*",
+        "https://*.etsy.com/*",
+        "https://*.fireapps.io/*"
+      ],
+      "css": ["assets/css/content_script.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/*"],
+      "css": ["assets/css/bootstrap.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.aliexpress.com/*"],
+      "js": ["assets/js/bootstrap.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/item/*", "https://*.aliexpress.com/store/product*"],
+      "js": ["assets/js/add_to_card_product.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/js/custom_script.js", "assets/images/*.png", "assets/svg/*.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs", "storage", "scripting", "cookies", "webRequest", "webNavigation", "notifications"],
+  "host_permissions": ["<all_urls>"]
+}

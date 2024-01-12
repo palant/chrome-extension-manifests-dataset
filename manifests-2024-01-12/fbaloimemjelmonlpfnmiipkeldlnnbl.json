@@ -1,0 +1,123 @@
+---
+name: CloudExtend Gmail for NetSuite Legacy
+version: 4.1.4.0
+category_slug: productivity/workflow
+rating: 4.166666666666667
+rating_count: 18
+user_count: 2000
+release_date: '2022-07-19T13:41:20.000Z'
+size: 128KiB
+languages:
+  - English
+description: >-
+  CloudExtend Gmail for NetSuite Legacy enables true cloud-to-cloud
+  synchronization of your Gmail with NetSuite.
+publisher: Celigo Inc
+publisher_account: Celigo.com
+publisher_address: |-
+  1820 Gateway Dr. Suite 260
+  San Mateo, CA 94404
+  US
+support_website: https://support.cloudextend.io/
+privacy_policy: http://www.celigo.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "CloudExtend Gmail for NetSuite Legacy",
+    "description": "CloudExtend Gmail for NetSuite Legacy enables true cloud-to-cloud synchronization of your Gmail with NetSuite.",
+    "short_name": "CloudExtend",
+    "version":"4.1.4.0",
+    "page_action": {
+        "default_icon": "assets/src/styles/CloudExtend_GA.png",
+        "default_title": "Celigo"
+    },
+    "background": {
+        "scripts": [
+            "assets/src/scripts/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.netsuite.com/*"
+            ],
+            "exclude_matches": [
+                "https://*.netsuite.com/core/media/media.nl*"
+            ],
+            "js": [
+                "assets/src/scripts/netsuite/injectToNetsuite.js"
+            ],
+            "run_at": "document_start",
+            "all_frames" : true
+        },
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "js": [
+                "assets/vendor/scripts/inboxsdk.js",
+                "assets/vendor/scripts/jquery.min.js",
+                "assets/vendor/scripts/jquery-ui.min.js",
+                "assets/src/scripts/gmail/gmailDOMApi.js",
+                "assets/src/scripts/gmail/injectCegaMainApp.js",
+                "assets/vendor/scripts/notify.min.js",
+                "assets/src/scripts/gmail/onLoad.js",
+                "assets/src/scripts/gmail/getGlobals.js"
+            ],
+            "css": [
+                "assets/src/styles/main.css",
+                "assets/vendor/styles/jquery-ui.min.css"
+            ],
+            "run_at": "document_end"
+        }, {
+            "matches": [
+                "https://inbox.google.com/*"
+            ],
+            "js": [
+                "assets/vendor/scripts/inboxsdk.js",
+                "assets/vendor/scripts/jquery.min.js",
+                "assets/vendor/scripts/jquery-ui.min.js",
+                "assets/src/scripts/inbox/injectCegaMainApp.js",
+                "assets/vendor/scripts/notify.min.js",
+                "assets/src/scripts/inbox/onLoad.js"
+            ],
+            "css": [
+                "assets/src/styles/main.css",
+                "assets/vendor/styles/jquery-ui.min.css"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "webRequest",
+        "https://*.netsuite.com/*",
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*",
+        "https://celigo-secure-resources.s3.amazonaws.com/*",
+        "webRequestBlocking",
+        "tabs",
+        "storage"
+    ],
+    "icons": {
+        "48": "assets/src/styles/CloudExtend_GA.png",
+        "128": "assets/src/styles/CloudExtend_GA.png"
+    },
+    "web_accessible_resources": [
+        "assets/src/scripts/netsuite/nsIframeFix.js",
+        "assets/src/scripts/netsuite/detectNSUser.js",
+        "assets/src/scripts/netsuite/netsuite.js",
+        "assets/src/styles/celigo-17x17.png",
+        "assets/src/styles/CloudExtend_GA.png",
+        "assets/src/styles/logo-circle-white.png",
+        "assets/src/styles/windowCloseIcon.png",
+        "assets/src/styles/arrowdown.png"
+    ],
+    "options_ui": {
+        "page": "assets/src/views/options.html",
+        "chrome_style": true
+    }
+}

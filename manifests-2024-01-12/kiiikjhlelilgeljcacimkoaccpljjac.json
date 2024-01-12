@@ -1,0 +1,129 @@
+---
+name: PhishCloud
+version: 4.0.13
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 696
+release_date: '2023-10-18T18:34:02.000Z'
+size: 462KiB
+languages:
+  - English (United States)
+description: >-
+  Verify Links all over the internet and check their safety against the largest
+  PhishCloud Database in the World.
+publisher: PhishCloud, Inc.
+publisher_account: PhishCloud, Inc
+publisher_address: |-
+  3250 Airport Way S
+  STE 534
+  Seattle, WA 98134
+  US
+privacy_policy: https://www.phishcloud.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "PhishCloud",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "PhishCloud"
+  },
+  "manifest_version": 3,
+  "version": "4.0.13",
+  "description": "Verify Links all over the internet and check their safety against the largest PhishCloud Database in the World.",
+  "icons": {
+    "16": "img/icon16New2.png",
+    "32": "img/Icon32New2.png",
+    "48": "img/icon48New2.png",
+    "128": "img/icon64New2.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "background"
+  ],
+  "host_permissions": [
+    "https://portal.phishcloud.io/DesktopSignIn",
+    "https://portal.phishcloud.io/PortalSignIn",
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.png",
+        "*.html",
+        "*.css",
+        "public/img/Logo.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": ["scripts/accessTokenCheck.js"],
+      "matches": [
+        "https://portal.phishcloud.io/*",
+        "https://login.phishcloud.io/*",
+        "<all_urls>"
+      ]
+    },
+    {
+      "js": ["scripts/jquery-3.6.3.min.js"],
+      "matches": ["*://*/*"],
+      "allFrames": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "scripts/getLinksOnPage.js",
+        "scripts/apiCalls.js",
+        "scripts/urlParser.js",
+        "scripts/linkRetrievingFunctions.js",
+        "scripts/linkBorderFormatting.js",
+        "scripts/linkClick.js"
+      ],
+      "allFrames": true,
+      "css": ["css/linkBorderStyling.css", "css/loadingSpinner.css", "scripts/Modals/linkSafetyCheckModal.css", "scripts/Modals/loginReminderModal.css"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "js": [
+        "scripts/linkBorderFormatting.js",
+        "scripts/addLinkSafetyLogic.js"
+      ],
+      "css": ["css/linkBorderStyling.css", "css/loadingSpinner.css"],
+      "matches": [
+        "*://webmail.emailsrvr.com/*",
+        "*://emailsrvr.com/*",
+        "*://app.hubspot.com/*",
+        "*://duckduckgo.com/*",
+        "*://*.xfinity.com/*",
+        "*://mail.google.com/*",
+        "*://*.slack.com/*",
+        "*://www.google.com/*",
+        "*://outlook.live.com/*",
+        "*://outlook.office.com/*",
+        "*://outlook.office365.com/*",
+        "*://www.linkedin.com/*",
+        "*://*.facebook.com//*",
+        "*://www.messenger.com/*",
+        "*://*.quora.com//*",
+        "*://twitter.com/*",
+        "*://*.reddit.com/*",
+        "*://*.yahoo.com/*",
+        "*://www.bing.com/*"
+      ]
+    }
+  ]
+}

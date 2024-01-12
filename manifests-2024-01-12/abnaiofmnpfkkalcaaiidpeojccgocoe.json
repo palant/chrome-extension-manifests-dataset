@@ -1,0 +1,69 @@
+---
+name: DataSpark Tools
+version: 0.5.4
+category_slug: productivity/workflow
+rating: 4
+rating_count: 6
+user_count: 5000
+release_date: '2023-10-20T02:49:08.000Z'
+size: 187KiB
+languages:
+  - English
+description: Display DataSpark data on other sites.
+publisher: DataSpark
+publisher_address: |-
+  14172 S Coyote Hollow Ct
+  Draper, UT 84020
+  US
+extension_website: dataspark.co
+support_website: https://dataspark.co/contact
+privacy_policy: https://dataspark.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DataSpark Tools",
+  "description": "Display DataSpark data on other sites.",
+  "version": "0.5.4",
+  "action": {
+    "default_icon": "submark.png",
+    "default_popup": "popup.html",
+    "default_title": "DataSpark"
+  },
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["https://*.walmart.com/*", "https://walmart.com/*", "https://*.amazon.com/*", "https://dataspark.co/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.walmart.com/*"],
+      "js": [
+        "shared.content_script.js",
+        "walmart.content_script.js"
+      ],
+      "css": ["primary_content.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.amazon.com/*"],
+      "js": [
+        "shared.content_script.js",
+        "amazon.content_script.js"
+      ],
+      "css": ["primary_content.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*.png", "fonts/*.ttf", "walmart_content.css", "images/*.svg"],
+      "matches": ["https://*.walmart.com/*", "https://walmart.com/*", "https://*.amazon.com/*", "https://dataspark.co/*"],
+      "use_dynamic_url": true
+    }
+  ]
+}

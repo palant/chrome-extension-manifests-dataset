@@ -1,0 +1,107 @@
+---
+name: 529renew
+version: 2.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 226
+release_date: '2024-01-01T12:58:54.000Z'
+size: 864KiB
+languages:
+  - English
+description: Tracks 23andMe DNA Matches using a local SQL database
+publisher_account: CameronD73
+privacy_policy: >-
+  https://raw.githubusercontent.com/CameronD73/529renew/main/utils/PrivacyPolicy.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name" : "529renew",
+  "version" : "2.0.1",
+  "description" : "Tracks 23andMe DNA Matches using a local SQL database",
+  "background": {
+   "service_worker": "service.js"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+       "https://you.23andme.com/profile/*",
+       "https://you.23andme.com/p/*/profile/*"
+      ],
+      "js" : [
+        "util/basicQueue.js",
+        "util/page_23_utils.js",
+        "util/dates.js",
+        "util/validations.js",
+        "save_segments.js"
+      ],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+       "https://you.23andme.com/family/relatives/*",
+       "https://you.23andme.com/p/*/family/relatives/*"
+      ],
+      "js" : [
+        "start_db_tab.js"
+      ],
+      "run_at" : "document_start",
+      "all_frames" : false
+    },
+    {
+      "matches" : [
+       "https://you.23andme.com/family/relatives/*",
+       "https://you.23andme.com/p/*/family/relatives/*"
+      ],
+      "js" : [
+        "util/basicQueue.js",
+        "util/page_23_utils.js",
+        "util/rounding.js",
+        "util/validations.js",
+        "scan_relatives.js"
+      ],
+      "run_at" : "document_idle",
+      "all_frames" : false
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "icons" : {
+   "16" : "logos/529renew-16.png",
+   "19" : "logos/529renew-19.png",
+   "48" : "logos/529renew-48.png",
+   "128" : "logos/529renew-128.png"
+  },
+  "web_accessible_resources": [
+ {
+   "resources": [
+  "*.png"
+   ],
+   "matches": [
+  "<all_urls>"
+   ]
+ }
+  ],
+  "action":
+  {
+   "default_icon" : "logos/529renew-19.png",
+   "default_title" : "View matches in 529Renew",
+    "default_popup" : "popup529.html"
+    },
+    "cross_origin_embedder_policy": {
+        "value": "require-corp"
+    },
+    "cross_origin_opener_policy": {
+        "value": "same-origin"
+  },
+  "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  }
+}

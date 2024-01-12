@@ -1,0 +1,104 @@
+---
+name: Webex Calling for Chrome
+version: 1.0.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 7
+user_count: 6000
+release_date: '2023-08-01T17:15:35.000Z'
+size: 329KiB
+languages:
+  - English
+description: Rich enterprise calling features for Google Chrome
+publisher_account: cisco.chromestore
+extension_website: webex.com
+support_website: https://help.webex.com/en-us/article/a5ormz
+privacy_policy: https://trustportal.cisco.com/c/r/ctp/trust-portal.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_application_title__",
+  "description": "__MSG_application_description__",
+  "version": "1.0.6",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/webex-icon-16.png",
+    "32": "icons/webex-icon-32.png",
+    "128": "icons/webex-icon-128.png"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_title": "__MSG_application_title__ - __MSG_browser_action_default_title__",
+    "default_icon": {
+      "16": "icons/webex-icon-16.png",
+      "32": "icons/webex-icon-32.png",
+      "128": "icons/webex-icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/service-worker.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.webex.com/*",
+        "https://web-int.webex.com/*"
+      ],
+      "js": ["js/webex-content-script.js"]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://web.webex.com/*",
+        "*://web-int.webex.com/*"
+      ],
+      "js": ["js/click-to-call-content-script.js"],
+      "all_frames": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "contextMenus",
+    "background",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://web.webex.com/*",
+    "*://web-int.webex.com/*"
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ],    
+    "matches": [
+      "*://web.webex.com/*",
+      "*://web-int.webex.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": ["options.html"],
+      "matches": [
+        "*://web.webex.com/*",
+        "*://web-int.webex.com/*"
+      ]
+    }
+  ]
+}

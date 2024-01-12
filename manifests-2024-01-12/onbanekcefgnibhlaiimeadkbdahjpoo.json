@@ -1,0 +1,59 @@
+---
+name: VA Claim Tracker
+version: 2.0.2
+category_slug: productivity/tools
+rating: 4.930769230769231
+rating_count: 130
+user_count: 10000
+release_date: '2023-12-07T04:06:31.000Z'
+size: 1.31MiB
+languages:
+  - English
+description: Extension to help veterans review data related to their disability claim.
+publisher_account: usvets
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VA Claim Tracker",
+  "version": "2.0.2",
+  "description": "Extension to help veterans review data related to their disability claim.",
+  "author": "CoderX",
+  "icons": {
+    "16": "favicon.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_name": "VA Claim Tracker"
+  },
+  "permissions": ["storage", "activeTab", "tabs"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://www.va.gov/", "https://api.va.gov/*"],
+  "content_scripts": [
+    {
+      "js": ["content-script.js", "script.js"],
+      "run_at": "document_start",
+      "matches": ["*://www.va.gov/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://www.va.gov/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["script.js"],
+      "matches": ["*://www.va.gov/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+}
