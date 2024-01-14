@@ -10,43 +10,43 @@ This has been inspired by a [similar repository](https://github.com/mandatorypro
 
 The convenience script `query.js` in this repository allows running queries against the dataset. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
 
-The queries are JavaScript code that will be executed sandboxed, with extension metadata/manifest as context. You can pass a manifest query and optionally a metadata query on the command line:
+The `query` parameter is JavaScript code that will be executed sandboxed, with two variables as context: `metadata`, `manifest`. Only extensions where the query returns a true-ish value will be listed. You can optionally pass an additional query as `filter` parameter, extensions where `filter` doesn’t return a true-ish value will be excluded from the count:
 
 ```sh
-query.js [-m metadata-query] manifest-query
+query.js [-f filter] query
 ```
 
 Examples:
 
 ```sh
 # List all Manifest V3 extensions
-query.js "manifest_version == 3"
+query.js "manifest.manifest_version == 3"
 ```
 
 ```sh
-# List all Manifest V3 extensions with at least 10.000 users
-query.js -m "user_count >= 10000" "manifest_version == 3"
+# List extensions with at least 10.000 users using Manifest V3
+query.js -f "metadata.user_count >= 10000" "manifest.manifest_version == 3"
 ```
 
 ```sh
 # List all extensions using 'unsafe-eval' Content Security Policy
-query.js "this.content_security_policy && /unsafe-eval/i.test(content_security_policy.extension_pages || content_security_policy)"
+query.js "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
 ```
 
 ```sh
-# List all extensions with less than 1.000 users using activeTab permission
-query.js -m "user_count < 1000" "[this.permissions].flat().includes('activeTab')"
+# List extensions with less than 1.000 users using activeTab permission
+query.js -f "metadata.user_count < 1000" "[manifest.permissions].flat().includes('activeTab')"
 ```
 
 ```sh
 # List all extensions requesting permissions for all websites (<all_urls>,
 # *://*/* or https://*/* permissions)
-query.js "[this.host_permissions, this.permissions].flat().some(permission => ['<all_urls>', '*://*/*', 'https://*/*'].includes(permission))"
+query.js "[manifest.host_permissions, manifest.permissions].flat().some(permission => ['<all_urls>', '*://*/*', 'https://*/*'].includes(permission))"
 ```
 
 Results example:
 ```sh
-$ query.js -m "user_count >= 10000000" "this.content_security_policy && /unsafe-eval/i.test(content_security_policy.extension_pages || content_security_policy)"
+$ query.js -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
 aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
 fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
 hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
@@ -59,23 +59,29 @@ Matched 5 out of 31 manifests (16.13%).
 
 The convenience script `compare.js` in this repository allows comparing extension data between two datasets. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
 
-The query is JavaScript code that will be executed sandboxed, with four variables as context: `metadata1`, `manifest1`, `metadata2`, `manifest2`. The variables `metadata1` and `manifest1` will be set to the extension’s metadata/manifest in the first directory, `metadata2` and `manifest2` to the same extension’s metadata/manifest in the second directory. By default, the second directory is the current dataset and the first directory the dataset preceding it.
+The `query` parameter is JavaScript code that will be executed sandboxed, with four variables as context: `metadata1`, `manifest1`, `metadata2`, `manifest2`. The variables `metadata1` and `manifest1` will be set to the extension’s metadata/manifest in the first directory, `metadata2` and `manifest2` to the same extension’s metadata/manifest in the second directory. By default, the second directory is the current dataset and the first directory the dataset preceding it.
 
 By passing `-i` command line option, extensions missing from one of the directories can be included in the comparison. The context variables for the directory where the extension is missing will be set to `null` then.
+
+You can optionally pass an additional query as `filter` parameter, extensions where `filter` doesn’t return a true-ish value will be excluded from the count:
+
+```sh
+compare.js [-i] [-f filter] query
+```
 
 Examples:
 
 ```sh
 # List popular extensions that changed their name recently
-compare.js "metadata2.user_count >= 1000000 && metadata1.name != metadata2.name"
+compare.js -f "metadata2.user_count >= 1000000" "metadata1.name != metadata2.name"
 ```
 
 ```sh
 # List popular extensions more than doubling their previous user count
-compare.js "metadata2.user_count >= 1000000 && metadata1.user_count * 2 < metadata2.user_count"
+compare.js -f "metadata2.user_count >= 1000000" "metadata1.user_count * 2 < metadata2.user_count"
 ```
 
 ```sh
 # List new extensions with a high user count
-compare.js -i "metadata1 == null && metadata2.user_count >= 100000"
+compare.js -i -f "metadata1 == null" "metadata2.user_count >= 100000"
 ```
