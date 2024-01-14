@@ -41,7 +41,9 @@ Note that field definitions apply to the same context as the queries but aren’
 This is what the default output looks like:
 
 ```sh
-$ query.js -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
+$ query.js \
+  -f "metadata.user_count >= 10000000" \
+  "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
 aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
 fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
 hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
@@ -53,7 +55,9 @@ Matched 5 out of 31 manifests (16.13%).
 And the same query with a custom output format:
 
 ```sh
-$ query.js -o "id, metadata.name, metadata.release_date, metadata.rating, manifest.manifest_version" -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
+$ query.js \
+  -o "id, metadata.name, metadata.release_date, metadata.rating, manifest.manifest_version" \
+  -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
 aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 2023-03-22T10:16:42.000Z 4.334249213282607 2
 fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 2024-01-12T05:41:10.000Z 4.565129151291513 3
 hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 2023-12-15T18:24:57.000Z 4.349355259345117 2
@@ -94,13 +98,17 @@ query.js "[manifest.host_permissions, manifest.permissions].flat().some(permissi
 ```sh
 # List popular extensions that changed their name recently, display both old
 # and new name
-compare.js -o "id, metadata1.name, metadata1.user_count, metadata2.name, metadata2.user_count" -f "metadata2.user_count >= 1000000" "metadata1.name != metadata2.name"
+compare.js \
+  -o "id, metadata1.name, metadata1.user_count, metadata2.name, metadata2.user_count" \
+  -f "metadata2.user_count >= 1000000" "metadata1.name != metadata2.name"
 ```
 
 ```sh
 # List popular extensions more than doubling their previous user count, display
 # both old and new user count
-compare.js -o "id, metadata2.name, metadata1.user_count, metadata2.user_count" -f "metadata2.user_count >= 1000000" "metadata1.user_count * 2 < metadata2.user_count"
+compare.js \
+  -o "id, metadata2.name, metadata1.user_count, metadata2.user_count" \
+  -f "metadata2.user_count >= 1000000" "metadata1.user_count * 2 < metadata2.user_count"
 ```
 
 ```sh
