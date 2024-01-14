@@ -12,4 +12,4 @@ import process from "node:process";
 
 import {doQuery, DefaultLogger} from "./lib/compare.js";
 
-doQuery(process.argv, new DefaultLogger());
+doQuery(process.argv, DefaultLogger);

@@ -20,11 +20,48 @@ It is always possible to use a different source directory. With `query.js`, the 
 
 ### The queries
 
-The queries are JavaScript code that will be executed in a sandbox. The context will contain information on the current extension, allowing the script to make a decision. With `query.js` script, that context contains `metadata` and `manifest` variables. With `compare.js` script, there are four context variables: `metadata1`, `manifest1`, `metadata2`, `manifest2`. These represent the data of the current extension from the first and the second source directory respectively.
+The queries are JavaScript code that will be executed in a sandbox. The context will contain information on the current extension, allowing the script to make a decision. With `query.js` script, that context contains `id`, `metadata` and `manifest` variables. With `compare.js` script, there are five context variables: `id`, `metadata1`, `manifest1`, `metadata2`, `manifest2`. These represent the data of the current extension from the first and the second source directory respectively.
 
-When `compare.js` script is run with the `-i` parameter, the queries may receive data of extensions only present in one of the source directories. In this case, two of the context variables will be `null`.
+When `compare.js` script is run with the `-i` parameter, the queries may receive data of extensions only present in one of the source directories. In this case, either `metadata1` and `manifest1` will be `null` (extension not present in the first source directory) or `metadata2` and `manifest2` (extension not present in the second source directory).
 
 Only extensions will be listed where the query returns a true-ish value. In additional to the regular query, it is possible to pass a filtering query. The filtering query is executed in the same fashion, however failing the query has the effect that the extension is excluded from the total count in the statistic displayed.
+
+### Output format
+
+By default, the scripts will list the extension ID, name and user count in their output. This can be customized by passing a comma-separated list of fields via the `-o` parameter, e.g.:
+
+```sh
+query.js -o "id, metadata.name, manifest.permissions" true
+```
+
+Instead of listing user count, this query will list the requested permissions of all extensions.
+
+Note that field definitions apply to the same context as the queries but aren’t evaluated as JavaScript code. They are rather treated as a dot-separated list of property names. So the proper way of referencing the first permission in the list is `manifest.permissions.0`.
+
+This is what the default output looks like:
+
+```sh
+$ query.js -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
+aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
+fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
+hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
+mmeijimgabbpbgpdklnllpncmdofkcpn Screencastify - Screen Video Recorder 12000000
+nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 16000000
+Matched 5 out of 31 manifests (16.13%).
+```
+
+And the same query with a custom output format:
+
+```sh
+$ query.js -o "id, metadata.name, metadata.release_date, metadata.rating, manifest.manifest_version" -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
+aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 2023-03-22T10:16:42.000Z 4.334249213282607 2
+fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 2024-01-12T05:41:10.000Z 4.565129151291513 3
+hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 2023-12-15T18:24:57.000Z 4.349355259345117 2
+mmeijimgabbpbgpdklnllpncmdofkcpn Screencastify - Screen Video Recorder 2023-12-01T15:33:04.000Z 3.976567884217781 2
+nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 2024-01-03T19:06:01.000Z 3.1609870740305523 2
+Matched 5 out of 31 manifests (16.13%).
+```
+
 
 ### Example calls
 
@@ -55,28 +92,18 @@ query.js "[manifest.host_permissions, manifest.permissions].flat().some(permissi
 ```
 
 ```sh
-# List popular extensions that changed their name recently
-compare.js -f "metadata2.user_count >= 1000000" "metadata1.name != metadata2.name"
+# List popular extensions that changed their name recently, display both old
+# and new name
+compare.js -o "id, metadata1.name, metadata1.user_count, metadata2.name, metadata2.user_count" -f "metadata2.user_count >= 1000000" "metadata1.name != metadata2.name"
 ```
 
 ```sh
-# List popular extensions more than doubling their previous user count
-compare.js -f "metadata2.user_count >= 1000000" "metadata1.user_count * 2 < metadata2.user_count"
+# List popular extensions more than doubling their previous user count, display
+# both old and new user count
+compare.js -o "id, metadata2.name, metadata1.user_count, metadata2.user_count" -f "metadata2.user_count >= 1000000" "metadata1.user_count * 2 < metadata2.user_count"
 ```
 
 ```sh
 # List new extensions with a high user count
 compare.js -i -f "metadata1 == null" "metadata2.user_count >= 100000"
-```
-
-### Script output example
-
-```sh
-$ query.js -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
-aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
-fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
-hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
-mmeijimgabbpbgpdklnllpncmdofkcpn Screencastify - Screen Video Recorder 12000000
-nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 16000000
-Matched 5 out of 31 manifests (16.13%).
 ```
