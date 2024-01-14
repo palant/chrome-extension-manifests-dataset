@@ -6,17 +6,27 @@ Note that the scraping approach changed with the 2023-06-01 and 2023-11-29 snaps
 
 This has been inspired by a [similar repository](https://github.com/mandatoryprogrammer/chrome-extension-manifests-dataset/) created by [@IAmMandatory](https://infosec.exchange/@mandatory). Captures for a bunch of points in time have been created but I cannot promise that any updates will happen in future. It's meant to be useful for analysis of the Chrome extension ecosystem, such as what permissions are requested, common Content Security Policies, etc.
 
-## Querying the dataset
+## Convenience scripts
 
-The convenience script `query.js` in this repository allows running queries against the dataset. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
+The repository contains two convenience scripts, `query.js` and `compare.js`. The former allows listing extensions of a snapshot matching specified criteria, the latter will compare two snapshots and list matching extensions. Both scripts will explain their command line parameters if run without parameters. The following explains the concepts used by these scripts.
 
-The `query` parameter is JavaScript code that will be executed sandboxed, with two variables as context: `metadata`, `manifest`. Only extensions where the query returns a true-ish value will be listed. You can optionally pass an additional query as `filter` parameter, extensions where `filter` doesn’t return a true-ish value will be excluded from the count:
+### “Current” snapshot
 
-```sh
-query.js [-f filter] query
-```
+The “current” snapshot directory is determined by the contents of the `current_dir` file. Usually, it will be the latest snapshot in the repository.
 
-Examples:
+By default, `query.js` will list extensions from the current snapshot. `compare.js` will use that directory as its second source directory, with the first source directory by default being the snapshot preceding the current snapshot.
+
+It is always possible to use a different source directory. With `query.js`, the relevant parameter is `--directory`. With `compare.js`, the parameters are `--directory1` and `--directory2`.
+
+### The queries
+
+The queries are JavaScript code that will be executed in a sandbox. The context will contain information on the current extension, allowing the script to make a decision. With `query.js` script, that context contains `metadata` and `manifest` variables. With `compare.js` script, there are four context variables: `metadata1`, `manifest1`, `metadata2`, `manifest2`. These represent the data of the current extension from the first and the second source directory respectively.
+
+When `compare.js` script is run with the `-i` parameter, the queries may receive data of extensions only present in one of the source directories. In this case, two of the context variables will be `null`.
+
+Only extensions will be listed where the query returns a true-ish value. In additional to the regular query, it is possible to pass a filtering query. The filtering query is executed in the same fashion, however failing the query has the effect that the extension is excluded from the total count in the statistic displayed.
+
+### Example calls
 
 ```sh
 # List all Manifest V3 extensions
@@ -44,33 +54,6 @@ query.js -f "metadata.user_count < 1000" "[manifest.permissions].flat().includes
 query.js "[manifest.host_permissions, manifest.permissions].flat().some(permission => ['<all_urls>', '*://*/*', 'https://*/*'].includes(permission))"
 ```
 
-Results example:
-```sh
-$ query.js -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
-aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
-fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
-hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
-mmeijimgabbpbgpdklnllpncmdofkcpn Screencastify - Screen Video Recorder 12000000
-nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 16000000
-Matched 5 out of 31 manifests (16.13%).
-```
-
-## Comparing datasets
-
-The convenience script `compare.js` in this repository allows comparing extension data between two datasets. To run the script you will need Node.JS 16 or higher. Before using the script for the first time, run `npm install` command in this directory to install dependencies.
-
-The `query` parameter is JavaScript code that will be executed sandboxed, with four variables as context: `metadata1`, `manifest1`, `metadata2`, `manifest2`. The variables `metadata1` and `manifest1` will be set to the extension’s metadata/manifest in the first directory, `metadata2` and `manifest2` to the same extension’s metadata/manifest in the second directory. By default, the second directory is the current dataset and the first directory the dataset preceding it.
-
-By passing `-i` command line option, extensions missing from one of the directories can be included in the comparison. The context variables for the directory where the extension is missing will be set to `null` then.
-
-You can optionally pass an additional query as `filter` parameter, extensions where `filter` doesn’t return a true-ish value will be excluded from the count:
-
-```sh
-compare.js [-i] [-f filter] query
-```
-
-Examples:
-
 ```sh
 # List popular extensions that changed their name recently
 compare.js -f "metadata2.user_count >= 1000000" "metadata1.name != metadata2.name"
@@ -84,4 +67,16 @@ compare.js -f "metadata2.user_count >= 1000000" "metadata1.user_count * 2 < meta
 ```sh
 # List new extensions with a high user count
 compare.js -i -f "metadata1 == null" "metadata2.user_count >= 100000"
+```
+
+### Script output example
+
+```sh
+$ query.js -f "metadata.user_count >= 10000000" "/unsafe-eval/i.test(manifest.content_security_policy?.extension_pages || manifest.content_security_policy)"
+aapbdbdomjkkjkaonfhkkikfgjllcleb Google Translate 38000000
+fheoggkfdfchfphceeifdbepaooicaho McAfee® WebAdvisor 82000000
+hdokiejnpimakedhajhdlcegeplioahd LastPass: Free Password Manager 10000000
+mmeijimgabbpbgpdklnllpncmdofkcpn Screencastify - Screen Video Recorder 12000000
+nkbihfbeogaeaoehlefnkodbefgpgknn MetaMask 16000000
+Matched 5 out of 31 manifests (16.13%).
 ```
