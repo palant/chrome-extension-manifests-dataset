@@ -41,7 +41,7 @@ query.js -m "user_count < 1000" "[this.permissions].flat().includes('activeTab')
 ```sh
 # List all extensions requesting permissions for all websites (<all_urls>,
 # *://*/* or https://*/* permissions)
-query.js "[this.host_permissions, this.permissions].flat().filter(permission => ['<all_urls>', '*://*/*', 'https://*/*'].includes(permission)).length"
+query.js "[this.host_permissions, this.permissions].flat().some(permission => ['<all_urls>', '*://*/*', 'https://*/*'].includes(permission))"
 ```
 
 Results example:
