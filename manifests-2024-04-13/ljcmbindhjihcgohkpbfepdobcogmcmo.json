@@ -1,0 +1,87 @@
+---
+name: CoonLink Domain Checker
+version: 1.6.3 beta
+category_slug: make_chrome_yours/privacy
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-02-15T11:04:13.000Z'
+size: 879KiB
+languages:
+  - English
+description: Checking the site for the CoonLink blacklist.
+publisher: Personal digital business card / coonlink.fun
+publisher_account: CoonLink
+publisher_address: |-
+  Ehitajate tee 153
+  Tallinn 13517
+  EE
+extension_website: coonlink.fun
+support_website: https://coonlink.fun/id/help
+privacy_policy: https://coonlink.fun/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_popupTitle__",
+    "version": "9",
+    "short_name": "__MSG_popupTitle__",
+    "description": "__MSG_extDescription__",
+    "default_locale": "en",
+    "author": "https://coonlink.fun",
+    "version_name": "1.6.3 beta",
+    "minimum_chrome_version": "121",
+    "options_page": "coonlink-inject-domain-check/options.html",
+    "action": {
+        "default_popup": "coonlink-inject-domain-check/popup.html"
+    },
+    "icons": {"16": "coonlink-inject-domain-check/images/icons/icon16.png","48": "coonlink-inject-domain-check/images/icons/icon48.png","128": "coonlink-inject-domain-check/images/icons/icon128.png"},
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {"chromeos": "Alt+Shift+C","linux": "Alt+Shift+C","mac": "Alt+Shift+C","windows": "Alt+Shift+C"}
+        }
+    },
+    "content_scripts": [
+        {
+            "js": ["coonlink-inject-domain-check/scripting/ConsoleCoonLink.mjs","coonlink-inject-domain-check/scripting/contentScript.mjs"],
+            "matches": ["*://*.youtube.com/*","*://*.coonlink.fun/*"],
+            "run_at": "document_end"
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "externally_connectable": {
+        "ids": [
+            "*"
+        ],
+        "matches": []
+    },
+    "offline_enabled": true,
+    "permissions": [
+        "webNavigation", 
+        "activeTab"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "coonlink-inject-domain-check/styles/coonlink-inject-domain-check.css",
+                "coonlink-inject-domain-check/styles/style.alert.coonlink.css",
+                "coonlink-inject-domain-check/images/logo.svg"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "allow": [
+                "scripting",
+                "styling"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "coonlink-inject-domain-check/scripting/background.mjs"
+    },
+    "incognito": "split"
+}

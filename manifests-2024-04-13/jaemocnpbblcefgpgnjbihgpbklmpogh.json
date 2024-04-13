@@ -1,0 +1,123 @@
+---
+name: Academics
+version: 5.00.13
+category_slug: productivity/education
+rating: 5
+rating_count: 2
+user_count: 82
+release_date: '2024-04-03T13:38:01.000Z'
+size: 1.31MiB
+languages:
+  - română
+description: Chrome extention for scientific data gathering
+publisher: SC Scream SRL
+publisher_account: sc.scream.srl
+publisher_address: |-
+  Str. Măgura Nr. 22
+  Maramures, Maramureș 430153
+  RO
+privacy_policy: https://simacplus.utcluj.ro/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Academics",
+    "version": "5.00.13",
+    "description": "Chrome extention for scientific data gathering",
+    "icons": {
+      "16": "icons/oldlogo.png",
+      "32": "icons/oldlogo.png",
+      "48": "icons/oldlogo.png",
+      "128": "icons/oldlogo.png"
+    },
+    "permissions": [
+      "storage"
+    ],
+    "action": {
+      "default_popup": "./popup/hello.html"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://app.dimensions.ai/details/publication/pub.*"],
+        "js": [
+              "./injections/utils.js",
+              "./injections/erihplus/publications.js"
+      ]
+      },
+      {
+        "matches": ["*://app.dimensions.ai/discover/publication?or_facet_researcher=*",
+                    "*://app.dimensions.ai/discover/publication?and_facet_researcher=*"],
+
+        "js": [
+              "./injections/utils.js",
+              "./injections/erihplus/author.js"  
+            ]
+      },
+      {
+        "matches":["*://app.dimensions.ai/discover/publication?or_subset_publication_citations=*"],
+        "js":[
+          "./injections/utils.js",
+          "./injections/erihplus/citations.js"
+        ]
+      },
+      {
+        "matches": ["*://scholar.google.com/citations*user=*",
+                    "*://scholar.google.ro/citations*user=*", 
+                    "*://scholar.google.hu/citations*user=*",
+                    "*://scholar.google.en/citations*user=*"],
+        "exclude_matches": ["*://scholar.google.com/citations*view_op=view_citation*", 
+                    "*://scholar.google.ro/citations*view_op=view_citation*", 
+                    "*://scholar.google.hu/citations*view_op=view_citation*",
+                    "*://scholar.google.en/citations*view_op=view_citation*"], 
+  
+        "js": [
+          "./injections/utils.js",
+          "./injections/googleScholar/author.js"
+        ]
+      },
+      {
+        "matches": ["*://scholar.google.com/citations*view_op=view_citation*", 
+                    "*://scholar.google.ro/citations*view_op=view_citation*", 
+                    "*://scholar.google.hu/citations*view_op=view_citation*",
+                    "*://scholar.google.en/citations*view_op=view_citation*"], 
+  
+        "js": [ 
+            "./injections/utils.js",
+            "./injections/googleScholar/publication.js"
+          ]
+      },
+      {
+        "matches": ["*://scholar.google.com/scholar*cites=*",
+                    "*://scholar.google.ro/scholar*cites=*",
+                    "*://scholar.google.hun/scholar*cites=*",
+                    "*://scholar.google.en/scholar*cites=*"], 
+        "js": [ 
+          "./injections/utils.js",
+          "./injections/googleScholar/citations.js"]
+  
+      },
+      {
+        "matches": [
+          "*://www.webofscience.com/wos/woscc/citing-articles-refs-search/*",
+          "*://www.webofscience.com/wos/woscc/cited-reference-search*"
+
+      ], 
+        "js": [ 
+          "./injections/utils.js",
+          "./injections/wos/wos_others.js"
+                ]
+      },
+      {
+        "matches": ["*://simacplus.utcluj.ro/*"],
+        "js": ["./injections/simac/extensions.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+          "resources": ["injections/erihplus/getFrontEndConfig.js"],
+          "matches": ["<all_urls>"]
+      }
+  ]
+}

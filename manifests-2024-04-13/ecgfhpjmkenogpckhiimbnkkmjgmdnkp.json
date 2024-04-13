@@ -1,0 +1,68 @@
+---
+name: OnHub Authorization Helper
+version: 1.0.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 4
+user_count: 2000
+release_date: '2021-09-18T12:28:32.000Z'
+size: 49.1KiB
+languages:
+  - English (United States)
+description: >-
+  This is an extension to assist in authorizing accounts with the OnHub API
+  (documented here:…
+publisher_account: Angelo DeLuca
+extension_website: angelod.com
+privacy_policy: https://www.angelod.com/extension-privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OnHub Authorization Helper",
+  "version": "1.0.0",
+  "manifest_version": 2,
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "https://accounts.google.com/embedded/setup/v2/safarivc/*",
+    "cookies",
+    "https://accounts.google.com/embedded/close"
+  ],
+  "icons":{
+    "16":"img/16.png",
+    "48":"img/48.png",
+    "128":"img/128.png"
+  },
+  "background": {
+    "scripts": [
+      "js/jquery.min.js",
+      "js/safarivcHR.js",
+      "js/getauthcode.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://accounts.google.com/embedded/setup/v2/safarivc/*?*"
+      ],
+      "js": [
+        "js/loginPage.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://accounts.google.com/embedded/close"
+      ],
+      "js": [
+        "js/jquery.min.js",
+        "js/tokenPage.js"
+      ]
+    }
+  ],
+  "browser_action": {
+    "default_popup": "popup.html"
+  }
+}

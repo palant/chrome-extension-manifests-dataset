@@ -1,0 +1,65 @@
+---
+name: Mealmole - Compare Food Delivery Services
+version: 1.0.1
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 45
+release_date: '2023-08-19T09:43:02.000Z'
+size: 571KiB
+languages:
+  - English (United States)
+description: >-
+  Automatically calculate your order’s price across DoorDash, Uber Eats,
+  Grubhub, and Seamless.
+publisher_account: Mealmole
+extension_website: mealmole.com
+privacy_policy: https://mealmole.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mealmole - Compare Food Delivery Services",
+  "description": "Automatically calculate your order’s price across DoorDash, Uber Eats, Grubhub, and Seamless.",
+  "version": "1.0.1",
+  "minimum_chrome_version": "101",
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "permissions": ["storage", "cookies", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["*://*.doordash.com/*", "*://*.ubereats.com/*", "*://*.grubhub.com/*", "*://*.seamless.com/*"],
+  "background": {
+    "service_worker": "serviceWorker.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["grubhubContentScript.bundle.js"],
+      "matches": ["*://*.grubhub.com/checkout/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["contentScript.bundle.js"],
+      "matches": ["*://*.doordash.com/*", "*://*.ubereats.com/*", "*://*.grubhub.com/*", "*://*.seamless.com/*"],
+      "run_at": "document_idle"
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "24": "assets/icon24.png",
+      "32": "assets/icon32.png"
+    },
+    "default_title": "Mealmole - Compare Food Delivery Services"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "*.map"],
+      "matches": ["*://*.doordash.com/*", "*://*.ubereats.com/*", "*://*.grubhub.com/*", "*://*.seamless.com/*"]
+    }
+  ]
+}

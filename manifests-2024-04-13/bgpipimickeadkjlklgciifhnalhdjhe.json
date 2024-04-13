@@ -1,0 +1,77 @@
+---
+name: GeroWallet
+version: 1.15.2
+category_slug: productivity/workflow
+rating: 4.739130434782608
+rating_count: 92
+user_count: 10000
+release_date: '2024-04-10T19:13:02.000Z'
+size: 4.18MiB
+languages:
+  - English (United States)
+description: A user friendly Cardano light wallet
+publisher_account: chrome-web-store
+extension_website: gerowallet.io
+support_website: https://gerowallet.io/#contact
+privacy_policy: https://gerowallet.io/assets/downloads/PRIVACY_NOTICE.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "GeroWallet",
+  "short_name": "GeroWallet",
+  "version": "1.15.2",
+  "description": "A user friendly Cardano light wallet",
+  "icons": {
+    "16": "./assets/img/logo16.png",
+    "48": "./assets/img/logo48.png",
+    "128": "./assets/img/logo128.png"
+  },
+  "browser_action": {
+    "default_popup": "index.html?#/popup",
+    "default_icon": {
+      "16": "./assets/img/logo16.png",
+      "48": "./assets/img/logo48.png",
+      "128": "./assets/img/logo128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "tabs",
+    "clipboardRead",
+    "chrome://favicon/",
+    "*://connect.trezor.io/*"
+  ],
+  "web_accessible_resources": [
+    "inject.js"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "./assets/vendor/trezor-content-script.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "contentPage.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'"
+}

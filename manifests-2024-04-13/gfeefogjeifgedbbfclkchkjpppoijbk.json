@@ -1,0 +1,66 @@
+---
+name: Treevity
+version: 0.1.0 beta
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 25
+release_date: '2022-08-23T07:54:22.000Z'
+size: 2.15MiB
+languages:
+  - English (United States)
+description: Save forests and save money.
+publisher: PBC
+publisher_account: Treevity
+publisher_address: |-
+  3 Germay Dr unit 4 2394
+  Wilmington, DE 19804-1127
+  US
+extension_website: www.treevity.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Treevity",
+  "description": "Save forests and save money.",
+  "version": "0.1.0",
+  "version_name": "0.1.0 beta",
+  "manifest_version": 3,
+  "icons": {
+    "16": "/icons/icon.png",
+    "48": "/icons/icon.png",
+    "128": "/icons/icon.png"
+  },
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["content.css"],
+      "exclude_globs": ["https://www.google.com/*"],
+      "js": ["./static/js/content.js"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.google.com/search?*"],
+      "js": ["./static/js/content-google.js"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "/icons/icon-disabled.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["bar-iframe.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,208 @@
+---
+name: Multi Brick+
+version: 1.0.0.3
+category_slug: lifestyle/games
+rating: 5
+rating_count: 1
+user_count: 3
+release_date: '2024-02-08T20:00:50.000Z'
+size: 489KiB
+languages:
+  - English
+description: >-
+  Enhanced features for Multi-Brick website navigation, avatar customization,
+  and more.
+publisher_account: danyalassi21
+extension_website: multi-brick.brick-hall.xyz
+support_website: https://multi-brick.brick-hall.xyz/privacy
+privacy_policy: https://multi-brick.brick-hall.xyz/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Multi Brick+",
+    "version": "1.0.0.3",
+    "manifest_version": 3,
+    "description": "Enhanced features for Multi-Brick website navigation, avatar customization, and more.",
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "./icons/PLUS16.png",
+            "48": "./icons/PLUS48.png",
+            "128": "./icons/PLUS.png"
+        }
+    },
+    "background": {
+        "service_worker": "./src/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.multi-brick.com/*"
+            ],
+            "js": [ 
+                "./lib/jquery.js", 
+                "./lib/LZString.js", 
+                "./src/utils/storage.js",
+                "./src/allPages.js",
+                "./src/filter.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/*"
+            ],
+            "js": [
+                "./src/navbar.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/user/*"
+            ],
+            "js": [ 
+                "./lib/imageMerger.js",
+                "./src/getAssets.js",
+                "./src/rendering/getConfig.js",
+                "./src/rendering/renderAvatar.js", 
+                "./lib/jquery.js", 
+                "./lib/three.js", 
+                "./lib/OBJLoader.js", 
+                "./lib/OrbitControls.js", 
+                "./lib/MTLLoader.js", 
+                "./src/userProfiles.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/forum",
+                "https://www.multi-brick.com/forum/"
+            ],
+            "js": [ "./src/forums/forumsHome.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/forum/thread/*"
+            ],
+            "js": [ 
+                "./src/rendering/getConfig.js",
+                "./src/forums/forums.js" 
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/forum/*/create",
+                "https://www.multi-brick.com/forum/*/create/",
+                "https://www.multi-brick.com/forum/reply/*/",
+                "https://www.multi-brick.com/forum/reply/*"
+            ],
+            "js": [ "./src/forums/createPost.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/forum/*",
+                "https://www.multi-brick.com/forum"
+            ],
+            "js": [ "./src/forums/allForums.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/settings/",
+                "https://www.multi-brick.com/settings"
+            ],
+            "js": [
+                "./src/settings.js" 
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/shop/*"
+            ],
+            "js": [ 
+                "./lib/imageMerger.js",
+                "./src/rendering/getConfig.js",
+                "./src/rendering/renderAvatar.js",
+                "./src/getAssets.js",
+                "./lib/three.js", 
+                "./lib/MTLLoader.js", 
+                "./lib/OBJLoader.js", 
+                "./lib/OrbitControls.js", 
+                "./src/rendering/renderItem.js",
+                "./src/itemPage.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/customize/"
+            ],
+            "js": [ 
+                "./lib/jquery.js", 
+                "./src/utils/storage.js",
+                "./src/avatar/lockItems.js",
+                "./src/avatar/customize.js" 
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/message/*"
+            ],
+            "js": [ "./src/messages.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.multi-brick.com/friends/",
+                "https://www.multi-brick.com/friends"
+            ],
+            "js": [ "./src/friends.js" ],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "storage",
+        "notifications"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/src/rendering/config.json",
+                "/src/settings.json",
+                "/static/Character.mtl",
+                "/static/Character.obj",
+                "/static/head.obj",
+                "/static/torso.obj",
+                "/static/right_arm.obj",
+                "/static/left_arm.obj",
+                "/static/right_leg.obj",
+                "/static/left_leg.obj",
+                "/icons/PLUSFULL.png",
+                "/src/avatar/randomizerPurger.js"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ],    
+    "icons": {
+        "16": "./icons/PLUS16.png",
+        "48": "./icons/PLUS48.png",
+        "128": "./icons/PLUS.png"
+    },
+    "host_permissions": [
+        "*://brkcdn.com/*",
+        "https://*.multi-brick.com/*",
+        "https://*.brick-hill.com/*"
+    ]
+}

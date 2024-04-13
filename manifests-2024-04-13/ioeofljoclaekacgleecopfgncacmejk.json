@@ -1,0 +1,90 @@
+---
+name: Holiday forecast
+version: 0.11.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 98
+release_date: '2024-01-01T08:13:21.000Z'
+size: 4.68MiB
+languages:
+  - English
+description: Import holiday and homeworking in Holiday forecast
+publisher_account: fstaudt
+privacy_policy: https://www.soprasteria.com/footer/personal-data-protection-charter
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Holiday forecast",
+  "version": "0.11.0",
+  "description": "Import holiday and homeworking in Holiday forecast",
+  "permissions": [
+    "tabs",
+    "storage",
+    "https://holiday.apps.ocp4.innershift.sodigital.io/",
+    "https://www.myworkandme.com/",
+    "https://4you.is.soprasteria.com/"
+  ],
+  "background": {
+    "scripts": [
+      "constants.js",
+      "scripts/utils.js",
+      "scripts/background.js"
+    ],
+    "persistent": false
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_title": "Holiday forecast",
+    "default_icon": {
+      "16": "icons/holiday_icon16.png",
+      "32": "icons/holiday_icon32.png",
+      "48": "icons/holiday_icon48.png",
+      "128": "icons/holiday_icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/holiday_icon16.png",
+    "32": "icons/holiday_icon32.png",
+    "48": "icons/holiday_icon48.png",
+    "128": "icons/holiday_icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.myworkandme.com/ebloxhr/hrwwevo/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "constants.js",
+        "scripts/utils.js",
+        "scripts/holidayButton.js",
+        "scripts/contentScriptEblox.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://docker/*",
+        "https://4you.is.soprasteria.com/*"
+      ],
+      "include_globs": [
+        "*/ptaForYou/pages/planning/PTAPlanningIndividuelAnnuel.jsp*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "constants.js",
+        "scripts/utils.js",
+        "scripts/holidayButton.js",
+        "scripts/contentScriptPleiades.js"
+      ]
+    }
+  ]
+}

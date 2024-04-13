@@ -1,0 +1,142 @@
+---
+name: Tenami
+version: 4.4.0
+category_slug: make_chrome_yours/accessibility
+rating: 4.8
+rating_count: 20
+user_count: 30000
+release_date: '2023-02-05T04:01:11.000Z'
+size: 2.07MiB
+languages:
+  - English
+description: >-
+  Tenami extends the Twitch watch party feature to include Netflix, YouTube,
+  Disney+, and more.
+publisher_account: tenamitv
+support_website: https://www.tenami.tv
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version":2,
+ "name":"Tenami",
+ "version":"4.4.0",
+ "icons":{
+  "128": "images/tenami_head_128.png"
+ },
+ "background":{
+  "scripts":["webpack/background_bundle.js"]
+ },
+ "description":"Tenami extends the Twitch watch party feature to include Netflix, YouTube, Disney+, and more.",
+ "permissions":["storage", "tabs", "system.display"],
+ "optional_permissions":["*://*/*"],
+ "content_scripts":[
+  {
+   "matches":["*://*.tenami.tv/*", "https://website-tenami-development.herokuapp.com/*"],
+   "js":["jquery-3.6.0.min.js", "webpack/extension_detector_bundle.js"]
+  },
+  {
+   "matches":["*://*.tenami.tv/watch-parties/redirect*"],
+   "js":["webpack/tenami_redirect_bundle.js"]
+
+  },
+  {
+   "matches":["*://*.twitch.tv/*"],
+   "include_globs":["https://twitch.tv/*", "https://www.twitch.tv/*", "https://m.twitch.tv/*"],
+   "js":["jquery-3.6.0.min.js","webpack/twitchPort_bundle.js", "webpack/notificationInjector_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["https://www.twitch.tv/*enabletenami=true*"],
+   "all_frames":true,
+   "js":["jquery-3.6.0.min.js","webpack/chatEmbedOverlay_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css","css/shadows.css","css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.youtube.com/*"],
+   "include_globs":["*live_chat*enabletenami=true*", "*embed*enabletenami=true*"],
+   "all_frames":true,
+   "js":["webpack/youtubeChatPort_bundle.js"]
+  },
+  {
+   "matches":["*://static.crunchyroll.com/*"],
+   "all_frames":true,
+   "js":["webpack/crunchyrollPlayerPort_bundle.js"]
+  },
+  {
+   "matches":["*://*.crunchyroll.com/*"],
+   "exclude_matches":["*://static.crunchyroll.com/*"],
+   "js":["webpack/crunchyrollPort_bundle.js","webpack/notificationInjector_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.youtube.com/*"],
+   "exclude_globs":["*live_chat*enabletenami=true*", "*embed*enabletenami=true*"],
+   "js":["webpack/youtubePort_bundle.js", "webpack/notificationInjector_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.netflix.com/*"],
+   "js":["webpack/playerInjector_bundle.js", "webpack/notificationInjector_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.hbomax.com/*"],
+   "js":["webpack/playerInjector_bundle.js", "webpack/notificationInjector_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.disneyplus.com/*"],
+   "js":["webpack/playerInjector_bundle.js", "webpack/notificationInjector_bundle.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.twitch.tv/*"],
+   "include_globs":["*player.twitch.tv*"],
+   "js":["webpack/twitchPopoutPlayerPort_bundle.js", "jquery-3.6.0.min.js"],
+   "css":["css/bulma.custom.prefixed.css", "css/shadows.css", "css/notificationAndOverlay.css"]
+  },
+  {
+   "matches":["*://*.crunchyroll.com/*"],
+   "exclude_matches":["*://beta.crunchyroll.com/*"],
+   "js":["webpack/crunchyrollTheme_bundle.js"],
+   "css":["css/tenami_crunchyroll/crunchyroll.css","css/tenami_crunchyroll/theme-color.css","css/tenami_crunchyroll/crunchyroll-theme.css","css/tenami_crunchyroll/crunchyroll.episode.css"],
+   "run_at":"document_start"
+  },
+  {
+   "matches":["*://*.crunchyroll.com/*"],
+   "js":["webpack/crunchyrollTheme_bundle.js"],
+   "run_at":"document_idle"
+  },
+  {
+   "matches":["*://beta.crunchyroll.com/*"],
+   "exclude_matches":["*://www.crunchyroll.com/*", "*://crunchyroll.com/*"],
+   "css":["css/tenami_crunchyroll/crunchyroll-beta.css"],
+   "run_at":"document_idle"
+  }
+ ],
+ "web_accessible_resources":[
+  "images/*.png",
+  "images/*.ico",
+  "images/*.jpg",
+  "webpack/netflixPort_bundle.js",
+  "webpack/hboPort_bundle.js",
+  "webpack/disneyPort_bundle.js",
+  "css/notificationAndOverlay.css",
+  "images/copy-regular-white.svg",
+  "images/chevron-*-grey-light.svg",
+  "images/theater-mode-white.svg",
+  "images/bug-white.svg",
+  "images/clapperboard-white.svg"
+ ],
+   "externally_connectable": {
+      "matches": [ "*://*.tenami.tv/*", "*://*.tenami.live/*", "*://*.twitch.tv/*", "*://*.ext-twitch.tv/*", "*://*.netflix.com/*", "*://*.youtube.com/*","*://*.crunchyroll.com/*", "*://*.hbomax.com/*", "*://*.disneyplus.com/*"]
+   },
+
+ "browser_action":{
+  "default_icon":"images/tenami_head_128.png",
+  "default_title": "Tenami",
+  "default_popup": "popup/tenami_popup.html"
+ }
+}

@@ -1,0 +1,134 @@
+---
+name: 'ProWritingAid: Grammar Checker & Paraphrasing Tool'
+version: 2.5.41844
+category_slug: productivity/workflow
+rating: 4.837816703159212
+rating_count: 6394
+user_count: 300000
+release_date: '2024-03-28T12:32:50.000Z'
+size: 4.21MiB
+languages:
+  - English (United States)
+description: >-
+  Gain confidence in your writing with the best grammar checker and paraphrasing
+  tool that works wherever you do.
+publisher: Orpheus Technology Ltd
+publisher_account: Orpheus Technology
+publisher_address: |-
+  24 Holborn Viaduct
+  London EC1A 2BN
+  GB
+extension_website: www.prowritingaid.com
+privacy_policy: https://prowritingaid.com/en/Home/Privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ProWritingAid: Grammar Checker & Paraphrasing Tool",
+    "description": "Gain confidence in your writing with the best grammar checker and paraphrasing tool that works wherever you do.",
+    "version": "2.5.41844",
+    "storage": {
+        "managed_schema": "schema.json"
+    },
+    "icons": {
+        "16": "assets/icons/pwa-logo-16x16.png",
+        "48": "assets/icons/pwa-logo-48x48.png",
+        "128": "assets/icons/pwa-logo-128x128.png"
+    },
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "action": {
+        "default_icon": {
+            "19": "assets/icons/pwa-logo-19x19.png",
+            "38": "assets/icons/pwa-logo-38x38.png"
+        },
+        "default_title": "ProWritingAid",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "cookies",
+        "storage",
+        "clipboardRead",
+        "clipboardWrite",
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "./polyfills.js"
+            ],
+            "match_about_blank": true,
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "./prepare.js"
+            ],
+            "match_about_blank": true,
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "./ping.js"
+            ],
+            "match_about_blank": true,
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "content_security_policy": {
+        "script-src": "'self'",
+        "object-src": "'self'",
+        "sandbox": "sandbox allow-scripts allow-modals allow-popups; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://*.prowritingaid.com"
+    },
+    "sandbox": {
+        "pages": [
+            "iframe-loader.html"
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "resources": [
+                "fonts/*.woff",
+                "fonts/*.woff2",
+                "fonts/*.ttf",
+                "fonts/*.eot",
+                "assets/*",
+                "images/*",
+                "summary-panel/*",
+                "gdocs-patch.js",
+                "facebook-draftjs-patch.js",
+                "salesforce-patch.js",
+                "linkedin-patch.js",
+                "index.html",
+                "iframe-loader.html"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+---
+name: Sau.cx
+version: 1.24.02.07
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-02-07T11:55:43.000Z'
+size: 3.77MiB
+languages:
+  - English
+description: >-
+  Unlock precise video playback control, with Sau.cx Chrome Extension!  
+  Frame-by-frame cueing, screenshot, social-sharing, and more.
+publisher_account: nominal.ventures
+extension_website: sau.cx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sau.cx",
+  "description": "Unlock precise video playback control, with Sau.cx Chrome Extension!   Frame-by-frame cueing, screenshot, social-sharing, and more.",
+  "version": "1.24.02.07",
+    "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": ["declarativeNetRequest", 
+                  "storage", 
+                  "history", 
+                  "tabs",
+                  "sidePanel"
+                ],
+  "background": {
+    "service_worker": "background.js"
+  },  
+  "host_permissions": ["*://*.amazon.com/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "path": "rules.json",
+        "enabled": true
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["/css/*","/src/*","notice.html","sidepanel.html","/images/watermark.svg","qrcode.js","qrcode-generator.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html",
+    "openPanelOnActionClick": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js","qrcode-generator.js"],
+      "all_frames": true
+    }
+  ]
+}

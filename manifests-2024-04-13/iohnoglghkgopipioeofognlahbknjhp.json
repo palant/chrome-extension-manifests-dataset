@@ -1,0 +1,82 @@
+---
+name: FaceBlocker
+version: 0.0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-09-11T04:50:10.000Z'
+size: 21.1MiB
+languages:
+  - English
+description: Extension to block content with unwanted characters
+publisher_account: santino.locanto99dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "FaceBlocker",
+  "version": "0.0.0.1",
+  "description": "Extension to block content with unwanted characters",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "node_modules/@vladmandic/face-api/model/*",
+        "icon.png",
+        "check.png",
+        "cross.png"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "node_modules/@vladmandic/face-api/dist/face-api.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "notifications",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "background":{
+    "service_worker": "background.js"
+  },
+  "host_permissions":[
+    "http://*/*",
+    "https://*/*"
+  ]
+}

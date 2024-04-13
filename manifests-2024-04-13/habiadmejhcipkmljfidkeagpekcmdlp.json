@@ -1,0 +1,83 @@
+---
+name: Squire
+version: 0.1.81
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 40
+release_date: '2023-06-22T06:25:25.000Z'
+size: 3.81MiB
+languages:
+  - English
+description: >-
+  Squire lets you easily capture conversations with candidates, automatically
+  updating your ATS with AI-generated recruiter notes.
+publisher: Olas.io
+publisher_account: Squire
+publisher_address: |-
+  Roscar
+  Leenane Road
+  Westport, Co. Mayo F28TD39
+  IE
+extension_website: squireapp.io
+support_website: https://squireapp.io/contact/
+privacy_policy: https://squireapp.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Squire",
+  "version": "0.1.81",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmIIJjOYOS4HF2RgjqB713TDjTbTw96SrtN+rU9Sd9OlWQKMjLyBrzVTjQfYZMOx3fmImqwKH1AwLIwq9j2Pi/HZhAhUWKPSfeLbgf1fNC3LUA9bnrJtz4lXxoFg3jEg0/UVjgKtjZ/KFxyqsr+vxf3omNqqCu0q8+53xOkpXlCoBj6MDhMAMiU9ujSX0G1CjzGhN4ertIVcL6e7JKQQjIiTM9FGvYq06c00xj4KGj/DANtrfDQ7An7AW4FGBew5XfzeXrZy1weMz+BrY59HTkkvJYNKDxcSb9kHNR9X0/QDFw1BL+xriXuc4U6aqKGuPJMy6lU/rAohQ4BcuB3wSgQIDAQAB",
+  "manifest_version": 3,
+  "description": "Squire lets you easily capture conversations with candidates, automatically updating your ATS with AI-generated recruiter notes.",
+  "background": {
+    "service_worker": "./js/service_worker.bundle.js"
+  },
+  "icons": {
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "images/icon_48.png",
+      "128": "images/icon_128.png"
+    },
+    "default_popup": "./template/index.html"
+  },
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["./js/content_script.bundle.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["./workers/*", "./template/*", "Images*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "desktopCapture",
+    "storage",
+    "scripting",
+    "nativeMessaging"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "script-src 'self'; sandbox allow-scripts; script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://www.squire-olas.com/*",
+      "https://beapi.squire-olas.com/*"
+    ]
+  }
+}

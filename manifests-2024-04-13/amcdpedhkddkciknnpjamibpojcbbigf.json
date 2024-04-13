@@ -1,0 +1,103 @@
+---
+name: keepClipper - web clipper for google keep
+version: 0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2024-04-02T07:41:41.000Z'
+size: 76.12KiB
+languages:
+  - English
+description: >-
+  keepClipper insert clipped web contents directly into google keep. No config
+  required
+publisher: Anil electronic
+publisher_account: brahmastra
+publisher_address: |-
+  Paryavaran Complex Main Rd
+  Block D, Paryavaran Complex, Sainik Farm
+  New Delhi, Delhi 110030
+  IN
+extension_website: noterail.site
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "minimum_chrome_version": "116",
+ "offline_enabled": true,
+ "name": "keepClipper - web clipper for google keep",
+ "short_name": "keepClipper",
+ "description": "keepClipper insert clipped web contents directly into google keep. No config required",
+ "version": "0.0.1",
+ "author": "NoteRail",
+ "icons": {
+  "16": "icon.png",
+  "32": "icon_32.png",
+  "128": "icon_128.png"
+ },
+ "action": {
+  "default_title": "Open keepClipper"
+ },
+ "side_panel": {
+  "default_path": "panel/index.html"
+ },
+ "options_page": "options/index.html",
+
+ "background": {
+  "service_worker": "background/background.js",
+  "type": "module"
+ },
+
+ "content_scripts": [
+  {
+   "matches": ["https://notes-pa.clients6.google.com/static/proxy.html?*"],
+   "js": ["scripts/xhr.js"],
+   "run_at": "document_start",
+   "all_frames": true,
+   "world": "MAIN"
+  },
+  {
+   "matches": ["https://notes-pa.clients6.google.com/static/proxy.html?*"],
+   "js": ["scripts/msg-proxy.js"],
+   "run_at": "document_start",
+   "all_frames": true
+  }
+ ],
+
+ "commands": {
+  "_execute_action": {
+   "suggested_key": {
+    "default": "Alt+K",
+    "windows": "Alt+K",
+    "mac": "Alt+K",
+    "linux": "Alt+K"
+   }
+  },
+  "screenshot": {
+   "suggested_key": {
+    "default": "Alt+S"
+   },
+   "description": "Capture screenshot"
+  }
+ },
+
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "scripts/cropper/crop-box-PANTFBUI.js",
+    "scripts/cropper/shot-cropper-QS2WOHXT.css",
+    "scripts/highlighter/highlighterCmd.js",
+    "scripts/highlighter/HighlightRange-3C6JRVT3.js"
+   ],
+   "matches": ["<all_urls>"]
+  }
+ ],
+
+ "permissions": ["contextMenus", "sidePanel", "storage", "activeTab", "scripting"],
+ "host_permissions": ["https://keep.google.com/", "https://notes-pa.clients6.google.com/static/proxy.html?*"],
+ "optional_permissions": ["tabs"],
+ "optional_host_permissions": ["<all_urls>"]
+}

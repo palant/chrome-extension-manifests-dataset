@@ -1,0 +1,91 @@
+---
+name: eFiling.us
+version: '1.0'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-04-10T09:47:58.000Z'
+size: 1.15MiB
+languages:
+  - English (United States)
+description: eFiling.us
+publisher: eFiling.us Inc
+publisher_account: efiling.us
+publisher_address: |-
+  8570 Stirling Rd
+  102-410
+  Hollywood, FL 33024
+  US
+support_website: https://www.efiling.us
+privacy_policy: https://efiling.atomian.com/efiling_privacy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "eFiling.us",
+  "version": "1.0",
+  "description": "eFiling.us",
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "./assets/extension-icons/icons_16.png",
+    "32": "./assets/extension-icons/icons_32.png",
+    "48": "./assets/extension-icons/icons_48.png",
+    "128": "./assets/extension-icons/icons_128.png"
+  },
+  "author": "Vicky Campo",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "cookies",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://*.courts.state.ny.us/*",
+    "https://*.efiling.us/*",
+    "http://www.atomian-studio.com/api/efiling/",
+    "https://core-7.atomian.com/*",
+    "https://core-6.atomian.com/*",
+    "https://*.atomian.com/*"
+  ],
+  
+  "background": {
+    "service_worker": "background.bundle.js",
+    "custom_role": "background"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["content.bundle.js"]
+    },    
+    {
+      "matches": ["https://*.ny.us/*"],
+      "js" : ["courts.bundle.js"],
+      "css" : ["courts.css"],
+      "custom_role": "content"
+    }
+  ],
+  "action": {
+    "permanent_visible": true,
+    "default_title": "Click to open panel",
+    "default_icon": {
+      "16": "./assets/extension-icons/icons_16.png",
+      "32": "./assets/extension-icons/icons_32.png",
+      "48": "./assets/extension-icons/icons_48.png",
+      "128": "./assets/extension-icons/icons_128.png"
+    }
+  },
+  
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+}
+

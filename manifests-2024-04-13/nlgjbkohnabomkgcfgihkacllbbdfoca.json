@@ -1,0 +1,87 @@
+---
+name: 'Grading Assistant: Grade transferer tool'
+version: 1.6.4
+category_slug: productivity/education
+rating: 3
+rating_count: 2
+user_count: 2000
+release_date: '2023-12-19T07:26:38.000Z'
+size: 367KiB
+languages:
+  - English
+description: >-
+  Transfer grades from Classroom, Teams and many edtech platforms to
+  PowerSchool, Infinite Campus and other gradebooks.
+publisher: Grading Assistant LLC
+publisher_account: Grading Assistant
+publisher_address: |-
+  21750 Hardy Oak Blvd ste 104
+  PMB 99662
+  San Antonio, TX 78258
+  US
+extension_website: grade-assistant.com
+support_website: https://grade-assistant.com/help
+privacy_policy: https://grade-assistant.com/page/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Grading Assistant: Grade transferer tool",
+  "short_name": "Grading Assistant",
+  "version": "1.6.4",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "side_panel": {
+    "default_path": "side.html"
+  },
+  "default_locale": "en",
+  "description": "Transfer grades from Classroom, Teams and many edtech platforms to PowerSchool, Infinite Campus and other gradebooks.",
+  "icons": {
+    "16": "images/icon-color.png",
+    "48": "images/icon-color.png",
+    "128": "images/icon-color.png"
+  },
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "clipboardRead",
+    "storage",
+    "notifications",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_idle",
+      "matches": ["*://*.infinitecampus.org/*apps/gradebook*","*://assignments.onenote.com/?isTeamsFrame=true&tenantId=*"],
+      "js": [  "content.js"]
+    }
+  ],
+  "commands": {
+    "run-grab": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "MacCtrl+Shift+C"
+      },
+      "description": "grab content"
+    },
+    "run-fill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+V",
+        "mac": "MacCtrl+Shift+V"
+      },
+      "description": "fill content"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

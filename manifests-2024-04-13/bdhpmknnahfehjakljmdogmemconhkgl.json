@@ -1,0 +1,62 @@
+---
+name: Word Grabber
+version: 0.1.11
+category_slug: productivity/workflow
+rating: 4.25
+rating_count: 4
+user_count: 131
+release_date: '2021-09-07T11:02:40.000Z'
+size: 298KiB
+languages:
+  - русский
+description: >-
+  Помощник для комфортного и эффективного парсинга ключевых запросов в Яндекс
+  Wordstat
+publisher: Самозанятый
+publisher_account: Khoroshilov Evgeniy
+publisher_address: |-
+  Тимирязева 29/2
+  Сочи, Краснодарский край 354068
+  RU
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Word Grabber",
+    "description": "Помощник для комфортного и эффективного парсинга ключевых запросов в Яндекс Wordstat",
+    "version": "0.1.11",
+    "manifest_version": 2,
+    "icons": {
+        "16": "img/icon.png",
+        "48": "img/icon.png",
+        "128": "img/icon.png"
+    },
+    "content_scripts": [
+        {
+            "js": ["js/keywordClass.js", "js/preload.js"],
+            "matches": ["*://wordstat.yandex.ru/*"],
+            "run_at": "document_start"
+        },
+        {
+            "js": ["js/manageData.js", "js/append_content.js"],
+            "matches": ["*://wordstat.yandex.ru/*"],
+            "css": ["css/styles.css", "css/content_marker.css"],
+            "run_at": "document_end"
+        }
+    ],
+    "background":{
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "permissions": [
+        "storage", "tabs", "downloads",
+        "contextMenus", "notifications"
+    ],
+    "omnibox": {
+        "keyword": "парсить"
+    },
+    "web_accessible_resources": [
+        "*.html"
+    ]
+}

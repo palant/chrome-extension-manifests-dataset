@@ -1,0 +1,88 @@
+---
+name: ListAlpha
+version: 0.6.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 56
+release_date: '2024-01-24T11:23:39.000Z'
+size: 88.76KiB
+languages:
+  - English
+description: Add profiles from LinkedIn and view additional information
+publisher_account: i.yuzvak
+extension_website: listalpha.com
+support_website: https://www.listalpha.com/
+privacy_policy: https://www.termsfeed.com/live/c1ff4d33-7863-4c60-b885-4fc5700c731f
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ListAlpha",
+  "description": "Add profiles from LinkedIn and view additional information",
+  "version": "0.6.1",
+  "author": "ListAlpha",
+  "offline_enabled": false,
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEArpndCGPcm30VGFN+IQ9XmSAR0grZRjXihdlS49p6WCXLI0YjhQPzb2RYFzN6t1ZiBvd966HYraBckYeue2iglstlgQ/STvDHkpvo8Pj2VIdMOYczQSLgsNutkl9rCP2yN9hKiLDaJ/XWsQnadTZSm586QC+VIZuQWDQ63jOVJYnqeH27IrQQvqS5q6bmfKYKM4q+gA3FN8OQFFlzt65G6Q/WIXfaIDZqpBCMLAFTLX3/G9f48ItmH0xJaGWJCmDO4D0C1btKyhMbeTT2JLJEAI+OysF3juecvdGiKMZS+mc0gpoVHI1FD4BVRS5eCfrL5EoXL4M8YYY7L0BgmLsFrwIDAQAB",
+  "icons": {
+    "16": "img/icon@16.png",
+    "48": "img/icon@48.png",
+    "128": "img/icon@128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["/js/token.js", "/js/main.js", "js/expand-profile.js", "js/snackbar.js", "js/requests.js","/js/menu.js"],
+      "css": ["/style/style.css", "/style/expand-profile.css", "/style/snackbar.css"]
+    },
+    {
+      "matches": [
+        "https://listalpha-real-dev.herokuapp.com/extension/install",
+        "https://listalpha-dev.herokuapp.com/extension/install",
+        "https://app.listalpha.com/extension/install",
+        "http://localhost:4200/extension/install"
+      ],
+      "js": ["/js/login.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "img/icon@16.png",
+      "48": "img/icon@48.png",
+      "128": "img/icon@128.png"
+    },
+    "default_title": "ListAlpha"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "/img/menu-logo.png",
+      "/svg/expand.svg",
+      "/svg/folder.svg",
+      "/svg/addToList.svg",
+      "/svg/plus-border.svg",
+      "/svg/email-black.svg",
+      "/svg/list-element.svg",
+      "/svg/shared-element.svg",
+      "/svg/close.svg"
+    ],
+    "matches": ["*://*.linkedin.com/*"]
+  }],
+  "host_permissions": [
+    "*://*.linkedin.com/*"
+  ],
+  "oauth2": {
+    "client_id": "191148388657-qhrvmrg2lsrrsjkl2528sjtelg7vquev.apps.googleusercontent.com",
+    "scopes": ["profile", "openid", "email"]
+  }
+}

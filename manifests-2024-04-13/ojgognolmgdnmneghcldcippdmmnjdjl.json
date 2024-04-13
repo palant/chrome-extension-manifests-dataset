@@ -1,0 +1,106 @@
+---
+name: noAd for myself
+version: 2.0 beta (1.79.1)
+category_slug: make_chrome_yours/functionality
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-04-11T03:34:47.000Z'
+size: 24.8KiB
+languages:
+  - 日本語
+description: This extension removes some Ad on Youtube, Twitter and more.
+publisher_account: mirai.takahashi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "noAd for myself",
+  "version": "1.79.1",
+  "version_name": "2.0 beta (1.79.1)",
+  "manifest_version": 3,
+  "minimum_chrome_version": "105.0",
+  "description": "This extension removes some Ad on Youtube, Twitter and more.",
+  "permissions": ["declarativeNetRequest", "storage"],
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "static/rules/rules.json"
+      }
+    ]
+  },
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "icons": {
+    "48": "static/icons/icon48.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["static/css/noad.css"],
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ]
+    },
+    {
+      "resources": ["static/css/noad.css"],
+      "matches": ["*://www.youtube.com/*", "*://m.youtube.com/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["<all_urls>"],
+      "match_about_blank": true,
+      "js": ["all_urls/entrypoint.js"],
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["*://www.youtube.com/*", "*://m.youtube.com/*"],
+      "js": ["youtube_main/entrypoint.js"],
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["*://www.youtube.com/*", "*://m.youtube.com/*"],
+      "js": ["youtube_isolated/entrypoint.js"],
+      "css": ["static/css/noad.css"],
+      "world": "ISOLATED"
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["twitter_main/entrypoint.js"],
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://twitter.com/*",
+        "*://*.twitter.com/*",
+        "*://x.com/*",
+        "*://*.x.com/*"
+      ],
+      "js": ["twitter_isolated/entrypoint.js"],
+      "css": ["static/css/noad.css"],
+      "world": "ISOLATED"
+    }
+  ]
+}

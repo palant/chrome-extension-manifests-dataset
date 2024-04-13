@@ -1,0 +1,156 @@
+---
+name: Tulr Utilities
+version: '2.8'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 8
+user_count: 21
+release_date: '2022-02-06T10:51:12.000Z'
+size: 6.14MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Türkçe
+  - català
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - हिन्दी
+  - தமிழ்
+  - 中文 (简体)
+  - 한국어
+description: Store your google meet transcripts and record screens with Tulr
+publisher_account: tulrdev
+support_website: https://tulr.io/
+privacy_policy: https://tulr.io/extension-privacy-policies
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Tulr Utilities",
+  "description": "Store your google meet transcripts and record screens with Tulr",
+  "version": "2.8",
+  "author": "tulr-dev",
+  "default_locale": "en",
+  "icons": {
+    "64": "assets/icons/tulr-64.png",
+    "32": "assets/icons/tulr-32.png",
+    "16": "assets/icons/tulr-16.png"
+  },
+  "browser_action": {
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["js/inject.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://app.tulr.io/new-recording",
+        "http://localhost:3000/new-recording"
+      ],
+      "js": [
+        "js/libraries/jquery-3.5.1.min.js",
+        "js/libraries/jquery.nice-select.min.js",
+        "js/clips.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/detect.js"],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "persistent": false,
+    "page": "html/background.html"
+  },
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "tabCapture",
+    "tabs",
+    "storage",
+    "https://www.googleapis.com/*",
+    "https://*/",
+    "http://*/",
+    "*://api.tulr.io/*"
+  ],
+  "web_accessible_resources": [
+    "js/transcriptor.js",
+    "html/camera.html",
+    "html/sources.html",
+    "html/settings.html",
+    "js/content.js",
+    "css/content.css",
+    "assets/images/*",
+    "js/sources.js",
+    "js/cameracontent.js",
+    "css/cameracontent.css",
+    "js/audiosources.js",
+    "html/audiosources.html",
+    "js/clips.js",
+    "html/clips.html",
+    "assets/*",
+    "js/libraries/*",
+    "css/libraries/*",
+    "css/clips.css",
+    "js/clipsOperation.js",
+    "js/uploadingOverlay.js",
+    "js/RecordingOverlayOperation.js",
+    "html/uploadingoverlay.html"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://meet.google.com/*",
+      "https://app.tulr.io/*",
+      "https://app.tulr.io/?close_tab_after_auth=true",
+      "http://localhost:3000/",
+      "http://localhost:3000/*"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'wasm-eval' https://www.datadoghq-browser-agent.com/datadog-logs.js; object-src 'self'",
+  "manifest_version": 2,
+  "commands": {
+    "cancel": {
+      "suggested_key": {
+        "default": "Alt+C",
+        "mac": "Alt+C"
+      },
+      "description": "Cancel a Recording"
+    },
+    "mute/unmute": {
+      "suggested_key": {
+        "default": "Alt+M",
+        "mac": "Alt+M"
+      },
+      "description": "Mute/Unmute a Recording"
+    },
+    "stop": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Stop a Recording"
+    },
+    "pause/resume": {
+      "suggested_key": {
+        "default": "Alt+P",
+        "mac": "Alt+P"
+      },
+      "description": "Pause/Resume a Recording"
+    }
+  }
+}

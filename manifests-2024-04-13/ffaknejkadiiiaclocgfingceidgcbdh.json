@@ -1,0 +1,73 @@
+---
+name: SAMLink
+version: 0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-03-15T08:09:17.000Z'
+size: 205KiB
+languages:
+  - English
+description: Share SAM.gov Opportunities to LinkedIn Easily
+publisher_account: BLEN, Inc.
+privacy_policy: https://www.blencorp.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SAMLink",
+  "version": "0.0.1",
+  "description": "Share SAM.gov Opportunities to LinkedIn Easily",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "https://sam.gov/*",
+    "https://www.linkedin.com/feed/"
+  ],
+  "host_permissions": [
+    "https://sam.gov/*",
+    "https://www.linkedin.com/feed/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sam.gov/*",
+        "https://www.linkedin.com/feed/"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "https://sam.gov/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

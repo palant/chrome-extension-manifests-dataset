@@ -1,0 +1,92 @@
+---
+name: Lytics Dev Tools
+version: 0.0.2
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 36
+release_date: '2024-04-05T00:35:45.000Z'
+size: 223KiB
+languages:
+  - English
+description: Chrome extension for exploring and debugging the Lytics web SDK and APIs.
+publisher: Lytics, Inc
+publisher_account: Lytics
+publisher_address: |-
+  811 SW 6th Ave
+  Suite 1000
+  Portland, OR 97204
+  US
+extension_website: lytics.com
+support_website: https://www.lytics.com/contact-us/
+privacy_policy: https://www.lytics.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Lytics Dev Tools",
+  "version": "0.0.2",
+  "description": "Chrome extension for exploring and debugging the Lytics web SDK and APIs.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "webRequest",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "lyticsBlockRule",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "src/pages/content/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/img/*.png",
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "icon-128.png",
+        "icon-34.png",
+        "src/pages/tagLink/index.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

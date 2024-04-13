@@ -1,0 +1,85 @@
+---
+name: Звонки с досок объявлений
+version: '1.1'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 67
+release_date: '2023-12-08T09:25:45.000Z'
+size: 72.34KiB
+languages:
+  - русский
+description: >-
+  Отправка номера телефона из объявлений на Avito, Домклик, Циан и Яндекс на
+  смартфон или в CRM INTRUM для совершения звонков
+publisher_account: intp8560
+privacy_policy: https://www.intrumnet.com/confidential
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Звонки с досок объявлений",
+ "version": "1.1",
+ "description": "Отправка номера телефона из объявлений на Avito, Домклик, Циан и Яндекс на смартфон или в CRM INTRUM для совершения звонков",
+ "icons": {
+  "16": "images/icon-16x16.png",
+  "32": "images/icon-32x32.png",
+  "48": "images/icon-48x48.png",
+  "128": "images/icon-128x128.png"
+ },
+ "background": {
+  "service_worker": "background.js"
+ },
+ "permissions": [
+  "tabs",
+  "clipboardWrite"
+ ],
+ "host_permissions": [
+  "https://*.intrumnet.com/*",
+  "https://*.avito.ru/*",
+  "https://*.cian.ru/*",
+  "https://realty.yandex.ru/*",
+  "https://realty.ya.ru/*",
+  "https://*.domclick.ru/*"
+ ],
+ "content_scripts": [
+  {
+   "matches": [ "https://*.intrumnet.com/*" ],
+   "js": [ "main.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "https://*.avito.ru/*" ],
+   "js": [ "foreground.js", "foreground_avito.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "https://*.cian.ru/*" ],
+   "js": [ "foreground.js", "foreground_cian.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "https://realty.yandex.ru/*", "https://realty.ya.ru/*" ],
+   "js": [ "foreground.js", "foreground_yandex.js" ],
+   "run_at": "document_end"
+  },
+  {
+   "matches": [ "https://*.domclick.ru/*" ],
+   "js": [ "foreground.js", "foreground_domclick.js" ],
+   "run_at": "document_end"
+  }
+ ],
+ "web_accessible_resources": [{
+  "resources": [ "images/call-32x32.png" ],
+  "matches": [
+   "https://*.avito.ru/*",
+   "https://*.cian.ru/*",
+   "https://realty.yandex.ru/*",
+   "https://realty.ya.ru/*",
+   "https://*.domclick.ru/*"
+  ],
+  "extension_ids": []
+ }]
+}

@@ -1,0 +1,86 @@
+---
+name: Muzzo extension
+version: 0.2.30
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 176
+release_date: '2024-04-04T05:53:06.000Z'
+size: 487KiB
+languages:
+  - Français
+description: L’extension Muzzo vous permet d’importer un profil depuis LinkedIn en 1 clic !
+publisher: Muzzo
+publisher_address: |-
+  47 rue Pierre Fontaine
+  Paris 75009
+  FR
+extension_website: muzzo.fr
+privacy_policy: https://muzzo.io/politique-de-confidentialite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Muzzo extension",
+  "description": "L’extension Muzzo vous permet d’importer un profil depuis LinkedIn en 1 clic !",
+  "version": "0.2.30",
+  "action": {
+    "default_icon": {
+      "16": "muzzo-16.png",
+      "48": "muzzo-48.png",
+      "128": "muzzo-128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Muzzo"
+  },
+  "background": {
+    "service_worker": "js/backgroundPage.js"
+  },
+  "icons": {
+    "16": "muzzo-16.png",
+    "48": "muzzo-48.png",
+    "128": "muzzo-128.png"
+  },
+  "host_permissions": ["https://*.app.muzzo.io/*", "https://*.linkedin.com/*"],
+  "externally_connectable": {
+    "matches": [
+      "https://*.app.muzzo.io/*",
+      "http://localhost:3000/*",
+      "https://*.vercel.app/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["https://linkedin.com/*", "https://www.linkedin.com/*"],
+      "exclude_matches": [
+        "https://linkedin.com/talent/*",
+        "https://www.linkedin.com/talent/*"
+      ],
+      "js": ["js/loadEmberScript.js"],
+      "all_frames": true
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.linkedin.com/*"],
+      "exclude_matches": ["https://*.linkedin.com/talent/*"],
+      "css": ["js/tailwind.css"],
+      "js": ["js/contentScript.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.app.muzzo.io/*"],
+      "js": ["js/muzzoContentScript.js"]
+    }
+  ],
+  "permissions": ["tabs", "activeTab", "storage", "cookies", "alarms"],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxEqkIS6oCQLt6nQitq4O0FP5ZhQPJKC3XPoEP64Xhy4y98XriEM6HkhsenbNM+RkrZYuUy1fwUVXYLbTU1uMAF7t63hpqaMYLielvjcNCkIkJCgms0CrGDMUwwywkV7aWUzWKERLbbBYXYVnpld40m4PbdV1bJCQpDxVMM60LdFVmwRQ9n4viYpFtGvM4pJUNSNe0vyndAeGc9p2MMP7JmoU80+p96MPg7n3jeRFCR04Aq+ZhrhKpYx8bBrTYvFhWbQkSDzQ4DgAM6cWc+1bjd97e2PDhyOtJeul6U67JzyGUZh/lS/7sjbb3Ymx0Sy0w5eghAxDek6+1OUBgOS7pQIDAQAB"
+}

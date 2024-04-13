@@ -1,0 +1,117 @@
+---
+name: Do You Gcal
+version: 0.5.1
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2023-03-16T09:59:29.000Z'
+size: 281KiB
+languages:
+  - 日本語
+description: 愛知県中小企業同友会のポータルサイト、あいどるのカレンダー機能を補完しGoogleカレンダー連携を行います
+publisher: カイズ電気株式会社
+extension_website: do-you-gcal.netlify.app
+support_website: https://do-you-gcal.netlify.app/support
+privacy_policy: https://do-you-gcal.netlify.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAko0IW/X6RxlMUxSIDDUYvic830Mbm1J2nJ8NfHM685DHXE4FoY8y+iVsz44DSp+CqdZV2VMcN1gq3FhNDGwtXx6/LQyKs3fLDsbndudn6JTEqwwPP+JTQPAnGks9cVqt61lpP1TJSl9o4tUDdoKunpE1neW2L+CEwgOaVdPGn4gsNR3dcLEClVbpuhjeKhhbyovhOFfdmy64ZbkELHVFKbR/0YBtquO3woWwpmdE26Nwe2Rw1SSKU8PahEKKDbuB5u3Tr61xd09mL4gbTGG5J2IA6PNiCgvCLGEORX2N3xwk/5y9xJNO6g+gDA5dO9eg+z2jFAfptTvoB5BLKyKDIwIDAQAB",
+  "name": "Do You Gcal",
+  "version": "0.5.1",
+  "description": "愛知県中小企業同友会のポータルサイト、あいどるのカレンダー機能を補完しGoogleカレンダー連携を行います",
+  "homepage_url": "https://do-you-gcal.netlify.app",
+  "icons": {
+    "16": "src/assets/icons/icon_16.png",
+    "32": "src/assets/icons/icon_32.png",
+    "48": "src/assets/icons/icon_48.png",
+    "128": "src/assets/icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "189129884626-6lmfa732o4rkqliig2qq856e8j17bm29.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
+    ]
+  },
+  "action": {
+    "default_title": "同友会 あいどるカレンダーSync",
+    "default_icon": {
+      "16": "src/assets/icons/icon_16.png",
+      "32": "src/assets/icons/icon_32.png",
+      "48": "src/assets/icons/icon_48.png",
+      "128": "src/assets/icons/icon_128.png"
+    }
+  },
+  "host_permissions": [
+    "https://aichi-v3.douyukai.or.jp/*",
+    "https://*.googleapis.com/*",
+    "http://*.google.com/*",
+    "https://www.gstatic.com/*",
+    "https://ssl.google-analytics.com/*"
+  ],
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "background"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content-script-loader.index.ts-f7b946c0-9b15c298.js"
+      ],
+      "matches": [
+        "https://aichi-v3.douyukai.or.jp/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "src/content/styles.css",
+        "assets/index-f4cac109.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://aichi-v3.douyukai.or.jp/*"
+      ],
+      "resources": [
+        "src/content/styles.css"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://aichi-v3.douyukai.or.jp/*"
+      ],
+      "resources": [
+        "assets/rangePlugin-0a0117f2.js",
+        "assets/stores-4e8e6906.js",
+        "assets/index.ts-f7b946c0.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; script-src 'self'; worker-src blob:",
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
+  },
+  "cross_origin_embedder_policy": {
+    "value": "require-corp"
+  },
+  "cross_origin_opener_policy": {
+    "value": "same-origin"
+  }
+}

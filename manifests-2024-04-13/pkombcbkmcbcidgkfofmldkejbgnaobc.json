@@ -1,0 +1,101 @@
+---
+name: ASIN Pick
+version: 2.2.2
+category_slug: productivity/tools
+rating: 4.4
+rating_count: 30
+user_count: 7000
+release_date: '2024-03-15T12:51:14.000Z'
+size: 104KiB
+languages:
+  - 日本語
+description: AmazonページのASINを抽出できます。
+publisher_account: zuotao.peng
+extension_website: aispel.com
+support_website: https://aispel.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ASIN Pick",
+  "version": "2.2.2",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "description": "AmazonページのASINを抽出できます。",
+  "action": {
+    "default_title": "ASIN取得",
+    "default_icon": "icons/icon19.png"
+  },
+  "background": {
+    "service_worker": "backgorund.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.amazon.co.jp/*/b/*field-lbr_brands_browse-bin=*",  "*://www.amazon.com/*/b/*field-lbr_brands_browse-bin=*", "*://www.amazon.fr/*/b/*field-lbr_brands_browse-bin=*",  "*://www.amazon.de/*/b/*field-lbr_brands_browse-bin=*", "*://www.amazon.ca/*/b/*field-lbr_brands_browse-bin=*",  "*://www.amazon.it/*/b/*field-lbr_brands_browse-bin=*", "*://www.amazon.co.uk/*/b/*field-lbr_brands_browse-bin=*", 
+        "*://www.amazon.co.jp/*node=*", "*://www.amazon.com/*node=*", "*://www.amazon.fr/*node=*", "*://www.amazon.de/*node=*", "*://www.amazon.ca/*node=*", "*://www.amazon.it/*node=*", "*://www.amazon.co.uk/*node=*", 
+        "*://www.amazon.co.jp/*srs=*", "*://www.amazon.com/*srs=*", "*://www.amazon.fr/*srs=*", "*://www.amazon.de/*srs=*", "*://www.amazon.ca/*srs=*", "*://www.amazon.it/*srs=*", "*://www.amazon.co.uk/*srs=*", 
+        "*://www.amazon.co.jp/*rh=n*", "*://www.amazon.com/*rh=n*", "*://www.amazon.fr/*rh=n*", "*://www.amazon.de/*rh=n*", "*://www.amazon.ca/*rh=n*", "*://www.amazon.it/*rh=n*", "*://www.amazon.co.uk/*rh=n*", 
+        "*://www.amazon.com/*me=*", "*://www.amazon.co.jp/*me=*", "*://www.amazon.fr/*me=*", "*://www.amazon.de/*me=*", "*://www.amazon.ca/*me=*", "*://www.amazon.it/*me=*", "*://www.amazon.co.uk/*me=*", 
+        "*://www.amazon.com/*k=*", "*://www.amazon.co.jp/*k=*", "*://www.amazon.fr/*k=*", "*://www.amazon.de/*k=*", "*://www.amazon.ca/*k=*", "*://www.amazon.it/*k=*", "*://www.amazon.co.uk/*k=*"
+      ],
+      "exclude_matches": [
+        "*://www.amazon.co.jp/*dp/*", "*://www.amazon.com/*dp/*", "*://www.amazon.fr/*dp/*", "*://www.amazon.de/*dp/*", "*://www.amazon.ca/*dp/*", "*://www.amazon.it/*dp/*", "*://www.amazon.co.uk/*dp/*", 
+        "*://www.amazon.co.jp/stores/*", "*://www.amazon.com/stores/*", "*://www.amazon.fr/stores/*", "*://www.amazon.de/stores/*", "*://www.amazon.ca/stores/*", "*://www.amazon.it/stores/*", "*://www.amazon.co.uk/stores/*"
+      ],
+      "css": ["scripts/toast.min.css"],
+      "js": ["scripts/toast.min.js", "scripts/main.js", "scripts/list_product_page.js"]
+    },
+    {
+      "matches": ["*://www.amazon.co.jp/stores/*", "*://www.amazon.com/stores/*", "*://www.amazon.fr/stores/*", "*://www.amazon.de/stores/*", "*://www.amazon.ca/stores/*", "*://www.amazon.it/stores/*", "*://www.amazon.co.uk/stores/*"],
+      "css": ["scripts/toast.min.css"],
+      "js": ["scripts/toast.min.js", "scripts/main.js", "scripts/store_page.js"]
+    },
+    {
+      "matches": ["*://www.amazon.co.jp/gp/*/*/*", "*://www.amazon.com/gp/*/*/*", "*://www.amazon.fr/gp/*/*/*", "*://www.amazon.de/gp/*/*/*", "*://www.amazon.ca/gp/*/*/*", "*://www.amazon.it/gp/*/*/*", "*://www.amazon.co.uk/gp/*/*/*"],
+      "exclude_matches": ["*://www.amazon.co.jp/gp/product/*", "*://www.amazon.com/gp/product/*", "*://www.amazon.fr/gp/product/*", "*://www.amazon.de/gp/product/*", "*://www.amazon.ca/gp/product/*", "*://www.amazon.it/gp/product/*", "*://www.amazon.co.uk/gp/product/*"],
+      "css": ["scripts/toast.min.css"],
+      "js": ["scripts/toast.min.js", "scripts/main.js", "scripts/ranking_page.js"]
+    },
+    {
+      "matches": [
+        "*://www.amazon.co.jp/*dp/*", "*://www.amazon.co.jp/gp/product/*", 
+        "*://www.amazon.com/*dp/*", "*://www.amazon.com/gp/product/*",
+        "*://www.amazon.fr/*dp/*", "*://www.amazon.fr/gp/product/*",
+        "*://www.amazon.de/*dp/*", "*://www.amazon.de/gp/product/*",
+        "*://www.amazon.ca/*dp/*", "*://www.amazon.ca/gp/product/*",
+        "*://www.amazon.it/*dp/*", "*://www.amazon.it/gp/product/*",
+        "*://www.amazon.co.uk/*dp/*", "*://www.amazon.co.uk/gp/product/*"
+      ],
+      "css": ["scripts/toast.min.css"],
+      "js": ["scripts/toast.min.js", "scripts/main.js", "scripts/product_page.js"]
+    }
+  ],
+  "permissions" : [
+    "declarativeContent",
+    "downloads"
+  ],
+  "host_permissions": [
+    "*://www.amazon.co.jp/*",
+    "*://www.amazon.com/*",
+    "*://www.amazon.fr/*",
+    "*://www.amazon.de/*",
+    "*://www.amazon.ca/*",
+    "*://www.amazon.it/*",
+    "*://www.amazon.co.uk/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "scripts/toast.min.css",
+      "icons/loading.gif",
+      "icons/icon48.png"
+    ],
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
+  }]
+}

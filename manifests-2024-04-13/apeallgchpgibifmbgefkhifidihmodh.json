@@ -1,0 +1,67 @@
+---
+name: e-Comet
+version: 1.0.65
+category_slug: productivity/workflow
+rating: 5
+rating_count: 9
+user_count: 2000
+release_date: '2024-03-28T12:12:56.000Z'
+size: 765KiB
+languages:
+  - русский
+description: e-comet.io - аналитика и управление рекламой Wildberries
+publisher_account: e-comet.io
+extension_website: e-comet.io
+privacy_policy: https://e-comet.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "e-Comet",
+  "description": "e-comet.io - аналитика и управление рекламой Wildberries",
+  "version": "1.0.65",
+  "icons": {
+    "16": "icon.png",
+    "32": "comet32.png",
+    "48": "comet48.png",
+    "128": "comet128.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "16":  "icon.ico",
+      "24":  "icon.ico",
+      "32":  "icon.ico"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+      {
+          "matches": ["https://*.wildberries.ru/*", "http://localhost:3000/*", "*://*.e-comet.io/*"],
+          "js": ["js/vendor.js", "js/content_script.js"],
+          "run_at": "document_idle"
+      },
+      {
+        "matches": ["https://*.wildberries.ru/*"],
+        "js": ["js/inject.js"],
+        "run_at": "document_start"
+      }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources" : ["js/injected.js"],
+      "matches": ["https://*.wildberries.ru/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "host_permissions": ["*://*.wildberries.ru/*"],
+  "permissions": [
+    "storage",
+    "cookies"
+  ]
+}

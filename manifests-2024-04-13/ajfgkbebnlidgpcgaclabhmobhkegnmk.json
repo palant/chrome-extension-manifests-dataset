@@ -1,0 +1,77 @@
+---
+name: Twitch Kicker
+version: 1.0.1
+category_slug: lifestyle/fun
+rating: 1
+rating_count: 1
+user_count: 54
+release_date: '2023-07-10T08:38:06.000Z'
+size: 15.08KiB
+languages:
+  - English
+description: Adds Kick.com streamers to the "following" section of the Twitch homepage
+publisher_account: sunergraversen
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Twitch Kicker",
+    "description": "Adds Kick.com streamers to the \"following\" section of the Twitch homepage",
+    "homepage_url": "https://suneg.site",
+    "version": "1.0.1",
+    "manifest_version": 3,
+    "minimum_chrome_version": "111",
+    "icons": { 
+      "16": "kickLoggedIn16.png",
+      "48": "kickLoggedIn48.png",
+      "128": "kickLoggedIn128.png" 
+    },
+    "action": {
+      "default_icon": {
+        "16": "kickLoggedIn16.png",
+        "48": "kickLoggedIn48.png",
+        "128": "kickLoggedIn128.png" 
+      }
+    },
+    "content_scripts": [
+      {
+        "run_at" : "document_idle",
+        "js": ["after.js"],
+        "matches": [
+          "https://*.twitch.tv/*",
+          "http://*.twitch.tv/*"
+        ]
+      }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+
+    "declarative_net_request" : {
+      "rule_resources" : [{
+        "id": "corsbypass",
+        "enabled": false,
+        "path": "corsrules.json"
+    }]},
+
+    "permissions": [
+      "cookies",
+      "declarativeNetRequestWithHostAccess",
+      "declarativeNetRequestFeedback"
+    ],
+    "host_permissions": [
+      "https://*.twitch.tv/*",
+      "http://*.twitch.tv/*",
+      "http://kick.com/*",
+      "https://kick.com/*"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "tagToInject.html" ],
+        "matches": [ "https://*.twitch.tv/*" ],
+        "extension_ids": [ "pbiilmjaijfkbelndicpeccoclcmghak" ]
+      }
+    ]
+  }
+  

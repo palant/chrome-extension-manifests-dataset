@@ -1,0 +1,81 @@
+---
+name: MySmellyCode
+version: '1.0'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2022-05-23T11:30:58.000Z'
+size: 56.5KiB
+languages:
+  - English
+description: Detect your own custom set of keywords in Github or Azure pull requests
+publisher_account: Duart Breedt
+privacy_policy: https://duartbreedt.github.io/MySmellyCode
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "MySmellyCode",
+    "description": "Detect your own custom set of keywords in Github or Azure pull requests",
+    "version": "1.0",
+    "manifest_version": 3,
+    "permissions": [
+        "storage",
+        "tabs",
+        "scripting",
+        "webRequest",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "https://github.com/*/diffs?*&bytes=*lines=*&pull_number=*&start_entry=*",
+        "https://dev.azure.com/*/_apis/Contribution/HierarchyQuery/project/*"
+    ],
+    "icons": {
+        "16": "/images/ic_icon.png",
+        "32": "/images/ic_icon.png",
+        "48": "/images/ic_icon.png",
+        "128": "/images/ic_icon.png"
+    },
+    "background": {
+        "service_worker": "service-workers/background.js"
+    },
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "/images/ic_icon.png",
+            "32": "/images/ic_icon.png",
+            "48": "/images/ic_icon.png",
+            "128": "/images/ic_icon.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "file:///D:/Dev/my-smelly-code/test.html"
+            ],
+            "css": [
+                "content-scripts/github-violations.css"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.github.com/*"
+            ],
+            "css": [
+                "content-scripts/github-violations.css"
+            ],
+            "js": [
+            ]
+        },
+        {
+            "matches": [
+                "https://dev.azure.com/*"
+            ],
+            "css": [
+                "content-scripts/azure-violations.css"
+            ]
+        }
+    ]
+}

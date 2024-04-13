@@ -1,0 +1,110 @@
+---
+name: DAT & Relay ToolKit
+version: 5.0.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 10
+user_count: 144
+release_date: '2023-08-05T16:39:47.000Z'
+size: 1.1MiB
+languages:
+  - English (United States)
+description: >-
+  Maximize your profit on Amazon Relay and save extra money by not paying for an
+  extra account on DAT. Cut costs, boost savings!
+publisher_account: drunkiddy
+extension_website: darelay.uz
+support_website: https://t.me/datazng
+privacy_policy: https://darelay.uz/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "DAT & Relay ToolKit",
+    "version": "5.0.0",
+    "short_name": "Darelay",
+    "description": "Maximize your profit on Amazon Relay and save extra money by not paying for an extra account on DAT. Cut costs, boost savings!",
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "ToolKit Refresher"
+    },
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "js": ["content.js"],
+            "matches": [
+                "https://*/tours/*",
+                "http://*/tours/*",
+                "https://*/loadboard*",
+                "http://*/loadboard*",
+                "*://*.dat.com/*",
+                "*://relay.amazon.com/*"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["*://relay.amazon.com/*"],
+            "js": ["contentScript.js", "src/pages/loadSearch/index.js"],
+            "css": ["loadSearchStyle.css"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://*/tours/loadboard*",
+                "https://*/loadboard*",
+                "https://*/tours/*"
+            ],
+            "js": ["src/pages/fetch_start/index.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "*://relay.amazon.com/*",
+                "*://power.dat.com/*",
+                "*://one.dat.com/*"
+            ],
+            "resources": [
+                "content.js",
+                "assets/onBtn.png",
+                "assets/offBtn.png",
+                "assets/onBtn2.png",
+                "assets/n.mp3",
+                "assets/js/*.js",
+                "src/pages/fetch/index.js",
+                "src/pages/background/index.js",
+                "restrictedRoutes.js",
+                "postTruck.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "scripting",
+        "tabs",
+        "storage",
+        "declarativeContent",
+        "activeTab",
+        "debugger",
+        "unlimitedStorage",
+        "identity",
+        "identity.email"
+    ],
+    "host_permissions": ["*://relay.amazon.com/*"],
+    "oauth2": {
+        "client_id": "771433368498-26ss78pc1d8rf2nv5vdruvsqvik3l38p.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.email"
+        ]
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmZZwGW4kOHkWRkjJMlIWOf2q7soHOTIjlou1+Cv1SvQqcDsHiGbsoX6gihqiUsBHOT5GSB2fReKXeUwGeyUdlLXXWQEKSJhNyTST0NBhw7fXRXjVUK007e8wUq9K41Nd1N+yrhJ0zcmG2NtwTUuCe41cEiki7L5nDpt8Kp8Bd3f1rKOT4JCBu/QT4ebKYUcD29Xqw2K8ov1oJpycJ6eKOtLI+edvuFa4KA4PLYBnKp6KDbOf70L2APRhlNkHbddXnQB7MjXrI1vxRhU5k3jbP4891g1CdpZR7wh0MoSXCS+I5syF7RkLMAATnnRLmPyCD47m3hVv7e3ggwKmSQBwGQIDAQAB"
+}

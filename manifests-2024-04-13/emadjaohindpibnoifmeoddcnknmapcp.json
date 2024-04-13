@@ -1,0 +1,78 @@
+---
+name: Nexus Omni Cloud
+version: 1.0.5.1
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 11
+release_date: '2023-03-05T09:14:39.000Z'
+size: 1.28MiB
+languages:
+  - português (Brasil)
+description: >-
+  Ligações a um clique de distância. Integração entre a plataforma Omnichannel
+  Nexus e diversos sistemas CRM.
+publisher: Nexcore Tecnologia
+publisher_account: Nexcore
+publisher_address: |-
+  R. Jacarezinho
+  731
+  Curitiba, PR 80710150
+  BR
+support_website: https://www.nexcore.com.br
+privacy_policy: https://nexcore.com.br/lgpd-nexcore
+---
+
+{
+    "manifest_version": 3,
+    "name": "Nexus Omni Cloud",
+    "description": "Ligações a um clique de distância. Integração entre a plataforma Omnichannel Nexus e diversos sistemas CRM.",
+    "icons" : {
+        "128": "image/globo-red.png"
+    },
+    "version": "1.0.5.1",
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "homepage_url": "https://www.nexcore.com.br",
+    "permissions": [ "storage","tabs","cookies","activeTab","contextMenus","scripting","alarms"],
+    "host_permissions":["*://*/*"],
+
+    "action": {
+        "browser_style": false,
+        "default_title": "Nexus Omni Cloud",
+        "default_popup": "popup/nexus.html",
+        "default_icon": {
+            "128": "image/globo-red.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "bg/bg.js",
+        "type" : "module"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [ "*://*.salesforce.com/*" , "*://*.force.com/*" , "*://*.lightning.force.com/*"],
+            "css": [ "popup/theme/padrao.css" ],
+            "js": [ "lib/util.js", "salesforce/nexus.js", "lib/nexus.config.js", "salesforce/start.js"],
+            "run_at": "document_end"
+        },{
+            "matches": [ "*://*/*"],
+            "js": [ "nexus/call.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "options_ui": {
+        "page": "popup/nexus.html",
+        "browser_style": true
+    },
+
+    "web_accessible_resources": [{
+        "resources" : [ "lib/*",
+                        "popup/js/*",
+                        "image/*",
+                        "popup/libs/font-awesome/*"],
+        "use_dynamic_url": true
+    }]
+}

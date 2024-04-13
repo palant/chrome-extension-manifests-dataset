@@ -1,0 +1,95 @@
+---
+name: Meeting Agendas, Notes & Goals - Hypercontext
+version: 2.0.3
+category_slug: productivity/communication
+rating: 4.891304347826087
+rating_count: 46
+user_count: 4000
+release_date: '2024-03-22T06:23:10.000Z'
+size: 4.68MiB
+languages:
+  - English (United States)
+description: >-
+  Collaborative agendas, notes, next steps, goals and more with Hypercontext.
+  All within Google Meet and Google Calendar.
+publisher: SoapBox Innovations
+publisher_account: Hypercontext
+publisher_address: |-
+  100 Broadview Ave
+  Suite 300
+  Toronto, ON M4M 3H3
+  CA
+extension_website: hypercontext.com
+support_website: https://help.hypercontext.com/en/
+privacy_policy: https://hypercontext.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Meeting Agendas, Notes & Goals - Hypercontext",
+    "description": "Collaborative agendas, notes, next steps, goals and more with Hypercontext. All within Google Meet and Google Calendar.",
+    "version": "2.0.3",
+    "permissions": [
+        "sidePanel",
+        "storage"
+    ],
+    "icons": {
+        "128": "assets/icon-app-128.png"
+    },
+    "action": {
+        "default_title": "Hypercontext"
+    },
+    "side_panel": {
+        "default_path": "index.html"
+    },
+    "host_permissions": [
+        "https://*.hypercontext.com/*"
+    ],
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [ "https://*.hypercontext.com/*"],
+            "exclude_matches": ["https://app.hypercontext.com/*"],
+            "all_frames": true,
+            "js": ["content-scripts/star-hypercontext-com.js"]
+        },
+        {
+            "world": "MAIN",
+            "matches": [ "https://*.hypercontext.com/*"],
+            "exclude_matches": ["https://app.hypercontext.com/*"],
+            "all_frames": true,
+            "js": ["content-scripts/star-hypercontext-com[NOT-ISOLATED].js"]
+        },
+        {
+            "matches": [
+                "https://meet.google.com/*"
+            ],
+            "js": [
+                "content-scripts/meet-google-com.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://calendar.google.com/*"
+            ],
+            "js": [
+                "content-scripts/calendar-google-com.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/*"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": ["content-scripts/emberHeplers.js"],
+            "matches": ["https://*.hypercontext.com/*"]
+        }
+
+    ],
+    "manifest_version": 3
+}

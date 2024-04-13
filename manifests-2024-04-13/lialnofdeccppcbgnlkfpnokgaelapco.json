@@ -1,0 +1,60 @@
+---
+name: Chrome Youtube music Lastfm Scrobbler
+version: '1.2'
+category_slug: lifestyle/social
+rating: 5
+rating_count: 2
+user_count: 49
+release_date: '2021-11-29T06:15:43.000Z'
+size: 31.44KiB
+languages:
+  - English (United States)
+description: Lastfm Scrobbler for youtube music
+publisher_account: mubrikdev
+privacy_policy: https://www.freeprivacypolicy.com/live/8f193594-e8cc-4f2d-95c5-67f2acd350fc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Chrome Youtube music Lastfm Scrobbler",
+    "description": "Lastfm Scrobbler for youtube music",
+    "version": "1.2",
+    "manifest_version": 3,
+    "action": {
+        "default_popup": "./src/index.html",
+        "default_icon": "./src/images/logo128.png"
+    },
+    "icons": {
+      "16": "./src/images/logo16.png",
+      "32": "./src/images/logo32.png",
+      "48": "./src/images/logo48.png",
+      "128": "./src/images/logo128.png"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://music.youtube.com/*",
+        "https://ws.audioscrobbler.com/",
+        "https://www.last.fm/api/*"
+    ],
+    "background": {
+      "service_worker": "background-wrapper.js"
+    },
+    "content_scripts": [
+        {
+          "matches": ["*://music.youtube.com/*"],
+          "js": ["./src/js/contentScript.js"],
+          "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": ["./src/js/extScript.js"],
+        "matches": ["*://music.youtube.com/*"]
+      }
+    ]
+}

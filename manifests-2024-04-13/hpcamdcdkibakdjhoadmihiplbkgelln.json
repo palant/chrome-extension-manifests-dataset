@@ -1,0 +1,76 @@
+---
+name: WICS
+version: 0.1.9
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 24
+release_date: '2023-01-18T08:25:47.000Z'
+size: 855KiB
+languages:
+  - English
+description: An extension to add and manage custom items to WaniKani
+publisher_account: gorbitgames
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "WICS",
+  "description": "An extension to add and manage custom items to WaniKani",
+  "version": "0.1.9",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon/16.png",
+    "32": "icon/32.png",
+    "48": "icon/48.png",
+    "96": "icon/96.png",
+    "128": "icon/128.png"
+  },
+  "action": {
+    "default_popup": "src/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.wanikani.com/review/session",
+        "https://*.wanikani.com/lesson/session"
+      ],
+      "js": [
+        "src/review.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.wanikani.com/*"
+      ],
+      "exclude_matches": [
+        "https://*.wanikani.com/review/session",
+        "https://*.wanikani.com/lesson/session"
+      ],
+      "js": [
+        "src/dashboard.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/monkeyPatching/jquery.js",
+        "src/monkeyPatching/fetch.js"
+      ],
+      "matches": [
+        "https://*.wanikani.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "unlimitedStorage",
+    "storage",
+    "tabs",
+    "scripting",
+    "activeTab"
+  ]
+}

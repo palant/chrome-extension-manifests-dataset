@@ -1,0 +1,143 @@
+---
+name: 'Plus: Live screenshots of any app or website'
+version: 4.9.1
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 18
+user_count: 10000
+release_date: '2023-05-26T17:54:39.000Z'
+size: 3.69MiB
+languages:
+  - English
+description: Capture, share and save data with live screenshots of any app or website.
+publisher: Plus Docs Inc
+publisher_account: Plus
+publisher_address: |-
+  113 Cherry St
+  PMB 86703
+  Seattle, WA 98104
+  US
+extension_website: plusdocs.com
+support_website: https://guide.plusdocs.com
+privacy_policy: https://www.plusdocs.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Plus: Live screenshots of any app or website",
+  "version": "4.9.1",
+  "description": "Capture, share and save data with live screenshots of any app or website.",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "commands": {
+    "snapshot": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S",
+        "chromeos": "Ctrl+Shift+S",
+        "linux": "Ctrl+Shift+S"
+      },
+      "description": "Take a live snapshot of the selected area on the current web page."
+    }
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content/import-preload.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content/import-index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content/import-injectExtensionId.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_title": "Plus"
+  },
+  "permissions": [
+    "cookies",
+    "fontSettings",
+    "storage",
+    "webRequest"
+  ],
+  "optional_permissions": [
+    "favicon"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/capture.html",
+        "content/menu-popup.html",
+        "content/onboarding.html",
+        "content/preview.html",
+        "content/reauth.html",
+        "content/runAddExtensionGlobal.js",
+        "content/runReloadCurrentSnapshot.js",
+        "images/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "_favicon/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "extension_ids": [
+        "*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content/preload.js",
+        "content/index.js",
+        "content/injectExtensionId.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://*.plusdocs.com/*"
+    ]
+  },
+  "icons": {
+    "16": "icons/plus-favicon-production-16.png",
+    "48": "icons/plus-favicon-production-48.png",
+    "128": "icons/plus-favicon-production-128.png"
+  }
+}

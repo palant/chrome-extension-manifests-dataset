@@ -1,0 +1,82 @@
+---
+name: التحضير
+version: 1.1.8
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 981
+release_date: '2024-03-19T07:31:42.000Z'
+size: 2.99MiB
+languages:
+  - ‫العربية
+description: التحضير الآلي لدروس منصة مدرستي وأسئلة النصفي والنهائي
+publisher_account: أسئلتي
+support_website: https://twitter.com/myasilaty
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "التحضير",
+    "description": "التحضير الآلي لدروس منصة مدرستي وأسئلة النصفي والنهائي",
+    "version": "1.1.8",
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "icons":{
+        "128":"./icon.png",
+        "64":"./icon.png",
+        "32":"./icon.png",
+        "16":"./icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://schools.madrasati.sa/SchoolManagment/Actions/Teacher/*"               
+            ],
+            "js": [
+                "js/content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://schools.madrasati.sa/SchoolSchedule/Schedule/ManageLecture*"               
+            ],
+            "js": [
+                "js/close-tab-handler.js"
+            ]
+        },
+        {
+            "all_frames": true,
+            "matches": [
+                "https://schools.madrasati.sa/Teacher/Lessons/LessonDetailsNew?Data=*"               
+            ],
+            "js": [
+                "js/captcha-tracker.js"
+            ]
+        }
+    ],
+    "web_accessible_resources":[{
+        "resources":[
+            "css/content.css",
+            "css/global.css",
+            "/images/logo.png",
+            "/images/success.png",
+            "/images/email_verification.png",
+            "/images/failed.png",
+            "/images/logout-icon.png",
+            "db/*"
+        ],
+        "matches":[
+            "https://schools.madrasati.sa/*"
+        ]
+    },{
+        "resources": ["/app.html"],
+        "matches": ["<all_urls>"]
+    }],
+    "permissions":[
+        "storage",
+        "tabs"
+    ]
+}

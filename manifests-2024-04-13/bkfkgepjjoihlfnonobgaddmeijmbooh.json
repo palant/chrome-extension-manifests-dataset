@@ -1,0 +1,89 @@
+---
+name: Earn Alliance Companion
+version: 1.0.11
+category_slug: lifestyle/entertainment
+rating: 3.9069767441860463
+rating_count: 43
+user_count: 30000
+release_date: '2024-04-09T16:35:45.000Z'
+size: 308KiB
+languages:
+  - English
+description: Earn Alliance Companion
+publisher: Earn Alliance Holdings Pte. Ltd
+publisher_account: Earn Alliance
+privacy_policy: https://www.earnalliance.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Earn Alliance Companion",
+  "version": "1.0.11",
+  "description": "Earn Alliance Companion",
+  "manifest_version": 3,
+  "options_page": "options.html",
+  "permissions": ["storage", "alarms", "tabs"],
+  "content_scripts": [
+    {
+      "js": ["main-world.js"],
+      "run_at": "document_idle",
+      "world": "MAIN",
+      "matches": ["*://twitter.com/*", "*://store.epicgames.com/*"]
+    },
+    {
+      "js": ["lib/jquery.js", "lib/toastr.min.js", "inject.js"],
+      "css": ["lib/toastr.min.css", "css/inject.css"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "matches": [
+        "*://twitter.com/*",
+        "*://store.epicgames.com/*",
+        "*://www.epicgames.com/*"
+      ]
+    },
+    {
+      "js": ["lib/jquery.js", "googleplay-scraper.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "matches": ["*://play.google.com/library/games"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/logo.png",
+      "32": "img/logo.png",
+      "48": "img/logo.png",
+      "128": "img/logo.png"
+    }
+  },
+  "icons": {
+    "16": "img/logo.png",
+    "32": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://earnalliance.com/*",
+      "*://www.earnalliance.com/*",
+      "*://test.earnalliance.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["img/logo.png"],
+      "matches": [
+        "*://localhost/*",
+        "*://earnalliance.com/*",
+        "*://www.earnalliance.com/*",
+        "*://test.earnalliance.com/*",
+        "*://play.google.com/*"
+      ]
+    }
+  ]
+}

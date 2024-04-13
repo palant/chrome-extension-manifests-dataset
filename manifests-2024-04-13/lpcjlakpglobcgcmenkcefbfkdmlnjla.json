@@ -1,0 +1,76 @@
+---
+name: Find Insecure Links
+version: 1.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 15
+release_date: '2022-01-13T15:02:22.000Z'
+size: 900KiB
+languages:
+  - English
+description: Find all broken as well as insecure links in current tab
+publisher: Browser Labs Pty Ltd
+publisher_account: Browser Labs
+publisher_address: |-
+  46 Meredith Street
+  Elwood, VIC 3184
+  Australia
+extension_website: find-insecure-links-tab.com
+privacy_policy: https://browser-labs.com.au/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Find Insecure Links",
+    "short_name": "Find Insecure Links",
+    "version": "1.0.0",
+    "description": "Find all broken as well as insecure links in current tab",
+    "icons": {
+        "32": "icons/logo-icon-128.png",
+        "48": "icons/logo-icon-128.png",
+        "64": "icons/logo-icon-128.png"
+    },
+    "action": {
+        "browser_style": true,
+        "default_title": "Find Insecure Links"
+    },
+    "author": "Find Insecure Links",
+    "permissions": [
+        "tabs"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [{
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "run_at": "document_start",
+        "js": ["assets/js/jquery-3.4.1.min.js", "assets/js/content_script.js", "assets/js/tab.js"],
+        "css": ["assets/css/find_links.css"]
+    }],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [{
+        "resources": ["/assets/images/*"],
+        "matches": ["<all_urls>"]
+    }],
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "encoding": "UTF-8",
+            "favicon_url": "https://find-insecure-links-tab.com/wp-content/uploads/2021/10/logo-icon-128.png",
+            "is_default": true,
+            "keyword": "Keyword",
+            "name": "Find Insecure Links",
+            "search_url": "https://search.find-insecure-links-tab.com/search?q={searchTerms}"
+        }
+    },
+    "chrome_url_overrides": {
+        "newtab": "new-tab.html"
+    }
+}

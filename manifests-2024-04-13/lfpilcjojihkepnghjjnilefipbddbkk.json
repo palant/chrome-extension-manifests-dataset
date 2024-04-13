@@ -1,0 +1,97 @@
+---
+name: GetAds
+version: 2.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 70
+release_date: '2024-02-26T06:27:42.000Z'
+size: 838KiB
+languages:
+  - English (United States)
+description: >-
+  Save ads from Meta & TikTok Ad Library with one click & collaborate with your
+  team.
+publisher: GetAds LLC
+publisher_account: getads.co
+publisher_address: |-
+  Verbena Drive
+  Phoenix, AZ 85048
+  US
+extension_website: getads.co
+privacy_policy: https://get-ads.notion.site/Privacy-Policy-3d81dd3511b94911aff4e7eaba036896
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzYI/kSzCakdFz3j6ICeLuddBycTGwatftJd6vs8Os4pqc1PH4URo/lvx0C9jk9Km1uI1eYFZQSyuQRxGOfGZwBYgEVuzyofXJG6QUFzFUiIqJB6Yk55SVdKR7GKqjBco6XYRILrQBdpSOCSeEm0xfmUs1cRxOgQkceZ9vRf9ahQKnp+LjWooQh3fGIxmklJau5N+7QfnWh7dIvSowm+YwwdVJppEy3lxl8wnM8/aU4Q90FDjnVe60cY9dyg51BdSDceoGT5/NhJyGBu59jYJKaafEdkvVbnB5debjGbS6E2nPF3mKAaJsPf4gmfOra7KkJQWiSK/X80ses/92miNuwIDAQAB",
+  "manifest_version": 3,
+  "name": "GetAds",
+  "version": "2.0.1",
+  "description": "Save ads from Meta & TikTok Ad Library with one click & collaborate with your team.",
+  "options_ui": {
+    "page": "src/pages/options/index.html"
+  },
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-128.png"
+  },
+  "icons": {
+    "32": "icon-128.png",
+    "128": "icon-128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/ads/library/*",
+        "https://ads.tiktok.com/business/creativecenter/*"
+      ],
+      "js": [
+        "src/pages/content/index.js"
+      ],
+      "css": [
+        "contentStyle.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/ads/library/*",
+        "https://ads.tiktok.com/business/creativecenter/*"
+      ],
+      "js": [
+        "src/pages/content/network-interceptor.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentStyle.css",
+        "icon-128.png",
+        "icon-34.png",
+        "src/pages/content/injected.js",
+        "fonts/dm-sans/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:5173/*",
+      "https://app.dev.getads.co/*",
+      "https://app.getads.co/*"
+    ]
+  }
+}

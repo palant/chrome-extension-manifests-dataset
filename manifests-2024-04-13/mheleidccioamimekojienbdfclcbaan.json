@@ -1,0 +1,74 @@
+---
+name: Q Accelerator
+version: 2.2.1
+category_slug: productivity/workflow
+rating: 4.375
+rating_count: 8
+user_count: 455
+release_date: '2019-03-05T20:47:10.000Z'
+size: 1.05MiB
+languages:
+  - 日本語
+description: Qiitaでの活動を加速させるChrome拡張機能
+publisher_account: tatsuya.nakano
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Q Accelerator",
+  "short_name":"QA",
+  "description": "Qiitaでの活動を加速させるChrome拡張機能",
+  "icons": {
+    "16": "assets/images/qa_icon16.png",
+    "48": "assets/images/qa_icon48.png",
+    "128": "assets/images/qa_icon128.png"
+  },
+  "version": "2.2.1",
+  "homepage_url": "https://github.com/howdy39/q-accelerator",
+  "background": {
+    "persistent": false,
+    "page": "background/background.html"
+  },
+  "browser_action": {
+    "default_popup": "assets/popup.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://qiita.com/*",
+        "https://qiita.com/*"
+      ],
+      "js": ["content_scripts/all-content.js"]
+    },
+    {
+      "matches": [
+        "http://qiita.com/*/items/*",
+        "https://qiita.com/*/items/*",
+        "http://qiita.com/*/private/*",
+        "https://qiita.com/*/private/*"
+      ],
+      "js": ["content_scripts/article-content.js"]
+    },
+    {
+      "matches": [
+        "http://qiita.com/drafts/new",
+        "https://qiita.com/drafts/new"
+      ],
+      "js": ["content_scripts/drafts-new-content.js"]
+    }
+  ],
+  "permissions": [
+    "unlimitedStorage",
+    "storage"
+  ],
+  "options_ui": {
+    "page": "assets/settings.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    "assets/images/*"
+  ]
+}

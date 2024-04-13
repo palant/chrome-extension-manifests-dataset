@@ -1,0 +1,65 @@
+---
+name: Code Odyssey Code Submission Extension
+version: '2.0'
+category_slug: productivity/education
+rating: 5
+rating_count: 4
+user_count: 15
+release_date: '2024-02-17T06:55:33.000Z'
+size: 1.89MiB
+languages:
+  - 한국어
+description: Code Odessey 문제 제출용 익스텐션
+publisher_account: nrbnov28
+privacy_policy: https://code-odyssey.site/personal-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Code Odyssey Code Submission Extension",
+  "version": "2.0",
+  "description": "Code Odessey 문제 제출용 익스텐션",
+  "icons": {
+    "16": "submission.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "submission.png"
+  },
+  "permissions": ["unlimitedStorage", "storage", "tabs"],
+  "host_permissions": [
+    "https://school.programmers.co.kr/",
+    "https://swexpertacademy.com/",
+    "https://www.acmicpc.net/",
+    "https://solved.ac/api/v3/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.acmicpc.net/status?*from_mine*"],
+      "js": ["scripts/baekjoon/solved.js"]
+    },
+    {
+      "matches": ["https://swexpertacademy.com/*"],
+      "js": ["scripts/swexpertacademy.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.acmicpc.net/submit/*"],
+      "js": ["scripts/baekjoon/submit.js"]
+    },
+    {
+      "matches": ["http://localhost:3000/main*"],
+      "js": ["scripts/user.js"]
+    },
+    {
+      "matches": ["https://code-odyssey.site/main*"],
+      "js": ["scripts/user.js"]
+    }
+  ]
+}

@@ -1,0 +1,83 @@
+---
+name: Bignest Privacy Guard & AdBlocker
+version: 0.0.7.9
+category_slug: productivity/workflow
+rating: 4
+rating_count: 2
+user_count: 126
+release_date: '2024-02-13T06:29:50.000Z'
+size: 108KiB
+languages:
+  - English (United States)
+description: >-
+  Block YouTube™ ads, pop-ups and improve your privacy! Using Chrome manifest
+  v3.
+publisher: Bignest Inc.
+publisher_account: Bignest d.o.o.
+publisher_address: |-
+  Celovška cesta 291
+  Ljubljana 1000
+  Slovenia
+extension_website: bignest.com
+support_website: https://bignest.com/contact
+privacy_policy: https://legal.bignest.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "0.0.7.9",
+  "name": "Bignest Privacy Guard & AdBlocker",
+  "manifest_version": 3,
+  "description": "Block YouTube™ ads, pop-ups and improve your privacy! Using Chrome manifest v3.",
+  "action": {
+    "default_title": "Bignest Privacy Guard",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/favicon/icon-16.png",
+    "48": "img/favicon/icon-48.png",
+    "128": "img/favicon/icon-128.png"
+  },
+  "web_accessible_resources": [{
+    "resources": ["cs.js"],
+    "matches": ["<all_urls>", "https://*/*"]
+  }],
+  "background": {
+    "service_worker": "js/modules/adblock.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://bignest.com/*", "https://*/*", "http://*/*"],
+      "js": [
+        "js/modules/sdk.js",
+        "js/content_script.js",
+        "js/modules/adblock_content.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": [
+    "activeTab",
+    "webRequest",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage"
+  ],
+  "optional_permissions": [
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://bignest.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; worker-src 'self' 'wasm-unsafe-eval'; script-src 'self' 'wasm-unsafe-eval'; connect-src http://localhost:3100 https://localhost:3100; style-src * 'unsafe-inline' 'self' blob:; font-src *; img-src * chrome://favicon/ 'self' data:; object-src 'self';"
+
+  }
+}

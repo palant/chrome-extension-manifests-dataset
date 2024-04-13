@@ -1,0 +1,71 @@
+---
+name: Sure Link Checker
+version: 1.0.0
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-07-27T04:04:47.000Z'
+size: 51.46KiB
+languages:
+  - English (United States)
+description: >-
+  Seamlessly detect and highlight broken links on web pages for more efficient
+  browsing.
+publisher_account: Hickory Projects
+publisher_address: |-
+  address_redacted
+  address_redacted, VA 23838
+  US
+support_website: https://forms.gle/X3osBVHjKnwsg9A29
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sure Link Checker",
+  "version": "1.0.0",
+  "description": "Seamlessly detect and highlight broken links on web pages for more efficient browsing.",
+  "permissions": ["activeTab", "tabs", "storage"],
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
+  "action": {
+    "default_title": "Sure Links"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/icon16_alt.png",
+    "48": "icons/icon48_alt.png",
+    "128": "icons/icon128_alt.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "css/sure_links.css",
+        "icons/file-arrow-down-solid.svg",
+        "icons/copy-solid.svg",
+        "icons/gears-solid.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["dist/ExtPay.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/sure_links.css"],
+      "js": ["utils/settings.js", "utils/logger.js", "utils/popup.js", "scripts/content-script.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

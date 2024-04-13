@@ -1,0 +1,67 @@
+---
+name: 'ㅅㅅ: 서울대학교 수강신청'
+version: 0.1.3
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 69
+release_date: '2024-04-04T10:15:46.000Z'
+size: 62.62KiB
+languages:
+  - 한국어
+description: 강의계획서를 한눈에, 수강신청을 편리하게.
+publisher_account: snusugang
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ㅅㅅ: 서울대학교 수강신청",
+  "version": "0.1.3",
+  "description": "강의계획서를 한눈에, 수강신청을 편리하게.",
+  "permissions": ["tabs", "storage", "declarativeNetRequest"],
+  "host_permissions": ["https://sugang.snu.ac.kr/sugang/cc/cc103.action"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "sugang",
+        "enabled": true,
+        "path": "rules_sugang.json"
+      }
+    ]
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/tab-icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {
+    "default_popup": "navigation.html",
+    "default_icon": "/images/bar-icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/enable.js"],
+      "matches": ["https://sugang.snu.ac.kr/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["plan.html"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["scripts/content.js"],
+      "matches": ["https://sugang.snu.ac.kr/*"]
+    },
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

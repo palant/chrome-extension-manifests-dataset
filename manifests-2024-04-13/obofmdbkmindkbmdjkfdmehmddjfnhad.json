@@ -1,0 +1,107 @@
+---
+name: Devi
+version: 2.5.6
+category_slug: productivity/workflow
+rating: 4.416666666666667
+rating_count: 12
+user_count: 6000
+release_date: '2024-04-11T11:16:29.000Z'
+size: 5.46MiB
+languages:
+  - English (United States)
+description: >-
+  AI Lead-Gen Assistant: Monitor Facebook groups, Twitter, LinkedIn, Reddit,
+  WhatsApp, and Nextdoor to find leads
+publisher: Devi AI LLC
+publisher_account: Devi AI Assistant
+publisher_address: |-
+  Ste 1200, 1309 Coffeen Avenue
+  Sheridan, WY 82801
+  US
+extension_website: ddevi.com
+support_website: https://ddevi.com/contact
+privacy_policy: https://ddevi.com/privacy-security
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Devi",
+  "description": "AI Lead-Gen Assistant: Monitor Facebook groups, Twitter, LinkedIn, Reddit, WhatsApp, and Nextdoor to find leads",
+  "version": "2.5.6",
+  "manifest_version": 3,
+  "icons": {
+    "32": "assets/images/logo/32x32.png",
+    "192": "assets/images/logo/192x192.png",
+    "512": "assets/images/logo/512x512.png"
+  },
+  "background": {
+    "service_worker": "dist/webworker-index.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "networkruleset_1",
+        "enabled": true,
+        "path": "networkrule.json"
+      }
+    ]
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "declarativeNetRequest",
+    "alarms",
+    "notifications",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://*.facebook.com/*",
+    "https://*.twitter.com/*",
+    "https://*.linkedin.com/*",
+    "https://*.reddit.com/*",
+    "https://www.google.com/*",
+    "https://ddevi.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://*.instagram.com/*",
+    "https://nextdoor.com/*",
+    "https://web.whatsapp.com/*"
+  ],
+  "action": {
+    "default_title": "Devi"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "options_page": "index.html",
+  "externally_connectable": {
+    "matches": ["https://ddevi.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.facebook.com/*",
+        "https://*.twitter.com/*",
+        "https://*.linkedin.com/*",
+        "https://*.reddit.com/*"
+      ],
+      "js": ["assets/js/open.js"],
+      "css": ["assets/css/open.css"]
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["assets/js/wppconnect-wa.js"],
+      "world": "MAIN",
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["assets/js/wa.js"],
+      "world": "MAIN",
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

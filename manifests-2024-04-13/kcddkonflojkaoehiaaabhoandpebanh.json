@@ -1,0 +1,114 @@
+---
+name: AdGuard ADBlocker
+version: 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 113
+release_date: '2023-12-21T11:12:46.000Z'
+size: 1.87MiB
+languages:
+  - English
+description: >-
+  Unmatched adblock extension against advertising and pop-ups. Blocks ads on
+  Spotify, YouTube,Twitch and all other websites.
+publisher_account: youtbadblocker
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AdGuard ADBlocker",
+  "description": "Unmatched adblock extension against advertising and pop-ups. Blocks ads on Spotify, YouTube,Twitch and all other websites.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "adguard16.png",
+    "48": "adguard48.png",
+    "128": "adguard128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AdGuard ADBlocker",
+    "default_icon": "adguard16.png"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.twitch.tv/*"
+      ],
+      "js": [
+        "adRemove.js",
+        "removeTwitchAds.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://open.spotify.com/*"
+      ],
+      "js": [
+        "contentScriptSpotify.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "Youtube.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "adRemove.js",
+        "removeTwitchAds.js"
+      ],
+      "matches": [
+        "https://*.twitch.tv/*"
+      ]
+    },
+    {
+      "resources": [
+        "contentScriptSpotify.js",
+        "adsSweetalertSpotify.js",
+        "adsAdsRemoveSpotify.js",
+        "adswsHooksSpotify.js"
+      ],
+      "matches": [
+        "https://open.spotify.com/*"
+      ]
+    }
+  ]
+}

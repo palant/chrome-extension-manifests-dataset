@@ -1,0 +1,213 @@
+---
+name: ExecVision conference recorder
+version: 0.2.62
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 63
+release_date: '2022-06-05T11:48:50.000Z'
+size: 3.01MiB
+languages:
+  - English
+description: >-
+  The ExecVision Chrome Extension enables users to record meetings using
+  web-based screenshare tools.
+publisher: ExecVision
+publisher_address: |-
+  1901 N Ft Myer Dr STE 902
+  Arlington, VA 22209
+  US
+support_website: https://knowledge.execvision.io/hc/en-us/articles/360035627594
+privacy_policy: https://www.execvision.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ExecVision conference recorder",
+  "short_name": "ExecVision recorder",
+  "version": "0.2.62",
+  "manifest_version": 2,
+  "description": "The ExecVision Chrome Extension enables users to record meetings using web-based screenshare tools.",
+  "homepage_url": "https://knowledge.execvision.io/hc/en-us/articles/360035627594",
+  "default_locale" : "en",
+  "icons": {
+      "16": "images/desktopCapture16.png",
+      "48": "images/desktopCapture48.png",
+      "128": "images/desktopCapture128.png"
+  },
+  "commands": {
+    "invoke-addon": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y"
+    },
+      "description": "Invoke addon"
+    }
+  },
+  "background": {
+    "persistent": true,
+    "page": "background.html"
+  },
+  "content_scripts": [
+    {
+      "js": [ "js/teamsRedirect.js" ],
+      "matches": ["https://teams.microsoft.com/*","https://teams.live.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "js/play.js" ],
+      "matches": ["https://app.gotomeeting.com/*",
+                  "https://*.webex.com/*",
+                  "https://www.uberconference.com/*",
+                  "https://secure.join.me/*",
+                  "https://join.me/*",
+                  "https://zoom.us/wc/*","https://*.zoom.us/wc/*",
+                  "https://bluejeans.com/*",
+                  "https://teams.microsoft.com/*",
+                  "https://teams.live.com/*",
+                  "https://v.ringcentral.com/*",
+                  "https://meet.google.com/*"
+      ],
+      "all_frames": true,
+      "match_about_blank":true,
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "vendor/jquery.js","js/bluejeansInstrument.js"],
+      "matches": ["https://bluejeans.com/*"],
+      "include_globs":["https://bluejeans.com/*/*/?src=meet_now",
+                "https://bluejeans.com/*?src=start_scheduled_meeting"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/bluejeans.js","js/CBbluejeans.js"],
+      "css": ["css/captureBanner.css"],
+      "matches": [ "https://bluejeans.com/*"],
+      "include_globs" : ["https://bluejeans.com/*/webrtc*","https://bluejeans.com/*/*/webrtc*"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": [ "vendor/jquery.js","js/zoomRedirect.js" ],
+      "matches": ["https://zoom.us/*","https://*.zoom.us/*"],
+      "include_globs":["https://zoom.us/s/*","https://*.zoom.us/s/*","https://zoom.us/j/*","https://*.zoom.us/j/*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/zoom.js","js/CBzoom.js"],
+      "css": ["css/captureBanner.css"],
+      "matches": [ "https://zoom.us/*","https://*.zoom.us/*" ],
+      "include_globs" : ["https://zoom.us/wc/*","https://*.zoom.us/wc/*"],
+      "exclude_globs" : ["https://zoom.us/wc/leave*"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": [ "vendor/jquery.js","js/gtmInstrument.js" ],
+      "matches": ["https://global.gotomeeting.com/*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/gotomeeting.js","js/CBgotomeeting.js" ],
+      "css": ["css/captureBanner.css"],
+      "matches": [ "https://app.gotomeeting.com/*" ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/webex.js","js/CBwebex.js" ],
+      "css": ["css/captureBanner.css"],
+      "matches": ["https://*.webex.com/*"],
+      "exclude_globs": ["https://*.webex.com/WBXmjsasset/*"],
+      "include_globs": ["https://*.webex.com/wbxmjs/joinservice/*","https://*.webex.com/webappng/*"],
+      "all_frames": true,
+      "match_about_blank":true,
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/uberconference.js","js/CBuber.js" ],
+      "css": ["css/captureBanner.css"],
+      "matches": ["https://www.uberconference.com/*"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/teams.js","js/CBteams.js" ],
+      "css": ["css/captureBanner.css"],
+      "matches": ["https://teams.microsoft.com/*","https://teams.live.com/*"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/joinme.js","js/CBjoinme.js" ],
+      "css": ["css/captureBanner.css"],
+      "matches": ["https://secure.join.me/*","https://www.join.me/*","https://join.me/*"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/ringcentral.js","js/CBringcentral.js"],
+      "css": ["css/captureBanner.css"],
+      "matches": [ "https://v.ringcentral.com/*" ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": [ "vendor/jquery.js","vendor/jqueryextend.js","js/meet.js","js/CBmeet.js"],
+      "css": ["css/captureBanner.css"],
+      "matches": [ "https://meet.google.com/*" ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_title": "ExecVision"
+  },
+  "permissions": [
+        "tabs",
+        "storage",
+        "downloads",
+        "tabCapture",
+        "activeTab",
+        "webNavigation",
+        "notifications",
+        "https://tvsurftv.com/*",
+        "https://app.gotomeeting.com/*",
+        "https://www.uberconference.com/*",
+        "https://*.webex.com/*",
+        "https://*.execvision.io/*",
+        "http://*.execvision.io/*",
+        "https://*.zoom.us/*","https://zoom.us/*",
+        "https://*.join.me/*",
+        "https://bluejeans.com/*",
+        "https://teams.microsoft.com/*",
+        "https://v.ringcentral.com/*",
+        "https://meet.google.com/*"
+
+  ],
+  "web_accessible_resources": [
+    "sounds/*",
+    "images/*",
+    "html/*"
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.webex.com/*",
+                "https://*.uberconference.com/*",
+                "https://*.gotomeeting.com/*",
+                "https://*.join.me/*",
+                "https://*.zoom.us/*","https://zoom.us/*",
+                "https://bluejeans.com/*",
+                "https://teams.microsoft.com/*",
+                "https://teams.live.com/*",
+                "https://v.ringcentral.com/*",
+                "https://meet.google.com/*"
+                ]
+  },
+  "content_security_policy": "object-src 'self';script-src 'self';media-src data: *;"
+
+}

@@ -1,0 +1,123 @@
+---
+name: TestBuddy - Your true QA buddy
+version: 1.3.1
+category_slug: productivity/developer
+rating: 4.636363636363637
+rating_count: 11
+user_count: 205
+release_date: '2024-03-15T13:39:00.000Z'
+size: 2.81MiB
+languages:
+  - English
+description: Your bug reporting helper
+publisher: Mindekk Technologies Pvt Ltd
+publisher_account: TestUnity
+publisher_address: |-
+  A#112, Sy.No.188 DS-MAX Sprinkles, Sarjapur Main Road
+  Hadosiddapura, Chikkakannalli
+  Bangalore, Karnataka 560035
+  IN
+privacy_policy: https://testbuddy.io/privacy-policy-2
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "background": {
+    "service_worker": "./dist/bg.js"
+  },
+  "short_name": "TestBuddy",
+  "description": "Your bug reporting helper",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/dist/document_start.js"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./dist/fabric.min.js"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "./dist/contentScript.js",
+        "./dist/domEventListeners.js",
+        "./dist/recordingEventListeners.js"
+      ],
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://app.testbuddy.io/static/index.html",
+        "https://chrome.google.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+
+  "icons": {
+    "128": "/assets/images/icon/icon_128.png",
+    "16": "/assets/images/icon/icon_16.png",
+    "32": "/assets/images/icon/icon_32.png",
+    "48": "/assets/images/icon/icon_48.png"
+  },
+  "action": {
+    "default_title": "Open TestBuddy",
+    "default_popup": "/html/popup.html"
+  },
+  "manifest_version": 3,
+
+  "name": "TestBuddy - Your true QA buddy",
+  "externally_connectable": {
+    "matches": ["*://*.testbuddy.io/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "./dist/rrweb.js",
+        "./dist/document_start.js",
+        "./dist/countDownHTML.js",
+        "./dist/contentScript.js",
+        "./dist/recordReplay.js",
+        "./dist/domEventListeners.js",
+        "./dist/recordingEventListeners.js",
+        "/dist/script.js",
+        "./dist/fabric.min.js",
+        "./css/annotation.css",
+        "./css/rrwebPlayer.css"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["/assets/*"]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "background",
+    "management",
+    "desktopCapture",
+    "webRequest",
+    "scripting",
+    "storage",
+    "contextMenus",
+    "webNavigation",
+    "tabs"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "version": "1.3.1"
+}

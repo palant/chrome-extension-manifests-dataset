@@ -1,0 +1,64 @@
+---
+name: Packmind for Code Review
+version: 4.0.4
+category_slug: productivity/developer
+rating: 5
+rating_count: 3
+user_count: 520
+release_date: '2024-04-12T07:54:05.000Z'
+size: 1.77MiB
+languages:
+  - English
+description: >-
+  Skyrocket your code review experience with all Packmind capabilities
+  (ex-Promyze)
+publisher: Promyze
+publisher_address: |-
+  11 Cr du 30 Juillet
+  Bordeaux 33000
+  FR
+support_website: https://docs.packmind.com/what-is-packmind
+privacy_policy: https://www.promyze.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Packmind for Code Review",
+  "version": "4.0.4",
+  "description": "Skyrocket your code review experience with all Packmind capabilities (ex-Promyze)",
+  "permissions": ["activeTab", "contextMenus", "storage", "notifications"],
+  "web_accessible_resources": [
+    "browser-polyfill.js.map",
+    "popup/popup.html",
+    "contentscript/css/contentscript.css",
+    "contentscript/img/*",
+    "contentscript/css/*",
+    "contentscript/fonts/*"
+  ],
+  "icons": {
+    "128": "./packmind.png"
+  },
+  "browser_action": {
+    "default_title": "Packmind",
+    "default_popup": "popup/popup.html"
+  },
+  "background": {
+    "scripts": ["browser-polyfill.js", "index.js"]
+  },
+  "options_page": "options/index.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*merge_requests*",
+        "*://*/*pull*",
+        "*://*.github.com/*",
+        "*://*/*reviews*"
+      ],
+      "js": ["browser-polyfill.js", "codeReviewDecoration.js"],
+      "css": ["contentscript/css/contentscript.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

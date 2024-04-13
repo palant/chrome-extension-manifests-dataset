@@ -1,0 +1,69 @@
+---
+name: Noting
+version: 1.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2024-02-05T09:51:26.000Z'
+size: 2.38MiB
+languages:
+  - English
+description: Sidebar note-taking & saving to favorites, support ChatGPT, Twitter and Bard
+publisher_account: finekewei
+extension_website: noting.im
+privacy_policy: https://www.noting.im/agreement?type=privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Noting",
+    "description": "Sidebar note-taking & saving to favorites, support ChatGPT, Twitter and Bard",
+    "version": "1.0.1",
+    "offline_enabled": true,
+    "minimum_chrome_version": "114",
+    "icons": {
+      "48": "icons/icon.png"
+    },
+    "action": {
+      "default_title": "click to open Noting"
+    },
+    "side_panel": {
+      "default_path": "index.html",
+      "openPanelOnActionClick": true
+    },
+    "permissions": ["sidePanel", "activeTab", "storage", "contextMenus", "tabs" ,"scripting"],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+      {
+        "resources": ["icons/icon.png"],
+        "matches": ["<all_urls>"]
+      }
+    ],
+    "content_scripts": [
+      {
+        "matches": ["*://*.twitter.com/*"],
+        "js": ["js/content_twitter.js"]
+      },
+      {
+        "matches": ["*://*.okjike.com/*"],
+        "js": ["js/content_jike.js"]
+      },
+      {
+        "matches": ["*://chat.openai.com/*"],
+        "js": ["js/content_chatgpt.js"]
+      },
+      {
+        "matches": ["*://bard.google.com/*"],
+        "js": ["js/content_bard.js"]
+      },
+      {
+        "matches": ["*://192.168.10.102/*", "*://*.noting.im/*"],
+        "js": ["js/content_noting.js"]
+      }
+    ]
+  }

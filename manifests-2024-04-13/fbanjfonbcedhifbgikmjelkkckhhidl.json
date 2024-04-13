@@ -1,0 +1,108 @@
+---
+name: Grafana k6 Browser Recorder
+version: 1.0.1
+category_slug: productivity/developer
+rating: 4
+rating_count: 1
+user_count: 4000
+release_date: '2023-07-04T07:26:09.000Z'
+size: 921KiB
+languages:
+  - English
+description: >-
+  Record k6 scripts right from the browser with the ability to automatically
+  upload them to Grafana Cloud.
+publisher: Grafana Labs
+publisher_address: |-
+  29 Broadway
+  PH
+  New York, NY 10006-3201
+  US
+support_website: https://grafana.com/products/cloud/k6/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Grafana k6 Browser Recorder",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "description": "Record k6 scripts right from the browser with the ability to automatically upload them to Grafana Cloud.",
+  "homepage_url": "https://grafana.com/products/cloud/k6/",
+  "author": "Grafana Labs",
+  "minimum_chrome_version": "109",
+  "permissions": [
+    "debugger",
+    "browsingData",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webRequest",
+    "webNavigation",
+    "downloads",
+    "offscreen",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "icons": {
+    "32": "images/app-icon@32.png",
+    "48": "images/app-icon@48.png",
+    "64": "images/app-icon@64.png",
+    "128": "images/app-icon@128.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "images/app-icon@32.png",
+      "48": "images/app-icon@48.png"
+    },
+    "default_title": "Grafana k6 Browser Recorder",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "toggle-recording": {
+      "suggested_key": {
+        "default": "Ctrl+E"
+      },
+      "description": "Toggle start stop recording",
+      "global": true
+    }
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.grafana.net/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.grafana.net/*",
+        "*://localhost/*"
+      ],
+      "js": [
+        "inject-extension-meta.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://grafana.com/orgs/*"
+      ],
+      "js": [
+        "extension-config-alert.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  }
+}

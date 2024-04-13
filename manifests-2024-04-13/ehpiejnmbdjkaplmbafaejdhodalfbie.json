@@ -1,0 +1,220 @@
+---
+name: AuctionGate
+version: 0.10.0
+category_slug: productivity/workflow
+rating: 4.684210526315789
+rating_count: 19
+user_count: 4000
+release_date: '2024-04-11T09:38:58.000Z'
+size: 269KiB
+languages:
+  - English
+  - русский
+  - українська
+description: Copart & IAAI Accounts Access Management and Control Service For Your Business
+publisher_account: auctiongate.io
+extension_website: auctiongate.io
+support_website: https://auctiongate.io/us/contact
+privacy_policy: https://auctiongate.io/us/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AuctionGate",
+  "short_name": "AuctionGate",
+  "version": "0.10.0",
+  "author": "ILC",
+  "description": "Copart & IAAI Accounts Access Management and Control Service For Your Business",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/on.png",
+    "32": "icons/on.png",
+    "48": "icons/on.png",
+    "64": "icons/on.png",
+    "128": "icons/on.png"
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "webRequest",
+    "activeTab",
+    "management",
+    "debugger"
+  ],
+  "host_permissions": [
+    "*://*.copart.com/*",
+    "*://*.iaai.com/*",
+    "*://auctiongate.io/*",
+    "*://*.auctiongate.io/*",
+    "*://*.ecb.europa.eu/*",
+    "*://www.googletagmanager.com/*"
+  ],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.copart.com/*", "*://*.iaai.com/*"],
+      "js": [
+        "js/overrideUserName.js",
+        "js/watchListIaai.js",
+        "js/notice_export.js",
+        "js/devTools.js"
+      ],
+      "css": [
+        "css/overrideUserName.css",
+        "css/watchListIaai.css",
+        "css/popUpNotExport.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.iaai.com/*"],
+      "js": ["js/watchListIaai.js"],
+      "css": ["css/watchListIaai.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.copart.com/*", "*://*.iaai.com/*"],
+      "js": [
+        "libs/jquery-3.3.1.min.js",
+        "js/page_log.js",
+        "js/addNoStatePopUpOnPage.js",
+        "js/showErrors.js",
+        "js/invoiceCopart.js"
+      ],
+      "css": ["css/popUpSweetchState.css", "css/authLoader.css"]
+    },
+    {
+      "matches": ["*://*.iaai.com/*"],
+      "js": ["js/invoiceIaai.js"]
+    },
+    {
+      "matches": ["*://*.iaai.com/*"],
+      "js": ["js/iaaiLogIn.js"]
+    },
+    {
+      "matches": ["*://*.copart.com/*"],
+      "js": ["js/invoiceCopart.js"]
+    },
+    {
+      "matches": ["*://*.copart.com/*"],
+      "js": [
+        "libs/jquery-3.3.1.min.js",
+        "js/script.js",
+        "js/prebid.js",
+        "js/prebidControl.js",
+        "js/watchListCopart.js",
+        "js/copartHidePages.js",
+        "js/copartXsrfInclude.js"
+      ],
+      "css": [
+        "css/style.css",
+        "css/watchListCopart.css",
+        "css/prebid.css",
+        "css/popUpSweetchState.css"
+      ]
+    },
+    {
+      "matches": ["*://*.copart.com/*"],
+      "js": ["js/copartHidePayData.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.iaai.com/*"],
+      "js": [
+        "libs/jquery-3.3.1.min.js",
+        "js/aaiMainScript.js",
+        "js/iaaiPrebid.js",
+        "js/iaaiPrebidControl.js",
+        "js/iaaiHidePages.js"
+      ],
+      "css": ["css/style.css", "css/prebid.css", "css/popUpSweetchState.css"]
+    },
+    {
+      "matches": ["*://*.iaai.com/*", "*://*.copart.com/*"],
+      "js": ["libs/jquery-3.3.1.min.js", "js/dashboard.js", "js/view.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.iaai.com/*", "*://*.copart.com/*"],
+      "run_at": "document_start",
+      "css": ["css/view.css", "css/viewShippers.css"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.iaai.com/*"],
+      "run_at": "document_start",
+      "js": ["js/iaaiSearch.js", "js/iaaiHidePayData.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.copart.com/*"],
+      "js": ["js/copartSearch.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "all_frames": true,
+      "matches": ["*://g2auction.copart.com/*"],
+      "js": [
+        "js/addNoStatePopUpOnPage.js",
+        "js/coaprt_live.js",
+        "js/copartLiveStateControl.js",
+        "js/copartLiveBidControl.js"
+      ],
+      "css": ["css/popUpSweetchState.css", "css/copartLiveStateControl.css"]
+    },
+    {
+      "matches": ["*://*.copart.com/*"],
+      "js": ["js/copartPaymentsDue.js"]
+    },
+    {
+      "matches": ["*://*.iaai.com/*"],
+      "js": ["js/iaaiPaymentsDue.js"]
+    },
+    {
+      "all_frames": true,
+      "matches": ["*://portal.auctionnow.iaai.com/*"],
+      "js": [
+        "js/iaai_live.js",
+        "js/iaaiLiveStateControl.js",
+        "js/iaaiLiveBidControl.js"
+      ],
+      "css": ["css/popUpSweetchState.css", "css/copartLiveStateControl.css"]
+    },
+    {
+      "matches": ["*://portal.auctionnow.iaai.com/*"],
+      "js": ["js/iaaiPortalMultiAuction.js"],
+      "run_at": "document_end",
+      "world": "MAIN"
+    }
+  ],
+  "action": {
+    "default_title": "Car Auctions Manager",
+    "default_icon": {
+      "16": "icons/on.png",
+      "32": "icons/on.png",
+      "48": "icons/on.png",
+      "64": "icons/on.png",
+      "128": "icons/on.png"
+    },
+    "default_popup": "template/auth.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "template/*.html",
+        "template/*.png",
+        "icons/*.png",
+        "js/*.js"
+      ],
+      "matches": ["*://*.copart.com/*", "*://*.iaai.com/*"]
+    }
+  ]
+}

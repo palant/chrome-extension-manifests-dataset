@@ -1,0 +1,93 @@
+---
+name: 'Capital One Shopping: Save Now'
+version: 0.1.1192
+category_slug: lifestyle/shopping
+rating: 4.832992700729927
+rating_count: 13700
+user_count: 9000000
+release_date: '2024-04-12T09:54:07.000Z'
+size: 4.26MiB
+languages:
+  - English (United States)
+description: A simple and free way to help you save online
+publisher_account: Capital One Shopping
+extension_website: capitaloneshopping.com
+support_website: https://capitaloneshopping.com/help
+privacy_policy: https://capitaloneshopping.com/our-terms/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Capital One Shopping: Save Now",
+  "version": "0.1.1192",
+  "manifest_version": 2,
+  "description": "A simple and free way to help you save online",
+  "icons": {
+    "16": "assets/icons/shopping-icon16.png",
+    "48": "assets/icons/shopping-icon48.png",
+    "128": "assets/icons/shopping-icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "permissions": [
+    "alarms",
+    "tabs",
+    "contextMenus",
+    "storage",
+    "cookies",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "assets/*",
+    "static/**/*",
+    "chunks/*",
+    "notifications/*"
+  ],
+  "background": {
+    "page": "bg/bg.html"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "assets/icons/browser/browseraction-off-19-shopping.png",
+      "38": "assets/icons/browser/browseraction-off-38-shopping.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "notifications/pageView.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.capitaloneshopping.com/*",
+        "*://*.ivf-stage.com/*"
+      ],
+      "js": [
+        "notifications/wikibuy.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.amazon.com/*",
+        "*://*.bestbuy.com/*",
+        "*://*.homedepot.com/*",
+        "*://*.zappos.com/*"
+      ],
+      "js": [
+        "notifications/priceComparison.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

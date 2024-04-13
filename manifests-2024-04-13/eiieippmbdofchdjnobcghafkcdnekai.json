@@ -1,0 +1,92 @@
+---
+name: Bittiniilo
+version: 0.94.1
+category_slug: productivity/workflow
+rating: 4.857142857142857
+rating_count: 14
+user_count: 5000
+release_date: '2024-04-11T20:02:15.000Z'
+size: 333KiB
+languages:
+  - suomi
+description: Lisätoiminnallisuuksia YTL:n Abitti-järjestelmän koelaadintaan (oma.abitti.fi)
+publisher: Nettiniilo Oy
+publisher_address: |-
+  Alppikatu 9 B 28
+  Helsinki 00530
+  FI
+extension_website: www.bittiniilo.fi
+privacy_policy: https://www.bittiniilo.fi/ehdot/gdpr/kayttajarekisteri
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bittiniilo",
+  "description": "Lisätoiminnallisuuksia YTL:n Abitti-järjestelmän koelaadintaan (oma.abitti.fi)",
+  "author": "Nettiniilo Oy",
+  "version": "0.94.1",
+  "icons": {
+    "128": "img/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://oma.abitti.fi/*"],
+      "css": ["css/common.css", "vendor/colorbox.css", "vendor/cookieconsent/cookieconsent.min.css"],
+      "js": ["vendor/jquery/jquery.min.js", "vendor/xorcipher/XORCipher.js", "js/content_scripts/settings.js", "js/content_scripts/main.js", "vendor/cookieconsent/cookieconsent.min.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/"],
+      "js": ["js/content_scripts/listing-init.js"],
+      "css": ["css/listing.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/school/bertta/*"],
+      "js": ["js/content_scripts/bertta-init.js"],
+      "css": ["css/bertta.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/school/exams"],
+      "js": ["js/content_scripts/listing-init.js"],
+      "css": ["css/listing.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/school/grading", "https://oma.abitti.fi/school/grading/*"],
+      "js": ["js/content_scripts/grading-init.js"],
+      "css": ["css/grading.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/school/preview/*"],
+      "js": ["js/content_scripts/preview-init.js"],
+      "css": ["css/preview.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/school/review/*"],
+      "js": ["js/content_scripts/review-init.js"],
+      "css": ["css/review.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://oma.abitti.fi/answers/*"],
+      "js": ["js/content_scripts/answers-init.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [ "https://oma.abitti.fi/*" ],
+  "web_accessible_resources": [
+    {
+      "resources": ["css/*", "js/content_scripts/inject/*", "vendor/*"],
+      "matches": ["https://oma.abitti.fi/*"]
+    }
+  ]
+}

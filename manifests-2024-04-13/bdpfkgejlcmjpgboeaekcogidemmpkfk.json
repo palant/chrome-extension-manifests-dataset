@@ -1,0 +1,111 @@
+---
+name: COPY PASTE 360
+version: '1.412'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 108
+release_date: '2023-12-21T17:14:55.000Z'
+size: 7.43MiB
+languages:
+  - English (United States)
+description: A convenient way to save multiple links and text in one place
+publisher_account: BOS
+support_website: https://copypaste360/support
+privacy_policy: https://app.mysocial360.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "COPY PASTE 360",
+  "short_name": "COPY PASTE 360",
+  "version": "1.412",
+  "description": "A convenient way to save multiple links and text in one place",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "homepage_url": "https://copypaste360.com",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F",
+        "windows": "Ctrl+Shift+F",
+        "chromeos": "Ctrl+Shift+F",
+        "linux": "Ctrl+Shift+F"
+      },
+      "description": "Multiple Copy and Paste"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "clipboardRead",
+    "contextMenus",
+    "identity",
+    "identity.email",
+    "gcm",
+    "notifications",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo16.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.mysocial360.com/oauth/*",
+        "https://beta.app.copypaste360.com/copypaste360/*",
+        "https://beta.app.copypaste360.com/copypaste360/api/facebook/verified",
+        "https://beta.app.copypaste360.com/copypaste360/api/facebook/verified/*",
+        "https://beta.app.copypaste360.com/copypaste360/oauth/*"
+      ],
+      "js": [
+        "./messages/auth.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./libs/jquery.js",
+        "./libs/sweetalert.js",
+        "./content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://accountscenter.facebook.com/profiles/",
+        "https://accountscenter.facebook.com/personal_info/",
+        "https://accountscenter.facebook.com/profiles/*",
+        "https://accountscenter.facebook.com/personal_info/*"
+      ],
+      "js": [
+        "./content/facebook.login.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "logo16.png",
+    "32": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  }
+}

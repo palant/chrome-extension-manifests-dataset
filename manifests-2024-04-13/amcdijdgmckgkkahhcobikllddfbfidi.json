@@ -1,0 +1,190 @@
+---
+name: 'Reply: Email Finder and Outreach'
+version: 3.3.12
+category_slug: productivity/tools
+rating: 4.266666666666667
+rating_count: 30
+user_count: 10000
+release_date: '2024-03-27T23:08:58.000Z'
+size: 2.08MiB
+languages:
+  - English
+description: >-
+  Reply’s Free Email Finder and Outreach searches for emails on professional
+  social media, automates the outreach process.
+publisher_account: reply.io
+extension_website: reply.io
+support_website: https://support.reply.io/en/articles/2881300-chrome-extension-overview
+privacy_policy: https://name2email.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.3.12",
+  "name": "Reply: Email Finder and Outreach",
+  "description": "Reply’s Free Email Finder and Outreach searches for emails on professional social media, automates the outreach process.",
+  "homepage_url": "https://reply.io",
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus",
+    "activeTab",
+    "webRequest",
+    "clipboardRead",
+    "clipboardWrite",
+    "scripting",
+    "cookies",
+    "notifications",
+    "alarms",
+    "system.display",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*/*",
+    "https://app.copper.com/*",
+    "https://name2email.com/*",
+    "https://mail.google.com/*",
+    "https://contacts.google.com/*",
+    "https://run.replyapp-stage.net/*",
+    "https://api.reply.io/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "background.build.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://run.replyapp-stage.net/*",
+        "https://run.reply.io/*",
+        "https://run.dev.reply.io/*"
+      ],
+      "js": [
+        "contentSrc/forReply/forReply.build.js",
+        "contentSrc/forReply/browserZoom.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.lightning.force.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "contentSrc/forSalesforce/new/forSalesforceNew.build.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.salesforce.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "contentSrc/forSalesforce/old/forSalesforceOld.build.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "contentSrc/forLinkedin/forLinkedin.build.js",
+        "contentSrc/forLinkedin/forLinkedinLoader.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.prosperworks.com/*",
+        "https://app.copper.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "contentSrc/forCopper/forCopperLoader.js",
+        "contentSrc/forCopper/forCopper.build.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.hubspot.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "contentSrc/forHubspot/forHubspot.build.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.mail.google.com/mail/u/*/*"
+      ],
+      "js": [
+        "contentSrc/forGmail/forGmailComposerPreact.build.js",
+        "contentSrc/forGmail/forGmailComposerLogic.build.js",
+        "contentSrc/forGmail/gmailContactSearch.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.mail.google.com/*"
+      ],
+      "js": [
+        "contentSrc/forGmail/emailSearchInit.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://api.reply.io/api/v1/chrome-extension/play?*",
+        "https://api.replyapp-stage.net/api/v1/chrome-extension/play?*"
+      ],
+      "js": [
+        "contentSrc/forReply/hideUrl.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentSrc/forLinkedin/XMLHttpWatcher.js",
+        "contentSrc/forCopper/CopperHttpWatcher.js",
+        "pageWorld.js"
+      ],
+      "matches": [
+        "https://www.linkedin.com/*",
+        "https://app.copper.com/*",
+        "https://mail.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "icons/plugin-icons.png",
+        "contentSrc/forGmail/forGmail.css"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "icons/logo.png",
+    "48": "icons/logo-1.png",
+    "128": "icons/logo-2.png"
+  },
+  "action": {
+    "default_icon": "icons/logo-1.png",
+    "default_title": "Reply"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhUXU00rFaUTFBCSwHJnYB+HGG5XNLHn66ic8igPhWSK97o/dQlK7kuNPQfuTolk7sDxzHa8MlLUQLL75mCJxmLeE4+9Q3yTxLzieMxxvLu7nPrl0jRLhiJhTun6XnwmVlypid8cKLCe8A1ng/kuGTnQq87SqVYcGhtFtO9N66t1pH8sYmZDspqs5keN+93vcbFTw5l2axfmB6lrWUGbTE/SaIoDPwpIx28+aVlL5HLLzDrx8sNLIP+K4KZ443baVxeC1Bzv9EAZ0sVbCDOmL++Xia0IznIGJbaRH36Jy/1WIMMS2KhK+9/1wZprG3iseOIhud1Mr+w1ghm96rEDj5QIDAQAB",
+  "oauth2": {
+    "client_id": "783238239360-95a92o3kc3pt2i0pdm2r5i0jml8gue3m.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email",
+      "openid"
+    ]
+  }
+}

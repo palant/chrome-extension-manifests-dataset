@@ -1,0 +1,129 @@
+---
+name: Mailshake
+version: 1.0.56
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 1000
+release_date: '2024-04-03T21:37:28.000Z'
+size: 10.42MiB
+languages:
+  - English
+description: LinkedIn Automation & Dialer by Mailshake
+publisher: Mailshake
+publisher_account: Mailshake.com
+publisher_address: |-
+  1920 E. Riverside Dr
+  Suite A120-116
+  Austin, TX 78741
+  US
+support_website: https://docs.mailshake.com/
+privacy_policy: https://mailshake.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Mailshake",
+  "version": "1.0.56",
+  "manifest_version": 3,
+  "description": "LinkedIn Automation & Dialer by Mailshake",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mailshake.com/*",
+        "https://*.mailshake.com/*",
+        "https://*.mailshake-dev.com/*",
+        "https://*.mailshake-qa.com/*",
+        "http://0.0.0.0:8080/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://*.mailshake.com/*",
+        "*://*.mailshake-dev.com/*",
+        "*://*.mailshake-qa.com/*",
+        "http://0.0.0.0:8080/*",
+        "https://docs.google.com/*"
+      ],
+      "js": [
+        "phoneNumberMatcher.js"
+      ],
+      "css": [
+        "phone-number-matcher.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://*.linkedin.com/*",
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "linkedinClient.js",
+        "dataFinder.js"
+      ],
+      "css": [
+        "data-finder.css"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": "assets/icons/icon19.png",
+    "default_title": "Mailshake",
+    "default_popup": "index.html#/login"
+  },
+  "options_ui": {
+    "page": "index.html#/options",
+    "open_in_tab": true,
+    "browser_style": true
+  },
+  "web_accessible_resources": [{
+    "resources": ["assets/img/link-bg.png",
+      "assets/img/data-finder-ms-active.png",
+      "assets/img/data-finder-search-active.png",
+      "assets/img/data-finder-finding.png",
+      "assets/img/data-finder-found.png",
+      "assets/img/data-finder-not-found.png",
+      "assets/img/data-finder-search-inactive.png"],
+    "matches": ["<all_urls>"],
+    "extension_ids": []
+  }],
+  "permissions": [
+    "notifications",
+    "webNavigation",
+    "webRequest",
+    "storage",
+    "alarms",
+    "system.display",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "*://0.0.0.0/*", "*://*.mailshake.com/*", "*://*.mailshake-dev.com/*", "*://*.mailshake-qa.com/*"]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmQDnZkCTBnAUxAnkFz4W3lbUoxGqzuKsSiatlfj7daQ1ezoZHQQXOH9/W1ZC3BJ+HlVDiNq9JTST3rMV8YiVdWfEJcagvJe0MmoYB8Bxbl1TFIFSM34H5gcOY7HSm+pM68yoWH33II9eqCuUBAcz+rWjg3edTMXQxbzfn7TGLGT0OVfCvvJGNnZQmmBdQncCIDNvWcFkBhe7NRnTKvs1xlma4BkN7M+hLkBJYGVYMdlhUGyahXiam094+AVXz4muyY/PIxtLYuKgOlXSxkxRsi5bdFXEpmEGf8MnUT2b8zbC9F6aE70FzZ1DTXKnrDMKbsE3coaq+l2Lxv5y2w8djwIDAQAB"
+}

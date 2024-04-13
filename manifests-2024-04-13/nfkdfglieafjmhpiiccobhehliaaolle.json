@@ -1,0 +1,122 @@
+---
+name: AMZ Online Arbitrage - Multi-Tool
+version: 1.4.3
+category_slug: productivity/workflow
+rating: 4.176470588235294
+rating_count: 17
+user_count: 3000
+release_date: '2023-12-14T15:53:38.000Z'
+size: 936KiB
+languages:
+  - English (United States)
+description: >-
+  Are You looking to source a product on Amazon? Our Multi-Tool will help you
+  find the most profitable products.
+publisher_account: AMZ Online Arbitrage
+extension_website: amzonlinearbitrage.com
+support_website: https://www.amzonlinearbitrage.com
+privacy_policy: https://amzonlinearbitrage.com/privacy-policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  
+    "manifest_version": 3,
+    "name": "AMZ Online Arbitrage - Multi-Tool",
+    "version": "1.4.3",
+    "description": "Are You looking to source a product on Amazon? Our Multi-Tool will help you find the most profitable products.",
+    "declarativeNetRequest": {
+      "rules": [
+        {
+          "id": "modifyHeadersRule",
+          "priority": 1,
+          "action": {
+            "type": "modifyHeaders",
+            "responseHeaders": [
+              { "name": "Content-Type", "value": "text/html" },
+              { "name": "sec-fetch-dest", "value": "empty" },
+              { "name": "sec-fetch-mode", "value": "cors" },
+              { "name": "sec-fetch-site", "value": "none" }
+            ]
+          },
+          "condition": {
+            "urlFilter": "*://sellercentral.amazon.com/hz/fba/profitabilitycalculator/index?lang=en_US*"
+          }
+        },
+        {
+          "id": "modifyHeadersRule2",
+          "priority": 2,
+          "action": {
+            "type": "modifyHeaders",
+            "responseHeaders": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "sec-fetch-dest", "value": "empty" },
+              { "name": "sec-fetch-mode", "value": "cors" },
+              { "name": "sec-fetch-site", "value": "none" }
+            ]
+          },
+          "condition": {
+            "urlFilter": "*://sellercentral.amazon.com/fba/profitabilitycalculator/productmatches"
+          }
+        },
+        {
+          "id": "modifyHeadersRule3",
+          "priority": 3,
+          "action": {
+            "type": "modifyHeaders",
+            "responseHeaders": [
+              { "name": "Content-Type", "value": "application/json" },
+              { "name": "sec-fetch-dest", "value": "empty" },
+              { "name": "sec-fetch-mode", "value": "cors" },
+              { "name": "sec-fetch-site", "value": "none" }
+            ]
+          },
+          "condition": {
+            "urlFilter": "*://sellercentral.amazon.com/fba/profitabilitycalculator/getafnfee"
+          }
+        }
+      ]
+    },
+    "permissions": [
+      "storage",
+      "declarativeNetRequest",
+      "activeTab"
+    ],
+    "host_permissions": [
+      "*://sellercentral.amazon.com/*",
+      "*://extnapi.amzonlinearbitrage.com/*",
+      "*://*.amazon.com/*"
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" ,"140":"cloud-computing140.png"},
+    "background": {
+      "matches": ["*://*.amazon.com/*"],
+      "service_worker": "background.js",
+      "type": "module"
+    },
+    "content_scripts": [
+      {
+        "matches": ["*://*.amazon.com/*"],
+        "js": [
+          "content.js",
+          "graph.js",
+          "react.development.js",
+          "react-dom.development.js",
+          "sweetalert.min.js",
+          "axios.min.js",
+          "jquery.js"
+        ],
+        "css": ["content.css"],
+        "run_at": "document_end",
+        "all_frames": true
+      }
+    ],
+    "web_accessible_resources": [{
+      "resources": ["logo.png","infoicon.png","product_logo.png", "graph.html","icon48.png","download.png","cloud-computing140.png","bag.png","doubt.png","file_share.png","copy_file.png","progress.png","refresh.png","calculator.png","enter.png","search-interface-symbol.png","amz_logo.png","icon48.png","feedback.png","icon.png","green_icon.png","warning.png","access_img.png","cal_calculator.png","calcy.png","green_exclometry.png","loading_icon.gif"],
+      "matches": ["*://*.amazon.com/*"]
+    }
+  ]
+  }
+  

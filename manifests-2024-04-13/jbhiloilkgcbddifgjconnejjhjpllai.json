@@ -1,0 +1,79 @@
+---
+name: CanDoo - Find better information faster
+version: 1.8.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 110
+release_date: '2024-03-25T04:23:28.000Z'
+size: 121KiB
+languages:
+  - English
+description: >-
+  CanDoo is a browser plugin to help you find legal data better and faster on
+  CanLII using advanced AI techniques.
+publisher: Formic AI
+publisher_account: varun
+publisher_address: |-
+  320 Richmond St E
+  610
+  Toronto, ON M5A 1P9
+  CA
+support_website: https://www.linkedin.com/company/candoo-ai
+privacy_policy: https://www.formic.legal/privacypolicy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CanDoo - Find better information faster",
+  "description": "CanDoo is a browser plugin to help you find legal data better and faster on CanLII using advanced AI techniques.",
+  "version": "1.8.0",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmpBnsBR/CLO/WOJpxn/QvvosdIKZUHd/HPflm/rJzYgkLSlNmdYJs0nXM/mU8FxaWU42ZkaY23UOSsEbQ3YwWcePIVRa/vXSRiCn3c+gVQI7K5BiVF8qAixL2Ia5INJQBWzHhURuj0MP+5B/omxAg9zheILu2lO56NfpglNZ1RBVNUptTq5tvEssy63/FGhea9r+yDUFXJLObD8pKRRrN24P/wpGLnZFe8QNVdENE5yHNUlH4Q18cIXAD2LZmcpfanuq4mup2RhvdOsWgNodHM8v+eeDu0T7xnko4N2iC0+kcMtDw1BkPzlfiZvrRFmevHXG8IBdLQi11povFh/jawIDAQAB",
+  "minimum_chrome_version": "116",
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_popup": "popup/popup.html"
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "./background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content/messageDispatcher.js",
+        "content/paragraphSelector.js",
+        "content/injectConversationButton.js",
+        "content/replaceSearchButton.js",
+        "content/subjectMonitor.js",
+        "content/subjectFilter.js",
+        "content/basicSearchDispatcher.js",
+        "content/injectSearchHistoryButton.js",
+        "content/sharedLink.js",
+        "content/content.js"
+      ],
+      "css": ["content/css/sharedLink.css"],
+      "matches": ["https://www.canlii.org/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["tabs", "cookies", "sidePanel", "storage", "webRequest"],
+  "host_permissions": [
+    "http://localhost:8081/",
+    "https://www.canlii.org/*",
+    "https://app.candoo.ai/"
+  ]
+}

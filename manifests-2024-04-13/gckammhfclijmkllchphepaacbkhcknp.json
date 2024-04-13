@@ -1,0 +1,71 @@
+---
+name: Standby lb detector
+version: 2020.3.23
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 16
+release_date: '2020-03-31T12:16:34.000Z'
+size: 7.41KiB
+languages:
+  - English (United States)
+description: >-
+  Tired of making changes to the standby Big-IP by mistake? This extension
+  detects when you log into a standby Big-IP and notifies…
+publisher_account: Magnus Watn
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Standby lb detector",
+  "version": "2020.3.23",
+  "author": "Magnus Watn",
+  "manifest_version": 2,
+  "icons": {
+    "64": "icon64.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "https://*/",
+    "webRequest",
+    "storage"
+  ],
+  "page_action": {
+    "default_icon": {
+      "64": "icon64.png"
+    }
+  },
+  "omnibox": {
+    "keyword": "b"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "js": [
+        "contentScript.js"
+      ],
+      "css": [
+        "standby-lb-detector-css.css"
+      ],
+      "matches": [
+        "https://*/xui/"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "js": [
+        "contentScriptLoginPage.js"
+      ],
+      "matches": [
+        "https://*/tmui/login.jsp*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,141 @@
+---
+name: Identity Guard
+version: 3.7.8
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 3000
+release_date: '2024-03-25T11:35:49.000Z'
+size: 7.08MiB
+languages:
+  - English (United States)
+description: >-
+  Identity Guard secures your passwords and helps you browse online more
+  securely and privately.
+publisher: Aura Sub, LLC
+publisher_account: https://www.aura.com/
+publisher_address: |-
+  15 Network Dr
+  FL 3
+  Burlington, MA 01803-2766
+  US
+support_website: https://www.identityguard.com/contact
+privacy_policy: https://www.aura.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnfcGSrccunnRkDxQALJl0KcXEm13IUWByMhikXx2JW5tUX6x72Q77scLmFXLA4RZrBl3tO0rzG26C7aHJfw1D+WLOiEOFZG81wLOhirELYzdPVv4lsCGhFmoxERrPqzQb3DauEea3B0Nuoa2ZdZ9r8FcKymSCowt7usNOYoMogh+t+y53MwSTql1jOzkcLOpsJgfJa9KwyA1fay9a0/s3/xI/u4BPZ3nKF12o/guhkNCFfcsrqcDnnrlSMGo2XlZPYS2Umj15crkUPJF87eCzyrv7bKyEoxcPgyfncdqr+TIgpB8DzcBB/9csB9SkpSVZ72Qh9t5xhxsYaPrbo3/jQIDAQAB",
+  "manifest_version": 3,
+  "name": "Identity Guard",
+  "version": "3.7.8",
+  "minimum_chrome_version": "109",
+  "description": "Identity Guard secures your passwords and helps you browse online more securely and privately.",
+  "icons": {
+    "16": "images/store-icon-16.png",
+    "48": "images/store-icon-48.png",
+    "128": "images/store-icon-128.png"
+  },
+  "background": {
+    "service_worker": "js/background-chrome.js"
+  },
+  "action": {
+    "default_popup": "",
+    "default_icon": {
+      "16": "images/action-icon/active_16.png",
+      "32": "images/action-icon/active_32.png",
+      "64": "images/action-icon/active_64.png"
+    },
+    "default_title": "Identity Guard"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "at",
+        "enabled": true,
+        "path": "ruleset/easy-tracking.json"
+      },
+      {
+        "id": "ads",
+        "enabled": true,
+        "path": "ruleset/easy-base.json"
+      },
+      {
+        "id": "allow",
+        "enabled": true,
+        "path": "ruleset/allowing-rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "alarms",
+    "privacy",
+    "webNavigation",
+    "storage",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "incognito": "spanning",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "images/*.svg",
+        "fonts/*.woff",
+        "fonts/*.woff2",
+        "videos/*.mp4",
+        "_locales/**/*.json",
+        "css/**/*.css",
+        "js/*.js",
+        "js/*.js.map",
+        "html/*.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/main-app-content-chrome.js"
+      ],
+      "css": [
+        "css/fonts/style.css"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/other-content-chrome.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.identityguard.com/*",
+        "*://localhost/*"
+      ],
+      "js": [
+        "js/specific-webpage-content-chrome.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; default-src 'self'; connect-src * data: blob: filesystem:; img-src *;",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-inline'"
+  }
+}

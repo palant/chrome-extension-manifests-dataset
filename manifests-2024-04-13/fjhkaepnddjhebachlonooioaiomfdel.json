@@ -1,0 +1,168 @@
+---
+name: Free Email Tracker for Gmail - EngageBay
+version: 2.0.2
+category_slug: productivity/workflow
+rating: 4.285714285714286
+rating_count: 14
+user_count: 1000
+release_date: '2024-02-16T11:51:09.000Z'
+size: 8.91MiB
+languages:
+  - English
+description: >-
+  Free Email tracker and lead generator. Scrape leads directly from LinkedIn and
+  add them in EngageBay to grow your business
+publisher: EngageBay Inc.,
+publisher_account: engagebay.com
+publisher_address: |-
+  Devi Residency, Suite #401, 80, Sri Shyam Nagar,
+  Telecom Nagar, Gachibowli,
+  Hyderabad,, Telangana 500032
+  IN
+extension_website: www.engagebay.com
+support_website: https://www.engagebay.com/support
+privacy_policy: https://www.engagebay.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Free Email Tracker for Gmail - EngageBay",
+  "description": "Free Email tracker and lead generator. Scrape leads directly from LinkedIn and add them in EngageBay to grow your business",
+  "version": "2.0.2",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "EngageBay",
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "32": "images/icon_32.png",
+      "48": "images/icon_48.png",
+      "128": "images/icon_128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon_16.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": [
+        "content_gmail.js"
+      ],
+      "css": [
+        "css/gmail.css",
+        "css/typeahead.css",
+        "css/commons.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.outlook.live.com/*",
+        "*://*.outlook.office365.com/*",
+        "*://*.outlook.office.com/*"
+      ],
+      "js": [
+        "content_outlook.js"
+      ],
+      "css": [
+        "css/outlook.css",
+        "css/commons.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/*",
+        "http://*.linkedin.com/*"
+      ],
+      "js": [
+        "content_linkedin.js",
+        "content_linkedin_profile_details.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.appspot.com/*",
+        "*://*.engagebay.com/*",
+        "http://localhost:8888/*"
+      ],
+      "js": [
+        "content_engagebay.js",
+        "content_linkedin_gadget.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "css": []
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/*",
+        "http://*.linkedin.com/*"
+      ],
+      "js": [
+        "content_linkedin_widget_frame_events.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.google.co.in/search?num=100*",
+        "http://*.google.co.in/search?num=100*",
+        "https://*.google.com/search?num=100*",
+        "https://www.google.com/search?gws_rd=cr&as_qdr=all&q=*",
+        "https://www.google.co.in/search?gws_rd=cr&as_qdr=all&q=*",
+        "https://*.google.com/search?q=*"
+      ],
+      "js": [
+        "content_linkedin_generic.js"
+      ],
+      "css": [
+        "css/commons.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module",
+    "matches": [
+      "<all_urls>"
+    ]
+  },
+  "permissions": [
+    "activeTab",
+    "management",
+    "notifications",
+    "cookies",
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pageWorld.js",
+        "images/*",
+        "inject/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://mail.google.com/",
+    "<all_urls>"
+  ]
+}

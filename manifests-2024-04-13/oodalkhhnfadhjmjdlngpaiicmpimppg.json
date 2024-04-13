@@ -1,0 +1,111 @@
+---
+name: Rami Levy Online Helper
+version: 2.0.0
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-06-25T15:19:31.000Z'
+size: 258KiB
+languages:
+  - עברית
+description: >-
+  אתר רמי לוי צריך לאפשר עוד אפשרויות.
+
+  למשל:
+
+  לאפשר לאחד בין רשימות מוצרים וליצור מהם רשימה חדשה, כולל לסכום את המוצרים
+  הקיימים בשניהם…
+publisher_account: noamloewenstern
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rami Levy Online Helper",
+  "version": "2.0.0",
+  "action": {
+    "default_title": "Popup",
+    "default_popup": "src/popup/index.html",
+    "default_icon": {
+      "16": "logo128.png",
+      "32": "logo128.png",
+      "48": "logo128.png",
+      "128": "logo128.png"
+    }
+  },
+  "icons": {
+    "48": "logo128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content.ts-loader-69099fd7.js"
+      ],
+      "matches": [
+        "https://www.rami-levy.co.il/*",
+        "https://api-prod.rami-levy.co.il/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/injectInterceptRequests.ts-loader-f52f27d7.js"
+      ],
+      "matches": [
+        "https://www.rami-levy.co.il/*",
+        "https://api-prod.rami-levy.co.il/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://api-prod.rami-levy.co.il/*",
+        "https://www.rami-levy.co.il/*"
+      ],
+      "resources": [
+        "logo128.png",
+        "src/assets/logo128.png",
+        "src/contentScript/interceptRequests/injectedDOMscript.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://api-prod.rami-levy.co.il/*",
+        "https://www.rami-levy.co.il/*"
+      ],
+      "resources": [
+        "assets/helpers-4e21c10b.js",
+        "assets/chunk-QIZ4XBKF-ef25b61d.js",
+        "assets/storage-46172a3b.js",
+        "assets/index-esm-fa93c79c.js",
+        "assets/_commonjsHelpers-7a77ea84.js",
+        "assets/content.ts-c86f2429.js",
+        "assets/injectInterceptRequests.ts-e92741c4.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src: 'self' 'unsafe-inline'; object-src 'self' ; default-src 'none'; frame-ancestors 'none';"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "src/options/index.html",
+    "open_in_tab": true
+  },
+  "host_permissions": [
+    "https://www.rami-levy.co.il/*",
+    "https://api-prod.rami-levy.co.il/api/*"
+  ]
+}

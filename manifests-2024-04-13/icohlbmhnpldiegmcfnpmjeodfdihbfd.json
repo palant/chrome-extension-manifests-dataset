@@ -1,0 +1,95 @@
+---
+name: Ovrlay
+version: 1.0.2
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2020-07-31T05:57:50.000Z'
+size: 127KiB
+languages:
+  - English (United States)
+description: >-
+  Broadcast the currently playing song to the overlay.zusor.io servers and use
+  that info for the OBS overlay
+publisher_account: Zusor
+support_website: https://overlay.zusor.io/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "1.0.2",
+  "name": "Ovrlay",
+  "description": "Broadcast the currently playing song to the overlay.zusor.io servers and use that info for the OBS overlay",
+  "page_action": {
+    "default_title": "Ovrlay settings",
+    "default_popup": "popup/Popup.html",
+    "default_icon": "icons/512.png"
+  },
+  "background": {
+    "scripts": [
+      "./socket.io.js",
+      "./Emitter.js"
+    ],
+    "persistent": true
+  },
+
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "512": "icons/512.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "include_globs": [
+        "*://soundcloud.*/*"
+      ],
+      "js": [
+        "./Extractor.js",
+        "./websites/soundcloud.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "include_globs": [
+        "*://www.youtube.*/*"
+      ],
+      "js": [
+        "./Extractor.js",
+        "./websites/youtube.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "include_globs": [
+        "*://music.youtube.*/*"
+      ],
+      "js": [
+        "./Extractor.js",
+        "./websites/youtube-music.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "include_globs": [
+        "*://www.pandora.*/*"
+      ],
+      "js": [
+        "./Extractor.js",
+        "./websites/pandora.js"
+      ]
+    }
+  ]
+}

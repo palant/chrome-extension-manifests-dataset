@@ -1,0 +1,156 @@
+---
+name: Cross List It
+version: 4.1.8
+category_slug: productivity/workflow
+rating: 1.9166666666666667
+rating_count: 12
+user_count: 416
+release_date: '2022-07-20T17:10:10.000Z'
+size: 769KiB
+languages:
+  - English
+description: >-
+  Cross List It provides an easy way to cross post your Ebay, Facebook, Etsy,
+  Poshmark, Mercari and Depop listings to each other.
+publisher: Carnival of Sorts
+publisher_account: Cross List It
+publisher_address: |-
+  608 Roanke Dr
+  Raymore, MO 64083
+  US
+extension_website: crosslistit.com
+support_website: http://crosslistit.com/#/support
+privacy_policy: https://crosslistit.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cross List It",
+  "short_name": "CLI",
+  "description": "Cross List It provides an easy way to cross post your Ebay, Facebook, Etsy, Poshmark, Mercari and Depop listings to each other.",
+  "manifest_version": 2,
+  "version": "4.1.8",
+  "permissions": [ 
+    "tabs", 
+    "downloads", 
+    "activeTab",
+    "storage",
+    "https://crlistit-dev.azurewebsites.net/api*",
+    "https://crosslistit.com/api*",
+    "https://bulkedit.ebay.com/",
+    "https://www.depop.com/*",
+    "https://www.etsy.com/*",
+    "https://poshmark.com/*",
+    "https://poshmark.ca/*",
+    "https://www.ebay.com/*",
+    "https://www.mercari.com/*",
+    "https://www.facebook.com/marketplace/*",
+    "https://vi.vipr.ebaydesc.com/*"
+  ],
+  "icons": {
+    "16": "arrow16.png",
+    "48": "arrow48.png",
+    "128": "arrow128.png",
+    "256": "arrow256.png"
+},
+"browser_action": {
+  "default_popup": "popup.html",
+  "default_title": "Cross List It"
+},
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "js": [ "scrape.js" ],
+      "matches": [
+        "https://www.depop.com/*",
+        "https://www.etsy.com/*",
+        "https://poshmark.com/*",
+        "https://poshmark.ca/*",
+        "https://www.ebay.com/*",
+        "https://www.mercari.com/*",
+        "https://www.facebook.com/marketplace/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["ebayDescriptionScrape.js"],
+      "matches": [ "https://vi.vipr.ebaydesc.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillDepop.js" ],
+      "matches": ["https://www.depop.com/products/create/*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillPoshmark.js" ],
+      "matches": ["https://poshmark.com/create-listing", "https://poshmark.ca/create-listing"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillMercari.js" ],
+      "matches": [ "https://www.mercari.com/sell/" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillFacebook.js" ],
+      "matches": [ "https://www.facebook.com/marketplace/create/item/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillEbayTitle.js" ],
+      "matches": [ "https://bulkedit.ebay.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillEbay.js" ],
+      "matches": [ "https://bulksell.ebay.com/ws/eBayISAPI.dll?SingleList&&DraftURL*" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillEbayNewTool.js"],
+      "matches": ["https://www.ebay.com/lstng*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillEbayQuickTool.js"],
+      "matches": ["https://www.ebay.com/sl/list/*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": ["fillEtsy.js" ],
+      "matches": [ "https://www.etsy.com/your/shops/*" ],
+      "include_globs": [
+          "https://www.etsy.com/your/shops/*/tools/listings/create*"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

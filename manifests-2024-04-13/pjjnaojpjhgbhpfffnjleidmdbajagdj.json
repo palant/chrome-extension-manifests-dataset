@@ -1,0 +1,116 @@
+---
+name: Dapplets
+version: 0.70.1
+category_slug: productivity/tools
+rating: 4.7
+rating_count: 10
+user_count: 27
+release_date: '2023-12-25T15:20:20.000Z'
+size: 2.0MiB
+languages:
+  - English
+description: The Bridge to the Augmented Web.
+publisher_account: Dapplets Project
+support_website: https://github.com/dapplets/dapplet-extension/issues
+privacy_policy: https://dapplets.org/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dapplets",
+  "version": "0.70.1",
+  "version_name": "0.70.1",
+  "description": "The Bridge to the Augmented Web.",
+  "author": "Dapplets Team <contact@dapplets.org>",
+  "short_name": "Dapplets",
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "minimum_chrome_version": "92",
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "19": "icons/icon19.png",
+      "32": "icons/icon32.png",
+      "36": "icons/icon36.png",
+      "38": "icons/icon38.png",
+      "48": "icons/icon48.png",
+      "64": "icons/icon64.png",
+      "96": "icons/icon96.png",
+      "128": "icons/icon128.png",
+      "512": "icons/icon512.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "32": "icons/icon32.png",
+    "36": "icons/icon36.png",
+    "38": "icons/icon38.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png",
+    "512": "icons/icon512.png"
+  },
+  "sandbox": {
+    "pages": [
+      "sandbox.html"
+    ]
+  },
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-inline' blob:"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "custom-elements.min.js",
+        "contentscript.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://app.mynearwallet.com/*",
+        "https://testnet.mynearwallet.com/*"
+      ],
+      "js": [
+        "mnw-patch-cs.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "callback.html",
+        "sandbox.html",
+        "inpage.js",
+        "worker.js",
+        "mnw-patch-inpage.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "unlimitedStorage",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "*://localhost/*",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

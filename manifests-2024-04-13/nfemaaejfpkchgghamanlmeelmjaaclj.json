@@ -1,0 +1,83 @@
+---
+name: jubei.jp横断検索
+version: 2.1.1
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 2
+user_count: 840
+release_date: '2023-10-02T06:34:23.000Z'
+size: 151KiB
+languages:
+  - English
+  - 日本語
+description: ウェブページ中のISBN・ネットショップURLを検出、対応する商品情報を表示して価格/在庫/レビューの比較ページにリンクします
+publisher_account: jubei.co.jp
+extension_website: jubei.jp
+support_website: https://jubei.co.jp/contactus/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name": "__MSG_extName__",
+    "description": "__MSG_extDescription__",
+    "default_locale": "ja",
+    "version": "2.1.1",
+    "icons" : {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+
+    "permissions": ["tabs", "storage"],
+    "host_permissions" : [
+        "https://www.e-hon.ne.jp/*",
+        "https://7net.omni7.jp/*",
+        "https://wowma.jp/*",
+        "https://www.yodobashi.com/*",
+        "https://www.biccamera.com/*",
+        "https://ec.geo-online.co.jp/*",
+        "https://merurido.jp/*",
+        "https://www.tokka.com/*",
+        "https://joshinweb.jp/*",
+        "https://www.ec-current.com/*",
+        "https://www.honyaclub.com/*",
+        "https://slist.amiami.jp/*",
+
+        
+        "https://jubei.jp/*"
+    ],
+
+    "background": {
+        "service_worker" : "background.js"
+    },
+
+    "content_scripts": [{
+        "matches": ["http://*/*", "https://*/*"],
+        "css" : ["cs/cs.css"],
+        "js": ["./libs/const.js", "./libs/itemurl.js", "./libs/tag.js", "./libs/options.js", "content_script.js"],
+        "run_at": "document_idle"
+    }],
+
+    "web_accessible_resources" : [
+        {"resources" : ["img/icon16.png"],
+        "matches" : ["http://*/*", "https://*/*"]
+        }
+    ],
+    "externally_connectable" : {
+        "matches" : [
+            
+            "https://jubei.jp/dt/*"
+        ]
+    },
+
+    "action": {
+        "default_title": "jubei.jp横断検索: ウェブページ中のISBN,ASIN,ネットショップURLに対応する商品を見る",
+        "default_icon": "img/icon16.png",
+        "default_popup": "popup.html"
+    },
+
+    "options_page": "options/index.html"
+}

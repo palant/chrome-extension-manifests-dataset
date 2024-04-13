@@ -1,0 +1,54 @@
+---
+name: LeetSync - Leetcode to Github Synchronizer
+version: 0.0.5
+category_slug: productivity/developer
+rating: 4.083333333333333
+rating_count: 36
+user_count: 7000
+release_date: '2024-02-12T12:03:20.000Z'
+size: 5.57MiB
+languages:
+  - English
+description: >-
+  LeetSync is a Chrome extension that enables you to sync your LeetCode problem
+  submissions with a selected GitHub repository.
+publisher_account: Ahmed Ghonem
+support_website: https://github.com/3ba2ii/LeetSync/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LeetSync - Leetcode to Github Synchronizer",
+  "description": "LeetSync is a Chrome extension that enables you to sync your LeetCode problem submissions with a selected GitHub repository.",
+  "version": "0.0.5",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "LeetSync"
+  },
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png",
+    "256": "logo256.png",
+    "512": "logo512.png"
+  },
+  "permissions": ["tabs", "storage", "cookies", "unlimitedStorage", "webRequest"],
+  "host_permissions": ["https://leetcode.com/*"],
+  "background": {
+    "service_worker": "static/scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["static/scripts/authorize-github.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["static/scripts/leetcode.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,155 @@
+---
+name: Focus On The Video
+version: '1.0'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 86
+release_date: '2020-05-10T08:03:07.000Z'
+size: 5.41MiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Kiswahili
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - मराठी
+  - हिन्दी
+  - বাংলা
+  - ગુજરાતી
+  - தமிழ்
+  - తెలుగు
+  - ಕನ್ನಡ
+  - മലയാളം
+  - ไทย
+  - አማርኛ
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Turn the lights back off and focus on the video. This is like a cinema
+  experience when you begin watching your Youtube videos.
+publisher_account: Free Software
+privacy_policy: https://www.freebusinessapps.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+  "manifest_version": 2,
+  "name": "Focus On The Video",
+  "short_name": "Focus On The Video",
+  "version": "1.0",
+  "description": "Turn the lights back off and focus on the video. This is like a cinema experience when you begin watching your Youtube videos.",
+
+  "icons": {
+      "16": "images/icons8-video-16.png",
+      "32": "images/icons8-video-32.png",
+      "48": "images/icons8-video-48.png",
+      "64":  "images/icons8-video-64.png",
+      "128": "images/icons8-video-128.png"
+  },
+  "default_locale": "en",
+  "browser_action": {
+      "default_icon": {
+        "16": "images/icons8-video-16.png",
+      "32": "images/icons8-video-32.png",
+      "48": "images/icons8-video-48.png",
+      "64":  "images/icons8-video-64.png",
+      "128": "images/icons8-video-128.png"
+      }
+    
+  },
+  "background": {
+    "page": "background.html",
+   "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["*://*/*/options.html"],
+      "js": ["js/constants.js", "js/content.js", "js/eco.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["*://*.mycinema.pro/*", "*://*/*/options.html"],
+      "css" : ["css/light.css"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/screenshader.js"],
+      "exclude_matches": ["*://*/*/options.html"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": [ "js/fps.js" ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": ["*://*/*/options.html"],
+      "js": ["js/autostop.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://*.youtube.com/*"], 
+      "css" : ["css/youtube.css"]
+    },
+    {
+      "matches": ["*://*/*/options.html"],
+      "js": ["js/constants.js","js/options.js","js/Chart.js","js/eco-preview.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "offline_enabled": true,
+  "minimum_chrome_version": "33",
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "permissions": [ "contextMenus", "tabs", "<all_urls>", "storage","https://update-api.cinemamode.co/" ]
+}

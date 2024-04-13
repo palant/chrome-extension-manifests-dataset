@@ -1,0 +1,124 @@
+---
+name: Vimium
+version: 2.1.2
+category_slug: productivity/tools
+rating: 4.818575005690872
+rating_count: 4393
+user_count: 500000
+release_date: '2024-04-04T05:30:39.000Z'
+size: 272KiB
+languages:
+  - English
+description: >-
+  The Hacker's Browser. Vimium provides keyboard shortcuts for navigation and
+  control in the spirit of Vim.
+publisher_account: Ilya Sukhar, Phil Crosby, Stephen Blott
+support_website: https://github.com/philc/vimium/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Vimium",
+  "version": "2.1.2",
+  "description": "The Hacker's Browser. Vimium provides keyboard shortcuts for navigation and control in the spirit of Vim.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "minimum_chrome_version": "105.0",
+  "background": {
+    "service_worker": "background_scripts/background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "browser_style": false,
+    "open_in_tab": true
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "history",
+    "storage",
+    "sessions",
+    "notifications",
+    "scripting",
+    "favicon",
+    "webNavigation"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "lib/utils.js",
+        "lib/keyboard_utils.js",
+        "lib/dom_utils.js",
+        "lib/rect.js",
+        "lib/handler_stack.js",
+        "lib/settings.js",
+        "lib/find_mode_history.js",
+        "content_scripts/mode.js",
+        "content_scripts/ui_component.js",
+        "content_scripts/link_hints.js",
+        "content_scripts/vomnibar.js",
+        "content_scripts/scroller.js",
+        "content_scripts/marks.js",
+        "content_scripts/mode_insert.js",
+        "content_scripts/mode_find.js",
+        "content_scripts/mode_key_handler.js",
+        "content_scripts/mode_visual.js",
+        "content_scripts/hud.js",
+        "content_scripts/mode_normal.js",
+        "content_scripts/vimium_frontend.js"
+      ],
+      "css": [
+        "content_scripts/vimium.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "file:///",
+        "file:///*/"
+      ],
+      "css": [
+        "content_scripts/file_urls.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/action_enabled_16.png",
+      "32": "icons/action_enabled_32.png"
+    },
+    "default_popup": "pages/action.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/vomnibar.html",
+        "content_scripts/vimium.css",
+        "pages/hud.html",
+        "pages/help_dialog.html",
+        "pages/completion_engines.html",
+        "resources/tlds.txt",
+        "_favicon/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

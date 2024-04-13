@@ -1,0 +1,93 @@
+---
+name: InstaText
+version: 1.1.15.1
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 12
+user_count: 100000
+release_date: '2024-04-01T10:16:08.000Z'
+size: 344KiB
+languages:
+  - English
+description: Write like a native speaker.
+publisher: InstaText d.o.o.
+publisher_account: InstaText
+publisher_address: |-
+  Tehnološki park 21
+  Ljubljana 1000
+  SI
+extension_website: instatext.io
+support_website: https://instatext.io/support/
+privacy_policy: https://instatext.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "InstaText",
+    "version": "1.1.15.1",
+    "description": "Write like a native speaker.",
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "https://*/*"
+    ],
+    "icons": {
+        "16": "images/icon-16x16.png",
+        "48": "images/icon-48x48.png",
+        "128": "images/icon-128x128.png"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "js": ["js/content.js"],
+            "css": ["css/itButton.css", "css/highlight.css"],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_idle",
+            "match_origin_as_fallback": true
+        },
+        {
+            "matches": [
+                "https://*/*"
+            ],
+            "js": ["js/editor.js"],
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "https://docs.google.com/*"
+            ],
+            "js": ["js/canvasFallback.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [ "js/alertMessages.json" ],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": [ "js/web-accessible/overleaf.js" ],
+            "matches": [ "*://www.overleaf.com/*" ]
+        },
+        {
+            "resources": [ "js/web-accessible/gdocs.js" ],
+            "matches": [ "https://docs.google.com/*" ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "images/icon-48x48.png"
+    },
+    "externally_connectable": {
+        "matches": ["*://instatext.io/*"]
+    },
+    "manifest_version": 3
+}

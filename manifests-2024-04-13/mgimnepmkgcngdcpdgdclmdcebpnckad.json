@@ -1,0 +1,64 @@
+---
+name: 速卖通称重和运费校验
+version: '1.3'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 275
+release_date: '2023-04-09T10:40:11.000Z'
+size: 72.97KiB
+languages:
+  - 中文 (简体)
+description: 获取速卖通包裹计费重量和实收运费，并根据实际重量判断速卖通是否多称、多收运费，自动计算可赔付金额。
+publisher_account: 清明雨上
+support_website: https://www.yuque.com/helps/sfr
+privacy_policy: https://www.aezhushou.com/web/policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "速卖通称重和运费校验",
+  "homepage_url":"https://tit.aezhushou.com/web/aeShipFeeReview/main.html?ifor=shipFeeReview",
+  "version": "1.3",
+  "manifest_version": 3,
+ 
+  "description": "获取速卖通包裹计费重量和实收运费，并根据实际重量判断速卖通是否多称、多收运费，自动计算可赔付金额。",
+  "icons": {
+    "16": "image/icon.png",
+    "48": "image/icon.png",
+    "128": "image/icon.png"
+  },
+  "background" : {
+      "service_worker": "html/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["html/jquery.js","html/underscore.js","html/sweetalert.min.js","html/g.js","html/checkShipFee.js"],
+      "css": ["html/sweetalert.css","html/mycss.css"],
+      "matches":["*://sg-cgmp.aliexpress.com/aex-seller-center/logistic/logisticOrderManage*","*://sg-cgmp.aliexpress.com/ae-global-seller-center/logistics_order_list*"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy":{
+    "script-src":"*://tit.aezhushou.com"
+  },
+  "permissions": ["background","declarativeNetRequest"],
+  "host_permissions": [
+    "*://sg-cainiao.aliexpress.com/*",
+    "*://sg-cgmp.aliexpress.com/*",
+    "*://gsp.aliexpress.com/*",
+    "*://csp.aliexpress.com/*",
+    "*://seller-acs.aliexpress.com/*",
+    "*://tit.aezhushou.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "rule1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  }
+}
+    
+    

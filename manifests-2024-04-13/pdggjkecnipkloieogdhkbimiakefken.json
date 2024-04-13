@@ -1,0 +1,148 @@
+---
+name: Business Click to Call Axialys
+version: AxiaCall (1.1.4)
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 777
+release_date: '2024-04-04T20:12:00.000Z'
+size: 244KiB
+languages:
+  - Français
+description: >-
+  Solution pour Centre de Contacts intégrée au navigateur pour recevoir des
+  appels et appeler en un clic un contact sur une page web.
+publisher: Axialys
+publisher_account: axialysdev
+publisher_address: |-
+  Imm. Energy Park – bât. 4
+  130/190 bd de Verdun
+  Courbevoie 92413
+  FR
+extension_website: axialys.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Business Click to Call Axialys",
+  "short_name": "AxiaCall",
+  "version": "1.1.4",
+  "minimum_chrome_version": "88",
+  "version_name": "AxiaCall (1.1.4)",
+  "omnibox": {
+    "keyword": "popc"
+  },
+  "default_locale": "fr",
+  "description": "__MSG_appDesc__",
+  "icons": {
+    "128": "img/logo2.png"
+  },
+  "author": "Axialys cloud Telecom Services",
+  "homepage_url": "https://voice-management.axialys.com/",
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/state/logo.png"
+    },
+    "default_title": "VoiceManagement"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://voice-management.axialys.com/operateurs/index.htm*"
+      ],
+      "js": [
+        "js/interface.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://voice-management.axialys.com/operateurs/index.htm?engine=chrome&version=0.0.0.1"
+      ],
+      "js": [
+        "js/fillLoginLogic.js",
+        "js/confirmPopup.js",
+        "js/logoutLogic.js"
+      ],
+      "run_at": "document_end"
+    },
+     {
+      "matches": [
+        "https://voice-management.axialys.com/operateurs/index.htm?engine=chrome&version=0.0.0.1&mode=easiware"
+      ],
+      "js": [
+        "js/fillLoginEasiware.js",
+        "js/confirmPopup.js",
+        "js/logoutLogic.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://voice-management.axialys.com/operateurs/*",
+        "https://*.easiware.fr/*"
+      ],
+      "js": [
+        "js/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.easiware.fr/*"
+      ],
+      "exclude_matches": [
+        "https://voice-management.axialys.com/operateurs/*"
+      ],
+      "js": [
+        "js/easiware.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://voice-management.axialys.com/operateurs/*"
+    ]
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "webRequest",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "contextMenus",
+    "tabs",
+    "windows"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "https://voice-management.axialys.com/*",
+    "*://voice-management.axialys.com/*",
+    "https://*.easiware.fr/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

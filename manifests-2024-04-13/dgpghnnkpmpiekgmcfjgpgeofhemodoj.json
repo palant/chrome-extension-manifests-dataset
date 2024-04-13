@@ -1,0 +1,70 @@
+---
+name: MyOwnExtension
+version: '1.7'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2022-03-10T12:15:06.000Z'
+size: 489KiB
+languages:
+  - 中文 (简体)
+description: >-
+  添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面,
+  删除一些url param追踪
+publisher_account: Luoming Xu
+support_website: https://github.com/LuomingXu/chromeextension/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "MyOwnExtension",
+    "version": "1.7",
+    "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面, 删除一些url param追踪",
+    "permissions": [
+        "contextMenus",
+        "webNavigation",
+        "storage"
+    ],
+    "background": {
+        "service_worker": "src/background.js"
+    },
+    "icons": {
+        "16": "imgs/icon.png",
+        "48": "imgs/icon.png",
+        "128": "imgs/icon.png"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+    "content_scripts": [
+        {
+            "css": [
+                "style.css"
+            ],
+            "js": [
+                "src/toc.js",
+                "src/timeChange.js",
+                "src/msgListener.js"
+            ],
+            "matches": [
+                "*://*.github.com/*"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "js": [
+                "src/emarket_urlelement_remove.js"
+            ],
+            "matches": [
+                "*://*.jd.com/*",
+                "*://item.taobao.com/*",
+                "*://detail.tmall.com/*",
+                "*://*.bilibili.com/*"
+            ]
+        }
+    ]
+}

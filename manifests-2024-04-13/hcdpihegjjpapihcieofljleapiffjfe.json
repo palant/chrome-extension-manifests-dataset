@@ -1,0 +1,83 @@
+---
+name: GigaChat
+version: 1.5.4
+category_slug: lifestyle/fun
+rating: 5
+rating_count: 2
+user_count: 220
+release_date: '2024-01-30T04:35:53.000Z'
+size: 23.88KiB
+languages:
+  - English
+description: Add live chat overlay on fullscreen video
+publisher_account: krzysiek.kurczewski
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GigaChat",
+  "version": "1.5.4",
+  "description": "Add live chat overlay on fullscreen video",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": [
+    "https://www.youtube.com/*"
+  ],
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "hook/onInstall.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content/options.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content/mutationObserver.js",
+        "content/top/top.js"
+      ],
+      "css": [
+        "content/top/top.css"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://www.youtube.com/live_chat?continuation=*",
+        "https://www.youtube.com/live_chat_replay?continuation=*"
+      ],
+      "js": [
+        "content/chatframe/chatframe.js"
+      ],
+      "css": [
+        "content/chatframe/chatframe.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+O"
+      }
+    }
+  }
+}

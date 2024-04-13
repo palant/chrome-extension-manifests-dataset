@@ -1,0 +1,136 @@
+---
+name: Property Extra
+version: 1.1.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 16
+release_date: '2020-03-19T10:10:56.000Z'
+size: 560KiB
+languages:
+  - English (UK)
+description: >-
+  The Property Extra browser extension provides listing price history. Currently
+  compatible with rightmove.co.uk.
+publisher_account: Property Extra
+privacy_policy: https://propertyextra.net/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Property Extra",
+  "author": "Property Extra",
+  "version": "1.1.1",
+  "homepage_url": "https://propertyextra.net",
+  "description": "The Property Extra browser extension provides listing price history. Currently compatible with rightmove.co.uk.",
+  "icons": {
+    "16": "assets/img/propertyextra-16x16.png",
+    "48": "assets/img/propertyextra-48x48.png",
+    "96": "assets/img/propertyextra-96x96.png",
+    "128": "assets/img/propertyextra-128x128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "identity",
+    "*://*.propertyextra.net/*",
+    "*://*.rightmove.co.uk/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.propertyextra.net/*"
+      ],
+      "js": [
+        "content_scripts/propertyextra_net/comms_content_script@document_start.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.rightmove.co.uk/*/find.*"
+      ],
+      "js": [
+        "content_scripts/rightmove_co_uk/find_content_script@document_start.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.rightmove.co.uk/*/find.*"
+      ],
+      "js": [
+        "assets/js/jquery.min.js",
+        "content_scripts/rightmove_co_uk/find_content_script@document_idle.js"
+      ],
+      "css": [
+        "./assets/css/font-awesome-solid.css",
+        "./assets/css/fontawesome.min.css",
+        "./assets/css/propertyextra-style.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.rightmove.co.uk/*/*.*"
+      ],
+      "exclude_matches": [
+        "*://*.rightmove.co.uk/*/map.*",
+        "*://*.rightmove.co.uk/*/find.*",
+        "*://*.rightmove.co.uk/property-*/property-*",
+        "*://*.rightmove.co.uk/commercial-property-*/property-*"
+      ],
+      "js": [
+        "content_scripts/rightmove_co_uk/determine_content_script@document_start.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.rightmove.co.uk/*/map.*"
+      ],
+      "js": [
+        "content_scripts/rightmove_co_uk/map_content_script@document_idle.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.rightmove.co.uk/property-*/property-*",
+        "*://*.rightmove.co.uk/commercial-property-*/property-*"
+      ],
+      "js": [
+        "assets/js/jquery.min.js",
+        "content_scripts/rightmove_co_uk/property_content_script@document_idle.js"
+      ],
+      "css": [
+        "./assets/css/font-awesome-solid.css",
+        "./assets/css/fontawesome.min.css",
+        "./assets/css/propertyextra-style.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "page": "background/background.html"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "assets/img/propertyextra-16x16.png",
+      "24": "assets/img/propertyextra-24x24.png",
+      "32": "assets/img/propertyextra-32x32.png"
+    },
+    "default_title": "Property Extra",
+    "default_popup": "./popup/popup.html"
+  },
+  "options_ui": {
+    "page": "./options/options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+    "assets/img/*",
+    "file-manifest.json"
+  ]
+}

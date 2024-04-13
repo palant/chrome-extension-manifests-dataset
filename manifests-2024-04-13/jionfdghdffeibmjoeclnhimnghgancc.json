@@ -1,0 +1,75 @@
+---
+name: Deeplink
+version: 0.0.14
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-03-15T19:50:17.000Z'
+size: 110KiB
+languages:
+  - English (United States)
+description: >-
+  Pull down Pulumi projects directly from the Pulumi Console. Requires the
+  companion desktop app for Pulumi called Deskypus.
+publisher: Cloudy Sky Software LLC
+publisher_account: Cloudy Sky Software
+publisher_address: |-
+  1420 NW Gilman Boulevard
+  Suite 2 PMB9013
+  Issaquah, WA 98027
+  US
+extension_website: deskypus.github.io
+support_website: https://github.com/deskypus/deeplink/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Deeplink",
+  "version": "0.0.14",
+  "description": "Pull down Pulumi projects directly from the Pulumi Console. Requires the companion desktop app for Pulumi called Deskypus.",
+  "action": {
+    "default_icon": "./assets/icon_128@2x.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon_16@2x.png",
+    "48": "./assets/icon_48@2x.png",
+    "128": "./assets/icon_128@2x.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://app.pulumi.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.pulumi.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "https://app.pulumi.com/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.js"
+  }
+}

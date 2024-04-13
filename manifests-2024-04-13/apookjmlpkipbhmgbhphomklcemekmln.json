@@ -1,0 +1,82 @@
+---
+name: Instasilo
+version: 2.1.14
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 33
+release_date: '2024-03-22T17:32:47.000Z'
+size: 1.9MiB
+languages:
+  - English (United States)
+description: InstaSilo allows you manage your Instagram messages
+publisher: Symalite Global Solutions Ltd.
+publisher_account: Jamiu Oloyede
+publisher_address: |-
+  5, Morenikeji Str., Behind GTBank
+  Osogbo, FL 33027
+  US
+privacy_policy: https://chatsilo.com/privacy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Instasilo",
+  "short_name": "Instasilo",
+  "version": "2.1.14",
+  "description": "InstaSilo allows you manage your Instagram messages",
+  "background": {
+    "service_worker": "background/bg-loader.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
+  },
+  "author": "Trigvent",
+  "action": {
+    "browser_style": false,
+    "default_title": "Instasilo",
+    "default_popup": "/index.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "alarms",
+    "webRequest",
+    "*://*.instagram.com/*"
+  ],
+  "host_permissions": ["https://api.instasilo.com/", "*://*.instagram.com/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.instagram.com/*",
+        "*://*.business.facebook.com/latest/inbox/instagram_direct*"
+      ],
+      "js": [
+        "assets/js/jquery-3.4.1.min.js",
+        "/config.js",
+        "content/content_script.js",
+        "content/index.global.js",
+        "assets/js/toastr.min.js",
+        "injected.js",
+        "content/profile_content_script.js",
+        "content/feed_content_script.js"
+      ],
+      "css": ["assets/css/toastr.min.css", "assets/css/content_script.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["*://*.instagram.com/*"]
+    }
+  ]
+}

@@ -1,0 +1,86 @@
+---
+name: SharpSports
+version: 1.2.3
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 2
+user_count: 6000
+release_date: '2024-03-13T22:12:10.000Z'
+size: 104KiB
+languages:
+  - English (United States)
+description: >-
+  Link your sportsbook account with any sports media / tool provider in the
+  SharpSports network.
+publisher: SharpSports
+publisher_address: |-
+  111 Town Square Place
+  1203
+  Jersey City, NJ 07310
+  US
+extension_website: sharpsports.io
+privacy_policy: https://www.sharpsports.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SharpSports",
+  "description": "Link your sportsbook account with any sports media / tool provider in the SharpSports network.",
+  "version": "1.2.3",
+  "icons": {
+    "16": "icon_16.png",
+    "32": "icon_32.png",
+    "48": "icon_48.png",
+    "128": "icon_128.png"
+  },
+  "action": {
+    "default_icon": "icon_128.png"
+  },
+  "background": {
+    "service_worker": "background/main.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_scripts/main.js"]
+    },
+    {
+      "matches": ["https://*.sportsbook.fanduel.com/*"],
+      "js": ["content_scripts/FanduelAPI.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.draftkings.com/lobby*"],
+      "js": ["content_scripts/DraftKingsAPI.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.sportsbook.fanduel.com/*"],
+      "js": ["content_scripts/FanduelCookies.js"]
+    },
+    {
+      "matches": ["https://app.prizepicks.com/*"],
+      "js": ["content_scripts/PrizePicksAPI.js"]    
+    },{
+      "matches": ["https://app.hardrock.bet/"],
+      "js": ["content_scripts/HardRockAPI.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/lib/pusher.js","/lib/datadog.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": ["https://app.hardrock.bet/*","https://*.fanduel.com/*","https://*.draftkings.com/*","https://api.sharpsports.io/*","https://http-intake.logs.datadoghq.com/api/*","https://app.prizepicks.com/*","*://*.prizepicks.com/"],
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest"
+  ]
+}

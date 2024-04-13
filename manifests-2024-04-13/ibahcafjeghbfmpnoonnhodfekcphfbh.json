@@ -1,0 +1,130 @@
+---
+name: Verbally Assistant
+version: '28'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 9
+user_count: 15
+release_date: '2023-10-09T16:02:03.000Z'
+size: 1.75MiB
+languages:
+  - English
+description: Meeting assistant companion application
+publisher: Verbally GmbH
+publisher_address: |-
+  Isländische Str. 9
+  Berlin 10439
+  DE
+extension_website: www.verbally.io
+support_website: https://verbally.io/faq
+privacy_policy: https://www.verbally.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Verbally Assistant",
+  "description": "Meeting assistant companion application",
+  "homepage_url": "https://verbally.io/",
+  "version": "28",
+  "icons": {
+    "16": "logo/verbally-16.png",
+    "48": "logo/verbally-48.png",
+    "128": "logo/verbally-128.png"
+  },
+  "action": {
+    "default_title": "Verbally Assistant: Click to learn more"
+  },
+  "permissions": [
+    "identity",
+    "cookies",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.verbally.de/*",
+    "https://*.verbally.io/*",
+    "https://www.googleapis.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.verbally.de/*",
+      "https://*.verbally.io/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "logo/*",
+        "*.js"
+      ],
+      "matches": [
+        "https://*.verbally.de/*",
+        "https://*.verbally.io/*",
+        "https://meet.google.com/*",
+        "https://calendar.google.com/*"
+      ],
+      "extension_ids": [
+        "ibahcafjeghbfmpnoonnhodfekcphfbh",
+        "ljnpabfiemdgegfbjdfnpiabfjelcikb"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "sentry-browser.js"
+      ],
+      "matches": [
+        "https://*.verbally.de/*",
+        "https://*.verbally.io/*",
+        "https://*.zoom.us/*",
+        "https://meet.google.com/*",
+        "https://calendar.google.com/*"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.verbally.io/*",
+        "https://meet.google.com/*"
+      ],
+      "exclude_matches": [
+        "https://meet.google.com/"
+      ],
+      "js": [
+        "meet.js",
+        "sentry-browser.js"
+      ],
+      "css": [
+        "videocall.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://calendar.google.com/*"
+      ],
+      "js": [
+        "calendar.js",
+        "sentry-browser.js"
+      ],
+      "css": [
+        "button.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "501137251054-8i3divb2ksh1si4mkmihl6mu5cqi01da.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/calendar.events",
+      "https://www.googleapis.com/auth/calendar.calendarlist.readonly"
+    ]
+  }
+}

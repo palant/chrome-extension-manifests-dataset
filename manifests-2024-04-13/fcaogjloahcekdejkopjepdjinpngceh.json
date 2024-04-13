@@ -1,0 +1,95 @@
+---
+name: Click-to-dial
+version: 1.5.11
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 640
+release_date: '2024-01-08T17:11:17.000Z'
+size: 850KiB
+languages:
+  - Nederlands
+description: Click-to-dial extensie voor online hosted telefooncentrale
+publisher: Digifoon Group BV
+publisher_address: |-
+  Modemstraat 1
+  Amsterdam 1033 RW
+  NL
+support_website: http://www.simmpl.nl/downloads/Simmpl_snelstarthandleiding_ClicktoDial.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Click-to-dial",
+    "short_name": "C2D",
+    "manifest_version": 2,
+    "description": "Click-to-dial extensie voor online hosted telefooncentrale",
+    "version": "1.5.11",
+    "background": {
+        "scripts": [
+            "index.js"
+        ]
+    },
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": "img/icon128.png",
+        "default_title": "Click-to-dial",
+        "default_popup": "panel.html"
+    },
+    "permissions": [
+        "https://realtime.api.kwebbl.net/*",
+        "https://api.click2dial.nl/*",
+        "https://c2d.qaller.net/*",
+        "<all_urls>",
+        "contextMenus",
+        "notifications",
+        "storage",
+        "alarms",
+        "gcm"
+    ],
+    "commands": {
+        "toggle-feature": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+K"
+            },
+            "description": "Plaats een oproep dmv selecteren van tekst en vervolgens de hotkey te gebruiken."
+        }
+    },
+    "content_security_policy": "script-src 'self' https://ajax.googleapis.com https://unpkg.com https://ssl.google-analytics.com; object-src 'self'",
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "parser.js",
+                "observer.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://api.click2dial.nl/*",
+                "https://c2d.qaller.net/*"
+            ],
+            "js": [
+                "sync.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        "img/inline-phone.png",
+        "i18n/en/en.json",
+        "i18n/en/whitelabel.json",
+        "i18n/nl/nl.json",
+        "i18n/nl/whitelabel.json"
+    ]
+}

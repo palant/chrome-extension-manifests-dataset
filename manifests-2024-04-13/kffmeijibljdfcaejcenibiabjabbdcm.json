@@ -1,0 +1,87 @@
+---
+name: HaloFuture 1688
+version: '2.12'
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 46
+release_date: '2022-06-06T09:53:56.000Z'
+size: 32.29KiB
+languages:
+  - English
+  - polski
+description: Shopping tool on 1688.com
+publisher: Technalab
+publisher_address: |-
+  21-505 Janów Podlaski
+  ul Elizy Orzeszkowej 11
+  Janów Podlaski 21-505
+  PL
+extension_website: halofuture.com
+support_website: https://1688.halofuture.com/home/index/lang/pl
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "version": "2.12",
+    "author": "HaloFuture",
+    "default_locale": "en",
+
+    "icons": {
+        "16": "pub/icon16.png",
+        "32": "pub/icon32.png",
+        "48": "pub/icon48.png",
+        "64": "pub/icon64.png",
+        "128": "pub/icon128.png"
+    },
+
+    "background": {
+        "scripts": [ "background.js" ],
+        "persistent": true
+    },
+
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "storage",
+        "https://*.halofuture.com/",
+        "https://*.1688.com/"
+    ],
+
+    "browser_action": {
+        "default_icon": "pub/icon16.png",
+        "default_title": "HaloFuture 1688",
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.1688.com/**"
+            ],
+            "run_at": "document_end",
+            "js": [ "content_prices.js" ]
+        },
+        {
+            "matches": [ "https://detail.1688.com/offer/*" ],
+            "run_at": "document_end",
+            "js": [ "content_shopping_cart.js" ],
+            "css": [ "pub/content.css" ]
+        },
+        {
+            "matches": [ "https://*.halofuture.com/*" ],
+            "run_at": "document_end",
+            "js": [ "dialogs.js", "hf_authorize.js" ],
+            "css": [ "pub/dialogs.css" ]
+        }
+    ],
+
+    "web_accessible_resources": [
+        "pub/*"
+    ]
+}

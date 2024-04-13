@@ -1,0 +1,62 @@
+---
+name: 'NetSuite: Search Export'
+version: '3.1'
+category_slug: productivity/developer
+rating: 4.859649122807017
+rating_count: 57
+user_count: 10000
+release_date: '2024-04-02T18:33:10.000Z'
+size: 67.88KiB
+languages:
+  - English (United States)
+description: Export your saved searches to Suitescript.
+publisher_account: David Smith
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "NetSuite: Search Export",
+    "version": "3.1",
+    "description": "Export your saved searches to Suitescript.",
+    "manifest_version": 3,
+    "icons": {
+      "128": "ns-saved-search-export.png"
+    },
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+            "matches": ["https://*.app.netsuite.com/app/common/search/search.nl*"],
+            "js": ["document_start.js"],
+            "run_at": "document_start" 
+      },
+      {
+        "matches": ["https://*.app.netsuite.com/app/common/search/search.nl*"],
+        "css": ["jquery-ui_dataimages.css"],
+        "run_at": "document_end"
+      },
+      {
+        "matches": ["https://*.app.netsuite.com/app/common/search/search.nl*"],
+        "js": ["document_end.js"],
+        "run_at": "document_end"
+      }
+    ],
+
+    "web_accessible_resources": [{
+      "resources": ["jquery-ui.min.js","inject_start.js"],
+      "matches": ["https://*.app.netsuite.com/*"]
+    }],
+
+    "action": {
+      "default_popup": "popup.html"
+    },
+
+    "host_permissions": [
+        "https://*.app.netsuite.com/app/common/search/search.nl*"
+    ],
+    "permissions": [
+        "scripting"
+    ]
+  }

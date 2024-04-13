@@ -1,0 +1,244 @@
+---
+name: Learnics
+version: 3.45.1
+category_slug: productivity/education
+rating: 5
+rating_count: 23
+user_count: 10000
+release_date: '2024-04-07T03:20:00.000Z'
+size: 8.54MiB
+languages:
+  - English (United States)
+description: >-
+  The Learnics Chrome extension enables students to log site data and keep
+  notes.
+publisher: Learnics LLC
+publisher_account: Learnics
+publisher_address: |-
+  116 Research Dr
+  Bethlehem, PA 18015-4741
+  US
+extension_website: learnics.com
+support_website: https://learnics.freshdesk.com/support/home
+privacy_policy: https://www.learnics.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Learnics",
+  "short_name": "Learnics",
+  "description": "The Learnics Chrome extension enables students to log site data and keep notes.",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1XwBJlTMngdFVMj0APW8COhiw7V/spGqFN00tdMBx2eLnPT6qyuhQLBPfSX0dGM2CQpsFcc62elz7aNqhdK/1c78PZiJMOSfUMB8m6MVMpvA5fFxMifBKiDLxVHUia3kybzrzzYC+Daf+vHXhTU8FCxwaz+yvKfPeh0HdWJWdRa68KvSG+0+QjCW1QKvuTKAtGEkNT1vySt41cApJ6/YiB5pAPSEv4qT/62RhJWOR5Zau6ONo3IDYhITG2cohZxlaH3Ca43p5ZrZBNAfOR7sRk7vFYhiYuzHtMktRMYqJxjhX1tB1AncEC5p4TQ4eNGtaBdVU5GuDe1gKG5A1bO7PwIDAQAB",
+  "background": {
+    "service_worker": "serviceWorker/index.js",
+    "type": "module"
+  },
+  "permissions": [
+    "idle",
+    "tabs",
+    "storage",
+    "alarms",
+    "scripting",
+    "favicon",
+    "sidePanel",
+    "contextMenus",
+    "gcm"
+  ],
+  "host_permissions": [
+    "*://docs.google.com/*",
+    "*://classroom.google.com/*"
+  ],
+  "action": {
+    "default_icon": "assets/images/inactive-38.png",
+    "default_title": "Learnics",
+    "default_popup": "popup/index.html"
+  },
+  "side_panel": {
+    "default_path": "sidePanel/index.html"
+  },
+  "icons": {
+    "19": "assets/images/inactive-19.png",
+    "38": "assets/images/inactive-38.png",
+    "48": "assets/images/icon128.png",
+    "128": "assets/images/icon128.png"
+  },
+  "externally_connectable": {
+    "ids": [
+      "jlhemnnjmgaaaklbcdpiafnkgibjnoed",
+      "nhdacjmkhimeohpnahfmdmcknaneeffk"
+    ],
+    "matches": [
+      "http://localhost:8080/*",
+      "http://localhost:5000/*",
+      "*://*.learnics.co/*",
+      "*://app.learnics.com/*",
+      "*://learnics-staging.firebaseapp.com/*",
+      "*://learnics-development.firebaseapp.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "toolbar/index.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "googleClassroom/index.js"
+      ],
+      "matches": [
+        "*://classroom.google.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "learnics/index.js"
+      ],
+      "matches": [
+        "http://localhost:8080/*",
+        "http://localhost:5000/*",
+        "*://*.learnics.co/*",
+        "*://app.learnics.com/*",
+        "*://learnics-staging.firebaseapp.com/*",
+        "*://learnics-development.firebaseapp.com/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "googleDocs/index.js"
+      ],
+      "matches": [
+        "*://docs.google.com/*"
+      ]
+    },
+    {
+      "matches": [
+        "*://docs.google.com/*"
+      ],
+      "js": [
+        "mountExpectationsModal/index.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "toolbar/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "expectationsModal/index.html"
+      ],
+      "matches": [
+        "*://docs.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "_favicon/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": [
+        "*"
+      ]
+    },
+    {
+      "resources": [
+        "elliptical_record_text.svg",
+        "150de8eaa454d669c405.ttf",
+        "e033a13ee751afc1860c.woff2",
+        "d87474231f4192884802.ttf",
+        "3223dc79c1adee56370b.woff2",
+        "4a2cd718d7031b732e76.ttf",
+        "bb975c966c37455a1bc3.woff2",
+        "0e3a648be390bd8cb094.ttf",
+        "68577e40f3e70067b5da.woff2",
+        "d95c91e88cc28d3305af.eot",
+        "d95c91e88cc28d3305af.eot",
+        "0207b94ccbbd5be9a50b.ttf",
+        "66f2d337503c6bd54e84.woff2",
+        "2e62b6565e8fb8e62ffc.woff",
+        "af9a28e7f261a412f581.eot",
+        "698bd8550d863c20a3e1.ttf",
+        "08cefa1bc6566a650da7.woff",
+        "2d8017489da689caedc1.woff2",
+        "assets/fonts/OpenSans-Italic-VariableFont_wdth,wght.ttf",
+        "assets/fonts/OpenSans-VariableFont_wdth,wght.ttf",
+        "assets/fonts/Raleway-Italic-VariableFont_wght.ttf",
+        "assets/fonts/Raleway-VariableFont_wght.ttf",
+        "assets/fonts/Roboto-Bold.ttf",
+        "assets/fonts/fonts.css",
+        "assets/images/active-19.png",
+        "assets/images/active-38.png",
+        "assets/images/barsSpinner.svg",
+        "assets/images/bibliographyText.svg",
+        "assets/images/btn_google_signin_dark_disabled_web@2x.png",
+        "assets/images/btn_google_signin_dark_focus_web@2x.png",
+        "assets/images/btn_google_signin_dark_normal_web@2x.png",
+        "assets/images/btn_google_signin_dark_pressed_web@2x.png",
+        "assets/images/btn_google_signin_light_disabled_web@2x.png",
+        "assets/images/btn_google_signin_light_focus_web@2x.png",
+        "assets/images/btn_google_signin_light_normal_web@2x.png",
+        "assets/images/btn_google_signin_light_pressed_web@2x.png",
+        "assets/images/circlePlus.svg",
+        "assets/images/classwork-tab.png",
+        "assets/images/elliptical_record_text.svg",
+        "assets/images/google-classroom-36x36_yellow_stroke_icon@2x.png",
+        "assets/images/google_classroom_logo.svg",
+        "assets/images/googledocs.png",
+        "assets/images/icon-128.png",
+        "assets/images/icon-16.png",
+        "assets/images/icon-19.png",
+        "assets/images/icon-48.png",
+        "assets/images/icon128.png",
+        "assets/images/icon16.png",
+        "assets/images/inactive-19.png",
+        "assets/images/inactive-38.png",
+        "assets/images/learnics-button-example.png",
+        "assets/images/learnics-letters-blue.png",
+        "assets/images/learnics-letters-white.png",
+        "assets/images/learnics-letters.svg",
+        "assets/images/learnics-spinner.svg",
+        "assets/images/learnics-symbol.svg",
+        "assets/images/learnics-white-symbol.svg",
+        "assets/images/learnics_logo.png",
+        "assets/images/learnics_logo_horizontal_white.png",
+        "assets/images/learnics_logo_lg.png",
+        "assets/images/loader.svg",
+        "assets/images/openSidePanelText.svg",
+        "assets/images/processingText.svg",
+        "assets/images/recordSymbol.svg",
+        "assets/images/sidePanel-symbol.svg",
+        "assets/images/sl-icon-active.svg",
+        "assets/images/sl-icon-inactive.svg",
+        "assets/images/snapshotReportText.svg",
+        "assets/images/startLoggingText.svg",
+        "assets/images/startRecordSymbol.svg",
+        "assets/images/stopLoggingText.svg",
+        "assets/images/stopSquare.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version": "3.45.1"
+}

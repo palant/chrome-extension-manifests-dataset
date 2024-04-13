@@ -1,0 +1,213 @@
+---
+name: 'BubbyBeep: Your AI Exploration Companion'
+version: 1.7.2
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-04-10T06:06:13.000Z'
+size: 2.3MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Tiếng Việt
+  - español
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - ไทย
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+description: >-
+  Elevates browsing with AI-powered summaries, video insights, curated prompts,
+  personalized queries, and direct AI chats
+publisher: ZenStudio
+publisher_address: |-
+  THang long number 1
+  THang long number 1
+  Ha Noi, Hanoi City 10000
+  VN
+extension_website: buddybeep.com
+privacy_policy: https://www.buddybeep.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "1.7.2",
+  "icons": {
+    "16": "src/assets/logo-64.png",
+    "32": "src/assets/logo-64.png",
+    "48": "src/assets/logo-48.png",
+    "128": "src/assets/logo-128.png"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {},
+  "host_permissions": [
+    "https://*.bing.com/",
+    "https://*.openai.com/",
+    "https://gemini.google.com/",
+    "https://*.buddybeep.com/",
+    "https://*.duckduckgo.com/",
+    "https://*.poe.com/",
+    "https://*.anthropic.com/",
+    "https://*.claude.ai/"
+  ],
+  "optional_host_permissions": [
+    "wss://*/*"
+  ],
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "unlimitedStorage",
+    "declarativeNetRequestWithHostAccess",
+    "sidePanel",
+    "scripting",
+    "activeTab"
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/chatgpt-inpage-proxy.ts-loader-50665477.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/index.tsx-loader-a89da1c0.js"
+      ],
+      "matches": [
+        "https://google.com/*",
+        "https://www.google.com/*",
+        "https://www.bing.com/*",
+        "https://www.duckduckgo.com/*"
+      ],
+      "css": [
+        "assets/index-2c31d636.css"
+      ]
+    },
+    {
+      "js": [
+        "assets/index.tsx-loader-ad5263e0.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "css": [
+        "assets/index-e9c2779c.css"
+      ]
+    }
+  ],
+  "commands": {
+    "open-app": {
+      "suggested_key": {
+        "default": "Alt+B",
+        "windows": "Alt+B",
+        "linux": "Alt+B",
+        "mac": "Command+B"
+      },
+      "description": "Open BuddyBeep app"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_bing",
+        "enabled": true,
+        "path": "src/rules/bing.json"
+      },
+      {
+        "id": "ruleset_ddg",
+        "enabled": true,
+        "path": "src/rules/ddg.json"
+      },
+      {
+        "id": "ruleset_qianwen",
+        "enabled": true,
+        "path": "src/rules/qianwen.json"
+      },
+      {
+        "id": "ruleset_baichuan",
+        "enabled": true,
+        "path": "src/rules/baichuan.json"
+      },
+      {
+        "id": "ruleset_pplx",
+        "enabled": true,
+        "path": "src/rules/pplx.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "resources": [
+        "assets/logger-a5d6ae52.js",
+        "assets/proxy-fetch-53558d70.js",
+        "assets/_commonjsHelpers-725317a4.js",
+        "assets/chatgpt-inpage-proxy.ts-e4300d34.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://google.com/*",
+        "https://www.bing.com/*",
+        "https://www.duckduckgo.com/*",
+        "https://www.google.com/*"
+      ],
+      "resources": [
+        "assets/client-7f96b649.js",
+        "assets/useTranslation-65665ccb.js",
+        "assets/_commonjsHelpers-725317a4.js",
+        "assets/index.tsx-6254785e.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "resources": [
+        "assets/client-7f96b649.js",
+        "assets/index-022f05cf.js",
+        "assets/_commonjsHelpers-725317a4.js",
+        "assets/logger-a5d6ae52.js",
+        "assets/store-11f00174.js",
+        "assets/index.tsx-a46a9e96.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/client-7f96b649.js",
+        "assets/useTranslation-65665ccb.js",
+        "assets/_commonjsHelpers-725317a4.js",
+        "assets/contentTest.tsx-b02e2c70.js",
+        "assets/contentTest-e6cce097.css"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}

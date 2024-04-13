@@ -1,0 +1,87 @@
+---
+name: CrowdLog Calendar Sync
+version: '3.1'
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 3
+user_count: 2000
+release_date: '2024-04-12T04:34:38.000Z'
+size: 388KiB
+languages:
+  - English
+  - 日本語
+description: Register your daily man-hours on Google Calendar / Outlook Calendar.
+publisher: 株式会社クラウドワークス
+support_website: https://www.crowdlog.jp/form/contact/
+privacy_policy: https://crowdworks.co.jp/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "3.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://*.crowdlog.jp/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "js": ["scripts/vendor.js", "scripts/google-calendar.js", "scripts/content-script.js"],
+      "css": ["styles/custom-style.css", "styles/bs-tooltip.css", "styles/google-calendar.css"]
+    },
+    {
+      "matches": [
+        "https://outlook.live.com/calendar/*",
+        "https://outlook.office365.com/calendar/*",
+        "https://outlook.office.com/calendar/*"
+      ],
+      "match_about_blank": true,
+      "js": ["scripts/vendor.js", "scripts/outlook-calendar.js", "scripts/content-script.js"],
+      "css": ["styles/custom-style.css", "styles/bs-tooltip.css", "styles/outlook-calendar.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/icon-48x48.png",
+        "images/icon-google-calendar.png",
+        "images/icon-outlook-calendar.png",
+        "images/service_logo.png",
+        "images/icon-help.png",
+        "images/popup_background.png",
+        "images/icon-user.png",
+        "images/icon-company.png",
+        "images/icon-reload.png",
+        "images/icon-caret-down.png"
+      ],
+      "matches": [
+        "https://calendar.google.com/*",
+        "https://outlook.live.com/*",
+        "https://outlook.office365.com/*",
+        "https://outlook.office.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon-16x16.png",
+      "32": "images/icon-32x32.png",
+      "48": "images/icon-48x48.png",
+      "128": "images/icon-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon-16x16.png",
+    "32": "images/icon-32x32.png",
+    "48": "images/icon-48x48.png",
+    "128": "images/icon-128x128.png"
+  },
+  "minimum_chrome_version": "91"
+}

@@ -1,0 +1,123 @@
+---
+name: Interactive Dual Subs for Languages Learning
+version: 3.43.0
+category_slug: productivity/education
+rating: 4.518248175182482
+rating_count: 137
+user_count: 2000
+release_date: '2024-04-04T10:55:24.000Z'
+size: 2.26MiB
+languages:
+  - English
+  - español
+  - español (Latinoamérica)
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - українська
+description: >-
+  Translate English, Spanish etc. words instantly in dual subtitles on YouTube,
+  Netflix, Coursera, TED. Then memorize on the go
+publisher: InterSub Inc.
+publisher_address: |-
+  220 E 23 street, siute 400
+  New York, NY 10010
+  US
+extension_website: intersub.cc
+privacy_policy: https://intersub.cc/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "short_name": "InterSub.cc",
+  "description": "__MSG_appDescription__",
+  "default_locale": "en",
+  "version": "3.43.0",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "browser-polyfill.js",
+        "content-script.js",
+        "content-script-loader.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["https://*.netflix.com/*"],
+      "js": ["netflix-subtitle-sniffer-injector.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.newplayjj.com/*"],
+      "js": ["alloha-tv-subtitle-sniffer-injector.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://kino.pub/*"],
+      "js": ["kinopub-subtitle-sniffer-injector.js"]
+    },
+    {
+      "matches": ["https://*.2sub.movie/*"],
+      "js": ["two-sub-movie-subtitle-sniffer-injector.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.primevideo.com/*"],
+      "js": ["amazon-prime-subtitle-sniffer-injector.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "icons": {
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png",
+    "512": "assets/images/icon512.png"
+  },
+  "action": {
+    "name": "__MSG_actionName__",
+    "default_icon": {
+      "48": "assets/images/icon48.png",
+      "128": "assets/images/icon128.png",
+      "512": "assets/images/icon512.png"
+    },
+    "default_title": "__MSG_actionDefaultTitle__",
+    "default_popup": "popup.html"
+  },
+  "host_permissions": ["https://app.intersub.cc/*"],
+  "content_security_policy": {},
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "*.css"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["netflix-subtitle-sniffer.js"],
+      "matches": ["https://*.netflix.com/*"]
+    },
+    {
+      "resources": ["alloha-tv-subtitle-sniffer.js"],
+      "matches": ["https://*.newplayjj.com/*"]
+    },
+    {
+      "resources": ["kinopub-subtitle-sniffer.js"],
+      "matches": ["https://kino.pub/*"]
+    },
+    {
+      "resources": ["two-sub-movie-subtitle-sniffer.js"],
+      "matches": ["https://*.2sub.movie/*"]
+    },
+    {
+      "resources": ["amazon-prime-subtitle-sniffer.js"],
+      "matches": ["https://*.primevideo.com/*"]
+    }
+  ]
+}

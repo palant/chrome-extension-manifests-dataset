@@ -1,0 +1,63 @@
+---
+name: oOhcoupons - Automatic Coupons
+version: 1.1.5
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 8
+user_count: 60000
+release_date: '2024-02-03T12:41:21.000Z'
+size: 6.62MiB
+languages:
+  - English
+description: Automatically find and apply the best coupon code to your cart.
+publisher_account: oohcoupons.com
+extension_website: oohcoupons.com
+privacy_policy: https://oohcoupons.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "oOhcoupons - Automatic Coupons",
+  "description": "Automatically find and apply the best coupon code to your cart.",
+  "version": "1.1.5",
+  "icons": {
+    "16": "assets/images/logo-128.png",
+    "48": "assets/images/logo-128.png",
+    "128": "assets/images/logo-128.png"
+  },
+  "action": {
+    "default_title": "oOhcoupons",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "19": "assets/icon/off-19.png",
+      "38": "assets/icon/off-38.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["contentScript/contentScript.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_end",
+      "all_frames": false,
+      "match_about_blank": false
+    }
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "unlimitedStorage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "isolated_world": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["libs/*", "assets/*", "contentScript/*.css", "*.png", "*.ttf", "*.otf"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

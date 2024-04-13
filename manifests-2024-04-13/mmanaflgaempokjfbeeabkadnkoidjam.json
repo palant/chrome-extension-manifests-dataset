@@ -1,0 +1,172 @@
+---
+name: DSers -  AliExpress.com Product Importer
+version: 3.0.5
+category_slug: lifestyle/shopping
+rating: 4.9
+rating_count: 490
+user_count: 300000
+release_date: '2024-04-04T07:05:45.000Z'
+size: 2.02MiB
+languages:
+  - English (United States)
+description: Import and sync products from AliExpress to your DSers platform account.
+publisher: Nebulapart  Limited
+publisher_account: dsers_official
+extension_website: dsers.com
+privacy_policy: https://www.dsers.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "DSers -  AliExpress.com Product Importer",
+  "description": "Import and sync products from AliExpress to your DSers platform account.",
+  "version": "3.0.5",
+  "manifest_version": 3,
+  "permissions": [
+    "declarativeNetRequestWithHostAccess",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequest",
+    "alarms",
+    "scripting",
+    "notifications",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "cookies",
+
+    "contextMenus",
+    "activeTab"
+  ],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "index.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "/assets/icons/48x48.png"
+  },
+  "icons": {
+    "16": "assets/icons/16x16.png",
+    "48": "assets/icons/48x48.png",
+    "128": "assets/icons/128x128.png"
+  },
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "/options.html"
+  },
+  "options_page": "/options.html",
+  "declarative_net_request": {
+    "rule_resources": []
+  },
+  "externally_connectable": {
+    "matches": ["*://*.dsers.com/*", "*://localhost:*/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["screenshot.js"]
+    },
+    {
+      "matches": ["*://*.dsers.com/*", "*://localhost/*"],
+      "js": ["dsers.js"]
+    },
+    {
+      "matches": [
+        "https://www.aliexpress.com/p/trade/confirm.html*",
+        "https://www.aliexpress.us/p/trade/confirm.html*"
+      ],
+      "js": ["aeOrderConfirm.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/item/*",
+        "https://*.aliexpress.us/item/*",
+        "https://aliexpress.ru/item/*",
+        "https://*.aliexpress.com/i/*",
+        "https://*.aliexpress.us/i/*",
+        "https://*.aliexpress.com/store/product/*"
+      ],
+      "js": ["aeItem.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/af/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.us/af/*",
+        "https://*.aliexpress.us/w/*",
+        "https://*.aliexpress.com/category/*",
+        "https://*.aliexpress.us/category/*",
+        "https://*.aliexpress.com/wholesale*",
+        "https://*.aliexpress.us/wholesale*",
+        "https://*.aliexpress.com/premium*",
+        "https://*.aliexpress.us/premium*",
+        "https://*.aliexpress.com/wishlist/wish_list_product_list.htm*",
+        "https://*.aliexpress.com/*_reviews.html*",
+        "https://home.aliexpress.com/dropshipper/ds_center.htm*"
+      ],
+      "js": ["aeList.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["aeProductMiniModal.js"],
+      "matches": [
+        "https://*.aliexpress.com/gcp/*",
+        "https://*.aliexpress.us/gcp/*",
+        "https://campaign.aliexpress.com/wow/*",
+        "https://*.aliexpress.com/p/calp-plus/index.html*",
+        "https://*.aliexpress.us/p/calp-plus/index.html*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["aeWishlist.js"],
+      "matches": [
+        "https://*.aliexpress.com/p/wishlist/index.html",
+        "https://*.aliexpress.us/p/wishlist/index.html"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["aeObligationList.js"],
+      "matches": [
+        "https://www.aliexpress.com/p/order/index.html*",
+        "https://www.aliexpress.com/p/order/detail.html*",
+        "https://*.aliexpress.us/p/order/index.html*",
+        "https://www.aliexpress.us/p/order/detail.html*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dsersInject.js",
+        "aeWishlistInject.js",
+        "aeOrderConfirmInject.js",
+        "aeProductMiniModalInject.js"
+      ],
+      "matches": [
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.us/*",
+        "*://*.aliexpress.ru/*",
+        "*://*.dropified.com/*",
+        "*://*.dsers.com/*",
+        "*://localhost:*/*"
+      ]
+    },
+    {
+      "resources": [
+        "assets/images/close.png",
+        "assets/images/error.png",
+        "assets/images/success.png",
+        "assets/images/loading.png",
+        "assets/images/arring.png",
+        "assets/images/logo.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

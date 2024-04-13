@@ -1,0 +1,52 @@
+---
+name: PersonalArchive
+version: 1.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-02-20T16:33:58.000Z'
+size: 3.95MiB
+languages:
+  - English
+description: >-
+  Save pages so you can read them later them even if they are no longer
+  available!
+publisher_account: devimalplanet
+privacy_policy: https://personalarchive.devimalplanet.com/api/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "PersonalArchive",
+  "description": "Save pages so you can read them later them even if they are no longer available!",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "assets/icon-16.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "PersonalArchive"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://personalarchive.devimalplanet.com/api/socialLogin/google/callback*"
+      ],
+      "js": ["plain-html/exchange-token.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["plain-html/html2canvas.js", "plain-html/inline-save.js"]
+    }
+  ],
+  "permissions": ["activeTab", "scripting", "storage"]
+}

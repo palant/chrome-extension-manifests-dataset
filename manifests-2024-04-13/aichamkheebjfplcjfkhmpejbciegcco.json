@@ -1,0 +1,80 @@
+---
+name: Ocean-MA Extension
+version: 1.0.20
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2024-03-22T02:08:10.000Z'
+size: 85.97KiB
+languages:
+  - English
+description: >-
+  Allows Med Access users to send chart files directly to Ocean without
+  requiring a download and upload from the user's machine.
+publisher_account: Marc Carvalho Consulting
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ocean-MA Extension",
+  "version": "1.0.20",
+  "description": "Allows Med Access users to send chart files directly to Ocean without requiring a download and upload from the user's machine.",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["ocean-page-shared.js"],
+      "matches": [
+        "https://ocean.cognisantmd.com/*",
+        "https://staging.cognisantmd.com/*",
+        "https://test.cognisantmd.com/*"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "js": ["ocean-page-extension.js"],
+      "matches": [
+        "https://ocean.cognisantmd.com/*",
+        "https://staging.cognisantmd.com/*",
+        "https://test.cognisantmd.com/*"
+      ],
+      "world": "ISOLATED"
+    },
+    {
+      "js": ["attachment-viewer.js"],
+      "matches": ["https://*.med-access.net/*"],
+      "world": "ISOLATED",
+      "all_frames": true
+    },
+    {
+      "js": ["ma-task-handler.js"],
+      "matches": [
+        "https://*.med-access.net/task/DisplayPatientTaskByObservationView.do*",
+        "https://*.med-access.net/task/DisplayPatientTask.do*"
+      ],
+      "world": "ISOLATED",
+      "all_frames": true
+    },
+    {
+      "js": ["telus-launcher.js"],
+      "matches": ["https://*.telusemrmobile.com/*"],
+      "world": "ISOLATED",
+      "all_frames": true
+    }
+  ],
+  "permissions": ["webRequest"],
+  "host_permissions": [
+    "https://*.med-access.net/",
+    "https://ocean.cognisantmd.com/",
+    "https://staging.cognisantmd.com/",
+    "https://test.cognisantmd.com/"
+  ],
+  "icons": {
+    "128": "icons/Attachment128.png"
+  }
+}

@@ -1,0 +1,87 @@
+---
+name: Allergy Shopper
+version: 1.0.2
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2021-08-23T06:17:25.000Z'
+size: 106KiB
+languages:
+  - English (UK)
+description: >-
+  This extension identifies allergens in products on popular UK grocery websites
+  and displays revelant icons to inform the user.
+publisher_account: AllergyShopper.co.uk
+extension_website: allergyshopper.co.uk
+support_website: https://extension.allergyshopper.co.uk
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Allergy Shopper",
+  "description": "This extension identifies allergens in products on popular UK grocery websites and displays revelant icons to inform the user.",
+  "version": "1.0.2",
+  "permissions": ["storage"],
+  "action": {
+    "default_title": "AllergyShopper",
+    "default_popup": "allergyshopper.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://groceries.aldi.co.uk/en-GB/*"],
+      "js": [
+        "scripts/shared/ExtPay.js",
+        "scripts/parsers/aldi.js",
+        "scripts/shared/allergens.js",
+        "scripts/shared/globals.js",
+        "scripts/shared/startup.js",
+        "scripts/content/allergyshopper-aldi.js"
+      ],
+      "css": ["css/aldi.css"]
+    },
+    {
+      "matches": [
+        "https://www.tesco.com/groceries/en-GB/shop/*",
+        "https://www.tesco.com/groceries/en-GB/products/*"
+      ],
+      "js": [
+        "scripts/shared/ExtPay.js",
+        "scripts/parsers/tesco.js",
+        "scripts/shared/allergens.js",
+        "scripts/shared/globals.js",
+        "scripts/shared/startup.js",
+        "scripts/content/allergyshopper-tesco.js"
+      ],
+      "css": ["css/tesco.css"]
+    },
+    {
+      "matches": ["https://groceries.asda.com/*"],
+      "js":[
+        "scripts/shared/ExtPay.js",
+        "scripts/parsers/asda.js",
+        "scripts/shared/allergens.js",        
+        "scripts/shared/globals.js",
+        "scripts/shared/startup.js",
+        "scripts/content/allergyshopper-asda.js"
+      ],
+      "css":["css/asda.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*/*/*.png", "icons/*/*/*.jpg"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

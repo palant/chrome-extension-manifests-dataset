@@ -1,0 +1,98 @@
+---
+name: Alchemy for ChatGPT
+version: '1.0'
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 31
+release_date: '2024-04-10T05:56:19.000Z'
+size: 4.07MiB
+languages:
+  - English
+description: Unleash ChatGPT's full potential.
+publisher: Alchemy
+publisher_address: |-
+  167 Eagle St
+  Brisbane City, QLD 4000
+  AU
+support_website: >-
+  https://alchemy-app.notion.site/Knowledge-Base-11b92476a6604251951e738bb8dcbcfe
+privacy_policy: https://dashboard.alchemy-app.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Alchemy for ChatGPT",
+  "version": "1.0",
+  "description": "Unleash ChatGPT's full potential.",
+  "permissions": ["contextMenus"],
+  "host_permissions": [
+    "*://*.openai.com/*",
+    "*://*.alchemy-app.com/*",
+    "*://*.bottocloud.com/*"
+  ],
+  "icons": {
+    "16": "vanilla/logo-small.png",
+    "128": "vanilla/logo.png"
+  },
+  "background": {
+    "service_worker": "vanilla/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://chat.openai.com/*"],
+      "exclude_matches": [
+        "https://auth0.openai.com/*",
+        "https://openai.com/chatgpt*",
+        "https://chat.openai.com/auth/login*",
+        "https://chat.openai.com/*?disableAlchemy=true*",
+        "https://chat.openai.com/*&disableAlchemy=true*"
+      ],
+      "js": ["vanilla/favicon.js"]
+    },
+    {
+      "matches": ["*://chat.openai.com/*"],
+      "exclude_matches": [
+        "https://auth0.openai.com/*",
+        "https://openai.com/chatgpt*",
+        "https://chat.openai.com/auth/login*",
+        "https://chat.openai.com/*?disableAlchemy=true*",
+        "https://chat.openai.com/*&disableAlchemy=true*"
+      ],
+      "js": [
+        "app/index.js",
+        "vanilla/utils/base64.js",
+        "vanilla/utils/throttling.js",
+        "vanilla/content.js",
+        "vanilla/logs.js",
+        "vanilla/fonts/index.js",
+        "vanilla/arkose/index.js",
+        "vanilla/arkose/triggers.js"
+      ],
+      "css": ["vanilla/content.css"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "vanilla/inject.js",
+        "vanilla/content.css",
+        "vanilla/arkose/inject.js",
+        "vanilla/fonts/*",
+        "vanilla/fonts/aeonik/*",
+        "vanilla/fonts/inter/*",
+        "vanilla/favicon.ico"
+      ],
+      "matches": [
+        "*://*.openai.com/*",
+        "*://*.alchemy-app.com/*",
+        "*://*.bottocloud.com/*"
+      ]
+    }
+  ]
+}

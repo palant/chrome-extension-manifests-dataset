@@ -1,0 +1,88 @@
+---
+name: SearchManualz
+version: 1.0.4
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 1000
+release_date: '2023-09-19T12:30:00.000Z'
+size: 25.33KiB
+languages:
+  - English (UK)
+description: >-
+  Type 's+Tab' plus a Manuals names into the Omnibox to open manual details
+  through manuals website in new tab.
+publisher_account: searchmanualz
+extension_website: searchmanualz.com
+privacy_policy: http://searchmanualz.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SearchManualz",
+  "description": "Type 's+Tab' plus a Manuals names into the Omnibox to open manual details through manuals website in new tab.",
+  "version": "1.0.4",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "omnibox": {
+    "keyword": "s"
+  },
+  "action": {
+    "default_icon": "search.png"
+  },
+  "icons": {
+      "16":"search.png",
+      "48":"search.png",
+      "128": "search.png"
+  },
+  "permissions": [
+    "cookies",
+    "tabs",
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://searchmanualz.com/",
+    "*://.searchmanualz.com/",
+    "*://*.searchmanualz.com/"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "scripts/content.js"
+      ],
+      "match_about_blank": true,
+      "matches": [
+        "*://*.yahoo.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Manuals",
+      "search_url": "https://feed.searchmanualz.com/?q={searchTerms}&publisherid=70594&barcodeid=70594003",
+      "keyword": "feed.searchmanualz.com",
+      "favicon_url": "https://feed.searchmanualz.com/favicon.ico",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "up-arrow-faded.png",
+        "checkbox.png",
+        "animations.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

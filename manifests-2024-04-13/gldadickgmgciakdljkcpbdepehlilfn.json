@@ -1,0 +1,123 @@
+---
+name: Addy AI - ChatGPT Email Assistant
+version: 1.4.6
+category_slug: productivity/workflow
+rating: 4.446153846153846
+rating_count: 65
+user_count: 10000
+release_date: '2024-04-10T07:00:32.000Z'
+size: 614KiB
+languages:
+  - English
+description: Write entire emails 10x faster using ChatGPT AI (Works on GMail and Outlook)
+publisher_account: Addy AI
+extension_website: addy-ai.com
+support_website: https://addy.so/help-center
+privacy_policy: https://addy.so/privacypolicy
+---
+
+{
+    "manifest_version": 3,
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnX6+Wdqpma7fmQ9J2W99RX/9W2QLEKvkHWpHxzuQKwFYPvGNagDFajGyDY+0vz0JUSLZSBZok+qz0VIUuaYcU1g3iwYi94Qe/bJ0CMLRp8A6GSoyJkHhgRWDbzS0mSL3WIfKpsoQy3B2uIRLLEb5otMBnJJEOXA2pvUM9gvaQS35kBphdKgBrTCHMsk+Cxzi4i/L7z+whFW1ATrTA4rvbzgo77JlN3JtwemiEgmim3QFTRb6l05tizMVCTtSO/oYq+mmkjZEYXICP2EgNvAjB73mgsJSsBWmNeOWD1ZDOmafhyFEJx3EwNBDZBQl/KDhQ0MvNbuATi0+e4OiLV8z2QIDAQAB",
+    "name": "Addy AI - ChatGPT Email Assistant",
+    "version": "1.4.6",
+    "description": "Write entire emails 10x faster using ChatGPT AI (Works on GMail and Outlook)",
+    "permissions": ["activeTab", "storage"],
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "action": {
+        "default_icon": "assets/icon.png",
+        "default_popup": "login.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://mail.google.com/*",
+                "*://inbox.google.com/*",
+                "*://outlook.live.com/*",
+                "*://outlook.office.com/*",
+                "*://outlook.office356.com/*",
+                "*://webmail.apps.mil/*",
+                "*://outlook.com/*"
+            ],
+            "css": [ "gmail/gmail-styles.css", "gmail/material-icons.css"],
+            "js": [
+                "cdn-scripts/jquery.js",
+                "cdn-scripts/progress-bar.js",
+                "cdn-scripts/gmail.js",
+                "cdn-scripts/confetti.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://outlook.live.com/*",
+                "*://outlook.office.com/*",
+                "*://outlook.office356.com/*",
+                "*://webmail.apps.mil/*",
+                "*://outlook.com/*"
+            ],
+            "css": ["outlook/outlook-styles.css"],
+            
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://mail.google.com/mail/*",
+                "*://inbox.google.com/*",
+                "*://outlook.live.com/*",
+                "*://outlook.office.com/*",
+                "*://outlook.office356.com/*",
+                "*://webmail.apps.mil/*",
+                "*://outlook.com/*"
+            ],
+            "js": [
+                "cdn-scripts/popper-min.js",
+                "cdn-scripts/tippy.js",
+                "js/initDashboardConnection.js",
+                "js/emailSummary.js",
+                "js/getSendersIntent.js",
+                "js/staging.js",
+                "js/personalization.js",
+                "js/suggestedReply.js",
+                "js/customInstructions.js",
+                "tooltip.js",
+                "gmail/compose.js",
+                "outlook/outlookCompose.js",
+                "outlook/outlookReply.js",
+                "gmail/pricing.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "css": ["css/sidebar.css"],
+            "js": ["cdn-scripts/popper-min.js", "cdn-scripts/tippy.js", "js/sidebar.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "icons": {
+        "16": "assets/icon16.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png"
+    },
+    "options_ui": {
+        "page": "settings.html",
+        "open_in_tab": true
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/addy_magic_pencil.png", "assets/icon128.png",
+                "assets/addy_ai_logo_connected.png", "assets/addy_ai_logo_not_connected.png",
+                "assets/icon.png", "assets/icon_white.png", "assets/power_off_icon.png",
+                "assets/close_icon.png", "assets/maximize_icon.png"],
+            "matches": ["<all_urls>"]
+        },
+        {
+          "resources": ["settings.html", "login.html", "onboarding.html"],
+          "extension_ids": ["gldadickgmgciakdljkcpbdepehlilfn"]
+        }
+    ]
+}

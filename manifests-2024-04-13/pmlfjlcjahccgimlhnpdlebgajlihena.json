@@ -1,0 +1,74 @@
+---
+name: Gently Wordle Solver
+version: 1.0.1
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2022-04-27T03:20:26.000Z'
+size: 1.15MiB
+languages:
+  - English (UK)
+description: A Wordle solver
+publisher_account: Andy Hawkins
+support_website: https://github.com/adhawkins/wordle-solver/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Gently Wordle Solver",
+ "version": "1.0.1",
+ "description": "A Wordle solver",
+ "author": "Andy Hawkins <andy@gently.org.uk>",
+ "icons": {
+  "16": "wordle_logo_16x16.png",
+  "32": "wordle_logo_32x32.png",
+  "48": "wordle_logo_48x48.png",
+  "128": "wordle_logo_128x128.png"
+ },
+ "action": {
+  "default_icon": "wordle_logo_32x32.png"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "https://www.nytimes.com/games/wordle/index.html",
+    "https://www.powerlanguage.co.uk/wordle/",
+    "https://www.wordle2.in/",
+    "https://www.wordhurdle.in/",
+    "https://septle.com/"
+   ],
+   "js": [
+    "site-integration.js",
+    "site-integration-wordle.js",
+    "site-integration-septle.js",
+    "content-script.js",
+    "wordle-solver-lib.js"
+   ],
+   "resources": [
+    "wordle-solver-lib.wasm",
+    "wordle-solver-lib.data"
+   ],
+   "run_at": "document_idle"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+  "resources": ["wordle-solver-lib.wasm"],
+  "matches": ["<all_urls>"]
+  },
+  {
+   "resources": ["wordle-solver-lib.data"],
+   "matches": ["<all_urls>"]
+  }
+ ],
+ "background": {
+  "service_worker": "background-script.js",
+  "type": "module"
+ },
+ "permissions": [
+  "tabs"
+ ]
+}

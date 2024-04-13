@@ -1,0 +1,90 @@
+---
+name: Handoffs
+version: 1.8.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 17
+release_date: '2024-04-12T15:53:02.000Z'
+size: 3.77MiB
+languages:
+  - English
+description: >-
+  Handoffs turn your CRM data into instantly sharable Summaries to make customer
+  conversations 100x easier. Manage customer…
+publisher: Handoffs
+publisher_account: dev
+publisher_address: |-
+  466 Bret Harte Rd
+  San Rafael, CA 94901-5254
+  US
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Handoffs",
+  "name": "Handoffs",
+  "version": "1.8.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "favicon.ico",
+    "32": "favicon.ico",
+    "48": "favicon.ico",
+    "128": "favicon.ico"
+  },
+  "host_permissions": [
+    "https://app.hubspot.com/*",
+    "https://app.handoffs.com/*",
+    "https://backend.handoffs.com/*"
+  ],
+  "action": {
+    "default_title": "Click to open Handoff extension!"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.handoffs.com/*"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["https://*.lightning.force.com/*"],
+      "js": [
+        "hosted-code/salesforce/crm-add-html.js",
+        "hosted-code/crm-readers/sf-lightning-tabs-reader.js"
+      ]
+    },
+    {
+      "matches": ["https://*.my.salesforce.com/*"],
+      "js": [
+        "hosted-code/salesforce/crm-add-classic-html.js",
+        "hosted-code/crm-readers/salesforce-tabs-reader.js"
+      ]
+    },
+    {
+      "matches": ["https://app.hubspot.com/contacts/*"],
+      "js": [
+        "hosted-code/crm-readers/hubspot-tabs-reader.js",
+        "hosted-code/hubspot/crm-add-html.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["hosted-code/*", "/hosted-code/*", "static/*"],
+      "matches": ["https://app.handoffs.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://app.handoffs.com/*"]
+  },
+  "permissions": ["scripting", "sidePanel", "storage", "tabs", "contextMenus"],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'"
+  }
+}

@@ -1,0 +1,58 @@
+---
+name: makler.md currency converter
+version: 1.0.3
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 10
+release_date: '2023-06-28T06:02:33.000Z'
+size: 25.29KiB
+languages:
+  - русский
+description: >-
+  Set currency and automatically convert all sale announcements across the
+  makler.md
+publisher_account: nikita.korniks
+support_website: https://github.com/NikitaKornik/makler-improved-currency
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "makler.md currency converter",
+  "description": "Set currency and automatically convert all sale announcements across the makler.md",
+  "version": "1.0.3",
+  "manifest_version": 3,
+  "icons": {
+    "128": "images/icon-128.png",
+    "64": "images/icon-64.png",
+    "48": "images/icon-48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://makler.md/*"],
+      "js": ["content/originalPrice.js", "content/convertedPrice.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "./service_workers/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "makler.md currency converter",
+    "default_popup": "popup/index.html"
+  },
+  "permissions": ["tabs", "storage", "webRequest"],
+  "host_permissions": [
+    "*://makler.md/*",
+    "*://www.agroprombank.com/*",
+    "*://www.energbank.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content/originalPrice.css"],
+      "matches": ["*://makler.md/*"]
+    }
+  ]
+}

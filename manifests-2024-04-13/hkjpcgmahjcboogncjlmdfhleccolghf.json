@@ -1,0 +1,100 @@
+---
+name: Input Ninja
+version: 0.9.99
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 13
+release_date: '2024-04-08T13:36:38.000Z'
+size: 2.02MiB
+languages:
+  - English
+description: >-
+  Access your templates, notes, todos and everything else with one key press.
+  Instantly copy/view or insert them into any field.
+publisher_account: Input Ninja Team
+extension_website: inputninja.com
+privacy_policy: https://inputninja.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Input Ninja",
+    "description": "Access your templates, notes, todos and everything else with one key press. Instantly copy/view or insert them into any field.",
+    "version": "0.9.99",
+    "manifest_version": 3,
+
+
+    "action": {
+        "default_icon": {
+            "16": "images/icon16.png",
+            "48": "images/icon48.png",
+            "128": "images/icon128.png"
+        },
+        "default_title": "Input Ninja",
+        "default_popup": "popup.html"
+    },
+
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+
+    "permissions": ["contextMenus", "storage", "scripting", "sidePanel", "activeTab", "management"],
+
+    "side_panel": {
+        "default_path": "sidepanel.html"
+    },
+
+    "host_permissions": ["<all_urls>"],
+
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["controller.js"],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["contentscript.js"],
+            "run_at": "document_start",
+            "all_frames": false
+        }
+    ],
+    "commands": {
+        "start": {
+            "suggested_key": {
+                "default": "Alt+Space",
+                "mac": "Alt+Space"
+            },
+            "description": "Starts Input Ninja on the page"
+        }
+    },
+    "externally_connectable": {
+        "matches": [
+            "https://*.inputninja.com/*",
+            "https://*.inputninja.net/*",
+            "https://inputninja.com/**/*"
+        ]
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": ["images/*"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": ["js/*"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

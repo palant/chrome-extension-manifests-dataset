@@ -1,0 +1,64 @@
+---
+name: Simulcast Assistant
+version: 2.0.3
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2024-04-12T07:54:03.000Z'
+size: 219KiB
+languages:
+  - English
+description: >-
+  Enables wholesale vehicle buyers and sellers to easily participate in multiple
+  Manheim Simulcast lanes.
+publisher_account: Cox Automotive, Inc.
+privacy_policy: >-
+  https://site.manheim.com/en/marketplace-policies/us-policies/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "2.0.3",
+  "name": "Simulcast Assistant",
+  "description": "Enables wholesale vehicle buyers and sellers to easily participate in multiple Manheim Simulcast lanes.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtLFZEzDU7UGTUzMf1U1lszVLw1ETlYQ4xXA9KwbBedht5VZOJbulLVvK7vuTUbaU5nJnd3ZBwvXw8NC55WaPmTXdbIHbv5mPlAVvhz5wNR/xiyuBcGKxOk6Yxlk3yfyPeQ15CHjakkbr36uRgVcNTqVQLcRPVFHCP/vuAyvh2hs5qLre1HEu+dOadcc3Y+NMp33HLckfDp9URL1AY8yB9RMPMtvGihH5tfRSDYolrfn3Yz+w25cCBaM/oGEECAaO4mBp0RjvHcQ0zQX1yExVmQCFMUzvoAzgXZHZTdBK0bhPrF9pY5yec3gVvg6ptApN2O3VIGPPozxRZim0CMrSvQIDAQAB",
+  "icons": {
+    "16": "assets/icons/mlogo_only_16.png",
+    "32": "assets/icons/mlogo_only_32.png",
+    "48": "assets/icons/mlogo_only_48.png",
+    "128": "assets/icons/mlogo_only_128.png"
+  },
+  "minimum_chrome_version": "114",
+  "permissions": [
+    "contextMenus",
+    "sidePanel",
+    "notifications",
+    "offscreen",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "scripts/service-worker/index.js"
+  },
+  "action": {
+    "default_title": "Click to open Simulcast Assistant"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "content_scripts": [{
+    "matches": ["https://*.manheim.com/*"],
+    "js": ["scripts/content-scripts/enter-sale.js"],
+    "run_at": "document_start"
+  }, {
+    "matches": ["https://dealer-ui.sim.manheim.com/*"],
+    "js": ["scripts/content-scripts/simulcast.js"],
+    "all_frames": true
+  }],
+  "web_accessible_resources": [{
+    "resources": ["scripts/content-scripts/opener.js", "assets/icons/side-panel.svg"],
+    "matches": ["<all_urls>"]
+  }]
+}

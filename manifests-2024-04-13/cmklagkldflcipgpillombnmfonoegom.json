@@ -1,0 +1,70 @@
+---
+name: Ассистент для партнёров Яндекс.Маркета
+version: 2.1.0
+category_slug: productivity/workflow
+rating: 3.625
+rating_count: 8
+user_count: 2000
+release_date: '2023-08-24T05:08:18.000Z'
+size: 138KiB
+languages:
+  - русский
+description: Создавайте партнёрские ссылки в один клик и зарабатывайте на своем контенте
+publisher_account: Партнёрская сеть Яндекс.Маркета и Беру
+extension_website: aflt.market.yandex.ru
+support_website: https://yandex.ru/support/market-distr/feedback.html
+privacy_policy: https://yandex.ru/legal/confidential
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ассистент для партнёров Яндекс.Маркета",
+  "description": "Создавайте партнёрские ссылки в один клик и зарабатывайте на своем контенте",
+  "version": "2.1.0",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "clipboardWrite"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "action": {
+      "default_title": "Партнёрские ссылки Маркета.",
+      "default_icon": "./icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "./background.js",
+    "type": "module"
+  },
+  "content_scripts" : [
+    {
+      "matches": [ "<all_urls>" ],
+      "js": ["./content-script.js"],
+      "css": ["./content-script.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "icons": {
+      "16": "./icons/icon16.png",
+      "48": "./icons/icon48.png",
+      "128": "./icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "proxy.html"
+      ],
+      "matches": [
+        "*://*.market.yandex.ru/*"
+      ]
+    }
+  ],
+  "manifest_version": 3
+}

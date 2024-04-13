@@ -1,0 +1,93 @@
+---
+name: 'OpenAsks: Social Platform for AI Chats'
+version: 1.1.6
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 19
+release_date: '2024-01-05T21:33:03.000Z'
+size: 479KiB
+languages:
+  - English
+description: >-
+  Interact with multiple AI platforms together to explore, compare, and share
+  with others
+publisher_account: OpenAsks
+extension_website: openasks.com
+support_website: https://docs.openasks.com
+privacy_policy: https://docs.openasks.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "1.1.6",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://chat.openai.com/*",
+    "*://bard.google.com/*",
+    "*://*.openasks.com/*",
+    "*://*.anthropic.com/*",
+    "*://*.claude.ai/*"
+  ],
+  "background": {
+    "service_worker": "background/bg.js"
+  },
+  "action": {},
+  "externally_connectable": {
+    "matches": [
+      "https://*.openasks.com/*",
+      "http://localhost:3000/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://bard.google.com/*",
+        "https://*.anthropic.com/*",
+        "https://*.claude.ai/*"
+      ],
+      "js": [
+        "content-scripts/mainUI.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://localhost:3000/*",
+        "https://openasks.com/*"
+      ],
+      "js": [
+        "content-scripts/authCheckUI.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content-scripts/mainUI.css",
+        "icons/icon48.png",
+        "leave_review.png"
+      ],
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://bard.google.com/*",
+        "https://*.anthropic.com/*",
+        "https://*.claude.ai/*"
+      ]
+    }
+  ],
+  "commands": {}
+}

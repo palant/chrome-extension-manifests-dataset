@@ -1,0 +1,92 @@
+---
+name: Kalami
+version: 1.0.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 11
+user_count: 258
+release_date: '2024-04-04T09:22:05.000Z'
+size: 3.97MiB
+languages:
+  - English
+description: This is a Chrome extension for Kalami
+publisher: Kalami
+publisher_account: omerhassan299
+publisher_address: |-
+  4479 Lee Avenue
+  Niagara Falls, ON L2H 3B7
+  CA
+privacy_policy: https://splendorous-conkies-65e735.netlify.app
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Kalami",
+  "description": "This is a Chrome extension for Kalami",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "activeTab", "scripting", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://kalami.ai/*"],
+      "run_at": "document_end",
+      "js": ["./auth/checkSession.js"]
+    },
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "run_at": "document_end",
+      "js": [
+        "./app/content_script/chatGPTContentScript.js",
+        "./app/scripting/OpenAiCoverLetterGenerator.js",
+        "./app/scripting/helpersScript.js",
+        "./app/content_script/chatGPTScriptFeedback.js"
+      ],
+      "css": [
+        "./app/content_script/buttonStyle.css",
+        "./app/content_script/scriptFeedback.css"
+      ]
+    },
+    {
+      "matches": ["https://gemini.google.com/*"],
+      "run_at": "document_end",
+      "js": [
+        "./app/content_script/geminiContentScript.js",
+        "./app/scripting/GeminiCoverLetterGenerator.js",
+        "./app/scripting/helpersScript.js",
+        "./app/content_script/geminiScriptFeedback.js"
+      ],
+      "css": [
+        "./app/content_script/buttonStyle.css",
+        "./app/content_script/scriptFeedback.css"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Mellon",
+    "default_popup": "./index.html",
+    "default_icon": {
+      "16": "./assets/icons/logo.png",
+      "32": "./assets/icons/logo.png",
+      "48": "./assets/icons/logo.png",
+      "128": "./assets/icons/logo.png"
+    }
+  },
+  "options_page": "./app/option/options.html",
+  "icons": {
+    "16": "./assets/icons/logo.png",
+    "32": "./assets/icons/logo.png",
+    "48": "./assets/icons/logo.png",
+    "128": "./assets/icons/logo.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["https://chat.openai.com/*", "https://gemini.google.com/*"],
+      "resources": ["assets/*", "static/*"]
+    }
+  ],
+  "host_permissions": ["https://*/*", "http://*/*"]
+}

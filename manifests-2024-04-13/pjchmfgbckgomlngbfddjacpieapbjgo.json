@@ -1,0 +1,72 @@
+---
+name: Pitts extension
+version: 0.1.19
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 30
+release_date: '2024-01-05T06:00:20.000Z'
+size: 211KiB
+languages:
+  - English (United States)
+description: >-
+  This extension allows the user to retrieve the PDFs of studies via the Pitts
+  web app
+publisher: Pitts
+publisher_address: |-
+  hogevalkseweg 93
+  Lunteren 6741GL
+  NL
+extension_website: pitts.ai
+privacy_policy: https://pitts.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Pitts extension",
+  "manifest_version": 3,
+  "version": "0.1.19",
+  "description": "This extension allows the user to retrieve the PDFs of studies via the Pitts web app",
+  "action": {
+    "default_icon": "img/iconred.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "Pitts extension"
+  },
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": ["cookies", "storage", "alarms"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.pitts.ai/*", "http://localhost:4200/*", "https://pittswebuidotnet-test.azurewebsites.net/*"],
+      "run_at": "document_idle",
+      "js": ["contentscripts/pitts_webapp.js"]
+    },
+    {
+      "matches": ["https://*/*"],
+      "run_at": "document_idle",
+      "js": ["contentscripts/check_login.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["img/iconred.png"],
+      "matches": ["https://*.pitts.ai/*", "http://localhost:4200/*", "https://pittswebuidotnet-test.azurewebsites.net/*"]
+    }
+  ],
+  "homepage_url": "https://pitts.ai/",
+  "options_ui": {
+    "page": "preferences/preferences.html",
+    "open_in_tab": true
+  },
+  "minimum_chrome_version": "92",
+  "icons": {
+    "128": "img/iconred.png"
+  }
+}

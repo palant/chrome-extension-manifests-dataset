@@ -1,0 +1,117 @@
+---
+name: CapMonster Cloud — automated captcha solver
+version: 1.11.13
+category_slug: make_chrome_yours/accessibility
+rating: 4.418181818181818
+rating_count: 55
+user_count: 10000
+release_date: '2024-04-08T12:54:45.000Z'
+size: 1.15MiB
+languages:
+  - English
+  - русский
+description: Online service for automated captcha solving
+publisher_account: Zennolab
+support_website: https://helpdesk.zennolab.com/ru/conversation/new
+privacy_policy: https://zennolab.com/ru/terms-of-service
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "default_locale": "en",
+
+    "name": "__MSG_extName__",
+    "description": "__MSG_extDesc__",
+    "short_name": "__MSG_extShortName__",
+    "version": "1.11.13",
+
+    "icons": {
+        "48": "img/icon.png"
+    },
+    "action": {
+        "default_icon": "img/icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["content.js"],
+            "css": ["css/content/solver.css"],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": true,
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["turnstileInterceptor.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["recaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["hcaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["*://*.arkoselabs.com/fc/*", "*://*.funcaptcha.com/fc/*"],
+            "js": ["funcaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["pageScriptHandler.js"],
+            "run_at": "document_start",
+            "all_frames": false
+        }
+    ],
+
+    "background": {
+        "service_worker": "background.js"
+    },
+
+    "permissions": [
+        "storage",
+        "cookies",
+        "contextMenus",
+        "activeTab",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "scripting"
+    ],
+
+    "host_permissions": ["<all_urls>"],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; report-uri https://o111940.ingest.sentry.io/api/4504712665628672/security/?sentry_key=82d69ef4536b474e80b8343faaffd27a https://api.mixpanel.com"
+    },
+    "web_accessible_resources": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "resources": [
+                "defaultSettings.json",
+                "recaptcha2Interceptor.js",
+                "recaptcha3Interceptor.js",
+                "hcaptchaInterceptor.js",
+                "geetestInterceptor.js",
+                "funcaptchaInterceptor.js",
+                "turnstileInterceptor.js",
+                "pageScript.js",
+                "fonts/roboto/Roboto-Regular.ttf",
+                "img/white-cogs.png",
+                "img/blue-cogs-animated.gif",
+                "img/green-cogs.png",
+                "img/red-cogs.png"
+            ]
+        }
+    ]
+}

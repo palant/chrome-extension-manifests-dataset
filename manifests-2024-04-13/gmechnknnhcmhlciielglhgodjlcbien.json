@@ -1,0 +1,116 @@
+---
+name: SessionBox One - Multi-Login Anti-Detect Tool
+version: 4.7.0
+category_slug: productivity/workflow
+rating: 4.6
+rating_count: 10
+user_count: 2000
+release_date: '2024-03-01T09:53:11.000Z'
+size: 1.54MiB
+languages:
+  - English
+  - magyar
+description: >-
+  Elevate multitasking: Unleash SessionBox One's power for managing multiple
+  accounts across all sites.
+publisher: Box Labs LLC
+publisher_account: Box Labs
+publisher_address: |-
+  Nádasdy utca 15/A
+  2. emelet 18.
+  Budapest 1097
+  HU
+extension_website: sessionbox.io
+support_website: https://sessionbox.io/help
+privacy_policy: https://sessionbox.io/docs/(doc:privacy)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_APP_NAME__",
+  "short_name": "__MSG_APP_SHORT_NAME__",
+  "description": "__MSG_APP_DESCRIPTION__",
+  "version": "4.7.0",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icon-16.png",
+    "36": "images/icon-36.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "36": "images/icon-36.png"
+    },
+    "default_title": "__MSG_BROWSER_ACTION_TITLE__"
+  },
+  "permissions": [
+    "tabs",
+    "webNavigation",
+    "storage",
+    "declarativeNetRequest",
+    "webRequest",
+    "contextMenus",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "scripts/render.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "scripts/before-load.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "assets/inject.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/communication.html",
+        "pages/frame.html",
+        "pages/redirect.html",
+        "styles/render.css",
+        "scripts/relay-worker.js",
+        "scripts/unregister-sw.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src ws: http: localhost:54789; script-src 'self'; style-src data: 'unsafe-inline' https://fonts.googleapis.com http://localhost:54789; img-src * data:; font-src data: https://fonts.gstatic.com http://localhost:54789; worker-src 'self';"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://open.sessionbox.dev/*"
+    ]
+  }
+}

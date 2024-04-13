@@ -1,0 +1,74 @@
+---
+name: PlayerTube
+version: '1.7'
+category_slug: lifestyle/fun
+rating: 4.714285714285714
+rating_count: 7
+user_count: 344
+release_date: '2024-02-24T10:03:25.000Z'
+size: 1.77MiB
+languages:
+  - English
+description: The secret ingredient for a older (and better) looking YouTube.
+publisher_account: ktg5
+support_website: https://github.com/ktg5/PlayerTube/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "PlayerTube",
+    "description": "The secret ingredient for a older (and better) looking YouTube.",
+    "version": "1.7",
+    "homepage_url": "https://github.com/ktg5/PlayerTube",
+
+    "background": {
+        "service_worker": "src/background.js"
+    },
+
+    "action": {
+        "default_popup": "html/popup.html",
+        "default_icon": "img/playertube/icon.png"
+    },
+
+    "icons": {
+        "16": "img/playertube/resize/16.png",
+        "32": "img/playertube/resize/32.png",
+        "48": "img/playertube/resize/48.png",
+        "128": "img/playertube/resize/128.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*.youtube.com/*"],
+            "js": ["src/setup.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["*://*.youtube.com/*"],
+            "js": ["src/main.js"]
+        },
+
+        {
+            "matches": ["*://*.youtube.com/embed/*"],
+            "js": ["src/setup.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": ["*://*.youtube.com/embed/*"],
+            "js": ["src/main.js"],
+            "all_frames": true
+        }
+    ],
+
+    "web_accessible_resources": [{
+        "matches": ["*://*.youtube.com/*"],
+        "resources": ["css/*", "src/*", "img/*"]
+    }],
+
+    "permissions": [
+        "storage"
+    ]
+}

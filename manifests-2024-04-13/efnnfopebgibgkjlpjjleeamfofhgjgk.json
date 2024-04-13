@@ -1,0 +1,73 @@
+---
+name: 哔哩哔哩多账号工具
+version: 0.1.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 188
+release_date: '2023-10-09T16:23:47.000Z'
+size: 109KiB
+languages:
+  - 中文 (简体)
+description: 在 B 站(bilibili.com)自由切换账号
+publisher_account: Aidbo Studio
+extension_website: aidbo.fun
+support_website: https://aidbo.fun/portfolios/bilibili-multi-account
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "哔哩哔哩多账号工具",
+  "version": "0.1.1",
+  "description": "在 B 站(bilibili.com)自由切换账号",
+  "default_locale": "zh_CN",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "cookies",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.bilibili.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.bilibili.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

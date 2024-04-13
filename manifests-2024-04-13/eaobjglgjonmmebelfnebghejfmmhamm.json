@@ -1,0 +1,143 @@
+---
+name: TextUs Next Extension
+version: 4.0.40
+category_slug: productivity/workflow
+rating: 3.0491803278688523
+rating_count: 61
+user_count: 40000
+release_date: '2023-11-17T13:20:35.000Z'
+size: 3.2MiB
+languages:
+  - English (United States)
+description: >-
+  Business-class Texting Software - Start texting directly from your CRM, ATS or
+  any website.
+publisher: TextUs
+publisher_address: |-
+  1312 17th St
+  Suite 1205
+  Denver, CO 80202
+  US
+support_website: https://help.next.textus.com/
+privacy_policy: https://textus.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TextUs Next Extension",
+  "version": "4.0.40",
+  "manifest_version": 2,
+  "description": "Business-class Texting Software - Start texting directly from your CRM, ATS or any website.",
+  "icons": {
+    "16": "icons/textus-icon16.png",
+    "32": "icons/textus-icon32.png",
+    "48": "icons/textus-icon48.png",
+    "128": "icons/textus-icon128.png"
+  },
+  "author": "TextUs",
+  "background": {
+    "scripts": ["scripts/background.js"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "tabs",
+    "alarms",
+    "idle",
+    "https://app.bullhornstaffing.com/*",
+    "https://*.lightning.force.com/*",
+    "https://next.textus.com/*","https://texting.bullhorn.com/*","https://talentreef.textus.com/*",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "browser_action": {
+    "default_title": "TextUs Next",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": "script-src 'self' https://cdn.segment.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.dynamics.com/*",
+        "https://*.bullhornstaffing.com/*",
+        "https://*.lightning.force.com/*",
+        "https://*.jobappnetwork.com/*",
+        "https://*.salesforce.com/*",
+        "https://*.jobappdemo.com/*",
+        "https://*.trdev.co/*",
+        "http://localhost:8001/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": ["scripts/addClickHandlers.js"],
+      "css": ["styles/addClickHandlers.css"]
+    },
+    {
+      "matches": ["https://next.textus.com/*","https://texting.bullhorn.com/*","https://talentreef.textus.com/*"],
+      "js": ["scripts/tesseractBridge.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "exclude_globs": [
+        "https://next.textus.com/*","https://texting.bullhorn.com/*","https://talentreef.textus.com/*",
+        "http://localhost:3001*",
+    "https://extension.textus.com*",
+    "https://embed.textus.com/0b09154*",
+        "https://help.textus.com*"
+      ],
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/slideout.js"],
+      "css": ["styles/slideout.css"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "exclude_globs": [
+        "https://next.textus.com/*","https://texting.bullhorn.com/*","https://talentreef.textus.com/*",
+        "http://localhost:3001*",
+    "https://extension.textus.com*",
+    "https://embed.textus.com/0b09154*"
+      ],
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/contactMatchObserver.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "commands": {
+    "open_extension": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      },
+      "description": "Opens the extension"
+    },
+    "find_numbers": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Find numbers on the page"
+    },
+    "toggle_slideout": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Open slideout in current tab"
+    }
+  },
+  "web_accessible_resources": [
+    "icons/*.*",
+    "styles/*.*",
+    "extension.html",
+    "slideout.html"
+  ]
+}

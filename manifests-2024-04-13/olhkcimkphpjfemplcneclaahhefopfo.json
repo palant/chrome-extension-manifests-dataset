@@ -1,0 +1,58 @@
+---
+name: 'OutWhit: Whitman Duo Auto Authentication'
+version: 3.0.1
+category_slug: productivity/education
+rating: 5
+rating_count: 2
+user_count: 30
+release_date: '2024-01-30T05:37:08.000Z'
+size: 975KiB
+languages:
+  - English
+description: Automatically verifies duo authentication for Whitman Students
+publisher_account: meechapooch
+privacy_policy: https://meechapooch.github.io/WhittieDuoDuper-Docs/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "OutWhit: Whitman Duo Auto Authentication",
+    "description": "Automatically verifies duo authentication for Whitman Students",
+    "version": "3.0.1",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_scripts": [{
+        "matches": [ "*://*.duosecurity.com/*" ],
+        "js": ["content.js"],
+        "all_frames": true
+    },{
+        "matches":["https://www.whitman.edu/canvas/*"],
+        "js":["whitman.js"],
+        "run_at":"document_end"
+    },{
+        "matches":["https://login.whitman.edu/*"],
+        "js":["whitmanLogin.js"]
+    },{
+        "matches":["https://login.whitman.edu/login*"],
+        "js":["lasttime.js"]
+    }],
+    "permissions": ["storage","cookies","activeTab"],
+    "host_permissions":["*://*.duosecurity.com/*","*://*.whitman.edu/*"],
+    "action": {
+        "default_popup": "./popup.html"
+    },
+    "icons": {
+        "16": "./assets/icons/icon16.png",
+        "48": "./assets/icons/icon48.png",
+        "128": "./assets/icons/icon128.png"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "duo@extension.com"
+        }
+    }
+}

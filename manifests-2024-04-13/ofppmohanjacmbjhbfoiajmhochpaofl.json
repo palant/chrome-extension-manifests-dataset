@@ -1,0 +1,98 @@
+---
+name: JobTarget Navigator
+version: 0.1.16
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 277
+release_date: '2024-04-02T03:49:12.000Z'
+size: 3.74MiB
+languages:
+  - English
+  - español
+description: Seamlessly access JobTarget tools and services directly from your browser.
+publisher: JobTarget
+publisher_address: |-
+  600 Summer St
+  Stamford, CT 06901-4404
+  US
+extension_website: www.jobtarget.com
+support_website: https://support.jobtarget.com/s/
+privacy_policy: https://www.jobtarget.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JobTarget Navigator",
+  "description": "Seamlessly access JobTarget tools and services directly from your browser.",
+  "version": "0.1.16",
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "action": {
+    "default_popup": "./popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.jobtarget.com/oc/browser-extension-auth-success*"],
+      "js": ["./src/sources/jobtarget-auth.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./content.js"]
+    },
+    {
+      "matches": [
+        "https://recruitingbypaycor.com/*",
+        "https://*.recruitingbypaycor.com/*",
+        "https://*.recruitingbypaycor-dev.com/*"
+      ],
+      "js": ["./src/sources/partners/paycor.js"]
+    },
+    {
+      "matches": ["https://*.agilehrqa.com/*"],
+      "js": ["./src/sources/partners/prismhr.js"]
+    },
+    {
+      "matches": ["https://*.jazz.co/*"],
+      "js": ["./src/sources/partners/jazzhr.js"]
+    },
+    {
+      "matches": ["https://*.paylocity.com/*"],
+      "js": ["./src/sources/partners/paylocity.js"]
+    },
+    {
+      "matches": ["https://workforcenow.adp.com/*"],
+      "js": ["./src/sources/partners/adp.js"]
+    },
+    {
+      "matches": ["https://*.icims.com/*"],
+      "js": ["./src/sources/partners/icims.js"]
+    },
+    {
+      "matches": ["https://*/wp-admin/*"],
+      "js": ["./src/sources/partners/automattic.js"]
+    }
+  ],
+  "icons": {
+    "16": "./assets/jobtarget-logo-16.png",
+    "48": "./assets/jobtarget-logo-48.png",
+    "128": "./assets/jobtarget-logo-128.png"
+  },
+  "options_page": "./options.html",
+  "devtools_page": "./devtools.html",
+  "default_locale": "en",
+  "web_accessible_resources": [
+    {
+      "matches": ["https://*.jobtarget.com/*"],
+      "resources": ["auth.html"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["prompts.html"]
+    }
+  ],
+  "permissions": ["tabs", "storage"]
+}

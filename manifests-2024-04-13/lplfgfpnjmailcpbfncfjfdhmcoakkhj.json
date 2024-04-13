@@ -1,0 +1,67 @@
+---
+name: Douban Book Rating
+version: 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 24
+release_date: '2024-01-29T10:11:20.000Z'
+size: 22.93KiB
+languages:
+  - 中文 (简体)
+description: 在微信读书、京东读书、得到读书、多看阅读、zlibrary图书详情页显示图书的豆瓣评分
+publisher: GeckoInfo
+publisher_account: GeckoInfo.top
+publisher_address: |-
+  zhongchenglu316
+  Guangzhou Shi, Guangdong Sheng 510000
+  CN
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Douban Book Rating",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "description": "在微信读书、京东读书、得到读书、多看阅读、zlibrary图书详情页显示图书的豆瓣评分",
+  "action": {
+    "default_icon": "static/icon/icon_16.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "permissions": [ "tabs" ],
+  "host_permissions": [
+    "https://*.douban.com/*"
+  ],
+  "icons": {
+    "16": "static/icon/icon_16.png",
+    "64": "static/icon/icon_64.png"
+  },
+  "content_scripts": [
+    {
+      "css":[
+        "./static/css/index.css"
+      ],
+      "js": [
+        "./components/index.js"
+      ],
+      "matches": [
+        "https://weread.qq.com/web/bookDetail/*",
+        "https://www.duokan.com/pc/detail/*",
+        "https://e-m.jd.com/detail/*",
+        "https://www.dedao.cn/ebook/detail*",
+        "https://zh.singlelogin.re/book/*"
+      ],
+      "run_at":"document_end"
+    }
+  ],
+  "web_accessible_resources": [ {
+    "matches": [ "<all_urls>" ],
+    "resources": [ "static/img/star.png","static/img/allstars.png" ]
+ } ]
+}

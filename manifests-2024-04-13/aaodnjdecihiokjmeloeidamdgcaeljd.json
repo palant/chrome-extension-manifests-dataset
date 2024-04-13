@@ -1,0 +1,63 @@
+---
+name: タイムズカーシェア マップで検索
+version: 1.3.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 312
+release_date: '2024-04-09T09:55:49.000Z'
+size: 1.68MiB
+languages:
+  - 日本語
+description: タイムズカーシェアを地図から徒歩距離順で検索して予約状況一覧を表示します
+publisher_account: fumito80
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.3.0",
+  "name": "タイムズカーシェア マップで検索",
+  "description": "タイムズカーシェアを地図から徒歩距離順で検索して予約状況一覧を表示します",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "タイムズカーシェア マップで検索",
+    "default_icon": "images/myicon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "images/myicon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://share.timescar.jp/view/member/mypage.jsp"
+      ],
+      "js": [
+        "script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "geolocation",
+    "declarativeContent"
+  ],
+  "host_permissions": [
+    "https://share.timescar.jp/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src-elem 'self' https://maps.googleapis.com; object-src 'self'"
+  },
+  "sandbox": {
+    "pages": [
+      "main.html"
+    ]
+  }
+}

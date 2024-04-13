@@ -1,0 +1,65 @@
+---
+name: Click Reward
+version: 1.0.4
+category_slug: lifestyle/entertainment
+rating: null
+rating_count: null
+user_count: 119
+release_date: '2024-03-08T08:24:51.000Z'
+size: 1.68MiB
+languages:
+  - English
+description: Get rewards for using your browser, participate in draws and win prizes.
+publisher_account: ClickReward
+extension_website: clickreward.net
+privacy_policy: https://clickreward.net/privacy-policy
+---
+
+{
+  "manifest_version": 3,
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "name": "Click Reward",
+  "description": "Get rewards for using your browser, participate in draws and win prizes.",
+  "version": "1.0.4",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "icons": {
+    "300": "300.png",
+    "128": "128.png",
+    "32": "32.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "128": "128.png",
+      "32": "32.png"
+    }
+  },
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://clickreward.net/*"],
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["js/content.js"],
+      "matches": [
+        "https://clickreward.net/*",
+        "https://www.bing.com/search*",
+        "https://search.yahoo.com/yhs/search*",
+        "https://*.search.yahoo.com/yhs/search*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Rewarded",
+      "keyword": "clickreward",
+      "search_url": "https://clickreward.net/search?q={searchTerms}",
+      "favicon_url": "https://clickreward.net/favicon.ico",
+      "suggest_url": "https://clickreward.net/complete/search?output=chrome&q={searchTerms}",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  }
+}

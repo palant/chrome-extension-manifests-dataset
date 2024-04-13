@@ -1,0 +1,80 @@
+---
+name: MerchBridge Tiktok Helper
+version: 0.0.15
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 86
+release_date: '2024-04-12T05:15:20.000Z'
+size: 262KiB
+languages:
+  - English
+description: An extension to help you fulfill Tiktok orders easier with MerchBridge.
+publisher_account: merchbridge.addons
+support_website: https://dashboard.merchbridge.com
+privacy_policy: https://merchbridge.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MerchBridge Tiktok Helper",
+  "version": "0.0.15",
+  "description": "An extension to help you fulfill Tiktok orders easier with MerchBridge.",
+  "devtools_page": "devtool/devtool.html",
+  "icons": {
+    "16": "assets/images/16.png",
+    "48": "assets/images/48.png",
+    "128": "assets/images/128.png"
+  },
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_title": "MerchBridge Tiktok Helper",
+    "default_icon": {
+      "48": "assets/images/48.png"
+    }
+  },
+  "default_locale": "en",
+  "content_scripts": [
+    {
+      "matches": ["https://seller-us.tiktok.com/*"],
+      "js": [
+        "assets/libs/jquery.min.js",
+        "assets/libs/jquery.toast.js",
+        "scripts/content_script.js",
+        "scripts/sync_order.js",
+        "scripts/add-tracking.js"
+      ],
+      "css": ["assets/styles/jquery.toast.css", "assets/styles/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'https://seller-us.tiktok.com/*'; object-src 'self'"
+  },
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": [
+    "https://seller-us.tiktok.com/*",
+    "https://api-dev.merchbridge.com/*",
+    "https://api.merchbridge.com/*",
+    "http://127.0.0.1:8080/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/images/not-found.png",
+        "assets/images/completed.png"
+      ],
+      "matches": ["https://seller-us.tiktok.com/*"]
+    },
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://seller-us.tiktok.com/*"]
+    }
+  ]
+}

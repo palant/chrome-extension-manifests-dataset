@@ -1,0 +1,70 @@
+---
+name: Fado168
+version: 1.0.14
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 16
+release_date: '2023-11-19T07:13:56.000Z'
+size: 462KiB
+languages:
+  - English
+description: A shopping tool from fado168.com
+publisher: FADO GLOBAL JOINT STOCK COMPANY
+publisher_account: FADO GLOBAL
+publisher_address: |-
+  60 Nguyễn Đình Chiểu
+  Đa Kao
+  Quận 1, Ho Chi Minh City 700000
+  VN
+extension_website: fado168.com
+privacy_policy: https://fado168.com/ext/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_icon": "static/assets/f128.png",
+    "default_popup": "popup.html",
+    "default_title": "Shopping anywhere"
+  },
+  "background": {"service_worker": "static/js/sw.js"},
+  "content_scripts": [
+    {
+      "js": ["static/js/jquery.js", "static/js/content.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["static/js/jquery.js", "static/js/checkout.js"],
+      "matches": ["*://fado168.com/ext/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["static/js/cart.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "content_scripts": "script-src 'self'; object-src 'self'",
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "default_locale": "en",
+  "description": "A shopping tool from fado168.com",
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "icons": {
+    "128": "static/assets/f128.png"
+  },
+  "manifest_version": 3,
+  "name": "Fado168",
+  "permissions": ["storage", "tabs", "cookies", "proxy"],
+  "version": "1.0.14",
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["static/assets/*"]
+    }
+  ]
+}

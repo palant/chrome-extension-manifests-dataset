@@ -1,0 +1,99 @@
+---
+name: 无追搜索-让你的搜索，不再被追踪
+version: 1.9.1
+category_slug: productivity/workflow
+rating: 4.625
+rating_count: 8
+user_count: 2000
+release_date: '2023-11-20T08:12:45.000Z'
+size: 1.4MiB
+languages:
+  - English
+  - 中文 (简体)
+description: 无追搜索是一款专注于保护隐私的新一代搜索引擎，以优质结果为基础，致力为用户打造安心纯净且有保障的搜索环境。
+publisher_account: wuzhuiso.com
+extension_website: www.wuzhuiso.com
+support_website: https://www.wuzhuiso.com/about.html
+privacy_policy: https://www.wuzhuiso.com/help/policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "无追搜索-让你的搜索，不再被追踪",
+  "version": "1.9.1",
+  "description": "无追搜索是一款专注于保护隐私的新一代搜索引擎，以优质结果为基础，致力为用户打造安心纯净且有保障的搜索环境。",
+  "icons": {
+    "16": "public/img/icon.png",
+    "48": "public/img/icon.png",
+    "128": "public/img/icon.png"
+  },
+  "background": {
+    "scripts": [
+      "webext-sdk/ewe-api.js",
+      "public/js/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "webext-sdk/ewe-content.js"
+      ],
+      "match_about_blank": true,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "public/js/content.js",
+        "public/iconfont/iconfont.js"
+      ],
+      "css": [
+        "public/css/web.css",
+        "public/css/content.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_action": {
+    "default_icon": "public/img/icon.png",
+    "default_title": "无追搜索-让你的搜索，不再被追踪",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "webNavigation",
+    "webRequest",
+    "unlimitedStorage",
+    "storage",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "homepage_url": "https://www.wuzhuiso.com",
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "encoding": "UTF-8",
+      "favicon_url": "https://www.wuzhuiso.com/favicon.ico",
+      "is_default": true,
+      "keyword": "wuzhuiso.com",
+      "name": "无追艾特搜索",
+      "search_url": "https://www.wuzhuiso.com/s?src=extension_chrome&q={searchTerms}",
+      "suggest_url": "https://www.wuzhuiso.com/v1/pc_ext/suggest?word={searchTerms}&count=8&src=ext_sug"
+    }
+  },
+  "default_locale": "zh_CN",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

@@ -1,0 +1,49 @@
+---
+name: 微博助手
+version: 4.2.2
+category_slug: productivity/workflow
+rating: 4.606060606060606
+rating_count: 33
+user_count: 4000
+release_date: '2022-12-07T04:50:55.000Z'
+size: 4.84MiB
+languages:
+  - 中文 (简体)
+description: 功能列表：归档微博原图, 解析视频地址，帐号切换
+publisher_account: neko4zheng
+publisher_address: |-
+  徐汇区漕溪北路595号
+  上海 200030
+  中华人民共和国
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "微博助手",
+  "version": "4.2.2",
+  "author": "neko4zheng",
+  "description": "功能列表：归档微博原图, 解析视频地址，帐号切换",
+  "icons": {
+    "128": "public/logo_wh_128.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_icon": {},
+    "default_title": "微博助手",
+    "default_popup": "app/popup.html"
+  },
+  "permissions": ["downloads", "tabs", "storage", "cookies", "*://wb.yizhibo.com/*", "*://*.xiaoka.*/*", "*://*.sinaimg.*/*", "*://*.weibo.com/*", "*://*.sina.com.cn/*"],
+  "background": {
+    "scripts": ["app/background.bundle.js"],
+    "persistent": false
+  },
+  "content_scripts": [{
+    "matches": ["*://weibo.com/*", "*://*.weibo.com/*", "*://*.meipai.com/*"],
+    "js": ["app/contentScriptsEnvInit.bundle.js", "app/contentScripts.bundle.js", "app/contentScripts_photos_autoDownloadVideo.bundle.js"],
+    "css": ["app/contentScripts.bundle.css"],
+    "run_at": "document_start"
+  }],
+  "web_accessible_resources": ["image/*", "resources/*", "dist/resources/*"]
+}

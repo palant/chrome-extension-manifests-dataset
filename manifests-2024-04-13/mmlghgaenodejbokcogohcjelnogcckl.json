@@ -1,0 +1,140 @@
+---
+name: HackerRank QuickApply
+version: 2.0.3
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 14
+release_date: '2024-04-08T17:16:35.000Z'
+size: 514KiB
+languages:
+  - English (United States)
+description: Instantly apply to any job with a single click
+publisher_account: HackerRank
+extension_website: hackerrank.com
+privacy_policy: https://www.hackerrank.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "HackerRank QuickApply",
+  "description": "Instantly apply to any job with a single click",
+  "version": "2.0.3",
+  "homepage_url": "https://hackerrank.com/",
+  "action": {
+    "default_title": "HackerRank QuickApply",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "activeTab", "tabs"],
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://boards.greenhouse.io/*/jobs/*",
+        "*://boards.greenhouse.io/embed/job_app*",
+        "*://*.myworkdayjobs.com/*/*/job/*/*/apply/applyManually*",
+        "*://*.myworkdayjobs.com/*/*/job/*/*/apply",
+        "*://*.myworkdayjobs.com/*/*/job/*",
+        "*://jobs.smartrecruiters.com/oneclick-ui/company/*/publication/*",
+        "*://hackerrank.com/quickapply/thanks",
+        "*://*.hackerrank.com/quickapply/thanks",
+        "http://localhost:8090/quickapply/thanks"
+      ],
+      "css": ["main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://boards.greenhouse.io/*/jobs/*",
+        "*://boards.greenhouse.io/embed/job_app*"
+      ],
+      "excludeMatches": ["https://boards.greenhouse.io/*/jobs/*/confirmation"],
+      "css": ["styles/greenhouse/greenhouse.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.myworkdayjobs.com/*/jobs/login*",
+        "*://*.myworkdayjobs.com/*/*/job/*",
+        "*://*.myworkdayjobs.com/*/*/job/*/*/apply/applyManually*",
+        "*://*.myworkdayjobs.com/*/*/job/*/*/apply"
+      ],
+      "excludeMatches": [],
+      "css": ["styles/workday/workday.css"],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": ["*://jobs.lever.co/*/*/apply"],
+      "excludeMatches": [],
+      "css": ["styles/lever/lever.css"],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": [
+        "*://*.myworkdayjobs.com/*/*/job/*/*/apply/applyManually*",
+        "*://*.myworkdayjobs.com/*/*/job/*/*/apply"
+      ],
+      "excludeMatches": [],
+      "css": ["styles/workday/workday-apply.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://jobs.smartrecruiters.com/*/*"],
+      "excludeMatches": [
+        "*://jobs.smartrecruiters.com/oneclick-ui/company/*/publication/*"
+      ],
+      "css": ["styles/smartrecruiters/description.css"],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": [
+        "*://jobs.smartrecruiters.com/oneclick-ui/company/*/publication/*"
+      ],
+      "css": ["styles/smartrecruiters/smartrecruiters.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["contentScript.bundle.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://hackerrank.com/*",
+      "*://*.hackerrank.com/*",
+      "*://*.private.hackerrank.link/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "main.css",
+        "styles/smartrecruiters/smartrecruiters.css",
+        "quick-apply.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

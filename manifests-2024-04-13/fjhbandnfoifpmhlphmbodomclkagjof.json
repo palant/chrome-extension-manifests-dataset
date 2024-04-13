@@ -1,0 +1,67 @@
+---
+name: movienight - comments for netflix
+version: 1.0.13
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 21
+release_date: '2023-03-02T19:19:05.000Z'
+size: 1.61MiB
+languages:
+  - English
+description: >-
+  movienight adds the much-needed comments section to anything you watch on
+  Netflix.
+publisher_account: SIEN
+support_website: https://getmovienight.app/help
+privacy_policy: https://sien.vision/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "movienight - comments for netflix",
+  "description": "movienight adds the much-needed comments section to anything you watch on Netflix.",
+  "version": "1.0.13",
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon-512.png"
+  },
+  "icons": {
+    "96": "icon-96.png",
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.netflix.com/*"],
+      "js": ["contentScript.bundle.js"],
+      "css": ["content.styles.css"]
+    },
+    {
+      "matches": ["*://*.getmovienight.app/*", "*://*.localhost/*"],
+      "js": ["auth.bundle.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' unsafe-inline"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content.styles.css",
+        "icon-512.png",
+        "icon-128.png",
+        "icon-96.png",
+        "sien.png",
+        "embedded.bundle.js"
+      ],
+      "matches": ["*://*.netflix.com/*"]
+    }
+  ],
+  "host_permissions": ["*://*.netflix.com/*", "*://*.getmovienight.app/*"],
+  "permissions": ["tabs", "storage"]
+}

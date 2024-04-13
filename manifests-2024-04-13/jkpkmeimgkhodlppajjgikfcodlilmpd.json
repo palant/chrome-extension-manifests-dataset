@@ -1,0 +1,108 @@
+---
+name: 動畫瘋·Plus
+version: 3.11.0
+category_slug: productivity/workflow
+rating: 4.614035087719298
+rating_count: 57
+user_count: 8000
+release_date: '2024-03-25T04:34:17.000Z'
+size: 2.28MiB
+languages:
+  - 中文 (繁體)
+description: >-
+  來自greasyfork上的動畫瘋·Plus，此插件設計是為了給短時間大量補番的人使用的，如果您覺得此插件好用，請付費支持動畫瘋讓此插件能持續為本平台服務，功能有分級標識自動同意、播畢後接續下一集、影片空降座標、子母畫面、影片截圖錄影、右鍵選取彈幕。
+publisher_account: Yan You Li
+extension_website: xu3u04u48.github.io/Anime_Crazy_Dot_Plus
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "動畫瘋·Plus", 
+    "description": "來自greasyfork上的動畫瘋·Plus，此插件設計是為了給短時間大量補番的人使用的，如果您覺得此插件好用，請付費支持動畫瘋讓此插件能持續為本平台服務，功能有分級標識自動同意、播畢後接續下一集、影片空降座標、子母畫面、影片截圖錄影、右鍵選取彈幕。", 
+    "author": "Yan You Li",
+    "version": "3.11.0",
+    "minimum_chrome_version": "96",
+    "icons": {
+        "48": "icons/48.png",
+        "128": "icons/128.png",
+        "300": "icons/300.png"
+    },
+    "background": {
+      "service_worker": "js/background.js"
+    },
+    "action": {
+      "default_icon": {
+          "48": "icons/48.png",
+          "128": "icons/128.png",
+          "300": "icons/300.png"
+      },
+      "default_popup": "pages/popup.html"
+    },
+    "declarative_net_request": {
+      "rule_resources": [
+        {
+          "id": "ruleset_1",
+          "enabled": true,
+          "path": "rules_1.json"
+        }
+      ]
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "contextMenus",
+        "declarativeContent",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback"
+    ],
+    "host_permissions": [
+      "https://ani.gamer.com.tw/*",
+      "https://*.bahamut.com.tw/*"
+    ],
+    "web_accessible_resources": [{
+      "resources": [
+        "image/*.png",
+        "library/*",
+        "js/*.js",
+        "css/*.css",
+        "pages/*.html",
+        "icons/*.png",
+        "icons/*.svg"],
+      "matches": ["https://ani.gamer.com.tw/*"]
+    }],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "content_scripts": [
+      {
+        "js": ["js/web_dark.js"],
+        "css":["css/web_dark_css.css"],
+        "matches": ["https://ani.gamer.com.tw/*"],
+        "run_at": "document_start"
+      },
+      {
+        "js": ["library/jquery.min.js","library/jquery-ui.min.js","js/web_embed.js"],
+        "matches": [ "https://ani.gamer.com.tw/animeVideo.php*","https://ani.gamer.com.tw/gamerVideo.php*"],
+        "run_at": "document_start"
+      },
+      {
+        "js": ["js/content.js"],
+        "css":["css/content.css"],
+        "matches": ["https://ani.gamer.com.tw/animeVideo.php*","https://ani.gamer.com.tw/gamerVideo.php*"]
+      },
+      {
+        "js": ["js/messageDOM.js"],
+        "matches": [ "https://ani.gamer.com.tw/animeVideo.php*","https://ani.gamer.com.tw/gamerVideo.php*"],
+        "run_at": "document_end"
+      },
+      {
+        "js": ["js/fb_comments_dark.js"],
+        "css": ["css/fb_comments_dark_css.css"],
+        "matches": ["https://www.facebook.com/plugins/feedback.php?*domain%3Dani.gamer.com.tw*"],
+        "run_at": "document_start",
+        "all_frames": true
+      }
+ ]
+}

@@ -1,0 +1,85 @@
+---
+name: Unicat - LinkedIn GIF comment picker
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 2.9
+rating_count: 10
+user_count: 2000
+release_date: '2024-03-22T08:54:38.000Z'
+size: 6.42MiB
+languages:
+  - English
+description: Add GIF to your LinkedIn comments. In 1 click.
+publisher: Waalaxy
+publisher_account: waalaxy
+publisher_address: |-
+  300 Av. Nina Simone
+  Montpellier 34000
+  FR
+extension_website: waalaxy.com
+privacy_policy: https://www.waalaxy.com/use-of-data
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Unicat - LinkedIn GIF comment picker",
+  "short_name": "Unicaat",
+  "description": "Add GIF to your LinkedIn comments. In 1 click.",
+  "version": "1.0.2",
+  "permissions": [
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "content_script/interceptor.js",
+      "assets/tutorial.gif"
+    ],
+    "matches": ["https://*.linkedin.com/*"]
+  }],
+  "icons": {
+    "16": "logo_unicat_16px.png",
+    "32": "logo_unicat_32px.png",
+    "48": "logo_unicat_48px.png",
+    "128": "logo_unicat_128px.png" },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "logo_unicat_128px.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "css" : [
+        "./assets/css/custom.css",
+        "./react-app/build/static/css/main.css"
+      ],
+      "js": [
+        "./node_modules/jquery/dist/jquery.min.js",
+        "./react-app/build/static/js/main.js",
+        "./content_script/getCSRFToken.js",
+        "./content_script/injectInterceptor.js",
+        "./content_script/htmlElements.js",
+        "./content_script/chooseGIF.js",
+        "./content_script/contentScript.js",
+        "./content_script/pickerIcon.js",
+        "./content_script/linkedInAPI.js",
+        "./content_script/modal.js",
+        "./content_script/toastAndLoader.js"
+      ],
+
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "run_at":    "document_end"
+    }
+  ],
+
+  "background": {
+    "service_worker": "./background.js"
+  }
+ }

@@ -1,0 +1,88 @@
+---
+name: ScoutX
+version: 1.0.22
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 5000
+release_date: '2024-03-21T13:38:13.000Z'
+size: 1.63MiB
+languages:
+  - English (United States)
+description: ScoutX, Product research tool for Amazon Sellers.
+publisher: InventoryLab Inc.
+publisher_account: ScoutX
+publisher_address: |-
+  9218 Metcalf Ave
+  #102
+  Overland Park, KS 66212
+  US
+extension_website: inventorylab.com
+support_website: https://support.inventorylab.com/hc/en-us
+privacy_policy: https://inventorylab.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ScoutX",
+  "short_name": "ScoutX",
+  "description": "ScoutX, Product research tool for Amazon Sellers.",
+  "version": "1.0.22",
+  "version_name": "1.0.22",
+  "author": "ScoutX \u003Csupport@inventorylab.com>",
+  "icons": { 
+    "16": "assets/icons/icon_16.png",
+    "32": "assets/icons/icon_32.png",
+    "64": "assets/icons/icon_64.png",
+    "128": "assets/icons/icon_128.png"
+  },
+  "action": {
+    "default_title": "ScoutX",
+    "default_popup": "./popup.html",
+    "default_icon": { "16": "assets/icons/icon_16-off.png", "32": "assets/icons/icon_32-off.png" }
+  },
+  "background": {
+    "service_worker": "./serviceWorker.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["./contentScripts.js"],
+      "matches": ["*://www.amazon.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": ["./inventorylab.js"],
+      "matches": ["*://*.inventorylab.com/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["assets/js/gtm.js"],
+    "matches": ["*://*.amazon.com/*"]
+  },{
+    "resources": ["assets/icons/icon_16.png"],
+    "matches": ["*://*.inventorylab.com/*"]
+  }],
+  "permissions": ["storage", "tabs", "webNavigation", "declarativeNetRequest", "webRequest", "cookies", "identity"],
+  "host_permissions": [
+    "*://*.amazon.com/*", "*://*.inventorylab.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_amazon",
+      "enabled": false,
+      "path": "assets/files/ruleset_amazon.json"
+    }]
+  },
+  "oauth2": {
+    "client_id": "472530664556-btdqth0hm4tm5crnfvk85b3vqr8vr2ag.apps.googleusercontent.com",
+    "client_secret": "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",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file", "profile", "email"
+    ]
+  }
+}

@@ -1,0 +1,125 @@
+---
+name: Reverso – Translation, dictionary
+version: 3.3.274
+category_slug: productivity/education
+rating: 4.6121970289288505
+rating_count: 1279
+user_count: 300000
+release_date: '2023-09-30T13:51:14.000Z'
+size: 8.48MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+  - русский
+description: Translate and learn languages while browsing and watching movies, it’s free.
+publisher: Reverso Technologies Inc
+publisher_account: Softissimo Inc.
+publisher_address: |-
+  630 Boulevard René-Lévesque O
+  Montréal, QC H3B 3C1
+  CA
+extension_website: context.reverso.net
+support_website: https://cps.reverso.net/en/doc/faq/?origin=chromeextension
+privacy_policy: https://cps.reverso.net/extension/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_appTitle__",
+  "short_name": "Reverso Context",
+  "description": "__MSG_appDesc__",
+  "version": "3.3.274",
+  "author": "Softissimo Inc.",
+  "homepage_url": "https://context.reverso.net/",
+  "options_page": "dist/index.html?navigateTo=options",
+  "icons": {
+    "16": "dist/assets/images/reverso-logo16x16.png",
+    "32": "dist/assets/images/reverso-logo32x32.png",
+    "48": "dist/assets/images/reverso-logo48x48.png",
+    "65": "dist/assets/images/reverso-logo.png",
+    "128": "dist/assets/images/reverso-logo.png"
+  },
+  "action": {
+    "default_title": "Reverso Context",
+    "default_popup": "dist/index.html"
+  },
+  "background": {
+    "service_worker": "dist/worker.bundle.js",
+    "type": "module"
+  }
+  ,
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "ftp://*/*",
+        "file://*/*"
+      ],
+      "js": [
+        "dist/preload-content-script.bundle.js"
+      ],
+      "css": [
+        "dist/content-script.bundle.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end",
+      "match_about_blank": true
+    }
+    
+  ],
+  "incognito": "split",
+  "content_security_policy": {
+    "extension_page":"script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'",
+    "worker-src": "script-src 'self' 'unsafe-eval' 'wasm-unsafe-eval'"
+  },
+  "file_browser_handlers": [ {
+    "default_title": "Open with PDF Viewer",
+    "file_filters": [ "filesystem:*.pdf" ],
+    "id": "open-as-pdf"
+  } ],
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "background",
+    "notifications",
+    "cookies",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "https://cps.reverso.net/"
+  ],
+  "web_accessible_resources": [{
+    "resources":[ 
+     "reverso-pop-up/*",
+     "dist/assets*/*",
+     "dist/index.html",
+     "content/web/viewer.html",
+     "dist/page-bar.html",
+     "dist/contentStyles.css",
+     "dist/content-script.bundle.js",
+     "dist/preload-content-script.bundle.js"
+    ],
+     "matches": [ 
+     "*://*/*",   
+     "http://*/*",
+     "https://*/*",
+     "ftp://*/*",
+     "file://*/*",
+     "chrome-extension://*/*"]
+   }, {
+    "resources": ["dist/content-script.bundle.js"],
+    "matches": ["*://*/*", "<all_urls>"]
+   }]
+}
+
+
+

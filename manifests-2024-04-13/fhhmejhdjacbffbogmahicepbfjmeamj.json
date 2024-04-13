@@ -1,0 +1,151 @@
+---
+name: KarSearch
+version: 1.0.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2018-03-02T13:53:36.000Z'
+size: 1.9MiB
+languages:
+  - Deutsch
+description: >-
+  Automatisierte Suche von Fahrzeugen aus Online-Auktionsplattformen auf
+  Fahrzeugmärkten.
+publisher: Keeke
+publisher_address: |-
+  Ripshorster Str. 369
+  Klaumer Bruch 4b
+  Oberhausen 46117
+  Oberhausen
+extension_website: karsearch.de
+support_website: https://karsearch.de/faq
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "KarSearch",
+  "short_name": "ks",
+  "version": "1.0.6",
+  "description": "Automatisierte Suche von Fahrzeugen aus Online-Auktionsplattformen auf Fahrzeugmärkten.",
+  "background": {
+    "persistent": false,
+    "scripts": ["content/config.js", "dependencies/jquery.min.js", "background/index.js"]
+  },
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "48": "icons/icon-48.png",
+    "64": "icons/icon-64.png",
+    "96": "icons/icon-96.png",
+    "128": "icons/icon-128.png",
+    "1024": "icons/circle-blue.png"
+  },
+  "permissions": [
+    "tabs",
+    "alarms",
+    "storage",
+    "identity",
+    "identity.email",
+    "notifications",
+    "http://api.carsearch.senycorp.de/api/*",
+    "http://my.pkwnow.de/index.php?mode=buy*",
+    "http://carsearch.senycorp.de/*",
+    "http://vi.vipr.ebaydesc.com/*",
+    "https://vi.vipr.ebaydesc.com/*",
+    "https://api.sparkpost.com/api/v1/transmissions"
+  ],
+  "web_accessible_resources": [
+    "content/*",
+    "icons/*",
+    "content/pkwnow/injection.js"
+  ],
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": ["https://www.exleasingcar.de/de/autoversteigerung/auktion-*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/exleasingcar/table.js"]
+    },
+    {
+      "matches": ["https://www.exleasingcar.de/de/fahrzeuginformationen/*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/exleasingcar/index.js"]
+    },
+    {
+      "matches": ["https://www.ebay-kleinanzeigen.de/s-autos/*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/ebay-kleinanzeigen/table.js"]
+    },
+    {
+      "matches": ["https://www.ebay-kleinanzeigen.de/s-anzeige/*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/ebay-kleinanzeigen/index.js"]
+    },
+    {
+      "matches": ["https://www.ebay.de/itm/*", "https://www.ebay.de/itm/*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "dependencies/lodash/lodash.js", "content/split-models.js", "content/ebay/index.js"]
+    },
+    {
+      "matches": ["https://www.ebay.de/b/*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js","content/split-models.js", "content/ebay/table.js"]
+    },
+    {
+      "matches": ["https://zoll-auktion.de/auktion/auktion.php?id=*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/zoll/index.js"]
+    },
+    {
+      "matches": ["https://zoll-auktion.de/auktion/auktionsuebersicht.php?katid=215*", "https://zoll-auktion.de/auktion/auktionsuebersicht.php?katid=216*"],
+      "css": [],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/zoll/table.js"]
+    },
+    {
+      "matches": ["*://my.pkwnow.de/index.php?mode=buy*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/pkwnow/index.js"]
+    },
+    {
+      "matches": ["https://de.bca-europe.com/buyer/facetedSearch*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/bca/table.js"]
+    },
+    {
+      "matches": ["https://de.bca-europe.com/Pages/Viewlot.aspx*"],
+      "css": ["dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/bca/index.js"]
+    },
+    {
+      "matches": ["http://carebid.eca-system.net/detail.php*"],
+      "css": ["content/carebid/styles.css", "dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/carebid/index.js"]
+    },
+    {
+      "matches": ["http://carebid.eca-system.net/auktion.php*"],
+      "css": ["content/carebid/styles.css", "dependencies/button.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "content/split-models.js", "content/carebid/table.js"]
+    },
+    {
+      "matches": ["*://suchen.mobile.de/*?karSearchData=*"],
+      "css": ["dependencies/overlay.css"],
+      "js": ["content/index.js", "content/config.js", "dependencies/jquery.min.js", "dependencies/lodash/lodash.js", "dependencies/string-similarity/compare-strings.js", "content/mobile/index.js"]
+    },
+    {
+      "matches": ["*://www.autoscout24.de/detailsuche*?karSearchData=*"],
+      "css": ["dependencies/overlay.css"],
+      "js": ["content/config.js", "content/index.js", "dependencies/jquery.min.js", "dependencies/lodash/lodash.js", "dependencies/string-similarity/compare-strings.js", "content/autoscout24/index.js"]
+    },
+    {
+      "matches": ["*://karsearch.de/", "*://www.karsearch.de/"],
+      "js": ["dependencies/jquery.min.js", "content/karsearch/index.js"]
+    }
+  ]
+}

@@ -1,0 +1,102 @@
+---
+name: Focus Ex Beta
+version: '3.1'
+category_slug: lifestyle/well_being
+rating: 3.6666666666666665
+rating_count: 3
+user_count: 527
+release_date: '2024-03-11T14:10:31.000Z'
+size: 359KiB
+languages:
+  - English
+description: >-
+  Focus Ex is a tool aiding online reading for those with attention issues, by
+  customizing text and reducing visual distractions.
+publisher_account: Szabolcs Vatány
+extension_website: focusex-extension.webflow.io
+support_website: https://focus-ex-beta.web.app/#InstallationGuide
+privacy_policy: https://focus-ex-beta.web.app/focus-ex-privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Focus Ex Beta",
+  "version": "3.1",
+  "description": "Focus Ex is a tool aiding online reading for those with attention issues, by customizing text and reducing visual distractions.",
+  "manifest_version": 3,
+  "permissions": [
+    "tabs",
+    "storage",
+    "identity"
+  ],  
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "action": {
+    "default_title": "Focus Ex - control your reading attention",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "content.js",
+        "highlight_features/words.js",
+        "highlight_features/lines.js",
+        "highlight_features/text_fragment.js",
+        "highlight_features/focus.js",
+        "feature_scripts/sliders.js",
+        "feature_scripts/page_content.js",
+        "feature_scripts/cursor.js",
+        "feature_scripts/websitemap.js",
+        "firebase/login-logout.js",
+        "feature_scripts/html2canvas.min.js"
+      ],
+      "css": ["page.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "feature_scripts/stop_video_image.js",
+        "feature_scripts/remove_caps.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/FocusSans-VariableVF3.ttf",
+        "style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "<all_urls>",
+    "https://www.google-analytics.com/"
+  ],
+  "externally_connectable": {
+    "ids": ["dlchhkpnfagokiecakphcgilhgdimkkg"],
+    "matches": ["*://*.focus-ex-beta.web.app/authentication.html*"]
+  },
+  "commands": {
+    "focus-toggle": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Focus Feature"
+    }
+  }
+}

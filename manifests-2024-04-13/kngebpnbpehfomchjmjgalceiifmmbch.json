@@ -1,0 +1,92 @@
+---
+name: MoocNote
+version: 2.0.2
+category_slug: productivity/education
+rating: 4.25
+rating_count: 4
+user_count: 750
+release_date: '2024-03-06T03:59:19.000Z'
+size: 353KiB
+languages:
+  - English
+description: >-
+  The new version of MoocNote allows users to take synchronized notes with
+  screenshots directly on YouTube.
+publisher_account: MoocNote.com
+extension_website: moocnote.com
+support_website: https://moocnote.com/contact
+privacy_policy: https://moocnote.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "MoocNote",
+    "version": "2.0.2",
+    "description": "The new version of MoocNote allows users to take synchronized notes with screenshots directly on YouTube.",
+    "author": "MoocNote.com",
+
+    "icons": {
+        "16": "/static/images/icon_16.png",
+        "48": "/static/images/icon_48.png",
+        "128": "/static/images/icon_128.png"
+    },
+
+    "action": {
+        "default_icons": {
+            "16": "/static/images/icon_16.png",
+            "24": "/static/images/icon_48.png",
+            "32": "/static/images/icon_16.png"
+        },
+        "default_title": "MoocNote",
+        "default_popup": "popup/popup.html"
+    },
+
+    "background": {
+        "service_worker": "background/serviceWorker.js"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://www.youtube.com/*"],
+            "css": ["static/style/content/content.youtube.tailwind.css"],
+            "js": ["content/content.youtube.js"]
+        },
+        {
+            "matches": ["*://*.moocnote.com/*", "*://moocnote/*", "*://moocnote.local/*"],
+            "css": ["static/style/content/content.moocnote.tailwind.css"],
+            "js": ["content/content.moocnote.js"]
+        }
+    ],
+
+    "permissions": ["storage", "declarativeNetRequest", "cookies", "tabs"],
+
+    "host_permissions": [
+        "*://*.youtube.com/*",
+        "*://youtube.com/*",
+        "*://*.googlevideo.com/*",
+        "*://*.moocnote.com/*",
+        "*://moocnote/*",
+        "*://api.moocnote/*",
+        "*://moocnote.local/*",
+        "*://api.moocnote.local/*"
+    ],
+
+    "web_accessible_resources": [
+        {
+            "resources": ["static/*"],
+            "matches": [
+                "*://*.youtube.com/*",
+                "*://youtube.com/*",
+                "*://*.moocnote.com/*",
+                "*://moocnote/*",
+                "*://moocnote.local/*"
+            ]
+        }
+    ],
+
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

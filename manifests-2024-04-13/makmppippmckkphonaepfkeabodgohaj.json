@@ -1,0 +1,78 @@
+---
+name: Los Altos High Helper
+version: '2.20'
+category_slug: productivity/workflow
+rating: 3
+rating_count: 2
+user_count: 40
+release_date: '2018-12-11T17:47:08.000Z'
+size: 126KiB
+languages:
+  - English
+description: >-
+  A collection of tools designed for students at Los Altos High (MVLA). Targets
+  Google Classroom, Aeries, and the Bell Countdown.
+publisher_account: Kendall Goto
+extension_website: kgo.to
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Los Altos High Helper",
+ "short_name": "LAHS+",
+  "version": "2.20",
+  "description": "A collection of tools designed for students at Los Altos High (MVLA). Targets Google Classroom, Aeries, and the Bell Countdown.",
+  "browser_action": {
+    "default_icon": "icons/icon128.png",
+    "default_popup": "popup.html",
+    "default_title": "LAHS+"
+  },
+ "content_scripts": [
+  {
+   "matches": ["https://*.asp.aeries.net/student/*", "https://*.asp.aeries.net/Student/*"],
+   "css": ["css/cs.css"],
+   "js": ["js/jquery-3.2.1.min.js", "js/cs.js"],
+   "run_at": "document_end"
+  },
+  {
+   "matches": ["https://bell.lahs.club/*", "http://bell.lahs.club/*", "https://countdown.zone/*", "http://countdown.zone/*", "https://bell.plus/*"],
+   "js": ["js/bell-override.js"],
+   "run_at": "document_end",
+   "all_frames": true
+  },
+  {
+   "matches": ["https://classroom.google.com/*"],
+   "css": ["css/classroom.css"],
+   "js": ["js/jquery-3.2.1.min.js", "js/classroom.js"],
+   "run_at": "document_idle"
+  }
+ ],
+ "background": {
+       "scripts": ["js/jquery-3.2.1.min.js", "js/popup.js", "js/background.js"]
+ },
+ "web_accessible_resources": [ "css/bell.css" ],
+  "permissions": [
+  "webRequest",
+  "webRequestBlocking",
+  "storage",
+  "notifications",
+    "https://*.asp.aeries.net/*",
+    "http://*.asp.aeries.net/*",
+  "http://bell.lahs.club/*",
+  "https://bell.lahs.club/*",
+  "http://countdown.zone/*",
+  "https://countdown.zone/*",
+  "https://classroom.google.com/*",
+  "https://bell.plus/*"
+  ],
+ "options_ui": {
+  "page": "options.html",
+  "chrome_style": true
+ },
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://www.googletagmanager.com 'sha256-uq4nb7xzgZgfL2i4B3dJdx3eKKrhBelaRVfs2yzl/rE='; object-src 'self'",
+  "manifest_version": 2
+}

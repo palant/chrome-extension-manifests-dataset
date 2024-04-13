@@ -1,0 +1,146 @@
+---
+name: Patent Plus
+version: 1.7.25
+category_slug: productivity/tools
+rating: 4.944444444444445
+rating_count: 18
+user_count: 557
+release_date: '2024-03-01T13:02:50.000Z'
+size: 6.15MiB
+languages:
+  - English (UK)
+description: Simplify patent reading on Google Patents - Patent Plus
+publisher_account: Dev
+extension_website: getpatentplus.com
+support_website: https://getpatentplus.com/contact-us/
+privacy_policy: https://getpatentplus.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Patent Plus",
+    "description": "Simplify patent reading on Google Patents - Patent Plus",
+    "version": "1.7.25",
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "icons": {
+        "16": "/images/logo.png",
+        "32": "/images/logo.png",
+        "48": "/images/logo.png",
+        "128": "/images/logo.png"
+    },
+    "web_accessible_resources": [
+        {
+          "resources": ["images/moon.svg","images/sun.svg"],
+          "matches": ["<all_urls>"]
+        }
+      ],      
+    "content_scripts": [
+        {
+            "matches": [
+                "https://tryslate.greyb.com/*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/enhance-slate.js",
+                "content-script/minimize-slate-content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/build-taxonomy.js"
+            ],
+            "css":["css/taxonomy_template.css"]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/patent-prior-art.js",
+                "content-script/ai-summary/suggest-document-summary.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/ai-summary/summary-in-list-view.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://patents.google.com/*"
+            ],
+            "js": [
+                "content-script/array.js",
+                "content-script/enhance-google-patents.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://patents.google.com/patent/*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/patentplusassitant.js",
+                "content-script/patent-prior-art.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/?utm_source=slate_extension*"
+            ],
+            "js": [
+                "content-script/login-with-slate.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/*"
+            ],
+            "js": [
+                "content-script/slate/prior_art/project_id.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/auto-interesting-insight.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/slate_popup.html",
+        "default_icon": {
+            "16": "/images/logo.png",
+            "32": "/images/logo.png",
+            "48": "/images/logo.png",
+            "128": "/images/logo.png"
+        }
+    },
+    "host_permissions": [
+        "https://tryslate.greyb.com/*",
+        "https://patents.google.com/*",
+        "https://usecatalyst.tech/*",
+        "https://getpatentplus.com/*",
+        "https://app.posthog.com/*"
+    ]
+}

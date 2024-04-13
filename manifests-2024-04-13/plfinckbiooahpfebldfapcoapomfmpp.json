@@ -1,0 +1,114 @@
+---
+name: Księgi wieczyste pobieracz PRO
+version: 1.1.5
+category_slug: productivity/workflow
+rating: 4
+rating_count: 3
+user_count: 191
+release_date: '2023-10-07T14:56:16.000Z'
+size: 117KiB
+languages:
+  - polski
+description: Rozszerzenie pomaga w pobieraniu zawartości ksiąg wieczystych na dysk.
+publisher_account: SYNTAX-ERROR
+privacy_policy: https://drive.google.com/file/d/1VVm1A_BFHzaQg0x7leIe4EsPK7dFqfa-/view
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Księgi wieczyste pobieracz PRO",
+  "description": "Rozszerzenie pomaga w pobieraniu zawartości ksiąg wieczystych na dysk.",
+  "version": "1.1.5",
+  "manifest_version": 3,
+  "icons": {
+    "128": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js", "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames":true,
+      "matches": [
+        "https://przegladarka-ekw.ms.gov.pl/eukw_prz/KsiegiWieczyste/wyszukiwanieKW*"
+      ],
+      "run_at": "document_end",
+      "js": ["Logger.js", "ExtPay.js", "content-script.js"]
+    },
+    {
+      "all_frames":true,
+      "matches": [
+        "https://przegladarka-ekw.ms.gov.pl/*"
+      ],
+      "run_at": "document_start",
+      "js": ["cts.js"]
+    },
+    {
+      "matches":[
+        "https://przegladarka-ekw.ms.gov.pl/eukw_prz/KsiegiWieczyste/wyszukiwanieKW*",
+        "https://www.google.com/recaptcha/api2/bframe*",
+        "https://www.recaptcha.net/recaptcha/api2/bframe*",
+        "https://recaptcha.net/recaptcha/api2/bframe*",
+        "https://www.google.com/recaptcha/enterprise/bframe*",
+        "https://www.recaptcha.net/recaptcha/enterprise/bframe*",
+        "https://recaptcha.net/recaptcha/enterprise/bframe*",
+        "https://www.google.com/recaptcha/api2/anchor*"
+      ],
+      "js":[
+        "recaptcha.js",
+        "recaptcha_voice.js"
+      ],
+      "all_frames":true,
+      "run_at":"document_end"
+    },
+    {
+      "matches":[
+        "*://*.google.com/recaptcha/*",
+        "*://*.recaptcha.net/recaptcha/*",
+        "*://recaptcha.net/recaptcha/*"
+      ],
+      "js":[
+        "recaptcha_fast.js"
+      ],
+      "all_frames":true,
+      "run_at":"document_start"
+    },
+    {
+      "matches":[
+        "*://*.google.com/recaptcha/api2/anchor*"
+      ],
+      "js":[
+        "recaptchaStatus.js"
+      ],
+      "all_frames":true,
+      "run_at":"document_start"
+    }
+  ],
+  "permissions": ["storage", "cookies", "tabs", "proxy", "scripting", "declarativeNetRequest"],
+  "host_permissions": [
+    "*://*.przegladarka-ekw.ms.gov.pl/*", "*://.przegladarka-ekw.ms.gov.pl/*", "https://engageub.pythonanywhere.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.przegladarka-ekw.ms.gov.pl/*",
+      "*://*.google.com/recaptcha/api2/anchor*"
+    ]
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources":[
+    {
+      "resources":[
+        "cts.js", "utils.js"
+      ],
+      "matches":[
+        "<all_urls>"
+      ]
+    }
+  ]
+}

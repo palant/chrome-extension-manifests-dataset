@@ -1,0 +1,65 @@
+---
+name: NojimaEmailApproval Extension (Staging)
+version: 0.1.18
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2023-05-17T07:14:11.000Z'
+size: 828KiB
+languages:
+  - 日本語
+description: |-
+  The extension is used to avoid sending the wrong email.
+  After user click on the button "Send" to send an email, there is a popup…
+publisher: 株式会社ノジマ
+publisher_account: ntq_upload
+privacy_policy: https://www.nojima.co.jp/corporation/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "NojimaEmailApproval Extension (Staging)",
+  "version": "0.1.18",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*.nojima.co.jp/",
+    "*://*.google.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["content.js"],
+      "matches": ["https://*.google.com/*"]
+    },
+    {
+      "resources": ["libs/img/logo.jpg"],
+      "matches": ["https://*.google.com/*"]
+    },
+    {
+      "resources": ["inject.js"],
+      "matches": ["https://*.google.com/*"]
+    }
+  ],
+  "content_scripts": [{
+    "matches": ["http://*/*", "https://*/*"],
+    "js": ["contentScript.js"],
+    "all_frames": true,
+    "permissions": ["scripting"]
+  },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["inject.js"],
+      "all_frames": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

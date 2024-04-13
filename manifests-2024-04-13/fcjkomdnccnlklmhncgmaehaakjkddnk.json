@@ -1,0 +1,104 @@
+---
+name: 'Samara: Web Wallet for Crypto'
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 1.5116279069767442
+rating_count: 43
+user_count: 10000
+release_date: '2022-11-29T13:23:28.000Z'
+size: 4.01MiB
+languages:
+  - English
+description: Samara is a non-custodial wallet built for crypto
+publisher_account: SamaraWallet
+support_website: https://samara.app
+privacy_policy: https://samara.app/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "https://samara.app",
+  "homepage_url": "https://samara.app",
+  "version": "1.0.2",
+  "name": "Samara: Web Wallet for Crypto",
+  "short_name": "Samara",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E",
+        "chromeos": "Alt+Shift+E",
+        "linux": "Alt+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "Samara is a non-custodial wallet built for crypto",
+  "icons": {
+    "16": "assets/img/icons/icon16.png",
+    "32": "assets/img/icons/icon32.png",
+    "64": "assets/img/icons/icon64.png",
+    "192": "assets/img/icons/icon192.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/img/icons/icon16.png",
+      "32": "assets/img/icons/icon32.png",
+      "64": "assets/img/icons/icon64.png",
+      "192": "assets/img/icons/icon192.png"
+    },
+    "default_title": "Samara",
+    "default_popup": "action.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/inject.js",
+        "scripts/*.js.map"
+      ],
+      "use_dynamic_url": false,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "95",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

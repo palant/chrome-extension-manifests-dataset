@@ -1,0 +1,100 @@
+---
+name: 内容辅助工具集
+version: 2.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 15
+release_date: '2020-03-26T12:46:47.000Z'
+size: 2.34MiB
+languages:
+  - 中文 (简体)
+description: 内容辅助实用工具集：显示 LaTeX；搜索当前页种的所有可下载资源；划词翻译
+publisher_account: LostAbaddon
+publisher_address: |-
+  Pudong New Area Yaohua Road House 2
+  Shanghai, Shanghai 200126
+  China
+privacy_policy: https://github.com/LostAbaddon
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "内容辅助工具集",
+ "version": "2.0.0",
+ "author": "LostAbaddon",
+ "homepage_url": "https://github.com/LostAbaddon/ArticleUtils",
+ "manifest_version": 2,
+ "description": "内容辅助实用工具集：显示 LaTeX；搜索当前页种的所有可下载资源；划词翻译",
+ "permissions": [ "storage", "contextMenus", "tabs" ],
+ "web_accessible_resources": [ "keyseq/*", "search/*", "notifier/*", "archieve/*", "MathJax2.5/*" ],
+ "icons": {
+  "128": "utils.png"
+ },
+ "background": {
+  "scripts": [
+   "common/common.js",
+   "common/param.js",
+   "common/sha256.js",
+   "common/LRUcache.js",
+   "common/cacheDB.js",
+   "common/cacheStorage.js",
+   "config.js",
+   "core/background.js"
+  ]
+ },
+ "browser_action": {
+  "default_title": "辅助工具",
+  "default_icon": "utils.png",
+  "default_popup": "page/badge.html"
+ },
+ "options_ui": {
+  "page": "page/option.html",
+  "open_in_tab": false
+ },
+ "content_scripts": [
+  {
+   "matches": ["<all_urls>"],
+   "js": [
+    "common/common.js",
+    "common/param.js",
+    "common/sha256.js",
+    "keyseq/keyseq_content.js",
+    "config.js",
+    "search/inject.js",
+    "archieve/archieve.js",
+    "notifier/notify.js",
+    "markup/markup.js",
+    "markup/extensions.js",
+    "core/content.js"
+   ]
+  }
+ ],
+ "commands": {
+  "toggle-search": {
+   "suggested_key": {
+    "default": "Alt+S"
+   },
+   "description": "搜索资源"
+  },
+  "toggle-translation": {
+   "suggested_key": {
+    "default": "Alt+T"
+   },
+   "description": "翻译本段"
+  },
+  "toggle-archieve": {
+   "suggested_key": {
+    "default": "Alt+A"
+   },
+   "description": "内容存档"
+  },
+  "view-archieve": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+A"
+   },
+   "description": "查看存档"
+  }
+ }
+}

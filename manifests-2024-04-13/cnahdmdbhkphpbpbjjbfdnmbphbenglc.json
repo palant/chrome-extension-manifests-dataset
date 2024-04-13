@@ -1,0 +1,87 @@
+---
+name: Mutable Web
+version: 0.1.7
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2024-04-12T15:34:59.000Z'
+size: 1.3MiB
+languages:
+  - English
+description: Bridge to the Mutable Web
+publisher_account: Dapplets Project
+support_website: https://github.com/dapplets/mutable-web-extension/issues
+privacy_policy: https://dapplets.org/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mutable Web",
+  "version": "0.1.7",
+  "version_name": "0.1.7",
+  "description": "Bridge to the Mutable Web",
+  "author": "Dapplets Team <contact@dapplets.org>",
+  "short_name": "Mutable Web",
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "minimum_chrome_version": "95",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_globs": [
+        "https://mutable-near-social-testnet.netlify.app/*",
+        "https://mutable-near-social.netlify.app/*",
+        "https://social.dapplets.org/*",
+        "http://localhost/*",
+        "http://127.0.0.1:3000/*"
+      ],
+      "js": [
+        "custom-elements.min.js",
+        "contentscript.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://app.mynearwallet.com/*",
+        "https://testnet.mynearwallet.com/*"
+      ],
+      "js": [
+        "mnw-patch-inpage.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "callback.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://localhost/*",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

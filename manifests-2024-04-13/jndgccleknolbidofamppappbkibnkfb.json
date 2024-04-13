@@ -1,0 +1,131 @@
+---
+name: 海鸥 SAAS 商品采集
+version: 1.0.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 11
+release_date: '2023-08-29T11:25:25.000Z'
+size: 79.4KiB
+languages:
+  - 中文 (简体)
+description: 海鸥 SAAS 商品采集
+publisher_account: 通晓网络科技
+extension_website: haiousaas.com
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "海鸥 SAAS 商品采集",
+    "version": "1.0.3",
+    "author": "Wang Wen Jie",
+    "description": "海鸥 SAAS 商品采集",
+    
+    "icons":{
+        "48": "./img/cms_logo.png"
+    },
+
+    "action": {            
+        "default_title":"海鸥 SAAS 商品采集",
+        "default_popup":"popup/popup.html"
+    },
+
+    "content_scripts": [        
+        {
+            "js": [                
+                "js/utils.js", 
+                "js/button.js"         
+            ],
+            "css":[
+                "css/pickup_button.css"
+            ],
+            "matches": [
+                "*://*.1688.com/*",
+                "*://*.aliexpress.com/*"
+            ],
+            "all_frames": true,
+            "run_at":"document_start"
+        },
+        
+        {
+            "js": [            
+                "js/a1688/a8_core.js",
+                "js/a1688/a8_detail.js",
+                "js/a1688/a8_content.js"
+            ],
+                        
+            "matches": [
+                "*://*.1688.com/*"
+            ],
+            "all_frames": true,
+            "run_at":"document_start"
+        },
+
+        {
+            "js": [            
+                "js/cms_content.js"
+            ],
+            "matches": [
+                "*://*.cangmishu.com/*",
+                "*://*.haiouoms.com/*"
+            ],
+            "all_frames": true,
+            "run_at":"document_start"
+        },
+
+        {
+            "js": [          
+                "js/aliexpress/ae_core.js",
+                "js/aliexpress/ae_detail.js",
+                "js/aliexpress/ae_content.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.us/*"
+            ],
+
+            "run_at":"document_start",
+            "all_frames": true
+        }
+    ],
+        
+    "host_permissions": [
+        "*://*.cangmishu.com/*",
+        "*://*.haiouoms.com/*",
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.us/*"        
+    ],
+
+    "declarative_net_request" : {
+        "rule_resources" : [{
+          "id": "ruleset_1",
+          "enabled": true,
+          "path": "rules_1.json"
+        }]
+    },
+    
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "webRequest",
+        "declarativeNetRequestWithHostAccess"
+    ],
+
+    "background":{
+        "service_worker": "js/background.js"
+    },
+    
+    "web_accessible_resources": [        
+        {
+            "resources":["js/a1688/a8_hide_button.js"],
+            "matches":["*://*.1688.com/*"]
+        },
+        {
+            "resources":["img/cms_text.png", "img/cms_list_button.png"],
+            "matches":["*://*.1688.com/*", "*://*.aliexpress.com/*", "*://*.aliexpress.us/*"]
+        }
+    ]    
+}

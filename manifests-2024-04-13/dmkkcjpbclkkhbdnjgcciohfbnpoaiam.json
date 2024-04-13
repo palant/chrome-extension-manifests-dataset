@@ -1,0 +1,77 @@
+---
+name: Chessconnect
+version: 0.3.3.25
+category_slug: lifestyle/games
+rating: 4.894736842105263
+rating_count: 19
+user_count: 1000
+release_date: '2024-03-25T04:25:14.000Z'
+size: 274KiB
+languages:
+  - English
+description: >-
+  Connects smart chessboards of various brands to either chess.com or
+  lichess.org.
+publisher_account: chessconnect
+extension_website: chessconnect.de
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chessconnect",
+  "description": "Connects smart chessboards of various brands to either chess.com or lichess.org.",
+  "version": "0.3.3.25",
+  "icons": {
+    "128": "res/icon128up.png"
+  },
+  "action": {
+    "default_icon": "res/icon128up.png",
+    "default_popup": "scripts/options/optiondlg.html",
+    "default_title": "Chessconnect"
+  },
+  "content_scripts": [
+    {
+      "js": ["dist/chesscomcontent.js"],
+      "matches": ["https://www.chess.com/*"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["dist/lichesscontent.js"],
+      "matches": ["https://lichess.org/*"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["dist/background.js"],
+      "matches": ["https://www.chess.com/*", "https://lichess.org/*"],
+      "world": "ISOLATED",
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "dist/serviceworker.js"
+  },
+  "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "res/beep.mp3",
+        "res/knock.mp3",
+        "res/icon128up.png",
+        "res/icon128down.png",
+        "res/icon128upred.png",
+        "res/icon128downyellow.png",
+        "res/icon128upgreen.png",
+        "res/yesnodialog.html"
+      ],
+      "matches": ["https://www.chess.com/*", "https://lichess.org/*"]
+    }
+  ],
+  "options_ui": {
+    "page": "scripts/options/optiondlg.html",
+    "open_in_tab": true
+  }
+}

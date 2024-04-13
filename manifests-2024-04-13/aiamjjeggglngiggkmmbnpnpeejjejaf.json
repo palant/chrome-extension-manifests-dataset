@@ -1,0 +1,73 @@
+---
+name: 'Read Smart Scheduler: Calendar + Time Manager'
+version: 0.5.6
+category_slug: productivity/tools
+rating: 4.538461538461538
+rating_count: 13
+user_count: 40000
+release_date: '2024-04-10T19:34:25.000Z'
+size: 1.3MiB
+languages:
+  - English (United States)
+description: Automate finding the best time for your meetings in Google Calendar.
+publisher: Read AI
+publisher_address: |-
+  999 3rd Ave
+  33rd Floor
+  Seattle, WA 98104
+  US
+extension_website: read.ai
+support_website: https://support.read.ai/hc/en-us/requests/new
+privacy_policy: https://www.read.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Read Smart Scheduler: Calendar + Time Manager",
+  "description": "Automate finding the best time for your meetings in Google Calendar.",
+  "version": "0.5.6",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Read Smart Scheduler"
+  },
+  "icons": {
+    "16": "logos/logomark_16.png",
+    "48": "logos/logomark_48.png",
+    "128": "logos/logomark_128.png"
+  },
+  "host_permissions": ["*://*.read.ai/"],
+  "permissions": ["cookies", "storage"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "fonts/*", "index.css"],
+      "matches": [
+        "https://*.calendar.google.com/*",
+        "https://*.meet.google.com/*",
+        "https://*.read.ai/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "assets/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.calendar.google.com/*",
+        "https://*.meet.google.com/*"
+      ],
+      "css": ["index.css"],
+      "js": ["assets/content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.read.ai/*"],
+      "css": ["index.css"],
+      "js": ["assets/rollcall.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

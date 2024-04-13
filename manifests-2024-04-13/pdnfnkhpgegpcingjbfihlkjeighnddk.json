@@ -1,0 +1,103 @@
+---
+name: Unblock Youku
+version: 4.1.3
+category_slug: productivity/workflow
+rating: 4.451428354929151
+rating_count: 26394
+user_count: 1000000
+release_date: '2024-04-04T11:35:54.000Z'
+size: 275KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+description: Helps users access their web services while travelling outside mainland China.
+publisher_account: https://uku.im
+extension_website: uku.im
+support_website: https://www.uku.im/feedback
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Unblock Youku",
+  "version": "4.1.3",
+  "manifest_version": 3,
+  "minimum_chrome_version": "103.0",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "proxy",
+    "declarativeNetRequestWithHostAccess",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "src/service_worker.mjs",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup.html",
+    "default_icon": "icons/icon19gray.png",
+    "default_title": "Unblock Youku isn't working properly! Visit http://uku.im/faq for solutions."
+  },
+  "options_page": "src/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://www.tudou.com/*"
+      ],
+      "js": [
+        "src/content_scripts/tudou.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://play.baidu.com/*"
+      ],
+      "css": [
+        "src/content_scripts/play.baidu.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://music.163.com/*"
+      ],
+      "js": [
+        "src/content_scripts/music.163.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://unblockcn.com/*",
+        "https://unblockcn.com/*",
+        "http://*.unblockcn.com/*",
+        "https://*.unblockcn.com/*",
+        "http://unblockyouku.cn/*",
+        "http://*.unblockyouku.cn/*",
+        "http://724sky.com/*",
+        "http://*.724sky.com/*",
+        "http://tieba.baidu.com/f?kw=unblockcn*",
+        "http://*.tieba.baidu.com/f?kw=unblockcn*"
+      ],
+      "js": [
+        "src/content_scripts/unblockcn.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ]
+}

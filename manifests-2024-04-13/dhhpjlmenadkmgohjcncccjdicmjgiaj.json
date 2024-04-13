@@ -1,0 +1,73 @@
+---
+name: Acefone WebPhone
+version: 0.7.7
+category_slug: lifestyle/social
+rating: 4.2
+rating_count: 5
+user_count: 2000
+release_date: '2024-04-05T07:15:56.000Z'
+size: 2.68MiB
+languages:
+  - English
+description: Acefone integrated webphone/softphone
+publisher: The Real PBX Limited
+publisher_account: app.developer
+publisher_address: |-
+  3, Willow Close
+  Holborough Lakes
+  Snodland, Kent, England ME65FA
+  GB
+privacy_policy: https://www.acefone.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Acefone WebPhone",
+  "short_name":"webphone",
+  "description": "Acefone integrated webphone/softphone",
+  "version": "0.7.7",
+  "icons": {
+    "128": "images/favicon.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "images/favicon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+       "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://*/*.pdf"
+      ],
+      "js": [
+        "assets/js/jquery.min.js",
+        "assets/js/jquery-ui.js",
+        "findAndReplaceDOMText.js",
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "notifications",
+    "background"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "assets/*", "phone.html", "index.html", "login.html"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

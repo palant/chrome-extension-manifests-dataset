@@ -1,0 +1,87 @@
+---
+name: AwardTravel
+version: 1.2.5
+category_slug: lifestyle/travel
+rating: 5
+rating_count: 6
+user_count: 1000
+release_date: '2024-02-13T22:46:56.000Z'
+size: 685KiB
+languages:
+  - English (United States)
+description: You don't have to be a millionaire to travel like one!
+publisher: 'CO: Rewards Rebate LLC'
+publisher_account: AwardTravel
+publisher_address: |-
+  1095 Sugarview Dr
+  Ste 500
+  Sheridan, WY 82801
+  US
+extension_website: awardtravel.co
+support_website: https://www.awardtravel.co/contact
+privacy_policy: https://www.awardtravel.co/privacy-policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  
+    "name": "AwardTravel",
+    "description": "You don't have to be a millionaire to travel like one!",
+    "version": "1.2.5",
+    "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js"
+  },
+    "web_accessible_resources": [
+      {
+        "resources": ["contentscript.js", "search.js", "booking.js", "styles.css", "popup-sign-in.html", "popup-sign-out.html", "popup-welcome-back.html"],
+        "matches": ["<all_urls>"]
+      }
+    ],
+    "externally_connectable": {
+      "matches": [
+          "*://*.awardtravel.co/*"
+      ]
+  },
+    "content_scripts": [
+      {
+        "matches": ["*://www.google.com/travel/flights/search?*"],
+        "js": ["search.js"],
+        "css": ["styles.css"]
+      },
+      {
+        "matches": ["*://www.google.com/travel/flights/booking?*"],
+        "js": ["booking.js"]
+      },
+      {
+        "matches": ["https://www.google.com/travel/search?*"],
+        "js": ["google_hotels.js"]
+      },
+      {
+        "matches": ["*://www.awardtravel.co/*"],
+        "js": ["sync_with_webapp.js"]
+      },
+      {
+        "matches": ["*://www.marriott.com/*", "*://www.hyatt.com/*", "*://www.ihg.com/*", "*://www.hilton.com/*"],
+        "js": ["hotels_booking.js"]
+      }
+    ],
+    "permissions": ["background", "webNavigation", "storage"],
+    "host_permissions": ["*://www.google.com/travel/*"],
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+        "16": "/images/at_frame16.png",
+        "32": "/images/at_frame32.png",
+        "48": "/images/at_frame48.png",
+        "128": "/images/at_frame128.png"
+      }
+    },
+    "icons": {
+      "16": "/images/at_frame16.png",
+      "32": "/images/at_frame32.png",
+      "48": "/images/at_frame48.png",
+      "128": "/images/at_frame128.png"
+    }
+  }
+  

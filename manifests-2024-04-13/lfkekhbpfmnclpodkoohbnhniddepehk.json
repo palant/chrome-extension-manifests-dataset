@@ -1,0 +1,76 @@
+---
+name: 'ArchShield: Safe Search'
+version: '1.2'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 215
+release_date: '2023-04-12T08:02:56.000Z'
+size: 935KiB
+languages:
+  - English
+description: >-
+  ArchShield enforces safesearch on multiple websites such as Google and Reddit
+  while also blocking over 5 million harmful websites
+publisher_account: ArchShield
+support_website: https://ArchShield.net
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ArchShield: Safe Search",
+    "version": "1.2",
+ "description": "ArchShield enforces safesearch on multiple websites such as Google and Reddit while also blocking over 5 million harmful websites",
+ "homepage_url": "https://archshield.net",
+    "background": {
+      "service_worker": "background_worker.js"
+    },
+    "action": {
+      "default_popup": "arch_menu.html",
+      "default_icon": "icon.png"
+ },
+    "icons": {
+      "128": "icon.png"
+    },
+    "permissions": [],
+    "content_scripts": [
+    {
+        "matches": ["<all_urls>"],
+        "js": ["scripts/website_blocker.js"],
+        "run_at": "document_start"
+       },
+    {
+        "matches": ["<all_urls>"],
+        "js": ["scripts/safe_search.js"],
+        "run_at": "document_end"
+       },
+    {
+        "matches": ["https://*.wikipedia.org/*"],
+        "js": ["scripts/wikipedia_sfw.js"],
+        "run_at": "document_end"
+       },
+    {
+        "matches": ["https://*.reddit.com/*"],
+        "js": ["scripts/reddit_sfw.js"],
+        "run_at": "document_end"
+       },
+    {
+        "matches": ["https://search.brave.com/*"],
+        "js": ["scripts/brave_safe.js"],
+        "run_at": "document_end"
+       }
+ ],
+ "incognito": "split",
+ "web_accessible_resources": [
+  {
+  "resources": ["pages/*"],
+  "matches": ["<all_urls>"],
+  "extension_ids": []
+  }
+ ],
+    "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

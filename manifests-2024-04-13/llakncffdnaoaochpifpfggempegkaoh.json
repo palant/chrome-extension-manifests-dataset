@@ -1,0 +1,64 @@
+---
+name: Context RepuTracker-users reputation tracker
+version: '0.54'
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 27
+release_date: '2024-03-13T20:11:10.000Z'
+size: 91.68KiB
+languages:
+  - русский
+description: Расширение для отслеживания репутации пользователей социальных сетей
+publisher_account: contextreputation
+privacy_policy: https://github.com/dmiandr/context/blob/master/privacypolicy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Context RepuTracker-users reputation tracker",
+  "short_name": "Context RepuTracker",
+  "version": "0.54",
+  "description": "Расширение для отслеживания репутации пользователей социальных сетей",
+  "author": "dmitrevo",
+  "homepage_url": "https://github.com/dmiandr/context",
+
+  "icons": {
+    "48": "icons/context48.png"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  
+  "commands": {
+    "store-all-events": {
+        "suggested_key": { "default": "Ctrl+Shift+1" },
+        "description": "Add all events on page to events base"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.cont.ws/*", "*://*.vk.com/*", "*://*.livejournal.com/*", "*://*.youtube.com/*", "*://*.habr.com/*"],  
+      "css": ["ddmenu.css"],
+      "js": ["mutation.js", "contextlib.js", "initfirst.js", "contws.js", "vkcom.js", "ljcom.js", "youtubecom.js", "habrcom.js", "content.js"]
+    }
+  ],
+  "incognito": "spanning",
+  "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [{
+      "resources": ["addhistorydialog.html", "userhistory.html", "contextlib.js"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+  }]
+}

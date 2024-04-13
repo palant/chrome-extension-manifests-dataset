@@ -1,0 +1,86 @@
+---
+name: X media Downloader
+version: 1.0.0
+category_slug: lifestyle/entertainment
+rating: 1.7083333333333333
+rating_count: 24
+user_count: 1000
+release_date: '2023-12-17T05:15:11.000Z'
+size: 251KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+description: Download images/videos of user's media-timeline on X.
+publisher_account: clsyy411
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "action": {
+      "default_icon": "img/icon_16.png",
+      "default_popup": "html/options.html",
+      "default_title": "__MSG_ext_title__"
+   },
+   "background": {
+      "service_worker": "background-wrapper.js"
+   },
+   "commands": {
+      "bulk_download": {
+         "description": "__MSG_BULK_DOWNLOAD__",
+         "suggested_key": {
+            "default": "Shift+Alt+D",
+            "mac": "Shift+Alt+D"
+         }
+      },
+      "bulk_download_likes": {
+         "description": "__MSG_BULK_DOWNLOAD_LIKES__",
+         "suggested_key": {
+            "default": "Shift+Alt+L",
+            "mac": "Shift+Alt+L"
+         }
+      }
+   },
+   "content_scripts": [ {
+      "all_frames": false,
+      "js": [ "js/browser_info.js", "js/jquery.min.js", "js/twitter-oauth/sha1.js", "js/twitter-oauth/oauth.js", "js/twitter-oauth/twitter-api.js", "js/session.js" ],
+      "matches": [ "*://twitter.com/*", "*://tweetdeck.twitter.com/*", "*://api.twitter.com/*", "*://pbs.twimg.com/media/*", "*://mobile.twitter.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "js/decimal.min.js", "js/jszip.min.js", "js/init.js", "js/timeline.js" ],
+      "matches": [ "*://twitter.com/*", "*://tweetdeck.twitter.com/*", "*://pbs.twimg.com/media/*", "*://mobile.twitter.com/*" ],
+      "run_at": "document_start"
+   }, {
+      "all_frames": true,
+      "js": [ "js/main_react.user.js" ],
+      "matches": [ "*://twitter.com/*", "*://mobile.twitter.com/*" ],
+      "run_at": "document_end"
+   }, {
+      "all_frames": true,
+      "js": [ "js/main_tweetdeck.user.js" ],
+      "matches": [ "*://tweetdeck.twitter.com/*" ],
+      "run_at": "document_end"
+   } ],
+   "default_locale": "en",
+   "description": "__MSG_ext_description__",
+   "host_permissions": [ "*://*.twitter.com/*", "*://pbs.twimg.com/*", "*://video.twimg.com/*", "*://*.cdn.vine.co/*" ],
+   "icons": {
+      "128": "img/icon_128.png",
+      "16": "img/icon_16.png",
+      "19": "img/icon_19.png",
+      "48": "img/icon_48.png"
+   },
+   "incognito": "split",
+   "manifest_version": 3,
+   "name": "__MSG_ext_title__",
+   "options_ui": {
+      "open_in_tab": true,
+      "page": "html/options.html"
+   },
+   "permissions": [ "storage" ],
+   "short_name": "__MSG_ext_short_name__",
+   "version": "1.0.0"
+}

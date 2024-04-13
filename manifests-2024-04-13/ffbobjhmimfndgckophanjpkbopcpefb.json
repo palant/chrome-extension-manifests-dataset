@@ -1,0 +1,84 @@
+---
+name: Loopholes
+version: 2.0.1.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 17
+release_date: '2024-02-29T05:26:10.000Z'
+size: 113KiB
+languages:
+  - English
+description: AI-powered assistant for ad policy compliance
+publisher: Loopholes Inc.
+publisher_account: loopholes-founders
+publisher_address: |-
+  850 New Burton Rd no 201
+  Dover, DE 19904-5785
+  US
+extension_website: loopholes.com
+support_website: https://www.loopholes.com
+privacy_policy: https://www.loopholes.com/policies/privacy-policy
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Loopholes",
+    "description": "AI-powered assistant for ad policy compliance",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgKjSpmMy9/I/MqNulZEZQJ+kR8jrfDQaVB/agoTK+8YZVZCM8/VmUEg58McK7bvTLFbbFQ6otmyUM6CtiZ2z4ZuyCc0zSg9RbDgr6sBM9uSpYM0CPQorH5ipsjfRdT0CucsnxviZMkwBhzbeOl2x1KkL7l52GDMa6YJ/1k8PbZRgUL8s6yzypASBU83jPenYplRKAfIniEjzXcEht05viYBPGgQfGv5+Ddvm8Pe/3Yxsa2AVsKcnMuNi/Lf1gaWxrIO6Sh2FlGS5cxNe51pFToMxouVKQwmS+5gVmvLUFFfHGDqenySjpbxkFB0E9NRlcP5PCKKD/aQ0NUBGPIKBVwIDAQAB",
+    "version": "2.0.1.0",
+    "version_name": "2.0.1.0",
+    "action": {
+        "default_icon": {
+            "16": "icon-16.png",
+            "48": "icon-48.png",
+            "128": "icon-128.png"
+        },
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "js/background/installation-worker.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://*.facebook.com/adsmanager/manage/ads/*",
+                "*://www.facebook.com/ad_center/create/*"
+            ],
+            "js": [
+                "js/jquery-3.6.3.js",
+                "js/contentScripts/facebookContentScript.js"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "icon-16.png",
+        "48": "icon-48.png",
+        "128": "icon-128.png"
+    },
+    "host_permissions": [
+        "*://*.loopholes.com/*"
+    ],
+    "web_accessible_resources": [{
+        "matches": ["<all_urls>"],
+        "resources": [
+            "js/contentScripts/contentScript.js",
+            "js/models/ad.js"
+        ]
+    }],
+    "permissions": [
+        "activeTab",
+        "identity",
+        "identity.email",
+        "storage"
+    ],
+    "oauth2": {
+        "client_id": "202383619290-ad0klt2r5vo72do1fh15u01gaeiv0lm8.apps.googleusercontent.com",
+        "scopes":["https://www.googleapis.com/auth/userinfo.email"]
+    }
+}

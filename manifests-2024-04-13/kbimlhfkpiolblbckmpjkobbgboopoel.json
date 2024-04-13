@@ -1,0 +1,73 @@
+---
+name: 틸리허브(TILyHub)
+version: '1.9'
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2023-11-14T11:59:38.000Z'
+size: 169KiB
+languages:
+  - 한국어
+description: Automatically integrate your TIL submissions to GitHub
+publisher_account: ehddud201724418
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "틸리허브(TILyHub)",
+  "description": "Automatically integrate your TIL submissions to GitHub",
+  "homepage_url": "https://github.com/Step3-kakao-tech-campus/Team7_FE",
+  "version": "1.9",
+  "author": "ehddud1006",
+  "action": {
+    "default_icon": "assets/thumbnail.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/thumbnail.png",
+    "48": "assets/thumbnail.png",
+    "128": "assets/thumbnail.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["https://kce4f8e6cb395a.user-app.krampoline.com/*", "https://github.com/"],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "library/jquery-3.3.1.min.js",
+        "library/semantic.min.js",
+        "popup.html",
+        "popup.js",
+        "welcome.html",
+        "welcome.js"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["scripts/authorize.js", "scripts/util.js", "scripts/Github.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://kce4f8e6cb395a.user-app.krampoline.com/*"],
+      "js": [
+        "library/sha1.min.js",
+        "library/jszip.min.js",
+        "scripts/authorize.js",
+        "scripts/tily.js",
+        "scripts/util.js",
+        "scripts/Github.js",
+        "scripts/uploadfunctions.js",
+        "scripts/storage.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

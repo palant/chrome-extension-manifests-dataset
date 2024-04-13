@@ -1,0 +1,54 @@
+---
+name: Flake linker
+version: '1.11'
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 150
+release_date: '2020-10-29T08:21:46.000Z'
+size: 21.02KiB
+languages:
+  - English (United States)
+description: Links to Chromium flakiness dashboard from build result pages.
+publisher_account: jdarpinian
+privacy_policy: https://policies.google.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Flake linker",
+  "description" : "Links to Chromium flakiness dashboard from build result pages.",
+  "version": "1.11",
+  "manifest_version": 2,
+  "icons": { "128": "icon128.png"},
+  "content_scripts": [
+    {
+      "js": ["flake_linker.js"],
+      "matches": ["*://ci.chromium.org/*"],
+      "exclude_matches": ["*://ci.chromium.org/ui/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["flake_linker_new_build_page.js"],
+      "matches": [
+          "*://ci.chromium.org/ui/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["log_scroller.js"],
+      "matches": [
+        "*://chromium-swarm.appspot.com/*",
+        "*://chrome-swarming.appspot.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "permissions": [
+      "tabs"
+  ]
+}

@@ -1,0 +1,83 @@
+---
+name: メールパートナー - 魔法のボタンで下書きが完璧なビジネスメールに
+version: 7.7.7
+category_slug: productivity/communication
+rating: 5
+rating_count: 2
+user_count: 49
+release_date: '2023-10-06T11:41:56.000Z'
+size: 128KiB
+languages:
+  - 日本語
+description: AIでメール作業がラクに！敬語表現に悩むことはありませんか？敬語、構成、件名作成がワンタップでこなせる魔法のボタンを追加します。
+publisher_account: メールパートナー
+extension_website: mailpartner.me
+support_website: >-
+  https://docs.google.com/forms/d/e/1FAIpQLSckb0ljjYlQVJ0bDfOsIQJ0xeY4jMmPBGhZCcFVpUn9Z-fmZg/viewform
+privacy_policy: https://email-partner.jpn.org/privacypolicy/index.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "メールパートナー - 魔法のボタンで下書きが完璧なビジネスメールに",
+    "description":"AIでメール作業がラクに！敬語表現に悩むことはありませんか？敬語、構成、件名作成がワンタップでこなせる魔法のボタンを追加します。",
+    "version": "7.7.7",
+    "icons": {
+        "16": "images/16x16.png",
+        "32": "images/32x32.png",
+        "48": "images/48x48.png",
+        "128": "images/128x128.png"
+      },
+      "action": {
+        "default_popup": "popup.html"
+    },
+     "permissions": [
+       "storage"
+     ],
+     "background": {
+    "service_worker": "background.js"
+  },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://mail.google.com/mail/*",
+                "*://inbox.google.com/*",
+                "*://email-partner.jpn.org/payed/*"
+            ],
+            "css": [
+                "modal.css",
+                "style.css",
+                "libs/wenk.min.css"
+            ],
+            "js": [
+                "libs/jquery.js",
+                "libs/gmail.js",
+                "libs/canvas-confetti.min.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://mail.google.com/mail/*",
+                "*://inbox.google.com/*"
+            ],
+            "js": [
+                "content.js",
+                "modal.js",
+                "toolbar.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://email-partner.jpn.org/payed/*"
+            ],
+            "js": [
+                "content.js"
+            ],
+            "run_at": "document_end"
+        }
+    ]
+}

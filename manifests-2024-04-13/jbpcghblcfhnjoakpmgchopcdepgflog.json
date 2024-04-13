@@ -1,0 +1,76 @@
+---
+name: BlueBean
+version: 0.1.3
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-03-18T11:25:41.000Z'
+size: 1.24MiB
+languages:
+  - English (United States)
+description: The Browser Extension That Manages Your Business Expenses
+publisher: BlueBean Technologies Inc
+publisher_account: BlueBean Technologies, Inc.
+publisher_address: |-
+  361 Newbury Street
+  Boston, MA 02115
+  US
+extension_website: bluebean.ai
+support_website: https://bluebean.ai/faq/
+privacy_policy: https://bluebean.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "BlueBean",
+  "description": "The Browser Extension That Manages Your Business Expenses",
+  "version": "0.1.3",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAuRFCbDmS7j1KQTa3aDMKIA2K7Tod4tCbDTf/djmJQaIbdGhqUc4l4Jml3FMlmRfcgHvO+6f6+XYP+0yRh5ASOGQGBuydIZqfoJB40s47aKAMAJM24nLpz3QXHyAUPacqJuGMrMMoF917r2oa7MeomK+eI70VjDVhXtBk7Bgq9aN8FnUf07voVFPc3oVtwWsrZPQwFYcMKYKTYuCDa1PtnK62ACtWYZ1dPXflwwuWZhPhi7h+6+iylFhnxwjP0DucC9F6Jqb4C4+PpIXrma6EkS1852LIEmsO2CaWcVg86pctLRZDo92ZLQhcxkaeRHECZWJqvP342BlmwEmao/ZwgwIDAQAB",
+  "icons": {
+    "16": "images/bean-active.png",
+    "48": "images/bean-active.png",
+    "128": "images/bean-active.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BlueBean Extension",
+    "default_icon": "images/bean-inactive.png"
+  },
+  "permissions": ["storage", "activeTab", "tabs", "scripting"],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["contentScript.js"],
+      "css": ["page.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["contentScriptAllFrames.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.bluebean.ai/*", "*://localhost/*"],
+      "js": ["installNotifier.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.bluebean.ai/*", "*://localhost/*"]
+  },
+  "host_permissions": ["https://*.bluebean.ai/*", "*://localhost/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "contentScript.css", "fonts/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

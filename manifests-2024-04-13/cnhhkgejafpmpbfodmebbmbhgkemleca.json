@@ -1,0 +1,95 @@
+---
+name: Control Space
+version: 19.15.1.426
+category_slug: productivity/workflow
+rating: 4.3
+rating_count: 10
+user_count: 209
+release_date: '2024-02-21T13:55:28.000Z'
+size: 3.47MiB
+languages:
+  - English
+description: Browse, organise, search or switch tabs with one simple shortcut
+publisher: Likely Logic
+publisher_address: |-
+  23B Ryde Vale Road
+  London SW12 9JQ
+  GB
+extension_website: controlspace.app
+support_website: https://controlspace.app/guide
+privacy_policy: https://controlspace.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Control Space",
+  "description": "Browse, organise, search or switch tabs with one simple shortcut",
+  "version": "19.15.1.426",
+  "manifest_version": 2,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0vnpxELmsgIXpO3cysyYyqv0xlKOiO7L8Hp9hUsfSWDLGw/BW/8Nrh2XcwRYMnLRl0gD+lK5cycvQdbpykJG2zn+EiOl/eRssKiwvFDpUi6lNKRCs6q+IlljCBn3Zit8tNSswmPTKDUBZHlPwLK0ma8Q6tt3GYlfQiEHX8XDw9MKMkhsj/71Z2zNLbpXynkiE+Qdf9dA0WnDBPppkggyACJWuWLkbmJb8DwFs2SHn7dFfrDKGGw6mPLM+vCOUqeANhbgWxQEsT9hXBG5kYh1jTKns9CMx4Cx4uKedRElHCioGPydLPsVLkO6YK6Ajy/EFXDQZfZ8qmi/1nTkqEmxSwIDAQAB",
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "48": "assets/icons/icon-48.png",
+    "128": "assets/icons/icon-128.png"
+  },
+  "permissions": [
+    "chrome://favicon/",
+    "*://*/*",
+    "bookmarks",
+    "sessions",
+    "history",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "core/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "vendor/mozilla/browser-polyfill.js",
+        "modules/page/main.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://account.controlspace.app/*",
+        "https://controlspace.app/*"
+      ],
+      "js": [
+        "modules/shell/installed.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://account.controlspace.app/*",
+      "https://controlspace.app/*"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "assets/icons/icon-32.png"
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Space",
+        "mac": "MacCtrl+Space"
+      }
+    }
+  },
+  "web_accessible_resources": [
+    "assets/*",
+    "index.html"
+  ],
+  "content_security_policy": "script-src 'self' https://*.outseta.com https://*.stripe.com https://api.rollbar.com https://eu.posthog.com; object-src 'self'; img-src 'self' * data: chrome://favicon; style-src 'self' https://fonts.googleapis.com 'unsafe-inline'; font-src 'self' https://fonts.gstatic.com;"
+}

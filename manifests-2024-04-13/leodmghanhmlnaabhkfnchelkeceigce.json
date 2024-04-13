@@ -1,0 +1,93 @@
+---
+name: DropWired - AliExpress Automator
+version: 1.6.0
+category_slug: lifestyle/shopping
+rating: 1
+rating_count: 2
+user_count: 214
+release_date: '2024-02-27T08:49:49.000Z'
+size: 183KiB
+languages:
+  - English
+description: DropWired - AliExpress Product Importer and Order Automator
+publisher: Platform 21 Limited
+publisher_account: DropWired
+publisher_address: |-
+  Suite 3
+  17 Wrens Court
+  Sutton Coldfield B72 1RT
+  GB
+support_website: >-
+  https://help.shopwired.co.uk/dropwired/dropwired-getting-started/how-dropwired-works
+privacy_policy: https://www.shopwired.co.uk/privacy-policy
+---
+
+  {
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "DropWired - AliExpress Automator",
+    "version": "1.6.0",
+    "description": "DropWired - AliExpress Product Importer and Order Automator",
+    "manifest_version": 3,
+    "permissions": ["storage", "notifications", "cookies"],
+    "host_permissions": [
+      "http://www.geoplugin.net/json.gp","https://passport.alibaba.com/*", "https://www.dropwired.com/*", "https://api.dropwired.com/*", "*://*.aliexpress.com/*", "*://*.aliexpress.us/*", "*://*.aliexpress.ru/*"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "options_page": "options.html",
+    "content_scripts": [
+        {
+          "matches": ["*://*.aliexpress.com/*","*://*.aliexpress.us/*","*://*.aliexpress.ru/*"],
+          "css": ["category_script.css"],
+          "js": ["jquery.js","waitForKeyElements.js","payOnlineSuccess.js","cart_submit.js","category_script.js"]
+        },
+        {
+          "matches": ["*://*.aliexpress.com/item/*","*://*.aliexpress.us/item/*"],
+          "css": ["product_script.css"],
+          "js": ["jquery.js","waitForKeyElements.js","product_script.js"]
+        },
+        {
+          "matches": ["https://www.dropwired.com/orders*"],
+          "js": ["order_script.js"]
+        },
+        {
+          "matches": ["*://*.aliexpress.com/p/trade/confirm.html*"],
+          "js": ["checkoutfinal_script.js"]
+        },
+        {
+          "matches": ["*://*.aliexpress.com/p/order/index.html*"],
+          "js": ["jquery.js","waitForKeyElements.js","checkorders.js"]
+        },
+        {
+          "matches": ["*://trade.aliexpress.com/orderList.htm*", "*://trade.aliexpress.com/order_list.htm*"],
+          "js": ["aliexpress_order_script.js"]
+        },
+        {
+          "matches": ["*://*.dropwired.com/getting_started*"],
+          "js": ["getting_started.js"]
+        },
+        {
+          "matches": ["*://*.dropwired.com/*"],
+          "js": ["jquery.js","waitForKeyElements.js","sign.js"],
+          "run_at": "document_start"
+        }
+    ],
+    "action": {
+      "default_popup": "popup_help.html",
+      "default_icon": {
+        "16": "images/dropwired_inactive16.png",
+        "32": "images/dropwired_inactive32.png",
+        "48": "images/dropwired_inactive48.png",
+        "128": "images/dropwired_inactive128.png"
+      }
+    },
+     "web_accessible_resources": [{
+      "resources": [
+        "images/*.png",
+        "images/*.gif"
+    ],
+      "matches": ["<all_urls>"]
+    }]
+  }

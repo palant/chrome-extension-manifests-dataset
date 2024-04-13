@@ -1,0 +1,182 @@
+---
+name: RevSeller
+version: 2.12.2
+category_slug: productivity/workflow
+rating: 4.7272727272727275
+rating_count: 66
+user_count: 50000
+release_date: '2024-04-06T02:55:48.000Z'
+size: 731KiB
+languages:
+  - English
+description: >-
+  Product research tool for third-party Amazon sellers that estimates FBA fees,
+  margin, ROI, and details about Variations.
+publisher: RevSeller, LLC
+publisher_account: RevSeller
+publisher_address: |-
+  5444 E Indiana St
+  Ste 215
+  Evansville, IN 47715-2857
+  US
+extension_website: revseller.com
+support_website: https://revseller.com/support
+privacy_policy: https://revseller.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RevSeller",
+  "description": "Product research tool for third-party Amazon sellers that estimates FBA fees, margin, ROI, and details about Variations.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqUeqCry4rKwTv8qPGJ0ai+L/k/tczqjNL62lyPViJ5/7mOB90t6DGXdkTcz75jEowghzTOKn0v7J/8CwucaNY7xugm0PUCJgqKs50bTTpFyTfNQPBnj5jywMKXg4xv/zuiI/YeizNQpxdLVTjhg+1VSIAejo9n4p1wCUWUp1iPgxBBVBH7z2UnTU7pNxpCPBk9Cq9fbTIRT/Sy4j+hryBquCoLhYKXB9hR+9qQp9tq44QoL4tzF/XMHAaGJf0BOlYueX+1r+jT+p+ICovORJq2DIeWnPw1C03XwspkbnPyUyNor7GDpPvx2j99yGPwkxYrtn5XeKt1c0ZpqHVuhcJwIDAQAB",
+  "version": "2.12.2",
+  "icons": {
+    "16": "img/icon16.png",
+    "24": "img/icon24.png",
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "64": "img/icon64.png",
+    "128": "img/icon128.png",
+    "256": "img/icon256.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/icon16.png",
+      "24": "img/icon24.png",
+      "32": "img/icon32.png",
+      "48": "img/icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "sw_background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.amazon.ca/*",
+        "https://*.amazon.ca/*",
+        "http://*.amazon.com/*",
+        "https://*.amazon.com/*"
+      ],
+      "js": [
+        "/lib/jquery-3.6.0.min.js",
+        "/js/content-script-0.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://*.amazon.ca/*",
+        "https://*.amazon.ca/*",
+        "http://*.amazon.com/*",
+        "https://*.amazon.com/*"
+      ],
+      "js": [
+        "/lib/moment.min.js",
+        "/lib/Chart.min.js",
+        "/lib/chart-zoom-plugin.js",
+        "/lib/stupidtable.modified.js",
+        "/js/content-script-1.js"
+      ],
+      "css": [
+        "/css/amazon.css",
+        "/css/amazon-serp.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://*.amazon.ca/*",
+        "https://*.amazon.ca/*",
+        "http://*.amazon.com/*",
+        "https://*.amazon.com/*"
+      ],
+      "js": [
+        "/js/content-script-2.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://sellercentral.amazon.com/hz/fba/profitabilitycalculator/index*",
+        "https://sellercentral.amazon.com/fba/profitabilitycalculator/index*",
+        "https://sellercentral.amazon.com/fba/revenuecalculator/index*",
+        "https://sellercentral.amazon.ca/hz/fba/profitabilitycalculator/index*",
+        "https://sellercentral.amazon.ca/fba/profitabilitycalculator/index*",
+        "https://sellercentral.amazon.ca/fba/revenuecalculator/index*"
+      ],
+      "js": [
+        "/js/content-script-3.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://sellercentral.amazon.com/revcal*",
+        "https://sellercentral.amazon.ca/revcal*"
+      ],
+      "js": [
+        "/js/content-script-4.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://sellercentral.amazon.com/product-search/search?q=*",
+        "https://sellercentral.amazon.ca/product-search/search?q=*"
+      ],
+      "js": [
+        "/js/content-script-5.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {},
+  "oauth2": {
+    "client_id": "863249128163-r2kvhcqt70qgtaik8m8pdesv8q903uug.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/img/*",
+        "/html/*",
+        "/js/inject-*.js"
+      ],
+      "matches": [
+        "*://www.amazon.com/*",
+        "*://www.amazon.ca/*",
+        "*://smile.amazon.com/*",
+        "*://smile.amazon.ca/*"
+      ]
+    },
+    {
+      "resources": [
+        "/html/sidebar3p.html",
+        "/html/storefront.html"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://www.amazon.com/*",
+    "*://*.images-amazon.com/*",
+    "*://revseller.com/*",
+    "https://sellercentral.amazon.com/*"
+  ]
+}

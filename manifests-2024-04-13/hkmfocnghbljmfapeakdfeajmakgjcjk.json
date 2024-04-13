@@ -1,0 +1,92 @@
+---
+name: Clippy - Screen Recorder & Productivity Tool
+version: 2.0.0
+category_slug: productivity/communication
+rating: 5
+rating_count: 4
+user_count: 46
+release_date: '2023-12-22T15:13:39.000Z'
+size: 429KiB
+languages:
+  - English
+description: >-
+  Record your screen with one click and share the link. The ultimate all-in-one
+  productivity tool.
+publisher_account: Clippy.video
+support_website: https://www.clippy.video/
+privacy_policy: https://clippy.video/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Clippy - Screen Recorder & Productivity Tool",
+  "description": "Record your screen with one click and share the link. The ultimate all-in-one productivity tool.",
+  "version": "2.0.0",
+  "icons": {
+    "512": "icons/512.png",
+    "128": "icons/128.png",
+    "64": "icons/64.png",
+    "32": "icons/32.png"
+  },
+  "action": {
+    "default_title": "Clippy - Screen Recorder & Productivity Tool",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "512": "icons/512.png",
+      "128": "icons/128.png",
+      "64": "icons/64.png",
+      "32": "icons/32.png"
+    }
+  },
+  "permissions": [
+    "desktopCapture",
+    "tabs",
+    "storage",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "parserOnClippy.js"
+      ],
+      "matches": [
+        "http://localhost:8878/*", "https://app.clippy.video/*", "https://staging-app.clippy.video/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "clipboard.js"
+      ],
+      "matches": [
+        "http://localhost:8878/share/video/*",
+        "https://app.clippy.video/share/video/*",
+        "https://staging-app.clippy.video/share/video/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

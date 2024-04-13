@@ -1,0 +1,85 @@
+---
+name: Plentymarkets-Theme
+version: 1.0.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 26
+release_date: '2023-08-22T11:37:36.000Z'
+size: 1.58MiB
+languages:
+  - Deutsch
+description: >-
+  Nutze diese Erweiterung um dein plentymarkets Backend an deine optischen
+  Bedürfnisse anzupassen
+publisher: COM.Create GmbH
+publisher_account: COM.Create
+publisher_address: |-
+  Körberheide
+  101
+  Münster 48157
+  DE
+privacy_policy: https://www.com-create.com/datenschutz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Plentymarkets-Theme",
+  "version": "1.0.6",
+  "manifest_version": 2,
+  "description": "Nutze diese Erweiterung um dein plentymarkets Backend an deine optischen Bedürfnisse anzupassen",
+  "homepage_url": "https://com-create.com",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128":"icons/icon128.png"
+  },
+  "background": {
+    "scripts": [
+      "src/bg/background.js"
+    ],
+    "persistent": false
+  },
+  "page_action": {
+    "default_icon": "icons/icon48.png",
+    "default_title": "Settings",
+    "default_popup": "src/settings/index.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "content_security_policy": "script-src 'self' https://embed.tawk.to; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.plentymarkets-cloud-de.com/*",
+        "https://*.plentymarkets-cloud-ie.com/*"
+      ],
+      "js": [
+        "src/inject/inject.js",
+        "src/inject/navbarHandler.js",
+        "src/inject/advertisingHandler.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.plentymarkets-cloud-de.com/*",
+        "https://*.plentymarkets-cloud-ie.com/*"
+      ],
+      "js": [
+        "src/inject/inject.js",
+        "src/inject/configHandler.js",
+        "src/inject/uiHandler.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "src/settings/css/*.css",
+    "src/settings/js/*.js",
+    "src/settings/*.html"
+  ]
+}
