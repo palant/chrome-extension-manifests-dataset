@@ -1,0 +1,115 @@
+---
+name: Video & Screen Recorder for Work - Drift
+version: 6.2.0
+category_slug: productivity/workflow
+rating: 4.028787878787878
+rating_count: 660
+user_count: 50000
+release_date: '2024-03-27T14:34:30.000Z'
+size: 12.09MiB
+languages:
+  - English
+description: Record video, screen, or both. Track views and chat live while they watch.
+publisher: Drift
+publisher_account: Drift Video
+publisher_address: |-
+  222 Berkley St
+  Boston, MA 02116
+  US
+extension_website: drift.com
+support_website: https://gethelp.drift.com/hc/en-us/categories/360001797014-Drift-Video
+privacy_policy: https://www.drift.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Video & Screen Recorder for Work - Drift",
+  "short_name": "Drift Video",
+  "description": "Record video, screen, or both. Track views and chat live while they watch.",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "images/drift-extension-icon-48x48.png",
+    "128": "images/drift-extension-icon-128x128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "clipboardWrite",
+    "scripting",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "facecam.html",
+        "permissions.html",
+        "recorder.html",
+        "*.png",
+        "*.svg",
+        "images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extensions": []
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.driftqa.com/*",
+      "*://*.drift.com/*",
+      "*://localhost:*/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.linkedin.com/*"
+      ],
+      "js": [
+        "contentscriptLinkedIn.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://app.salesloft.com/*"
+      ],
+      "js": [
+        "contentscriptSalesloft.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.outreach.io/*"
+      ],
+      "js": [
+        "contentscriptOutreach.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/mail/*",
+        "https://inbox.google.com/"
+      ],
+      "js": [
+        "contentscriptGmail.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "version": "6.2.0"
+}

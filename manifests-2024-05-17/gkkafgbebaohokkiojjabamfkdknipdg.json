@@ -1,0 +1,84 @@
+---
+name: Log Analytics Query History Lookup
+version: 0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-02-19T12:38:49.000Z'
+size: 13.5KiB
+languages:
+  - English
+description: Stores and allows lookup of Log Analytics queries.
+publisher_account: Alon Extensions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Log Analytics Query History Lookup",
+    "version": "0.0.1",
+    "description": "Stores and allows lookup of Log Analytics queries.",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.portal.azure.com/*",
+                "https://portal.azure.com/*",
+                "https://*.portal.azure.net/*"
+            ],
+            "js": [
+                "src/content-script.js"
+            ],
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "service_worker": "src/worker.js"
+    },
+    "permissions": [
+        "storage",
+        "webRequest",
+        "unlimitedStorage",
+        "activeTab"
+    ],
+    "commands": {
+        "lookupQuery": {
+            "suggested_key": {
+                "default": "Alt+R",
+                "mac": "Alt+R"
+            },
+            "description": "Search query in history."
+        }
+    },
+    "host_permissions": [
+        "https://*.loganalytics.io/*/query",
+        "https://*.loganalytics.azure.com/*/query",
+        "https://*.monitor.azure.com/*/query",
+        "https://*.applicationinsights.io/*/query",
+        "https://*.applicationinsights.azure.com/*/query",
+        "https://*.portal.azure.net/*"
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://*.portal.azure.com/*",
+            "https://portal.azure.com/*"
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "src/injected-script.js"
+            ],
+            "matches": [
+                "https://*/*"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    }
+}

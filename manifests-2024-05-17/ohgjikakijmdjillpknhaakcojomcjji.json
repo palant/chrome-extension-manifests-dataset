@@ -1,0 +1,75 @@
+---
+name: OrgOrg
+version: 1.2.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 7
+user_count: 113
+release_date: '2024-03-29T05:01:58.000Z'
+size: 27.97KiB
+languages:
+  - English
+description: Organize your organization
+publisher: OrgOrg, LLC
+publisher_account: OrgOrg
+publisher_address: |-
+  225 N Avalon Dr
+  Los Altos, CA 94022-2320
+  US
+extension_website: orgorg.us
+support_website: https://orgorg.us/support
+privacy_policy: https://orgorg.us/trust/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OrgOrg",
+  "description": "Organize your organization",
+  "version": "1.2.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/orgorg_icon16.png",
+    "32": "icons/orgorg_icon32.png",
+    "48": "icons/orgorg_icon48.png",
+    "128": "icons/orgorg_icon128.png",
+    "256": "icons/orgorg_icon256.png"
+  },
+  "omnibox": { "keyword": "org" },
+  "action": {
+    "default_title": "OrgOrg",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "256": "icons/orgorg_icon256.png"
+    }
+  },
+  "chrome_url_overrides": {
+    "newtab": "newtab.html"
+  },
+  "permissions": ["declarativeNetRequest", "tabs", "contextMenus"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "shortlinks",
+        "enabled": true,
+        "path": "shortlink_rules.json"
+      }
+    ]
+  },
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["https://orgorg.us/*"],
+      "js": ["localfiles.js"]
+    },
+    {
+      "matches": ["https://orgorg.us/*"],
+      "js": ["extension-installed.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

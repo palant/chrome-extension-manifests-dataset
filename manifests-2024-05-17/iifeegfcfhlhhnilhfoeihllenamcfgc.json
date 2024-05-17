@@ -1,0 +1,76 @@
+---
+name: GeroWallet Preview
+version: 1.14.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 583
+release_date: '2023-07-28T15:05:26.000Z'
+size: 3.91MiB
+languages:
+  - English (United States)
+description: Preview only version
+publisher_account: GeroWallet
+support_website: https://gerowallet.io/#contact
+privacy_policy: https://gerowallet.io/assets/downloads/UserAgreement.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "GeroWallet Preview",
+  "short_name": "GeroWallet Preview",
+  "version": "1.14.3",
+  "description": "Preview only version",
+  "icons": {
+    "16": "./assets/img/logo16.png",
+    "48": "./assets/img/logo48.png",
+    "128": "./assets/img/logo128.png"
+  },
+  "browser_action": {
+    "default_popup": "index.html?#/popup",
+    "default_icon": {
+      "16": "./assets/img/logo16.png",
+      "48": "./assets/img/logo48.png",
+      "128": "./assets/img/logo128.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "tabs",
+    "clipboardRead",
+    "chrome://favicon/",
+    "*://connect.trezor.io/*"
+  ],
+  "web_accessible_resources": [
+    "inject.js"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "./assets/vendor/trezor-content-script.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "contentPage.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'wasm-eval'; object-src 'self'"
+}

@@ -1,0 +1,79 @@
+---
+name: Evoke360 - CareBook Connect
+version: 2.153.21
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 48
+release_date: '2022-03-07T05:01:12.000Z'
+size: 6.5MiB
+languages:
+  - English
+description: >-
+  DataLink's CareBook Connect streamlines workflows and eliminates the need to
+  toggle between multiple applications by overlaying on…
+publisher_account: dl-quickscorecard
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Evoke360 - CareBook Connect",
+  "short_name": "CareBook Connect",
+  "version": "2.153.21",
+  "permissions": [
+    "https://*.datalink.com/*",
+    "https://*.datalinksoftware.com/*",
+    "alarms",
+    "storage",
+    "background"
+  ],
+  "web_accessible_resources": [
+    "assets/match.png"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_title": "CareBook Connect",
+    "default_popup": "index.html#login"
+  },
+  "background": {
+    "scripts": [
+      "patient-match-background.js",
+      "sso-background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ssodev.datalink.com/core/login-redirect.html",
+        "https://ssoqa.datalink.com/core/login-redirect.html",
+        "https://ssouat.datalinksoftware.com/core/login-redirect.html",
+        "https://sso.datalinksoftware.com/core/login-redirect.html"
+      ],
+      "js": [
+        "sso-content.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.firstchoicepediatrics.net:8443/*",
+        "https://*.ecwcloud.com/*",
+        "https://*.datalink.com/trinity/*",
+        "https://*.datalinksoftware.com/trinity/*"
+      ],
+      "js": [
+        "patient-info-scraper.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "assets/DL-ChromeAppLogo-16.png",
+    "32": "assets/DL-ChromeAppLogo-32.png",
+    "48": "assets/DL-ChromeAppLogo-48.png",
+    "128": "assets/DL-ChromeAppLogo-128.png"
+  }
+}

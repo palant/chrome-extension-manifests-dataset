@@ -1,0 +1,97 @@
+---
+name: Super Trello
+version: 1.5.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-05-14T21:35:38.000Z'
+size: 273KiB
+languages:
+  - English (United States)
+description: Supercharge your Trello with Super Trello!
+publisher_account: Ryan Kamal
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Super Trello",
+  "description": "Supercharge your Trello with Super Trello!",
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": {
+      "32": "icon-32.png"
+    }
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "cookies"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/index.tsx-loader.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "assets/inject.js-loader.js"
+      ],
+      "matches": [
+        "*://trello.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*.trello.com/*"
+      ],
+      "resources": [
+        "src/pages/content/injected.js",
+        "src/modules/db.ts"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "assets/moment.js",
+        "assets/index.tsx.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "*://trello.com/*"
+      ],
+      "resources": [
+        "assets/inject.js.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "host_permissions": [
+    "*://trello.com/*",
+    "*://localhost/*"
+  ],
+  "version": "1.5.1"
+}

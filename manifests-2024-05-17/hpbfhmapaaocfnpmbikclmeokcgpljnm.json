@@ -1,0 +1,61 @@
+---
+name: NeoCeo
+version: 1.1.5
+category_slug: make_chrome_yours/functionality
+rating: 5
+rating_count: 2
+user_count: 318
+release_date: '2024-05-14T03:58:28.000Z'
+size: 44.84MiB
+languages:
+  - English
+description: >-
+  Maximize your Neopet experience with real-time prices, streamlined search
+  results, and smart profit optimization!
+publisher_account: MintFarm
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "NeoCeo",
+  "description": "Maximize your Neopet experience with real-time prices, streamlined search results, and smart profit optimization!",
+  "version": "1.1.5",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/neoceo16.png",
+    "48": "images/neoceo48.png",
+    "128": "images/neoceo128.png"
+  },
+  "minimum_chrome_version": "93",
+  "web_accessible_resources": [{
+    "resources": ["images/*", "html/*"],
+    "matches": ["<all_urls>"]
+  }],
+  "action": {
+   "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "dist/main.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.neopets.com/shops/wizard.phtml*"],
+      "all_frames": true,
+      "js": [
+        "classes/HTMLScraper.js",
+        "objects/Item.js",
+        "objects/ItemRecord.js",
+        "objects/Shop.js",
+        "objects/Submarket.js",
+        "objects/MarketManager.js",
+        "objects/ShopWizardSearch.js",
+        "objects/ShopWizardResults.js",
+        "classes/ShopWizardResultsInjector.js",
+        "content.js"
+      ],
+      "css": ["css/neostyles.css"],
+      "run_at": "document_end"
+    }
+  ]
+}

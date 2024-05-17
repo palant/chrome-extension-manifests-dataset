@@ -1,0 +1,80 @@
+---
+name: AdScanner by PPC Ad Editor
+version: 2.0.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 297
+release_date: '2024-04-03T10:35:18.000Z'
+size: 450KiB
+languages:
+  - English (United States)
+description: >-
+  AdScanner is an amazing tool for scraping and downloading ads from Google's ad
+  transparency page.
+publisher: PPC Ad Editor
+publisher_account: info
+publisher_address: |-
+  7056 Archibald Ave Ste 102-171
+  Eastvale, CA 92880
+  US
+extension_website: www.ppcadeditor.com
+support_website: https://www.ppcadeditor.com/contact-us/
+privacy_policy: https://www.ppcadeditor.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "AdScanner by PPC Ad Editor",
+    "description": "AdScanner is an amazing tool for scraping and downloading ads from Google's ad transparency page.",
+    "version": "2.0.2",
+    "manifest_version": 3,
+    "homepage_url": "https://www.ppcadeditor.com/",
+    "author": {
+        "name": "Mohsin Ali",
+        "url": "https://github.com/mohsinaliryk"
+    },
+    "background": {
+        "service_worker": "js/sw.js"
+    },
+    "action": {
+        "default_popup": "app.html"
+    },
+    "icons": {
+        "48": "icons/48.png",
+        "64": "icons/64.png",
+        "128": "icons/128.png",
+        "256": "icons/256.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://adstransparency.google.com/*"],
+            "js": ["js/content.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://adstransparency.google.com/advertiser/*/creative/*?*&opener=extension"],
+            "js": ["js/details.js"],
+            "run_at": "document_end",
+            "match_about_blank": true,
+            "all_frames": true
+        },
+        {
+            "matches": ["https://tpc.googlesyndication.com/archive/sadbundle/$csp%3Darchive$/*"],
+            "js": ["js/frame.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "oauth2": {
+        "client_id": "766082034962-ef0uae8reqri5u2nc51qlh9vmrnej356.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.profile",
+            "https://www.googleapis.com/auth/userinfo.email"
+        ]
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAq3NfHzKYZ/MZbpGiOs5VoPdxsWkWY46DO12mZk0W0HYOieGop/kyZ8k30Cs9FNSk1zRohj3lRRPYE8MH1TpjY7Oud02/1clelMIZxjWlEbaPvD2hAa/47ws0LXYF2sIyY74HZ3tTGKhrPYt1KTF5qbh0Au9hTEZb/KSBZ5HY5elhnCft9aegZzTkqBskc6mwDgSTQ95k3k9Jq7OIa97Q/Q4grH3SlPTXKIheiXoxKpTZAbkVlwMn56LT05vkNwGZq0VZAcrWO68UAIJIFxHrouUAxfIoOP4TSyrbGZky3O1u+ZCkMFGRG2cIPi6H4gcdXYjrkzlDi03ifUh9PTCm5wIDAQAB",
+    "host_permissions": ["https://adscanner.onrender.com/*", "https://test-adscanner.onrender.com/*", "https://adstransparency.google.com/*", "http://localhost:3000/*"],
+    "permissions": ["storage", "identity", "identity.email"]
+}

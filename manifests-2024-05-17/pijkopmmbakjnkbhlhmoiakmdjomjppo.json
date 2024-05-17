@@ -1,0 +1,160 @@
+---
+name: snapADDY DataQuality
+version: 11.16.2
+category_slug: productivity/workflow
+rating: 4.391304347826087
+rating_count: 23
+user_count: 3000
+release_date: '2024-04-26T11:57:37.000Z'
+size: 570KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+description: The data quality booster for your CRM system
+publisher: snapADDY GmbH
+publisher_account: snapaddy-web-store-members
+publisher_address: |-
+  Haugerkirchgasse 7
+  Würzburg 97070
+  DE
+extension_website: www.snapaddy.com
+support_website: https://help.snapaddy.com
+privacy_policy: https://www.snapaddy.com/en/legal/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "11.16.2",
+  "version_name": "11.16.2",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background-scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/content-scripts/shared/main/main.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.google.de/search*",
+        "https://www.google.com/search*"
+      ],
+      "js": [
+        "scripts/content-scripts/shared/google-images/google-images.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.snapaddy.com/de/index.html*"
+      ],
+      "js": [
+        "scripts/content-scripts/shared/oauth/oauth.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.snapaddy.com/*"
+      ],
+      "js": [
+        "scripts/content-scripts/shared/visitreport/visitreport.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.crm.ondemand.com/*"
+      ],
+      "js": [
+        "scripts/content-scripts/shared/smart-autocomplete/sap-injector.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.lightning.force.com/*",
+        "https://*.snapaddy.com/*",
+        "http://localhost/*"
+      ],
+      "js": [
+        "scripts/content-scripts/shared/proxy/proxy.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "contextMenus",
+    "webRequest",
+    "declarativeNetRequest",
+    "scripting"
+  ],
+  "optional_permissions": [
+    "cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "webrequest-rules",
+        "enabled": true,
+        "path": "webrequest-rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/page-scripts/shared/proxy.js",
+        "scripts/page-scripts/shared/dynamics-open-popup.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "scripts/page-scripts/shared/smart-autocomplete/sap-frame-communication.js"
+      ],
+      "matches": [
+        "https://*.crm.ondemand.com/*"
+      ]
+    }
+  ]
+}

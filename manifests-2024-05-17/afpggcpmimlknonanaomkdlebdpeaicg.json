@@ -1,0 +1,155 @@
+---
+name: Aliexpress Free invoice - AliInvoice™️
+version: 3.1.6
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 8
+user_count: 1000
+release_date: '2023-07-30T06:02:27.000Z'
+size: 571KiB
+languages:
+  - English
+description: >-
+  The #1 app for AliExpress dropshipping.Get AliExpress invoice, price
+  history,buyer photo,review,order history,ePacket
+publisher_account: Wizard_Pekka
+privacy_policy: https://sites.google.com/view/avengerprivacypolicy/home
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Aliexpress Free invoice - AliInvoice™️",
+    "version": "3.1.6",
+    "manifest_version": 2,
+    "description": "The #1 app for AliExpress dropshipping.Get AliExpress invoice, price history,buyer photo,review,order history,ePacket",
+    "externally_connectable": {
+        "matches": [
+          "https://*.aliexpress.com/*"
+        ]
+      },
+    "background": {
+        "scripts": ["./assets/js/vendors.js",
+            "./src/lib/jquery.min.js",
+            "./src/content/dataStorage.js",
+            "background.js"
+        ],
+        "persistent": true
+    },
+    "icons": {
+        "16": "./logo/icon16.png",
+        "48": "./logo/icon.png",
+        "128": "./logo/icon48.png"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "browser_action": {
+        "default_title": "Ali Hunter",
+        "default_icon": "./logo/icon48.png",
+        "default_popup": "popup.html",
+        "scripts": "popup.js"
+    },
+    "options_ui": {
+        "page": "opt.html", 
+        "open_in_tab": true
+    },
+    "web_accessible_resources": [
+        "/logo/*",
+        "/src/*",
+        "/invoice.js",
+        "/opt.html",
+        "/src/bulma/bulma.css",
+        "/src/elements/modal.html",
+        "/src/css/global.css"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["assets/js/vendors.js", "assets/js/content_script.js"],
+            "css": ["assets/css/content_script.css"],
+            "run_at": "document_end"
+          },
+          {
+            "matches": ["<all_urls>"],
+            "js": ["assets/js/vendors.js", "assets/js/content_script_shopify.js"],
+            "css": ["assets/css/content_script_shopify.css"],
+            "run_at": "document_start"
+          },
+        {
+            "js": [
+                "./src/lib/jquery.min.js",
+                "./src/content/orderDetails.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/order_detail.htm*",
+                "*://*.aliexpress.ru/order_detail.htm*",
+                "*://*.aliexpress.us/order_detail.htm*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/css/single.css"
+            ]
+        },
+        {
+            "js": [
+                "./src/lib/accounting.min.js",
+                "./src/lib/jquery.min.js",
+                "./src/content/components/basicVariables.js",
+                "./src/content/ui.js",
+                "./src/content/components/validator.js",
+                "./src/content/services/scrape.js",
+                "./src/content/models/Invoice.js",
+                "./src/content/models/Options.js",
+                "./src/content/models/Order.js",
+                "./src/content/models/OrderItem.js",
+                "./src/content/orderPage.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/order_list.htm*",
+                "*://*.aliexpress.ru/order_list.htm*",
+                "*://*.aliexpress.com/orderList.htm*",
+                "*://*.aliexpress.ru/orderList.htm*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/bulma/bulma-mod.css"
+            ]
+        },
+        {
+            "js": [
+                "./src/lib/accounting.min.js",
+                "./src/lib/jquery.min.js",
+                "./src/content/ui.js",
+                "./src/content/models/Order.js",
+                "./src/content/models/OrderItem.js",
+                "./src/content/components/utilities.js",
+                "./src/content/dataStorage.js",
+                "./src/content/components/newOrderList.js",
+                "./src/content/components/newOrderDetails.js",
+                "./src/content/components/newOrderLogistics.js",
+                "./src/content/extra.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.ru/*",
+                "*://*.aliexpress.us/*"
+            ],
+            "css": [
+                "./src/bulma/bulma-mod.css",
+                "./src/css/global.css"
+            ]
+        }
+    ],
+    "optional_permissions": [
+        "*://*.aliexpress.us/*",
+        "downloads"
+    ],
+    "permissions": [
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.ru/*",
+        "*://*.mmstat.com/*",
+        "webRequest",
+        "webRequestBlocking",
+        "storage",
+        "unlimitedStorage"
+    ]
+}

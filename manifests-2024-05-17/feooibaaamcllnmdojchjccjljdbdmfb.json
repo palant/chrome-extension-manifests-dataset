@@ -1,0 +1,75 @@
+---
+name: 'VU Quiz Firewall Bypass: Allow Quiz Copy-Paste & Skip Lesson Video'
+version: 1.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-05-02T07:55:01.000Z'
+size: 181KiB
+languages:
+  - English (United States)
+description: >-
+  Enable copy paste on quiz pages, mark lesson videos as viewed, and bypass VU
+  quiz firewall.
+publisher_account: gptquizapp
+privacy_policy: https://fmedu.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VU Quiz Firewall Bypass: Allow Quiz Copy-Paste & Skip Lesson Video",
+  "version": "1.0.1",
+  "description": "Enable copy paste on quiz pages, mark lesson videos as viewed, and bypass VU quiz firewall.",
+  "minimum_chrome_version": "101",
+  "action": {
+    "default_icon": "./icon-256.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./icon-256.png",
+    "48": "./icon-512.png",
+    "128": "./icon-512.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "declarativeNetRequestWithHostAccess",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.vu.edu.pk/*",
+    "*://vu-db-worker.gptquiz.workers.dev/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ua_rules",
+        "enabled": true,
+        "path": "ua_rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.vu.edu.pk/*"],
+      "js": ["content_script.js"],
+      "match_origin_as_fallback": true,
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://*.vu.edu.pk/*"],
+      "js": ["content_script_2.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

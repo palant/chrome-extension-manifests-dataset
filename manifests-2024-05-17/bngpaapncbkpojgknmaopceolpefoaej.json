@@ -1,0 +1,120 @@
+---
+name: 구파스 확장앱_V1.8
+version: 1.8.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 538
+release_date: '2024-05-03T11:16:44.000Z'
+size: 460KiB
+languages:
+  - 한국어
+description: 구파스/셀더웨이 간편등록 확장앱(Made by 인디소프트)
+publisher: 주식회사 인디소프트
+publisher_account: kkndkim
+publisher_address: |-
+  소향로13번길 14-22
+  802호
+  부천시, 경기도 14544
+  KR
+extension_website: indysoft.co.kr
+privacy_policy: https://indysoft.co.kr/privacy.asp
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version":3,
+ "name":"구파스 확장앱_V1.8",
+ "description":"구파스/셀더웨이 간편등록 확장앱(Made by 인디소프트)",
+ "version":"1.8.0.1",
+ "permissions": [
+  "storage",
+     "cookies",
+  "declarativeNetRequest"
+ ],
+ "host_permissions": [
+  "https://indysoft.co.kr/*",
+  "https://gupas.co.kr/*", "https://*.gupas.co.kr/*",
+  "https://selltheway.co.kr/*", "https://*.selltheway.co.kr/*",
+  "https://smartstore.naver.com/*"
+   ],
+ "action":{
+  "default_icon": {
+  "16": "images/icons-16.png",
+  "24": "images/icons-24.png",
+  "32": "images/icons-32.png",
+  "48": "images/icons-48.png",
+  "64": "images/icons-64.png",
+  "128": "images/icons-128.png"
+  },
+ "default_title":"구파스/셀더웨이 팝업",
+ "default_popup":"popup_new.html"
+ },
+ "icons": {
+  "16": "images/icons-16.png",
+  "24": "images/icons-24.png",
+  "32": "images/icons-32.png",
+  "48": "images/icons-48.png",
+  "64": "images/icons-64.png",
+  "128": "images/icons-128.png"
+ },
+ 
+ "content_scripts":[{
+  "matches": [
+   "https://gupas.co.kr/", "https://*.gupas.co.kr/",
+   "https://gupas.co.kr/login*", "https://*.gupas.co.kr/login*",
+   "https://selltheway.com/", "https://*.selltheway.com/",
+   "https://selltheway.com/login*", "https://*.selltheway.com/login*"
+  ],
+  "js": ["login.js"]
+ }, {
+  "matches": [
+   "https://gupas.co.kr/editStoreProduct/*", "https://*.gupas.co.kr/editStoreProduct/*",
+   "https://selltheway.com/editStoreProduct/*", "https://*.selltheway.com/editStoreProduct/*"
+  ],
+  "js": ["common.js", "editStoreProduct.js"]
+ }, {
+  "matches": [
+   "https://gupas.co.kr/storeProducts*", "https://*.gupas.co.kr/storeProducts*",
+   "https://selltheway.com/storeProducts*", "https://*.selltheway.com/storeProducts*"
+  ],
+  "js": ["storeProducts.js"]
+ }, {
+  "matches": [
+   "https://gupas.co.kr/addStoreBestSellingProducts", "https://*.gupas.co.kr/addStoreBestSellingProducts",
+   "https://selltheway.com/addStoreBestSellingProducts", "https://*.selltheway.com/addStoreBestSellingProducts"
+  ],
+  "js": ["common.js", "getOptionCount.js"]
+ }, {
+  "matches": [
+   "https://gupas.co.kr/addSmartStoreSearchProducts", "https://*.gupas.co.kr/addSmartStoreSearchProducts",
+   "https://selltheway.com/addSmartStoreSearchProducts", "https://*.selltheway.com/addSmartStoreSearchProducts"
+  ],
+  "js": ["common.js", "getOptionCount2.js"]
+ }, {
+  "matches": [
+   "https://gupas.co.kr/profile", "https://*.gupas.co.kr/profile",
+   "https://selltheway.com/profile", "https://*.selltheway.com/profile"
+  ],
+  "js":["profile.js"]
+ }, {
+  "matches": ["https://smartstore.naver.com/*/products/*"],
+  "js": ["common.js", "demad/collections.js", "demad/naverproduct.js"]
+ }, {
+  "matches": [
+   "https://smartstore.naver.com/*"
+  ],
+  "exclude_matches": ["https://smartstore.naver.com/*/products/*"],
+  "js": ["common.js", "demad/collections.js"],
+  "runat": "document_end"
+ }, {
+  "matches": [
+   "https://gupas.co.kr/editSeller/*",
+   "https://selltheway.com/editSeller/*"
+  ],
+  "js": ["common.js", "demad/editseller.js"],
+  "runat": "document_end"
+ }],
+ "background": { "service_worker": "background.js" }
+}

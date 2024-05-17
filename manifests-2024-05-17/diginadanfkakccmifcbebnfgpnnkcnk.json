@@ -1,0 +1,94 @@
+---
+name: Testernotes
+version: '2'
+category_slug: productivity/developer
+rating: 5
+rating_count: 5
+user_count: 6
+release_date: '2024-02-23T10:12:19.000Z'
+size: 389KiB
+languages:
+  - English
+description: Record sessions to generate end-to-end tests
+publisher: Bazuel
+publisher_account: NoTest
+publisher_address: |-
+  Via Pavullo Nel Frignano, 107
+  Roma, RM 00125
+  IT
+extension_website: notest.io
+support_website: https://notest.io/contact
+privacy_policy: https://notest.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Testernotes",
+  "description": "Record sessions to generate end-to-end tests",
+  "version": "2",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "cookies",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "chrome/background.js"
+  },
+  "commands": {
+    "testernotes-toggle-recording": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q"
+      },
+      "description": "Toggle session registration"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/assets/testernotes_icon_16.png",
+      "32": "/assets/testernotes_icon_32.png",
+      "64": "/assets/testernotes_icon_64.png",
+      "128": "/assets/testernotes_icon_128.png"
+    }
+  },
+  "icons": {
+    "16": "/assets/testernotes_icon_16.png",
+    "32": "/assets/testernotes_icon_32.png",
+    "64": "/assets/testernotes_icon_64.png",
+    "128": "/assets/testernotes_icon_128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "page/monitor.js",
+        "page/widget.js",
+        "page/widget.css",
+        "page/custom-element.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content_scripts/embedder.js",
+        "content_scripts/background-page-channel.js",
+        "content_scripts/storage.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

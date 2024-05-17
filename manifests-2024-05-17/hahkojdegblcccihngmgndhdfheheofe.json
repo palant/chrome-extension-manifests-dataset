@@ -1,0 +1,161 @@
+---
+name: 'TextCortex: Personal AI Assistant & AI Writer'
+version: 1.33.1
+category_slug: productivity/workflow
+rating: 4.899441340782123
+rating_count: 1074
+user_count: 80000
+release_date: '2024-05-16T05:56:14.000Z'
+size: 13.21MiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Kiswahili
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - मराठी
+  - हिन्दी
+  - বাংলা
+  - ગુજરાતી
+  - தமிழ்
+  - తెలుగు
+  - ಕನ್ನಡ
+  - മലയാളം
+  - ไทย
+  - አማርኛ
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Tailor your AI assistant to your style & needs — uniquely crafted from your
+  own inputs and integrated with 10.000+ platforms.
+publisher: Text Cortex AI UG (haftungsbeschränkt)
+publisher_account: TextCortex AI
+publisher_address: |-
+  c/o Factory Works Gmbh Lohmühlenstr. 65
+  Berlin 12435
+  DE
+extension_website: textcortex.com
+support_website: https://help.textcortex.com/hc/en-us
+privacy_policy: https://textcortex.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "version": "1.33.1",
+  "default_locale": "en",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "clipboardRead",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "side_panel": { "default_path": "sidepanel.html" },
+  "sidebar_action": {
+    "default_icon": "/images/logo_32.png",
+    "default_title": "TextCortex AI",
+    "default_panel": "sidepanel.html"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/logo_16.png",
+      "32": "/images/logo_32.png",
+      "48": "/images/logo_48.png",
+      "128": "/images/logo_128.png",
+      "166": "/images/logo_128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/logo_square_16.png",
+    "32": "/images/logo_square_32.png",
+    "48": "/images/logo_square_48.png",
+    "128": "/images/logo_square_512.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentscript.js"],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "*://accounts.google.com/*",
+        "*://music.youtube.com/*",
+        "*://tagassistant.google.com/*"
+      ],
+      "css": ["css/textcortex-fonts.css"]
+    },
+    {
+      "matches": ["https://docs.google.com/document/*"],
+      "js": ["googleDocsPre.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "run_at": "document_start",
+      "js": ["./scripts/appendYTScriptTag.js"]
+    }
+  ],
+  "background": { "service_worker": "background.js" },
+  "externally_connectable": {
+    "matches": ["https://app.textcortex.com/*", "https://*.textcortex.com/*"]
+  },
+  "web_accessible_resources": [
+    { "resources": ["/images/onboarding/*"], "matches": ["<all_urls>"] },
+    {
+      "resources": ["injectionDev.js"],
+      "matches": ["https://docs.google.com/*"]
+    },
+    {
+      "resources": ["injectionProd.js"],
+      "matches": ["https://docs.google.com/*"]
+    },
+    { "resources": ["fonts/*", "css/*"], "matches": ["*://*/*"] },
+    {
+      "resources": ["interceptYoutubeNetwork.js"],
+      "matches": ["https://www.youtube.com/*"]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+---
+name: Rumble Tools
+version: 0.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 171
+release_date: '2023-07-26T06:42:47.000Z'
+size: 36.83KiB
+languages:
+  - English (United States)
+description: >-
+  Providing everyone with the tools to simplify and enhance their Rumble
+  experience.
+publisher_account: Hickory Projects
+publisher_address: |-
+  address_redacted
+  address_redacted, VA 23838
+  US
+support_website: https://forms.gle/HcpZCmcaDjHMN52i7
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rumble Tools",
+  "description": "Providing everyone with the tools to simplify and enhance their Rumble experience.",
+  "version": "0.0.1",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_title": "Rumble Tools"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icons/rumble-tools-icon-16.png",
+    "48": "icons/rumble-tools-icon-48.png",
+    "128": "icons/rumble-tools-icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["dist/ExtPay.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://rumble.com/*", "https://www.rumble.com/*"],
+      "js": [
+        "utils/settings.js",
+        "utils/tooltip.js",
+        "utils/download.js",
+        "utils/injector.js",
+        "scripts/content.js"
+      ],
+      "css": ["css/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/rumbletools-autoplay.png",
+        "icons/rumbletools-autoplay-green.png",
+        "icons/rumbletools-download.png"
+      ],
+      "matches": ["https://rumble.com/*", "https://www.rumble.com/*"]
+    }
+  ]
+}

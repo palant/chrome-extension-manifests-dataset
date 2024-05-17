@@ -1,0 +1,98 @@
+---
+name: HubSpot Sales
+version: 3.0.0.18812
+category_slug: productivity/communication
+rating: 4.459920203119332
+rating_count: 8271
+user_count: 1000000
+release_date: '2024-05-16T12:28:02.000Z'
+size: 21.13MiB
+languages:
+  - English
+description: Email tracking, CRM for Gmail, and sales productivity tools in your inbox
+publisher: HubSpot, Inc
+publisher_account: signals-extension-publishing
+publisher_address: |-
+  25 First St
+  Cambridge, MA 02141
+  US
+extension_website: app.hubspot.com
+support_website: https://community.hubspot.com/
+privacy_policy: https://legal.hubspot.com/product-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "HubSpot Sales",
+  "short_name": "HubSpot Sales",
+  "description": "Email tracking, CRM for Gmail, and sales productivity tools in your inbox",
+  "version": "3.0.0.18812",
+  "permissions": [
+    "tabs",
+    "cookies",
+    "storage",
+    "background",
+    "declarativeNetRequest",
+    "alarms",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.hubspot.com/*",
+    "*://*.hubspotqa.com/*",
+    "*://*.hubapi.com/*",
+    "*://*.hubapiqa.com/*",
+    "*://mail.google.com/*",
+    "*://*.googleusercontent.com/*"
+  ],
+  "optional_permissions": ["management"],
+  "optional_host_permissions": ["*://*.force.com/*", "*://*/*"],
+  "icons": {
+    "16": "img/hubspot-logo-16.png",
+    "48": "img/hubspot-logo-48.png",
+    "128": "img/logo-128-webstore.png"
+  },
+  "background": {
+    "service_worker": "js/init/Background-sw.js",
+    "type": "module"
+  },
+  "incognito": "not_allowed",
+  "action": {
+    "default_icon": "img/hubspot-logo-bg-48.png",
+    "default_popup": "pages/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/*.js.map",
+        "img/*",
+        "pages/*",
+        "css/*",
+        "js/xhrInterceptor.js",
+        "js/gmailSdk.js"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "all_frames": false,
+      "matches": ["*://*.hubspot.com/*", "*://*.hubspotqa.com/*"],
+      "exclude_matches": ["*://*/*.xml"],
+      "js": ["js/sig-ext.js"]
+    },
+    {
+      "run_at": "document_start",
+      "all_frames": false,
+      "matches": ["*://mail.google.com/*"],
+      "js": ["js/gmail.js"],
+      "css": ["css/gmail.css"]
+    }
+  ]
+}

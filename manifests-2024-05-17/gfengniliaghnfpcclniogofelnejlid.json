@@ -1,0 +1,86 @@
+---
+name: 知末采集器
+version: 1.0.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 327
+release_date: '2021-04-14T08:57:40.000Z'
+size: 109KiB
+languages:
+  - 中文 (简体)
+description: 这个扩展程序可以让你方便地从任意网站上采集喜欢的图片或者网页截图到灵感网(znztv.com)上。这是灵感网官方(znztv.com)提供的扩展。
+publisher_account: dingziznzmo
+support_website: https://pin.znztv.com/#/extensionH5
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "知末采集器",
+  "version": "1.0.4",
+  "manifest_version": 2,
+
+  "description": "这个扩展程序可以让你方便地从任意网站上采集喜欢的图片或者网页截图到灵感网(znztv.com)上。这是灵感网官方(znztv.com)提供的扩展。",
+  "icons": {
+    "16": "images/logo_16.png",
+    "48": "images/logo_48.png",
+    "128": "images/logo_128.png"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "options_page": "preferences.html",
+
+  "browser_action": {
+    "default_icon": {
+      "19": "images/logo_19.png",
+      "38": "images/logo_38.png"
+    },
+    "default_title": "灵感网页收藏工具",
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "exclude_globs": [
+        "*://znztv.com*",
+        "*://*.znztv.com*",
+        "http://local*",
+        "http://127.0.0.1*",
+        "https://graph.qq.com*",
+        "https://*.znzmo.com*"
+      ],
+      "include_globs": ["*"],
+      "js": ["js/lodash.js", "js/script.js"],
+      "css": ["css/content_scripts.css"],
+      "matches": ["http://*/*", "https://*/*"],
+
+      "run_at": "document_end"
+    },
+    {
+      "js": ["js/page.js", "js/shortcut.js", "js/transmit.js"],
+      "css": ["css/capture.css"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["js/isload.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://znztv.com https://ssl.google-analytics.com; object-src 'self'",
+
+  "permissions": [
+    "contextMenus",
+    "notifications",
+    "storage",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "activeTab",
+    "<all_urls>"
+  ],
+  "minimum_chrome_version": "26"
+}

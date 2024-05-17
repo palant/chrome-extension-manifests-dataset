@@ -1,0 +1,108 @@
+---
+name: 飛比購物幫手：網路購物即時比價工具
+version: 3.11.0
+category_slug: lifestyle/shopping
+rating: 4.829617834394904
+rating_count: 2512
+user_count: 100000
+release_date: '2024-03-18T08:32:04.000Z'
+size: 106KiB
+languages:
+  - 中文 (繁體)
+description: 飛比購物幫手:歷史價格通通掌握,比價破億商品,網購最佳幫手，讓你花最少，買最好！
+publisher: 第一網站股份有限公司
+publisher_account: 飛比價格
+publisher_address: |-
+  復興北路164號2F-1
+  中山區, 台北市 104509
+  TW
+extension_website: feebee.com.tw
+privacy_policy: https://feebee.com.tw/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "飛比購物幫手：網路購物即時比價工具",
+    "short_name": "飛比購物幫手",
+    "version": "3.11.0",
+    "description": "飛比購物幫手:歷史價格通通掌握,比價破億商品,網購最佳幫手，讓你花最少，買最好！",
+    "icons": {
+        "16": "images/16x16.png",
+        "48": "images/48x48.png",
+        "128": "images/128x128.png"
+    },
+    "background": {
+        "service_worker": "js/background.min.js"
+    },
+    "action": {
+        "default_icon": {
+            "32": "images/32x32.png"
+        }
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://*.google.com/*",
+                "*://*.google.com.tw/*"
+            ],
+            "js": [ "js/google.min.js" ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://tw.search.yahoo.com/*"
+            ],
+            "js": [ "js/yahoo.min.js" ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "*://www.bing.com/*"
+            ],
+            "js": [ "js/bing.min.js" ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "exclude_matches": [
+                "*://*.google.com/*",
+                "*://*.google.com.tw/*",
+                "*://tw.search.yahoo.com/*",
+                "*://www.bing.com/*"
+            ],
+            "js": [
+                "js/ec.min.js",
+                "js/traffic.min.js"
+            ]
+        },
+        {
+            "run_at": "document_idle",
+            "matches": [
+                "https://feebee.com.tw/member/coupon"
+            ],
+            "js": [ "js/feebee-coupon.min.js" ]
+        }
+    ],
+    "externally_connectable" : {
+        "matches" : [
+            "*://*.feebee.com.tw/*"
+        ]
+    },
+    "permissions": [
+        "cookies",
+        "contextMenus",
+        "storage"
+    ],
+    "host_permissions": [
+        "*://*.feebee.com.tw/*"
+    ]
+}

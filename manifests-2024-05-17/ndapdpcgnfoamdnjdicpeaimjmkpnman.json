@@ -1,0 +1,71 @@
+---
+name: Capture Web Clipper
+version: 1.3.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 132
+release_date: '2023-11-08T04:06:54.000Z'
+size: 102KiB
+languages:
+  - English
+description: Save links from the web to Capture.
+publisher: Eleventh, Inc.
+publisher_account: Capture
+publisher_address: |-
+  169 Madison Ave #2036
+  New York, NY 10016
+  US
+privacy_policy: https://capture.so/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Capture Web Clipper",
+  "version": "1.3.2",
+  "description": "Save links from the web to Capture.",
+  "icons": {
+    "128": "images/chrome-icon-default.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "images/chrome-icon-default.png"
+    },
+    "default_title": "Capture Web Clipper"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies",
+    "contextMenus",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://capture.so/*",
+      "https://capture-producer-prod.herokuapp.com/*"
+    ]
+  },
+  "host_permissions": ["https://capture.so/"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://capture.so/*",
+        "https://capture-producer-prod.herokuapp.com/*"
+      ],
+      "js": ["dist/callApi.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

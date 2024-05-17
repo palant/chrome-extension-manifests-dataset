@@ -1,0 +1,138 @@
+---
+name: C2 Password
+version: 2.20.1
+category_slug: make_chrome_yours/privacy
+rating: 3.3529411764705883
+rating_count: 51
+user_count: 20000
+release_date: '2024-04-29T13:16:58.000Z'
+size: 3.51MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+  - русский
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  A highly secure password management solution to store, sync, and safeguard
+  your credentials.
+publisher: Synology
+publisher_account: Synology.com
+publisher_address: |-
+  9F., No.1, Yuandong Rd.
+  Banqiao District, New Taipei City 220632
+  TW
+support_website: https://c2.synology.com/support
+privacy_policy: https://www.synology.com/company/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "2.20.1",
+  "homepage_url": "https://c2.synology.com/password",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "author": "Synology Inc.",
+  "permissions": [
+    "alarms",
+    "contextMenus",
+    "idle",
+    "privacy",
+    "scripting",
+    "storage",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "webRequestAuthProvider"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "assets/logo_pw_16.png",
+    "24": "assets/logo_pw_24.png",
+    "48": "assets/logo_pw_48.png",
+    "128": "assets/logo_pw_128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "__MSG_extName__",
+    "default_icon": {
+      "19": "assets/logo_pw_19.png",
+      "38": "assets/logo_pw_38.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-script-0.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://profile.c2.synology.com/authenticator-verification*",
+        "https://profile.c2.c2go.dev/authenticator-verification*",
+        "https://profile.c2test.synology.com/authenticator-verification*"
+      ],
+      "js": [
+        "content-script-1.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "auth.html",
+        "encryption-key.html"
+      ],
+      "matches": [
+        "https://*.synology.inc/*",
+        "https://*.c2.c2go.dev/*",
+        "https://*.synology.com/*"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "autosave.html",
+        "dropdown.html",
+        "icon.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "linux": "Ctrl+Shift+U"
+      }
+    },
+    "save_login": {
+      "suggested_key": {
+        "default": "Alt+Shift+E"
+      },
+      "description": "Save to C2 Password"
+    }
+  }
+}

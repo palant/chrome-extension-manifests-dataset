@@ -1,0 +1,83 @@
+---
+name: vLex
+version: '6.8'
+category_slug: productivity/tools
+rating: 4.3
+rating_count: 40
+user_count: 100000
+release_date: '2023-10-03T07:01:04.000Z'
+size: 1.12MiB
+languages:
+  - English
+  - Français
+  - català
+  - español
+  - italiano
+  - português (Brasil)
+description: Improve your Google searches by adding related documents at vLex.com
+publisher: vlex
+publisher_account: vlex-addons
+publisher_address: |-
+  Calle Tánger 86, Oficina 7-107
+  Barcelona, Barcelona 08018
+  ES
+extension_website: vlex.com
+support_website: https://kb.vlex.com/
+privacy_policy: https://vlex.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "vLex",
+ "version": "6.8",
+ "description": "__MSG_appDesc__",
+ "default_locale": "en",
+ "permissions": ["activeTab", "storage", "webRequest"],
+ "host_permissions": ["https://*/"],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "google-iframe/search.html",
+    "google-iframe/stream.html",
+    "resources/extensionChecker.js",
+    "content/vlex-taskpane.html",
+    "*.svg",
+    "*.png",
+    "*.js.map"
+   ],
+   "matches": ["*://*/*"]
+  }
+ ],
+ "background": {
+  "service_worker": "build/background.js"
+ },
+ "externally_connectable": {
+  "matches": ["*://*.vlex.com/*"]
+ },
+ "content_scripts": [
+  {
+   "matches": ["*://*/*"],
+   "js": [
+    "build/content-script.js",
+    "build/universal-content-script.js",
+    "build/vcite.js"
+   ],
+   "css": ["content/content.css"],
+   "run_at": "document_start"
+  }
+ ],
+ "action": {
+  "default_icon": "resources/img/vlex-logo-128.png",
+  "default_popup": "popup/popup.html"
+ },
+ "omnibox": {
+  "keyword": "v"
+ },
+ "icons": {
+  "16": "resources/img/vlex-logo-16.png",
+  "48": "resources/img/vlex-logo-app.png",
+  "128": "resources/img/vlex-logo-app.png"
+ }
+}

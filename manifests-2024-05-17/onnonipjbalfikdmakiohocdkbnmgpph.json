@@ -1,0 +1,113 @@
+---
+name: Feroot PageScanner
+version: 1.0.1
+category_slug: make_chrome_yours/privacy
+rating: 5
+rating_count: 12
+user_count: 341
+release_date: '2024-05-01T10:41:59.000Z'
+size: 2.8MiB
+languages:
+  - English
+description: >-
+  Feroot PageScanner enables you to perform privacy and security compliance
+  assessments (PCI-DSS 4.0, HIPAA, CCPA)
+publisher: Feroot Security Inc
+publisher_address: |-
+  325 Front Street West
+  Unit 400
+  Toronto, ON M5V 2Y1
+  CA
+extension_website: feroot.com
+privacy_policy: https://www.feroot.com/feroot-pagescanner-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "Feroot",
+  "name": "__MSG_manifest_name__",
+  "description": "__MSG_manifest_description__",
+  "default_locale": "en",
+  "background": {
+    "service_worker": "service_worker/index.js",
+    "type": "module"
+  },
+  "permissions": [
+    "activeTab",
+    "webRequest",
+    "tabs",
+    "storage",
+    "favicon",
+    "windows",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "ws://*/*",
+    "wss://*/*",
+    "file://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "file:///*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content_scripts/patches.js"
+      ],
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "service_worker/vulnerability/jsrepository.json"
+      ],
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "service_worker/privacy/data-transfers/GeoIP2-Country.mmdb"
+      ],
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/icons/icon-180.png"
+  },
+  "icons": {
+    "22": "assets/icons/icon-21.png",
+    "180": "assets/icons/icon-180.png",
+    "192": "assets/icons/icon-192.png",
+    "512": "assets/icons/icon-512.png"
+  },
+  "version": "1.0.1"
+}

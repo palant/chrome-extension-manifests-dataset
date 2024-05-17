@@ -1,0 +1,87 @@
+---
+name: Atendare
+version: 0.24.03.05
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 773
+release_date: '2024-03-05T21:53:11.000Z'
+size: 799KiB
+languages:
+  - português (Brasil)
+description: Atendare - Conectando equipes e processos de venda em um só lugar
+publisher: Atendare
+publisher_account: desenvolvimentochrome
+publisher_address: |-
+  Av Uruguai, 513
+  Sala 201
+  Três de Maio, RS 98910000
+  BR
+extension_website: atendare.com
+support_website: https://help.atendare.com
+privacy_policy: https://atendare.com/politica-de-privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Atendare",
+ "manifest_version": 3,
+ "version": "0.24.03.05",
+ "description": "Atendare - Conectando equipes e processos de venda em um só lugar",
+ "permissions": ["activeTab", "scripting", "storage"],
+ "host_permissions": ["*://web.whatsapp.com/*", "*://*.atendare.com/*", "*://*.mail.google.com/*", "*://localhost/*"],
+ "background": {
+  "service_worker": "assets/background.js",
+  "type": "module"
+ },
+ "incognito": "not_allowed",
+ "icons": {
+  "16": "img/icon_16.png",
+  "32": "img/icon_32.png",
+  "192": "img/icon_192.png"
+ },
+ "action": {
+  "default_popup": "popup.html",
+  "default_title": "Abrir opções do Atendare"
+ },
+ "content_scripts": [
+  {
+   "matches": ["*://web.whatsapp.com/*"],
+   "js": ["assets/whatsapp_script.js"],
+   "css": ["assets/whatsapp_script.css"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://mail.google.com/*"],
+   "js": ["assets/gmail_script.js"],
+   "css": ["assets/gmail_script.css"],
+   "run_at": "document_end",
+   "all_frames": true
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "matches": ["https://*/*"],
+   "resources": [
+    "*.html",
+    "assets/whatsapp_chat.js",
+    "img/icon_32.png",
+    "img/icon_32_white.png",
+    "img/arrow_black.png",
+    "img/arrow_white.png",
+    "img/loading.gif"
+   ]
+  }
+ ],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'",
+  "web_accessible_resources": "script-src 'self'; object-src 'self'"
+ },
+ "options_ui": {
+  "open_in_tab": true
+ },
+ "externally_connectable": {
+  "matches": ["*://*.atendare.com/*", "https://atendare-static.storage.googleapis.com/*"]
+ }
+}

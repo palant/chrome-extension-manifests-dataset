@@ -1,0 +1,71 @@
+---
+name: Sherlock
+version: 4.3.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 5
+user_count: 263
+release_date: '2022-05-19T04:00:34.000Z'
+size: 675KiB
+languages:
+  - English (United States)
+description: Browsing a home? Find everything you need to know instantly.
+publisher_account: ZeroDown
+extension_website: zerodown.com
+support_website: https://zerodown.com/sherlock
+privacy_policy: https://zerodown.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Sherlock",
+  "description": "Browsing a home? Find everything you need to know instantly.",
+  "version": "4.3.2",
+  "browser_action": {
+    "default_icon": "sherlock32.png",
+    "default_title": "Sherlock",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": ["src/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://www.zillow.com/*"],
+      "js": ["src/zillowScraper.js", "src/badge.js"],
+      "css": ["style.css"]
+    },
+    {
+      "matches": ["*://www.redfin.com/*"],
+      "js": ["src/redfinScraper.js", "src/badge.js"],
+      "css": ["style.css"]
+    },
+    {
+      "matches": ["*://www.realtor.com/*"],
+      "js": ["src/realtorScraper.js", "src/badge.js"],
+      "css": ["style.css"]
+    },
+    {
+      "matches": ["*://www.trulia.com/*"],
+      "js": ["src/truliaScraper.js", "src/badge.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "icons": {
+    "32": "sherlock32.png",
+    "48": "sherlock48.png",
+    "128": "sherlock128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "https://fonts.googleapis.com/",
+    "https://zerodown.com/*",
+    "https://labsapp.zerodown.com/*"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}

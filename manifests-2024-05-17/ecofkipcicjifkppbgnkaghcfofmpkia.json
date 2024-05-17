@@ -1,0 +1,275 @@
+---
+name: 妙手跨境助手
+version: 1.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 590
+release_date: '2024-03-28T04:28:36.000Z'
+size: 544KiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - English
+  - English (United States)
+  - Tiếng Việt
+  - español
+  - বাংলা
+  - ไทย
+  - 中文 (简体)
+description: Support collecting products from multiple platforms
+publisher_account: sotoknox7
+extension_website: erp.91miaoshou.com
+support_website: https://erp.91miaoshou.com/
+privacy_policy: https://erp.91miaoshou.com/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_extensionName__",
+    "version": "1.0.1",
+    "description": "__MSG_extensionDescription__",
+    "default_locale": "zh_CN",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';",
+        "sandbox": "sandbox allow-scripts; script-src 'self'; object-src 'self';"
+    },
+    "icons": {
+        "16": "images/logo16.png",
+        "24": "images/logo24.png",
+        "48": "images/logo48.png",
+        "128": "images/logo128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_icon": {
+            "24": "images/logo24.png"
+        },
+        "default_title": "妙手跨境助手",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/jquery.js",
+                "js/underscore-1.8.3.min.js",
+                "js/bootstrap/bootstrap.3.3.4.min.js",
+                "js/lib.js",
+                "js/md5.js",
+                "js/ric_plugin.js"
+            ],
+            "css": [
+                "js/layer-3.0.1/skin/default/layer.css",
+                "css/niuniu.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/layer-3.0.1/layer.min.js"
+            ],
+            "css": [
+
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "js/biz/common/fetch_tool.js",
+                "js/biz/common/common_util.js",
+                "js/biz/common/common_tool.js",
+                "js/biz/platform/platform-hook-config.js",
+                "js/biz/platform/platform-base.js",
+                "js/biz/purchase/common/init_plugin_client.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://*.1688.com/*"
+            ],
+            "js": [
+                "js/biz/platform/platform-1688.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://erp.91miaoshou.com/order/package/index*"
+            ],
+            "js": [
+                "js/biz/purchase/common/post_msg.js",
+                "js/biz/purchase/platform_api/1688_order.js",
+                "js/biz/purchase/common/platform_order.js",
+                "js/biz/purchase/common/init_self_platform.js",
+                "js/biz/purchase/common/purchase_trace.js",
+                "js/biz/purchase/common/check_relate_purchase_order.js",
+                "js/biz/purchase/common/platform_user_login.js",
+                "js/biz/purchase/util/rsync_purchase_order.js",
+                "js/biz/purchase/shopee_purchase_order_index.js",
+                "js/biz/purchase/shopee_purchase_order_desktop.js",
+                "js/biz/purchase/search_same_goods_index.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://erp.91miaoshou.com/purchase/goods*"
+            ],
+            "js": [
+                "js/biz/purchase/platform_api/1688_order.js",
+                "js/biz/purchase/common/platform_order.js",
+                "js/biz/purchase/common/init_self_platform.js",
+                "js/biz/purchase/common/platform_user_login.js",
+                "js/biz/purchase/shopee_goods_purchase_order_index.js",
+                "js/biz/purchase/shopee_purchase_order_desktop.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://detail.1688.com/offer/*"
+            ],
+            "js": [
+                "js/biz/purchase/purchase_order_base.js",
+                "js/biz/purchase/purchase_order_fix_panel.js",
+                "js/biz/purchase/purchase_auto_ordering_common.js",
+                "js/biz/purchase/purchase_auto_ordering_item.js",
+                "js/biz/purchase/purchase_1688_add_address.js",
+                "js/biz/purchase/common/purchase_order_sensitive_consignee.js",
+                "js/biz/purchase/purchase_1688_item.js"
+            ],
+            "css": [
+                "css/order.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://cart.1688.com/cart.htm*"
+            ],
+            "js": [
+                "js/biz/purchase/purchase_order_base.js",
+                "js/biz/purchase/purchase_order_fix_panel.js",
+                "js/biz/purchase/purchase_1688_add_address.js",
+                "js/biz/purchase/purchase_1688_cart.js",
+                "js/biz/purchase/common/purchase_order_sensitive_consignee.js"
+            ],
+            "css": [
+                "css/order.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://order.1688.com/order/smart_make_order.htm*",
+                "*://order.1688.com/order/smart_commit_order.htm*",
+                "*://1688.com/page/placeOrder.htm*"
+            ],
+            "js": [
+                "js/biz/purchase/purchase_order_base.js",
+                "js/biz/purchase/purchase_order_fix_panel.js",
+                "js/biz/purchase/purchase_auto_ordering_common.js",
+                "js/biz/purchase/purchase_auto_ordering_confirm.js",
+                "js/biz/purchase/purchase_1688_add_address.js",
+                "js/biz/purchase/common/purchase_order_sensitive_consignee.js",
+                "js/biz/purchase/purchase_1688_confirm.js",
+                "js/biz/purchase/purchase_1688_add_temp_address.js"
+            ],
+            "css": [
+                "css/order.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://trade.1688.com/order/trade_flow.htm*",
+                "*://order.1688.com/page/cashier.html*"
+            ],
+            "js": [
+                "js/biz/purchase/purchase_order_base.js",
+                "js/biz/purchase/purchase_1688_success.js",
+                "js/biz/purchase/auto_purchase/auto_purchase_index.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://trade.1688.com/order/unify_pay_success.htm*",
+                "*://trade.1688.com/order/new_step_order_detail.htm*"
+            ],
+            "js": [
+                "js/biz/purchase/purchase_1688_pay_success.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://s.1688.com/selloffer/offer_search.htm*",
+                "*://s.1688.com/youyuan/index.htm*"
+            ],
+            "js": [
+                "js/biz/purchase/purchase_order_fix_panel.js",
+                "js/biz/purchase/search_same_goods_common.js",
+                "js/biz/purchase/purchase_1688_search_same_goods.js"
+            ],
+            "css": [
+                "css/order.css"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "storage",
+        "declarativeNetRequest",
+        "scripting",
+        "cookies"
+    ],
+    "declarative_net_request" : {
+        "rule_resources" : [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "rules_1.json"
+            }
+        ]
+    },
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*.png",
+                "fonts/*",
+                "js/biz/purchase/inject/upload_1688_image.js",
+                "js/biz/purchase/inject/purchase_1688_tag.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "*://localhost/*",
+            "*://*.szchengji-inc.com/*",
+            "*://*.chengji-inc.com/*",
+            "*://*.91miaoshou.com/*"
+        ]
+    }
+}

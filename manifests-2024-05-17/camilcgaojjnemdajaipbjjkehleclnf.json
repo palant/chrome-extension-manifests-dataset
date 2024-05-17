@@ -1,0 +1,106 @@
+---
+name: Ptengine-Assistant
+version: 2.0.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 4000
+release_date: '2024-04-11T10:34:11.000Z'
+size: 417KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 日本語
+description: Enhance the performance of Ptengine heatmaps and experience no-code editor.
+publisher_account: ptengine-app
+privacy_policy: https://www.ptengine.jp/privacy-policy
+---
+
+{
+  "author": "@samrum/vite-plugin-web-extension",
+  "description": "__MSG_appDesc__",
+  "name": "Ptengine-Assistant",
+  "version": "2.0.4",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "32": "icons/Ptengine-plugin-32.png",
+      "48": "icons/Ptengine-plugin-48.png",
+      "128": "icons/Ptengine-plugin-128.png"
+    },
+    "default_popup": "src/entries/popup/index.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "src/entries/contentScript/primary/main.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/entries/contentScript/primary/main.ts",
+        "js/inject.js",
+        "js/inject-heatmap-helper.js",
+        "css/bootstrap.min.css",
+        "js/_sid.js",
+        "js/_auth.js",
+        "js/assistant_inject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    },
+    {
+      "resources": [
+        "assets/src/entries/contentScript/primary/main-7e32cfe2.js",
+        "assets/screenShotContent-86055bbd.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "/rule/rules.json"
+      }
+    ]
+  },
+  "icons": {
+    "32": "icons/Ptengine-plugin-32.png",
+    "48": "icons/Ptengine-plugin-48.png",
+    "128": "icons/Ptengine-plugin-128.png"
+  },
+  "options_ui": {
+    "page": "src/entries/options/index.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "tabs",
+    "scripting",
+    "storage",
+    "activeTab"
+  ]
+}

@@ -1,0 +1,71 @@
+---
+name: 'Mailmeteor: Mail merge, Follow up, and export emails in Gmail'
+version: 0.7.0
+category_slug: productivity/communication
+rating: 4.8108108108108105
+rating_count: 74
+user_count: 20000
+release_date: '2024-05-11T06:20:12.000Z'
+size: 1.71MiB
+languages:
+  - English (United States)
+description: >-
+  Do even more in Gmail. Mail merge, schedule follow-ups, export emails, and
+  more features to bring your inbox to the next level.
+publisher: Mailmeteor
+publisher_account: Mailmeteor for Gmail
+publisher_address: |-
+  43 Boulevard Auguste Blanqui
+  Paris 75013
+  FR
+extension_website: mailmeteor.com
+support_website: https://mailmeteor.com/support
+privacy_policy: https://mailmeteor.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Mailmeteor: Mail merge, Follow up, and export emails in Gmail",
+  "description": "Do even more in Gmail. Mail merge, schedule follow-ups, export emails, and more features to bring your inbox to the next level.",
+  "version": "0.7.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "dist/popup.html"
+  },
+  "permissions": ["storage", "activeTab", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["https://mail.google.com/*", "https://*.googleusercontent.com/*", "https://*.appspot.com/*"],
+  "background": {
+    "service_worker": "dist/mailmeteor.background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "blockMailmeteorTrackingRules",
+        "enabled": true,
+        "path": "dist/declarative_net_request_rules/blockMailmeteorTrackingRules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["dist/mailmeteor.min.js", "dist/mailmeteor.app.js", "dist/mailmeteor.editor.min.js"],
+      "css": ["assets/css/mailmeteor.css", "assets/css/editor.css"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/img/*", "assets/videos/*"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ],
+  "icons": {
+    "16": "assets/img/mailmeteor-16x16.png",
+    "32": "assets/img/mailmeteor-32x32.png",
+    "48": "assets/img/mailmeteor-48x48.png",
+    "128": "assets/img/mailmeteor-128x128.png"
+  }
+}

@@ -1,0 +1,129 @@
+---
+name: Power Notes Searcher for SAP
+version: '3.1'
+category_slug: productivity/tools
+rating: 5
+rating_count: 8
+user_count: 662
+release_date: '2023-08-03T12:01:07.000Z'
+size: 40.94KiB
+languages:
+  - English (UK)
+description: Search for multiple SAP notes easily & with history.
+publisher: Blast Furnaces
+publisher_account: in2DB Consultants Ltd
+publisher_address: |-
+  Blasted Furnaces Road
+  Margam
+  Port Talbot SA13 2NG
+  GB
+extension_website: in2db.com
+support_website: http://www.in2db.com/pwns
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Power Notes Searcher for SAP",
+  "short_name": "Power Notes Searcher for SAP",
+  "description": "Search for multiple SAP notes easily & with history.",
+  "version": "3.1",
+  "author": "in2DB Consultants Ltd",
+  "minimum_chrome_version": "90",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAi1BlPl2ap2sxCyaEa9ApUhKI6Jw1pdqEIsAlueZ6mN1IglqrFy1TdGpFt/sGVGd8ab/t4qE6FIS+COwQ5Fuvql1ikKveqwXY0VQFQJnraV66EINr26KAFrftLxbP/iMGL3kPcAMBJ0CrDAdkM4yFMagj8yLPSSWvSd/9L/5AQElGP7+HrWt1He33NgPc2mBU6dl5WsT2kIQWJ6tArDH+tSgj1OaXss5yt4Be/3tCGL3o7wxc1BHyOgrr29EyvOjlDKpR9sSWoehOhBMQM5kV9AULPq/Nh7wTIBa9IyVkmxZ9HdXc6XU5+SuvQTUrB4GWBFZDSMDnWaXk0z65qES6bwIDAQAB",
+
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "clipboardWrite",
+    "notifications",
+    "offscreen"
+  ],
+
+  "host_permissions": [
+    "https://me.sap.com/*",
+    "https://launchpad.support.sap.com/*",
+    "https://userapps.support.sap.com/*"
+  ],
+
+  "icons": {
+     "16": "icon16.png",
+     "48": "icon48.png",
+     "128": "icon128.png"
+  },
+
+  "omnibox": { "keyword" : "note" },
+
+  "action": {
+    "default_title": "Power Notes Searcher for SAP",
+    "default_icon": "icon16.png",
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+
+ "content_scripts": [
+    {
+      "matches": ["https://me.sap.com/notes/*"],
+      "js": ["highlightnotes.js","notecontent.js","clicker.js"],
+      "all_frames": false,
+      "match_about_blank": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://me.sap.com/support/search/*"],
+      "js": ["clicker.js"],
+      "all_frames": false,
+      "match_about_blank": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://me.sap.com/servicessupport/*"],
+      "js": ["highlightnotes.js","notecontent.js","clicker.js"],
+      "all_frames": false,
+      "match_about_blank": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://launchpad.support.sap.com/*"],
+      "js": ["highlightnotes.js","notecontent.js","clicker.js"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://me.sap.com/softwarecenter/*"],
+      "js": ["clicker.js"],
+      "all_frames": false,
+      "match_about_blank": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://userapps.support.sap.com/sap/support/sfm/notes/print/*"],
+      "js": ["printfriendly.js"],
+      "all_frames": false,
+      "match_about_blank": false,
+      "run_at": "document_end"
+    }
+  ],
+
+ "web_accessible_resources": [
+  {
+    "resources": [
+      "xmlhttpresolver.js"
+    ],
+    "matches": ["https://*.sap.com/*" ]
+  },
+  {
+    "resources": [
+      "offscreen.html"
+    ],
+    "matches": [    ]
+  }
+]
+
+}

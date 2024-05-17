@@ -1,0 +1,178 @@
+---
+name: Zenfetch
+version: 2.6.1
+category_slug: productivity/workflow
+rating: 4.777777777777778
+rating_count: 9
+user_count: 564
+release_date: '2024-05-16T09:14:41.000Z'
+size: 1.65MiB
+languages:
+  - English (United States)
+description: >-
+  Zenfetch helps you leverage all the information you've saved including
+  articles, PDFs, and youtube videos.
+publisher: Zenfetch, Inc.
+publisher_account: Zenfetch Founders
+publisher_address: |-
+  112 N 8th St
+  Brooklyn, NY 11249-2853
+  US
+extension_website: zenfetch.com
+privacy_policy: https://zenfetch.com/Privacy-and-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Zenfetch",
+  "description": "Zenfetch helps you leverage all the information you've saved including articles, PDFs, and youtube videos.",
+  "version": "2.6.1",
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "action": {
+    "default_icon": {
+      "128": "icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "icons": {
+    "16": "icon-bitty.png",
+    "48": "icon-small.png",
+    "128": "icon.png"
+  },
+
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+
+  "content_scripts": [
+    {
+      "js": ["js/content_scripts/index.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://*.calendar.google.com/*",
+        "https://*.drive.google.com/*",
+        "https://*.chase.com/*",
+        "https://*.wellsfargo.com/*",
+        "https://*.citi.com/*",
+        "https://*.bankofamerica.com/*",
+        "https://*.hsbc.com/*",
+        "https://*.barclays.com/*",
+        "https://*.standardchartered.com/*",
+        "https://*.santander.com/*",
+        "https://*.morganstanley.com/*",
+        "https://*.goldmansachs.com/*",
+        "https://*.us.bank/*",
+        "https://*.td.com/*",
+        "https://*.ynab.com/*",
+        "https://*.paypal.com/*",
+        "https://*.netflix.com/*",
+        "https://*.hbomax.com/*",
+        "https://play.max.com/*",
+        "https://*.hulu.com/*",
+        "https://*.disneyplus.com/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://docs.google.com/*"],
+      "all_frames": false,
+      "run_at": "document_start",
+      "js": ["js/content_scripts/docs-contentscript.js"]
+    },
+    {
+      "js": ["js/content_scripts/index.js"],
+      "matches": ["https://mail.google.com/*", "https://docs.google.com/*"],
+      "all_frames": true
+    },
+    {
+      "js": ["js/content_scripts/website-communication-channel.js"],
+      "matches": ["https://*.zenfetch.com/*"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background/background.js",
+    "type": "module"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "identity.email",
+    "alarms",
+    "tabs",
+    "sidePanel",
+    "https://zenfetch.ngrok.app/",
+    "offscreen",
+    "declarativeNetRequest",
+    "idle",
+    "contextMenus"
+  ],
+
+  "optional_permissions": ["bookmarks"],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://www.google-analytics.com https://zenfetch.ngrok.app wss://zenfetch.ngrok.app wss://staging.zenfetch.com/ https://ambient.zenfetch.com  wss://ambient.zenfetch.com/ https://staging.zenfetch.com/;",
+    "font-src": "https://fonts.gstatic.com",
+    "style-src": "https://fonts.googleapis.com"
+  },
+
+  "host_permissions": ["<all_urls>"],
+
+  "commands": {
+    "open-sidepanel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Open sidepanel"
+    },
+    "save-article": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      },
+      "description": "Save article"
+    }
+  },
+
+  "externally_connectable": {
+    "matches": ["https://*.zenfetch.com/*", "http://localhost/*"]
+  },
+
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "icon.png",
+        "save-icon.png",
+        "icon-saved.png",
+        "logged-out.png",
+        "saving.gif",
+        "main_white.png",
+        "main_dark.png",
+        "default_cover.png",
+        "pdf-js/pdf.js",
+        "pdf-js/pdf-worker.js",
+        "js/scripts/pdf-getter.js",
+        "offscreen.html"
+      ]
+    },
+    {
+      "resources": [
+        "js/content_scripts/docs-contentscript.js",
+        "js/content_scripts/docs-canvas.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

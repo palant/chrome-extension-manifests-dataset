@@ -1,0 +1,201 @@
+---
+name: Keep it simple
+version: 0.7.3
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 19
+release_date: '2023-06-22T11:00:41.000Z'
+size: 586KiB
+languages:
+  - English
+description: Web less hyper
+publisher_account: marko bogdanovic
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Keep it simple",
+  "description": "Web less hyper",
+  "version": "0.7.3",
+  "action": {
+   "default_icon": "icons/wheel128.png",
+   "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/wheel16.png",
+    "128": "icons/wheel128.png"
+  },
+  "options_page":"options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true,
+    "browser_style": true
+  },
+  "permissions": [
+    "background",
+    "tabs",
+    "webNavigation",
+    "scripting",
+    "unlimitedStorage",
+    "storage",
+    "contextMenus"
+  ],
+  "host_permissions": ["*://*/*"],
+  "web_accessible_resources": [{
+    "matches": ["*://*/*"],
+    "resources": [
+        "icons/*",
+        "dist/*.js",
+        "src/styles/*",
+        "src/styles/yt-thumbs.css",
+        "src/styles/yt-old-hidden-side-recos.css",
+        "src/styles/yt-old-side-recos-container.css",
+        "src/styles/ted-side-recos.css",
+        "src/styles/yt-embedded.css",
+        "assets/*",
+        "assets/Raleway-VariableFont_wght.ttf"
+    ]
+  }],
+  "background":{
+    "service_worker": "dist/bg.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "dist/remove-controls.js", "dist/gifWand.js", "dist/customKbdListeners.js",
+        "dist/element-highlight.js",
+        "dist/postits.js",
+        "dist/highlight-text.js",
+        "dist/editable.js",
+        "dist/draw.js"
+      ],
+      "matches": ["*://*/*"],
+      "css":[
+        "src/styles/general.css",
+        "src/styles/remove-controls.css",
+        "src/styles/element-highlight.css",
+        "src/styles/postits.css",
+        "src/styles/highlight-text.css",
+        "src/styles/editable.css",
+        "src/styles/scribble.css"
+      ]
+    },
+    {
+      "js": [ "dist/main-injector.js" ],
+      "matches": ["*://*/*"],
+      "exclude_matches":[
+        "http://localhost/*","http://127.0.0.1:5500/*",
+        "*://www.ted.com/","*://www.ted.com/*",
+        "*://mail.google.com/","*://mail.google.com/*","*://gmail.com/*","*://gmail.com/",
+        "*://www.youtube.com/*","*://*.glitch.me/*"
+      ],
+      "exclude_globs":["*://www.google.*/maps/*",
+        "*://www.fastcompany.com*"
+      ]
+    },
+    {
+      "css":["src/styles/articles.css"],
+      "js": ["dist/articles.js"],
+      "matches":[
+        "*://www.theguardian.com/*",
+        "*://aeon.co/*",
+        "*://www.theverge.com/*",
+        "*://www.wired.com/*"
+      ],
+      "exclude_matches":[
+        "https://www.theguardian.com/international",
+        "https://www.theguardian.com/international?INTCMP=CE_INT",
+        "https://www.theguardian.com/uk",
+        "https://www.theguardian.com/uk?INTCMP=CE_UK",
+        "https://www.theguardian.com/au",
+        "https://www.theguardian.com/au?INTCMP=CE_AU",
+        "https://www.theguardian.com/us",
+        "https://www.theguardian.com/us?INTCMP=CE_US",
+
+        "https://www.theguardian.com/podcasts",
+        "https://www.theguardian.com/news/series/the-audio-long-read",
+        "https://www.theguardian.com/theguardian",
+        "https://www.theguardian.com/weekly",
+        "https://www.theguardian.com/weekly?INTCMP=gdnwb_mawns_editorial_gweekly_GW_TopNav_Int"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "css":["src/styles/guardian-homepage.css"],
+      "matches":[ 
+        "https://www.theguardian.com/international",
+        "https://www.theguardian.com/international?INTCMP=CE_INT",
+        "https://www.theguardian.com/uk",
+        "https://www.theguardian.com/uk?INTCMP=CE_UK",
+        "https://www.theguardian.com/au",
+        "https://www.theguardian.com/au?INTCMP=CE_AU",
+        "https://www.theguardian.com/us",
+        "https://www.theguardian.com/us?INTCMP=CE_US"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js":["dist/gifOnce.js", "dist/video-stop.js"],
+      "matches":["*://*/*"],
+      "exclude_matches":["http://localhost/*","http://127.0.0.1:5500/*",
+        "*://www.ted.com/","*://www.ted.com/*",
+        "*://mail.google.com/","*://mail.google.com/*","*://gmail.com/*","*://gmail.com/",
+        "*://www.youtube.com/*","https://*.glitch.me/*",
+        "*://*.facebook.com/*"
+      ],
+      "exclude_globs":["*://www.google.*/maps/*",
+        "*://www.fastcompany.com*"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches":["*://*.youtube.com/embed/*", "https://www.youtube.com/*"],
+      "include_globs":["https://www.youtube.com/embed/*"],
+      "css":["src/styles/yt-embedded.css"],
+      "js": ["dist/yt-embedded.js"]
+    },
+    {
+      "matches": ["*://www.youtube.com/*"],
+      "run_at": "document_start",
+      "css": ["src/styles/yt.css", "src/styles/yt-homepage-styles.css"],
+      "js": ["dist/yt-kis.js","dist/yt-moving-thumbs.js","dist/yt-recosBWFilter.js"]
+    },
+    {
+      "matches":["*://*.ted.com/*"],
+      "run_at": "document_start",
+      "css":["src/styles/ted.css"],
+      "js":["dist/ted.js"]
+    },
+    {
+      "matches":["*://qz.com/*"],
+      "css":["src/styles/qz.css"]
+    },
+    {
+        "all_frames": true,
+        "matches":["*://*/*"],
+        "exclude_globs":["*://*.youtube.com/*", "*://*.youtube.com/embed/*"],
+        "js": ["dist/iframe.videos.js"]
+    },
+    {
+        "matches":["*://*.netflix.com/*"],
+        "js": ["dist/netflix.js"],
+        "css":["src/styles/netflix2.css"]
+    },
+    {
+      "js": ["dist/twitter_kis.js"],
+      "matches":["*://twitter.com/*" , "*://twitter.com/home"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["dist/duckduckgo.js"],
+      "matches":["https://duckduckgo.com/*"]
+    },
+    {
+      "js": ["dist/kis-ecosia.js"],
+      "matches":["https://www.ecosia.org/*"]
+    }
+  ]
+}

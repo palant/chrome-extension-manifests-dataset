@@ -1,0 +1,84 @@
+---
+name: Premium Ad Blocker
+version: 4.2.5
+category_slug: productivity/tools
+rating: 3.6666666666666665
+rating_count: 3
+user_count: 45
+release_date: '2024-01-24T09:13:38.000Z'
+size: 55.47KiB
+languages:
+  - English
+description: Blocks 99.99% of ads and pop-ups on YouTube and all your favorite websites.
+publisher_account: Guardian
+support_website: >-
+  https://chrome.google.com/webstore/detail/premium-ad-blocker/kjkhnhdcjejlkbomkjdekcpmakhnnbgp/support
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+"manifest_version": 3,
+    "name": "Premium Ad Blocker",
+    "description": "Blocks 99.99% of ads and pop-ups on YouTube and all your favorite websites.",
+    "author":"Guardian(Meir)",
+    "version": "4.2.5",
+    "permissions": [
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "activeTab",
+        "tabs",
+        "storage",
+        "webNavigation"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ads",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+},
+"background": {
+  "service_worker": "service_worker.js"
+},
+"content_scripts": [
+  {
+    "matches": ["<all_urls>", "*://*/*", "http://*/*", "https://*/*"],
+    "js": ["stealth.js"],
+    "run_at": "document_start"
+  },
+    {
+      "matches": ["<all_urls>", "*://*/*", "http://*/*", "https://*/*"],
+      "js": ["zapper.js"],
+      "run_at": "document_start"
+    },
+  {
+    "matches": ["<all_urls>", "*://*/*", "http://*/*", "https://*/*"],
+    "css": ["allSites.css"],
+    "js": ["allSites.js"]
+    
+  },
+  {
+    "matches": ["*://youtube.com/*", "https://www.youtube.com/*", "http://www.youtube.com/*"],
+    "js": ["youTube.js"]
+  },
+  {
+    "matches": ["*://google.com/*", "https://www.google.com/*", "http://www.google.com/*"],
+    "js": ["google.js"]
+  }
+
+
+      ],
+      "icons": {
+        "16": "Icons/AdBlock/AdBlock16.png",
+        "32": "Icons/AdBlock/AdBlock32.png",
+        "48": "Icons/AdBlock/AdBlock48.png",
+        "64": "Icons/AdBlock/AdBlock64.png",
+        "128": "Icons/AdBlock/AdBlock128.png"
+      },
+    "action": {
+    "default_popup": "popup.html"
+    }
+}

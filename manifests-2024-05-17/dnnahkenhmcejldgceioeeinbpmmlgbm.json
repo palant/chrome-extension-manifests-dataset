@@ -1,0 +1,133 @@
+---
+name: AliBill - AliExpress Invoice Generator
+version: 2.0.8
+category_slug: productivity/workflow
+rating: 4.357142857142857
+rating_count: 84
+user_count: 10000
+release_date: '2024-01-25T13:54:26.000Z'
+size: 209KiB
+languages:
+  - English
+description: Generate AliExpress invoice from order details.
+publisher_account: kiril.abdulov
+privacy_policy: https://infinity8.xyz/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "AliBill - AliExpress Invoice Generator",
+    "version": "2.0.8",
+    "manifest_version": 2,
+    "description": "Generate AliExpress invoice from order details.",
+    "background": {
+        "scripts": [
+            "./src/lib/jquery.min.js",
+            "./src/content/dataStorage.js",
+            "background.js"
+        ],
+        "persistent": true
+    },
+    "icons": {
+        "16": "./logo/icon16.png",
+        "48": "./logo/icon48.png",
+        "128": "./logo/icon128.png"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "browser_action": {
+        "default_title": "AliBill",
+        "default_icon": "./logo/icon128.png",
+        "default_popup": "popup.html",
+        "scripts": "popup.js"
+    },
+    "options_ui": {
+        "page": "opt.html", 
+        "open_in_tab": true
+    },
+    "web_accessible_resources": [
+        "/logo/*",
+        "/src/*",
+        "/invoice.js",
+        "/opt.html",
+        "/src/bulma/bulma.css",
+        "/src/elements/modal.html",
+        "/src/css/global.css"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "./src/lib/jquery.min.js",
+                "./src/content/orderDetails.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/order_detail.htm*",
+                "*://*.aliexpress.ru/order_detail.htm*",
+                "*://*.aliexpress.us/order_detail.htm*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/css/single.css"
+            ]
+        },
+        {
+            "js": [
+                "./src/lib/accounting.min.js",
+                "./src/lib/jquery.min.js",
+                "./src/content/components/basicVariables.js",
+                "./src/content/ui.js",
+                "./src/content/components/validator.js",
+                "./src/content/services/scrape.js",
+                "./src/content/models/Invoice.js",
+                "./src/content/models/Options.js",
+                "./src/content/models/Order.js",
+                "./src/content/models/OrderItem.js",
+                "./src/content/orderPage.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/order_list.htm*",
+                "*://*.aliexpress.ru/order_list.htm*",
+                "*://*.aliexpress.com/orderList.htm*",
+                "*://*.aliexpress.ru/orderList.htm*"
+            ],
+            "css": [
+                "./src/css/global.css",
+                "./src/bulma/bulma-mod.css"
+            ]
+        },
+        {
+            "js": [
+                "./src/lib/accounting.min.js",
+                "./src/lib/jquery.min.js",
+                "./src/content/ui.js",
+                "./src/content/models/Order.js",
+                "./src/content/models/OrderItem.js",
+                "./src/content/components/utilities.js",
+                "./src/content/dataStorage.js",
+                "./src/content/components/newOrderList.js",
+                "./src/content/components/newOrderDetails.js",
+                "./src/content/components/newOrderLogistics.js",
+                "./src/content/extra.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.ru/*",
+                "*://*.aliexpress.us/*"
+            ],
+            "css": [
+                "./src/bulma/bulma-mod.css",
+                "./src/css/global.css"
+            ]
+        }
+    ],
+    "optional_permissions": [
+        "*://*.aliexpress.us/*",
+        "downloads"
+    ],
+    "permissions": [
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.ru/*",
+        "storage",
+        "unlimitedStorage"
+    ]
+}

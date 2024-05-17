@@ -1,0 +1,77 @@
+---
+name: Hamatata.com Helper
+version: 1.7.5
+category_slug: lifestyle/fun
+rating: 4.9213153258954785
+rating_count: 1703
+user_count: 20000
+release_date: '2022-10-28T07:54:44.000Z'
+size: 69.21KiB
+languages:
+  - русский
+description: |-
+  www.hamatata.com
+
+  Онлайн-плеер для просмотра фильмов на английском языке. 
+  Главная особенность - перевод субтитров по клику мыши!…
+publisher_account: hamatata.com
+extension_website: www.hamatata.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name": "Hamatata.com Helper",
+    "version": "1.7.5",
+
+    "icons": {"128": "img/green128.png"},
+
+    "permissions": [
+        "tabs",
+        "storage",
+        "webRequest"
+    ],
+
+    "host_permissions": [
+      "<all_urls>"
+    ],
+
+    "background": {
+      "service_worker": "sw_background.js"
+    },
+
+    "action": {
+        "default_icon": "img/white128.png",
+        "default_title": "Hamatata helper",
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://vk.com/*"],
+            "exclude_matches": ["*://vk.com/notifier.php*"],
+            "js": ["vk-client.js"],
+            "css": ["vk.css"],
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*.hamatata.com/*"],
+            "js": ["check_installation.js", "translator_client.js", "xhr.js", "export-client.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "web_accessible_resources": [
+        {
+          "resources": ["img/loader.gif", "img/green128.png", "img/white128.png"],
+          "matches": ["http://*/*", "https://*/*"]
+        },
+        {
+          "resources": ["vk_script.js"],
+          "matches": ["https://vk.com/*"]
+        }
+    ]
+
+}

@@ -1,0 +1,65 @@
+---
+name: inControl | Reduce distractions
+version: 1.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2022-10-11T04:39:02.000Z'
+size: 261KiB
+languages:
+  - English
+description: >-
+  Improve your productivity by reducing the effects of infinite scrolling and
+  recommendation systems.
+publisher_account: incontrolextension
+support_website: https://github.com/fabioS24/inControl
+privacy_policy: https://github.com/fabioS24/inControl/wiki/Privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "inControl | Reduce distractions",
+  "description": "Improve your productivity by reducing the effects of infinite scrolling and recommendation systems.",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": ["storage", "activeTab", "scripting", "tabs"],
+    "host_permissions": ["<all_urls>"],
+  "action": {
+      "default_popup": "popup.html",
+      "default_icon": {
+          "16": "/images/brain16.png",
+          "32": "/images/brain32.png",
+          "64": "/images/brain64.png",
+          "128": "/images/brain128.png"
+        }
+    },
+  "content_scripts": [
+    {
+      "matches": ["http://*.facebook.com/*", "https://*.facebook.com/*"],
+      "js": ["./lib/jquery-3.6.0.js", "./facebook/facebook.js", "infiniteScrolling.js", "./lib/dayjs.min.js"],
+      "run_at": "document_end",
+      "css": ["./facebook/facebook.css"]
+    },
+    {
+      "matches": ["https://*.youtube.com/*", "http://*.youtube.com/*"],
+      "js": ["./lib/jquery-3.6.0.js", "./youtube/youtube.js", "infiniteScrolling.js", "./lib/dayjs.min.js"],
+      "css": ["./youtube/youtube.css"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./lib/apexcharts.js", "./lib/moment.min.js"]
+    }
+  ],
+  "icons": {
+  "16": "/images/brain16.png",
+  "32": "/images/brain32.png",
+  "64": "/images/brain64.png",
+  "128": "/images/brain128.png"
+  },
+  "options_page": "options.html"
+}

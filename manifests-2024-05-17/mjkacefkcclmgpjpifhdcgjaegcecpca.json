@@ -1,0 +1,101 @@
+---
+name: Impact gegevens verzamelen
+version: 1.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2021-06-27T05:58:08.000Z'
+size: 80.33KiB
+languages:
+  - Nederlands
+description: >-
+  Op een privacy vriendelijke manier gegevens verzamelen ten behoeve van je
+  Impact hypotheek
+publisher_account: Credit Management & Investor Solutions B.V.
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Impact gegevens verzamelen",
+  "description": "Op een privacy vriendelijke manier gegevens verzamelen ten behoeve van je Impact hypotheek",
+  "version": "1.0.0",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "homepage_url": "https://cmisnederland.nl/",
+  "icons": {
+    "32": "resources/logo32X32.png",
+    "48": "resources/logo48X48.png",
+    "128": "resources/logo128X128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://localhost/*",
+        "https://aqopi.com/*",
+        "https://*.aqopi.com/*",
+        "https://iwize.nl/*",
+        "https://*.digid.nl/*",
+        "https://*.overheid.nl/*",
+        "https://*.mijnpensioenoverzicht.nl/*",
+        "https://*.uwv.nl/*",
+        "https://*.belastingdienst.nl/*",
+        "https://*.duo.nl/*",
+        "https://*.toeslagen.nl/*",
+        "https://*.schuldenwijzer.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/content.js",
+        "content/actions.js",
+        "content/crypto.js",
+        "content/templateMatching.js",
+        "content/fetchBlob.js",
+        "content/downloadPdfByClick.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mijn.duo.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/fetchJsonWithAuthHeader.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "webRequest",
+    "*://localhost/*",
+    "https://*.aqopi.com/*",
+    "https://*.digid.nl/*",
+    "https://*.overheid.nl/*",
+    "https://*.mijnpensioenoverzicht.nl/*",
+    "https://*.uwv.nl/*",
+    "https://*.belastingdienst.nl/*",
+    "https://*.duo.nl/*",
+    "https://*.toeslagen.nl/*",
+    "https://*.schuldenwijzer.nl/*",
+    "https://iwize.nl/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "resources/logo32X32.png",
+    "default_title": "IWIZE BRONDATA"
+  },
+  "web_accessible_resources": [
+    "resources/logo80X80.png"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "https://*.iwize.nl/*"
+    ]
+  }
+}

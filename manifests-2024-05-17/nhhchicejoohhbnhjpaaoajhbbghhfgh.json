@@ -1,0 +1,93 @@
+---
+name: 'JustParty: watch Netflix with friends'
+version: '1.5'
+category_slug: lifestyle/fun
+rating: 4.25
+rating_count: 4
+user_count: 2000
+release_date: '2024-01-29T21:30:46.000Z'
+size: 184KiB
+languages:
+  - English
+description: 'JustParty: watch Netflix in-sync while video chatting with friends'
+publisher_account: goodmovies
+extension_website: justparty.io
+support_website: https://justparty.cc
+privacy_policy: https://goodmovies.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "JustParty: watch Netflix with friends",
+  "short_name": "JustParty: watch Netflix with friends",
+  "version": "1.5",
+  "description": "JustParty: watch Netflix in-sync while video chatting with friends",
+  "manifest_version": 3,
+  "minimum_chrome_version": "96",
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": [
+        "lib/content.js"
+      ]
+    },
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": [
+        "lib/jquery-3.6.0.min.js",
+        "emoji/emojione-3.1.2.min.js",
+        "emoji/emojionearea.min.js",
+        "google/google.js"
+      ],
+      "css": [
+        "emoji/emojione-3.1.2.min.css",
+        "emoji/emojionearea.min.css"
+      ]
+    },
+    {
+      "matches": ["https://*.netflix.com/*"],
+      "js": [
+        "netflix/netflix.js"
+      ],
+      "css": [
+        "lib/watch.css"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "images/icon_16.png",
+    "24": "images/icon_24.png",
+    "32": "images/icon_32.png",
+    "48": "images/icon_48.png",
+    "128": "images/icon_128.png"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "lib/*",
+      "emoji/*",
+      "google/google.css",
+      "netflix/pause.js",
+      "netflix/play.js",
+      "netflix/seek.js",
+      "netflix/seekBy.js"
+    ],
+    "matches": ["<all_urls>"]
+  }]
+}

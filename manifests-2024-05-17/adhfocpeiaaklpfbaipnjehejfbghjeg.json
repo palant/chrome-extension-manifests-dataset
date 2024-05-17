@@ -1,0 +1,90 @@
+---
+name: Pigogo ALERT!
+version: 2.0.1
+category_slug: lifestyle/shopping
+rating: 4.2
+rating_count: 10
+user_count: 5000
+release_date: '2024-05-01T04:55:53.000Z'
+size: 961KiB
+languages:
+  - Ελληνικά
+description: Receive Cashback, Coupons, Deals and Offers from shopping.
+publisher: PIGOGO OE
+publisher_account: Pigogo
+publisher_address: |-
+  Aristotelous 95
+  Acharnes 136 74
+  GR
+extension_website: www.pigogo.gr
+privacy_policy: https://www.pigogo.gr/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Pigogo ALERT!",
+  "version": "2.0.1",
+  "description": "Receive Cashback, Coupons, Deals and Offers from shopping.",
+  "homepage_url": "https://pigogo.gr",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "webRequest",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://www.pigogo.gr/*",
+    "*://backend.pigogo.gr/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "pigogo",
+        "enabled": true,
+        "path": "ruleset.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": [
+        "ci.content.pack.js",
+        "js/contentBundle.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "ci.browser.helper.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "backgroundBrowserified.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Pigogo",
+    "default_icon": "img/neutral_18.png"
+  },
+  "icons": {
+    "48": "img/neutral_48.png",
+    "128": "img/neutral_128.png"
+  }
+}

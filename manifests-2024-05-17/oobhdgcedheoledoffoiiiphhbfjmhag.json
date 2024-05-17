@@ -1,0 +1,135 @@
+---
+name: ANTDIY - Dropshipping Product Importer
+version: 3.0.4
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 1000
+release_date: '2023-11-21T10:04:22.000Z'
+size: 137KiB
+languages:
+  - English (United States)
+description: >-
+  Import and sync products from AliExpress & Banggood to your Shopify or
+  BigCommerce store
+publisher: Ant Links Limited
+publisher_account: www.antlinksgroup.com
+publisher_address: |-
+  Unit A1 of Unit A,11th Floor,Success Commercial Building,245-251 Hennessy Road
+  香港島, 香港 999077
+  CN
+extension_website: www.antdiy.vip
+support_website: https://www.antdiy.vip/support
+privacy_policy: https://www.antlinksgroup.com/detail?p=3
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ANTDIY - Dropshipping Product Importer",
+  "description": "Import and sync products from AliExpress & Banggood to your Shopify or BigCommerce store",
+  "version": "3.0.4",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/logo 19px.png",
+      "48": "icons/logo 38px.png"
+    }
+  },
+  "omnibox": { "keyword": "go" },
+  "devtools_page": "devtools.html",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "icons": {
+    "16": "icons/logo 19px.png",
+    "48": "icons/logo 38px.png"
+  },
+  "permissions": [
+    "tabs",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://*.aliexpress.com/*",
+    "https://*.aliexpress.ru/*",
+    "https://*.aliexpress.us/*",
+    "*://*.antdiy.vip/*",
+    "https://*.banggood.com/*",
+    "https://*.banggood.in/*",
+    "https://*.1688.com/*"
+  ],
+  "content_scripts": [{
+      "matches": ["https://*.aliexpress.com/af/*", "https://*.aliexpress.com/w/*", "https://*.aliexpress.com/category/*", "https://*.aliexpress.com/wholesale*", "https://*.aliexpress.ru/*"],
+      "js": ["js/content-script.js", "js/jquery.js"],
+      "css": ["css/main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/store/*.html*"],
+      "js": ["js/change.js", "js/jquery.js"],
+      "css": ["css/main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/item/*", "https://*.aliexpress.ru/item/*", "https://*.aliexpress.us/item/*"],
+      "js": ["js/detail.js", "js/jquery.js"],
+      "css": ["css/main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.banggood.com/search/*"],
+      "js": ["js/banggood-content-script.js", "js/jquery.js"],
+      "css": ["css/main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.banggood.com/*-p-*.html*", "https://*.banggood.in/*-p-*.html*"],
+      "js": ["js/banggood-detail.js", "js/jquery.js"],
+      "css": ["css/main.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.detail.1688.com/*"
+      ],
+      "js": [
+        "js/jquery.js",
+        "js/1688-detail.js"
+      ],
+      "css": [
+        "css/main.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.1688.com/selloffer/*"
+      ],
+      "js": [
+        "js/jquery.js",
+        "js/1688-content.js"
+      ],
+      "css": [
+        "css/main.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.1688.com/page/offerlist*"
+      ],
+      "js": [
+        "js/jquery.js",
+        "js/1688-page.js"
+      ],
+      "css": [
+        "css/main.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.antdiy.vip/*", "*://*.aliexpress.com/*", "*://*.aliexpress.us/*", "*://*.aliexpress.ru/*", "*://*.banggood.com/*", "*://*.banggood.in/*", "https://*.1688.com/*"]
+  }
+}

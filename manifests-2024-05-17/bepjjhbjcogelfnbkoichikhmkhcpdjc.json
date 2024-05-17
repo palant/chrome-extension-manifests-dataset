@@ -1,0 +1,91 @@
+---
+name: Wingman
+version: 1.1.35
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 196
+release_date: '2021-06-24T05:06:01.000Z'
+size: 128KiB
+languages:
+  - English
+description: >-
+  This extension captures the audio on from your dialer tabs and stream it back
+  to enable Wingman.
+publisher_account: eng
+extension_website: strings.ai
+support_website: https://www.trywingman.com/privacy-policy
+privacy_policy: https://trywingman.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "Wingman",
+  "description": "This extension captures the audio on from your dialer tabs and stream it back to enable Wingman.",
+  "version": "1.1.35",
+  "icons": {
+    "128": "img/icon.png"
+  },
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_popup": "popup.html",
+    "default_title": "Wingman"
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "permissions": [
+    "tabs",
+    "tabCapture",
+    "activeTab",
+    "cookies",
+    "http://localhost/",
+    "https://app.hubspot.com/",
+    "https://app.strings.ai/",
+    "https://api.trywingman.com/",
+    "https://app.trywingman.com/",
+    "https://dialpad.com/",
+    "https://dev.trywingman.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://localhost/*"],
+      "js": ["content_scripts/localhost.js", "content_scripts/popup.js"]
+    },
+    {
+      "matches": [
+        "https://app.hubspot.com/*",
+        "https://*.freshsales.io/*",
+        "https://*.freshcaller.com/*",
+        "https://dialpad.com/app*",
+        "https://*.followupboss.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content_scripts/dialer_integration.js",
+        "content_scripts/popup.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": ["css/*", "img/*"],
+  "commands": {
+    "enable": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+6",
+        "mac": "Command+Shift+6"
+      },
+      "global": true,
+      "description": "Enable wingman"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+7",
+        "mac": "Command+Shift+7"
+      }
+    }
+  }
+}

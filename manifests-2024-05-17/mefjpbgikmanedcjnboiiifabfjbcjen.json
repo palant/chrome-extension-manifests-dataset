@@ -1,0 +1,139 @@
+---
+name: Dorsata
+version: 4.3.16
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 10000
+release_date: '2024-05-06T14:15:57.000Z'
+size: 524KiB
+languages:
+  - English (United States)
+description: >-
+  A quick and easy way to view your patient's OB chart in Dorsata without losing
+  access to other areas within athenaClinicals.  Open…
+publisher: Dorsata
+publisher_address: |-
+  3100 Clarendon Blvd. Suite 200
+  Arlington, VA 22201
+  US
+extension_website: www.dorsata.com
+privacy_policy: https://www.dorsata.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dorsata",
+  "short_name": "Dorsata",
+  "description": "",
+  "version": "4.3.16",
+  "minimum_chrome_version": "103",
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "19": "icons/icon19.png",
+      "38": "icons/icon38.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Open Dorsata Inbox"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "19": "icons/icon19.png",
+    "38": "icons/icon38.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "bundles/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.dorsata.com/*",
+        "https://*.dorsata-prerelease.com/*",
+        "https://*.dorsata-staging.com/*",
+        "https://*.dorsata-salesdemo.com/*"
+      ],
+      "js": [
+        "lib/jquery.js",
+        "bundles/client.js"
+      ],
+      "run_at": "document_start",
+      "css": [],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.athenahealth.com/*"
+      ],
+      "js": [
+        "lib/jquery.js",
+        "bundles/athenahealth.js"
+      ],
+      "css": [
+        "css/main.css",
+        "css/pulltab.css",
+        "css/hide-obe.css"
+      ],
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "templates/options.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "templates/eager-sso-frame-container.html",
+        "templates/frame-container-content.html",
+        "templates/frame-helper.html",
+        "scripts/inline-context.js",
+        "scripts/frame-helper.js",
+        "images/check.svg",
+        "images/chevron.svg",
+        "images/logo-white.svg"
+      ],
+      "matches": [
+        "https://athenanet.athenahealth.com/*",
+        "https://preview.athenahealth.com/*",
+        "https://salesdemo.athenahealth.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "scripts/dorsata-inline-context.js"
+      ],
+      "matches": [
+        "https://cdn.dorsata.com/*",
+        "https://app.dorsata.com/*",
+        "https://cdn.dorsata-prerelease.com/*",
+        "https://app.dorsata-prerelease.com/*",
+        "https://cdn.dorsata-staging.com/*",
+        "https://app.dorsata-staging.com/*",
+        "https://cdn.dorsata-salesdemo.com/*",
+        "https://app.dorsata-salesdemo.com/*",
+        "https://localhost:5000/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://app.dorsata.com/",
+    "https://app.dorsata-prerelease.com/",
+    "https://app.dorsata-staging.com/",
+    "https://app.dorsata-salesdemo.com/",
+    "https://athenanet.athenahealth.com/",
+    "https://preview.athenahealth.com/",
+    "https://salesdemo.athenahealth.com/",
+    "http://athenahealth.com/"
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "webRequest",
+    "cookies"
+  ]
+}

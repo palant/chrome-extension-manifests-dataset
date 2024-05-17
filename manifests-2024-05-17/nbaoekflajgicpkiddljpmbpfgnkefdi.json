@@ -1,0 +1,75 @@
+---
+name: X/Twitter DM Downloader
+version: 1.0.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 30
+release_date: '2024-04-19T12:19:51.000Z'
+size: 8.94MiB
+languages:
+  - English
+description: Adds a download button for Twitter DM/GC videos
+publisher_account: Momo Softworks
+support_website: https://github.com/Chungmire/Twitter-DM-Video-Downloader
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "X/Twitter DM Downloader",
+  "version": "1.0.0",
+  "description": "Adds a download button for Twitter DM/GC videos",
+  "icons": {
+      "32": "icons/gem.png",
+      "48": "icons/gem.png",
+      "96": "icons/gem.png"
+  },
+  "permissions": [      
+    "storage", 
+    "webRequest"
+ ],
+  "host_permissions": [
+      "<all_urls>"
+  ],
+  "action": {
+      "default_icon": "icons/gem.png",
+      "default_title": "Twitter DM Downloader",
+      "default_popup": "html/popup.html"
+  },
+  "background": {
+      "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+      {
+          "matches": [
+              "https://twitter.com/*"
+          ],
+          "js": [
+              "lib/ffmpeg.min.js",
+              "lib/ffmpeg-core.js",
+              "js/content.js"
+          ]
+      }
+  ],
+  "options_ui": {
+      "page": "html/transcode.html"
+  },
+  "web_accessible_resources": [
+      {
+          "resources": [
+              "data/*",
+              "html/*",
+              "lib/*"
+          ],
+          "matches": [
+              "<all_urls>"
+          ]
+      }
+  ],
+  "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+      "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; child-src 'self';"
+  }
+}

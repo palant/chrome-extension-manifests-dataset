@@ -1,0 +1,162 @@
+---
+name: Mixmax for Google Chrome
+version: 5.68.0
+category_slug: productivity/workflow
+rating: 4.435483870967742
+rating_count: 496
+user_count: 90000
+release_date: '2024-05-14T06:51:13.000Z'
+size: 15.33MiB
+languages:
+  - English
+description: The Sales Engagement Platform built for B2B revenue teams.
+publisher: Mixmax, Inc
+publisher_account: Mixmax, Inc.
+publisher_address: |-
+  548 Market St
+  PMB 60764
+  San Francisco, CA 94104
+  US
+extension_website: mixmax.com
+support_website: https://success.mixmax.com/
+privacy_policy: https://mixmax.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Mixmax for Google Chrome",
+  "short_name": "Mixmax",
+  "version": "5.68.0",
+  "description": "The Sales Engagement Platform built for B2B revenue teams.",
+  "author": "Mixmax, Inc.",
+  "background": {
+    "service_worker": "core/background.js"
+  },
+  "icons": {
+    "16": "core/assets/img/icon.png",
+    "48": "core/assets/img/icon.png",
+    "128": "core/assets/img/icon.png"
+  },
+  "permissions": [
+    "alarms",
+    "cookies",
+    "tabs",
+    "notifications",
+    "storage",
+    "declarativeNetRequest",
+    "unlimitedStorage",
+    "*://*/*"
+  ],
+  "homepage_url": "https://mixmax.com",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.mixmax.com/*"
+      ],
+      "exclude_matches": [
+        "*://*.mixmax.com/public/analyticsbridge.html"
+      ],
+      "js": [
+        "core/content/globals.js",
+        "core/content/ExtensionMessageBus.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "core/content/unblock.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*",
+        "*://*.force.com/*",
+        "*://*.salesforce.com/*"
+      ],
+      "js": [
+        "core/content/globals.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "core/content/gmailPageInterop.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*",
+        "*://*.force.com/*",
+        "*://*.salesforce.com/*"
+      ],
+      "js": [
+        "core/content/ExtensionMessageBus.js",
+        "core/content/app.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/sales/widget/*"
+      ],
+      "js": [
+        "core/content/globals.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/sales/widget/*"
+      ],
+      "js": [
+        "core/content/app.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://mail.google.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "core/content/mailTo.js",
+        "core/content/callTo.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "suppressTrackingRequests",
+        "enabled": true,
+        "path": "core/rules/suppressTrackingRequests.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    "core/*",
+    "loadable/*"
+  ],
+  "browser_action": {
+    "default_icon": "core/assets/img/icon.png",
+    "default_title": "Mixmax"
+  },
+  "manifest_version": 2,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoYQ79kFdYz3gjTbz/YPkGBaaEOsP8NT//Jugc88JGj9/v92YHzze0y9tApTkk8Qv3DlrAXXnigTiCfNnCkRY66evHZ4Jf8j+Q9E5P/sRTp9J73dtQRcB4Fiz7QgJYnviVXckbAQMLUSCBbUXZeav/xEvmrxNX6Tr16sYBSXB06Ll4kkH8V7hDvqZzOFHlEI7cduMI+I1h6ip3yZ9aSkPD/OlRjGaqM299gonGw0ntrv4LUjvyJiRRvviceWO1BPXZLCoKcqIq5fFeGhymq4hN2RMG5c7YvJEqlsJyT+TvBaGNp/zFg+7uKIOk48y2JV3vKaG7rR8d+hBU7+SNnOHnQIDAQAB"
+}

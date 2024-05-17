@@ -1,0 +1,104 @@
+---
+name: k6 Browser Recorder
+version: 0.6.2
+category_slug: productivity/developer
+rating: 4.222222222222222
+rating_count: 9
+user_count: 10000
+release_date: '2021-11-02T08:03:47.000Z'
+size: 730KiB
+languages:
+  - English
+description: >-
+  Record k6 scripts right from the browser, automatically uploaded to your k6.io
+  cloud account.
+publisher: Load Impact AB
+publisher_account: k6.io (Grafana Labs)
+publisher_address: |-
+  Katarinavägen 20
+  Stockholm 116 45
+  SE
+support_website: https://k6.io/docs/cloud
+privacy_policy: https://k6.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "k6 Browser Recorder",
+  "version": "0.6.2",
+  "manifest_version": 2,
+  "description": "Record k6 scripts right from the browser, automatically uploaded to your k6.io cloud account.",
+  "homepage_url": "https://k6.io/",
+  "author": "Load Impact",
+  "permissions": [
+    "debugger",
+    "browsingData",
+    "http://*/*",
+    "https://*/*",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webRequest",
+    "webNavigation",
+    "downloads"
+  ],
+  "icons": {
+    "32": "images/app-icon@32.png",
+    "48": "images/app-icon@48.png",
+    "64": "images/app-icon@64.png",
+    "128": "images/app-icon@128.png"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://api.k6.io; object-src 'self'",
+  "browser_action": {
+    "default_icon": {
+      "32": "images/app-icon@32.png",
+      "48": "images/app-icon@48.png"
+    },
+    "default_title": "k6 Browser Recorder",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "toggle-recording": {
+      "suggested_key": {
+        "default": "Ctrl+E"
+      },
+      "description": "Toggle start stop recording",
+      "global": true
+    }
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.k6.io/*"
+    ]
+  },
+  "web_accessible_resources": [
+    "inject-data.js",
+    "inject-extension-meta.js",
+    "background.map.js",
+    "popup.map.js"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://app.dev.k6.io:9000/*",
+        "https://app.staging.k6.io/*",
+        "https://app.k6.io/*"
+      ],
+      "js": [
+        "inject-extension-meta.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  }
+}

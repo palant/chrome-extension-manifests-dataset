@@ -1,0 +1,75 @@
+---
+name: Timing71
+version: 1.3.0
+category_slug: lifestyle/entertainment
+rating: 4
+rating_count: 9
+user_count: 5000
+release_date: '2024-04-19T13:36:09.000Z'
+size: 173KiB
+languages:
+  - English (UK)
+description: Timing71 browser extension
+publisher_account: Timing71
+extension_website: timing71.org
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Timing71",
+  "description": "Timing71 browser extension",
+  "version": "1.3.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.timing71.org/*", "http://localhost/*"],
+      "js": ["injector.js"]
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["flash.js"],
+      "css": ["timing71.css"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "host_permissions": ["https://*/", "wss://*/"],
+  "permissions": [
+    "alarms",
+    "declarativeNetRequest",
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_title": "Timing71",
+    "default_popup": "menu.html"
+  },
+  "icons": {
+    "16": "logo_16.png",
+    "32": "logo_32.png",
+    "64": "logo_64.png",
+    "128": "logo_128.png"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.timing71.org/*", "http://localhost/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["logo_32.png"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["host.html", "host.js"],
+      "matches": ["https://*.timing71.org/*", "http://localhost/*"]
+    }
+  ]
+}

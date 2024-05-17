@@ -1,0 +1,114 @@
+---
+name: Chat Bot
+version: 1.0.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2023-07-22T07:33:25.000Z'
+size: 1.23MiB
+languages:
+  - 中文 (简体)
+description: Chat-Gpt Broswer Plugin
+publisher: 小暄山
+publisher_account: VitoWu
+publisher_address: |-
+  呼家楼街道
+  天阶大厦17层
+  朝阳区, 北京市 100000
+  CN
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Chat Bot",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "description": "Chat-Gpt Broswer Plugin",
+    "background": {
+        "service_worker": "/js/sw.js"
+    },
+    "icons": {
+        "16": "/icons/icon-16.png",
+        "48": "/icons/icon-48.png",
+        "128": "/icons/icon-128.png"
+    },
+    "action": {
+        "default_icon": "/icons/icon-128.png",
+        "default_title": "Chat-Gpt Broswer Plugin"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "exclude_globs": [
+                "https://*.openai.com/*",
+                "https://chatbot-testing.xuantong.cn/*"
+            ],
+            "js": [
+                "/js/sidebar.js"
+            ],
+            "type": "module",
+            "run_at": "document_start",
+            "all_frames": false
+        },
+        {
+            "matches": [
+                "*://www.baidu.com/*"
+            ],
+            "js": [
+                "/js/search.js"
+            ],
+            "type": "module",
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://chatbot-testing.xuantong.cn/*"
+            ],
+            "js": [
+                "/js/cscu.js"
+            ],
+            "type": "module",
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://*.openai.com/*"
+            ],
+            "js": [
+                "/js/csopenai.js"
+            ],
+            "type": "module",
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "options_page": "options.html",
+    "permissions": [
+        "storage",
+        "tabs",
+        "scripting",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/*.html",
+                "/js/*",
+                "/css/*",
+                "/icons/*"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ]
+}

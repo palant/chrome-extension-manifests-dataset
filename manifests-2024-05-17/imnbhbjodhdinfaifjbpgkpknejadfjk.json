@@ -1,0 +1,73 @@
+---
+name: 네이버 영어사전 (DeepL)
+version: '6.4'
+category_slug: productivity/tools
+rating: 4.676923076923077
+rating_count: 65
+user_count: 30000
+release_date: '2024-05-09T09:42:19.000Z'
+size: 164KiB
+languages:
+  - English
+  - 한국어
+description: 직접 단어를 입력하거나 웹페이지의 영어 단어를 선택해 영단어의 뜻을 보여줍니다. 웹페이지의 문장을 드래그하면 DeepL로 번역합니다.
+publisher_account: gencode.me
+extension_website: gencode.me
+support_website: https://gencode.me/blogs/post/76/네이버_영어사전에_DeepL_번역_API_연동하기
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_APP_NAME__",
+  "description": "__MSG_APP_DESCRIPTION__",
+  "version": "6.4",
+  "default_locale": "ko",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [{
+    "matches": [ "<all_urls>" ],
+    "run_at": "document_idle",
+    "all_frames": true,
+    "css": ["content.css"],
+    "js": ["contentWrapper.js"]
+  }],
+  "web_accessible_resources": [
+    {
+      "resources": ["content.js", "content.css"],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "rule_endic",
+      "enabled": true,
+      "path": "rule_endic.json"
+    }]
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions" : [
+    "https://dict.naver.com/",
+    "https://en.dict.naver.com/",
+    "https://api-free.deepl.com/"
+  ]
+}

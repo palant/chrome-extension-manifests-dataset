@@ -1,0 +1,147 @@
+---
+name: Study Tools voor Magister
+version: 3.10.2
+category_slug: productivity/education
+rating: 4.761904761904762
+rating_count: 21
+user_count: 8000
+release_date: '2024-05-10T18:14:30.000Z'
+size: 254KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+description: >-
+  Een extensie die verschillende aspecten van Magister verbetert en problemen
+  ermee oplost.
+publisher_account: QkeleQ10
+support_website: https://qkeleq10.github.io/studytools
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "$schema": "https://json.schemastore.org/chrome-manifest",
+    "manifest_version": 3,
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "version": "3.10.2",
+    "default_locale": "nl",
+    "icons": {
+        "16": "icons/icon@16px.png",
+        "32": "icons/icon@32px.png",
+        "48": "icons/icon@48px.png",
+        "64": "icons/icon@64px.png",
+        "128": "icons/icon@128px.png",
+        "256": "icons/icon@256px.png",
+        "300": "icons/icon@300px.png",
+        "512": "icons/icon@512px.png"
+    },
+    "minimum_chrome_version": "109",
+    "background": {
+        "service_worker": "src/service-worker.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.magister.net/*",
+                "*://login.microsoftonline.com/*/oauth2/authorize*"
+            ],
+            "js": [
+                "src/magister/scripts/api.js",
+                "src/util.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://*.magister.net/*"
+            ],
+            "js": [
+                "src/magister/scripts/style.js"
+            ],
+            "css": [
+                "src/magister/styles/main.css",
+                "src/magister/styles/gamification.css",
+                "src/magister/styles/today.css",
+                "src/magister/styles/grades.css",
+                "src/magister/styles/studyguide.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://*.magister.net/magister/*"
+            ],
+            "js": [
+                "src/magister/scripts/main.js",
+                "src/magister/scripts/gamification.js",
+                "src/magister/scripts/today.js",
+                "src/magister/scripts/grades.js",
+                "src/magister/scripts/studyguide.js",
+                "src/magister/scripts/books.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://accounts.magister.net/account/login*"
+            ],
+            "js": [
+                "src/magister/scripts/login.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://login.microsoftonline.com/*/oauth2/authorize*"
+            ],
+            "js": [
+                "src/other/microsoft-login.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "_locales/nl/strings.json",
+                "_locales/en/strings.json",
+                "_locales/fr/strings.json",
+                "_locales/de/strings.json",
+                "_locales/la/strings.json"
+            ],
+            "matches": [
+                "*://*.magister.net/*"
+            ]
+        }
+    ],
+    "action": {
+        "default_icon": {
+            "16": "icons/icon@16px.png",
+            "32": "icons/icon@32px.png",
+            "48": "icons/icon@48px.png",
+            "64": "icons/icon@64px.png",
+            "128": "icons/icon@128px.png",
+            "256": "icons/icon@256px.png",
+            "300": "icons/icon@300px.png",
+            "512": "icons/icon@512px.png"
+        },
+        "default_popup": "popup/dist/index.html",
+        "default_title": "__MSG_appName__\nKlik om te configureren"
+    },
+    "options_page": "popup/dist/index.html",
+    "options_ui": {
+        "page": "popup/dist/index.html",
+        "open_in_tab": true
+    },
+    "permissions": [
+        "storage",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "*://*.magister.net/*"
+    ]
+}

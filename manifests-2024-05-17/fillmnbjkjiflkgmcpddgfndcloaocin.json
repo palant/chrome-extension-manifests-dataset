@@ -1,0 +1,189 @@
+---
+name: Shade Map
+version: '1.5'
+category_slug: lifestyle/news
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2022-06-18T07:35:29.000Z'
+size: 3.89MiB
+languages:
+  - English (United States)
+description: >-
+  Real life sun and shadow layer for online maps. Display sun and shade for any
+  date and time. 
+
+
+  Shade Map currently displays…
+publisher: ShadeMap
+publisher_account: shademap.app
+publisher_address: |-
+  9615 NE 195th Cir
+  Bothell, WA 98011
+  US
+extension_website: shademap.app
+support_website: https://shademap.app
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Shade Map",
+ "version": "1.5",
+ "manifest_version": 3,
+ "action": {},
+ "permissions": [
+  "activeTab",
+  "declarativeNetRequest"
+ ],
+ "host_permissions": [
+  "https://*.alltrails.com/*",
+  "https://*.gaiagps.com/*",
+  "https://*.onxmaps.com/*",
+  "https://www.openstreetmap.org/*"
+ ],
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "id": "ruleset_alltrails",
+    "enabled": true,
+    "path": "alltrails/redirect.json"
+   },
+   {
+    "id": "ruleset_gaiagps",
+    "enabled": true,
+    "path": "gaiagps/redirect.json"
+   },
+   {
+    "id": "ruleset_onxmaps",
+    "enabled": true,
+    "path": "onxmaps/redirect.json"
+   },
+   {
+    "id": "ruleset_openstreetmap",
+    "enabled": true,
+    "path": "openstreetmap/csp.json"
+   }
+  ]
+ },
+ "icons": {
+  "16": "icons/icon16.png",
+  "32": "icons/icon32.png",
+  "48": "icons/icon48.png",
+  "128": "icons/icon128.png"
+ },
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [
+  {
+   "run_at": "document_end",
+   "matches": [
+    "https://caltopo.com/*"
+   ],
+   "js": [
+    "caltopo/inject.js"
+   ],
+   "all_frames": true
+  },
+  {
+   "run_at": "document_start",
+   "matches": [
+    "https://www.openstreetmap.org/*"
+   ],
+   "js": [
+    "openstreetmap/inject.js"
+   ],
+   "all_frames": true
+  },
+  {
+   "run_at": "document_end",
+   "matches": [
+    "https://www.alltrails.com/*"
+   ],
+   "js": [
+    "alltrails/inject.js"
+   ],
+   "all_frames": true
+  },
+  {
+   "run_at": "document_end",
+   "matches": [
+    "https://www.gaiagps.com/*"
+   ],
+   "js": [
+    "gaiagps/inject.js"
+   ],
+   "all_frames": true
+  },
+  {
+   "run_at": "document_end",
+   "matches": [
+    "https://webmap.onxmaps.com/*"
+   ],
+   "js": [
+    "onxmaps/inject.js"
+   ],
+   "all_frames": true
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "matches": [
+    "https://caltopo.com/*",
+    "https://www.openstreetmap.org/*"
+   ],
+   "resources": [
+    "leaflet-shademap.umd.min.js",
+    "controls.js",
+    "toggle-controls.js",
+    "content.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://www.openstreetmap.org/*"
+   ],
+   "resources": [
+    "openstreetmap/content.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://www.alltrails.com/*",
+    "https://www.gaiagps.com/*",
+    "https://webmap.onxmaps.com/*"
+   ],
+   "resources": [
+    "controls.js",
+    "toggle-controls.js",
+    "alltrails/application.js",
+    "mapbox-gl-js/mapboxgl-shademap.umd.min.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://www.alltrails.com/*"
+   ],
+   "resources": [
+    "alltrails/application.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://www.gaiagps.com/*"
+   ],
+   "resources": [
+    "gaiagps/application.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://webmap.onxmaps.com/*"
+   ],
+   "resources": [
+    "onxmaps/application.js"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+---
+name: The Formula Button
+version: 0.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 13
+release_date: '2024-05-15T05:35:51.000Z'
+size: 208KiB
+languages:
+  - English
+description: >-
+  Create and edit complex formulas with GPT-4 without switching tabs. Let The
+  Button do the job.
+privacy_policy: https://fs-website-azure.vercel.app/privacyPolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "The Formula Button",
+  "version": "0.0.1",
+  "description": "Create and edit complex formulas with GPT-4 without switching tabs. Let The Button do the job.",
+  "action": {
+    "default_popup": "./src/scripts/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "js/service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "1": "./assets/logofs.png"
+  },
+  "permissions": [
+    "identity",
+    "identity.email"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/spreadsheets/*",
+        "*://www.notion.so/*",
+        "*://onedrive.live.com/*"
+      ],
+      "js": [
+        "./js/content.js"
+      ]
+    }
+  ],
+  "commands": {
+    "refresh_extension": {
+      "suggested_key": {
+        "default": "Ctrl+Space"
+      },
+      "description": "Refresh Extension"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "resources": [
+        "dist/js/index.js",
+        "dist/js/popup.js",
+        "dist/js/service-worker.js"
+      ]
+    }
+  ]
+}

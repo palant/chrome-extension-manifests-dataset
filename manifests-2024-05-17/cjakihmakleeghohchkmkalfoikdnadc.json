@@ -1,0 +1,101 @@
+---
+name: Google Meet Transcripts
+version: 4.2.5
+category_slug: productivity/workflow
+rating: 4.530612244897959
+rating_count: 147
+user_count: 10000
+release_date: '2024-03-07T16:21:51.000Z'
+size: 388KiB
+languages:
+  - English
+description: >-
+  Google Meet Transcription, Highlight and Insight. Get the most out of Google
+  Meet!
+publisher: Laxis, Inc.
+publisher_address: |-
+  800 N Green River Rd
+  Evansville, IN 47715
+  US
+extension_website: laxis.tech
+support_website: https://www.laxis.com/contact
+privacy_policy: https://laxis.tech/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Google Meet Transcripts",
+  "description": "Google Meet Transcription, Highlight and Insight. Get the most out of Google Meet!",
+  "version": "4.2.5",
+  "icons": {
+    "16": "image/logo16x16.png",
+    "48": "image/logo48x48.png",
+    "128": "image/logo128x128.png"
+  },
+  "background": {
+    "service_worker": "login.js"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://dev.laxis.tech/*",
+      "https://dev.laxis.tech/settings*",
+      "https://staging.laxis.tech/*",
+      "https://staging.laxis.tech/settings*",
+      "https://app.laxis.tech/*",
+      "https://app.laxis.tech/settings*",
+      "http://localhost:3000/*",
+      "http://localhost:3000/settings*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": [
+        "feature/utilities/packages/jquery.min.js",
+        "feature/utilities/packages/html2canvas.js",
+        "feature/utilities/packages/html2pdf.bundle.min.js",
+        "feature/utilities/packages/string-similarity.min.js",
+        "feature/utilities/util.js",
+        "inject.js",
+        "style/panel.js",
+        "config/share.js",
+        "config/panel.js",
+        "config/record.js",
+        "feature/record/captionObserver.js",
+        "feature/record/captionControls.js",
+        "feature/record/captionProcessing.js",
+        "feature/record/settings.js",
+        "feature/record/storage.js",
+        "feature/record/dom.js",
+        "feature/record/transcript.js",
+        "feature/record/meetingInfo.js",
+        "feature/panel/main.js",
+        "feature/panel/icons.js",
+        "analytics.js",
+        "runtime.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "runtime.js",
+        "analytics.js",
+        "analytics/analyticsSource.js",
+        "analytics/load.js",
+        "image/bookmark/*.svg",
+        "image/logo.png",
+        "image/info.svg",
+        "image/repair.svg",
+        "style/panel.css"
+      ],
+      "matches": ["https://meet.google.com/*"]
+    }
+  ],
+  "permissions": ["storage"],
+  "host_permissions": ["https://meet.google.com/*"]
+}

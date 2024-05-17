@@ -1,0 +1,93 @@
+---
+name: LearnWithAI
+version: 1.0.5
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 776
+release_date: '2024-04-22T11:36:36.000Z'
+size: 30.55MiB
+languages:
+  - English (United States)
+description: >-
+  We collect educational app data for Learn with AI to improve our coaching for
+  students.
+publisher_account: gt.school
+privacy_policy: https://gt.school/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "LearnWithAI",
+  "description": "We collect educational app data for Learn with AI to improve our coaching for students.",
+  "version": "1.0.5",
+  "icons": {
+    "16": "/assets/icons/learn-with-ai-16.png",
+    "64": "/assets/icons/learn-with-ai-64.png",
+    "128": "/assets/icons/learn-with-ai-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "background",
+    "contextMenus",
+    "identity",
+    "identity.email",
+    "storage",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "idle",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "nativeMessaging",
+    "notifications"
+  ],
+  "host_permissions": ["<all_urls>"],
+
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "index.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.ixl.com/*", "https://*.readtheory.org/*", "https://*.khanacademy.org/*"],
+      "js": ["apollo-client-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.ixl.com/*"],
+      "js": ["learning-input-validation-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.duolingo.com/*", "https://*.ixl.com/*"],
+      "js": ["third-party-app-credentials-popup-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset 1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.css", "*.jpeg", "*.js", "*.js.map", "*.json", "*.mp4", "*.png", "*.svg", "*.ttf", "assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

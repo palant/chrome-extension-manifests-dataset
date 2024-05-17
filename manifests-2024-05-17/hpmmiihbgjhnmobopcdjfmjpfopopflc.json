@@ -1,0 +1,76 @@
+---
+name: Ride Receipts
+version: 2.0.6
+category_slug: productivity/tools
+rating: 3.2
+rating_count: 5
+user_count: 325
+release_date: '2024-04-28T17:12:01.000Z'
+size: 278KiB
+languages:
+  - English
+description: Automation extension to download invoices from Uber's dashboard.
+publisher: Hello Efficiency Inc.
+publisher_address: |-
+  6497 Tisler Crescent
+  Mississauga, ON L5N 3G6
+  CA
+extension_website: ridereceipts.io
+support_website: https://ridereceipts.io/frequently-asked-questions/
+privacy_policy: https://ridereceipts.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ride Receipts",
+  "version": "2.0.6",
+  "description": "Automation extension to download invoices from Uber's dashboard.",
+  "action": {
+    "default_icon": "./assets/Icon-128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/Icon-16.png",
+    "48": "./assets/Icon-38.png",
+    "128": "./assets/Icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "downloads",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://riders.uber.com/*",
+    "*://www.ubereats.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://riders.uber.com/*",
+        "*://www.ubereats.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "*://riders.uber.com/*",
+        "*://www.ubereats.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

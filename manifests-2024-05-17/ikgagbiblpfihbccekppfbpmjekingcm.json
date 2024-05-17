@@ -1,0 +1,63 @@
+---
+name: Odesli for Bandcamp
+version: '3.0'
+category_slug: lifestyle/fun
+rating: 4.25
+rating_count: 4
+user_count: 411
+release_date: '2023-12-25T05:31:35.000Z'
+size: 663KiB
+languages:
+  - English (United States)
+description: >-
+  Open Bandcamp album on every streaming platform. Forever free. Powered by
+  Odesli.
+publisher_account: Bender Bureau
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Odesli for Bandcamp",
+  "description": "Open Bandcamp album on every streaming platform. Forever free. Powered by Odesli.",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "version": "3.0",
+  "permissions": ["storage", "tabs"],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "action": {
+    "default_popup": "options.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.bandcamp.com/album/*"],
+      "js": ["jquery.min.js", "bc_inject_album.js", "sdk-3.3.2.js"],
+      "css": ["bc_styles.css"]
+    },
+    {
+      "matches": ["*://bandcamp.com/", "*://bandcamp.com/?g*"],
+      "js": ["jquery.min.js", "bc_inject_discover.js", "sdk-3.3.2.js"],
+      "css": ["bc_styles.css"]
+    },
+    {
+      "matches": ["*://*.bandcamp.com/track/*"],
+      "js": ["jquery.min.js", "bc_inject_track.js", "sdk-3.3.2.js"],
+      "css": ["bc_styles.css"]
+    }
+  ]
+}

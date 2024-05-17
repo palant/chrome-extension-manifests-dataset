@@ -1,0 +1,105 @@
+---
+name: cameloop
+version: 1.0.1
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 16
+release_date: '2024-02-27T11:43:00.000Z'
+size: 4.13MiB
+languages:
+  - English
+description: Record and loop your camera in google meet and microsoft teams
+publisher: Cameloop
+publisher_account: saeedeve
+publisher_address: |-
+  Ella-Barowsky-Straße 20
+  Berlin 10829
+  DE
+support_website: https://cameloop.com
+privacy_policy: https://cameloop.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "cameloop",
+  "short_name": "cameloop",
+  "version": "1.0.1",
+  "description": "Record and loop your camera in google meet and microsoft teams",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "permissions": [
+    "storage", 
+    "activeTab"
+  ],
+  "action": {
+    "default_popup": "index.html?#/panel",
+    "default_title": "Cameloop"
+  },
+  "options_page": "index.html?#/options",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentPage.js",
+        "insertedScripts.js",
+        "interval.js",
+        "worker.js",
+        "offscreen.js",
+        "offscreen.html",
+        "jeelizFaceFilter.js",
+        "Canvas2DDisplay.js",
+        "selfie_segmentation_solution_simd_wasm_bin.js",
+        "selfie_segmentation.binarypb",
+        "selfie_segmentation.tflite",
+        "model.json",
+        "group1-shard1of1.bin"
+      ],
+      "matches": [
+        "https://hangouts.google.com/*",
+        "https://meet.google.com/*",
+        "https://teams.live.com/*",
+        "https://microsoft.com/*",
+        "https://teams.microsoft.com/*",
+        "https://www.microsoft.com/*",
+        "https://*.microsoft.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "contentPage.js"
+      ],
+      "matches": [
+        "https://hangouts.google.com/*",
+        "https://meet.google.com/*",
+        "https://teams.live.com/*",
+        "https://microsoft.com/*",
+        "https://www.microsoft.com/*",
+        "https://*.microsoft.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "backgroundPage.js",
+    "worker": "worker.js"
+  },
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts",
+    "policy_serialized": {
+      "extension_pages": {
+        "script-src": ["'self'"]
+      },
+      "sandbox": {
+        "sandbox": "sandbox allow-scripts allow-forms"
+      },
+      "web_accessible_resources": []
+    }
+  }
+}

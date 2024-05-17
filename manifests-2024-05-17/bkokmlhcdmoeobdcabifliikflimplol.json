@@ -1,0 +1,96 @@
+---
+name: Vepaar - CRM for WhatsApp
+version: 8.4.6
+category_slug: lifestyle/social
+rating: 4.444444444444445
+rating_count: 27
+user_count: 5000
+release_date: '2024-05-16T09:40:20.000Z'
+size: 870KiB
+languages:
+  - English
+description: CRM & E-commerce Store built on top of WhatsApp
+publisher_account: 7Span
+extension_website: vepaar.com
+support_website: https://vepaar.com
+privacy_policy: https://vepaar.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8/DZoJp+Ptyowm8qC4NVqJpTBCK3S3wNVnjk8N+DJJXl3+MW+u5uJ582CaCnz42N8wjxbhv9Dp99Jjj5bl2VshVbfGP2zi0PZZdKnNH6MmEEU8h01nf6CoI5Cj8gdJJV2KeQ78zYTl7xJrDKwRVPhPEKU6AJdkHfY+skiqnCvUEMXP/fG3HrYh4BSEnq+eCeeum0Jp/UgGrirFeA5NC631WFEBIN5RKxzTsE5kZMI3ayC8e2lXu4YUOgd12GSzm1C+u8C9qprlW9R05Ii5UoSXix60CmVQvVTG872V+dAsnpPsc6/TJOLEmwEVwJpA9ugjW68RSPozas2XHSKyWj+QIDAQAB",
+  "name": "Vepaar - CRM for WhatsApp",
+  "description": "CRM & E-commerce Store built on top of WhatsApp",
+  "version": "8.4.6",
+  "homepage_url": "https://vepaar.com",
+  "action": {
+    "default_icon": "./assets/img/icon.png",
+    "default_popup": "./dist/popup/index.html",
+    "default_title": "Vepaar"
+  },
+  "minimum_chrome_version": "116",
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icons/16.png",
+    "32": "./assets/icons/32.png",
+    "48": "./assets/icons/48.png",
+    "128": "./assets/icons/128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "js": [
+        "dist/content-scripts/isolated/index.global.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "js": [
+        "dist/content-scripts/main/index.global.js"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/*",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://web.vepaar.com/*",
+      "https://web.vepaar.dev/*",
+      "https://qa--web-vepaar.netlify.app/*",
+      "https://qa.vepaar.com/*",
+      "http://localhost:8080/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; style-src 'self' 'unsafe-inline'; script-src 'self'; https://www.google-analytics.com https://www.googletagmanager.com https://connect.facebook.net; object-src 'self';"
+  }
+}

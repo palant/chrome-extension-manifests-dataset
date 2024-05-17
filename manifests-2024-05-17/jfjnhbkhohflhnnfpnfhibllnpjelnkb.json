@@ -1,0 +1,65 @@
+---
+name: 'EventikSaver: Event Ticket Price Comparison'
+version: '1.04'
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 19
+release_date: '2023-11-03T04:04:04.000Z'
+size: 29.18KiB
+languages:
+  - English (United States)
+description: >-
+  Compare ticket prices on Ticketmaster and StubHub to save up to 50% on event
+  purchases. Use our tool to find cheaper tickets.
+publisher: Concerts50
+publisher_account: EventikSaver
+publisher_address: |-
+  вулиця Центральна, 67
+  Покров, Dnipropetrovsk oblast 53300
+  UA
+extension_website: concerts50.com
+support_website: https://concerts50.com/contact
+privacy_policy: https://concerts50.com/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "EventikSaver: Event Ticket Price Comparison",
+    "description": "Compare ticket prices on Ticketmaster and StubHub to save up to 50% on event purchases. Use our tool to find cheaper tickets.",
+    "version": "1.04",
+    "manifest_version": 3,
+    "icons": {
+        "16": "icons/16.png",
+        "32": "icons/32.png",
+        "57": "icons/57.png",
+        "128": "icons/144.png"
+    },
+    "permissions": ["storage", "tabs", "declarativeNetRequestWithHostAccess"],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"     
+    },
+
+    "host_permissions": ["https://www.stubhub.com/*", "https://www.ticketmaster.com/*", "*://*.ticketmaster.com/*/event/*", "*://*.ticketmaster.com/event/*"],
+    "action": {
+        "default_popup": "popup.html"
+    },  
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.ticketmaster.com/*/event/*", "*://*.ticketmaster.com/event/*"],
+            "js": ["content-tm.js"],
+            "css": ["content.css"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://www.stubhub.com/*"],
+            "js": ["content-sh.js"],
+            "css": ["content.css"],
+            "run_at": "document_start"
+        }
+    ]    
+}

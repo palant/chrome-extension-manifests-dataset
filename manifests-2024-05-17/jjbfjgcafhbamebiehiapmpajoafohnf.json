@@ -1,0 +1,75 @@
+---
+name: CopyPasta - Scrape everything
+version: 1.0.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 21
+release_date: '2020-01-23T19:57:05.000Z'
+size: 99.88KiB
+languages:
+  - Deutsch
+  - English
+description: Copyies a selected text and make it downloadable as a md or TXT file
+publisher_account: mtsch
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "Copyies a selected text and make it downloadable as a md or TXT file",
+  "manifest_version": 2,
+  "name": "CopyPasta - Scrape everything",
+  "short_name": "CopyPasta",
+  "version": "1.0.6",
+  "homepage_url": "https://mtsch.dev/projects/copy-pasta",
+  "icons": {
+    "48": "icons/light-theme-action.png"
+  },
+  "permissions": ["activeTab", "storage", "tabs", "downloads", "notifications"],
+  "browser_action": {
+    "default_icon": "icons/light-theme-action.png",
+    "theme_icons": [
+      {
+        "dark": "icons/dark-theme-action.png",
+        "light": "icons/light-theme-action-32.png",
+        "size": 32
+      }
+    ],
+    "default_title": "CopyPasta",
+    "default_popup": "ui/show-scrapes/show-scrapes.html"
+  },
+  "commands": {
+    "copy-paste-selection": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "linux": "Alt+Shift+A"
+      },
+      "description": "'Triggers extracting and transforming of selection"
+    },
+    "show-tag-element-menu": {
+      "suggested_key": {
+        "default": "Alt+Shift+Y",
+        "linux": "Alt+Shift+Y"
+      },
+      "description": "'Shows a menu to tag a selection."
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content_script.js"],
+      "css": ["content_script.css", "tagging-menu.css"]
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "ui/options/options.html",
+    "browser_style": true
+  },
+  "web_accessible_resources": ["content/*.jpg", "content/*.png", "icons/*.png"],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "default_locale": "de"
+}

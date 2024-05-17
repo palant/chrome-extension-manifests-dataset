@@ -1,0 +1,81 @@
+---
+name: CompanyCam
+version: 0.4.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 4000
+release_date: '2024-01-30T19:46:19.000Z'
+size: 253KiB
+languages:
+  - English
+description: Get access to your CompanyCam photos from any web site
+publisher: CompanyCam
+publisher_address: |-
+  300 Canopy St
+  Suite 200
+  Lincoln, NE 68508
+  US
+support_website: >-
+  https://help.companycam.com/article/478-how-to-install-and-use-the-companycam-chrome-extension#setup
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CompanyCam",
+  "version": "0.4.0",
+  "description": "Get access to your CompanyCam photos from any web site",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmaX6oUrSoZc4mrOXiZ9BQiuf59J+Lj5ePldDcQ7xRpaFj69OJ4aFNkax4At+LmPMrQ2FhbyJsur4S3qJSHYNJ1XSP98hqujgEe1tia1tOav7YjtiKsZfTIgEkIIkmF32saxiLVvYOKgOao9vCmYE6ybIXGbaLKUKSalX36/t2GYu6mizAFv1tTVCbUAObe0H1C62p0nqMMjJp1Sb37rpkWVK/F/dHAYHoj/TIFJFW5i+/MhD/6KBGBeBbyp2++KY9KlUgtLWm+OVWExbgFQ1/wyfsfOVb3UPdd/OH11h+VI0YbOfMKDsm4ezEGMUekpa1wuPaMHrFQplPirwDSuoQwIDAQAB",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Companycam Ext",
+    "default_popup": "popup.html"
+  },
+  "oauth2": {
+    "client_id": "eTTv9DqqzQJeO5DdJrYqJ9wfch1cbNQssFx7L1ADLKw",
+    "scopes": ["read"]
+  },
+  "permissions": ["identity", "storage", "tabs", "declarativeNetRequest"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "run_at": "document_idle",
+      "js": ["contentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["plugins/handleDynamicElements.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["images/logo.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "https://*.facebook.com/*",
+    "https://*.intuit.com/*",
+    "https://*.instagram.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "rule1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

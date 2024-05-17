@@ -1,0 +1,93 @@
+---
+name: Thulium
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 375
+release_date: '2024-02-13T11:57:57.000Z'
+size: 19.91KiB
+languages:
+  - English (United States)
+description: >-
+  Put yourself into pause (or unpause) directly from the browser. Make calls
+  using Thulium calls via the context menu on any web page.
+publisher: Thulium
+publisher_address: |-
+  Osiedle Złotej Jesieni 7
+  Kraków 31-827
+  PL
+support_website: https://support.thulium.com
+privacy_policy: >-
+  https://thulium.com/static/4654e2f2431f8048273c60e3f7b9674c/Privacy%20Policy%20of%20thulium.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Thulium",
+  "description": "Put yourself into pause (or unpause) directly from the browser. Make calls using Thulium calls via the context menu on any web page.",
+  "version": "1.1.0",
+  "icons": {
+    "32": "images/thulium.png"
+  },
+  "background": {
+    "service_worker": "js/service_worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus",
+    "scripting"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["*://*.thulium.com/*"],
+      "resources": [
+        "js/pageScript.js",
+        "js/pageScriptToContentScriptStatuses.js",
+        "js/contentScriptToPageScriptStatuses.js",
+        "js/contentScriptToServiceWorkerStatuses.js",
+        "js/serviceWorkerToContentScriptStatuses.js",
+        "js/config.js",
+        "js/core.js"
+      ]
+    },
+    {
+      "matches": ["*://*.pipedrive.com/*"],
+      "resources": [
+        "js/contentScriptToServiceWorkerStatuses.js",
+        "js/core.js",
+        "js/config.js"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.thulium.com/panel/*"],
+      "js": ["js/contentScript.js"]
+    },
+    {
+      "matches": ["*://*.pipedrive.com/*"],
+      "js": ["js/pipedriveContentScript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/main.html",
+    "default_title": "Nie zalogowany do aplikacji",
+    "default_icon": {
+      "32": "images/thulium.png"
+    }
+  },
+  "content_security_policy": {},
+  "host_permissions": [
+    "*://*.thulium.com/panel/*",
+    "*://*.pipedrive.com/*"
+  ]
+}

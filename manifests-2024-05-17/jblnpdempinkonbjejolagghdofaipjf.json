@@ -1,0 +1,52 @@
+---
+name: Chess.com to Lichess Import
+version: '0.80'
+category_slug: lifestyle/fun
+rating: 3
+rating_count: 6
+user_count: 487
+release_date: '2024-02-24T12:01:44.000Z'
+size: 3.34MiB
+languages:
+  - English (United States)
+description: Allows users to import Chess.com games into Lichess with one click
+publisher_account: 17victork
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Chess.com to Lichess Import",
+  "description": "Allows users to import Chess.com games into Lichess with one click",
+  "version": "0.80",
+  "icons":{
+    "48":"logo48.png",
+    "128":"logo128.png"
+  },
+  "action": {
+    "default_popup": "./donation.html"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://lichess.org/*"
+  ],
+  "background": {
+    "service_worker": "./scripts/background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [{
+    "resources": ["table.html", "scripts/*", "styles/*"],
+    "matches": ["https://www.chess.com/*", "https://lichess.org/*"],
+    "use_dyanmics_url": true
+  }],
+  "content_scripts": [
+    {
+      "matches": ["https://www.chess.com/*", "https://lichess.org/*"],
+      "js": ["./scripts/ratingWindow.js", "./scripts/injectHtmlButtonToPage.js", "./scripts/lichessPressAnalysis.js"]
+    }
+  ],
+  "manifest_version": 3
+}

@@ -1,0 +1,94 @@
+---
+name: Code Medium
+version: 0.6.0
+category_slug: productivity/communication
+rating: 4.636363636363637
+rating_count: 22
+user_count: 2000
+release_date: '2024-04-17T05:44:03.000Z'
+size: 785KiB
+languages:
+  - English
+description: >-
+  Extends the Medium writer interface to quickly create and edit Github Gists,
+  without having to leave the editor.
+publisher_account: Maluen
+extension_website: manueldellelce.com
+support_website: https://github.com/Maluen/code-medium/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhUUr0Z4y8DxD5WIezuYeGW3zDZkvGXST+uviv4jtXwkNVZI5XTUrs/pfYoYsOKdnrxkE47/mI+TiumUj7buB1pC+qeWYjVEshDD5Wum6J44RhXmAo7eb1e3u+IG0BmFvQOO+ENtRxIacZ/M8gexGRIlVWJKuRtcLREc7EkwxtWN58fPrWcYsuXfO3NDEkvrSz7hCCNgeVf/y0MKIz7ZRje8Afb1cRa2PtVAFJ2KUFikzghNFyAY8DVmXXZzrvUDbkeKxA/ja2+5TePhVhKBE+DpFGNUBhb1bEi+pl7ysssxFxjdwiW5/9q58JJeh1Mcu1lnoGIVQTspcd5fbioMNNQIDAQAB",
+  "manifest_version": 3,
+  "minimum_chrome_version": "102",
+  "name": "Code Medium",
+  "version": "0.6.0",
+  "description": "Extends the Medium writer interface to quickly create and edit Github Gists, without having to leave the editor.",
+  "icons": {
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "author": "Manuel Dell'Elce",
+  "short_name": "code-medium",
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "19": "assets/icon.png",
+      "38": "assets/icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://medium.com/**"
+      ],
+      "js": [
+        "content/content.js"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://medium.com/media/*"
+      ],
+      "js": [
+        "content/content_iframe.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "app/*.*"
+      ],
+      "matches": [
+        "https://medium.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "medium-create-gist": {
+      "suggested_key": {
+        "default": "Alt+Shift+0"
+      },
+      "description": "Create a Gist in the Medium Editor"
+    }
+  },
+  "permissions": [
+    "identity",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://gist.github.com/*"
+  ]
+}

@@ -1,0 +1,68 @@
+---
+name: Shahta GV stats scraper
+version: '1.5'
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-05-15T05:02:09.000Z'
+size: 85.9KiB
+languages:
+  - русский
+description: Parses data for guild statistics in Godville.
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Shahta GV stats scraper",
+  "version": "1.5",
+  "description": "Parses data for guild statistics in Godville.",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "96": "icons/icon-96.png"
+  },
+  "permissions": [
+    "storage",
+    "notifications",
+    "alarms"
+  ],
+  "action": {
+    "default_title": "Shahta GV Stats sync",
+    "default_popup": "pages/popup.html",
+    "default_icon": "icons/icon-32.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://godville.net/stats/guild/*"
+      ],
+      "js": [
+        "scripts/content_scripts/guildmembers.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://godville.net/news"
+      ],
+      "js": [
+        "scripts/content_scripts/news.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background/worker.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "scripts/modules/*.js"
+      ]
+    }
+  ]
+}

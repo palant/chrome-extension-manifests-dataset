@@ -1,0 +1,77 @@
+---
+name: GroupGrabber
+version: 1.0.4
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 15
+release_date: '2024-05-16T05:57:24.000Z'
+size: 226KiB
+languages:
+  - English (United States)
+description: Search facebook groups using city or zip code
+publisher: GroupGrabber
+publisher_account: groupgrabbersocial
+publisher_address: |-
+  451 Old John Dodd Rd
+  Boiling Springs, SC 29316-8350
+  US
+extension_website: groupgrabber.com
+support_website: https://groupgrabber.com/faqs
+privacy_policy: https://groupgrabber.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GroupGrabber",
+  "version": "1.0.4",
+  "description": "Search facebook groups using city or zip code",
+  "action": {
+    "default_icon": "./assets/icon.png"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon.png",
+    "48": "./assets/icon.png",
+    "128": "./assets/icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://groupgrabber.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.facebook.com/*",
+        "https://*.facebook.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

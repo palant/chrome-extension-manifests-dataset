@@ -1,0 +1,161 @@
+---
+name: TechLink - 达灵
+version: 1.4.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 13
+user_count: 6000
+release_date: '2024-05-08T10:38:44.000Z'
+size: 786KiB
+languages:
+  - 中文 (简体)
+description: TechLink-达灵是一款为快手同学打造的轻量级插件，主要能力为帮忙用户便捷访问各类研发工具及数据工具，并利用已有AI能力辅助大家提质增效。
+publisher: 北京快手科技有限公司
+publisher_account: TechLink
+publisher_address: |-
+  上地西路6号
+  海淀区, 北京市 100193
+  CN
+privacy_policy: https://www.kuaishou.com/about/policy?tab=privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TechLink - 达灵",
+  "version": "1.4.1",
+  "description": "TechLink-达灵是一款为快手同学打造的轻量级插件，主要能力为帮忙用户便捷访问各类研发工具及数据工具，并利用已有AI能力辅助大家提质增效。",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TechLink - 达灵"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://www.figma.com/*"
+  ],
+  "icons": {
+    "16": "src/assets/techlink_t_logo.png",
+    "32": "src/assets/techlink_t_logo.png",
+    "48": "src/assets/techlink_t_logo.png",
+    "128": "src/assets/techlink_t_logo.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/content-script-loader-c9e44168.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "js": [
+        "content-script-figma-helper.js"
+      ],
+      "world": "MAIN",
+      "matches": [
+        "https://www.figma.com/file/*",
+        "https://www.figma.com/design/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "assets/content-script-design-next-loader-0faab139.js"
+      ],
+      "matches": [
+        "https://figma.com/file/*",
+        "https://www.figma.com/file/*",
+        "https://figma.com/design/*",
+        "https://www.figma.com/design/*",
+        "https://figma.com/files/*",
+        "https://www.figma.com/files/*"
+      ]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+M",
+        "mac": "Command+M"
+      }
+    }
+  },
+  "options_ui": {
+    "page": "techlink-settings.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "techlink-side-panel.html"
+  },
+  "omnibox": {
+    "keyword": "j"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "req_rules",
+        "enabled": true,
+        "path": "req_rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "assets/tech_t-3e90ddb1.svg",
+        "assets/sidebar_right-d6f98ddb.jpg",
+        "assets/sidebar_right_active-80e14dbf.jpg",
+        "assets/openai-8271cde1.svg",
+        "assets/design_ai-09e69937.svg",
+        "assets/kuaiyi-41c9858a.svg",
+        "assets/avatar_bg-522d74ae.png",
+        "assets/comment_empty-d09525f6.png",
+        "store.js",
+        "LoggerService.js",
+        "messenger.js",
+        "content-script.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://www.figma.com/*",
+        "https://www.figma.com/*"
+      ],
+      "resources": [
+        "content-script-figma-helper.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://figma.com/*",
+        "https://figma.com/*",
+        "https://figma.com/*",
+        "https://www.figma.com/*",
+        "https://www.figma.com/*",
+        "https://www.figma.com/*"
+      ],
+      "resources": [
+        "store.js",
+        "messenger.js",
+        "content-script-design-next.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

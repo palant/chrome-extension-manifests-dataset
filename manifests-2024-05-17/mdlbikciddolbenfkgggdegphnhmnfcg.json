@@ -1,0 +1,76 @@
+---
+name: New Netflix 1080p
+version: 1.31.1
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 5
+user_count: 533
+release_date: '2024-04-20T05:16:23.000Z'
+size: 921KiB
+languages:
+  - English
+description: Forces 1080p and 5.1 playback for Netflix as well as other QoL improvements.
+publisher_account: jangxx
+support_website: https://github.com/jangxx/netflix-1080p/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "New Netflix 1080p",
+  "description": "Forces 1080p and 5.1 playback for Netflix as well as other QoL improvements.",
+  "version": "1.31.1",
+  "author": "jangxx (original by truedread)",
+  "action": {
+    "default_icon": "img/icon128.png"
+  },
+  "icons": {
+    "48": "img/icon48.png",
+    "128": "img/icon128.png",
+    "16": "img/icon16.png",
+    "32": "img/icon32.png"
+  },
+  "content_scripts": [{
+    "matches": [
+      "*://assets.nflxext.com/*/ffe/player/html/*",
+      "*://www.assets.nflxext.com/*/ffe/player/html/*",
+      "*://*.a.nflxso.net/sec/*/ffe/player/html/*",
+      "*://netflix.com/*",
+      "*://www.netflix.com/*"
+    ],
+    "all_frames": true,
+    "css": ["style_fix.css"],
+    "js": ["content_script.js"],
+    "run_at": "document_start"
+  }],
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "netflix_max_bitrate.js",
+      "cadmium-playercore-6.0044.268.911-patched.js"
+    ],
+    "matches": [ "*://www.netflix.com/*" ]
+  }],
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://assets.nflxext.com/*/ffe/player/html/*",
+    "*://www.assets.nflxext.com/*/ffe/player/html/*",
+    "*://*.a.nflxso.net/sec/*/ffe/player/html/*",
+    "*://netflix.com/*",
+    "*://www.netflix.com/*"
+  ],
+  "declarative_net_request" : {
+    "rule_resources": [{
+      "id": "redirect_to_patched",
+      "enabled": true,
+      "path": "redirect_rules.json"
+    }]
+  }
+}

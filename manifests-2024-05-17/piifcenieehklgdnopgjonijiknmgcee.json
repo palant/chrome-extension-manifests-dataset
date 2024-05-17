@@ -1,0 +1,81 @@
+---
+name: SpeedyG
+version: 0.0.1.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 11
+release_date: '2024-02-16T08:14:04.000Z'
+size: 1.11MiB
+languages:
+  - English (United States)
+description: >-
+  Make Gmail effortless. SpeedyG is for professionals that like Gmail but want
+  to streamline common steps.
+publisher: SpeedyG
+publisher_account: extension-developer
+publisher_address: |-
+  344 Thomas L. Berkley Way
+  C/O Port Workspaces
+  Oakland, CA 94612
+  US
+extension_website: speedyg.app
+privacy_policy: https://speedyg.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SpeedyG",
+  "description": "Make Gmail effortless. SpeedyG is for professionals that like Gmail but want to streamline common steps.",
+  "version": "0.0.1.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "icons": {
+    "16": "static/images/logos/logo16x16.png",
+    "48": "static/images/logos/logo48x48.png",
+    "128": "static/images/logos/logo128x128.png"
+  },
+  "action": {
+    "default_title": "SpeedyG"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "run_at": "document_idle",
+      "js": ["gmail-content-script.bundle.js"],
+      "css": ["static/css/gmail-content-script.bundle.css"]
+    },
+    {
+      "matches": ["https://mail.google.com/*","https://calendar.google.com/*"],
+      "run_at": "document_start",
+      "js": ["sidebar-content-script-inject.bundle.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/*",
+        "sidebar-content-script.html",
+        "sidebar-content-script.bundle.js"
+      ],
+      "matches": ["https://mail.google.com/*","https://calendar.google.com/*"]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "scripting",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://dev.speedyg.app/api*",
+    "https://calendar.google.com/*",
+    "https://mail.google.com/*",
+    "https://mail-attachment.googleusercontent.com/attachment/*"
+  ]
+}

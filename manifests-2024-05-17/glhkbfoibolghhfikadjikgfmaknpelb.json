@@ -1,0 +1,64 @@
+---
+name: GPT Search
+version: 0.0.91
+category_slug: productivity/workflow
+rating: 4.545454545454546
+rating_count: 11
+user_count: 1000
+release_date: '2024-05-07T03:22:37.000Z'
+size: 147KiB
+languages:
+  - English
+  - Tiếng Việt
+  - Türkçe
+  - español
+  - italiano
+  - português (Brasil)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: Search your GPT conversation history.
+publisher_account: Polywocker
+support_website: https://github.com/polywock/gptSearch
+privacy_policy: https://github.com/polywock/gptSearch/blob/main/PRIVACY_POLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "short_name": "GPT Search",
+  "version": "0.0.91",
+  "description": "__MSG_appDesc__",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "host_permissions": ["https://*.openai.com/*", "https://openai.com/*", "https://*.chatgpt.com/*"],
+  "permissions": ["storage", "unlimitedStorage", "webRequest", "scripting"],
+  "icons": { 
+    "128": "128.png" 
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {},
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*"],
+      "js": ["preamble.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*"],
+      "js": ["main.js"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    }
+  ]
+}

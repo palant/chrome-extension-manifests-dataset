@@ -1,0 +1,150 @@
+---
+name: Ocean_extensions
+version: 2.3.1
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 3
+release_date: '2022-07-07T08:49:18.000Z'
+size: 159KiB
+languages:
+  - 中文 (简体)
+description: Ocean 数据辅助分析工具
+publisher_account: am
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ocean_extensions",
+  "description": "Ocean 数据辅助分析工具",
+  "version": "2.3.1",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions":[
+    "https://*.csdance.cn/*",
+    "https://test.ocean.cspaas.cn/*",
+    "https://*.facebook.com/*"
+  ],
+  "action": {
+    "default_icon": "images/fb_helper.png",
+    "default_popup": "pages/popup.html"
+  },
+  "icons": {
+    "128": "images/fb_helper.png",
+    "16": "images/fb_helper.png",
+    "48": "images/fb_helper.png"
+  },
+  "background": {
+    "service_worker":"background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.facebook.com/adsmanager/*",
+        "https://*.csdance.cn/*",
+        "http://*.csdance.cn/*",
+        "https://test.ocean.cspaas.cn/*",
+        "https://*.csjigsaw.com/*"
+      ],
+      "js": [
+        "js/env.js",
+        "js/vendors/jquery.js",
+        "js/vendors/locale.js",
+        "js/vendors/currency.js",
+        "js/utils.js",
+        "js/dynamicData.js",
+        "views/facebook/ads-edit/content.js",
+        "js/content.js"
+      ],
+      "css": [
+        "css/insert.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/adsmanager/manage/ads/edit*"
+      ],
+      "js": [
+        "js/vendors/jquery.js",
+        "js/vendors/locale.js",
+        "js/utils.js",
+        "views/facebook/ads-edit/content.js",
+        "js/content.js"
+      ],
+      "css": [],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.tiktok.com/i18n/perf/*",
+        "https://*.tiktok.com/i18n/creation/*"
+      ],
+      "js": [
+        "js/vendors/jquery.js",
+        "js/vendors/locale.js",
+        "js/utils.js",
+        "views/tiktok/ads-edit/content.js",
+        "js/content.js"
+      ],
+      "css": [],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.google.com/aw/ads*"
+      ],
+      "js": [
+        "js/vendors/jquery.js",
+        "js/vendors/locale.js",
+        "js/utils.js",
+        "views/google/ads-edit/content.js",
+        "js/content.js"
+      ],
+      "css": [],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://business.facebook.com/*",
+        "https://ads.google.com/*",
+        "https://ads.tiktok.com/*"
+      ],
+      "js": [
+        "js/vendors/jquery.js",
+        "js/utils.js",
+        "js/dynamicData.js",
+        "views/popup-dialog/index.js",
+        "views/popup-dialog/popup.js"
+      ],
+      "css": ["views/popup-dialog/popup.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/*"
+      ],
+      "js": [
+        "js/vendors/jquery.js",
+        "views/facebook/ads-filter/util.js",
+        "views/facebook/ads-filter/content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "options_ui":
+ {
+     "chrome_style": true
+ },
+  "web_accessible_resources":[
+    {
+      "resources": [ "views/facebook/ads-filter/inject.js" ],
+      "matches": [ "https://www.facebook.com/*" ]
+    }
+  ]
+}

@@ -1,0 +1,105 @@
+---
+name: CoderDocs Security
+version: 2.0.0
+category_slug: lifestyle/social
+rating: 5
+rating_count: 4
+user_count: 58
+release_date: '2024-05-03T06:19:16.000Z'
+size: 511KiB
+languages:
+  - English
+description: >-
+  You are protected absolutely with our awesome features: Realtime protection,
+  block seen and typing indicator, blur messenger!
+publisher_account: lenhatthanh20
+extension_website: lenhatthanh.com
+support_website: https://lenhatthanh.com
+privacy_policy: https://lenhatthanh.com/coderdocs-security-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "CoderDocs Security",
+    "version": "2.0.0",
+
+    "description": "You are protected absolutely with our awesome features: Realtime protection, block seen and typing indicator, blur messenger!",
+    "icons": {
+        "16": "./assets/img/android-chrome.png",
+        "48": "./assets/img/android-chrome.png",
+        "128": "./assets/img/android-chrome.png"
+    },
+
+    "author": "CoderDocs",
+
+    "action": {
+        "default_icon": {
+            "16": "./assets/img/android-chrome.png",
+            "48": "./assets/img/android-chrome.png",
+            "128": "./assets/img/android-chrome.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "./scripts/background-loader.js"
+    },
+
+    "incognito": "split",
+
+    "permissions": [
+        "background",
+        "activeTab",
+        "declarativeNetRequestWithHostAccess",
+        "declarativeNetRequest",
+        "storage",
+        "tabs",
+        "scripting",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.facebook.com/*",
+                "https://www.messenger.com/*",
+                "https://www.instagram.com/direct/*"
+            ],
+            "js": ["./scripts/blocking.content-script.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://www.messenger.com/*"],
+            "css": ["./assets/css/blur-messenger.css"],
+            "js": ["./scripts/blur-messenger.content-script.js"],
+            "run_at": "document_idle",
+            "all frames": true
+        },
+        {
+            "matches": ["*://*/*"],
+            "css": ["./assets/css/realtime-protection.css"],
+            "js": ["./scripts/realtime-protection.content-script.js"],
+            "run_at": "document_idle"
+        }
+    ],
+
+    "web_accessible_resources": [
+        {
+            "resources": ["scripts/blocking.page-script.js"],
+            "matches": [
+                "https://web.facebook.com/*",
+                "https://www.facebook.com/*",
+                "https://www.messenger.com/*"
+            ]
+        },
+        {
+            "resources": ["assets/img/apple-touch-icon.png"],
+            "matches": ["https://www.messenger.com/*"],
+            "use_dynamic_url": true
+        }
+    ]
+}

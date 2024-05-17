@@ -1,0 +1,105 @@
+---
+name: Uptime Recorder
+version: 1.0.30
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 244
+release_date: '2024-02-13T05:13:04.000Z'
+size: 972KiB
+languages:
+  - English
+description: Record automated online store test flows to be used in the Uptime Shopify app
+publisher: Jagged Pixel Inc
+publisher_account: Uptime
+publisher_address: |-
+  28 Ravina Crescent
+  Toronto, ON M4J 3M1
+  CA
+extension_website: getuptime.co
+support_website: https://www.getuptime.co/create-automated-test-flow
+privacy_policy: https://www.getuptime.co/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Uptime Recorder",
+  "description": "Record automated online store test flows to be used in the Uptime Shopify app",
+  "version": "1.0.30",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "privacy",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "action": {
+    "default_title": "Uptime Recorder",
+    "default_icon": "src/app/images/icon-128.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "src/app/images/icon-16.png",
+    "19": "src/app/images/icon-19.png",
+    "38": "src/app/images/icon-38.png",
+    "128": "src/app/images/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "inject.bundle.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "match_about_blank": false,
+      "all_frames": false,
+      "js": [
+        "content_script.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "manifest_version": 3,
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "recording-notifier.html",
+        "onboarding.html",
+        "modify_attach_shadow.bundle.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.getuptime.co/*",
+      "http://localhost/*",
+      "http://localhost:*/*",
+      "https://*.ngrok.io/*"
+    ]
+  }
+}

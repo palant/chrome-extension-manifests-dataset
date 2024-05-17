@@ -1,0 +1,146 @@
+---
+name: Donate4.Fun
+version: 0.21.0
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 7
+release_date: '2023-01-04T05:39:52.000Z'
+size: 1.45MiB
+languages:
+  - English
+description: Support creators instantly using Bitcoin Lightning Network
+publisher_account: Donate4.Fun
+extension_website: donate4.fun
+support_website: https://discord.gg/pfFRGWZ4TM
+privacy_policy: https://donate4.fun/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Donate4.Fun",
+  "description": "Support creators instantly using Bitcoin Lightning Network",
+  "homepage_url": "https://donate4.fun",
+  "author": "Nikolay Bryskin",
+  "version": "0.21.0",
+  "icons": {
+    "48": "static/D-48.png",
+    "128": "static/D-128.png"
+  },
+  "permissions": [
+    "storage",
+    "scripting",
+    "activeTab",
+    "tabs",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://*.donate4.fun/*",
+    "https://youtube.com/*",
+    "https://www.youtube.com/*",
+    "https://m.youtube.com/*",
+    "https://*.twitter.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "minimum_chrome_version": "99",
+  "content_scripts": [
+    {
+      "js": [
+        "youtube/contentscript.js"
+      ],
+      "css": [
+        "youtube/contentscript.css",
+        "static/global.css"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://youtube.com/*",
+        "*://www.youtube.com/*",
+        "*://m.youtube.com/*"
+      ],
+      "exclude_matches": [
+        "*://*.music.youtube.com/*"
+      ]
+    },
+    {
+      "js": [
+        "donate4.fun/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.donate4.fun/*"
+      ]
+    },
+    {
+      "js": [
+        "twitter/contentscript.js"
+      ],
+      "css": [
+        "twitter/contentscript.css",
+        "static/global.css"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://*.twitter.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "static/D-16.png",
+      "24": "static/D-24.png",
+      "32": "static/D-32.png"
+    },
+    "default_title": "Donate4.Fun",
+    "default_popup": "popup.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "webln.js",
+        "webln.js.map",
+        "youtube/contentscript.js.map",
+        "static/success.png",
+        "static/global.css",
+        "static/defaults.css",
+        "static/lottie-arrow.json",
+        "static/youtube.svg",
+        "static/loader.svg"
+      ],
+      "matches": [
+        "https://*.youtube.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "globalobj.js",
+        "globalobj.js.map",
+        "donate4.fun/contentscripts.js.map"
+      ],
+      "matches": [
+        "*://*.donate4.fun/*"
+      ]
+    },
+    {
+      "resources": [
+        "webln.js",
+        "webln.js.map",
+        "twitter/contentscripts.js.map",
+        "static/global.css",
+        "static/lottie-bolt.json"
+      ],
+      "matches": [
+        "https://*.twitter.com/*"
+      ]
+    }
+  ]
+}

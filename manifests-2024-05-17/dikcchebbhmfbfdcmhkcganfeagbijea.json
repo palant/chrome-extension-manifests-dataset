@@ -1,0 +1,121 @@
+---
+name: GalilAI
+version: 1.0.11
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 979
+release_date: '2023-03-09T12:26:52.000Z'
+size: 554KiB
+languages:
+  - English
+  - português (Brasil)
+description: Get more time to do what you love with an AI-powered writing assistant
+publisher_account: GalilAI
+extension_website: galil.ai
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1k1dHO1meHwEmEadYV4E6dE+BjrsoGFvJ0VldUy+8mkI8gT7jG2BvDh0SfVXwwxYSBTENqqPjl3pQtwaHIc4ltneWlCdnXFOyyWUX07LsNOinIY0EqjZ2xtmA9EZ9jX8CfCmi3S+2QBUDLSXza++brxvkm9rK4DjWSaYkjWJmwrOjpM3iSecESjarEj0fESz2W4w7qOujNl2SA7M25Fo0MXkSxYnJp3q0jqD+MWESUnhOSAmQUv8in+O/9B340PM21RbNJO2JDvfCxqhWBQGnX5cfCbm5ttYKX7V4bOOzSbvMBS2Li9IRzNecPcNIofhvlGucIhqxNxO0KshS7EURQIDAQAB",
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDescription__",
+    "default_locale": "en",
+    "version": "1.0.11",
+    "manifest_version": 3,
+    "icons": {
+        "16": "icons/16.png",
+        "32": "icons/32.png",
+        "48": "icons/48.png",
+        "128": "icons/128.png"
+    },
+    "content_scripts": [
+        {
+          "matches": [
+            "https://docs.google.com/document/d/*",
+            "https://medium.com/new-story",
+            "https://medium.com/p/*/edit",
+            "https://*.sharepoint.com/*/*/doc.aspx*",
+            "https://*.sharepoint.com/*/*/*/doc.aspx*",
+            "https://*.sharepoint.com/*/*/*/*/doc.aspx*",
+            "https://*.sharepoint.com/*/*/*/*/*/doc.aspx*",
+            "https://*.sharepoint.com/*/*/*/*/*/*/doc.aspx*",
+            "https://*.sharepoint.com/*/*/*/*/*/*/*/doc.aspx*",
+            "https://onedrive.live.com/edit.aspx*"
+            ],
+          "css": [
+
+          ],
+          "js": [
+              "js/vendor/angular.min.js",
+              "js/vendor/angular-translate.min.js",
+              "js/vendor/sentry-7.19.0.min.js",
+              "js/vendor/mixpanel.min.js",
+              "js/services/storage.js",
+              "js/app.js",
+              "js/services/api.js",
+              "js/main.controller.js",
+              "js/content/content.js"
+          ],
+          "run_at": "document_end"
+        },
+        {
+          "matches": [
+            "https://galil.ai/verify/*",
+            "https://galil.ai/*/verify/*",
+            "https://galil.ai/pt/verify/*"
+          ],
+          "js": [
+            "js/content/verify.js"
+          ],
+          "run_at": "document_start"
+        },
+        {
+          "matches": [
+            "https://galil.ai/*/welcome",
+            "https://galil.ai/pt/welcome",
+            "https://galil.ai/welcome"
+          ],
+          "js": [
+            "js/content/welcome.js"
+          ],
+          "run_at": "document_start"
+        },
+        {
+          "matches": [
+            "<all_urls>"
+          ],
+          "js": [
+            "js/content/smartinputs.js"
+          ],
+          "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "optional_host_permissions": [
+      "<all_urls>"
+    ],
+    "permissions": [ "storage", "activeTab", "scripting" ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "index.html",
+                "js/*",
+                "js/vendor/*",
+                "js/services/*",
+                "css/*",
+                "vendor/**/css/*",
+                "vendor/**/webfonts/*",
+                "vendor/**/js/*",
+                "img/*"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "action": {
+        "default_title": "GalilAI"
+    }
+}

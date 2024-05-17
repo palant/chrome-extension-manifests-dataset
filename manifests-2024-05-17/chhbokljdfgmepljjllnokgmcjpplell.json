@@ -1,0 +1,105 @@
+---
+name: Puffin Cloud Isolation Assistant
+version: 1.0.0.878
+category_slug: make_chrome_yours/accessibility
+rating: 4.5
+rating_count: 4
+user_count: 483
+release_date: '2022-01-16T12:27:53.000Z'
+size: 1.62MiB
+languages:
+  - English
+  - 中文 (繁體)
+description: >-
+  Convert unsafe direct web page access into isolated and display-only web page
+  within existing web browsers.
+publisher: CloudMosa
+publisher_account: CloudMosa Inc.
+publisher_address: |-
+  20863 Stevens Creek Blvd, Suite 560
+  Cupertino, CA 95014
+  US
+support_website: https://help.puffin.com/feedback/?product=cloud-isolation
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "default_locale": "en",
+  "name": "__MSG_NAME__",
+  "description": "__MSG_DESCRIPTION__",
+  "version": "1.0.0.878",
+  "options_page": "options.html",
+  "browser_action": {
+    "default_icon": "img/puffin_cloud_isolation_assistant_48_on.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": [
+      "js/background.js"
+    ],
+    "persistent": true
+  },
+  "omnibox": {
+    "keyword": "isolation"
+  },
+  "icons": {
+    "16": "img/puffin_cloud_isolation_assistant_16_on.png",
+    "48": "img/puffin_cloud_isolation_assistant_48_on.png",
+    "128": "img/puffin_cloud_isolation_assistant_128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "contextMenus",
+    "webNavigation",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.puffin.com/*",
+        "https://*.puffin.app/*"
+      ],
+      "js": [
+        "js/content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "js/snackbar.js",
+        "js/modal.js",
+        "js/logout.js"
+      ]
+    }
+  ],
+  "commands": {
+    "new_isolation_tab": {
+      "suggested_key": {
+        "default": "Ctrl+I",
+        "mac": "Command+I"
+      },
+      "description": "New isolation tab"
+    }
+  },
+  "web_accessible_resources": [
+    "css/snackbar.css",
+    "img/puffin_cloud_isolation_assistant_48_on.png",
+    "img/puffin_cloud_isolation_assistant_48_off.png",
+    "img/logo_puffin_cloud_isolation_assistant.png",
+    "img/btn_blue_normal.png",
+    "img/btn_blue_hover.png",
+    "img/btn_red_normal.png",
+    "img/btn_red_hover.png",
+    "img/btn_checkbox_on.png",
+    "img/btn_checkbox_off.png"
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com; object-src 'self'"
+}

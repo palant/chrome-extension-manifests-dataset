@@ -1,0 +1,75 @@
+---
+name: Dynolex
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 38
+release_date: '2024-05-09T14:55:39.000Z'
+size: 55.54KiB
+languages:
+  - English
+description: >-
+  Dynolex helps legal professionals fast track & streamline the experience of
+  searching & retrieving data from official sources.
+publisher_account: Dynolex
+privacy_policy: https://www.dynolex.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name" : "Dynolex",
+  "version" : "1.1.0",
+  "manifest_version" : 3,
+  "description" : "Dynolex helps legal professionals fast track & streamline the experience of searching & retrieving data from official sources.",
+
+ "background": {
+    "service_worker": "bg-sw.js",
+    "type": "module"
+  },
+  
+  "action": {
+    "default_icon": "icons/icon-128.png",
+    "default_title": "Dynolex"
+  },
+
+  "icons": {
+    "128": "icons/icon-128.png"
+  },
+  
+  "content_scripts" : [{
+      "matches" : ["https://ipindiaonline.gov.in/*", "https://ipindiaservices.gov.in/*", "https://*.ipindia.gov.in/*"],
+      "all_frames": true,
+      "css" : ["style.css"]
+    },{
+      "matches" : ["https://ipindiaonline.gov.in/*", "https://ipindiaservices.gov.in/*", "https://*.ipindia.gov.in/*"],
+      "run_at" : "document_start",
+      "all_frames": true,
+   "world": "MAIN",
+      "js" : ["in-page.js"]
+    },{
+      "matches" : ["https://ipindiaonline.gov.in/*", "https://ipindiaservices.gov.in/*", "https://*.ipindia.gov.in/*"],
+      "run_at" : "document_end",
+      "all_frames": true,
+      "js" : ["constants.js", "tmr-results.js"]
+    },{
+      "matches" : ["https://ipindiaonline.gov.in/*", "https://ipindiaservices.gov.in/*", "https://*.ipindia.gov.in/*"],
+      "run_at" : "document_end",
+      "all_frames": true,
+      "js" : ["constants.js", "tmr-search.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "permissions" : [ "storage", "tabs" ],
+ "host_permissions": [
+    "https://www.dynolex.com/*"
+  ],
+  "web_accessible_resources": [
+  {
+      "resources": [ "ui/popup.htm", "ui/popup.js" ],
+      "matches": [ "https://ipindiaservices.gov.in/*", "https://*.ipindia.gov.in/*" ]
+    }
+ ]
+}
+

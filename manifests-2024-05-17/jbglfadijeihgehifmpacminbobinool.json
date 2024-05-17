@@ -1,0 +1,207 @@
+---
+name: nana order assistant
+version: 1.2.5
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-04-01T09:42:26.000Z'
+size: 933KiB
+languages:
+  - 中文 (简体)
+  - 日本語
+description: |-
+  代行奈奈代行サポートするプログラムになります
+
+  代行奈奈代行サイト専用
+
+  中国タオバオ（taobao.com）及び中国アリババ（1688.com）詳細パージから
+  代行奈奈詳細ページを直接開く
+  代行奈奈買い物かごへ商品を追加できるツール…
+publisher_account: 奈奈代行サポート
+extension_website: www.daikounana.com
+privacy_policy: https://daikounana.com/about-13.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/sentry_init.ts-loader.js",
+        "assets/search_image.ts-loader.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "css": [
+        "assets/alert_expired.css",
+        "assets/search_image.css"
+      ]
+    },
+    {
+      "js": [
+        "assets/sentry_init.ts-loader.js",
+        "assets/add_cart_taobao.ts-loader.js"
+      ],
+      "matches": [
+        "*://item.taobao.com/*",
+        "*://*.detail.tmall.com/*",
+        "*://detail.tmall.hk/*"
+      ],
+      "css": [
+        "assets/alert_expired.css",
+        "assets/add_cart.css",
+        "assets/add_cart_taobao.css"
+      ]
+    },
+    {
+      "js": [
+        "assets/sentry_init.ts-loader.js",
+        "assets/add_cart_1688.ts-loader.js"
+      ],
+      "matches": [
+        "*://detail.1688.com/*"
+      ],
+      "css": [
+        "assets/alert_expired.css",
+        "assets/add_cart.css",
+        "assets/add_cart_1688.css"
+      ]
+    },
+    {
+      "js": [
+        "assets/sentry_init.ts-loader.js",
+        "assets/set_version.ts-loader.js"
+      ],
+      "matches": [
+        "*://*.daikounana.com/*"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "enabled": true,
+        "id": "ruleset",
+        "path": "rules_net_request.json"
+      }
+    ]
+  },
+  "default_locale": "ja",
+  "host_permissions": [
+    "*://*.daikounana.com/*",
+    "https://*.1688.com/*",
+    "https://detailskip.taobao.com/json/deliveryFee.htm*"
+  ],
+  "icons": {
+    "16": "src/assets/logo/logo_16.png",
+    "48": "src/assets/logo/logo_48.png",
+    "128": "src/assets/logo/logo_128.png"
+  },
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "permissions": [
+    "cookies",
+    "tabs",
+    "declarativeNetRequest",
+    "storage"
+  ],
+  "version": "1.2.5.0",
+  "version_name": "1.2.5",
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "src/content_scripts/add_cart_taobao/set_info_to_dom_taobao.js",
+        "src/content_scripts/add_cart_1688/set_info_to_dom_1688.js",
+        "src/assets/logo.png",
+        "pages/search_goods_by_image.html",
+        "pages/search_goods_by_image/search_goods_by_image.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/sdk.js",
+        "assets/hub.js",
+        "assets/sentry_init.ts.js",
+        "assets/icon.png",
+        "assets/icon-ext.png",
+        "assets/loading-0.gif",
+        "assets/jquery.js",
+        "assets/alert_expired.js",
+        "assets/_commonjsHelpers.js",
+        "assets/get_i18n_message.js",
+        "assets/search_image.ts.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "*://*.detail.tmall.com/*",
+        "*://detail.tmall.hk/*",
+        "*://item.taobao.com/*"
+      ],
+      "resources": [
+        "assets/icon.png",
+        "assets/icon-ext.png",
+        "assets/loading-0.gif",
+        "assets/icon_with_white_close.png",
+        "assets/add_cart.js",
+        "assets/jquery.js",
+        "assets/hub.js",
+        "assets/alert_expired.js",
+        "assets/get_i18n_message.js",
+        "assets/_commonjsHelpers.js",
+        "assets/add_cart_taobao.ts.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "*://detail.1688.com/*"
+      ],
+      "resources": [
+        "assets/icon.png",
+        "assets/icon-ext.png",
+        "assets/loading-0.gif",
+        "assets/icon_with_white_close.png",
+        "assets/add_cart.js",
+        "assets/jquery.js",
+        "assets/hub.js",
+        "assets/alert_expired.js",
+        "assets/get_i18n_message.js",
+        "assets/_commonjsHelpers.js",
+        "assets/add_cart_1688.ts.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "*://*.daikounana.com/*"
+      ],
+      "resources": [
+        "assets/jquery.js",
+        "assets/_commonjsHelpers.js",
+        "assets/set_version.ts.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

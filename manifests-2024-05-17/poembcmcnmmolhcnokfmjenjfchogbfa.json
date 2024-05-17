@@ -1,0 +1,123 @@
+---
+name: VersaTrial
+version: 2.19.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 964
+release_date: '2024-01-29T14:12:05.000Z'
+size: 1.09MiB
+languages:
+  - English (United States)
+description: Helping sites re-imagine their workflow across different technology platforms.
+publisher: Versatrial
+publisher_account: VersaTrial
+publisher_address: |-
+  62 Hemmelskamp Rd
+  Wilton, CT 06897-2103
+  US
+extension_website: versatrial.io
+support_website: https://app.versatrial.io/
+privacy_policy: https://app.versatrial.io/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "VersaTrial",
+ "description": "Helping sites re-imagine their workflow across different technology platforms.",
+ "version": "2.19.1",
+ "manifest_version": 3,
+ "icons": {
+  "16": "/img/icons/16.png",
+  "32": "/img/icons/32.png",
+  "48": "/img/icons/48.png",
+  "128": "/img/icons/128.png"
+ },
+ "background": {
+  "service_worker": "/js/background.js",
+  "type": "module"
+ },
+ "action": {
+  "default_popup": "/pages/popup/index.html",
+  "default_icons": {
+   "16": "/img/icons/16.png",
+   "32": "/img/icons/32.png",
+   "48": "/img/icons/48.png",
+   "128": "/img/icons/128.png"
+  }
+ },
+ "content_scripts": [
+  {
+   "all_frames": true,
+   "matches": [
+    "https://*/*"
+   ],
+   "exclude_matches": [
+    "https://versatrial-staging.herokuapp.com/*",
+    "https://app.versatrial.io/*",
+    "https://versatrial.test/*",
+    "https://versatrial.dev/*"
+   ],
+   "js": [
+    "/js/launcher.js"
+   ]
+  },
+  {
+   "run_at": "document_start",
+   "all_frames": true,
+   "matches": [
+    "https://app.versatrial.io/*"
+   ],
+   "js": [
+    "/js/app_content.js"
+   ]
+  },
+  {
+   "all_frames": false,
+   "run_at": "document_idle",
+   "matches": [
+    "https://*/*"
+   ],
+   "exclude_matches": [
+    "https://versatrial-staging.herokuapp.com/*",
+    "https://app.versatrial.io/*",
+    "https://versatrial.test/*",
+    "https://versatrial.dev/*"
+   ],
+   "js": [
+    "/js/initiate_nudges.js"
+   ]
+  }
+ ],
+ "options_ui": {
+  "page": "/pages/options/index.html",
+  "open_in_tab": false
+ },
+ "optional_permissions": [
+  "bookmarks",
+  "downloads"
+ ],
+ "permissions": [
+  "activeTab",
+  "alarms",
+  "cookies",
+  "contextMenus",
+  "scripting",
+  "storage"
+ ],
+ "host_permissions": [
+  "https://*/*"
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "*"
+   ],
+   "matches": [
+    "https://*/*"
+   ],
+   "extension_ids": []
+  }
+ ]
+}

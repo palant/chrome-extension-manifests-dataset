@@ -1,0 +1,105 @@
+---
+name: Translate, Transcribe, and Summarize Japanese & English Meetings
+version: 3.18.2
+category_slug: productivity/communication
+rating: 5
+rating_count: 5
+user_count: 145
+release_date: '2024-05-15T14:55:24.000Z'
+size: 316KiB
+languages:
+  - English
+description: >-
+  JotMe automatically translates Japanese to English, generates transcripts, and
+  writes AI meeting notes on Google Meet.
+publisher: JotMe Limited
+publisher_account: JotMe
+publisher_address: |-
+  30 Aldwych
+  London WC2B 4BG
+  GB
+extension_website: jotme.io
+privacy_policy: https://www.jotme.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Translate, Transcribe, and Summarize Japanese & English Meetings",
+  "description": "JotMe automatically translates Japanese to English, generates transcripts, and writes AI meeting notes on Google Meet.",
+  "version": "3.18.2",
+  "action": {
+    "default_title": "JotMe",
+    "default_icon": "icon128.png",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://app.jotme.io/*",
+        "https://jotme-web.vercel.app/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "overlay/react/index.js"
+      ],
+      "css": [
+        "overlay/react/index.css"
+      ],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://meet.google.com/"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "resources": [
+        "inject.js",
+        "overlay/react/index.js",
+        "overlay/react/index.css",
+        "overlay/jotme-logo.png",
+        "overlay/minimized-logo.png"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.jotme.io/*",
+        "https://jotme-web.vercel.app/*"
+      ],
+      "resources": [
+        "icon16.png"
+      ]
+    }
+  ]
+}

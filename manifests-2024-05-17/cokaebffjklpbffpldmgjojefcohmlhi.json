@@ -1,0 +1,72 @@
+---
+name: Codeium Forge
+version: 0.1.4
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 23
+release_date: '2024-05-15T05:36:05.000Z'
+size: 254KiB
+languages:
+  - English
+description: Codeium Forge Chrome extension to review code with AI.
+publisher: Exafunction, Inc.
+publisher_account: Codeium
+publisher_address: |-
+  257 Castro St
+  #214
+  Mountain View, CA 94041-1285
+  US
+support_website: https://codeium.com/contact
+privacy_policy: https://codeium.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Codeium Forge",
+  "description": "Codeium Forge Chrome extension to review code with AI.",
+  "version": "0.1.4",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open Forge"
+  },
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
+  "host_permissions": [
+    "https://github.com/*",
+    "https://forge.codeium.com/*",
+    "https://codeium.com/*"
+  ],
+  "permissions": ["activeTab", "storage", "tabs", "declarativeNetRequest"],
+  "externally_connectable": {
+    "matches": ["https://github.com/*"]
+  },
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "css": ["hide.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["./static/js/content.js"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "modify_headers",
+        "path": "modify_headers_rules.json",
+        "enabled": true
+      }
+    ]
+  }
+}

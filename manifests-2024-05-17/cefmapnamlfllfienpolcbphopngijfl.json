@@ -1,0 +1,64 @@
+---
+name: Ushipper Importer
+version: '2.10'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 75
+release_date: '2024-05-02T07:34:50.000Z'
+size: 34.59KiB
+languages:
+  - English (United States)
+description: |-
+  Extension for integration between CentralDispatch and Ushipper.
+
+  Provides the ability to:
+
+  Import orders from CentralDispatch to…
+publisher_account: Ushipper
+privacy_policy: https://ushipper.us/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ushipper Importer",
+  "version": "2.10",
+  "manifest_version": 3,
+  "icons": {
+    "48": "/images/ushipper-logo.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": ["https://*.centraldispatch.com/*"],
+      "all_frames": true,
+      "js": ["centraldispatch-content-script.js"],
+      "css": ["centraldispatch-inject-style.css"]
+    },
+    {
+      "matches": ["*://*.app.ushipper.us/*"],
+      "all_frames": true,
+      "js": ["ushipper-content-script.js"],
+      "css": ["ushipper-inject-style.css"]
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "offscreen",
+    "scripting",
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": ["https://*.centraldispatch.com/*", "*://*.app.ushipper.us/*"],
+  "web_accessible_resources": [{
+    "matches": ["https://*.centraldispatch.com/*"],
+    "resources": ["/images/spinner.svg","/images/ushipper-logo.svg", "/imports/common/centraldispatch-order-parse.js"]
+  }, {
+    "matches": ["*://*.app.ushipper.us/*"],
+    "resources": ["/images/spinner.svg","/images/ushipper-logo.svg"]
+  }]
+}

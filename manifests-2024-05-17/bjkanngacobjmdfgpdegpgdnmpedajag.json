@@ -1,0 +1,118 @@
+---
+name: Tipli na vaš preglednik
+version: 3.0.8
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 98
+release_date: '2024-05-04T05:14:20.000Z'
+size: 215KiB
+languages:
+  - hrvatski
+description: >-
+  Savjeti preglednika uvijek će vas obavijestiti kada možete dobiti povrat novca
+  za svoju kupnju.
+publisher: Tipli s.r.o.
+publisher_account: Tipli
+publisher_address: |-
+  Na Poříčí 1067
+  Praha 1-Nové Město 110 00
+  CZ
+extension_website: tipli.hr
+support_website: https://www.tipli.hr/kontakt
+privacy_policy: https://www.tipli.hr/suglasnost-za-obradu-osobnih-podataka
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.8",
+  "name": "Tipli na vaš preglednik",
+  "description": "Savjeti preglednika uvijek će vas obavijestiti kada možete dobiti povrat novca za svoju kupnju.",
+  "homepage_url": "http://www.tipli.hr",
+  "icons": {
+    "128": "assets/icon128.png",
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png"
+  },
+  "author": "https://www.tipli.hr",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Tipli na vaš preglednik"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "roboto.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "protect-content-boxes.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.google.cz/*",
+        "https://www.google.sk/*",
+        "https://www.google.pl/*",
+        "https://www.google.ro/*",
+        "https://search.seznam.cz/*",
+        "https://*.heureka.cz/*",
+        "https://www.zbozi.cz/*"
+      ],
+      "js": [
+        "serp.js"
+      ],
+      "css": [
+        "roboto.css",
+        "serp.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

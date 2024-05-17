@@ -1,0 +1,85 @@
+---
+name: BewlyBewly
+version: 0.18.8
+category_slug: productivity/workflow
+rating: 4.891891891891892
+rating_count: 185
+user_count: 40000
+release_date: '2024-05-14T05:41:24.000Z'
+size: 579KiB
+languages:
+  - English (United States)
+description: Just make a few small changes to your Bilibili homepage.
+publisher_account: Hakadao
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BewlyBewly",
+  "version": "0.18.8",
+  "description": "Just make a few small changes to your Bilibili homepage.",
+  "homepage_url": "https://github.com/hakadao/BewlyBewly",
+  "background": {
+    "service_worker": "./dist/background/index.js"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.bilibili.com/*",
+    "*://*.mcbbs.net/*",
+    "*://*.hdslb.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.bilibili.com/*",
+        "*://search.bilibili.com/*",
+        "*://t.bilibili.com/*",
+        "*://space.bilibili.com/*",
+        "*://message.bilibili.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "./dist/contentScripts/style.css"
+      ],
+      "run_at": "document_start",
+      "match_about_blank": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "assets/rules.json"
+      }
+    ]
+  }
+}

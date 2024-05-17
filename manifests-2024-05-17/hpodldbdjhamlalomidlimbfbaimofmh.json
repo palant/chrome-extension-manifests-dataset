@@ -1,0 +1,90 @@
+---
+name: Carbly VIN Scanner Extension
+version: 0.16.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 980
+release_date: '2023-09-13T18:26:37.000Z'
+size: 325KiB
+languages:
+  - English
+description: Detect VIN numbers to automatically send to Carbly VIN Scanner
+publisher: Ambient Automotive, Inc
+publisher_account: Carbly
+publisher_address: |-
+  2017 W. Shakespeare Ave
+  Chicago, IL 60647
+  US
+support_website: https://getcarbly.com/support/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Carbly VIN Scanner Extension",
+  "version": "0.16.0",
+  "description": "Detect VIN numbers to automatically send to Carbly VIN Scanner",
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "action": {
+    "default_title": "Carbly",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/carbly_16.png",
+    "32": "icons/carbly_32.png",
+    "48": "icons/carbly_48.png",
+    "128": "icons/carbly_128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "parser.js"
+      ],
+      "world": "MAIN",
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://localhost/*",
+        "*://web.getcarbly.com/*",
+        "*://web-staging.getcarbly.com/*",
+        "*://uat.getcarbly.com/*",
+        "*://mail.google.com/*"
+      ]
+    },
+    {
+      "js": [
+        "content.js"
+      ],
+      "world": "ISOLATED",
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://localhost/*",
+        "*://web.getcarbly.com/*",
+        "*://web-staging.getcarbly.com/*",
+        "*://uat.getcarbly.com/*",
+        "*://mail.google.com/*"
+      ]
+    }
+  ]
+}

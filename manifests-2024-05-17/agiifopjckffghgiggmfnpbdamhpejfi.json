@@ -1,0 +1,100 @@
+---
+name: M3U8 Downloader Pro - HLS Downloader
+version: 0.1.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-05-01T23:32:56.000Z'
+size: 586KiB
+languages:
+  - English
+description: You can download m3u8, hls with one click.
+publisher_account: Hello World
+privacy_policy: >-
+  https://mint-brie-e61.notion.site/Privacy-Policy-014d4f4d1a4a41858f4d12fab9d7b5a8
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "M3U8 Downloader Pro - HLS Downloader",
+  "short_name": "M3U8 Downloader",
+  "version": "0.1.3",
+  "description": "You can download m3u8, hls with one click.",
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "background": { "service_worker": "service-worker.js" },
+  "action": {
+    "default_icon": {
+      "16": "img/icon-16.png",
+      "48": "img/icon-48.png",
+      "128": "img/icon-128.png"
+    },
+    "default_title": "M3U8 Downloader Pro",
+    "default_popup": "panel/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://pro.m3u8.dev/m3u8downloader*",
+        "*://pro.m3u8.dev/*/m3u8downloader*"
+      ],
+      "js": ["libs/hls.js", "js/hls.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://pro.m3u8.dev/videodownloader*",
+        "*://pro.m3u8.dev/*/videodownloader*"
+      ],
+      "js": ["js/mp4.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://pro.m3u8.dev/bufferrecorder*",
+        "*://pro.m3u8.dev/*/bufferrecorder*"
+      ],
+      "js": ["js/rec.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*/*"],
+      "exclude_globs": ["*//pro.m3u8.dev/*"],
+      "js": ["js/content-script.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["*://pro.m3u8.dev/*"],
+      "resources": [
+        "img/recording.svg",
+        "bootstrap/js/bootstrap.bundle.min.js",
+        "libs/jsZIP.js",
+        "panel/hls.html",
+        "panel/mp4.html",
+        "panel/rec.html"
+      ]
+    },
+    {
+      "matches": ["*://*/*"],
+      "resources": ["js/injected.js", "img/icon-recording.png"]
+    }
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "storage",
+    "declarativeNetRequest",
+    "offscreen"
+  ],
+  "default_locale": "en"
+}

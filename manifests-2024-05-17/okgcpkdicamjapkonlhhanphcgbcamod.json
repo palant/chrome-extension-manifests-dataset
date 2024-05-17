@@ -1,0 +1,89 @@
+---
+name: Code-Vault
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 20
+release_date: '2024-02-18T07:49:27.000Z'
+size: 411KiB
+languages:
+  - 한국어
+description: Code-Vault에서 제공하는 크롬 확장도구입니다.
+publisher_account: jwchung0828
+support_website: https://github.com/woong-jae/code-vault
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Code-Vault",
+  "description": "Code-Vault에서 제공하는 크롬 확장도구입니다.",
+  "version": "1.1.0",
+  "version_name": "1.1.0",
+  "author": "jwchung0828@gmail.com",
+  "homepage_url": "https://github.com/woong-jae/code-vault",
+  "icons": {
+    "128": "logo-128.png"
+  },
+  "action": {},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "webRequest",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "storage"
+  ],
+  "host_permissions": ["https://*/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["setting.html", "setting.js"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "id": "CodeVault-programmers",
+      "matches": [
+        "https://school.programmers.co.kr/learn/courses/30/lessons/*"
+      ],
+      "js": ["programmers.js"],
+      "world": "MAIN"
+    },
+    {
+      "id": "CodeVault-boj",
+      "matches": ["https://www.acmicpc.net/status*"],
+      "js": ["boj.js"],
+      "world": "MAIN"
+    },
+    {
+      "id": "CodeVault-leetcode",
+      "matches": ["https://leetcode.com/problems/*"],
+      "js": ["leetcode.js"],
+      "world": "MAIN"
+    },
+    {
+      "id": "CodeVault-common_isolated",
+      "matches": [
+        "https://school.programmers.co.kr/learn/courses/30/lessons/*",
+        "https://www.acmicpc.net/status*",
+        "https://leetcode.com/problems/*"
+      ],
+      "js": ["common_isolated.js"]
+    }
+  ]
+}

@@ -1,0 +1,143 @@
+---
+name: SpeKing蝦皮輔助工具(買賣黑名單)
+version: 1.1.5
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 166
+release_date: '2022-08-22T11:33:43.000Z'
+size: 92.19KiB
+languages:
+  - 中文 (繁體)
+description: 標示黑名單買家、標示黑名單賣家
+publisher_account: citerptw
+extension_website: www.citerp.com.tw
+privacy_policy: https://www.citerp.com.tw/EZK_Help_Do/EZK_Privacy01.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "SpeKing蝦皮輔助工具(買賣黑名單)",
+    "version": "1.1.5",
+    "description": "標示黑名單買家、標示黑名單賣家",
+    "manifest_version": 2,
+    "icons": {
+        "16": "logo001_16.png",
+        "48": "logo001_48.png",
+        "128": "logo001_128.png"
+    },
+    "browser_action": {
+        "default_icon": "logo001.png",
+        "default_popup": "popup.html"
+    },
+    "permissions": ["https://buy.citerp.com.tw/", "activeTab", "contextMenus"],
+
+    "web_accessible_resources": ["/images/kk.png", "/images/kk1.png"],
+
+    "background": {
+        "scripts": [
+            "JAScript/jquery-3.5.1.min.js","JAScript/dataset.js", "background.js"
+        ],
+        "persistent": false
+      },
+
+    "content_scripts": [
+        {
+            "matches": ["https://shopee.tw/*"],
+            "js": ["JAScript/jquery-3.5.1.min.js", "sale/content.js", "blacklist2.js"]
+        },
+        {
+            "matches": ["https://www.facebook.com/*"],
+            "js": ["JAScript/jquery-3.5.1.min.js", "sale/content.js", "blacklistfb.js"]
+        },
+        {
+            "comment": "訂單明細",
+            "matches": ["https://seller.shopee.tw/portal/sale/order/*"],
+            "js": [     
+                "JAScript/jquery-3.5.1.min.js", "sale/order.js", "sale/tabs_do.js"
+            ]
+        },
+        {
+            "comment": "擷取送貨單資料/嵌入送貨單資料",
+            "matches": ["https://seller.shopee.tw/portal/sale/order","https://seller.shopee.tw/portal/sale/mass/ship","https://seller.shopee.tw/portal/sale/mass/ship*", "https://seller.shopee.tw/portal/sale/shipment?type=toship","https://seller.shopee.tw/portal/sale/shipment*","https://seller.shopee.tw/portal/sale/ship?type=toship*", "https://seller.shopee.tw/portal/sale/ship?type=print*", "https://seller.shopee.tw/portal/sale/shipment?type=toship*", "https://seller.shopee.tw/portal/sale/shipment/?type=toship*","https://seller.shopee.tw/portal/sale/ship"],
+            "js": [     
+                "JAScript/jquery-3.5.1.min.js","blacklist.js", "sale/speking.js", "sale/content.js", "sale/tabs_do.js"
+            ],
+            "css": ["sale/speking.css"]
+        },
+        {
+            "comment": "全家單張送貨單",
+            "matches": ["https://external2.shopee.tw/ext/familymart/OrderPrint/OrderPrint.aspx", "http://external2.shopee.tw/ext/familymart/OrderPrint/OrderPrint.aspx", "https://mybid.ruten.com.tw/deliver/famimart_shipping_order_preview.php*"],
+            "js": [
+                "doprint.js"
+            ],
+            "css": ["zfamilymart/familymart.css"]
+        },
+        {
+            "comment": "全家多張送貨單",
+            "matches": ["https://external2.shopee.tw/ext/familymart/OrdersPrint/OrdersPrint.aspx", "http://external2.shopee.tw/ext/familymart/OrdersPrint/OrdersPrint.aspx", "https://logistics.ecpay.com.tw/Express/PrintFAMIC2COrderInfo","https://ecfme.famiport.com.tw/OrdersPrint/OrdersPrint.aspx"],
+            "js": [
+                "JAScript/jquery-3.5.1.min.js", "zfamilymart/familymart_multi_open_app.js"
+            ],
+            "css": ["zfamilymart/familymart.css"]
+        },
+
+        {
+            "comment": "用來直接打開單張全家送貨單",
+            "matches": ["https://mybid.ruten.com.tw/deliver/store_shipment_print.php*"],
+            "js": [
+                 "JAScript/jquery-3.5.1.min.js","zfamilymart/familymart_open_app.js"
+            ]
+        },
+
+        {
+            "comment": "7-11單張送貨單", 
+            "matches": ["https://epayment.7-11.com.tw/C2C/C2CWeb/PrintC2CPinCode.aspx"],
+            "js": [
+                "doprint.js"
+            ]
+        },
+
+        {
+            "comment": "用來直接打開單張7-11送貨單",
+            "matches": ["https://epayment.7-11.com.tw/C2C/C2CWeb/C2C.aspx"],
+            "js": [
+                 "JAScript/jquery-3.5.1.min.js","z7_11/7_11_open_app.js"
+            ]
+        },
+        {
+            "comment": "7-11多張送貨單",
+            "matches": ["https://epayment.7-11.com.tw/C2C/C2CWeb/MultiplePrintC2CPinCode.aspx"],
+            "js": [
+                "JAScript/jquery-3.5.1.min.js", "z7_11/7_11_multi_open_app.js"
+            ],
+            "css": ["z7_11/7_11.css"]
+        },
+
+        {
+            "comment": "萊爾富單張送貨單",
+            "matches": ["https://external2.shopee.tw/ext/hilife/live/ec_vendorPrnC2C.aspx*", "https://external2.shopee.tw/ext/hilife/live/ec_orders_tagC2C.aspx*"],
+            "js": [
+                "JAScript/jquery-3.5.1.min.js", "zhilife/hilife_app.js"
+            ],
+            "css": ["zhilife/hilife.css"]
+        },
+        {
+            "comment": "OK送貨單",
+            "matches": ["https://ecservice.okmart.com.tw/ShopeeShippingOrders/Printer_B2C_batchPDF*","https://ecservice.okmart.com.tw//ShopeeShippingOrders/Printer_B2C_batchPDF*","https://ecservice.okmart.com.tw/ShopeeShippingOrders/Printer_B2C_PDF*"],
+            "js": [
+                "JAScript/jquery-3.5.1.min.js", "zok/ok_app.js"
+            ]
+        },
+        {
+            "comment": "綠界萊爾富單張送貨單",
+            "matches": ["https://ecservice.hilife.com.tw/ec_vendorPrnC2C.aspx*"],
+            "js": [
+                "JAScript/jquery-3.5.1.min.js", "zhilife/ec_hilife_app.js"
+            ],
+            "css": ["zhilife/hilife.css"]
+        }
+
+    ]
+}

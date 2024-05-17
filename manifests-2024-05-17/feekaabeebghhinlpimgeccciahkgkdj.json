@@ -1,0 +1,79 @@
+---
+name: sitebrunch
+version: 1.1.10
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2024-05-11T10:12:57.000Z'
+size: 360KiB
+languages:
+  - Deutsch
+description: |-
+  Sichten, kommentieren, entscheiden und aktivieren. 
+  Direkt auf eurer Website.
+publisher: sitebrunch GmbH
+publisher_address: |-
+  Eifflerstraße 43
+  Hamburg 22769
+  DE
+privacy_policy: https://sitebrunch.com/Impressum
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.1.10",
+  "name": "sitebrunch",
+  "description": "Sichten, kommentieren, entscheiden und aktivieren. \nDirekt auf eurer Website.",
+  "permissions": [
+    "activeTab", "scripting", "storage", "tabs", "contextMenus"
+  ],
+
+  "host_permissions": ["<all_urls>"],
+
+  "action": {},
+
+  "background": {
+    "service_worker": "pages/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:3456/*", "https://dashboard.sitebrunch.com/*"],
+      "js": ["pages/dashboard.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["pages/screenshot.js"]
+    }
+  ],
+
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "https://dashboard.sitebrunch.com/*"]
+  },
+
+  "icons": {
+    "16": "assets/icons/icon-16.png",
+    "32": "assets/icons/icon-32.png",
+    "128": "assets/icons/icon-128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dev/loader.js",
+        "contentStyle.css",
+        "assets/images/icon.png",
+
+        "dist/js/index.js",
+        "dist/css/index.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

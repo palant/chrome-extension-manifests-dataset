@@ -1,0 +1,130 @@
+---
+name: Temple - Tezos Wallet
+version: 1.21.1
+category_slug: productivity/workflow
+rating: 4.481481481481482
+rating_count: 54
+user_count: 100000
+release_date: '2024-04-24T11:08:07.000Z'
+size: 9.86MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - Türkçe
+  - русский
+  - українська
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  🔐💰Cryptocurrency wallet for Tezos blockchain as Web Extension for your
+  Browser.
+publisher_account: temple-publishing-group
+support_website: https://templewallet.com/contact
+privacy_policy: https://templewallet.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.21.1",
+  "name": "Temple - Tezos Wallet",
+  "short_name": "Temple - Tezos Wallet",
+  "icons": {
+    "16": "misc/icon-16.png",
+    "19": "misc/icon-19.png",
+    "38": "misc/icon-38.png",
+    "128": "misc/icon-128.png"
+  },
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/madfish-solutions/templewallet-extension",
+  "author": "https://madfish.solutions",
+  "minimum_chrome_version": "103",
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost/*",
+        "http://127.0.0.1/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentScript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/replaceAds.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/keepBackgroundWorkerAlive.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "resources": [
+        "scripts/*.chunk.js",
+        "scripts/*.embed.js",
+        "fullpage.html",
+        "misc/ad-banners/*",
+        "iframes/ads-stack.html",
+        "iframes/persona-ad.html"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost:8732/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "action": {
+    "default_title": "Temple - Tezos Wallet",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "misc/icon-16.png",
+      "19": "misc/icon-19.png",
+      "38": "misc/icon-38.png",
+      "128": "misc/icon-128.png"
+    },
+    "chrome_style": false
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background/index.js"
+  }
+}

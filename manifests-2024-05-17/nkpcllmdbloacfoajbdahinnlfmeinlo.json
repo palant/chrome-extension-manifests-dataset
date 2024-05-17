@@ -1,0 +1,53 @@
+---
+name: Rogue Dex
+version: '2.4'
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 9
+release_date: '2024-05-15T05:11:05.000Z'
+size: 16.16KiB
+languages:
+  - English
+description: >-
+  Shows useful information about the pokemon displayed in each battle such as
+  type effectiveness, IVs, abilities and soon much more!
+support_website: https://discord.com/invite/gSEz97cN
+privacy_policy: https://raw.githubusercontent.com/roguedex-dev/roguedex/main/README.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rogue Dex",
+  "version": "2.4",
+  "permissions": ["activeTab", "webRequest"],
+  "host_permissions": [
+    "https://pokerogue.net/*",
+    "https://api.pokerogue.net/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://api.pokerogue.net/*", "https://pokerogue.net/*"],
+      "js": ["inject.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://pokerogue.net/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js", "injected.js"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ]
+}

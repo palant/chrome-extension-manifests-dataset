@@ -1,0 +1,105 @@
+---
+name: Stay for Browser
+version: 2.6.6
+category_slug: productivity/tools
+rating: 4.304347826086956
+rating_count: 23
+user_count: 1000
+release_date: '2024-05-05T07:54:44.000Z'
+size: 1.59MiB
+languages:
+  - English
+  - 中文 (简体)
+description: >-
+  Userscript manager compatible with Tampermonkey, Violentmonkey. Dark mode for
+  every website. Stay synched on Chrome/Safari/Firefox.
+publisher_account: stay-extension
+extension_website: staybrowser.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_name_browser__",
+    "version": "2.6.6",
+    "description": "__MSG_extension_description_browser__",
+    "manifest_version": 2,
+    "build" : "227",
+    "copyright": "Stay Browser",
+    "icons":{
+        "48": "extension-img/icon-48-chrome.png",
+        "96": "extension-img/icon-96-chrome.png",
+        "128": "extension-img/icon-128-chrome.png",
+        "256": "extension-img/icon-256-chrome.png"
+    },
+
+    "background":{
+        "scripts": ["source/background.js"],
+        "persistent": false,
+        "match_about_blank": true
+    },
+
+    "default_locale": "en",
+
+    "content_scripts": [
+        {
+            "js": ["source/darkmode/fallback.js","source/darkmode/dark.config.js", "source/darkmode/dark.user.js"],
+            "matches": ["<all_urls>"],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "js": ["source/content.js"],
+            "matches": [ "<all_urls>" ],
+            "all_frames": true,
+            "run_at": "document_start",
+            "match_about_blank": true
+        },
+        {
+            "js": ["source/sniffer/sniffer.img.js"],
+            "matches": [ "<all_urls>" ],
+            "all_frames": true,
+            "run_at": "document_start"
+        },
+        {
+            "js": ["source/inject/install-script.js"],
+            "matches": [ "*://greasyfork.org/*/scripts/*" ],
+            "all_frames": false,
+            "run_at": "document_start"
+        },
+        {
+            "js": ["source/sniffer/sniffer.file.js"],
+            "matches": ["<all_urls>"],
+            "all_frames": true,
+            "run_at": "document_start"
+        }
+
+
+    ],
+
+    "browser_action": {
+        "default_popup": "popup.html"
+    },
+    
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+
+    "web_accessible_resources": ["*"],
+
+    "permissions": [
+        "activeTab",
+        "<all_urls>",
+        "storage",
+        "tabs",
+        "alarms",
+        "unlimitedStorage",
+        "clipboardwrite",
+        "cookies",
+        "downloads"
+    ]
+}

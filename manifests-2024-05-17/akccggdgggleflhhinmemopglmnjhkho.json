@@ -1,0 +1,117 @@
+---
+name: Ring.io Web Phone
+version: 2430.1218.1953
+category_slug: productivity/workflow
+rating: 3.7777777777777777
+rating_count: 9
+user_count: 1000
+release_date: '2023-12-31T23:13:42.000Z'
+size: 637KiB
+languages:
+  - English
+description: >-
+  Click to call from Salesforce, Zoho or any other website. Automatically logs
+  your calls. Free trial.
+publisher: Ring.io
+publisher_address: |-
+  570 Herndon Pkway
+  Ste 400
+  Herndon, VA 20170
+  US
+extension_website: ringio.com
+support_website: https://support.ring.io
+privacy_policy: http://www.ring.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Ring.io Web Phone",
+    "description": "Click to call from Salesforce, Zoho or any other website. Automatically logs your calls. Free trial.",
+    "icons": {
+        "16": "icon-16.png",
+        "48": "icon-48.png",
+        "128": "icon-128.png"
+    },
+    "version":"2430.1218.1953",
+    "content_security_policy": "script-src 'self' https://app.ringio.com; object-src 'self'",
+    "permissions": [
+        "contextMenus",
+        "*://*/*"
+    ],
+    "background": {
+        "page" : "background/background.store-production.html"
+    },
+    "externally_connectable": {
+        "ids": [
+            "akccggdgggleflhhinmemopglmnjhkho",
+            "dojkabcgnobldoinfehkcgacdfdjhcdd",
+            "dmapobhlcojobmppjfhcmpjhncclgigl",
+            "mklioalbingcjkeoidhmjciimjejoiim"
+        ],
+        "matches": [
+            "https://*.ringio.com/launcher-app/*"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.ringio.com/launcher-app/*",
+                "https://app.ringio.com/*"
+            ],
+            "all_frames": true,
+            "run_at": "document_end",
+            "js": [
+                "config/config.js",
+                "content-tab/BackgroundBridge.js",
+                "content-tab/TabBridge.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "exclude_matches": [
+                "https://*.ringio.com/*",
+                "https://*.twilio.com/*",
+                "https://*.hubspot.com/workflows/*",
+                "https://localhost:*/*"
+            ],
+            "all_frames": true,
+            "run_at": "document_end",
+            "js": [
+                "content-tab/BackgroundBridge.js",
+                "content-c2c/libphonenumber-min.js",
+                "content-c2c/c2c.js"],
+            "css": ["content-c2c/c2c.css"]
+        },
+        {
+            "matches": [
+                "https://*/*?*ringiotest=true*"
+            ],
+            "all_frames": true,
+            "run_at": "document_end",
+            "js": [
+                "content-welcome/jquery-3.5.1.min.js",
+                "content-welcome/jquery-migrate-3.3.1.min.js",
+                "content-welcome/kinetic.min.js",
+                "content-welcome/enjoyhint.min.js",
+                "content-welcome/welcome.js"
+            ],
+            "css": [
+                "content-welcome/enjoyhint.css"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_title": "Ring.io Web Phone",
+        "default_icon": "browser-action-logo.png"
+    },
+    "web_accessible_resources": [
+        "content-c2c/telephone.svg",
+        "content-c2c/libphonenumber-min.js.map",
+        "content-welcome/Casino_Hand/*",
+        "icon-48.png"
+    ]
+}

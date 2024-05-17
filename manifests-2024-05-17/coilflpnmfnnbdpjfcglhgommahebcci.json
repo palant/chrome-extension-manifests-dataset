@@ -1,0 +1,70 @@
+---
+name: 'Citi Shop℠: Smarter Online Shopping'
+version: 1.7.0
+category_slug: lifestyle/shopping
+rating: 3.217391304347826
+rating_count: 23
+user_count: 30000
+release_date: '2024-03-20T16:21:43.000Z'
+size: 9.64MiB
+languages:
+  - English
+description: >-
+  The free Citi Shop℠ browser extension finds offers at over 5,000 online
+  merchants.
+publisher: Citibank, N.A.
+publisher_address: |-
+  388 Greenwich St.
+  New York, NY 10013-2362
+  US
+support_website: https://www.citi.com/credit-cards/citishop/support
+privacy_policy: https://online.citi.com/US/JRS/portal/template.do?ID=Privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.7.0",
+  "name": "Citi Shop℠: Smarter Online Shopping",
+  "short_name": "Citi Shop℠",
+  "description": "The free Citi Shop℠ browser extension finds offers at over 5,000 online merchants.",
+  "icons": {
+    "128": "img/icon-128.png"
+  },
+  "permissions": ["storage", "tabs", "notifications", "background", "webRequest", "cookies", "unlimitedStorage"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_icon": "img/icon-disabled-128.png"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start",
+      "js": ["browser-polyfill.min.js", "content.js"]
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start",
+      "js": ["browser-polyfill.min.js", "checkout.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*", "fonts/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    },
+    {
+      "resources": ["oauth.html", "shoppay.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["shoppay.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

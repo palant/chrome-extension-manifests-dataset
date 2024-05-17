@@ -1,0 +1,86 @@
+---
+name: Adobe Experience Cloud Visual Editing Helper
+version: 1.0.7
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 9000
+release_date: '2024-04-04T19:16:43.000Z'
+size: 23.85KiB
+languages:
+  - English
+description: >-
+  The Visual Editing Helper extension allows users to load their website into
+  Adobe Target or Adobe Journey Optimizer.
+publisher: Adobe Inc.
+publisher_address: |-
+  345 Park Ave
+  San Jose, CA 95110
+  US
+privacy_policy: https://www.adobe.com/privacy/policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Adobe Experience Cloud Visual Editing Helper",
+  "version": "1.0.7",
+  "description": "The Visual Editing Helper extension allows users to load their website into Adobe Target or Adobe Journey Optimizer.",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "32": "assets/icons/icon32_grayscale.png",
+      "38": "assets/icons/icon38_grayscale.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*adobe_authoring_enabled*",
+        "*://*/*mboxEdit*",
+        "*://*/*mboxDisable*",
+        "*://*/*adobe_vec_authoring*"
+      ],
+      "js": ["client.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.adobe.com/*",
+        "https://*.adobe.net/*",
+        "https://*.adobe.io/*"
+      ],
+      "match_origin_as_fallback": true,
+      "js": ["assets/vecPostMessage.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/cookieOverride.js", "assets/fileLoader.js"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "background": { "service_worker": "background.js" },
+
+  "permissions": [
+    "browsingData",
+    "notifications",
+    "webRequest",
+    "webNavigation",
+    "cookies",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "38": "assets/icons/icon38.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  }
+}

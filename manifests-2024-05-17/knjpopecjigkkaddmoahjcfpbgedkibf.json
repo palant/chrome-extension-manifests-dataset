@@ -1,0 +1,97 @@
+---
+name: Red Block
+version: 0.14.1.44
+category_slug: lifestyle/social
+rating: 3.5211267605633805
+rating_count: 71
+user_count: 10000
+release_date: '2023-07-25T04:13:37.000Z'
+size: 2.87MiB
+languages:
+  - English
+  - 中文 (简体)
+  - 한국어
+description: 해로운 사용자를 막는 새로운 체인블락 확장기능
+publisher_account: 가을별
+privacy_policy: https://gist.github.com/gaeulbyul/25b3a4abfdd91a32d98a5bbe78769f2d
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Red Block",
+  "author": "Gaeulbyul <aeiou256@gmail.com>",
+  "version": "0.14.1.44",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/gaeulbyul/RedBlock",
+  "description": "해로운 사용자를 막는 새로운 체인블락 확장기능",
+  "icons": {
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+
+  "permissions": [
+    "https://twitter.com/*",
+    "https://api.twitter.com/*",
+    "https://mobile.twitter.com/*",
+    "https://tweetdeck.twitter.com/*",
+    "https://*.twimg.com/*",
+    "storage",
+    "notifications",
+    "cookies",
+    "contextMenus",
+    "tabs",
+    "downloads",
+    "webRequest",
+    "webRequestBlocking",
+    "alarms"
+  ],
+
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "options/options.html"
+  },
+
+  "background": {
+    "scripts": ["bundled/background.bun.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://mobile.twitter.com/*"],
+      "exclude_matches": [
+        "https://*.twitter.com/about",
+        "https://*.twitter.com/download",
+        "https://*.twitter.com/intent/*",
+        "https://*.twitter.com/privacy",
+        "https://*.twitter.com/tos",
+        "https://*.twitter.com/*/privacy",
+        "https://*.twitter.com/*/tos",
+        "https://*.twitter.com/i/release_notes",
+        "https://*.twitter.com/i/tweetdeck_release_notes"
+      ],
+      "css": ["styles/oneclick-block.css"],
+      "js": ["bundled/twitter.bun.js"]
+    },
+    {
+      "matches": ["https://tweetdeck.twitter.com/*"],
+      "css": ["styles/oneclick-block.css"],
+      "js": ["bundled/tweetdeck.bun.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    "bundled/twitter_inject.bun.js",
+    "bundled/blackbird_inject.bun.js",
+    "bundled/gryphon_inject.bun.js"
+  ],
+
+  "browser_action": {
+    "default_icon": "icons/icon-48.png",
+    "default_title": "Red Block",
+    "default_popup": "popup/popup.html"
+  },
+
+  "incognito": "spanning"
+}

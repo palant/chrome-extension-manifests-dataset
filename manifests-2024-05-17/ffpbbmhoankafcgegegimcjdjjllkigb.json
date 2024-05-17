@@ -1,0 +1,116 @@
+---
+name: ClientGenie
+version: 0.6.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 81
+release_date: '2024-03-06T15:33:26.000Z'
+size: 251KiB
+languages:
+  - English
+description: >-
+  ClientGenie Makes It Fast & Easy To Generate Qualified Leads, Convert Your
+  Leads Into Red Hot Conversions On Facebook™
+publisher_account: GroupKit
+publisher_address: |-
+  13519 East Chicago Street
+  Chandler, Arizona 85225
+  United States
+privacy_policy: https://groupkit.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ClientGenie",
+  "version": "0.6.1",
+  "description": "ClientGenie Makes It Fast & Easy To Generate Qualified Leads, Convert Your Leads Into Red Hot Conversions On Facebook™",
+  "host_permissions": [
+    "https://*.facebook.com/*",
+    "https://clientgenie.stage.guaranteed.site/*",
+    "https://app.clientgenie.ai/*",
+    "http://127.0.0.1:8000/*"
+  ],
+  "content_scripts": [
+    {
+      "-comment-": "************* Facebook specific JS files ****************",
+      "all_frames": true,
+      "matches": [
+        "*://*.facebook.com/*"
+      ],
+      "js": [
+        "scripts/create-post.js"
+      ]
+    },
+    {
+      "-comment-": "************* Specific JS and CSS files ****************",
+      "all_frames": true,
+      "matches": [
+        "*://*.facebook.com/*",
+        "http://localhost:8000/*",
+        "http://127.0.0.1:8000/*",
+        "https://clientgenie.stage.guaranteed.site/*",
+        "https://app.clientgenie.ai/*"
+      ],
+      "js": [
+        "scripts/globals.js",
+        "scripts/shared.js",
+        "scripts/progress-bar.js",
+        "scripts/send-friend-request.js",
+        "scripts/scan-friends-list.js",
+        "scripts/like-love-post.js",
+        "scripts/unfriend-request.js",
+        "scripts/scan-friends-activity.js",
+        "scripts/reply-to-comment.js",
+        "scripts/listener.js",
+        "scripts/group-members.js",
+        "lib/js/jquery-3.2.1.min.js",
+        "scripts/load-ui-html.js",
+        "scripts/scraper.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "-comment-": "************* Aweber JS and CSS files ****************",
+      "matches": [
+        "https://auth.aweber.com/oauth2/result*"
+      ],
+      "js": [
+        "scripts/globals.js",
+        "scripts/aweber-login.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:8000/*",
+      "http://127.0.0.1:8000/*",
+      "https://clientgenie.stage.guaranteed.site/*",
+      "https://app.clientgenie.ai/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "scripting",
+    "cookies",
+    "debugger",
+    "storage"
+  ]
+}

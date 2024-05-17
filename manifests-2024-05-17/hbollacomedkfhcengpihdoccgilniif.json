@@ -1,0 +1,194 @@
+---
+name: UWatcher Netflix, AppleTV & Crunchyroll stats
+version: 1.1.9
+category_slug: lifestyle/social
+rating: 3.9775280898876404
+rating_count: 89
+user_count: 5000
+release_date: '2024-04-25T06:54:03.000Z'
+size: 6.64MiB
+languages:
+  - English
+description: >-
+  Extension analyzes your Netflix, AppleTV+ & Crunchyroll watching history and
+  creates personalized statistics dashboard.
+publisher: PlumResearch
+publisher_account: uwatcher.app
+publisher_address: |-
+  aleja Piastów 22
+  Szczecin 71-064
+  PL
+privacy_policy: https://uwatcher.app/privacy_policy_WS
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "UWatcher Netflix, AppleTV & Crunchyroll stats",
+  "version": "1.1.9",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhxpSdIu7qQwAoIMq72bg7ZZscbyx3Sz8HWlTbqvvT+jjEcOI0clnwSoQfsL1PCCuVAuj25dEVWL7x+Q1fjEGVk/rFizbw2wY4XQNTsQ0V9S1loVdm56qCti/fMaj84zliOlpPQOtg+lpCRbZmkrdwsc9v9/2o6Vy0LFkxOKL2sl2bBhyIOotbyNhzRcAjXaDtSvuRHaokjuiwHhAazU89EcDTN2PoPUifMfRTRhUKDOjHFaPUvlit0CU40Mj3bqLiUV1g6H31cqsGTDdN2O/QxY1ErjLDIWCdtZKPgNK3KeOwmYJfNf2ugIT1avvyKyQrOAjTu1WNAOsXkEnLo8g3QIDAQAB",
+  "description": "Extension analyzes your Netflix, AppleTV+ & Crunchyroll watching history and creates personalized statistics dashboard.",
+  "manifest_version": 3,
+  "permissions": ["storage", "cookies"],
+  "host_permissions": [
+    "*://*.amazon.co.jp/*",
+    "*://*.amazon.co.uk/*",
+    "*://*.amazon.com/*",
+    "*://*.amazon.de/*",
+    "*://*.apple.com/*",
+    "*://*.bamgrid.com/*",
+    "*://*.disneyplus.com/*",
+    "*://*.hbo.com/*",
+    "*://*.hbomax.com/*",
+    "*://*.max.com/*",
+    "*://*.hulu.com/*",
+    "*://*.netflix.com/*",
+    "*://*.paramountplus.com/*",
+    "*://*.peacocktv.com/*",
+    "*://*.primevideo.com/*",
+    "*://*.tubitv.com/*",
+    "*://*.pluto.tv/*",
+    "*://*.crunchyroll.com/*",
+    "*://*.uwatcher.app/*",
+    "*://ip-api.com/*",
+    "http://localhost:8080/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.uwatcher.app/*",
+        "http://localhost:8080/*"
+      ],
+      "js": [
+        "utils/common.js",
+        "utils/waitForElm.js",
+        "utils/uwatcherApp.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/settings/viewed?stats=true",
+        "https://www.netflix.com/browse/my-list",
+        "https://play.hbomax.com/*",
+        "https://*.max.com/*",
+        "https://www.netflix.com/*",
+        "https://www.crunchyroll.com/*",
+        "https://tv.apple.com/*"
+      ],
+      "js": [
+        "vendor/lodash.min.js",
+        "vendor/json2csv.min.js",
+        "vendor/jquery.min.js",
+        "vendor/purify.min.js",
+        "vendor/chart.min.js",
+        "utils/DaysMonthsConst.js",
+        "utils/waitForElm.js",
+        "utils/template.js",
+        "utils/common.js",
+        "utils/loader.js",
+        "utils/db.js",
+        "utils/stats.js",
+        "utils/format.js",
+        "utils/debug.js",
+        "utils/globalStats.js",
+        "utils/charts.js",
+        "utils/mylist.js",
+        "utils/copybtns.js",
+        "utils/netflixProfileTracker.js",
+        "utils/notification.js",
+        "common/urls.js",
+        "dashboard/dashboard.js",
+        "dashboard/hbomax.js",
+        "dashboard/crunchyroll.js",
+        "dashboard/uwatcher.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/settings/viewed?stats=true",
+        "https://www.netflix.com/browse/my-list",
+        "https://www.netflix.com/*"
+      ],
+      "js": [
+        "utils/activity.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.crunchyroll.com/*"
+      ],
+      "js": [
+        "utils/crunchyrollActivity.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://tv.apple.com/*"
+      ],
+      "js": [
+        "utils/appleTvActivity.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/settings/viewed?stats=true",
+        "https://www.crunchyroll.com/history?stats=true",
+        "https://tv.apple.com/?uwatcherStats=true"
+      ],
+      "css": ["styles/styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dashboard/dashboard.html",
+        "empty.html",
+        "error.html",
+        "fonts/*",
+        "images/*",
+        "utils/*"
+      ],
+      "matches": [
+        "https://*.netflix.com/*", 
+        "https://www.crunchyroll.com/*", 
+        "https://tv.apple.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "dashboard/dashboard.html",
+        "hbomaxstats.html",
+        "hbomaxempty.html",
+        "fonts/*",
+        "images/*"
+      ],
+      "matches": ["https://*.hbomax.com/*","https://*.max.com/*"]
+    },
+    {
+      "resources": ["fonts/*"],
+      "matches": ["https://*.uwatcher.app/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo48.png",
+      "128": "images/logo128.png"
+    }
+  },
+  "icons": {
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png",
+    "128": "images/logo128.png"
+  }
+}

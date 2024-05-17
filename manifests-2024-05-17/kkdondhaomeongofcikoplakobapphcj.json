@@ -1,0 +1,94 @@
+---
+name: Convert Gmail™ to PDF (locally)
+version: 0.3.5
+category_slug: productivity/education
+rating: 3.3529411764705883
+rating_count: 34
+user_count: 10000
+release_date: '2023-10-10T04:20:53.000Z'
+size: 4.03MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - 中文 (简体)
+  - 日本語
+description: >-
+  Convert your emails to PDF format on offline mode (without a server
+  interaction; secure and private) to backup your emails
+publisher_account: rynu.smith
+support_website: https://webextension.org/listing/to-pdf.html
+privacy_policy: https://add0n.com/policies/rynu.smith.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Convert Gmail™ to PDF (locally)",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "version": "0.3.5",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "scripting",
+    "declarativeContent"
+  ],
+  "host_permissions": [
+    "*://mail.google.com/*"
+  ],
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "content_scripts": [{
+    "matches": ["*://mail.google.com/*"],
+    "run_at": "document_start",
+    "css": ["/data/button/index.css"],
+    "js": ["/data/button/index.js"]
+  }, {
+    "matches": [
+      "*://mail.google.com/mail/*save-as-pdf-jspdf*",
+      "*://mail.google.com/mail/*save-as-pdf-print*"
+    ],
+    "run_at": "document_start",
+    "js": [
+      "/prefs.js",
+      "/data/view/index.js"
+    ],
+    "all_frames": true
+  }],
+  "web_accessible_resources": [{
+    "resources": [
+      "/data/button/icon-blue.svg",
+      "/data/button/icon-orange.svg",
+      "/data/print/index.html",
+      "/data/assets/*.ttf",
+      "/data/view/inject.js"
+    ],
+    "matches": ["*://mail.google.com/*"]
+  }],
+  "homepage_url": "https://webextension.org/listing/to-pdf.html",
+  "options_ui": {
+    "page": "/data/options/index.html"
+  },
+  "icons": {
+     "16": "/data/icons/16.png",
+     "32": "/data/icons/32.png",
+     "48": "/data/icons/48.png",
+     "64": "/data/icons/64.png",
+     "128": "/data/icons/128.png",
+     "256": "/data/icons/256.png",
+     "512": "/data/icons/512.png"
+  },
+  "action": {}
+}

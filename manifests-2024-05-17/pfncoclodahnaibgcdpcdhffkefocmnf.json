@@ -1,0 +1,115 @@
+---
+name: Dragon Bookeeper
+version: 0.8.3.1
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-05-07T11:55:04.000Z'
+size: 463KiB
+languages:
+  - English
+description: >-
+  Keeps track of progress in Dragcave.net and helps you identify eggs you many
+  need to complete a full scroll.
+publisher_account: dragcavelivingpediahelper
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dragon Bookeeper",
+  "version": "0.8.3.1",
+  "author": "Pedro Carvalho",
+  "description": "Keeps track of progress in Dragcave.net and helps you identify eggs you many need to complete a full scroll.",
+  "icons": {
+    "32": "icons/extension-icon.png"
+  },
+
+  "permissions": ["storage"],
+
+  "content_scripts": [
+    {
+      "matches": ["https://dragcave.net/abandoned"],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/abandoned.js"]
+    },
+    {
+      "matches": ["https://dragcave.net/locations/*"],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/locations.js"]
+    },
+    {
+      "matches": [
+        "https://dragcave.net/dragons",
+        "https://dragcave.net/dragons/*"
+      ],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/ownScroll.js"]
+    },
+    {
+      "matches": ["https://dragcave.net/user/*"],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/otherScroll.js"]
+    },
+    {
+      "matches": [
+        "https://dragcave.net/actions/*/abandon",
+        "https://dragcave.net/actions/*/keep",
+        "https://dragcave.net/actions/*/freeze",
+        "https://dragcave.net/actions/*/earthquake",
+        "https://dragcave.net/actions/*/stun/*",
+        "https://dragcave.net/actions/*/kill",
+        "https://dragcave.net/actions/*/influence/*",
+        "https://dragcave.net/actions/*/fertility",
+        "https://dragcave.net/actions/*/incubate/*",
+        "https://dragcave.net/actions/*/bite/*",
+        "https://dragcave.net/actions/*/ward/*",
+        "https://dragcave.net/actions/*/precognition/*",
+        "https://dragcave.net/actions/*/summon"
+      ],
+      "js": ["scripts/pages/BSA_QoL.js"]
+    },
+    {
+      "matches": ["https://dragcave.net/market"],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/market.js"]
+    },
+    {
+      "matches": ["https://dragcave.net/actions/*/breed"],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/breed.js"]
+    },
+    {
+      "matches": ["https://dragcave.net/trading*"],
+      "css": ["styles/labels.css"],
+      "js": ["scripts/pages/trading.js"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "scripts/background/background.js",
+    "type": "module"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "data/speciesData.json",
+        "data/speciesData2.json",
+        "data/speciesData3.json",
+        "data/speciesData4.json",
+        "data/speciesData5.json",
+        "scripts/helper/setupFunctions.js",
+        "scripts/helper/imageProcessingFunctions.js",
+        "scripts/helper/storageFunctions.js",
+        "scripts/helper/otherFunctions.js",
+        "scripts/helper/uiFunctions.js",
+        "scripts/helper/constants.js",
+        "html/progress_summary/progress_summary.html"
+      ],
+      "matches": ["https://dragcave.net/*"]
+    }
+  ]
+}

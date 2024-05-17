@@ -1,0 +1,246 @@
+---
+name: Motorwatch - car price tracker
+version: 0.6.1
+category_slug: lifestyle/shopping
+rating: 4.782608695652174
+rating_count: 46
+user_count: 4000
+release_date: '2024-05-09T02:46:10.000Z'
+size: 144KiB
+languages:
+  - English (UK)
+description: Motorwatch - car and bike price tracker AutoTrader, Pistonheads, Cazoo and MCN
+publisher_account: Motorwatch
+extension_website: motorwatch.co.uk
+support_website: https://www.motorwatch.co.uk/support
+privacy_policy: https://www.motorwatch.co.uk/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Motorwatch - car price tracker",
+  "version": "0.6.1",
+  "description": "Motorwatch - car and bike price tracker AutoTrader, Pistonheads, Cazoo and MCN",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://www.motorwatch.co.uk/*",
+    "*://*.autotrader.co.uk/*",
+    "*://heycar.com/uk/autos?*",
+    "*://www.motors.co.uk/*",
+    "*://www.pistonheads.com/*",
+    "*://www.cazoo.co.uk/*",
+    "*://www.gumtree.com/search?*",
+    "*://www.gumtree.com/search*search_category=cars*",
+    "*://www.gumtree.com/search*search_category=motorbikes-scooters*",
+    "*://www.gumtree.com/cars-vans-motorbikes/motorbikes-scooters*",
+    "*://www.gumtree.com/search*search_category=vans*",
+    "*://www.gumtree.com/cars-vans-motorbikes/vans*",
+    "*://www.gumtree.com/search*search_category=campervans-motorhomes*",
+    "*://www.gumtree.com/cars-vans-motorbikes/campervans-motorhomes*",
+    "*://www.gumtree.com/p/*",
+    "*://www.motorcyclenews.com/bikes-for-sale*",
+    "*://www.cinch.co.uk/used-cars*"
+  ],
+
+  "action": {
+    "default_icon": {
+      "16": "images/motorwatch-website-favicon-color.png",
+      "48": "images/motorwatch-website-favicon-color.png",
+      "128": "images/motorwatch-website-favicon-color.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.autotrader.co.uk/car-search*",
+        "https://www.autotrader.co.uk/van-search*",
+        "https://www.autotrader.co.uk/bike-search*",
+        "https://www.autotrader.co.uk/truck-search*",
+        "https://www.autotrader.co.uk/farm-search*",
+        "https://www.autotrader.co.uk/plant-search*",
+        "https://www.autotrader.co.uk/caravan-search*",
+        "https://www.autotrader.co.uk/motorhome-search*"
+      ],
+      "js": ["scripts/autotrader/content.js", "scripts/funcs.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.autotrader.co.uk/secure/saved-adverts*"],
+      "js": ["scripts/autotrader/saved.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": ["https://www.autotrader.co.uk/car-details*"],
+      "js": [
+        "scripts/autotrader/details.js",
+        "scripts/init.js",
+        "scripts/funcs.js"
+      ],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://heycar.com/uk/autos?*"],
+      "js": ["scripts/heycar/content.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": ["https://www.motors.co.uk/search/car/*"],
+      "js": ["scripts/motors/content.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": ["https://www.motors.co.uk/car-*"],
+      "js": ["scripts/motors/details.js", "scripts/init.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.pistonheads.com/buy/search*"],
+      "js": ["scripts/pistonheads/content.js", "scripts/funcs.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.pistonheads.com/buy/listing/*"],
+      "js": [
+        "scripts/pistonheads/details.js",
+        "scripts/init.js",
+        "scripts/funcs.js"
+      ],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.pistonheads.com/account/bookmarks*"],
+      "js": ["scripts/pistonheads/favourites.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": [
+        "https://www.gumtree.com/search*search_category=cars*",
+        "https://www.gumtree.com/search*search_category=motorbikes-scooters*",
+        "https://www.gumtree.com/cars-vans-motorbikes/motorbikes-scooters",
+        "https://www.gumtree.com/search*search_category=vans*",
+        "https://www.gumtree.com/cars-vans-motorbikes/vans*",
+        "https://www.gumtree.com/search*search_category=campervans-motorhomes*",
+        "https://www.gumtree.com/cars-vans-motorbikes/campervans-motorhomes*"
+      ],
+      "js": ["scripts/gumtree/content.js", "scripts/funcs.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.gumtree.com/p/*"],
+      "js": [
+        "scripts/gumtree/details.js",
+        "scripts/init.js",
+        "scripts/funcs.js"
+      ],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.motorcyclenews.com/bikes-for-sale/*/?*"],
+      "js": ["scripts/mcn/content.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": ["https://www.motorcyclenews.com/bikes-for-sale/*/*/*/"],
+      "js": ["scripts/mcn/details.js", "scripts/init.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": ["https://www.cazoo.co.uk/cars/*"],
+      "js": ["scripts/cazoo/content.js", "scripts/funcs.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.cazoo.co.uk/car-details/*"],
+      "js": ["scripts/cazoo/details.js", "scripts/init.js", "scripts/funcs.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.cazoo.co.uk/saved/favourites/"],
+      "js": ["scripts/cazoo/favourites.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    },
+    {
+      "matches": [
+        "https://www.cinch.co.uk/used-cars/*/*",
+        "https://www.cinch.co.uk/used-cars/*",
+        "https://www.cinch.co.uk/used-cars?*"
+      ],
+      "exclude_matches": ["https://www.cinch.co.uk/used-cars/*/*/*"],
+      "js": ["scripts/cinch/content.js", "scripts/funcs.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.cinch.co.uk/used-cars/*/*/*"],
+      "js": ["scripts/cinch/details.js", "scripts/funcs.js", "scripts/init.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["dist/styles.css"]
+    },
+    {
+      "matches": ["https://www.cinch.co.uk/my-profile/favourites*"],
+      "js": ["scripts/cinch/favourites.js"],
+      "runat": "documnent_idle",
+      "all_frames": true,
+      "css": ["css/styles.css"]
+    }
+  ],
+  "icons": {
+    "16": "images/motorwatch-website-favicon-color.png",
+    "48": "images/motorwatch-website-favicon-color.png",
+    "128": "images/motorwatch-website-favicon-color.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": [
+        "images/motorwatch-website-favicon-color.png",
+        "images/motorwatch-logo.png",
+        "images/motorwatch-logo-black-145.png",
+        "images/vrm-input-icon.svg",
+        "images/MotorlyCarFinanceLg.png",
+        "images/motorly-small.png"
+      ]
+    }
+  ]
+}

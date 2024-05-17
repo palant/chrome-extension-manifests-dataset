@@ -1,0 +1,74 @@
+---
+name: Chess.com BestMove
+version: '2.62'
+category_slug: lifestyle/fun
+rating: 4.5
+rating_count: 8
+user_count: 1000
+release_date: '2024-04-01T08:51:11.000Z'
+size: 804KiB
+languages:
+  - English
+description: >-
+  A stockfish based chess solver for chess.com. Automatically highlight best
+  moves.
+support_website: https://www.youtube.com/watch?v=n8wxoheVpyo
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chess.com BestMove",
+  "version": "2.62",
+  "author": "Devin Wieker",
+  "description": "A stockfish based chess solver for chess.com. Automatically highlight best moves.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "identity.email"
+  ],
+  "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.chess.com/play/*",
+        "https://www.chess.com/game/*",
+        "https://www.chess.com/puzzles/*",
+        "https://www.chess.com/analysis/*"
+      ],
+      "js": [
+        "jquery.js",
+        "content.js"
+      ]
+    },
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["ExtPay.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "bg-loader.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "A stockfish based chess engine for chess.com games.",
+    "default_icon": {
+      "16": "favicon-16x16.png",
+      "32": "favicon-32x32.png"
+    }
+  },
+  "icons": {
+    "16": "favicon-16x16.png",
+    "32": "favicon-32x32.png",
+    "128": "icon128.png"
+  }
+}

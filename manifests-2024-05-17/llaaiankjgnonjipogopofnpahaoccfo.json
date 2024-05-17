@@ -1,0 +1,101 @@
+---
+name: UsableNet PageCapture
+version: '0.65'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 17
+release_date: '2024-02-28T19:42:02.000Z'
+size: 502KiB
+languages:
+  - English (United States)
+description: Capture web pages to be processed by UsableNet AQA
+publisher_account: UsableNet
+privacy_policy: https://usablenet.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "UsableNet PageCapture",
+  "version": "0.65",
+  "manifest_version": 3,
+  "description": "Capture web pages to be processed by UsableNet AQA",
+  "author": "UsableNet",
+  "icons": {
+    "128": "icons/icon-128x128.png"
+  },
+  "devtools_page":"devtools/devtools.html",
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "background": {
+    "service_worker": "background/background.bundle.js"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentscripts/overrides-init.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentscripts/snapshotter.bundle.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentscripts/contentscripts.bundle.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentscripts/msgFallback.js"
+      ]
+    }
+  ],
+  "commands": {
+    "capture-page": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "Take a snapshot of the current page."
+    }
+  },
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "scripting",
+    "downloads",
+    "pageCapture",
+    "unlimitedStorage"
+  ]
+}

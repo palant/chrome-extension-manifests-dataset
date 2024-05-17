@@ -1,0 +1,86 @@
+---
+name: Meme sandbox
+version: 1.0.14
+category_slug: lifestyle/games
+rating: 5
+rating_count: 1
+user_count: 177
+release_date: '2024-04-21T09:29:11.000Z'
+size: 565KiB
+languages:
+  - English (UK)
+description: Help explore Meme sandbox game
+publisher_account: PopBRC
+privacy_policy: https://www.freeprivacypolicy.com/live/6dd710d0-f34f-4c8a-878b-45998e1c8d8f
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Meme sandbox",
+    "version": "1.0.14",
+    "description": "Help explore Meme sandbox game",
+    "manifest_version": 3,
+    "author": "PopBRC",
+    "icons": {
+        "128": "images/logo-pecl.png"
+    },
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "Mem Sandbox"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval';  script-src-elem 'self' ; object-src 'self'; "
+    },
+    "background": { 
+        "service_worker": "scripts/backgroundSecure.js"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/extensionHelper.js"
+            ],
+            "all_frames": true,
+            "matches": [
+                "https://www.twitter.com/*",
+                "https://twitter.com/*",
+                "https://x.com/*",
+                "https://play.sandbox.popbrc.com/*"
+            ]
+        },
+        {
+            "css": [ "css/bootstrap.min.css", "css/app.css" ],
+            "js": [
+                "scripts/lib/jquery.min.js",
+                "scripts/lib/ethers-5-1.umd.min.js",
+                "scripts/lib/bootstrap.min.js",
+                "scripts/content.js"
+            ],
+            "matches": [
+                "https://www.twitter.com/*",
+                "https://twitter.com/*",
+                "https://x.com/*"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "web_accessible_resources": [
+         {
+            "resources": ["images/*"],
+            "matches": ["https://www.twitter.com/*",
+            "https://twitter.com/*"]
+        }
+    ]  ,
+    "externally_connectable": {
+        "matches": [
+          "https://www.twitter.com/*",
+          "https://twitter.com/*",
+          "https://play.sandbox.popbrc.com/*",
+          "https://api.sandbox.popbrc.com/*",
+          "http://127.0.0.1:9899/*"
+        ]
+      }
+}

@@ -1,0 +1,74 @@
+---
+name: Verse Medical Orders
+version: 1.0.0.8
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 65
+release_date: '2024-04-08T01:36:38.000Z'
+size: 26.17KiB
+languages:
+  - English (United States)
+description: >-
+  Conveniently submit orders to versemedical.com by taking screen shots of user
+  information.
+publisher: Verse Medical
+publisher_account: google-chrome-store
+publisher_address: |-
+  37 W 20th St ste 801
+  New York, NY 10011
+  US
+extension_website: versemedical.com
+privacy_policy: https://versemedical.com/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Verse Medical Orders",
+  "description": "Conveniently submit orders to versemedical.com by taking screen shots of user information.",
+  "version": "1.0.0.8",
+  "manifest_version": 3,
+  "icons": {"48": "images/favicon.png"},
+  "permissions": [
+    "storage", 
+    "activeTab",
+    "scripting",
+    "unlimitedStorage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources" :["images/logo.png"],
+      "matches": ["https://*.healogics.com/*", "https://*.ecwcloud.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://versemedical.com/*",
+    "https://*.healogics.com/*",
+    "https://*.ecwcloud.com/*",
+    "https://csdomain.jetlenses.com/*",
+    "http://localhost:8181/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_icon": "images/favicon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.healogics.com/*", "https://*.ecwcloud.com/*"],
+      "js": ["content-script.js"],
+      "css": ["content-script.css"]
+    },
+    {
+      "matches": [
+        "https://versemedical.com/extension/install_auth_token*",
+        "http://localhost:8181/extension/install_auth_token*"
+      ],
+      "js": ["auth_token_install.js"],
+      "css": ["auth_token_install.css"]
+    }
+  ]
+}

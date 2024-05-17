@@ -1,0 +1,65 @@
+---
+name: Ofertas Portoplus
+version: 0.2.1
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2022-05-30T08:11:43.000Z'
+size: 175KiB
+languages:
+  - português (Brasil)
+description: Shophub Redirect Extension Portoplus
+publisher_account: shophub.vertem
+privacy_policy: https://vertem.com/politica-de-privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ofertas Portoplus",
+  "description": "Shophub Redirect Extension Portoplus",
+  "manifest_version": 3,
+  "version": "0.2.1",
+  "content_security_policy": {
+    "script-src": "'self', https://apis.google.com",
+    "object-src": "'self'"
+  },
+  "permissions": ["tabs", "webNavigation", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "assets/shophub.ico",
+      "48": "assets/shophub.ico",
+      "128": "assets/shophub.ico"
+    }
+  },
+  "icons": {
+    "16": "assets/shophub.ico",
+    "48": "assets/shophub.ico",
+    "128": "assets/shophub.ico"
+  },
+  "host_permissions": ["https://shopping-showcase-api-prd.azurewebsites.net/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://redirect.shophub.com.br/portoplus*"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["partners-script.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

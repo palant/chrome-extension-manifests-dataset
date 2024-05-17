@@ -1,0 +1,134 @@
+---
+name: Free CAPTCHA Bypass
+version: 1.0.4
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 38
+release_date: '2024-05-13T08:52:44.000Z'
+size: 1.8MiB
+languages:
+  - English
+  - español
+  - русский
+description: Automatically solve reCAPTCHA, hCaptcha, FunCaptcha...
+publisher: Captcha Solutions
+publisher_account: CAPTCHA Proxies
+publisher_address: |-
+  39-A Escario Street
+  Cebu City, Cebu 6000
+  Philippines
+extension_website: captchaproxies.com
+support_website: https://freecaptchabypass.com/support/
+privacy_policy: https://freecaptchabypass.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Free CAPTCHA Bypass",
+  "short_name": "FCB",
+  "description": "Automatically solve reCAPTCHA, hCaptcha, FunCaptcha...",  
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  },
+  "devtools_page": "www/index.html#/devtools",
+  "background": {
+    "service_worker": "background.js"
+  },  
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "action": {
+    "default_icon": "icons/icon-48x48.png",
+    "default_popup": "www/index.html#/popup",
+    "default_title": "Free CAPTCHA Bypass"
+  },
+  "version": "1.0.4",
+  "permissions": [
+    "storage",
+    "contextMenus"
+  ],  
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "assets/content.css"
+      ],
+      "js": [
+        "my-content-script.js",
+        "image-to-text.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.arkoselabs.com/fc/*",
+        "*://*.funcaptcha.com/fc/*"
+      ],
+      "js": [
+        "funcaptcha-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://*.hcaptcha.com/captcha/*"
+      ],
+      "js": [
+        "hcaptcha-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://*.google.com/recaptcha/*",
+        "*://*.recaptcha.net/recaptcha/*",
+        "*://recaptcha.net/recaptcha/*"
+      ],
+      "js": [
+        "recaptcha-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "aws-recognition.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

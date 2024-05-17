@@ -1,0 +1,92 @@
+---
+name: MindYourPass Password Firewall
+version: 4.8.0
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 2000
+release_date: '2024-05-07T04:55:45.000Z'
+size: 2.59MiB
+languages:
+  - English
+description: >-
+  MindYourPass Password Firewall is an application that offers organizations
+  insight and control over online accounts.
+publisher: MindYourPass BV
+publisher_account: mindyourpass.com
+publisher_address: |-
+  High Tech campus
+  27
+  Eindhoven 5656AE
+  NL
+extension_website: mindyourpass.io
+support_website: https://www.mindyourpass.io
+privacy_policy: https://www.mindyourpass.io/privacy-en
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MindYourPass Password Firewall",
+  "description": "MindYourPass Password Firewall is an application that offers organizations insight and control over online accounts.",
+  "version": "4.8.0",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "author": "MindYourPass",
+  "permissions": [
+    "webRequest",
+    "storage",
+    "nativeMessaging",
+    "alarms",
+    "identity",
+    "identity.email"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "action": {
+    "default_icon": {
+      "20": "assets/MindYourPassCheck.png",
+      "40": "assets/MindYourPassCheck.png"
+    },
+    "default_popup": "browserAction/index.html"
+  },
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "icons": {
+    "16": "icon_16.png",
+    "48": "icon_48.png",
+    "128": "icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://login.mindyourpass.io/*",
+        "https://web.mindyourpass.io/*"
+      ],
+      "js": [
+        "contentEntry.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.mindyourpass.io/installer/*"
+      ],
+      "js": [
+        "contentInstaller.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

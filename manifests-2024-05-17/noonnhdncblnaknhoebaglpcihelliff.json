@@ -1,0 +1,66 @@
+---
+name: Alibaba Cloud PTS录制器
+version: 0.0.26
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 121
+release_date: '2022-01-15T08:58:41.000Z'
+size: 384KiB
+languages:
+  - 中文 (简体)
+description: 通过录制HTTP流量，快速生成测试脚本，支持阿里云PTS和Apache JMeter
+publisher_account: pts_aliyun
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Alibaba Cloud PTS录制器",
+  "version": "0.0.26",
+  "description": "通过录制HTTP流量，快速生成测试脚本，支持阿里云PTS和Apache JMeter",
+  "author": "xinhan.wxh@alibaba-inc.com",
+  "icons": {
+    "128": "images/PTS.png"
+  },
+  "content_security_policy": "script-src 'self' https://dev.g.alicdn.com https://g.alicdn.com https://d.alicdn.com https://log.mmstat.com; object-src 'self'",
+  "permissions": [
+    "http://*/",
+    "https://*/",
+    "webRequest",
+    "webRequestBlocking",
+    "tabs",
+    "cookies",
+    "notifications"
+  ],
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": {
+    "19": "images/PTS.png",
+    "38": "images/PTS.png"
+  },
+  "default_popup": "index.html"
+},
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["./content.js"],
+    "run_at": "document_start",
+    "all_frames": true,
+    "exclude_matches": [
+      "*://*.aliyun.com/*"
+    ]
+  }, {
+    "matches": ["https://pts.console.aliyun.com/*"],
+    "all_frames": true,
+    "js": ["./ptscontent.js"],
+    "run_at": "document_start"
+  }],
+  "web_accessible_resources": [
+    "pagescript.js",
+    "ptspagescript.js"
+  ]
+}

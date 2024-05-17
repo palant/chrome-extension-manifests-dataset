@@ -1,0 +1,168 @@
+---
+name: Malwarebytes Browser Guard Beta
+version: 3.0.2
+category_slug: productivity/workflow
+rating: 3.8
+rating_count: 5
+user_count: 7000
+release_date: '2024-05-02T21:17:26.000Z'
+size: 27.56MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+description: The fastest and safest web browsing experience.
+publisher: Malwarebytes Inc.
+publisher_account: Malwarebytes
+publisher_address: |-
+  3979 Freedom Cir
+  12th Floor
+  Santa Clara, CA 95054-1241
+  US
+support_website: https://links.malwarebytes.com/support/browserguard
+privacy_policy: https://www.malwarebytes.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "Malwarebytes",
+  "name": "Malwarebytes Browser Guard Beta",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "3.0.2",
+  "icons": {
+    "128": "app/assets/icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.eot",
+        "*.ttf",
+        "*.woff",
+        "*.woff2",
+        "app/assets/close-icon.svg",
+        "app/assets/tooltip.svg",
+        "app/eventpages/block.html",
+        "app/eventpages/block-content-control.html",
+        "app/eventpages/block-mv3.html",
+        "app/eventpages/debugger.html",
+        "app/eventpages/downloading.html",
+        "app/eventpages/block-notification.html",
+        "app/eventpages/block-notification.css",
+        "app/eventpages/block-notification-dark.css",
+        "app/eventpages/monthly-notification.html",
+        "app/eventpages/monthly-notification.css",
+        "app/eventpages/monthly-notification-dark.css",
+        "app/eventpages/clipboard-notification.html",
+        "app/eventpages/clipboard-notification.css",
+        "app/eventpages/clipboard-notification-dark.css",
+        "app/eventpages/empty.html",
+        "injection-instart.js",
+        "injection-tss.js",
+        "injection-tss-notification.js",
+        "injection-topics.js",
+        "injection-tss-skimmer.js",
+        "offscreen/offscreen.html",        
+        "vendor/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.msn.com/*"
+    ]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.malwarebytes.com/browserguard/*"
+      ],
+      "js": [
+        "content-debugging.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-scripts.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_icon": "app/assets/icon.png",
+    "default_popup": "app/pop.html",
+    "default_title": "Malwarebytes"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "mbgc.mv3.whitelist_1",
+        "enabled": true,
+        "path": "db/mbgc.mv3.whitelist_1.json"
+      },
+      {
+        "id": "mbgc.mv3.ads_1",
+        "enabled": true,
+        "path": "db/mbgc.mv3.ads_1.json"
+      },
+      {
+        "id": "mbgc.mv3.ads_2",
+        "enabled": true,
+        "path": "db/mbgc.mv3.ads_2.json"
+      },
+      {
+        "id": "mbgc.mv3.malware_1",
+        "enabled": false,
+        "path": "db/mbgc.mv3.malware_1.json"
+      },
+      {
+        "id": "mbgc.mv3.easylist_1",
+        "enabled": true,
+        "path": "db/mbgc.mv3.easylist_1.json"
+      }
+    ]
+  },
+  "permissions": [
+    "alarms",
+    "downloads",
+    "storage",
+    "tabs",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "unlimitedStorage",
+    "webRequest",
+    "contextMenus",
+    "nativeMessaging",
+    "offscreen",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],  
+  "incognito": "split"
+}

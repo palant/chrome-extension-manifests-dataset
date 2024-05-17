@@ -1,0 +1,83 @@
+---
+name: Assistax2s
+version: 1.0.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 12
+user_count: 12
+release_date: '2024-04-20T12:21:21.000Z'
+size: 350KiB
+languages:
+  - Français
+description: Facilitez le processus de la déclaration de taxe de séjour
+publisher: Haïku Dev
+publisher_account: Haïku dev
+publisher_address: |-
+  60 Rue François 1er
+  Paris 75008
+  FR
+extension_website: assistax2s.com
+privacy_policy: https://www.assistax2s.com/legal/confidentialite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Assistax2s",
+    "version": "1.0.2",
+    "description": "Facilitez le processus de la déclaration de taxe de séjour",
+    "permissions": [
+      "webRequest",
+      "storage"
+    ],
+    "host_permissions": [
+      "https://www.assistax2s.com/",
+      "https://taxedesejour.ofeaweb.fr/"
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://taxedesejour.ofeaweb.fr/*TeledeclarerEtPayer/TeledeclarerV2/",
+          "https://taxedesejour.ofeaweb.fr/*TeledeclarerEtPayer/TeledeclarerV2"
+        ],
+        "js": [
+          "atx2s/atx2s.js"
+        ],
+        "run_at": "document_end"
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "icons/trash-can-regular.svg", 
+          "icons/booking_512x512.png", 
+          "icons/airbnb_512x512.png", 
+          "icons/icon128.png", 
+          "atx2s/atx2s.html", 
+          "atx2s/atx2s.css",
+          "atx2s/spinner.html"],
+        "matches": [
+          "https://taxedesejour.ofeaweb.fr/*"
+        ]
+      }
+    ],
+    "background": {
+      "service_worker": "atx2s/service-worker.js"
+    },
+    "options_ui": {
+      "page": "atx2s/options.html",
+      "open_in_tab": true
+    },
+    "action": {
+      "default_icon": "icons/icon48.png"
+    },
+    "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }

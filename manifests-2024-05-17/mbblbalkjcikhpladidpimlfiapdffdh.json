@@ -1,0 +1,84 @@
+---
+name: Instance Assistant for Lemmy & Kbin
+version: 1.2.6
+category_slug: lifestyle/social
+rating: 5
+rating_count: 2
+user_count: 172
+release_date: '2023-10-08T04:02:32.000Z'
+size: 163KiB
+languages:
+  - English
+description: >-
+  Simplify your Lemmy & Kbin experience with tools for your instance and
+  communities
+publisher_account: cynber
+support_website: https://lemmy.ca/c/instance_assistant
+privacy_policy: https://github.com/cynber/lemmy-instance-assistant/wiki/Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Instance Assistant for Lemmy & Kbin",
+  "short_name": "Inst. Assist",
+  "author": "Cynber",
+  "description": "Simplify your Lemmy & Kbin experience with tools for your instance and communities",
+  "homepage_url": "https://github.com/cynber/lemmy-instance-assistant",
+  "version": "1.2.6",
+  "manifest_version": 3,
+  "icons": {
+    "48": "img/lemming48.png",
+    "128": "img/lemming128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "*://*/communities",
+    "*://*/c/*",
+    "*://*/m/*",
+    "*://*/post/*"
+  ],
+  "action": {
+    "default_popup": "page-popup/popup.html",
+    "default_icon": {
+      "16": "img/lemming16.png",
+      "32": "img/lemming32.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/communities",
+        "*://*/c/*",
+        "*://*/m/*",
+        "*://*/post/*",
+        "*://*/u/*"
+      ],
+      "js": [
+        "node_modules/webextension-polyfill/dist/browser-polyfill.js",
+        "utils.js",
+        "content-sidebar.js",
+        "content-general.js",
+        "content-communityNotFound.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_title": "Instance Assistant",
+    "default_icon": {
+      "16": "img/lemming16.png",
+      "32": "img/lemming32.png"
+    },
+    "default_path": "page-sidebar/sidebar.html"
+  }
+}

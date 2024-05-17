@@ -1,0 +1,84 @@
+---
+name: 'novoShield: Anti-Phishing'
+version: '1.34'
+category_slug: make_chrome_yours/privacy
+rating: null
+rating_count: null
+user_count: 37
+release_date: '2024-03-24T18:41:28.000Z'
+size: 5.61MiB
+languages:
+  - English
+description: >-
+  novoShield brings industry-leading cybersecurity to your browser, so you can
+  work, play, and connect - fearlessly.
+publisher: novoShield Ltd.
+publisher_account: 'novoShield '
+publisher_address: |-
+  Raoul Wallenberg St 20
+  Tel Aviv-Yafo 6971916
+  IL
+extension_website: novoshield.com
+support_website: https://novoshield.com/contact-us/
+privacy_policy: https://novoshield.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "novoShield: Anti-Phishing",
+  "description": "novoShield brings industry-leading cybersecurity to your browser, so you can work, play, and connect - fearlessly.",
+  "version": "1.34",
+  "manifest_version": 3,
+  "permissions": ["tabs", "storage", "scripting"],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "./dist/background.js"
+  },
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./dist/content.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./dist/input_detection.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["*://www.bing.com/search*"],
+      "js": ["./dist/search_an.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://search.yahoo.com/search*"],
+      "js": ["./dist/search_an.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://search.yahoo.com/yhs/search*"],
+      "js": ["./dist/search_an.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*/search*"],
+      "include_globs": ["*://*.google.*/search*"],
+      "js": ["dist/search_re.js"],
+      "css": ["dist/search_re.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {}
+}

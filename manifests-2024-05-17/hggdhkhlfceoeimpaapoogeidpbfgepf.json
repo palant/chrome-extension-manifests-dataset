@@ -1,0 +1,93 @@
+---
+name: VoVo - Influencer audience analytics
+version: 0.0.1
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-01-08T10:23:09.000Z'
+size: 276KiB
+languages:
+  - English (UK)
+description: Audience, brand and engagement analytics for Instagram users
+publisher: VoVo
+publisher_address: |-
+  64 Ousebank Way
+  Stony Stratford
+  Milton Keynes MK11 1LB
+  GB
+extension_website: vovo-analytics.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VoVo - Influencer audience analytics",
+  "version": "0.0.1",
+  "description": "Audience, brand and engagement analytics for Instagram users",
+  "background": {
+    "service_worker": "src/pages/background/index.js"
+  },
+  "host_permissions": [
+    "https://www.instagram.com/*",
+    "https://www.tiktok.com/*"
+  ],
+  "action": {
+    "default_popup": "pages/popup/index.html",
+    "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.instagram.com/*"
+      ],
+      "js": [
+        "src/pages/instagram/index.js"
+      ],
+      "css": [],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.instagram.com/*",
+        "https://www.tiktok.com/*"
+      ],
+      "js": [
+        "src/pages/interceptor/index.js"
+      ],
+      "css": [],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icon128.png",
+        "icon-34.png",
+        "popup-logo.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "/src/pages/interceptor/interceptor.js",
+        "assets/js/*.js",
+        "assets/css/*.css"
+      ],
+      "matches": [
+        "https://www.instagram.com/*",
+        "https://www.tiktok.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ]
+}

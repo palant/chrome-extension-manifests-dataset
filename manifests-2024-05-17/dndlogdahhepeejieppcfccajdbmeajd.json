@@ -1,0 +1,81 @@
+---
+name: tkm-gchat-ext
+version: 2.8.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 5000
+release_date: '2024-03-30T16:33:35.000Z'
+size: 176KiB
+languages:
+  - English
+  - 日本語
+description: >-
+  Makes Google Chat™ more useful. Read Later, Copy Message/Thread URL, Change
+  Favorite Emoji, Change List Order, etc.
+publisher_account: たかみ
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_ExtensionName__",
+  "description": "__MSG_ExtensionDescription__",
+  "version": "2.8.0",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/chat/*",
+        "https://chat.google.com/*"
+      ],
+      "css": [
+        "tkm-gchat-ext-main.css"
+      ],
+      "js": [
+        "tkm-gchat-ext-main.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset-msg-jump",
+        "enabled": false,
+        "path": "ruleset-msg-jump.json"
+      }
+    ]
+  },
+  "action": {
+    "default_icon": {
+      "128": "icon-128.png"
+    },
+    "default_popup": "tkm-gchat-ext-popup.html"
+  },
+  "background": {
+    "service_worker": "tkm-gchat-ext-background.js"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://chat.google.com/*/*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icon-128.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

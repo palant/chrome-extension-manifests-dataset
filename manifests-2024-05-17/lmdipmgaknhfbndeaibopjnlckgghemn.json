@@ -1,0 +1,75 @@
+---
+name: Astral Codex Eleven
+version: 0.2.4
+category_slug: productivity/communication
+rating: 5
+rating_count: 4
+user_count: 91
+release_date: '2024-05-04T09:48:02.000Z'
+size: 26.74KiB
+languages:
+  - English (United States)
+description: >-
+  Speeds up loading of comments on Astral Codex Ten
+  (https://www.astralcodexten.com/).
+publisher_account: Maks Verver
+support_website: https://github.com/maksverver/astral-codex-eleven/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Astral Codex Eleven",
+  "version": "0.2.4",
+  "description": "Speeds up loading of comments on Astral Codex Ten (https://www.astralcodexten.com/).",
+  "icons": {
+    "48": "images/icon-48x48.png",
+    "128": "images/icon-128x128.png"
+  },
+  "permissions": [
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "*://www.astralcodexten.com/p/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset-1",
+        "enabled": true,
+        "path": "filter-rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://www.astralcodexten.com/*"
+      ],
+      "resources": [
+        "filtered-comments.json",
+        "main-script.js"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.astralcodexten.com/*"
+      ],
+      "exclude_matches": [
+        "*://www.astralcodexten.com/p/*/comment/*",
+        "*://www.astralcodexten.com/p/*/comments"
+      ],
+      "css": [
+        "ext-comments.css"
+      ],
+      "js": [
+        "ext-comments.js",
+        "astral-codex-eleven.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

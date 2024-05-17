@@ -1,0 +1,128 @@
+---
+name: Kupuj i pomagaj
+version: 1.6.11
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 53
+release_date: '2024-02-07T04:35:25.000Z'
+size: 382KiB
+languages:
+  - polski
+description: >-
+  Automatyzacja procesu wspierania podopiecznych fundacji Kupuj i pomagaj.
+  Robisz zakupy w internecie i pomagasz potrzebującym!
+publisher: Spółka Jawna
+publisher_account: unicornum
+publisher_address: |-
+  Wiśniowa 11/3
+  Warszawa 02-563
+  PL
+privacy_policy: https://pomagaj.bardziejkochani.pl/cookies
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Kupuj i pomagaj",
+  "description": "Automatyzacja procesu wspierania podopiecznych fundacji Kupuj i pomagaj. Robisz zakupy w internecie i pomagasz potrzebującym!",
+  "version": "1.6.11",
+  "manifest_version": 2,
+  "icons": {
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "browser_action": {
+    "default_title": "Kupuj i pomagaj"
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "chrome_style": true
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "css/widget.css"
+      ],
+      "js": [
+        "widget/widget.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "css": [
+        "css/google_widget.css"
+      ],
+      "js": [
+        "content/search_widget.js"
+      ],
+      "include_globs": [
+        "*://google.??",
+        "*://google.??/*",
+        "*://google.???",
+        "*://google.???/*",
+        "*://google.co.uk",
+        "*://google.co.uk/*",
+        "*://www.google.??",
+        "*://www.google.??/*",
+        "*://www.google.???",
+        "*://www.google.???/*",
+        "*://www.google.co.uk",
+        "*://www.google.co.uk/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": [],
+      "js": [
+        "content/register_content.js"
+      ],
+      "include_globs": [
+        "*://*.kupujipomagaj.pl.*",
+        "*://kupujipomagaj.pl.*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "*://kupujipomagaj.pl/*",
+    "*://*.kupujipomagaj.pl/*",
+    "https://unicornum-kip-prod.herokuapp.com/*",
+    "https://unicornum-kip-test.herokuapp.com/*",
+    "https://api.unicornum.pl/*",
+    "https://*.unicornum.pl/*",
+    "*://*.unicornum.pl/*",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    "content/search_widget.js",
+    "icons/logo_kip.png",
+    "icons/logo_small.jpg"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.kupujipomagaj.pl/*"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; https://www.google-analytics.com https://www.googletagmanager.com; object-src 'self'"
+}

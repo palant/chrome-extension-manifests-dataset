@@ -1,0 +1,98 @@
+---
+name: Topicus KeyHub
+version: 7.0.0
+category_slug: make_chrome_yours/privacy
+rating: 5
+rating_count: 4
+user_count: 2000
+release_date: '2024-03-07T08:51:34.000Z'
+size: 1.56MiB
+languages:
+  - Deutsch
+  - English (UK)
+  - Nederlands
+description: Access your Topicus KeyHub vaults directly from your browser.
+publisher_account: Topicus Security B.V.
+extension_website: topicus-keyhub.com
+support_website: https://www.topicus-keyhub.com/contact
+privacy_policy: https://www.topicus-keyhub.com/privacy-statement
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "browser_specific_settings": {
+  "gecko": {
+   "id": "keyhub@topicus.nl"
+  }
+ },
+ "manifest_version": 3,
+ "name": "Topicus KeyHub",
+ "short_name": "KeyHub",
+ "version": "7.0.0",
+ "description": "__MSG_manifest_description__",
+ "default_locale": "en_GB",
+ "author": "Topicus Security B.V.",
+ "icons": {
+  "32": "icon/keyhub-icon-32.png",
+  "128": "icon/keyhub-icon-128.png",
+  "256": "icon/keyhub-icon-256.png"
+ },
+ "action": {
+  "default_title": "Topicus KeyHub",
+  "default_icon": {
+   "32": "icon/keyhub-icon-32.png",
+   "128": "icon/keyhub-icon-128.png",
+   "256": "icon/keyhub-icon-256.png"
+  },
+  "default_popup": "index.html"
+ },
+ "commands": {
+  "trigger-fill-with-keyhub": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+F",
+    "mac": "Ctrl+Shift+F"
+   },
+   "description": "Fill with Topicus KeyHub"
+  },
+  "trigger-fill-rotating-pwd": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+X",
+    "mac": "Ctrl+Shift+X"
+   },
+   "description": "Fill rotating password"
+  }
+ },
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [{
+   "matches": ["https://*/console*"],
+   "js": ["detectkeyhub.js"]
+  },{
+   "matches": ["<all_urls>"],
+   "all_frames": true,
+   "js": ["autofill.js"]
+ }],
+ "web_accessible_resources": [{
+  "resources": [
+   "index.html",
+   "callback.html"
+  ],
+  "matches": ["<all_urls>"]
+ }],
+ "permissions": [
+  "clipboardWrite",
+  "contextMenus",
+  "scripting",
+  "storage",
+  "tabs",
+  "declarativeNetRequestWithHostAccess",
+  "identity",
+  "webRequest"
+ ],
+ "host_permissions": [
+  "https://*/keyhub/rest/v1*",
+  "https://www.topicus-keyhub.com/*"
+ ]
+}

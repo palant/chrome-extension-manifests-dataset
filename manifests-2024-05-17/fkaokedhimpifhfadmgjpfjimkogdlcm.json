@@ -1,0 +1,167 @@
+---
+name: Snippet Highlighter - Web & PDF
+version: 5.1.5
+category_slug: productivity/education
+rating: 4.206106870229007
+rating_count: 131
+user_count: 30000
+release_date: '2021-03-12T07:32:39.000Z'
+size: 5.34MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Tiếng Việt
+  - Türkçe
+  - dansk
+  - español
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - slovenščina
+  - suomi
+  - русский
+description: >-
+  Highlighter tool to annotate websites and PDF, import Kindle highlights and
+  more.
+publisher: Movalio Media SRL
+publisher_account: Movalio
+publisher_address: |-
+  Calea Dorobanților 51
+  Timișoara 300309
+  RO
+extension_website: gosnippet.com
+support_website: https://gosnippet.com/help
+privacy_policy: https://gosnippet.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "version": "5.1.5",
+  "manifest_version": 2,
+  "description": "__MSG_appDescription__",
+  "homepage_url": "https://gosnippet.com",
+  "icons": {
+    "16": "images/purple/icon-16.png",
+    "32": "images/purple/icon-32.png",
+    "48": "images/purple/icon-48.png",
+    "128": "images/purple/icon-128.png"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "<all_urls>",
+    "storage",
+    "contextMenus",
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "http://gosnippet.com/",
+    "https://gosnippet.com/",
+    "https://read.amazon.com/*",
+    "https://read.amazon.ca/*",
+    "https://read.amazon.co.uk/*",
+    "https://read.amazon.com.au/*"
+  ],
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/purple/icon-19.png",
+      "38": "images/purple/icon-38.png"
+    },
+    "default_title": "Snippet Highlighter - click to toggle on/off"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "chrome_style": true
+  },
+  "commands": {
+    "toggle-snippet": {
+      "suggested_key": {
+        "default": "Alt+Shift+X"
+      },
+      "description": "Toggle Snippet Highlighter on/off"
+    },
+    "toggle-snippet-sidebar": {
+      "suggested_key": {
+        "default": "Alt+X"
+      },
+      "description": "Show/Hide Snippet sidebar"
+    },
+    "capture-screen": {
+      "suggested_key": {
+        "default": "Alt+C"
+      },
+      "description": "Screen snip"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://gosnippet.com/*",
+        "https://gosnippet.test/*",
+        "http://gosnippet.com/*",
+        "http://gosnippet.test/*"
+      ],
+      "js": [
+        "content_scripts/content-app.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ],
+      "js": [
+        "content_scripts/content-main.js"
+      ],
+      "css": [
+        "css/sidebar.css",
+        "css/content-main.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://read.amazon.com/*",
+        "https://read.amazon.ca/*",
+        "https://read.amazon.co.uk/*",
+        "https://read.amazon.com.au/*"
+      ],
+      "js": [
+        "content_scripts/content-kindle.js"
+      ],
+      "css": [
+        "css/content-kindle.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    "images/*",
+    "content_scripts/frames/sidebar/index.html",
+    "content_scripts/frames/popover/index.html",
+    "content_scripts/frames/select-screenshot/index.html",
+    "content_scripts/frames/edit-screenshot/index.html",
+    "content_scripts/frames/kindle-choose-book/index.html",
+    "content_scripts/frames/application/index.html",
+    "pdfjs/web/viewer.html"
+  ],
+  "content_security_policy": "script-src 'self'; object-src 'self'"
+}

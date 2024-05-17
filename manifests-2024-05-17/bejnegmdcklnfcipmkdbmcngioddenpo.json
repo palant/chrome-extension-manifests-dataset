@@ -1,0 +1,67 @@
+---
+name: Tap to Sign
+version: '1.1'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 33
+release_date: '2021-09-12T05:52:22.000Z'
+size: 15.53KiB
+languages:
+  - English
+description: E-Sign software for car dealerships.
+publisher_account: kyle
+extension_website: taptosign.com
+support_website: https://taptosign.com/
+privacy_policy: https://taptosign.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Tap to Sign",
+  "description": "E-Sign software for car dealerships.",
+  "version": "1.1",
+
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "background": { 
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.taptosign.com/*", "https://*.dealercenter.net/*"]
+  },
+  "content_scripts":[
+    {
+      "matches": ["https://app.dealercenter.net/*"],
+      "js": ["addButton.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["file://*/*","http://*/*", "https://*/*"],
+      "js": ["checkPdf.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.taptosign.com/*"],
+      "js": ["initial.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.scsautoexpress.com/scs.dap.rvt/ContractListPanel.aspx?*"],
+      "js": ["autoexpress.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "permissions": [
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*","https://*/*","file://*/*"
+  ]
+}

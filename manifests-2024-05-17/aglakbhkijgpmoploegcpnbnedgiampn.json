@@ -1,0 +1,103 @@
+---
+name: Prodeus
+version: 2.1.0
+category_slug: productivity/workflow
+rating: 4.258064516129032
+rating_count: 31
+user_count: 4000
+release_date: '2022-05-19T09:27:47.000Z'
+size: 10.05MiB
+languages:
+  - English (United States)
+description: >-
+  Forget massive tuition costs. Let Prodeus catalog the hours you spend learning
+  on Youtube and all the work you do along the way.
+publisher: Prodeus LLC
+publisher_account: Prodeus
+publisher_address: |-
+  961 Bergen St.
+  5A
+  Brooklyn, NY 11216
+  US
+extension_website: prodeus.co
+support_website: https://www.prodeus.co/help
+privacy_policy: https://www.prodeus.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Prodeus",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtN1azFbfx0AIlSShhlF3bZvAm+znga9IlnlEtWnWWpsVNcw3dKnNOgnRIxfri3XgzwylFx6zXyyZRN6tVESQq5dGaFw6d2liNAXaPTsERDjRFQ2Ef7jIArJw7nA2kvMFu6ouibb/vLOe+vXdZMK/8Utym9y7TDQ39mVh8d3sTJ8V0WTseFEKJZDoJvVyDTtTIwpew5QSNRl+di4tuKr1HOT0X8sBqzwUImHB5/Zj1rQ2UZZrO8ee5h4Kk4bA5qFmV521S1Ziglb6Nxov7uhaFWjDzahh8MMwURo8whX7DhP31j8s28DQc64ucwn4BMe0XCBCR9vrfcx3NUgIeeSAcwIDAQAB",
+    "short_name": "Prodeus",
+    "description": "Forget massive tuition costs. Let Prodeus catalog the hours you spend learning on Youtube and all the work you do along the way.",
+    "version": "2.1.0",
+    "browser_action": {
+        "default_title": "Prodeus",
+        "default_icon": {
+            "16": "icons/icon-16.png",
+            "24": "icons/icon-24.png",
+            "32": "icons/icon-32.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon-16.png",
+        "48": "icons/icon-48.png",
+        "128": "icons/icon-128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.youtube.com/*",
+                "https://*.medium.com/*",
+                "*://*.wikipedia.org/*",
+                "https://blog.logrocket.com/*"
+            ],
+            "js": ["tracker.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.youtube.com/*"],
+            "js": ["widget.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://app.prodeus.co/",
+                "https://app.prodeus.co/dash*",
+                "https://app.prodeus.co/login"
+            ],
+            "js": ["login.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://app.prodeus.co/*"
+            ],
+            "js": ["logout.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "oauth2": {
+        "client_id": "432205627649-t7209tb258r3o4gl9gl944utlsn60aph.apps.googleusercontent.com",
+        "scopes": ["profile", "email", "openid"]
+    },
+    "background": {
+        "persistent": true,
+        "scripts": ["hot-reload.js", "background.js"]
+    },
+    "content_security_policy": "script-src 'self' https://prodeus-api.herokuapp.com 'sha256-G0jttwTicqwx6qiINDVnSnCLM5cYip527RZNBOPuXUc='; object-src 'self'; media-src *;",
+    "permissions": [
+        "https://www.youtube.com/",
+        "https://api-js.mixpanel.com/*",
+        "https://www.prodeus-api.herokuapp.com/*",
+        "https://prodeus-api-staging.herokuapp.com/*",
+        "https://www.prodeus.app/*",
+        "https://www.prodeus-web-staging.herokuapp.com/*",
+        "*://mandrillapp.com/*",
+        "activeTab",
+        "tabs"
+    ],
+    "web_accessible_resources": ["*.png", "*.svg"]
+}

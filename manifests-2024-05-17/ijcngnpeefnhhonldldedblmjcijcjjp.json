@@ -1,0 +1,52 @@
+---
+name: Mubi Film Synopsis
+version: 1.0.0
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2023-07-17T08:39:35.000Z'
+size: 28.56KiB
+languages:
+  - English (UK)
+description: >-
+  Make each film synopsis available on the homepage without having to open the
+  link
+publisher_account: mubisynopsisplugin
+support_website: https://www.instagram.com/johnnypwalks/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mubi Film Synopsis",
+  "version": "1.0.0",
+  "description": "Make each film synopsis available on the homepage without having to open the link",
+  "action": { 
+    "default_popup": "/popup/popup.html"
+  },
+  "icons": {
+    "512": "images/icon-512.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "/images/*"],
+      "matches": [ "https://mubi.com/*" ]
+    }
+  ],
+  "background": {
+    "service_worker": "workers/service-worker.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://www.mubi.com/films/*"],
+  "content_scripts": [
+    {
+      "js": ["scripts/utils.js", "scripts/content.js"],
+      "run_at": "document_end",
+      "matches": [
+        "https://mubi.com/*"
+      ]
+    }
+  ]
+}

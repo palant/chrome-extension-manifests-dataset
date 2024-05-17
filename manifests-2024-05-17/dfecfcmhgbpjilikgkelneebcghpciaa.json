@@ -1,0 +1,86 @@
+---
+name: Tab Helper
+version: '1.5'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 32
+release_date: '2023-12-09T02:33:06.000Z'
+size: 395KiB
+languages:
+  - English (United States)
+description: Helper Extension for Tabroom
+publisher_account: Poke535
+privacy_policy: https://poke535.dev/extensions/tabroomhelper/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Tab Helper",
+    "description": "Helper Extension for Tabroom",
+    "version": "1.5",
+    "host_permissions": [
+      "*://speechanddebate.org/*"
+    ],
+    "permissions": [
+        "storage",
+        "cookies"
+    ],
+    "icons": {
+        "16": "icons/TH-16.png",
+        "48": "icons/TH-48.png",
+        "128": "icons/TH-128.png"
+    },
+    "action": {
+      "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+        {
+          "js": ["scripts/judge.js"],
+          "matches": [
+            "*://www.tabroom.com/index/paradigm.mhtml",
+            "*://www.tabroom.com/index/paradigm.mhtml?judge_person_id=*",  
+            "*://www.tabroom.com/index/tourn/postings/judge.mhtml?judge_id=*"
+          ]
+        },
+        {
+          "js": ["scripts/record.js"],
+          "matches": [
+            "*://www.tabroom.com/index/results/team_results.mhtml?id1=*&id2=*",
+            "*://www.tabroom.com/index/results/team_results.mhtml?id1=*"
+          ]
+        },
+        {
+          "js": ["scripts/results.js"],
+          "matches": [
+            "https://www.tabroom.com/user/student/history.mhtml?tourn_id=*&student_id=*"
+          ]
+        },{
+          "js": ["scripts/speech_record_inserter.js"],
+          "matches": [
+            "*://www.tabroom.com/index/tourn/fields.mhtml?tourn_id=*&event_id=*"
+          ]
+        },
+        {
+          "js": ["scripts/speech_record.js"],
+          "run_at": "document_start",
+          "matches": [
+            "https://www.tabroom.com/index/results/team_results.mhtml?name=*&school=*"
+          ]
+        }
+      ],
+    "background": {
+      "service_worker": "background/nsda.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [ "/templates/*" ],
+            "matches": [
+                "<all_urls>"
+              ]
+        }
+    ]
+    
+  }

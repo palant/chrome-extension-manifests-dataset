@@ -1,0 +1,77 @@
+---
+name: Dictionary to Notion
+version: 0.6.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 38
+release_date: '2024-05-02T11:19:27.000Z'
+size: 394KiB
+languages:
+  - English
+description: >-
+  Saving Dicionary vocabularies to Notion, now supporting Oxford Learner's
+  Dictionary and Cambridge Dictionary!
+publisher_account: averageandy119
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Dictionary to Notion",
+  "version": "0.6.1",
+  "description": "Saving Dicionary vocabularies to Notion, now supporting Oxford Learner's Dictionary and Cambridge Dictionary!",
+  "permissions": [ 
+      "storage" 
+  ],
+  "host_permissions":[
+        "https://dictionary.cambridge.org/dictionary/english/*",
+        "https://*.oxfordlearnersdictionaries.com/definition/english/*",
+        "https://*.notion.so/*",
+        "https://*.notion.com/*"
+  ],
+  "background":{
+      "service_worker": "src/background/bundle.js"
+  },
+  "content_scripts":[
+        {
+            "matches":["https://*.oxfordlearnersdictionaries.com/definition/english/*"],
+            "js":["contentScript_oxford.js"],
+            "web_accessible_resources": [
+                {
+                    "resources": ["icons/send.png"],
+                    "matches": ["https://*.oxfordlearnersdictionaries.com/*"]
+                }
+            ]
+        },
+        {
+            "matches":["https://dictionary.cambridge.org/dictionary/english/*"],
+            "js":["contentScript_cambridge.js"],
+            "web_accessible_resources": [
+                {
+                    "resources": ["icons/send.png"],
+                    "matches": ["https://dictionary.cambridge.org/dictionary/english/*"]
+                }
+            ]
+        }
+  ],
+  "web_accessible_resources": [
+      {
+        "resources": ["icons/send.png"],
+        "matches": [
+            "https://*.oxfordlearnersdictionaries.com/*",
+            "https://dictionary.cambridge.org/*"
+        ]
+      }
+  ],
+  "action":{
+      "default_icon":{
+          "16": "icons/ext-icon.png",
+          "24": "icons/ext-icon.png",
+          "32": "icons/ext-icon.png"
+      },
+      "default_title":"Send Vocab to Notion",
+      "default_popup":"src/popup/popup.html"
+  },
+  "manifest_version" : 3
+}

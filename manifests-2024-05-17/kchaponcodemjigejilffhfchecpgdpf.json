@@ -1,0 +1,115 @@
+---
+name: ChatSonic - ChatGPT with super powers
+version: 1.0.0.68
+category_slug: productivity/workflow
+rating: 4.849304068522484
+rating_count: 3736
+user_count: 100000
+release_date: '2024-03-21T04:27:35.000Z'
+size: 2.19MiB
+languages:
+  - English
+description: >-
+  Like ChatGPT but with internet access, references, AI image generation and
+  more.
+publisher: Writesonic, Inc.
+publisher_account: Writesonic
+publisher_address: |-
+  2261 Market Street #4608
+  San Francisco, CA 94114
+  US
+extension_website: writesonic.com
+support_website: https://writesonic.com/contact-us
+privacy_policy: https://writesonic.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatSonic - ChatGPT with super powers",
+  "description": "Like ChatGPT but with internet access, references, AI image generation and more.",
+  "version": "1.0.0.68",
+  "icons": {
+    "128": "./images/logo.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "./images/logo.png"
+    },
+    "default_popup": "./pages/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "./js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/search*", "https://www.bing.com/search*"],
+      "js": ["./js/content_search.js"],
+      "css": ["./css/content_search.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*", "https://ads.google.com/aw/*", "https://adsmanager.facebook.com/*", "https://studio.youtube.com/channel/*"],
+      "css": ["./css/content_ads.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://app.writesonic.com/*", "https://staging.writesonic.com/*"],
+      "js": ["./js/content_auth.js"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*", "file://*/*.pdf"],
+      "js": ["./js/content_main.js"],
+      "css": ["./css/main/main.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": ["https://secure.helpscout.net/*"],
+      "css": ["./css/content_helpscout.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/wp-admin/post*"],
+      "js": ["./js/content_wordpress.js"],
+      "css": ["./css/content_wordpress.css", "./css/main/main.css"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*/*", "http://*/*"],
+      "js": ["./js/content_alliframes.js"],
+      "all_frames": false,
+      "run_at": "document_idle"
+    }
+  ],
+
+  "commands": {
+    "toggle-feature": {
+      "suggested_key": {
+        "chromeos": "Ctrl+M",
+        "default": "Ctrl+M",
+        "linux": "Ctrl+M",
+        "mac": "Command+M",
+        "windows": "Ctrl+M"
+      },
+      "description": "Toggle ChatSonic on any page."
+    }
+  },
+
+  "permissions": ["storage", "contextMenus"],
+  "host_permissions": ["https://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

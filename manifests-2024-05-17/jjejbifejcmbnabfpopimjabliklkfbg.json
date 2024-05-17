@@ -1,0 +1,65 @@
+---
+name: 알고노트 (AlgoNote)
+version: '1.2'
+category_slug: productivity/education
+rating: 5
+rating_count: 1
+user_count: 7
+release_date: '2024-05-12T08:38:01.000Z'
+size: 220KiB
+languages:
+  - 한국어
+description: 편리하게 알고리즘 오답노트를 작성해보세요.
+privacy_policy: https://gpolya.notion.site/5db7bf3abd314c3ba37422d2e193581b?pvs=4
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "알고노트 (AlgoNote)",
+    "description": "편리하게 알고리즘 오답노트를 작성해보세요.",
+    "homepage_url": "https://algnote.duckdns.org/",
+    "version": "1.2",
+    "author": "euny0ung",
+    "content_scripts": [
+        {
+            "matches": ["https://www.acmicpc.net/*"],
+            "js": ["scripts/parsing.js", "scripts/util.js", "scripts/baekjoon.js"],
+            "type": "module",
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "service_worker": "background/background.js",
+        "type": "module"
+    },
+    "icons": {
+        "16": "images/logo.png",
+        "32": "images/logo.png",
+        "48": "images/logo.png",
+        "128": "images/logo.png"
+    },
+    "action": {
+        "default_icon": "images/logo.png",
+        "default_title": "AlgoNote",
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": ["declarativeNetRequest", "declarativeNetRequestWithHostAccess", "cookies"],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    },
+    "host_permissions": ["https://www.acmicpc.net/", "https://solved.ac/api/v3/*", "https://algnote.duckdns.org/*"],
+    "web_accessible_resources": [
+        {
+            "matches": ["<all_urls>"],
+            "resources": ["images/detail_logo.png", "popup/popup.html"]
+        }
+    ]
+}

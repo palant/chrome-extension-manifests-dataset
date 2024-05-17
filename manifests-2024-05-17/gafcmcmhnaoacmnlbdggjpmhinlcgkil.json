@@ -1,0 +1,124 @@
+---
+name: uiFlowDesign
+version: 22.5.10.2
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2022-07-28T10:04:16.000Z'
+size: 1.41MiB
+languages:
+  - English (United States)
+description: Sends page to Web Test Lab on uiFlowDesign
+publisher: ATPT LLC
+publisher_account: support
+publisher_address: |-
+  2464 Millbrook Loop
+  Leander, TX 78641
+  US
+extension_website: atpt.io
+support_website: https://www.atpt.io/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "uiFlowDesign",
+  "version": "22.5.10.2",
+  "description": "Sends page to Web Test Lab on uiFlowDesign",
+  "icons": {
+    "16": "static/images/atpmt16.png",
+    "32": "static/images/atpmt32.png",
+    "48": "static/images/atpmt48.png",
+    "64": "static/images/atpmt64.png",
+    "128": "static/images/atpmt128.png",
+    "256": "static/images/atpmt256.png",
+    "512": "static/images/icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "cookies",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_icon": "static/images/icon.png",
+    "default_popup": "action/button.html",
+    "default_title": "Send to uiFlowDesign"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [
+        "lib/globals.js",
+        "lib/tab-id.js",
+        "lib/location.js",
+        "lib/performance.js",
+        "lib/jquery-3.4.1.min.js",
+        "lib/cropper/cropper.min.js",
+        "content/internals/HTMLEventParser.js",
+        "content/internals/messages-content-script.js",
+        "content/internals/block-frame-detection.js",
+        "content/highlight.js",
+        "content/component-mode.js",
+        "content/click.js",
+        "content/right-click.js",
+        "content/double-click.js",
+        "content/forms.js",
+        "content/drag-drop.js",
+        "content/mousedown.js",
+        "content/mouseover.js",
+        "content/url-change.js",
+        "content/attributes.js",
+        "content/screenshot.js",
+        "content/script.js",
+        "content/rrweb.js",
+        "content/recording.js",
+        "content/browser-event.js",
+        "content/url.js",
+        "content/date-picker.js",
+        "content/screenshot-cropper.js",
+        "content/theme.js",
+        "content/popup/popupHandler.js",
+        "content/popup/popup.js"
+      ],
+      "css": ["lib/cropper/cropper.min.css"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["https://*.atpmt.com/*", "http://localhost/*"],
+      "js": ["content/frame-parent.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/highlight.css",
+        "content/popup/popup.css",
+        "content/popup/popupHandler.js",
+        "content/browser-event-inject.js",
+        "content/block-frame-detection-inject.js"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "removeHeaders",
+        "enabled": true,
+        "path": "background/headers.json"
+      }
+    ]
+  }
+}

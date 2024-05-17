@@ -1,0 +1,79 @@
+---
+name: MyMusicFind
+version: 1.0.2
+category_slug: lifestyle/entertainment
+rating: null
+rating_count: null
+user_count: 244
+release_date: '2024-04-05T06:09:27.000Z'
+size: 93.85KiB
+languages:
+  - English (United States)
+description: MyMusicFind - Search for your favourite tunes.
+publisher_account: mymusicfind8
+extension_website: mymusicfind.com
+privacy_policy: https://mymusicfind.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MyMusicFind",
+  "description": "MyMusicFind - Search for your favourite tunes.",
+  "version": "1.0.2",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "omnibox": {
+    "keyword": "m"
+  },
+
+  "action": {
+    "default_icon": "images/icon-logo.png",
+    "default_title": "MyMusicFind"
+  },
+  "icons": {
+    "16": "images/icon-logo.png",
+    "48": "images/icon-logo.png",
+    "128": "images/icon-logo.png"
+  },
+  "permissions": ["cookies", "storage"],
+  "host_permissions": ["*://.mymusicfind.com/*" , "*://mymusicfind.com/*"],
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["scripts/first-content.js"],
+      "match_about_blank": true,
+      "matches": ["https://forward.mymusicfind.com/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "MyMusicFind or press m+tab",
+      "search_url": "https://forward.mymusicfind.com/?q={searchTerms}&publisherid=72032&barcodeid=72032003",
+      "keyword": "mymusicfind.com",
+      "favicon_url": "https://mymusicfind.com/favicon.ico",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["mymusic.html", 
+      "mymusic.js", 
+      "mymusicsearch.html", 
+      "mymusic.css", 
+      "search.css", 
+      "icon-search.png",
+      "logo-search.png",
+      "logo-pu.png",
+      "mymusicsearch.js",
+      "logo.png"
+    ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

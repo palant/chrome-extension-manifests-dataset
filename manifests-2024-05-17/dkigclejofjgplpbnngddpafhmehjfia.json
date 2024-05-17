@@ -1,0 +1,98 @@
+---
+name: Nynorskoversetteren
+version: 1.2.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 353
+release_date: '2024-03-14T10:30:36.000Z'
+size: 270KiB
+languages:
+  - Norsk
+description: >-
+  Automatisk oversettelse fra bokmål til nynorsk. Oversett direkte i
+  publiseringssystemet ditt eller last opp filer til oversettelse.
+publisher: Totaltekst
+publisher_account: Totaltekst dev
+publisher_address: |-
+  Hieronymus Heyerdahls gate 1
+  Oslo 0160
+  NO
+support_website: https://www.totaltekst.no/nynorskoversetteren/support
+privacy_policy: https://www.totaltekst.no/personvernerklaering
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Nynorskoversetteren",
+    "description": "Automatisk oversettelse fra bokmål til nynorsk. Oversett direkte i publiseringssystemet ditt eller last opp filer til oversettelse.",
+    "manifest_version": 3,
+    "version": "1.2.0",
+    "permissions": [
+        "notifications",
+        "storage",
+        "activeTab",
+        "contextMenus",
+        "clipboardRead",
+        "clipboardWrite"
+    ],
+    "background": {
+        "service_worker": "service_worker.js"
+    },
+    "options_page": "options.html",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "web_accessible_resources": [{
+        "resources": ["settings.js", "jquery-min.js"],
+        "matches": ["*://*/*"]
+    }],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "all_frames": false,
+            "js": [
+                "jquery-min.js",
+                "content-script.js"
+            ],
+            "css": ["styles.css"]
+        }
+    ],
+    "icons": {
+        "16": "icons/16x16.png",
+        "32": "icons/32x32.png",
+        "48": "icons/48x48.png",
+        "128": "icons/128x128.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Nynorskoversetteren",
+        "default_icon": {
+            "16": "icons/16x16.png",
+            "32": "icons/32x32.png",
+            "48": "icons/48x48.png",
+            "128": "icons/128x128.png"
+        }
+    },
+    "commands": {
+        "run_ext": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+E",
+                "mac": "Command+Shift+E"
+            },
+            "description": "Oversett og erstatt"
+        },
+        "_execute_action": {
+            "suggested_key": {
+                "windows": "Ctrl+Shift+Y",
+                "mac": "Command+Shift+Y",
+                "chromeos": "Ctrl+Shift+Y",
+                "linux": "Ctrl+Shift+Y"
+            }
+        }
+    }
+}

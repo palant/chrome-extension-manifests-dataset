@@ -1,0 +1,78 @@
+---
+name: Tackle
+version: 8.6.0
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 15
+user_count: 1000
+release_date: '2024-05-09T16:44:41.000Z'
+size: 906KiB
+languages:
+  - English (United States)
+description: Automatic Google Calendar time tracking and productivity insights
+publisher: TimeTackle Inc
+publisher_address: |-
+  1090 Walnut Woods Ct
+  San Jose, CA 95122-3177
+  US
+extension_website: timetackle.com
+support_website: https://www.timetackle.com/contact/
+privacy_policy: https://www.timetackle.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Tackle",
+    "version": "8.6.0",
+    "short_name": "Tackle",
+    "description": "Automatic Google Calendar time tracking and productivity insights",
+    "author": "AK Syam <syam@timetackle.com>",
+    "manifest_version": 3,
+    "icons": {
+        "16": "/assets/img/16.png",
+        "32": "/assets/img/16.png",
+        "48": "/assets/img/16.png",
+        "128": "/assets/img/16.png"
+    },
+    "permissions": ["activeTab", "scripting", "storage"],
+    "host_permissions": [
+        "https://app.timetackle.com/*",
+        "http://localhost:3000/*",
+        "https://app2.timetackle.com/*",
+        "https://calendar.google.com/*",
+        "https://staging-dot-timetackle.ue.r.appspot.com/*"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/assets/img/16.png",
+            "32": "/assets/img/16.png",
+            "48": "/assets/img/16.png",
+            "128": "/assets/img/16.png"
+        },
+        "default_title": "Tackle"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "/content.js",
+                "/assets/vendor/crypto.aes.min.js",
+                "/assets/vendor/crypto.aes.custom.js"
+            ],
+            "matches": ["https://calendar.google.com/calendar/*"],
+            "run_at": "document_end",
+            "all_frames": false,
+            "match_about_blank": false
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/*"],
+            "matches": ["https://calendar.google.com/*", "https://app2.timetackle.com/*"]
+        }
+    ]
+}

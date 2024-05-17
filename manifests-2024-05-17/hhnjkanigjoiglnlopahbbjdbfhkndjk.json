@@ -1,0 +1,87 @@
+---
+name: Power Thesaurus
+version: 3.1.1
+category_slug: productivity/tools
+rating: 4.5492610837438425
+rating_count: 406
+user_count: 200000
+release_date: '2024-04-23T12:51:20.000Z'
+size: 1.38MiB
+languages:
+  - English
+  - русский
+description: >-
+  Use the power of synonyms by button in toolbar, right-click or by word
+  selection on any page.
+publisher: Power Thesaurus
+publisher_address: |-
+  2633 Gold Coast Hwy
+  Broadbeach, QLD 4218
+  AU
+extension_website: powerthesaurus.org
+privacy_policy: https://www.powerthesaurus.org/_privacy_statement
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Power Thesaurus",
+  "short_name": "PT",
+  "description": "Use the power of synonyms by button in toolbar, right-click or by word selection on any page.",
+  "default_locale": "en",
+  "version": "3.1.1",
+  "permissions": ["storage", "contextMenus"],
+  "options_ui": {
+    "page": "options.html?options=true",
+    "open_in_tab": true
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": false
+  },
+  "browser_action": {
+    "default_popup": "popup.html?popup=true"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_matches": [
+        "https://docs.google.com/document/*",
+        "https://*.powerthesaurus.org/*",
+        "http://*.powerthesaurus.org/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    },
+    {
+      "matches": ["*://docs.google.com/document/*"],
+      "all_frames": false,
+      "js": ["docsContent.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://docs.google.com/document/*"],
+      "all_frames": false,
+      "js": ["docsPreContent.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.powerthesaurus.org/*",
+        "http://*.powerthesaurus.org/*"
+      ],
+      "js": ["authorization.js", "content.js"],
+      "css": ["content.css"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "64": "images/icon64.png",
+    "128": "images/icon128.png"
+  },
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com/analytics.js; object-src 'self'; connect-src https://api.powerthesaurus.org/ https://www.google-analytics.com/ https://stats.g.doubleclick.net/",
+  "web_accessible_resources": ["images/*", "assets/fonts/*", "injectables/*"]
+}

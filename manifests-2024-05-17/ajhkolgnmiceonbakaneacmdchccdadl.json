@@ -1,0 +1,91 @@
+---
+name: CloseBuy
+version: 0.2.2
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 5
+user_count: 97
+release_date: '2021-04-06T00:54:27.000Z'
+size: 895KiB
+languages:
+  - English (United States)
+description: >-
+  Shopping small businesses, made simple. Easily browse unique products from
+  independent businesses all over the U.S.
+publisher_account: CloseBuy
+extension_website: closebuyme.com
+support_website: https://www.closebuyme.com/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "CloseBuy",
+  "version": "0.2.2",
+  "description": "Shopping small businesses, made simple. Easily browse unique products from independent businesses all over the U.S.",
+  "short_name": "CloseBuy",
+  "author": "CloseBuy",
+  "icons": {
+    "16": "assets/icons/favicon-16.png",
+    "32": "assets/icons/favicon-32.png",
+    "48": "assets/icons/favicon-48.png",
+    "128": "assets/icons/favicon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webNavigation",
+    "unlimitedStorage",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": "script-src unsafe-inline 'self' https://www.google-analytics.com https://cdn.segment.com https://www.googletagmanager.com https://browser.sentry-cdn.com https://tagmanager.google.com; object-src 'self';",
+  "minimum_chrome_version": "49",
+  "browser_action": {
+    "default_icon": {
+      "16": "assets/icons/favicon-16.png",
+      "32": "assets/icons/favicon-32.png",
+      "48": "assets/icons/favicon-48.png",
+      "128": "assets/icons/favicon-128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "CloseBuy",
+    "chrome_style": false
+  },
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true,
+    "chrome_style": false
+  },
+  "background": {
+    "scripts": [
+      "js/background.bundle.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "http://*.amazon.com/*",
+        "https://*.amazon.com/*"
+      ],
+      "js": [
+        "js/amazonContent.bundle.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/merchantContent.bundle.js"
+      ]
+    }
+  ]
+}

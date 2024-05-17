@@ -1,0 +1,128 @@
+---
+name: Petapator
+version: '11.4'
+category_slug: productivity/workflow
+rating: 4.696629213483146
+rating_count: 89
+user_count: 2000
+release_date: '2023-12-17T10:47:59.000Z'
+size: 866KiB
+languages:
+  - English
+description: Increase your patent efficiency
+publisher_account: Petapator
+extension_website: petapator.com
+support_website: https://groups.google.com/forum/#!forum/user--petapator-aspator
+privacy_policy: https://www.petapator.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Petapator",
+  "version": "11.4",
+  "manifest_version": 3,
+  "description": "Increase your patent efficiency",
+  "action": {
+    "default_popup": "/manifest/action/default_popup/index.html"
+  },
+  "background": {
+    "service_worker": "/manifest/background/main.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "/manifest/options/options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://ppubs.uspto.gov/",
+    "https://worldwide.espacenet.com/",
+    "https://chat.openai.com/"
+  ],
+  "icons": {
+    "16": "/blobs/icons/petakata_icon_16.png",
+    "128": "/blobs/icons/petakata_icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://worldwide.espacenet.com/*",
+        "https://ppubs.uspto.gov/pubwebapp/*",
+        "https://patents.google.com/*",
+        "https://patentscope.wipo.int/search/en/result.jsf*"
+      ],
+      "css": [
+        "/library/tostify/index.css"
+      ],
+      "js": [
+        "/library/tostify/index.js",
+        "/library/papaparse/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://worldwide.espacenet.com/*"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/library/waitForElement/index.js",
+        "/library/showdown/index.js",
+        "/manifest/content_scripts/espacenet/download_csv.js",
+        "/manifest/content_scripts/espacenet/searchRequestBody.js",
+        "/manifest/content_scripts/espacenet/insert_image.js",
+        "/manifest/content_scripts/espacenet/chatGPT.js"
+      ],
+      "css": [
+        "/manifest/content_scripts/espacenet/insert_image.css",
+        "/manifest/content_scripts/espacenet/chatGPT.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://ppubs.uspto.gov/pubwebapp/*"
+      ],
+      "css": [
+        "/manifest/content_scripts/uspto/insert_image.css"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+        "/manifest/content_scripts/uspto/download_csv.js",
+        "/manifest/content_scripts/uspto/insert_image.js",
+        "/manifest/content_scripts/uspto/searchRequestBody.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://patents.google.com/*"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+        "/library/showdown/index.js",
+        "/library/getPatentFromGoogle/index.js",
+        "/manifest/content_scripts/google/search_url.js",
+        "/manifest/content_scripts/google/download_csv.js",
+        "/manifest/content_scripts/google/chatGPT.js"
+      ],
+      "css": [
+        "/manifest/content_scripts/google/chatGPT.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://patentscope.wipo.int/search/en/result.jsf*"
+      ],
+      "css": [
+        "/manifest/content_scripts/wipo/insert_image.css"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/manifest/content_scripts/wipo/download_csv.js",
+        "/manifest/content_scripts/wipo/insert_image.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+---
+name: Similar Shopify Stores by SimplyTrends.co
+version: 0.0.0.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 61
+release_date: '2023-07-25T08:48:10.000Z'
+size: 623KiB
+languages:
+  - English (United States)
+description: Instantly find Shopify stores similar to the one you are currently browsing.
+publisher_account: SimplyTrends Team
+extension_website: simplytrends.co
+support_website: https://www.simplytrends.co
+privacy_policy: https://www.simplytrends.co/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "SimilarStores",
+    "name": "Similar Shopify Stores by SimplyTrends.co",
+    "description": "Instantly find Shopify stores similar to the one you are currently browsing.",
+    "version": "0.0.0.3",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "action": {},
+    "permissions": [
+        "scripting",
+        "storage",
+        "management",
+        "declarativeNetRequestWithHostAccess"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "contentscript.js"
+            ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+          {
+            "id": "ruleset_bing",
+            "enabled": true,
+            "path": "rules/bing.json"
+          }
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "entry.js",
+                "getShopifyInfoInDocument.js",
+                "contentscript.js",
+                "images/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

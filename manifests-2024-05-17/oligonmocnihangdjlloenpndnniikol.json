@@ -1,0 +1,153 @@
+---
+name: Edpuzzle
+version: 5.0.3
+category_slug: productivity/workflow
+rating: 4.185185185185185
+rating_count: 54
+user_count: 800000
+release_date: '2023-03-20T11:52:37.000Z'
+size: 1.15MiB
+languages:
+  - English
+description: >-
+  Adds an Edpuzzle button next to YouTube™ videos to quickly start editing them
+  in Edpuzzle
+publisher: Edpuzzle Inc.
+publisher_account: Edpuzzle
+publisher_address: |-
+  833 Market St
+  #427
+  San Francisco, CA 94103
+  US
+extension_website: edpuzzle.com
+support_website: https://support.edpuzzle.com
+privacy_policy: https://edpuzzle.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Edpuzzle",
+  "description": "Adds an Edpuzzle button next to YouTube™ videos to quickly start editing them in Edpuzzle",
+  "version": "5.0.3",
+  "manifest_version": 3,
+  "icons": {
+    "128": "images/App-icon_128x128.png"
+  },
+  "background": {
+    "service_worker": "screen_recorder/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "screen_recorder/html/popup.html",
+    "default_icon": "images/App-icon_128x128.png",
+    "default_title": "Make any video your lesson within/from Youtube"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://edpuzzle.com/*"
+      ],
+      "js": [
+        "./edpuzzle/edpuzzle_extension_helpers.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "css": [
+        "./youtube/css/edit_with_edpuzzle_button.css"
+      ],
+      "js": [
+        "./youtube/edit_with_edpuzzle_button.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "tabCapture",
+    "desktopCapture",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/edpuzzle-edit-button.png",
+        "images/pinExtension.png",
+        "images/mic-blocked.jpg",
+        "images/camera-blocked.jpg",
+        "images/camera-mic-blocked.jpg",
+        "screen_recorder/html/recording_tab.html",
+        "screen_recorder/html/devices_detection.html",
+        "screen_recorder/html/webcam.html",
+        "screen_recorder/styles/foreground.css",
+        "screen_recorder/styles/font_faces.css",
+        "audios/soft-bell-countdown.wav"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://edpuzzle.com/*"
+    ]
+  },
+  "incognito": "split",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+E"
+      }
+    },
+    "a-discard-recording": {
+      "suggested_key": {
+        "default": "Alt+Delete"
+      },
+      "description": "Discard recording"
+    },
+    "b-toggle-pause-recording": {
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "Pause/Resume recording"
+    },
+    "c-end-recording": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "End recording"
+    },
+    "d-toggle-microphone": {
+      "description": "Toggle microphone"
+    },
+    "e-toggle-camera": {
+      "description": "Toggle camera"
+    },
+    "f-toggle-drawing-tool": {
+      "description": "Toggle drawing tool"
+    },
+    "g-erase-all-draws": {
+      "description": "Erase drawing"
+    },
+    "h-undo-draw": {
+      "description": "Undo drawing"
+    },
+    "i-collapse-toolbar": {
+      "description": "Collapse toolbar"
+    },
+    "j-expand-toolbar": {
+      "description": "Expand toolbar"
+    }
+  }
+}

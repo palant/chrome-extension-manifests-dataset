@@ -1,0 +1,101 @@
+---
+name: Quden for Chrome
+version: 0.2.35
+category_slug: productivity/workflow
+rating: 5
+rating_count: 6
+user_count: 1000
+release_date: '2024-05-07T02:30:12.000Z'
+size: 8.74MiB
+languages:
+  - 日本語
+description: Quden（クデン）は「画面＋カメラの録画」を簡単に作成・シェアできるクラウドサービスです。
+publisher: ジパンク
+publisher_account: zipunk, Inc.
+extension_website: quden.io
+support_website: https://quden.io/
+privacy_policy: https://app.quden.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "0.2.35",
+  "name": "Quden for Chrome",
+  "description": "Quden（クデン）は「画面＋カメラの録画」を簡単に作成・シェアできるクラウドサービスです。",
+  "browser_action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "icons": {
+    "16": "assets/extension_icon16.png",
+    "32": "assets/extension_icon32.png",
+    "48": "assets/extension_icon48.png",
+    "128": "assets/extension_icon128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo8EtxbjqZrlYpCauAwXxzdPu6efLGLvI/E0ZfXgGLxwgrCB2CEJx6ra0COgLqfWx838rKhrzlWs3laOFehFutbKtgrvR6aN57E1SPnvbE/yZ0mD8t786wpus/4DWNjb+T8EqU13UQsrrbY22HTkx1J7O9yg5RKQoT4a5HjQiXmMGHAZS+iEPKu6saL7qZ1e8PPpfoQ54p275bZDiZ0EVo600zZtOu8kZUIuyR6Sa0lf5mCHBqSRDqyBOwHMCOCziTdC5EaoLh3OAY7Fz6CN1pIhrgqvE1zX0Q2hY0/gwuS7crgJM/bXEm6n7B4Ntn7iwP4VSokO39iPNViKz9iDvRQIDAQAB",
+  "permissions": [
+    "identity",
+    "desktopCapture",
+    "activeTab",
+    "<all_urls>",
+    "storage",
+    "notifications",
+    "alarms",
+    "http://*/",
+    "https://*/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["observe-elements.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["insert-custom-component.js"]
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["insert-iframe.js"]
+    },
+    {
+      "matches": [ "<all_urls>"],
+      "all_frames": true,
+      "match_about_blank": true,
+      "js": ["step-guide-iframe-listener.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "triggers.html",
+    "menu.js",
+    "ff-camera-window.html",
+    "audio-visualizer.html",
+    "embed-view.html",
+    "assets/*"
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.quden.io/*"]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval' https://cdn.segment.com https://cdn.amplitude.com; object-src 'self'",
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": "Alt+Shift+L"
+    },
+    "PAUSE_OR_RESUME": {
+      "suggested_key": "Alt+Shift+P",
+      "description": "Pause or Resume a recording"
+    },
+    "CANCEL": {
+      "suggested_key": "Alt+Shift+C",
+      "description": "Cancel a recording"
+    },
+    "RESTART": {
+      "suggested_key": "Alt+Shift+R",
+      "description": "Restart a recording"
+    }
+  }
+}

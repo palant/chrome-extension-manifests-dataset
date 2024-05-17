@@ -1,0 +1,131 @@
+---
+name: Vudu Catalog
+version: 2.6.4
+category_slug: productivity/workflow
+rating: 4.386363636363637
+rating_count: 44
+user_count: 4000
+release_date: '2024-03-13T05:53:37.000Z'
+size: 43.71KiB
+languages:
+  - English
+description: Creates a list of the movies you own
+publisher_account: willgriesmer
+privacy_policy: >-
+  https://docs.google.com/document/d/1dbooInuFPhhPEt5jT2Dt9O9xh_W7pu-u--wUhovNZTc/edit?usp=sharing
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "Vudu Catalog",
+  "version": "2.6.4",
+  "description": "Creates a list of the movies you own",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "icons": {
+    "128": "image/logo_128.png",
+    "48": "image/logo_48.png",
+    "16": "image/logo_16.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "script/vudu_redeem.js"
+      ],
+      "matches": [
+        "*://*.vudu.com/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "script/vudu.js",
+        "script/vudu_redeem.js"
+      ],
+      "matches": [
+        "*://*.vudu.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "script/ma.js"
+      ],
+      "matches": [
+        "*://*.moviesanywhere.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "script/googleplay.js"
+      ],
+      "matches": [
+        "*://play.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "script/googleplayfs.js"
+      ],
+      "matches": [
+        "*://play.google.com/store/movies/details/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "script/vudu_functions.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_indexeddb.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_go.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_clear_watchlist.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_mixandmatch.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_movie.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_uxrow.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_maintain_catalog_js.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    },
+    {
+      "resources": [ "script/vudu_redeem_functions.js" ],
+      "matches":   [ "*://*.vudu.com/*" ]
+    }
+  ],
+  "options_page": "options.html",
+  "action": {
+    "default_icon": "image/logo_128.png"
+  },
+  "content_security_policy": {},
+  "host_permissions": [
+    "https://www.vudu.com/*"
+  ]
+}

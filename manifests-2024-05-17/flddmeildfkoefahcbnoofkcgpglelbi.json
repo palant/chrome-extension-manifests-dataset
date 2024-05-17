@@ -1,0 +1,87 @@
+---
+name: SNL Internlenker
+version: 1.25.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 174
+release_date: '2023-12-19T09:01:38.000Z'
+size: 38.8KiB
+languages:
+  - Norsk
+description: >-
+  En utvidelse til Chrome for å gjøre redigering av artikler på Store Norske
+  Leksikon lettere med diverse snarveier og hjelpemidler.…
+publisher_account: jotjern
+---
+
+{
+ "update_url": "https://clients2.google.com/service/update2/crx",
+ "name": "SNL Internlenker",
+ "version": "1.25.0",
+ "manifest_version": 3,
+ "host_permissions": ["*://*.snl.no/*", "*://snl.no/*",
+       "*://*.lex.dk/*", "*://lex.dk/*"],
+ "background": {
+  "service_worker": "scripts/background.js"
+ },
+ "icons": {
+        "16": "icons/icon_16.png",
+        "24": "icons/icon_24.png",
+        "32": "icons/icon_32.png",
+        "48": "icons/icon_48.png",
+        "128": "icons/icon_128.png"
+ },
+ "content_scripts": [
+  {
+   "matches": ["*://*.snl.no/.improvements/*", "*://snl.no/.improvements/*",
+      "*://*.snl.no/.articles/new/*", "*://snl.no/.articles/new/*",
+      "*://*.lex.dk/.improvements/*", "*://lex.dk/.improvements/*",
+      "*://*.lex.dk/.articles/new/*", "*://lex.dk/.articles/new/*",
+      "*://*.snl.no/.edit_field/xhtml_draft/*", "*://snl.no/.edit_field/xhtml_draft/*",
+      "*://*.lex.dk/.edit_field/xhtml_draft/*", "*://lex.dk/.edit_field/xhtml_draft/*"],
+
+   "js": ["scripts/editor_tools.js", "scripts/title.js"],
+   "all_frames": false
+  },
+  {
+   "matches": ["*://*.snl.no/*", "*://snl.no/*",
+      "*://*.lex.dk/*", "*://lex.dk/*"],
+   "js": ["scripts/article_shortcuts.js"],
+   "all_frames": false
+  },
+  {
+   "matches": ["*://*.snl.no/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm",
+         "*://snl.no/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm",
+
+      "*://*.lex.dk/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm",
+         "*://lex.dk/tiny_mce/jscripts/tiny_mce/plugins/internallinks*/dialog.htm"],
+
+   "js": ["scripts/dialog.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://*.snl.no/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm",
+      "*://snl.no/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm",
+      "*://*.lex.dk/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm",
+      "*://lex.dk/tiny_mce/jscripts/tiny_mce/themes/advanced/link.htm"],
+   "js": ["scripts/linkdialog.js"],
+   "all_frames": true
+  },
+  {
+   "matches": ["*://*.snl.no/.admin/taxonomies/new",
+      "*://snl.no/.admin/taxonomies/new",
+      "*://*.lex.dk/.admin/taxonomies/new",
+      "*://lex.dk/.admin/taxonomies/new"],
+   "js": ["scripts/sokimenyer.js"]
+  },
+  {
+   "matches": ["*://*.snl.no/.versions/list/*",
+      "*://snl.no/.versions/list/*"],
+   "js": ["scripts/versions.js"]
+  }
+ ],
+ "action": {
+  "default_popup": "popup.html"
+ }
+}

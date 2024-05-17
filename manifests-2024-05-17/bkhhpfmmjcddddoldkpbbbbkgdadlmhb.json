@@ -1,0 +1,92 @@
+---
+name: Examzone Webcheck
+version: 0.1.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-10-19T19:40:57.000Z'
+size: 627KiB
+languages:
+  - Deutsch
+description: Examzone Webcheck
+publisher: Codefabrik GmbH
+publisher_account: Codefabrik
+publisher_address: |-
+  Seidenweg 75
+  Bern 3012
+  CH
+support_website: https://examzone.ch/support.html
+privacy_policy: https://examzone.ch/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "Examzone Webcheck",
+  "manifest_version": 3,
+  "name": "Examzone Webcheck",
+  "version": "0.1.6",
+  "author": "Lukas Diener",
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src 'self' https://admin.examzone.ch http://localhost:3000;"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/examzone16.png",
+      "32": "icons/examzone32.png"
+    }
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.examzone.ch/*",
+      "*://localhost/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/overlay/notification.html",
+        "src/overlay/overlay.html",
+        "src/overlay/overlay.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.examzone.ch/*",
+        "*://localhost/*"
+      ],
+      "js": [
+        "src/hook.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/overlay/overlay.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": []
+  },
+  "permissions": [
+    "webRequest",
+    "scripting",
+    "declarativeNetRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}
