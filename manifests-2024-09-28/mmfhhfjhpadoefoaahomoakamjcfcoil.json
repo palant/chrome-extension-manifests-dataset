@@ -1,0 +1,127 @@
+---
+name: 'TextExpander: Keyboard Shortcuts & Templates'
+version: 8.0 (800.5)
+category_slug: productivity/tools
+rating: 4.656716417910448
+rating_count: 134
+user_count: 70000
+release_date: '2024-07-22T18:44:38.000Z'
+size: 23.21MiB
+languages:
+  - English
+description: >-
+  Create and expand repetitive text anywhere on the web with custom keyboard
+  shortcuts.
+publisher: TextExpander, Inc.
+publisher_address: |-
+  548 Market St #37453
+  San Francisco, CA 94104-5401
+  US
+extension_website: textexpander.com
+support_website: https://textexpander.com/support
+privacy_policy: https://textexpander.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_EXTENSION_NAME__",
+  "short_name": "TextExpander",
+  "version": "800.5",
+  "version_name": "8.0 (800.5)",
+  "manifest_version": 3,
+  "description": "__MSG_EXTENSION_DESCRIPTION__",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgcEdgMSA4KVURVidWlozuFZUUTRd4cHiVh9bJtjRA0Q0WE8evBDtbsyOhKEbHsutoeg4Z6G3DrqTj7PKOd+WCGBZK50xey+IT9ki1pJbRK9nlzOSSGFb58NVm1myShtaFsTG9KxDqD2IXw6SILppMgFc3V1VPTcu2DdoBopJ7B//My/B+3uXmFqARA2w1XsJ4kl7i9AH2MozWMD4r6jfkryuAWQ4u0VGkMNkvUiDrVwSNYeQm4gvN23T6srBqmWx6vz5CzP4CuYeyBV9rQKU+mxXEn8/LM7s3EHDpASre/BTvg5yURb83sOJOHxBweyHODb2Cm6pawn/0JbdUwLizQIDAQAB",
+  "icons": {
+    "16": "images/icon16.png",
+    "19": "images/icon19.png",
+    "24": "images/icon24.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "externally_connectable": {
+    "matches": ["https://api.textexpander.com/*", "https://app.textexpander.com/*"]
+  },
+  "default_locale": "en",
+  "offline_enabled": true,
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "permissions": [
+    "tabs",
+    "clipboardRead",
+    "storage",
+    "scripting",
+    "nativeMessaging",
+    "contextMenus",
+    "notifications",
+    "offscreen",
+    "clipboardWrite"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "options_ui": {
+    "page": "preference.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>"],
+      "match_about_blank": true,
+      "all_frames": true,
+      "css": [],
+      "js": [
+        "extension.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://api.textexpander.com/ssoChrome*"],
+      "run_at": "document_start",
+      "js": ["ssoLogin.js"]
+    },
+    {
+      "matches": ["https://go.textexpander.com/*"],
+      "run_at": "document_start",
+      "js": ["goURL.js"]
+    }
+  ],
+  "omnibox": {
+    "keyword" : "te"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/icon19.png",
+      "24": "images/icon24.png",
+      "32": "images/icon32.png",
+      "38": "images/icon38.png"
+  },
+    "default_title": "__MSG_BROWSER_ACTION_TITLE__"
+  },
+  "web_accessible_resources": [{
+    "resources": ["teModal.html", "teInlineSearch.html", "contentLoaded.js", "main_window.html"],
+    "matches": ["<all_urls>"]
+
+ }],
+  "commands": {
+    "inline-search": {
+      "suggested_key": {
+        "default": "Ctrl+Period",
+        "mac": "MacCtrl+Period"
+      },
+      "description": "Search Snippets"
+    },
+  "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Period",
+        "mac": "MacCtrl+Shift+Period"
+      }
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+  },
+  "sandbox": {
+    "pages": ["evalWorkerSandbox.html"]
+  }
+}

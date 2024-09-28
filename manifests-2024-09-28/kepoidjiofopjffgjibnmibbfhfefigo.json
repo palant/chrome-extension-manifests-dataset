@@ -1,0 +1,91 @@
+---
+name: Audio Visualizer - AudioVibe
+version: '1.0'
+category_slug: lifestyle/fun
+rating: 4.666666666666667
+rating_count: 3
+user_count: 117
+release_date: '2024-08-14T10:37:43.000Z'
+size: 2.09MiB
+languages:
+  - English (United States)
+description: >-
+  AudioVibe Visuals is a music visualizer offering different styles and color
+  customizations to be displayed on any site playing audio
+publisher: AudioVibe Visuals
+publisher_account: AudioVibe
+publisher_address: |-
+  280 Yoakum Pkwy
+  Apt. 1310
+  Alexandria, VA 22304
+  US
+support_website: https://audiovisualizer.app/ContactUs.html
+privacy_policy: https://www.freeprivacypolicy.com/live/33dfefc8-01c1-4c0b-adf3-8db5e859acd2
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+"manifest_version": 3,
+"name": "Audio Visualizer - AudioVibe",
+"short_name": "AudioVibe",
+"description": "AudioVibe Visuals is a music visualizer offering different styles and color customizations to be displayed on any site playing audio",
+"version": "1.0.0",
+"version_name": "1.0",
+"minimum_chrome_version": "116",
+"author": {
+  "email": "audiovibevisuals@gmail.com"
+},
+"permissions": ["tabCapture", "storage", "activeTab", "offscreen", "scripting"],
+"action": {
+  "default_icon": {
+    "16": "images/icon16.png"
+  },
+  "default_title": "AudioVibe Visuals",
+  "default_popup": "action/action.html"
+},
+"icons": {
+  "16": "images/icon16.png",
+  "32": "images/icon32.png",
+  "48": "images/icon48.png",
+  "128": "images/icon128.png"
+},
+"web_accessible_resources": [
+  {
+    "resources": [ "images/VolumeLevelBars/GREEN.png", "images/VolumeLevelBars/YELLOW.png",
+     "images/VolumeLevelBars/RED.png", "images/VolumeLevelBars/PEAK_RED.png"],
+    "matches": [ "https://*/*" ]
+  }
+],
+"background": {
+  "service_worker": "background/service-worker.js"
+  },
+"content_scripts": [
+  {
+    "matches": ["https://music.youtube.com/*"],
+    "js": ["contentScripts/ytMusic.js"]
+  },
+  {
+    "matches": ["https://*.spotify.com/*"],
+    "js": ["contentScripts/spotify.js"]
+  },
+  {
+    "matches": ["https://soundcloud.com/*"],
+    "js": ["contentScripts/soundcloud.js"]
+  },
+  {
+    "matches": ["https://*/*"],
+    "exclude_matches": ["https://music.youtube.com/*", "https://*.spotify.com/*", "https://soundcloud.com/*"],
+    "js": ["contentScripts/universal.js"]
+  },
+  {
+    "matches": ["https://*/*"],
+    "js": ["contentScripts/contentScript.js"]
+  },
+  {
+    "matches": ["https://extensionpay.com/*"],
+    "js": ["extPayContentScript/extPayListenerRequirement.js"],
+    "run_at": "document_start"
+  }
+  ]
+}

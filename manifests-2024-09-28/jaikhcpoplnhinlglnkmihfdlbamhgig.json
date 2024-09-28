@@ -1,0 +1,72 @@
+---
+name: アマゾン注文履歴フィルタ
+version: 0.1.1.0
+category_slug: make_chrome_yours/accessibility
+rating: 3.3404255319148937
+rating_count: 47
+user_count: 100000
+release_date: '2024-02-06T15:18:12.000Z'
+size: 106KiB
+languages:
+  - 日本語
+description: アマゾン(amazon.co.jp)の注文履歴を月別表示したり、月別もしくは通年の領収書をまとめて表示・印刷したりできるようになります。
+publisher_account: furyu
+extension_website: memo.furyutei.work
+support_website: https://github.com/furyutei/amzOrderHistoryFilter/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version" : 3,
+    "name" : "__MSG_ext_title__",
+    "short_name" : "__MSG_ext_short_name__",
+    "version" : "0.1.1.0",
+    "description" : "__MSG_ext_description__",
+    "author" : "furyu",
+    "default_locale" : "ja",
+    
+    "icons" : {
+        "16" : "img/icon_16.png",
+        "48" : "img/icon_48.png",
+        "64" : "img/icon_64.png",
+        "96" : "img/icon_96.png",
+        "128" : "img/icon_128.png"
+    },
+    
+    "background" : {
+        "service_worker" : "background-wrapper.js"
+    },
+    
+    "content_scripts" : [
+        {
+            "matches" : [
+                "https://www.amazon.co.jp/gp/your-account/order-history*",
+                "https://www.amazon.co.jp/gp/legacy/order-history*",
+                "https://www.amazon.co.jp/gp/css/order-history*",
+                "https://www.amazon.co.jp/your-orders/orders*",
+                "https://www.amazon.co.jp/gp/digital/your-account/order-summary.html*",
+                "https://www.amazon.co.jp/gp/css/summary/print.html*",
+                "https://www.amazon.co.jp/ap/signin*"
+             ],
+            "js" : [ "js/jquery.min.js", "js/concurrent_promise.js", "js/init.js", "js/amzOrderHistoryFilter.user.js" ],
+            "run_at" : "document_end",
+            "all_frames" : true
+        }
+    ],
+    
+    "options_ui" : {
+        "page" : "html/options.html",
+        "open_in_tab" : true
+    },
+    
+    "action" : {
+        "default_icon" : "img/icon_16-gray.png",
+        "default_title" : "__MSG_ext_title__",
+        "default_popup" : "html/options.html"
+    },
+    
+    "permissions": [
+        "storage"
+    ]
+}

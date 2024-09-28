@@ -1,0 +1,109 @@
+---
+name: Nera Utility
+version: 0.0.3.4
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 69
+release_date: '2024-09-15T09:35:02.000Z'
+size: 7.65MiB
+languages:
+  - English (UK)
+description: Productivity Tool For Nera Telecommunications
+publisher: NTT LT Global Shared Service Centre Asia Pacific Sdn. Bhd
+publisher_account: Yong Keh Soon
+publisher_address: |-
+  No. 1, Persiaran Bandar Utama
+  Bandar Utama
+  Petaling Jaya 47800
+  Malaysia
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Nera Utility",
+  "version": "0.0.3.4",
+  "manifest_version": 3,
+  "description": "Productivity Tool For Nera Telecommunications",
+  "author": "Yong Keh Soon",
+  
+  "homepage_url": "https://chrome.google.com/webstore/detail/odgjadfpfckebkfaafjcijaejgdkpfbb",
+
+  "icons": {
+      "16":  "images/icons/nera-logo-16.png",
+      "32":  "images/icons/nera-logo-32.png",
+      "48":  "images/icons/nera-logo-48.png",
+      "128": "images/icons/nera-logo-128.png"
+  },
+
+  "action": {
+    "default_title": "Nera Utility",
+    "default_popup": "popup/popup.html"
+  },
+  
+  "background": {
+    "service_worker": "background/background.js"
+  },
+
+  "content_scripts": [
+      {
+        "matches": [
+          "https://*.app.netsuite.com/app/site/hosting/scriptlet.nl?script=2895&deploy=1&*module=reporter*",
+          "https://*.app.netsuite.com/app/site/hosting/scriptlet.nl?script=2895&deploy=1",
+          "https://*.app.netsuite.com/app/site/hosting/scriptlet.nl?script=2895&deploy=1&whence="
+        ],
+        "js":   ["reporter/reporter-content.js"],
+        "run_at" : "document_end"
+      },
+      {
+        "matches": ["https://4492385-sb1.app.netsuite.com/*"],
+        "css" : ["sandbox/sandbox.css"]
+      },
+      {
+        "matches": [
+          "https://*.app.netsuite.com/app/site/hosting/scriptlet.nl?script=2895&deploy=1&*module=approver*"
+        ],
+        "js": ["approver/approver-content.js"],
+        "run_at" : "document_end"
+      },
+      {
+        "matches": [
+          "https://*.app.netsuite.com/app/site/hosting/scriptlet.nl?script=2895&deploy=1&*module=qbuilder*"
+        ],
+        "js": ["qbuilder/qbuilder-content.js"],
+        "run_at" : "document_end"
+      },
+      {
+        "matches": [
+          "https://*.app.netsuite.com/app/common/search/search.nl?*id=*"
+        ],
+        "js": ["searchutil/searchutil-content.js"],
+        "run_at" : "document_end"
+      },
+      {
+        "matches": [
+          "https://*.app.netsuite.com/app/site/hosting/scriptlet.nl?script=*&deploy=1&*module=itemmaster*"
+        ],
+        "js": ["itemmaster/itemmaster-content.js"],
+        "run_at" : "document_end"
+      }
+    ],
+  
+  "web_accessible_resources": [
+      {
+          "resources": ["images/*.jpeg", "libs/*", "modules/*", "reporter/*", "approver/*", "qbuilder/*", "searchutil/*", "itemmaster/*"],
+          "matches":   ["<all_urls>"]
+      }
+  ],
+  
+  "permissions": ["storage"],
+
+  "host_permissions": [
+    "https://api.npoint.io/1259de850879122e800f"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'"
+  }
+}

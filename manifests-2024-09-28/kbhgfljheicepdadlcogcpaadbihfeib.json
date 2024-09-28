@@ -1,0 +1,80 @@
+---
+name: 小红旅计
+version: 0.0.17
+category_slug: lifestyle/travel
+rating: 5
+rating_count: 1
+user_count: 985
+release_date: '2024-05-27T10:59:11.000Z'
+size: 754KiB
+languages:
+  - 中文 (简体)
+description: 收集小红书的旅游攻略，并创建生成自定义旅游攻略的工具
+publisher_account: yihui_indie
+extension_website: travel.aiyeshi.cn
+support_website: https://travel.aiyeshi.cn/feedback
+privacy_policy: https://travel.aiyeshi.cn/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "小红旅计",
+  "externally_connectable": {
+    "matches": [
+      "https://*.aiyeshi.cn/*",
+      "http://*.aiyeshi.cn/*",
+      "*://localhost/*"
+    ]
+  },
+  "version": "0.0.17",
+  "description": "收集小红书的旅游攻略，并创建生成自定义旅游攻略的工具",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.xiaohongshu.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

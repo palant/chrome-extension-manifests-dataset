@@ -1,0 +1,197 @@
+---
+name: Speechify Text to Speech Voice Reader
+version: 11.3.0
+category_slug: productivity/education
+rating: 4.55418282184399
+rating_count: 15217
+user_count: 1000000
+release_date: '2024-09-23T13:51:50.000Z'
+size: 22.12MiB
+languages:
+  - English
+description: >-
+  Read aloud any Google Doc, PDF, webpage, or book with text to speech (TTS).
+  Natural sounding voices in 30+ languages & 130 voices.
+publisher: Speechify Inc
+publisher_account: Speechify
+publisher_address: |-
+  7901 4th St N
+  STE 6193
+  St. Petersburg, FL 33702
+  US
+extension_website: speechify.com
+privacy_policy: https://www.speechify.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "author": "Speechify Inc",
+  "version": "11.3.0",
+  "default_locale": "en",
+  "description": "__MSG_appDesc__",
+  "icons": {
+    "16": "images/icon-light-square-16.png",
+    "32": "images/icon-light-square-32.png",
+    "48": "images/icon-light-square-48.png",
+    "128": "images/icon-light-square-128.png"
+  },
+  "commands": {
+    "play-pause": {
+      "suggested_key": {
+        "mac": "Alt+Q",
+        "windows": "Alt+Q",
+        "chromeos": "Alt+Q",
+        "linux": "Alt+Q"
+      },
+      "description": "Play/Pause"
+    },
+    "play-pause-new": {
+      "suggested_key": {
+        "mac": "Alt+A",
+        "windows": "Alt+A",
+        "chromeos": "Alt+A",
+        "linux": "Alt+A"
+      },
+      "description": "Play/Pause (new shortcut)"
+    },
+    "save-to-library": {
+      "suggested_key": {
+        "mac": "Alt+S",
+        "windows": "Alt+S",
+        "chromeos": "Alt+S",
+        "linux": "Alt+S"
+      },
+      "description": "Save to library"
+    },
+    "open-screenshot-mode": {
+      "suggested_key": {
+        "mac": "MacCtrl+Command+R",
+        "windows": "Alt+R",
+        "chromeos": "Alt+R",
+        "linux": "Alt+R"
+      },
+      "description": "Open Screenshot Mode"
+    }
+  },
+  "minimum_chrome_version": "109",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts; default-src *; media-src data:; style-src 'nonce-nVxWUtkqVd';"
+  },
+  "permissions": [
+    "offscreen",
+    "tabs",
+    "contextMenus",
+    "storage",
+    "alarms",
+    "scripting",
+    "unlimitedStorage",
+    "system.cpu",
+    "system.memory"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://*/",
+    "http://*/",
+    "file://*/"
+  ],
+  "background": {
+    "service_worker": "background/main.js",
+    "type": "module"
+  },
+  "sandbox": {
+    "pages": [
+      "sandbox/sandbox.html"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-idle-notifier.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content-wrapper.js"
+      ],
+      "css": [
+        "css/speechify.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "iframes-wrapper.js"
+      ],
+      "css": [
+        "css/speechify.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "toggleIcon.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://*.getspeechify.com/*",
+      "*://*.speechify.com/*",
+      "*://speechify.com/*",
+      "*://speechify.website/*",
+      "*://*.speechify.website/*",
+      "*://speechify.dev/*",
+      "*://*.speechify.dev/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "features.json",
+        "fonts/*",
+        "images/*",
+        "audio/*",
+        "houdini.js",
+        "audio-worklet.js",
+        "timestretch_bg.wasm",
+        "content/*",
+        "iframes/*",
+        "sandbox/*",
+        "offscreen/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": [],
+      "use_dynamic_url": true
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/icon-light-square-16.png",
+      "32": "images/icon-light-square-32.png",
+      "48": "images/icon-light-square-48.png",
+      "128": "images/icon-light-square-128.png"
+    }
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnnXnXWS/0k0it5ppG9ZrLg+vbLcnWIc7oO0etuckHIoLFnbjjpV7/+ivDIkdkCpfbGtkc25lZfcuJHwk5b+kMEsWPeKn1XBENnxW4N3QdyXFQVEJeVQwGiuN0WBk3DTnfrwYePBzbfOelTVGR7hdLDsE+0WlQ+V3YfhcuCOHL7YxiCloj3fx7mr5H+q2VinDI/hjhWTKmw7Udd39BMZgwkXO1rtDeR4YAgoQrRp4eKkOccSRW3osZXFRve1HSnk9PWAAsi/AQNTvrcwMhGIyYMSd6xOpVt96mDa09oYCCidLAtCC3qRDPj4FUc0kogn5qjCDBYISYCO4KkRRFCbjBwIDAQAB"
+}

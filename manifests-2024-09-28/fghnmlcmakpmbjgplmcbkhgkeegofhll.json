@@ -1,0 +1,102 @@
+---
+name: GQueues for Google Calendar
+version: 1.2.3
+category_slug: productivity/workflow
+rating: 5
+rating_count: 18
+user_count: 10000
+release_date: '2024-06-06T04:43:01.000Z'
+size: 500KiB
+languages:
+  - English (United States)
+description: Mark GQueues tasks complete directly in Google Calendar
+publisher: GQueues LLC
+publisher_account: cameron@gqueues.com
+publisher_address: |-
+  1824 Pearl St Unit A
+  Boulder, CO 80302
+  US
+extension_website: www.gqueues.com
+support_website: >-
+  https://learn.gqueues.com/en/articles/5337364-set-up-the-gqueues-for-google-calendar-chrome-extension
+privacy_policy: https://www.gqueues.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "GQueues for Google Calendar",
+    "version": "1.2.3",
+
+    "action": {},
+    "description" : "Mark GQueues tasks complete directly in Google Calendar",
+    "icons": {
+                "16"  : "gqIcon16.png",
+                "48"  : "gqIcon48.png",
+                "128" : "gqIcon128.png"
+    },
+
+    "author" : "GQueues",
+
+    "background": {
+        "service_worker": "background.min.js",
+        "type": "module"
+    },
+
+    "content_scripts": [
+
+        {
+            "run_at":   "document_end",
+            "matches":  [
+                            "https://calendar.google.com/*"
+                        ],
+            "css":      [
+                            "gqueues-calendar-ext.min.css"
+                        ],
+            "js":       [
+                            "jquery-2.1.1.min.js",
+                            "jquery-ui-1.11.2.min.js",
+                            "gqueues-calendar-ext.min.js"
+                        ]
+        },
+
+        {
+            "run_at":   "document_end",
+            "matches":  [
+                            "https://app.gqueues.com/calendarext?*",
+                            "https://www.gqueues.com/calendar/createEvents*",
+                            "https://app.gqueues.com/calendar/createEvents*"
+                        ],
+            "js":       [   
+                            "jquery-2.1.1.min.js",
+                            "login-content-script.js"
+                        ]
+        }
+
+
+
+     ],
+
+    "host_permissions": ["https://calendar.google.com/*"],
+
+    "permissions": [
+        "scripting",
+        "storage"
+    ],
+
+    "content_security_policy": {
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": [  "images/*",
+                            "fonts/*",
+                            "fonts.css"
+            ],
+            "matches": [ "https://calendar.google.com/*" ]
+        }
+    ]
+
+}
+

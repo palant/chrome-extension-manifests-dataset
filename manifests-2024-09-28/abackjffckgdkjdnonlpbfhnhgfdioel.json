@@ -1,0 +1,110 @@
+---
+name: Dokkio Sidebar
+version: 4.0.0
+category_slug: productivity/workflow
+rating: 4.866666666666666
+rating_count: 15
+user_count: 892
+release_date: '2024-08-29T04:27:02.000Z'
+size: 1023KiB
+languages:
+  - English
+description: Integrate your digital life - web pages & apps, content, files, and messages.
+publisher: Dokkio, Inc.
+publisher_account: Dokkio Inc.
+publisher_address: |-
+  255 S B ST STE 210
+  San Mateo, CA 94401
+  US
+extension_website: www.dokkio.com
+support_website: https://www.dokkio.com/support
+privacy_policy: https://www.dokkio.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "4.0.0",
+  "name": "Dokkio Sidebar",
+  "description": "Integrate your digital life - web pages & apps, content, files, and messages.",
+  "permissions": [
+    "storage",
+    "pageCapture",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "dokkio_cloud_16x16.png",
+    "48": "dokkio_cloud_48x48.png",
+    "96": "dokkio_cloud_96x96.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "sidebar_browser_logo_off.png"
+    },
+    "default_title": "Dokkio Extension",
+    "default_popup": "popup.html"
+  },
+  "omnibox": {
+    "keyword": "dokkio"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.dokkio.com/*"
+      ],
+      "js": [
+        "accessTokenFromDokkioPage.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://*.dokkio.com/*",
+        "https://*.dokkio-dev.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "font.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.bing.com/*",
+        "https://search.yahoo.com/*"
+      ],
+      "js": [
+        "search.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "gmail.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "panel.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

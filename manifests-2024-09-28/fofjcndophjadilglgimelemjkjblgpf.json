@@ -1,0 +1,84 @@
+---
+name: ZoomInfo Chrome Extension
+version: 11.9.5
+category_slug: productivity/workflow
+rating: 4.151162790697675
+rating_count: 258
+user_count: 400000
+release_date: '2024-09-27T15:17:25.000Z'
+size: 1021KiB
+languages:
+  - English (United States)
+description: >-
+  Access ZoomInfo's best-in-class contact and company data on any website using
+  our Chrome Extension. Free for ZoomInfo customers.
+publisher: ZoomInfo
+publisher_account: zoominfo
+publisher_address: |-
+  275 Wyman St
+  Waltham, MA 02451-1200
+  US
+extension_website: www.zoominfo.com
+support_website: https://www.zoominfo.com/about/contact
+privacy_policy: https://www.zoominfo.com/business/about-zoominfo/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ZoomInfo Chrome Extension",
+  "version": "11.9.5",
+  "description": "Access ZoomInfo's best-in-class contact and company data on any website using our Chrome Extension. Free for ZoomInfo customers.",
+  "action": {
+    "default_icon": "assets/image/16x16.png"
+  },
+  "icons": {
+    "16": "assets/image/16x16.png",
+    "32": "assets/image/32x32.png",
+    "48": "assets/image/48x48.png",
+    "128": "assets/image/128x128.png"
+  },
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+  "permissions": ["tabs", "storage", "contextMenus"],
+  "host_permissions": ["http://*/", "https://*/", "https://www.google.com/_/chrome/newtab*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "index.html"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_globs": [
+        "*-dev.zoominfo.com*",
+        "*-staging.zoominfo.com*",
+        "*-regression.zoominfo.com*",
+        "*app.zoominfo.com*",
+        "*apps.zoominfo.com*",
+        "*admin.zoominfo.com*",
+        "*-preprod.zoominfo.com*",
+        "*-pre-prd.zoominfo.com*",
+        "*login.zoominfo.com*",
+        "*zi-lite.zoominfo.com*",
+        "*zi-lite-pre-prd.zoominfo.com*",
+        "*zi-lite-regression.zoominfo.com*",
+        "*zi-lite-dev.zoominfo.com*"
+      ],
+      "js": ["index.bundle.js"],
+      "css": ["styles.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://*.zoominfo.com/*", "*://*.chorus.ai/*"]
+  }
+}

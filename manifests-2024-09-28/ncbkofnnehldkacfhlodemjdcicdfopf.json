@@ -1,0 +1,173 @@
+---
+name: Better Booth
+version: 0.5.6
+category_slug: make_chrome_yours/accessibility
+rating: 5
+rating_count: 1
+user_count: 337
+release_date: '2024-09-24T06:55:26.000Z'
+size: 297KiB
+languages:
+  - English
+  - 日本語
+description: Boothでショップのブロックや、検索設定の保存をします。
+publisher_account: tm
+support_website: https://tm0428.github.io/BetterBooth/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_Name__",
+    "default_locale": "ja",
+    "version": "0.5.6",
+    "description": "__MSG_Description__",
+    "icons": {
+        "128": "icon/icon-128.png",
+        "400": "icon/icon-400.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "options_ui": {
+        "page": "/src/option/option.html",
+        "open_in_tab": true
+    },
+    "action": {
+        "default_popup": "src/popup/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://booth.pm/*/browse/*",
+                "*://booth.pm/*/search/*",
+                "*://booth.pm/*/items*",
+                "*://accounts.booth.pm/wish_lists*",
+                "*://booth.pm/ja",
+                "*://booth.pm/en",
+                "*://booth.pm/ko",
+                "*://booth.pm/zh-cn",
+                "*://booth.pm/zh-tw"
+            ],
+            "js": [
+                "js/search_item_filter.js"
+            ],
+            "css": [
+                "css/search.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://*.booth.pm/items/*",
+                "*://*.booth.pm/*/items/*",
+                "*://booth.pm/*/items/*"
+            ],
+            "exclude_matches": [
+                "*://accounts.booth.pm/*",
+                "*://manage.booth.pm/*",
+                "*://checkout.booth.pm/*",
+                "*://*.booth.pm/items/*.json"
+            ],
+            "js": [
+                "js/custom_item.js"
+            ],
+            "css": [],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://*.booth.pm/*"
+            ],
+            "exclude_matches": [
+                "*://booth.pm/carts/",
+                "*://accounts.booth.pm/*",
+                "*://manage.booth.pm/*",
+                "*://checkout.booth.pm/*"
+            ],
+            "js": [
+                "js/content.js"
+            ],
+            "css": [
+                "css/content.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://checkout.booth.pm/orders*"
+            ],
+            "js": [
+                "js/purchase.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.booth.pm/*"
+            ],
+            "exclude_matches": [
+                "*://booth.pm/*",
+                "*://accounts.booth.pm/*",
+                "*://manage.booth.pm/*",
+                "*://checkout.booth.pm/*"
+            ],
+            "js": [
+                "js/custom_shop.js"
+            ],
+            "css": [
+                "css/custom_shop.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://*.booth.pm/"
+            ],
+            "exclude_matches": [
+                "*://booth.pm/carts/",
+                "*://accounts.booth.pm/*",
+                "*://manage.booth.pm/*",
+                "*://checkout.booth.pm/*"
+            ],
+            "js": [
+                "js/itemlist_sort.js"
+            ],
+            "css": [
+                "css/itemlist_sort.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://accounts.booth.pm/orders*"
+            ],
+            "js": [
+                "js/order.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": [
+          "/src/popup/popup.html"
+        ],
+        "matches": [
+          "*://*.booth.pm/*"
+        ]
+    },
+    {
+        "resources": [
+            "js/module/chrome_storage.js",
+            "js/module/shop_data.js",
+            "js/module/shop.js",
+            "js/module/filter_data.js",
+            "js/module/item_data.js",
+            "js/module/item.js",
+            "js/module/settings_data.js",
+            "js/module/extended_settings.js",
+            "js/module/search_settings.js"
+        ],
+        "matches": [
+            "*://*.booth.pm/*"
+        ]
+    }]
+}

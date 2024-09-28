@@ -1,0 +1,88 @@
+---
+name: Helloworld
+version: 2.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 112
+release_date: '2024-01-06T06:46:19.000Z'
+size: 1.38MiB
+languages:
+  - 中文 (简体)
+description: Helloworld的Chrome扩展
+publisher_account: '329052613'
+privacy_policy: https://helloworldmore-1252698292.cos.ap-chengdu.myqcloud.com/Web2/pri.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Helloworld",
+  "version": "2.0.0",
+  "description": "Helloworld的Chrome扩展",
+  "icons": {
+    "16": "Imgs/20.png",
+    "48": "Imgs/40.png",
+    "128": "Imgs/120.png"
+  },
+  "background": {
+    "service_worker": "Chrome/hwservice.js"
+  },
+  "action": {
+    "default_icon": "Imgs/20.png",
+    "default_title": "Helloworld",
+    "default_popup": "Chrome/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://web.whatsapp.com/",
+        "https://web.telegram.org/*",
+        "https://www.messenger.com/*",
+        "https://*.zalo.me/*",
+        "https://discord.com/*",
+        "*://helloworldmore-1252698292.cos.accelerate.myqcloud.com/Web17/Html/*"
+      ],
+      "js": ["Chrome/InjectStartJs.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/", "https://www.messenger.com/*", "https://chat.zalo.me/*", "https://web.telegram.org/*", "https://discord.com/*"],
+      "js": ["Chrome/InjectEndJs.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["Chrome/CommTT.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "permissions": ["webNavigation", "tabs", "notifications", "storage", "contextMenus", "*://*/*", "http://*/*", "https://*/*"],
+  "optional_permissions": ["unlimitedStorage"],
+  "host_permissions": ["*://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "Chrome/forchrome.js",
+        "Chrome/CommTT.js",
+        "Chrome/Setting.js",
+        "Comm/hwcomm.js",
+        "Comm/preload.js",
+        "Comm/comm_end.js",
+        "Helper/whatsapphelper_end.js",
+        "Helper/telegramnewhelper_end.js",
+        "Helper/messenger_end.js",
+        "Helper/zalo_end.js",
+        "Helper/zalo_lang-zh.js",
+        "Helper/discord_end.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "content_security_policy": {},
+  "homepage_url": "https://www.helloword.com.cn/",
+  "omnibox": {"keyword": "hw"}
+}

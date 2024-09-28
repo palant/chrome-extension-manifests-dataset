@@ -1,0 +1,78 @@
+---
+name: Kavkom Click2Call
+version: '2.0'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 674
+release_date: '2021-04-28T08:52:15.000Z'
+size: 253KiB
+languages:
+  - English
+description: >-
+  Searches for a phone numbers on web pages, allows to make calls by one click
+  for logged in Kavkom Cloud PBX phone system users.
+publisher: Kavkom
+publisher_account: kavkom.com
+support_website: http://www.kavkom.com/contact
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Kavkom Click2Call",
+    "description": "Searches for a phone numbers on web pages, allows to make calls by one click for logged in Kavkom Cloud PBX phone system users.",
+    "version": "2.0",
+    "manifest_version": 2,
+    "icons": {
+        "128": "img/favicon/favicon-32x32.png"
+    },
+    "commands": {
+        "_execute_browser_action": {
+            "suggested_key": {
+                "chromeos": "Ctrl+Shift+U",
+                "linux": "Ctrl+Shift+J",
+                "mac": "Command+Shift+Y",
+                "windows": "Ctrl+Shift+Y"
+            }
+        }
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+                "vendors/mutation-summary.js",
+                "content.bundle.js"
+            ],
+            "exclude_matches": [
+                "*://webphone.kavkom.com/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "img/*.png",
+        "img/*.jpg",
+        "img/*.svg"
+    ],
+    "permissions": [
+        "storage",
+        "contextMenus"
+    ],
+    "background": {
+        "persistent": true,
+        "scripts": [
+            "background.bundle.js"
+        ]
+    },
+    "browser_action": {
+        "default_icon": {
+            "128": "img/favicon/favicon-32x32.png"
+        },
+        "default_title": "KavKom Click2Call",
+        "default_popup": "popup.html"
+    },
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';"
+}

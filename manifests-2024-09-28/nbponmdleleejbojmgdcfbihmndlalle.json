@@ -1,0 +1,105 @@
+---
+name: ReadText (Text to Speech Reader)
+version: 2.0.4
+category_slug: productivity/education
+rating: 4.090909090909091
+rating_count: 11
+user_count: 402
+release_date: '2024-08-08T09:47:29.000Z'
+size: 537KiB
+languages:
+  - English
+description: >-
+  Single-click text-to-speech magic directly in your browser. Multi-task and
+  customize in 30+ languages, effortlessly and for free.
+publisher: MagicLabs
+publisher_account: Cody
+publisher_address: |-
+  32, Church St
+  Bengaluru, Karnataka 560001
+  IN
+extension_website: readtextonline.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ReadText (Text to Speech Reader)",
+  "version": "2.0.4",
+  "description": "Single-click text-to-speech magic directly in your browser. Multi-task and customize in 30+ languages, effortlessly and for free.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://us.i.posthog.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon48.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "action": {
+    "default_icon": "assets/icon.png"
+  },
+  "background": {
+    "service_worker": "background/extension.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.wwnorton.com/*"],
+      "js": ["assets/posthog-array.js", "content/posthog-setup.js", "content/early-loader.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.wwnorton.com/*"],
+      "js": ["assets/posthog-array.js", "content/posthog-setup.js", "assets/compromise.min.js", "assets/jquery-3.6.0.min.js", "content/content.js"],
+      "css": ["content/styles.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.wwnorton.com/*"],
+      "js": ["assets/posthog-array.js", "content/posthog-setup.js", "assets/compromise.min.js", "assets/jquery-3.6.0.min.js", "content/content.js"],
+      "css": ["content/styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "toggle-play-pause": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "mac": "Command+Shift+Space"
+      },
+      "description": "Toggle play/pause"
+    },
+    "increase-speed": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Up",
+        "mac": "Command+Shift+Up"
+      },
+      "description": "Increase reading speed"
+    },
+    "decrease-speed": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Down",
+        "mac": "Command+Shift+Down"
+      },
+      "description": "Decrease reading speed"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

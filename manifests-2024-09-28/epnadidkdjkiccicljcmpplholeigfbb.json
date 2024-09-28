@@ -1,0 +1,86 @@
+---
+name: BetterMagister
+version: '1.0'
+category_slug: lifestyle/fun
+rating: 4.2727272727272725
+rating_count: 11
+user_count: 633
+release_date: '2022-02-24T10:04:06.000Z'
+size: 506KiB
+languages:
+  - Nederlands
+description: Makes magister MUCH better!
+publisher_account: BocuD
+publisher_address: |-
+  Bredaseweg 202b
+  Tilburg 5038NK
+  Netherlands
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "BetterMagister",
+  "description": "Makes magister MUCH better!",
+  "version": "1.0",
+  "manifest_version": 3,
+
+  "action": {
+    "default_title": "BetterMagister",
+    "default_popup": "settings/BetterMagisterSettings.html"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "https://bettermagister.paultje52.me/stats"
+  ],
+  
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://accounts.magister.net/*"],
+      "js": [
+        "imageHelper.js",
+        "loginImage.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://accounts.magister.net/*"],
+      "js": [
+        "imageHider.js"
+      ],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": ["https://*.magister.net/magister/*"],
+      "js": [
+        "imageHelper.js",
+        "profileImage.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["login-img/*.webp"],
+      "matches": ["https://accounts.magister.net/*"]
+    },
+    
+    {
+      "resources": ["profile-img/*.webp", "profile-img/*.jpg", "profile-img/*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "icons": {
+    "1024": "icon/icon-1024.png"
+  }
+}

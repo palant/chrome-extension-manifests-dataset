@@ -1,0 +1,75 @@
+---
+name: VK Music Ex
+version: 1.2.1
+category_slug: lifestyle/social
+rating: 2.9375
+rating_count: 16
+user_count: 1000
+release_date: '2023-12-19T23:57:37.000Z'
+size: 11.37MiB
+languages:
+  - русский
+description: Расширение для удобного копирования/перемещения/сортировки музыки ВКонтакте
+publisher_account: pshonka.dev
+support_website: https://t.me/vk_music_ex
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "VK Music Ex",
+    "short_name": "VK Music Ex",
+    "description": "Расширение для удобного копирования/перемещения/сортировки музыки ВКонтакте",
+    "version": "1.2.1",
+    "icons": {
+        "512": "assets/assets/icons/spotty_listening_512.png"
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhuLKHLcsjwIUXIO+ULNKpcn7NKv9xrW+kvl2ZAhJV+itrhtxMTESLl8XmOpGaI8r4jtnZU/tjyhDMSM/d2aTd1Of6WiCRhMAbU9Xd60k340/wUfBh2aHgZZTO/oSs97DVWSn/BP1jUUI/JRPEz3cq3iTI8valfZN39LHb7cSq1aJoi4rdmEP/G+KRjm9OWQhwUHe3HH5j7SqhbAGbwAwm+hfDFX8GiFC72uxWYPUX8Hp4utXS3KBxTfkw6u/JUiBV+NuOv/QjM22j7eXcekWpqgkMOYiVNGQk6TcZP9VDZIDdhXFG7PozqPyh/3a/0HdfRhJ7hEQUPjOpuWBcYBTlQIDAQAB",
+
+    "background": {
+        "service_worker": "background.dart.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "all_frames": false,
+            "matches": [
+                "*://*.vk.com/*"
+            ],
+            "js": ["injected.dart.js"],
+            "run_at": "document_start",
+            "world": "MAIN"
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "*://*.vk.com/*"
+        ]
+    },
+    "web_accessible_resources": [{
+        "resources": [
+            "canvaskit/*",
+            
+            "/assets/*",
+            "/packages/*",
+
+            "injected.dart.js",
+            "injected.dart.js.deps",
+            "injected.dart.js.map"
+        ],
+        "matches": [
+            "*://*.vk.com/*"
+        ]
+    }],
+    "host_permissions": [
+        "*://*.vk.com/*",
+        "*://*.google.com/*",
+        "*://*.google-analytics.com/*",
+        "*://*.mixpanel.com/*"
+    ],
+
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    }
+}

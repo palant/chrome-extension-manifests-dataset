@@ -1,0 +1,112 @@
+---
+name: Canva Automate Maker
+version: 1.5.6
+category_slug: productivity/workflow
+rating: 3.761904761904762
+rating_count: 21
+user_count: 10000
+release_date: '2024-08-03T07:10:19.000Z'
+size: 640KiB
+languages:
+  - English
+description: >-
+  Automate your Canva designs with variables, generate multiple variants in bulk
+  and download them automatically on canva.com.
+publisher_account: EchoWebBot Studio
+privacy_policy: https://echobot.dev/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "identity",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://*.canva.com/*",
+    "*://*.echobot.dev/*"
+  ],
+  "oauth2": {
+    "client_id": "783073505404-6a9j5vol9brfg0e13pct888n5e413cn4.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email"
+    ]
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-script-start.js"
+      ],
+      "matches": [
+        "*://*.canva.com/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "libs/jquery-3.6.0.min.js",
+        "content-script.js"
+      ],
+      "css": [
+        "css/content-script.css"
+      ],
+      "matches": [
+        "*://*.canva.com/*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "js": [
+        "auth.js"
+      ],
+      "matches": [
+        "*://*.echobot.dev/auth/success/canvaautomatemaker*"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js",
+        "injected2.js"
+      ],
+      "matches": [
+        "*://*.canva.com/*"
+      ]
+    }
+  ],
+  "version": "1.5.6"
+}

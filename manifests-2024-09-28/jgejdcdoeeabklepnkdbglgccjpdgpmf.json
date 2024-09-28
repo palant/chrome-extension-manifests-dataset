@@ -1,0 +1,147 @@
+---
+name: Old Twitter Layout (2024)
+version: 1.8.9
+category_slug: lifestyle/social
+rating: 4.544018058690745
+rating_count: 443
+user_count: 50000
+release_date: '2024-08-29T13:07:09.000Z'
+size: 1.84MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Filipino
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - español
+  - italiano
+  - latviešu
+  - polski
+  - português (Brasil)
+  - română
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - български
+  - русский
+  - українська
+  - עברית
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: A new extension that returns old Twitter's look.
+publisher_account: dimden.dev
+extension_website: dimden.dev
+support_website: https://github.com/dimdenGD/OldTwitter
+privacy_policy: https://dimden.dev/ot/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Old Twitter Layout (2024)",
+  "description": "__MSG_ext_description__",
+  "version": "1.8.9",
+  "manifest_version": 3,
+  "homepage_url": "https://github.com/dimdenGD/OldTwitter",
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "contextMenus",
+    "scripting",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.twitter.com/*",
+    "*://twitter.com/*",
+    "*://twimg.com/*",
+    "*://*.twimg.com/*",
+    "*://x.com/*",
+    "*://*.x.com/*"
+  ],
+  "sandbox": {
+    "pages": ["sandbox.html"]
+  },
+  
+  "declarative_net_request": {
+    "rule_resources" : [{
+      "id": "ruleset",
+      "enabled": true,
+      "path": "ruleset.json"
+    }]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "layouts/*",
+        "images/*",
+        "fonts/*",
+        "libraries/*",
+        "_locales/*",
+        "sandbox.html"
+      ],
+      "matches": [
+        "*://*.twitter.com/*",
+        "*://*.x.com/*"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "/images/logo16.png",
+    "32": "/images/logo32.png",
+    "48": "/images/logo48.png",
+    "128": "/images/logo128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "/images/logo16.png",
+      "32": "/images/logo32.png",
+      "48": "/images/logo48.png",
+      "128": "/images/logo128.png"
+    },
+    "default_title": "Open settings"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*?*newtwitter=true*", "https://x.com/*?*newtwitter=true*"],
+      "js": ["scripts/xIconRemove.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://twitter.com/*?*newtwitter=true*", "https://x.com/*?*newtwitter=true*"],
+      "js": ["scripts/newtwitter.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "exclude_matches": [
+        "https://twitter.com/*?*newtwitter=true*", "https://twitter.com/settings/download_your_data", 
+        "https://twitter.com/i/flow/login*", "https://twitter.com/i/tweetdeck", "https://twitter.com/i/communitynotes",
+        "https://twitter.com/i/broadcasts/*", "https://twitter.com/search-advanced", "https://twitter.com/x/migrate",
+
+        "https://x.com/*?*newtwitter=true*", "https://x.com/settings/download_your_data", "https://x.com/i/flow/login*",
+        "https://x.com/i/tweetdeck", "https://x.com/i/communitynotes", "https://x.com/i/broadcasts/*",
+        "https://x.com/search-advanced", "https://x.com/x/migrate"
+      ],
+      "js": ["scripts/blockBeforeInject.js", "scripts/config.js", "scripts/helpers.js", "scripts/apis.js", "scripts/twchallenge.js", "scripts/injection.js"],
+      "css": ["libraries/viewer.min.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ]
+}

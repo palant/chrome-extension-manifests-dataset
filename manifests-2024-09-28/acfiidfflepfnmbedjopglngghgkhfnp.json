@@ -1,0 +1,90 @@
+---
+name: Close Coach
+version: 1.0.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2022-03-23T09:43:12.000Z'
+size: 1.27MiB
+languages:
+  - English
+description: An email coach that helps you close leads faster.
+publisher_account: Automator
+support_website: https://support.close.coach
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Close Coach",
+  "description": "An email coach that helps you close leads faster.",
+  "version": "1.0.3",
+  "manifest_version": 3,
+  "icons": {
+    "48": "icons/logo_48.png",
+    "128": "icons/logo_128.png"
+  },
+  "action": {
+    "default_title": "Close Coach"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "management",
+    "tabs",
+    "cookies",
+    "activeTab",
+    "storage",
+    "history",
+    "management"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/",
+    "https://inbox.google.com/",
+    "https://www.linkedin.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost/*",
+      "https://close.coach/*",
+      "https://*.close.coach/*",
+      "http://close-coach-dev.web.app/*",
+      "http://close-coach.web.app/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*",
+        "*://inbox.google.com/*"
+      ],
+      "js": [
+        "jquery.js",
+        "gmail/content.js"
+      ],
+      "css": [
+        "gmail/style.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://app.hubspot.com/*",
+        "https://app-eu1.hubspot.com/*"
+      ],
+      "js": [
+        "jquery.js",
+        "hubspot/content.js"
+      ],
+      "css": [
+        "hubspot/style.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

@@ -1,0 +1,100 @@
+---
+name: Bugu
+version: 0.2.9
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 22
+release_date: '2024-08-14T07:39:22.000Z'
+size: 516KiB
+languages:
+  - English
+description: Share bugs, feedback, and ideas with your team
+publisher_account: hilongjw
+extension_website: bugu.at
+support_website: https://bugu.at
+privacy_policy: https://mixa.cyan.page/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bugu",
+  "version": "0.2.9",
+  "description": "Share bugs, feedback, and ideas with your team",
+  "action": {
+    "default_icon": "./assets/logo.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/logo.png",
+    "48": "./assets/logo.png",
+    "128": "./assets/logo.png"
+  },
+  "commands": {
+    "capture-screen": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+M",
+        "mac": "Command+Ctrl+M"
+      },
+      "description": "Run \"Capture Screenshot\" on the current page."
+    },
+    "record-tab": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+N",
+        "mac": "Command+Ctrl+N"
+      },
+      "description": "Run \"Record Replay\" on the current page."
+    }
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "background",
+    "pageCapture",
+    "scripting",
+    "activeTab",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/injects/inject.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

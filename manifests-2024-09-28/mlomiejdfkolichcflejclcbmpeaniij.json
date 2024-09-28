@@ -1,0 +1,285 @@
+---
+name: Ghostery Tracker & Ad Blocker - Privacy AdBlock
+version: 10.4.7
+category_slug: make_chrome_yours/privacy
+rating: 4.593757172366307
+rating_count: 13071
+user_count: 2000000
+release_date: '2024-09-26T05:13:38.000Z'
+size: 11.32MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Tiếng Việt
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  A powerful privacy extension that blocks ads, prevents trackers, and
+  accelerates website loading
+publisher: Ghostery GmbH
+publisher_account: Ghostery
+publisher_address: |-
+  Arabellastraße
+  23
+  München 81925
+  DE
+extension_website: www.ghostery.com
+support_website: https://www.ghostery.com/support
+privacy_policy: https://www.ghostery.com/privacy/ghostery-plans-and-products-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "Ghostery",
+  "name": "__MSG_manifest_name__",
+  "short_name": "Ghostery",
+  "default_locale": "en",
+  "description": "__MSG_manifest_short_description__",
+  "permissions": [
+    "alarms",
+    "cookies",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "webNavigation",
+    "storage",
+    "scripting",
+    "tabs",
+    "webRequest",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "ws://*/*",
+    "wss://*/*"
+  ],
+  "icons": {
+    "64": "/icons/icon-64.png",
+    "128": "/icons/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "64": "/icons/icon-64.png",
+      "128": "/icons/icon-128.png"
+    },
+    "default_title": "Ghostery",
+    "default_popup": "pages/panel/index.html"
+  },
+  "options_ui": {
+    "page": "pages/settings/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ads",
+        "enabled": false,
+        "path": "rule_resources/dnr-ads.json"
+      },
+      {
+        "id": "tracking",
+        "enabled": false,
+        "path": "rule_resources/dnr-tracking.json"
+      },
+      {
+        "id": "annoyances",
+        "enabled": false,
+        "path": "rule_resources/dnr-annoyances.json"
+      },
+      {
+        "id": "fixes",
+        "enabled": false,
+        "path": "rule_resources/dnr-fixes.json"
+      },
+      {
+        "id": "lang-ar",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-ar.json"
+      },
+      {
+        "id": "lang-de",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-de.json"
+      },
+      {
+        "id": "lang-el",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-el.json"
+      },
+      {
+        "id": "lang-fr",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-fr.json"
+      },
+      {
+        "id": "lang-hu",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-hu.json"
+      },
+      {
+        "id": "lang-it",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-it.json"
+      },
+      {
+        "id": "lang-ja",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-ja.json"
+      },
+      {
+        "id": "lang-ko",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-ko.json"
+      },
+      {
+        "id": "lang-pl",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-pl.json"
+      },
+      {
+        "id": "lang-ru",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-ru.json"
+      },
+      {
+        "id": "lang-tr",
+        "enabled": false,
+        "path": "rule_resources/dnr-lang-tr.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/adblocker.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/autoconsent.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/notifications.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/whotracksme/reporting.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://www.youtube.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content_scripts/youtube.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content_scripts/whotracksme/ghostery-whotracksme.js",
+        "content_scripts/trackers-preview.js",
+        "content_scripts/prevent-serp-tracking.js",
+        "pages/trackers-preview/index.html",
+        "pages/onboarding/index.html",
+        "pages/notifications/opera-serp.html",
+        "pages/notifications/youtube.html"
+      ],
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "rule_resources/redirects/1x1.gif",
+        "rule_resources/redirects/2x2.png",
+        "rule_resources/redirects/32x32.png",
+        "rule_resources/redirects/3x2.png",
+        "rule_resources/redirects/amazon_ads.js",
+        "rule_resources/redirects/amazon_apstag.js",
+        "rule_resources/redirects/ampproject_v0.js",
+        "rule_resources/redirects/chartbeat.js",
+        "rule_resources/redirects/click2load.html",
+        "rule_resources/redirects/doubleclick_instream_ad_status.js",
+        "rule_resources/redirects/fingerprint2.js",
+        "rule_resources/redirects/fingerprint3.js",
+        "rule_resources/redirects/google-analytics_cx_api.js",
+        "rule_resources/redirects/google-analytics_ga.js",
+        "rule_resources/redirects/google-analytics_inpage_linkid.js",
+        "rule_resources/redirects/google-ima.js",
+        "rule_resources/redirects/googlesyndication_adsbygoogle.js",
+        "rule_resources/redirects/googletagmanager_gtm.js",
+        "rule_resources/redirects/googletagservices_gpt.js",
+        "rule_resources/redirects/hd-main.js",
+        "rule_resources/redirects/nobab2.js",
+        "rule_resources/redirects/noeval.js",
+        "rule_resources/redirects/nofab.js",
+        "rule_resources/redirects/noop-0.1s.mp3",
+        "rule_resources/redirects/noop-0.5s.mp3",
+        "rule_resources/redirects/noop-1s.mp4",
+        "rule_resources/redirects/noop-vmap1.0.xml",
+        "rule_resources/redirects/noop.css",
+        "rule_resources/redirects/noop.html",
+        "rule_resources/redirects/noop.js",
+        "rule_resources/redirects/noop.json",
+        "rule_resources/redirects/outbrain-widget.js",
+        "rule_resources/redirects/popads-dummy.js",
+        "rule_resources/redirects/prebid-ads.js",
+        "rule_resources/redirects/prevent-bab.js",
+        "rule_resources/redirects/prevent-popads-net.js",
+        "rule_resources/redirects/scorecardresearch_beacon.js",
+        "rule_resources/redirects/silent-noeval.js"
+      ],
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "version": "10.4.7"
+}

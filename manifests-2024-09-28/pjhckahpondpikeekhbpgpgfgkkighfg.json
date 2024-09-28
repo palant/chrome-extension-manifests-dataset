@@ -1,0 +1,94 @@
+---
+name: Ekata Deep Link Builder
+version: 2.16.0
+category_slug: productivity/tools
+rating: 3.6
+rating_count: 5
+user_count: 1000
+release_date: '2024-08-28T12:16:38.000Z'
+size: 706KiB
+languages:
+  - English
+description: Deep link builder extension for Ekata Pro Insight.
+publisher_account: Ekata
+support_website: https://content.ekata.com/rs/756-OJA-475/images/Ekata_Deep_Links_Guide.pdf
+privacy_policy: https://ekata.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ekata Deep Link Builder",
+  "version": "2.16.0",
+  "description": "Deep link builder extension for Ekata Pro Insight.",
+  "action": {
+    "default_title": "Deep Link Builder",
+    "default_popup": "pages/popup/index.html"
+  },
+  "icons": {
+    "16": "images/icon-enabled-16.png",
+    "48": "images/icon-enabled-48.png",
+    "128": "images/icon-enabled-128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "exclude_matches": [
+        "*://*/*__*"
+      ],
+      "js": [
+        "content/import-index.js"
+      ],
+      "css": [
+        "content/content-script.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "resources": [
+        "content/index.js",
+        "content/inject.html",
+        "images/icon-enabled-16.png",
+        "images/icon-enabled-48.png",
+        "images/icon-enabled-128.png",
+        "images/icon-disabled-16.png",
+        "images/icon-disabled-48.png",
+        "images/icon-disabled-128.png"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content/index.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "minimum_chrome_version": "91",
+  "incognito": "split"
+}

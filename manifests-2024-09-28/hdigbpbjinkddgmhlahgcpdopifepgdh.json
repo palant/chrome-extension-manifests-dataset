@@ -1,0 +1,89 @@
+---
+name: Vcare Click2dial
+version: '1.2'
+category_slug: make_chrome_yours/accessibility
+rating: 5
+rating_count: 4
+user_count: 89
+release_date: '2020-12-01T07:31:05.000Z'
+size: 396KiB
+languages:
+  - Nederlands
+description: Extentie voor de Vcare Operator
+publisher: Vtel telecom
+publisher_address: |-
+  Pantheon 2
+  Enschede 7521 PR
+  Nederland
+privacy_policy: https://www.vtel.nl/wp-content/uploads/2018/05/Privacyverklaring.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Vcare Click2dial",
+  "short_name": "Vcare Click2dial",
+  "version": "1.2",
+  "description": "Extentie voor de Vcare Operator",
+  "homepage_url": "https://www.vcareconnect.nl",
+  "minimum_chrome_version": "36",
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "activeTab"
+  ],
+  "icons": {
+    "16": "images/Icoon-balk-20x20.png",
+    "32": "images/Icoon-balk-40x40.png",
+    "48": "images/Icoon-balk-60x60.png",
+    "128": "images/Icoon-balk-160x160.png"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*/*",
+        "file://*"
+      ],
+      "js": [
+        "scripts/jquery-3.3.1.min.js",
+        "scripts/sendToDialer.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://*.vcareconnect.nl/*",
+        "http://localhost/*"
+      ],
+      "js": [
+        "scripts/receiveInDialer.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "manifest_version": 2,
+  "web_accessible_resources": [
+    "images/*.png"
+  ],
+  "commands": {
+    "dial-number": {
+      "suggested_key": {
+        "default": "Ctrl+Down"
+      },
+      "description": "Bel geselecteerd nummer"
+    }
+  },
+  "options_ui": {
+    "page": "pages/vcareHelp.html",
+    "chrome_style": true,
+    "open_in_tab": true
+  }
+}

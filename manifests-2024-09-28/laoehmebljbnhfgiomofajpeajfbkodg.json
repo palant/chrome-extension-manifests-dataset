@@ -1,0 +1,76 @@
+---
+name: Discord DM BOT
+version: 1.1.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 430
+release_date: '2024-07-17T09:17:11.000Z'
+size: 1.97MiB
+languages:
+  - English
+  - 中文 (简体)
+description: Automatically send Discord messages in batches
+publisher_account: muepoints
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_chrome_extension_name__",
+  "version": "1.1.2",
+  "description": "__MSG_chrome_extension_description__",
+  "default_locale": "en",
+  "icons": {
+    "16": "./assets/icon16.png",
+    "19": "./assets/icon19.png",
+    "38": "./assets/icon38.png",
+    "48": "./assets/icon48.png",
+    "128": "./assets/icon128.png"
+  },
+  "action": {
+    "default_icon": "./assets/icon128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.discord.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*.discord.com/*"
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "webRequest"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

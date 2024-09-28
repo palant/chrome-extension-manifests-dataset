@@ -1,0 +1,90 @@
+---
+name: Lectio Expert
+version: 2.9.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 9
+user_count: 601
+release_date: '2022-11-14T05:02:43.000Z'
+size: 1.74MiB
+languages:
+  - dansk
+description: >-
+  Opdaterer Lectio med nyt tema og dynamisk mørkt tema, auto-login, personlig
+  baggrund, vægtet gennemsnitsberegner og meget mere!
+publisher_account: lectioexpert
+support_website: https://goo.gl/forms/LACDIe4acVswButD3
+privacy_policy: >-
+  https://docs.google.com/document/d/1chDpztvDYF_hFvd7EASplwF4mawFywUAzUKaRAHDW3s/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "Toke & Ghaith",
+  "description": "Opdaterer Lectio med nyt tema og dynamisk mørkt tema, auto-login, personlig baggrund, vægtet gennemsnitsberegner og meget mere!",
+  "manifest_version": 2,
+  "version": "20200.1.12",
+  "version_name": "2.9.5",
+  "name": "Lectio Expert",
+  "permissions": ["https://www.lectio.dk/*", "storage"],
+  "background": {
+  "page": "html/background.html",
+  "persistent": true
+},
+
+  "browser_action": {
+    "default_popup": "html/popup/popup.html",
+    "default_icons": {
+      "128": "icons/icon128.png",
+      "64": "icons/icon64.png",
+      "16": "icons/icon16.png"
+    }
+  },
+  "icons": {
+    "128": "icons/icon128.png",
+    "64": "icons/icon64.png",
+    "16": "icons/icon16.png"
+  },
+  "options_page": "html/popup/settings.html",
+  "content_scripts": [ {
+    "matches": ["https://www.lectio.dk/*"],
+    "js": ["js/lib.js", "js/openGame.js"]
+  }, {
+    "matches": ["https://www.lectio.dk/*"],
+    "js": ["js/changeColor.js"],
+    "css": ["css/stylesheet-main.css"]
+  }, {
+    "matches": ["https://www.lectio.dk/*"],
+    "js": ["js/Google_Analytics.js"]
+  }, {
+    "matches": ["https://www.lectio.dk/lectio/*"],
+    "js": ["js/footer/footer.js"],
+    "run_at": "document_idle"
+  }, {
+    "matches": ["https://www.lectio.dk/*"],
+    "js": ["js/master.js"],
+    "css": ["css/stylesheet-DOM.css"]
+  }, {
+    "matches": ["https://www.lectio.dk/*"],
+    "js": ["js/loadTheme.js"],
+    "run_at": "document_start"
+  }, {
+     "matches": [ "https://www.lectio.dk/lectio/*/login.aspx*" ],
+     "js": ["js/autoLogin.js"],
+     "run_at": "document_end"
+  }, {
+    "matches": [ "https://www.lectio.dk/lectio/*/default.aspx" ],
+    "js": ["js/newUpdate.js"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["https://www.lectio.dk/lectio/*/SkemaNy.aspx*"],
+    "js": ["js/setID.js"]
+  } ],
+    "web_accessible_resources": [
+      "icons/*", "css/*", "html/*",
+      "changelog.json", "images/*", "js/absenceChart.js",
+      "js/skemaChart.js", "js/absence.js", "js/schemeAbsence.js",
+      "js/lib.js", "json/*"],
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+}

@@ -1,0 +1,147 @@
+---
+name: 6Park Extension
+version: '2023.1208'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-12-09T12:11:59.000Z'
+size: 72.49KiB
+languages:
+  - English
+  - 中文 (简体)
+description: 6park.com post helper, 12/08/2023
+publisher_account: songsoft
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "6Park Extension",
+    "short_name": "6Park Extension",
+    "version": "2023.1208",
+    "description": "6park.com post helper, 12/08/2023",
+    "permissions": [
+        "activeTab"
+    ],
+    "icons": {
+        "48": "icons/6p-48.png",
+        "96": "icons/6p-96.png"
+    },
+    "default_locale": "en",
+    "action": {
+        "default_icon": {
+            "48": "icons/6p-48.png",
+            "96": "icons/6p-96.png"
+        },
+        "default_title": "__MSG_name__",
+        "default_popup": "popup.html"
+    },
+    "background.service_worker": {
+        "scripts": [
+            "scripts/background.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "file:///*"
+            ],
+            "js": [
+                "commonJS.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.mozilla.org/*"
+            ],
+            "js": [
+                "borderify.js"
+            ]
+        },
+
+        {
+            "matches": [
+                "*://club.6parkbbs.com/*index.php*","*://web.6parkbbs.com/index.php*"
+            ],
+            "js": [
+                "6park-common.js", "6park-post.js"
+            ],
+            "run_at": "document_end"
+        },        
+        {
+            "matches": [
+                "*://club.6parkbbs.com/enter1/*", "https://www.sixparker.com/*"
+            ],
+            "js": [
+                "6park-common.js", "6park-enter1.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://club.6parkbbs.com/life1/*"
+            ],
+            "js": [
+                "6park-common.js", "6park-test.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://*.6parkbbs.com/*",
+                "*://*.6parker.com/*"
+            ],
+            "exclude_globs": [
+                "*://club.6parkbbs.com/enter1/*", "*://club.6parkbbs.com/life1/*"
+            ],
+            "js": [
+                "6park-common.js", "6park.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.163.com/*",
+                "*://*.51.ca/*",
+                "*://*.66.ca/*",
+                "*://*.6do.news/*",
+                "*://*.aboluowang.com/*",
+                "*://*.bbc.com/*",
+                "*://*.careerengine.us/*",
+                "*://*.chinadigitaltimes.net/*",
+                "*://*.creaders.net/*",
+                "*://*.kantie.org/*",
+                "*://*.rfa.org/*",
+                "*://*.sina.com.cn/*",
+                "*://*.sina.com/*",
+                "*://*.singtaousa.com/*",
+                "*://*.timednews.com/*",
+                "*://*.toutiao.com/*",
+                "*://*.udn.com/*",
+                "*://*.voachinese.com/*",
+                "*://*.zaobao.com.sg/*",
+                "*://*.zhihu.com/*",
+                "*://cn.nytimes.com/*",
+                "*://freewechat.com/a/*",
+                "*://mp.weixin.qq.com/*",
+                "*://mrnews.cc/*",
+                "*://olympics.com/*",
+                "*://weitushe.com/*",
+                "*://wemp.app/posts/*",
+                "*://www.nytimes.com/*",
+                "*://www.sohu.com/*"
+            ],
+            "js": [
+                "commonJS.js",
+                "extensionJs.js",
+                "processSite.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "optional_permissions": [
+        "clipboardWrite", "clipboardRead"
+    ]
+}

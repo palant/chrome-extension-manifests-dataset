@@ -1,0 +1,84 @@
+---
+name: Taplio X
+version: 2.6.3
+category_slug: lifestyle/social
+rating: 4.019607843137255
+rating_count: 51
+user_count: 30000
+release_date: '2024-08-23T04:03:44.000Z'
+size: 93.53KiB
+languages:
+  - English (United States)
+description: >-
+  Supercharge your LinkedIn experience: find post inspirations, consult your
+  stats, get relevant info on people.
+publisher: Lempire SAS
+publisher_account: mickael
+publisher_address: |-
+  128 rue de la Boétie
+  Paris 75008
+  FR
+extension_website: lempire.co
+support_website: https://support.taplio.com/
+privacy_policy: https://taplio.com/our-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Taplio X",
+  "name": "Taplio X",
+  "description": "Supercharge your LinkedIn experience: find post inspirations, consult your stats, get relevant info on people.",
+  "version": "2.6.3",
+  "manifest_version": 3,
+  "icons": {
+    "16": "logo_16.png",
+    "48": "logo_48.png",
+    "128": "logo_128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "css": ["/css/root.css"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://*.taplio.com/*", "http://localhost:3003/*"],
+      "js": ["apibridge.js"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "webRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": ["*://*.linkedin.com/", "*://app.taplio.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "logo_taplio_500.png",
+        "closeicon.png",
+        "logo_48.png",
+        "/front-end/*"
+      ],
+      "matches": ["*://*.linkedin.com/*", "*://linkedin.com/*"]
+    }
+  ]
+}

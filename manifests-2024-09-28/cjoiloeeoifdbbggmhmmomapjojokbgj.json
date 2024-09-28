@@ -1,0 +1,141 @@
+---
+name: CodeshAIR
+version: 1.0.7
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 290
+release_date: '2023-03-29T06:21:08.000Z'
+size: 1.09MiB
+languages:
+  - English
+description: >-
+  CodeshAIR is a new way to buy discount airfare. For those looking to travel,
+  we can offer up to 30% off each ticket purchased.
+publisher_account: CodeshAIR
+support_website: https://codeshair.com/contact-us
+privacy_policy: https://www.codeshair.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CodeshAIR",
+  "version": "1.0.7",
+  "homepage_url": "https://www.codeshair.com",
+  "description": "CodeshAIR is a new way to buy discount airfare. For those looking to travel, we can offer up to 30% off each ticket purchased.",
+  "default_locale": "en",
+  "permissions": [
+  ],
+  "host_permissions": [
+    "https://www.spirit.com/book/flights/*",
+    "https://www.allegiantair.com/booking/*",
+    "https://www.expedia.com/Flight-Information*",
+    "https://booking.flyfrontier.com/Flight/Select/*",
+    "https://www.codeshair.com/*",
+    "https://staging.codeshair.com/*",
+    "http://localhost:8091/*"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "web_accessible_resources": [{
+    "resources":[
+          "assets/*.png",
+          "assets/Montserrat-Regular.ttf",
+          "assets/Montserrat-Bold.ttf",
+          "js/*.js"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "background" : {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "*://*.codeshair.com/*"]
+  },
+
+
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "__MSG_extName__",
+    "default_icon": {
+      "19": "icons/16.png",
+      "38": "icons/32.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.spirit.com/",
+        "https://www.spirit.com/book/flights",
+        "https://www.spirit.com/book/flights*",
+        "https://www.spirit.com/book/flights/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "js/confetti.browser.js",
+        "js/jquery.min.js",
+        "common.js",
+        "content-spirit-20220718.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.allegiantair.com/booking/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "js/confetti.browser.js",
+        "js/luxon.min.js",
+        "js/jquery.min.js",
+        "common.js",
+        "content-allegiant.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.expedia.com/Flight-Information*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "js/confetti.browser.js",
+        "js/jquery.min.js",
+        "common.js",
+        "content-expedia.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://booking.flyfrontier.com/Flight/Select/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "js/confetti.browser.js",
+        "js/luxon.min.js",
+        "js/jquery.min.js",
+        "common.js",
+        "content-frontier.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,97 @@
+---
+name: Composer Quant Tools
+version: 1.1.0
+category_slug: make_chrome_yours/functionality
+rating: 5
+rating_count: 5
+user_count: 70
+release_date: '2024-09-26T08:12:28.000Z'
+size: 41.81MiB
+languages:
+  - English
+description: Utility extension that makes working with Composer Symphonies easier
+publisher_account: composertradeui
+support_website: https://github.com/jhicken/composer-quant-tools
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Composer Quant Tools",
+  "description": "Utility extension that makes working with Composer Symphonies easier",
+  "version": "1.1.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_title": "Composer Quant Tools",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.composer.trade/*"
+      ],
+      "js": [
+        "fetchAuth.js",
+        "lib/jslib/lodash.min.js",
+        "utils/liveTickerTooltip.js"
+      ],
+      "world": "MAIN",
+      "css": [
+        "utils/liveTickerTooltip.css",
+        "utils/additional.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.composer.trade/*"
+      ],
+      "js": [
+        "contentScriptBootstrap.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ],
+    "matches": [
+      "https://app.composer.trade/*"
+    ],
+    "accepts_tls_channel_id": false
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*",
+        "utils/*",
+        "lib/*",
+        "popup.js",
+        "init.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "type": "module"
+    }
+  ]
+}

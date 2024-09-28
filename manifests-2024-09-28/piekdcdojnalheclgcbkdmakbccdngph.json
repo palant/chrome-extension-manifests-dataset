@@ -1,0 +1,68 @@
+---
+name: Seed Oil Shopper
+version: '2.0'
+category_slug: lifestyle/well_being
+rating: 5
+rating_count: 5
+user_count: 9
+release_date: '2024-09-24T08:56:49.000Z'
+size: 446KiB
+languages:
+  - English (United States)
+description: Hide product containing seed oils from online grocery stores
+publisher_account: Seed Oil Shopper
+publisher_address: |-
+  7861 east 26th ave
+  Denver, CO 80238
+  US
+privacy_policy: https://seedoilshopper.com/privacy-policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Seed Oil Shopper",
+    "version": "2.0",
+    "description": "Hide product containing seed oils from online grocery stores",
+    "permissions": [
+      "storage"
+    ],
+    "manifest_version": 3,
+    "icons": {
+     "128": "src/img/icon.png"
+    },
+    "action": {
+      "default_icon": "src/img/icon.png"
+    },
+    "background": {
+      "service_worker": "./src/server.js"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "*://*.kingsoopers.com/*",
+          "*://*.amazon.com/*",
+          "*://*.walmart.com/*"
+        ],
+        "js": ["src/libs/jquery.min.js","src/client.js"]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "product-listing.csv",
+          "amazon.csv"
+        ],
+        "matches": [
+          "https://*.kingsoopers.com/*",
+          "https://*.amazon.com/*",
+          "https://*.walmart.com/*"
+        ]
+      }
+    ],
+    "host_permissions": [
+      "https://*.kingsoopers.com/*",
+      "https://*.amazon.com/*",
+      "https://*.walmart.com/*"
+    ]
+  }

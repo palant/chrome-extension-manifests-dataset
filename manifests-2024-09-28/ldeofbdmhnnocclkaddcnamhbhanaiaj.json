@@ -1,0 +1,101 @@
+---
+name: Tracking & Ad Removal on FaceBk
+version: 1.13.0
+category_slug: lifestyle/social
+rating: 4.282608695652174
+rating_count: 46
+user_count: 3000
+release_date: '2024-06-19T09:53:07.000Z'
+size: 82.48KiB
+languages:
+  - English
+  - Français
+description: Removes Ads and the user interaction tracking from content on Facebook™
+publisher_account: Z
+support_website: https://github.com/mgziminsky/FacebookTrackingRemoval/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extensionName__",
+    "version": "1.13.0",
+    "description": "__MSG_extensionDescription__",
+    "default_locale": "en",
+    "icons": {
+        "128": "src/icon.png"
+    },
+    "author": "Michael Ziminsky",
+    "homepage_url": "https://github.com/mgziminsky/FacebookTrackingRemoval",
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{bb1b80be-e6b3-40a1-9b6e-9d4073343f0b}",
+            "strict_min_version": "113.0"
+        }
+    },
+    "permissions": ["alarms", "declarativeNetRequestWithHostAccess", "scripting", "storage", "webNavigation"],
+    "host_permissions": [
+        "*://*.facebook.com/*",
+        "*://*.messenger.com/*",
+        "*://*.facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion/*",
+        "https://mgziminsky.gitlab.io/FacebookTrackingRemoval/*"
+    ],
+    "options_ui": {
+        "page": "src/options/options.html",
+        "open_in_tab": false
+    },
+    "background": {
+        "type": "module",
+        "scripts": ["src/background/background.js"],
+        "service_worker": "src/background/background.js"
+    },
+    "action": {
+        "default_icon": "src/icon.png",
+        "default_popup": "src/options/options.html"
+    },
+    "page_action": {
+        "default_icon": "src/icon.png",
+        "default_popup": "src/options/options.html",
+        "show_matches": [
+            "*://*.facebook.com/*",
+            "*://*.messenger.com/*",
+            "*://*.facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion/*"
+        ]
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "matches": [
+                "*://*.facebook.com/*",
+                "*://*.messenger.com/*",
+                "*://*.facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion/*"
+            ],
+            "css": ["src/content_script/app.css"],
+            "js": ["browser-polyfill.min.js", "src/content_script/content_script.js"],
+            "run_at": "document_end",
+            "world": "ISOLATED"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "use_dynamic_url": true,
+            "matches": [
+                "*://*.facebook.com/*",
+                "*://*.messenger.com/*",
+                "*://*.facebookwkhpilnemxj7asaniu7vnjjbiltxjqhye3mhbshg7kx5tfyd.onion/*"
+            ],
+            "resources": ["/src/*"]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset",
+                "enabled": true,
+                "path": "data/declarativeNetRequest.json"
+            }
+        ]
+    },
+    "incognito": "spanning",
+    "manifest_version": 3
+}

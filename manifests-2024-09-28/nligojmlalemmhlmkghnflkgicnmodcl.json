@@ -1,0 +1,125 @@
+---
+name: CryptKeeper
+version: 0.5.3
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-10-12T21:21:01.000Z'
+size: 12.96MiB
+languages:
+  - English (United States)
+description: A ZK Identity and Proof Management Wallet
+publisher_account: Privacy and Scaling Explorations (PSE)
+support_website: https://github.com/CryptKeeperZK/crypt-keeper-extension/discussions
+privacy_policy: >-
+  https://github.com/CryptKeeperZK/crypt-keeper-extension/blob/main/privacy_policy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CryptKeeper",
+  "description": "A ZK Identity and Proof Management Wallet",
+  "version": "0.5.3",
+  "minimum_chrome_version": "93",
+  "action": {
+    "default_icon": "./icons/logo.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "js/backgroundPage.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/content.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "js/injected.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "icons": {
+    "16": "./icons/icon-16.png",
+    "48": "./icons/icon-48.png",
+    "128": "./icons/icon-128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "permissions": [
+    "scripting",
+    "clipboardWrite",
+    "activeTab",
+    "tabs",
+    "storage",
+    "notifications",
+    "unlimitedStorage",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/content.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "js/injected.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "js/offscreen.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "styles/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "js/zkeyFiles/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

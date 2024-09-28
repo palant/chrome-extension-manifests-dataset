@@ -1,0 +1,65 @@
+---
+name: WINN.AI
+version: 2.9.501
+category_slug: productivity/workflow
+rating: 4.866666666666666
+rating_count: 30
+user_count: 1000
+release_date: '2024-09-17T05:15:35.000Z'
+size: 175KiB
+languages:
+  - English
+description: WINN.AI
+publisher: Winn.ai
+publisher_account: Winn AI
+publisher_address: |-
+  Ha-Yetsira St 19
+  Ramat Gan 5252157
+  IL
+extension_website: winn.ai
+support_website: https://winn.ai/support
+privacy_policy: https://winn.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "WINN.AI",
+    "description": "WINN.AI",
+    "version": "2.9.501",
+    "icons": {
+        "16": "16.png",
+        "48": "48.png",
+        "128": "128.png"
+    },
+    "action": {
+        "default_title": "WINN.AI"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://zoom.us/profile/setting*"],
+            "js": ["enableZoomPermissions.js"]
+        },
+        {
+            "matches": ["https://app.winn.ai/*"],
+            "js": ["winnAppExtensionBridgeScript.js"]
+        },
+        {
+            "matches": ["https://meet.google.com/*"],
+            "js": ["googleMeetMain.js"],
+            "world": "MAIN"
+        },
+        {
+            "matches": ["https://meet.google.com/*"],
+            "js": ["googleMeetIsolated.js"],
+            "world": "ISOLATED"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["storage", "cookies", "background", "alarms", "gcm", "tabs"],
+    "optional_permissions": ["notifications"],
+    "host_permissions": ["*://*.zoom.us/*", "*://*.winn.ai/*", "*://meet.google.com/*"]
+}

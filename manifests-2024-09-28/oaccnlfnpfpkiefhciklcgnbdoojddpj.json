@@ -1,0 +1,65 @@
+---
+name: Amazon Data App
+version: 0.0.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2020-06-01T06:33:32.000Z'
+size: 1.38MiB
+languages:
+  - English
+description: Gives you relevant data to make better decisions on Amazon Marketplace.
+publisher_account: vinay.samtani
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Amazon Data App",
+    "version": "0.0.0.1",
+    "description": "Gives you relevant data to make better decisions on Amazon Marketplace.",
+    "permissions": ["declarativeContent",
+      "tabs",
+      "storage",
+      "https://notifyapi2.azurewebsites.net/api/Chrome/*",
+      "https://fonts.googleapis.com/css*"
+      ],
+    "content_security_policy": "script-src 'self' https://notifyapi2.azurewebsites.net/api/Chrome/; object-src 'self'",
+    "web_accessible_resources": ["images/loader.gif"],
+    "background": {
+        "scripts": ["background.js"],
+        "persistent": false
+      },
+    "page_action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "images/five_star.png"
+          }
+      },
+    "content_scripts": [
+      {
+          "run_at": "document_end",
+          "matches": [
+              "https://*.amazon.com/s*",
+              "https://www.amazon.com/gp/bestsellers/*",
+              "https://*.amazon.com/Best-Sellers-*"
+          ],
+          "js": ["Modifier.js"],
+          "css": ["style.css"]
+      },
+      {
+        "run_at": "document_end",
+        "matches": [
+            "https://*.amazon.com/dp/*",
+            "https://*.amazon.com/*/dp/*"
+        ],
+        "js": ["ModifierProduct.js","js/chartjs/Chart.js"],
+        "css": ["style.css"]
+    }
+    ],
+    "icons": {
+        "128": "images/five_star.png"
+      },
+    "manifest_version": 2
+  }

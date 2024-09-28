@@ -1,0 +1,97 @@
+---
+name: wonderbar
+version: 2.6.0
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 80
+release_date: '2024-09-05T08:33:00.000Z'
+size: 293KiB
+languages:
+  - Deutsch
+  - English
+description: >-
+  Mit der Browser-Erweiterung „wonderbar“ verpasst Du kein CashBack, Gutscheine
+  oder Deals mehr
+publisher: wonderunited UG (haftungsbeschränkt)
+publisher_account: wonderunited
+publisher_address: |-
+  Am Sande 1
+  Rotenburg 27356
+  Deutschland
+extension_website: happybenefits.de
+privacy_policy: https://wondercashback.de/datenschutz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "author": "wonderunited UG",
+    "name": "wonderbar",
+    "version": "2.6.0",
+    "manifest_version": 3,
+    "description": "Mit der Browser-Erweiterung „wonderbar“ verpasst Du kein CashBack, Gutscheine oder Deals mehr",
+    "icons": {
+        "16": "src/img/WC_Bildmarke_16.png",
+        "48": "src/img/WC_Bildmarke_48.png",
+        "128": "src/img/WC_Bildmarke_128.png"
+    },
+    "default_locale": "de",
+    "background": {
+        "service_worker": "src/classes/background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_icon": "src/img/WC_Bildmarke_19.png",         
+        "default_title": "Kein CashBack, Gutscheine oder Deals für diese Seite verfügbar."
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "alarms"
+    ],
+    "optional_host_permissions": [
+        "*://*/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/src/img/WC_Bildmarke_Cashback_Active.png",
+                "/src/img/WC_Bildmarke_Cashback_NotActive.png",
+                "/src/main.css"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "src/classes/lib/jquery/jquery.js",
+                "src/classes/connect.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+            ],
+            "js": [
+                "src/classes/lib/jquery/jquery.js",
+                "src/classes/widget.js",
+                "src/classes/content.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        }
+    ]
+}

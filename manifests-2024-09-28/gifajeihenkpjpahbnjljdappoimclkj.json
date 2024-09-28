@@ -1,0 +1,89 @@
+---
+name: Library of Values - Twitter Feed Reranker (Dual Mode)
+version: 0.0.3
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-09-28T06:57:51.000Z'
+size: 2.47MiB
+languages:
+  - English
+description: >-
+  A simple chrome extension that offers the ability to rerank Twitter feeds by
+  values in post.
+publisher_account: Farnaz Jahanbakhsh
+privacy_policy: >-
+  https://docs.google.com/document/d/1jNjGBUS1Kj9BaDPgdfvc_q3HZulwM0o3wygFUY9E7Ag/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Library of Values - Twitter Feed Reranker (Dual Mode)",
+  "version": "0.0.3",
+  "description": "A simple chrome extension that offers the ability to rerank Twitter feeds by values in post. ",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://twitter.com/*",
+    "*://x.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js",
+        "dist/contentScripts/config.js",
+        "dist/contentScripts/libs/jquery.min.js",
+        "dist/contentScripts/libs/client.js",
+        "dist/contentScripts/libs/timeme.min.js",
+        "dist/contentScripts/libs/utils.js",
+        "dist/contentScripts/events.js",
+        "dist/contentScripts/logic.js",
+        "dist/contentScripts/launcher.js"
+      ],
+      "css": [
+        "public/main.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/injected.js",
+        "assets/UprankGraphic.png",
+        "assets/DownrankGraphic.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

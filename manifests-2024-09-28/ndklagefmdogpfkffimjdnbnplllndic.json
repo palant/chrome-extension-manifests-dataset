@@ -1,0 +1,118 @@
+---
+name: E Money Network
+version: 2.0.6
+category_slug: productivity/workflow
+rating: 4.7701149425287355
+rating_count: 87
+user_count: 4000
+release_date: '2024-08-09T12:07:39.000Z'
+size: 19.34MiB
+languages:
+  - English
+description: Everything in the blockchain made easy
+publisher_account: devchain
+privacy_policy: https://scallop-docs.s3.eu-west-1.amazonaws.com/privacy-policy-emoney.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "https://emoney.network",
+  "homepage_url": "https://emoney.network",
+  "version": "2.0.6",
+  "name": "E Money Network",
+  "short_name": "EMoney",
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E",
+        "chromeos": "Alt+Shift+E",
+        "linux": "Alt+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/inject.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "Everything in the blockchain made easy",
+  "icons": {
+    "16": "assets/img/icons/icon16.png",
+    "32": "assets/img/icons/icon32.png",
+    "64": "assets/img/icons/icon64.png",
+    "192": "assets/img/icons/icon192.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/img/icons/icon16.png",
+      "32": "assets/img/icons/icon32.png",
+      "64": "assets/img/icons/icon64.png",
+      "192": "assets/img/icons/icon192.png"
+    },
+    "default_title": "EMoney",
+    "default_popup": "action.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/inject.js",
+        "scripts/*.js.map",
+        "assets/*"
+      ],
+      "use_dynamic_url": false,
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "111",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

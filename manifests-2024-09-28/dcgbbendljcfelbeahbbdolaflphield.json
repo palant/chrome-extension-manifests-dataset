@@ -1,0 +1,84 @@
+---
+name: Recipe Hub Search
+version: 1.0.11
+category_slug: make_chrome_yours/functionality
+rating: 4
+rating_count: 1
+user_count: 976
+release_date: '2024-09-19T03:56:07.000Z'
+size: 520KiB
+languages:
+  - English
+description: >-
+  Internet's definitive source for delicious and nutritious recipes. From next
+  door to around the globe.
+publisher_account: New Tab Tools Extensions
+extension_website: www.newtabtools.com
+support_website: https://www.newtabtools.com/contact-us
+privacy_policy: https://www.newtabtools.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Recipe Hub Search",
+  "version": "1.0.11",
+  "manifest_version": 3,
+  "description": "Internet's definitive source for delicious and nutritious recipes. From next door to around the globe.",
+  "homepage_url": "https://www.newtabtools.com",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": "icons/icon48.png"
+  },
+  "background": {
+    "service_worker": "js/bg/rh_background.js"
+  },
+  "permissions": [
+    "alarms",
+    "tabs",
+    "storage",
+    "topSites",
+    "history",
+    "search"
+  ],
+  "host_permissions": [
+    "*://*.newtabtools.com/*",
+    "*://*.yahoo.com/*"
+  ],
+  "content_scripts": [{
+  "matches": ["http://*.newtabtools.com/*", "https://*.newtabtools.com/*"],
+      "js": ["js/bg/rh_ext.js"]
+  },{
+    "matches": ["https://*.search.yahoo.com/*","https://search.yahoo.com/*"],
+    "all_frames": true,
+    "js": ["js/rh_events.js"]
+  }],
+  "chrome_url_overrides": {
+    "newtab": "rh_new_tab.html"
+  },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "encoding": "UTF-8",
+      "favicon_url": "https://www.newtabtools.com/assets/images/yahoo-favicon.ico",
+      "is_default": true,
+      "keyword": "Yahoo",
+      "name": "Yahoo Partner",
+      "search_url": "https://www.newtabtools.com/search?p={searchTerms}&aid=26",
+      "suggest_url": "https://www.newtabtools.com/search/suggest?q={searchTerms}"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

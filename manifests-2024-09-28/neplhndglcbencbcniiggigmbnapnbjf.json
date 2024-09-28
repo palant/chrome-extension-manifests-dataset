@@ -1,0 +1,88 @@
+---
+name: Binumi
+version: 2.0.0
+category_slug: productivity/workflow
+rating: 4.5
+rating_count: 2
+user_count: 76
+release_date: '2020-07-24T11:05:26.000Z'
+size: 317KiB
+languages:
+  - English
+description: Record tab in HD and upload to Binumi.
+publisher_account: Binumi
+extension_website: www.binumi.com
+support_website: https://www.binumi.com/help
+privacy_policy: https://www.binumi.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "name":"Binumi",
+   "short_name":"Binumi",
+   "version":"2.0.0",
+   "manifest_version":2,
+   "minimum_chrome_version":"49",
+   "description":"Record tab in HD and upload to Binumi.",
+   "background":{
+      "scripts":[
+         "js/background/background.common.js",
+         "js/background/background.js",
+         "js/background/background.desktopCapture.js",
+         "js/background/background.tabCapture.js",
+         "js/background/background.badgeText.js",
+         "js/background/background.getUserMedia.js",
+         "js/background/background.messaging.js",
+         "js/background/background.players.js",
+         "library/RecordRTC/MediaStreamRecorder.js",
+         "library/RecordRTC/MultiStreamRecorder.js",
+         "library/RecordRTC/MultiStreamsMixer.js",
+         "library/RecordRTC/StereoAudioRecorder.js",
+         "library/RecordRTC/DiskStorage.js",
+         "library/RecordRTC/EBML.js"
+      ],
+      "persistent":false
+   },
+   "content_scripts":[
+      {
+        "matches":[
+          "<all_urls>"
+        ],
+        "js":[
+            "js/background/background.contentScript.js"
+        ],
+        "all_frames": true,
+        "run_at": "document_start"
+      }
+    ],
+   "browser_action":{
+      "default_icon":"images/binumi-icon-48x48.png",
+      "default_title":"Record Your Tab",
+      "default_popup": "dropdown.html"
+   },
+   "icons":{
+      "16":"images/binumi-icon-16x16.png",
+      "48":"images/binumi-icon-48x48.png",
+      "128":"images/binumi-icon-128x128.png"
+   },
+   "permissions":[
+      "desktopCapture",
+      "storage",
+      "tabs",
+      "tabCapture",
+      "activeTab",
+      "<all_urls>",
+      "identity",
+      "https://www.googleapis.com/*"
+   ],
+   "content_security_policy": "script-src 'self' https://apis.google.com https://*.binumi.com; connect-src 'self' https://apis.google.com https://*.binumi.com; object-src 'self'",
+   "web_accessible_resources":[
+      "images/binumi-icon-48x48.png"
+   ],
+   "options_ui":{
+      "page":"options.html",
+      "chrome_style":false,
+      "open_in_tab": true
+   }
+}

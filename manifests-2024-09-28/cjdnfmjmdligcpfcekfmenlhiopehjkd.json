@@ -1,0 +1,394 @@
+---
+name: TwoSeven Extension
+version: 3.0.7
+category_slug: lifestyle/entertainment
+rating: 3.5483870967741935
+rating_count: 62
+user_count: 200000
+release_date: '2024-09-21T05:12:13.000Z'
+size: 5.3MiB
+languages:
+  - English (United States)
+description: Opens up exciting new possibilities of watching together on twoseven.xyz
+publisher_account: twoseven.xyz
+extension_website: twoseven.xyz
+support_website: https://twoseven.xyz/help/faq
+privacy_policy: https://twoseven.xyz/help/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TwoSeven Extension",
+  "version": "3.0.7",
+  "description": "Opens up exciting new possibilities of watching together on twoseven.xyz",
+  "action": {
+    "default_icon": "./assets/icon-512x512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./assets/icon-512x512.png",
+    "48": "./assets/icon-512x512.png",
+    "128": "./assets/icon-512x512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "identity",
+    "storage",
+    "notifications",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "scripting",
+    "cookies"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "global",
+        "enabled": true,
+        "path": "./dist/rules/global-rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/early-index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/early-page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.js",
+        "./dist/contentScripts/generic/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "*://*.twoseven.xyz/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/twoseven/index.js",
+        "./dist/contentScripts/twoseven/iframe-strategy-cs.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.netflix.com/**",
+        "https://*.netflix.com/**"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./dist/contentScripts/netflix/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.amazon.com/**",
+        "https://*.amazon.com/**",
+        "http://*.amazon.co.uk/**",
+        "https://*.amazon.co.uk/**",
+        "http://*.primevideo.com/**",
+        "https://*.primevideo.com/**"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/amazon-video/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.hulu.com/**",
+        "https://*.hulu.com/**"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/hulu/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.disneyplus.com/**",
+        "https://*.disneyplus.com/**"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/disneyplus/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.disneyplus.com/**",
+        "https://*.disneyplus.com/**"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/disneyplus/page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.peacocktv.com/**",
+        "https://*.peacocktv.com/**"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/peacock/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*.peacocktv.com/**",
+        "https://*.peacocktv.com/**"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/peacock/page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*.max.com/**"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/hbo/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://tv.apple.com/**",
+        "https://tv.apple.com/**",
+        "https://mediaauth.apple.com/auth-bridge/**"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/appletv/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "https://mediaauth.apple.com/auth-bridge/**"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/appletv/mediaauth-page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://tv.apple.com/**",
+        "https://tv.apple.com/**"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/appletv/page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "*://*.youtube.com/**",
+        "*://tv.youtube.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/youtube/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "matches": [
+        "*://*.crunchyroll.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/crunchyroll/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "matches": [
+        "*://*.crunchyroll.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/crunchyroll/page.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "matches": [
+        "*://*.funimation.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/funimation/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_end",
+      "matches": [
+        "*://*.vrv.co/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/vrv.co/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "*://*.paramountplus.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/paramountplus/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "*://*.paramountplus.com/**"
+      ],
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/paramountplus/page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "https://www.jiocinema.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/jiocinema.com/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "https://www.jiocinema.com/**"
+      ],
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/jiocinema.com/page.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "https://www.viki.com/**"
+      ],
+      "js": [
+        "./dist/contentScripts/webext-bridge.js",
+        "./dist/contentScripts/viki.com/index.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "run_at": "document_start",
+      "matches": [
+        "https://www.viki.com/**"
+      ],
+      "world": "MAIN",
+      "js": [
+        "./dist/contentScripts/viki.com/page.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/webext-bridge.js",
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/views/modal/**",
+        "dist/contentScripts/views/modal/assets/**",
+        "web_resources/**/*",
+        "web_resources/dummy.js",
+        "dist/contentScripts/**/page.js",
+        "dist/contentScripts/twoseven/page.js",
+        "dist/contentScripts/media-finder/web-worker-context.js",
+        "node_modules/**"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

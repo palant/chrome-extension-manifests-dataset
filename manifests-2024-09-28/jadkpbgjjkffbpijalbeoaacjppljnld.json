@@ -1,0 +1,72 @@
+---
+name: DropKiller
+version: '1.1'
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 814
+release_date: '2024-09-04T05:42:16.000Z'
+size: 2.23MiB
+languages:
+  - español
+description: >-
+  DropKiller es una poderosa extensión de Chrome diseñada para llevar tu negocio
+  de dropshipping al siguiente nivel. Con DropKiller,…
+publisher_account: Scalboost
+privacy_policy: https://app.dropkiller.com/terms-and-conditions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DropKiller",
+  "version": "1.1",
+  "description": "",
+  "permissions": ["https://app.dropkiller.com/*"],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "icons": {
+    "16": "public/icon-16.png",
+    "32": "public/icon-32.png",
+    "48": "public/icon-48.png",
+    "128": "public/icon-128.png"
+  },
+  "action": {
+    "default_popup": "build/index.html",
+    "default_icon": "public/favicon.ico"
+  },
+  "host_permissions": [
+    "https://app.dropkiller.com/*",
+    "https://api.dropkiller.com/history",
+    "https://app.dropi.co/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/assets/libs/chart.min.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:3000/*", "https://app.dropi.co/*"],
+      "css": [],
+      "js": ["src/match-control.js"]
+    },
+    {
+      "matches": ["https://app.dropi.co/*"],
+      "js": [
+        "src/assets/libs/chart.min.js",
+        "src/initializers/killer-components.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://app.dropi.co/*"],
+      "js": ["src/killer.js"],
+      "css": ["src/css/killer.css"],
+      "run_at": "document_idle"
+    }
+  ]
+}

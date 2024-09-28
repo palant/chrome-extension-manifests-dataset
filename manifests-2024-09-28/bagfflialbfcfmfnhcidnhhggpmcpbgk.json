@@ -1,0 +1,70 @@
+---
+name: OTC Trading Assistant
+version: '2.2'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 126
+release_date: '2021-02-15T11:43:49.000Z'
+size: 11.04KiB
+languages:
+  - English (United States)
+description: This is a due diligence tool used by OTCMethod.com members
+publisher_account: tony
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "author": {
+        "name": "StockGapper",
+        "url": "https://www.otcmethod.com"
+    },
+    "manifest_version": 2,
+    "name": "OTC Trading Assistant",
+    "description": "This is a due diligence tool used by OTCMethod.com members",
+    "version": "2.2",
+    "icons": {
+        "48": "images/icon.png"
+    },
+    "incognito": "split",
+ "content_scripts": [
+  {
+            "matches": ["*://ih.advfn.com/p.php?pid=traderalerts"],
+            "js": ["js/inject.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://*.otcmarkets.com/stock/*/security*"],
+            "js": ["js/otcmarkets_inject.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://*.otcmarkets.com/market-activity/current-market/*/active/dollarVolume",
+                "*://*.otcmarkets.com/market-activity/current-market/*/advancers/1",
+                "*://*.otcmarkets.com/market-activity/current-market/*/decliners/1"
+            ],
+            "js": ["js/otcmarkets_market_activity.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://ih.advfn.com/stock-market/*/*/trades"],
+            "js": ["js/stock-market__trades_inject.js" ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "*://ih.advfn.com/markets/*/regular",
+                "*://ih.advfn.com/markets/*/regular/percentage-gainers",
+                "*://ih.advfn.com/markets/*/afterhours",
+                "*://ih.advfn.com/markets/*/afterhours/percentage-gainers",
+                "*://ih.advfn.com/markets/*/premarket",
+                "*://ih.advfn.com/markets/*/premarket/percentage-gainers"
+            ],
+            "js": ["js/markets_inject.js" ],
+            "css": ["css/markets_inject.css" ],
+            "run_at": "document_end"
+        }
+    ]
+}

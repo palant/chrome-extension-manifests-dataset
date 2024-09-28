@@ -1,0 +1,72 @@
+---
+name: NetConnect MultiMonitor
+version: '1.26'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 536
+release_date: '2022-08-02T11:27:49.000Z'
+size: 646KiB
+languages:
+  - English
+description: >-
+  This Chrome extension enables the use of full screen and multi-monitor for
+  NetConnect sessions
+publisher: Northbridge Secure
+publisher_address: |-
+  50 Broughton Road
+  Level 1
+  Artarmon, NSW 2064
+  AU
+support_website: https://northbridgesecure.com/customer-support/
+privacy_policy: https://northbridgesecure.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "NetConnect MultiMonitor",
+  "version": "1.26",
+
+  "description": "This Chrome extension enables the use of full screen and multi-monitor for NetConnect sessions",
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "background/background.js",
+      "background/iconChanger.js"
+    ]
+  },
+
+  "browser_action": {
+    "default_icon": "images/icon_disabled_128.png",
+    "default_popup": "popup/popup.html",
+    "default_title": ""
+  },
+
+  "icons":  { "48": "/images/icon_enabled_48.png",
+    "128": "/images/icon_enabled_128.png" },
+  "content_scripts": [{
+    "run_at": "document_idle",
+    "matches": ["*://*/ncpRemoteApp/*", "*://*/nosRemoteApp/*", "*://*/monitor/*"],
+    "js": [
+      "content/appname.js",
+      "content/hasExtension.js",
+      "content/fullscreen.js"
+    ]
+  }, {
+    "run_at": "document_end",
+    "matches": ["*://*/monitor/*"],
+    "js": [
+      "content/connectionIdEventListener.js",
+      "content/windowClosedListener.js"
+    ]
+  }],
+
+  "permissions": [
+    "activeTab",
+    "system.display",
+    "tabs"
+  ]
+}

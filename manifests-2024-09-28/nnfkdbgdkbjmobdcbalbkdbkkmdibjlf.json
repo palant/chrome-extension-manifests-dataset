@@ -1,0 +1,114 @@
+---
+name: Muscle Points
+version: 1.2.3
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 2
+release_date: '2023-03-29T17:20:58.000Z'
+size: 914KiB
+languages:
+  - English
+  - español
+description: >-
+  A chrome extension to redeem your Muscle Points on Amazon, Ebay, Airbnb,
+  Mercado Libre, Shopify stores, and more.
+publisher_account: Muscle Points
+privacy_policy: >-
+  https://uploads-ssl.webflow.com/60c139584269900441ec318e/61a7afc3e433d6801fec3e42_Privacy-Notice-Muscle-Points.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Muscle Points",
+  "description": "A chrome extension to redeem your Muscle Points on Amazon, Ebay, Airbnb, Mercado Libre, Shopify stores, and more.",
+  "version": "1.2.3",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.amazon.com/*",
+    "https://*.mercadolibre.cl/*",
+    "https://*.airbnb.com/*",
+    "https://*.airbnb.co.cr/*",
+    "https://*.ebay.com/*",
+    "https://wallet-test.musclepoints.com/*",
+    "https://wallet-staging.musclepoints.com/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_title": "Muscle Points",
+    "default_icon": "favicon.png",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "favicon.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": ["http://localhost:3000/*", "https://wallet-test.musclepoints.com/*", "https://wallet-staging.musclepoints.com/*"]
+  },
+  "web_accessible_resources":[
+    {
+      "resources": ["css/*", "assets/*", "script.js"],
+      "matches": ["https://*.amazon.com/*", "https://*.mercadolibre.cl/*", "https://*.airbnb.com/*", "https://*.airbnb.co.cr/*", "https://*/*", "https://*.ebay.com/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*.amazon.com/*"],
+      "js": ["js/jquery-3.6.0.min.js", "js/jquery-ui.min.js", "js/jquery.mask.min.js", "js/amazon.js"],
+      "css": ["css/styles.css", "css/jquery-ui.min.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [ "js/amazon-credit-card-iframe.js" ],
+      "matches": [ "*://apx-security.amazon.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.mercadolibre.cl/*", "https://*.mercadolibre.com.ar/*"],
+      "js": ["js/jquery-3.6.0.min.js", "js/jquery-ui.min.js", "js/bililiteRange.js", "js/mercado-libre.js"],
+      "css": ["css/styles.css", "css/jquery-ui.min.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.airbnb.com/*", "https://www.airbnb.pt/*", "https://www.airbnb.co.cr/*"],
+      "js": ["js/jquery-3.6.0.min.js", "js/jquery-ui.min.js", "js/bililiteRange.js", "js/airbnb.js"],
+      "css": ["css/styles.css", "css/jquery-ui.min.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "https://checkout.shopifycs.com/*", "https://checkout.shopify.com/*"],
+      "all_frames": true,
+      "js": ["js/jquery-3.6.0.min.js", "js/shopify-credit-card-iframe.js" ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://iframes.airbnbpayments.com/*"],
+      "js": ["js/jquery-3.6.0.min.js", "js/bililiteRange.js", "js/airbnb-credit-card-iframe.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.ebay.com/*"],
+      "js": ["js/jquery-3.6.0.min.js", "js/jquery-ui.min.js", "js/bililiteRange.js", "js/ebay.js"],
+      "css": ["css/styles.css", "css/jquery-ui.min.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ]
+}

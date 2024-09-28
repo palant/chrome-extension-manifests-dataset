@@ -1,0 +1,97 @@
+---
+name: Krisp for Chrome
+version: 1.3.5
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-09-28T04:30:50.000Z'
+size: 24.41MiB
+languages:
+  - English
+description: Remove background noise during calls with Krisp for Chrome
+publisher: Krisp Technologies, Inc
+publisher_account: krisp.ai
+publisher_address: |-
+  2150 Shattuck Ave, Suite 1300
+  Berkeley, CA 94704
+  US
+support_website: help.krisp.ai
+privacy_policy: https://krisp.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Krisp for Chrome",
+  "version": "1.3.5",
+  "manifest_version": 3,
+  "description": "Remove background noise during calls with Krisp for Chrome",
+  "icons": {
+    "16": "images/ico16x16.png",
+    "32": "images/ico32x32.png",
+    "48": "images/ico48x48.png",
+    "64": "images/ico64x64.png",
+    "128": "images/ico128x128.png"
+  },
+  "background": {
+    "service_worker": "/static/js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "32": "images/ico32x32.png",
+      "64": "images/ico64x64.png"
+    },
+    "default_title": "Krisp",
+    "default_popup": "index.html"
+  },
+  "content_scripts" : [
+    {
+      "js": [ "/static/js/contentFrame.js" ],
+      "matches": [ "*://*.webex.com/*", "*://pwa.zoom.us/*",  "*://app.zoom.us/*", "*://*.my.connect.aws/*" ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "js": [ "/static/js/content.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "exclude_matches": [ "*://*.webex.com/*", "*://pwa.zoom.us/*", "*://app.zoom.us/*", "*://*.my.connect.aws/*" ],
+      "run_at": "document_start",
+      "all_frames": false,
+      "match_about_blank": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting",
+    "activeTab",
+    "system.cpu",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/static/js/patch.js", "/models/model_8.thw", "/models/model_16.thw", "/models/model_32.thw", "/models/model_bvc.thw", "/assets/bvc-allowed.txt"],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "modifyCSPHeaders",
+      "enabled": true,
+      "path": "modifyCSPHeaders.json"
+    }]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

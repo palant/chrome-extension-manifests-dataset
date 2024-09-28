@@ -1,0 +1,63 @@
+---
+name: EmmaCare
+version: 0.1.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 130
+release_date: '2024-08-06T19:53:03.000Z'
+size: 304KiB
+languages:
+  - English
+description: >-
+  Enables users to seamlessly refer patients from approved EMRs to the EmmaCare
+  chronic care provider
+publisher_account: EmmaCare
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "EmmaCare",
+  "version": "0.1.0",
+  "description": "Enables users to seamlessly refer patients from approved EMRs to the EmmaCare chronic care provider",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://dev-api.emmacare-dev.com/",
+    "https://sandbox-api.emmacare-dev.com/",
+    "https://preprod-api.emmacare-dev.com/",
+    "https://api.emmacare.com/"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/hhax.js", "scripts/jquery-3.7.1.min.js"],
+      "matches": [
+        "https://app.hhaexchange.com/*/Patient/InternalPatientInfo.aspx*PatientId=*"
+      ]
+    },
+    {
+      "js": ["scripts/hhax-linked-patient.js"],
+      "matches": [
+        "https://app.hhaexchange.com/*/Patient/Patient.aspx*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "scripts/add-referral-form.html.mjs", "build/sentry.js", "bootstrap/bootstrap.min.css"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

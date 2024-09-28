@@ -1,0 +1,84 @@
+---
+name: Unipd Moodle Autologin
+version: 1.0.3
+category_slug: make_chrome_yours/accessibility
+rating: 5
+rating_count: 1
+user_count: 16
+release_date: '2023-05-12T14:24:06.000Z'
+size: 7.45KiB
+languages:
+  - italiano
+description: Accede automaticamente alle piattaforme Moodle e Uniweb dell'UNIPD
+publisher_account: Gexi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Unipd Moodle Autologin",
+    "version": "1.0.3",
+    "description": "Accede automaticamente alle piattaforme Moodle e Uniweb dell'UNIPD",
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": [
+      "storage",
+      "https://elearning.unipd.it/",
+      "https://ssu.elearning.unipd.it/",
+      "https://uniweb.unipd.it/",
+      "https://shibidp.cca.unipd.it/"
+    ],
+    "content_scripts": [
+      {
+        "matches": [
+          "https://*.elearning.unipd.it/*"
+        ],
+        "exclude_matches": [
+          "https://*.elearning.unipd.it/login/index.php"
+        ],
+        "js": ["scripts/Moodle_Login_click.js"]
+      },
+      {
+        "matches": [
+          "https://elearning.unipd.it/*"
+        ],
+        "exclude_matches": [
+          "https://elearning.unipd.it/login/index.php"
+        ],
+        "js": ["scripts/Moodle_Login_click.js"]
+      },
+      {
+        "matches": [
+          "https://*.elearning.unipd.it/login/index.php"
+        ],
+        "js": ["scripts/SSO_jump.js"]
+      },
+      {
+        "matches": [
+          "https://*.elearning.unipd.it/*/login/index.php"
+        ],
+        "js": ["scripts/SSO_jump.js"]
+      },
+      {
+        "matches": [
+          "https://uniweb.unipd.it/*"
+        ],
+        "js": ["scripts/uniweb_Login_click.js"]
+      },
+      {
+        "matches": [
+          "https://shibidp.cca.unipd.it/idp/profile/SAML2/Redirect/SSO?execution=*"
+        ],
+        "js": ["scripts/SSO_Login.js"]
+      }            
+    ],
+    
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "icons": {
+      "32": "icon.png"
+    },
+    "manifest_version": 3
+  }

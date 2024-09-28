@@ -1,0 +1,80 @@
+---
+name: Clik - Email Tracker for Gmail
+version: '3.5'
+category_slug: productivity/communication
+rating: 5
+rating_count: 2
+user_count: 160
+release_date: '2024-09-26T04:40:05.000Z'
+size: 367KiB
+languages:
+  - English
+description: Track Email Opens, Clicks, Location & Device
+publisher_account: Anas Chowdhury
+support_website: https://sites.google.com/view/clikinstall/contact
+privacy_policy: https://sites.google.com/view/clikinstall/privacy
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Clik - Email Tracker for Gmail",
+  "version": "3.5",
+  "manifest_version": 3,
+  "description": "Track Email Opens, Clicks, Location & Device",
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": {
+      "16": "icons/logobg.png",
+      "32": "icons/logobg.png",
+      "48": "icons/logobg.png",
+      "128": "icons/logobg.png"
+    },
+    "default_title": "Clik - Email Tracker for Gmail"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["js/jquery.min.js","injectors/gmail.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["injectors/clik_gmail.js"],
+      "css": ["css/gmail.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "icons/Icon.png",
+      "icons/remove.png",
+      "icons/black.png"
+    ],
+    "matches": ["*://mail.google.com/*"]
+  }],
+  "host_permissions": [
+    "https://mail.google.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "notifications",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules_1.json"
+      }
+    ]
+  }
+
+}

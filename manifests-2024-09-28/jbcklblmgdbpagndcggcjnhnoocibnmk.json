@@ -1,0 +1,110 @@
+---
+name: Twitch Stats by Streams Charts
+version: 2.0.6
+category_slug: lifestyle/social
+rating: 4.04
+rating_count: 150
+user_count: 10000
+release_date: '2024-05-03T14:36:23.000Z'
+size: 218KiB
+languages:
+  - English (United States)
+description: >-
+  Your personal access to world-class streaming analytics on Twitch by
+  StreamsCharts.com
+publisher_account: Streams Charts
+extension_website: streamscharts.com
+privacy_policy: https://streamscharts.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Twitch Stats by Streams Charts",
+  "description": "Your personal access to world-class streaming analytics on Twitch by StreamsCharts.com",
+  "version": "2.0.6.0",
+  "version_name": "2.0.6",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "src/popup/index.html",
+    "default_title": "__MSG_extName__",
+    "default_icon": {
+      "16": "icons/sc_logo_16.png",
+      "32": "icons/sc_logo_32.png",
+      "48": "icons/sc_logo_48.png",
+      "128": "icons/sc_logo_128.png"
+    }
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/index.ts-loader-7b2e9330.js"
+      ],
+      "all_frames": false,
+      "matches": [
+        "https://www.twitch.tv/*",
+        "https://www.twitch.tv/**/*"
+      ],
+      "exclude_globs": [
+        "https://www.twitch.tv/p/*",
+        "https://www.twitch.tv/products/*",
+        "https://www.twitch.tv/*/manager*",
+        "https://www.twitch.tv/*/dashboard",
+        "https://www.twitch.tv/broadcast",
+        "https://www.twitch.tv/messages/*",
+        "https://www.twitch.tv/settings"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "assets/base-793e997d.css",
+        "assets/index-eb50ab90.css"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://www.twitch.tv/*",
+    "https://www.twitch.tv/**/*"
+  ],
+  "icons": {
+    "16": "icons/sc_logo_16.png",
+    "32": "icons/sc_logo_32.png",
+    "48": "icons/sc_logo_48.png",
+    "128": "icons/sc_logo_128.png"
+  },
+  "options_page": "src/options/index.html",
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "resources": [
+        "src/content-script/index.ts",
+        "src/content-script/iframe/index.html"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://www.twitch.tv/*",
+        "https://www.twitch.tv/*"
+      ],
+      "resources": [
+        "assets/debug-6a942fd8.js",
+        "assets/base-98069dcd.js",
+        "assets/index.ts-2d5e9efb.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://www.twitch.tv/;"
+  }
+}

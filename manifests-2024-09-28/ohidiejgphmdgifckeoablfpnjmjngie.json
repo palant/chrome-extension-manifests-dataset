@@ -1,0 +1,71 @@
+---
+name: Mapsted Chrome Extension
+version: 1.0.14
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2022-12-20T03:38:11.000Z'
+size: 2.08MiB
+languages:
+  - English (United States)
+description: Invite and direct guests to your meeting with the click of a link.
+publisher_account: Mapsted
+support_website: https://mapsted.com/contact-us
+privacy_policy: https://www.mapsted.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Mapsted Chrome Extension",
+  "description": "Invite and direct guests to your meeting with the click of a link.",
+  "version": "1.0.14",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icons": "assets/images/mapsted_logo_colored_vertical.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "assets/icons/m_logo_16px.png",
+    "48": "assets/icons/m_logo_48px.png",
+    "128": "assets/icons/m_logo_128px.png"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://calendar.google.com/calendar/*"],
+      "js": [
+        "./content-scripts/packages/arrive.js",
+        "./content-scripts/constants.js",
+        "./content-scripts/server.api.js",
+        "./content-scripts/CustomHTMLElement.js",
+        "./content-scripts/actions.js",
+        "./content-scripts/index.js"
+      ],
+      "css": ["./styles/content_css.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/images/mapsted-logo.png",
+        "assets/images/mapsted_logo_colored_vertical.png",
+        "assets/images/mapsted_logo_M.jpg",
+        "templates/index.html",
+        "templates/index_script.html",
+        "templates/login.html",
+        "templates/entity.html"
+      ],
+      "matches": ["https://calendar.google.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://auth.mapsted.com/*",
+    "https://hub.mapsted.com/api/v2/forgotPassword",
+    "https://public.mapsted.com/api/v1/cms/*"
+  ]
+}

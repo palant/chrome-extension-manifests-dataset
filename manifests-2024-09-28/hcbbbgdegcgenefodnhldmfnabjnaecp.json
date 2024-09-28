@@ -1,0 +1,162 @@
+---
+name: 'Crunchyroll: Ad-Free Player'
+version: 1.0.2
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 36
+user_count: 615
+release_date: '2024-06-26T11:42:48.000Z'
+size: 4.34MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Filipino
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - italiano
+  - lietuvių
+  - português (Brasil)
+  - português (Portugal)
+  - svenska
+  - ไทย
+  - 日本語
+  - 한국어
+description: >-
+  Optimize Crunchyroll: Block ads, skip intros and improve streaming experience.
+  Without interruptions!
+publisher_account: software.labs.apps
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ 
+    "manifest_version": 3,
+    "name": "__MSG_name__",
+    "description": "__MSG_description__",
+    "short_name": "AdBlocker for Crunchyroll",
+    "version": "1.0.2",
+    "default_locale": "en",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "action": {
+        "default_icon": "icon128.png",
+        "default_title": "__MSG_name__",
+        "default_popup": "index.html"
+    },
+    "background": {
+        "service_worker": "worker.js"
+    },
+    "content_scripts": [
+        
+        {
+            "matches": [
+              "*://static.crunchyroll.com/vilos-v2/web/vilos/player.html*"
+            ],
+            "js": [
+              "lib/native/add.js",
+              "lib/shared/chromeStorage.js",
+              "lib/shared/renderer.js",
+              "lib/shared/shortcutUtils.js",
+              "lib/content_scripts/player/buttons/buttons.js",
+              "lib/content_scripts/player/fast-forward-backward/fast-forward-backward.js",
+              "lib/content_scripts/player/playback/playback.js",
+              "lib/content_scripts/player/render/render.js",
+              "lib/content_scripts/player/settings/settings.js",
+              "lib/content_scripts/player/shortcuts/shortcuts.js",
+              "lib/content_scripts/player/skippers/skippers.js",
+              "lib/content_scripts/player/main.js"
+            ],
+            "css": [
+              "css/lib/content_scripts/player/buttons/buttons.css",
+              "css/lib/content_scripts/player/fast-forward-backward/fast-forward-backward.css",
+              "css/lib/content_scripts/player/playback/playback.css",
+              "css/lib/content_scripts/player/render/render.css",
+              "css/lib/content_scripts/player/settings/settings.css",
+              "css/lib/content_scripts/player/skippers/skippers.css",
+              "css/lib/content_scripts/player/main.css"
+            ],
+            "all_frames": true,
+            "run_at": "document_start"
+        },
+        {
+          "matches": [
+            "*://beta.crunchyroll.com/*",
+            "*://www.crunchyroll.com/*"
+          ],
+          "js": [
+            "lib/native/alert.js"
+          ],
+          "run_at": "document_end"
+        },
+        {
+            "matches": [
+              "*://beta.crunchyroll.com/*",
+              "*://www.crunchyroll.com/*"
+            ],
+            "js": [
+              "lib/shared/chromeStorage.js",
+              "lib/shared/renderer.js",
+              "lib/content_scripts/website/api/api.js",
+              "lib/content_scripts/website/action-menu/action-menu.js",
+              "lib/content_scripts/website/pages/empty.js",
+              "lib/content_scripts/website/pages/series/series.js",
+              "lib/content_scripts/website/pages/watch/watch.js",
+              "lib/content_scripts/website/main.js"
+            ],
+            "css": [
+              "css/lib/shared/theme-color.css",
+              "css/lib/content_scripts/website/action-menu/action-menu.css",
+              "css/lib/content_scripts/website/pages/watch.css",
+              "css/lib/content_scripts/website/main.css"
+            ],
+            "run_at": "document_idle"
+        }
+  
+ ],
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "ruleset_1",
+            "enabled": true,
+            "path": "./rules.json"
+        }]
+    },
+    "permissions": [
+      "tabs",
+      "activeTab",
+      "storage",
+      "background",
+      "scripting",
+      "declarativeNetRequest",
+      "declarativeNetRequestFeedback"
+    ],
+    "web_accessible_resources": [{
+        "resources":[
+            "*.css",
+            "*.js",
+            "*.jpg",
+            "*.JPG",
+            "*.PNG",
+            "*.png",
+            "temp.js",
+            "block.js",
+            "dash.all.min.js"
+        ],
+        "matches": ["<all_urls>"]
+    }],
+    "host_permissions": [
+        "*://*.crunchyroll.com/*"
+    ]
+}

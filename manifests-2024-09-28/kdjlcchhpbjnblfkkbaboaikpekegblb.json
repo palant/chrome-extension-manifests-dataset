@@ -1,0 +1,68 @@
+---
+name: RooBY
+version: 1.0.1
+category_slug: lifestyle/games
+rating: 5
+rating_count: 2
+user_count: 21
+release_date: '2024-05-12T18:53:56.000Z'
+size: 285KiB
+languages:
+  - English (United States)
+description: Adds calculators and extra functionality to Generation 1 Pokemon Showdown
+publisher_account: NonprofitProphet
+privacy_policy: https://www.freeprivacypolicy.com/live/79cf68f9-735b-4adb-a1fe-1fbbb310fc86
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,  
+    "name": "RooBY",
+    "version": "1.0.1",
+    "description": "Adds calculators and extra functionality to Generation 1 Pokemon Showdown",
+    "permissions": [
+      "storage"
+    ],
+    "icons": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "background": {
+      "service_worker": "scripts/worker.js",
+      "type": "module"
+    },
+    "content_scripts": [
+      {
+        "world": "MAIN",
+        "js": ["scripts/page.js"],
+        "matches": [
+          "https://play.pokemonshowdown.com/*",
+          "https://replay.pokemonshowdown.com/*"
+        ],
+        "run_at": "document_start"    
+      },
+      {
+        "js": ["scripts/unpkg.com_@smogon_calc@0.7.0_dist_production.min.js", "scripts/unpkg.com_@smogon_calc@0.7.0_dist_data_production.min.js", "scripts/util.js", "scripts/consts.js", "scripts/calculator.js", "scripts/playContent.js"],
+        "css": ["styles/style.css"],
+        "matches": [
+          "https://play.pokemonshowdown.com/*",
+          "https://replay.pokemonshowdown.com/*"
+        ],
+        "run_at": "document_end"    
+      },
+      {
+        "js": ["scripts/unpkg.com_@smogon_calc@0.7.0_dist_production.min.js", "scripts/unpkg.com_@smogon_calc@0.7.0_dist_data_production.min.js", "scripts/util.js", "scripts/consts.js", "scripts/calculator.js", "scripts/calcContent.js"],
+        "matches": [
+          "https://calc.pokemonshowdown.com/*"
+        ],
+        "run_at": "document_end"    
+      }
+    ],
+    "web_accessible_resources": [{
+      "matches": ["<all_urls>"],
+      "resources": ["images/icon-128.png", "images/digimonicons-sheet.png", "images/gen5icons-sheet.png", "images/gen5icons-pokeball-sheet.png"]
+    }]
+  }

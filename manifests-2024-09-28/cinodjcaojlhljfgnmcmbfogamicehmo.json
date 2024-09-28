@@ -1,0 +1,48 @@
+---
+name: Easy Class Break (UCLA)
+version: 0.4.7
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 283
+release_date: '2021-07-01T06:29:07.000Z'
+size: 65.21KiB
+languages:
+  - English
+description: Find out the classes whose break is not enough to walk to the next class.
+publisher_account: Qingpeng Li
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Easy Class Break (UCLA)",
+  "version": "0.4.7",
+  "description": "Find out the classes whose break is not enough to walk to the next class.",
+  "icons": { "128": "icon.png" },
+  "background": {
+    "scripts": ["addressList.js", "./background/distanceMat.js", "./background/background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.my.ucla.edu/ClassPlanner/*"],
+      "css": ["./content_scripts/showTips.css"],
+      "js": ["addressList.js", "./content_scripts/jquery-3.6.0.slim.min.js",
+             "./content_scripts/getClassInfo.js", "./content_scripts/processClassInfo.js",
+             "./content_scripts/showTips.js", "./content_scripts/contentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    "./distanceMat.json"
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "page_action": {
+    "default_icon": "icon.png",
+    "default_popup": "./popup/popup.html"
+},
+  "manifest_version": 2,
+  "content_security_policy": "default-src 'self' https://www.google-analytics.com; style-src 'self'; script-src 'self' https://www.google-analytics.com"
+}

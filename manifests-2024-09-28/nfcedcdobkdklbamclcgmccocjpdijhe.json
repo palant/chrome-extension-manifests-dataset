@@ -1,0 +1,99 @@
+---
+name: GegevensDelen
+version: 2.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 969
+release_date: '2024-08-07T08:00:08.000Z'
+size: 825KiB
+languages:
+  - Nederlands
+description: >-
+  Op een privacy vriendelijke manier gegevens verzamelen binnen je persoonlijke
+  omgeving.
+publisher: iWize B.V.
+publisher_address: |-
+  Lichttoren 32
+  Eindhoven 5611 BJ
+  NL
+privacy_policy: https://iwize.nl/privacy/index.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GegevensDelen",
+  "description": "Op een privacy vriendelijke manier gegevens verzamelen binnen je persoonlijke omgeving.",
+  "version": "2.0.1",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://gegevensdelen.nl",
+  "icons": {
+    "32": "resources/logo32X32.png",
+    "48": "resources/logo48X48.png",
+    "128": "resources/logo128X128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.overheid.nl/*",
+        "https://*.mijnpensioenoverzicht.nl/*",
+        "https://*.uwv.nl/*",
+        "https://*.belastingdienst.nl/*",
+        "https://*.duo.nl/*",
+        "https://*.rdw.nl/*",
+        "https://*.digid.nl/*",
+        "https://*.aqopi.com/*",
+        "https://iwize.nl/*",
+        "https://*.gegevensdelen.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/content.js",
+        "content/actions.js",
+        "content/crypto.js",
+        "content/templateMatching.js",
+        "content/fetchBlob.js",
+        "content/downloadPdfByClick.js"
+      ]
+    },
+    {
+      "matches": ["https://mijn.duo.nl/*"],
+      "run_at": "document_start",
+      "js": ["content/fetchJsonWithAuthHeader.js"]
+    }
+  ],
+  "permissions": ["cookies", "webRequest", "storage"],
+  "host_permissions": [
+    "https://*.overheid.nl/*",
+    "https://*.mijnpensioenoverzicht.nl/*",
+    "https://*.uwv.nl/*",
+    "https://*.belastingdienst.nl/*",
+    "https://*.duo.nl/*",
+    "https://*.rdw.nl/*",
+    "https://*.digid.nl/*",
+    "https://*.aqopi.com/*",
+    "https://iwize.nl/*",
+    "https://*.gegevensdelen.nl/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "resources/logo32X32.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "gegevensdelen.nl"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["/resources/logo80X80.png", "/content/helpers/dljson.js", "/content/helpers/wrap.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.iwize.nl/*", "https://*.gegevensdelen.nl/*"]
+  }
+}

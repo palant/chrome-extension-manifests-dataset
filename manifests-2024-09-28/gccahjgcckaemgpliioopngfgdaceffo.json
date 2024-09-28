@@ -1,0 +1,108 @@
+---
+name: MerciApp — Correcteur d’orthographe et assistant de rédaction
+version: 3.52.0
+category_slug: productivity/workflow
+rating: 4.57258064516129
+rating_count: 124
+user_count: 90000
+release_date: '2024-09-27T13:21:02.000Z'
+size: 2.64MiB
+languages:
+  - Français
+description: >-
+  Le correcteur d’orthographe MerciApp fonctionne avec tous vos outils en ligne
+  préférés grâce à l’extension navigateur Chrome
+publisher: J2S3
+publisher_account: MerciApp
+publisher_address: |-
+  295 Bd Saint-Denis
+  Courbevoie 92400
+  FR
+extension_website: merci-app.com
+support_website: https://www.merci-app.com
+privacy_policy: https://www.merci-app.com/infos-legales/politique-confidentialite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MerciApp — Correcteur d’orthographe et assistant de rédaction",
+  "version": "3.52.0",
+  "icons": {
+    "64": "static/metadata/merci-icon-64-production.png",
+    "128": "static/metadata/merci-icon-128-production.png"
+  },
+  "description": "Le correcteur d’orthographe MerciApp fonctionne avec tous vos outils en ligne préférés grâce à l’extension navigateur Chrome",
+  "homepage_url": "https://www.merci-app.com",
+  "short_name": "MerciApp",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies",
+    "tabs",
+    "alarms",
+    "scripting"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.merci-app.com/*"
+    ]
+  },
+  "author": "MerciApp",
+  "minimum_chrome_version": "90",
+  "manifest_version": 3,
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "64": "static/metadata/merci-icon-64-production.png",
+      "128": "static/metadata/merci-icon-128-production.png"
+    },
+    "default_title": "Merci",
+    "chrome_style": false
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; font-src 'self' https://assets.merci-app.com/; object-src 'self';"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "*://docs.google.com/document/*"
+      ],
+      "js": [
+        "gdocs.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/static/*"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

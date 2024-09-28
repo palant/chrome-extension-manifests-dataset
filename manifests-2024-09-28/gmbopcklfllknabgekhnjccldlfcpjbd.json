@@ -1,0 +1,63 @@
+---
+name: Klara Chrome Extension
+version: 2.1.2
+category_slug: productivity/workflow
+rating: 4
+rating_count: 4
+user_count: 20000
+release_date: '2024-09-18T11:34:57.000Z'
+size: 243KiB
+languages:
+  - English
+description: Work in Klara and your EHR side by side
+publisher: Klara
+publisher_account: Klara Technologies
+publisher_address: |-
+  Brunnenstraße 166
+  Berlin 10119
+  DE
+support_website: http://support.klara.com/
+privacy_policy: https://www.klara.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Klara Chrome Extension",
+  "description": "Work in Klara and your EHR side by side",
+  "author": "Klara Technologies, Inc.",
+  "version": "2.1.2",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.klara.com/*"],
+      "js": ["injectSidebarMenu.js", "initScraper.js"],
+      "css": ["sidebar/sidebarMenu.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "sandbox": "sandbox allow-scripts; script-src 'self'; child-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*.svg", "images/*.png", "fonts/*", "sidebar/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ],
+  "icons": {
+    "128": "images/icon.png"
+  },
+  "permissions": ["cookies", "activeTab", "tabs", "storage", "webRequest"],
+  "host_permissions": ["*://*/*"],
+  "action": {
+    "default_icon": "images/icon.png",
+    "default_title": "Klara"
+  }
+}

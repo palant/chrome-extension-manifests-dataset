@@ -1,0 +1,115 @@
+---
+name: クラウド電話/クラウドFAX ＜サテライトオフィス＞
+version: 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 16
+release_date: '2023-11-22T09:41:34.000Z'
+size: 71.82KiB
+languages:
+  - 日本語
+description: サテライトオフィス・クラウド電話/クラウドFAXを呼び出すための拡張機能です
+publisher_account: Sateraito Office
+privacy_policy: https://www.sateraito.jp/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvtBIq444G//QShVw9T6Y5aPSssoE8mDalpHM0nAsEBkCZvfsesQWRoo45ZfDmRDT5fyf2745l8AyJQ6JEEKsv8whZRYhr3sqytMDlX1q8o9Jq2bfplSxjnWT1jV1s1ctj97zm8J3DCIzyKhC16b4OX8Agivqce2ncECkIneCPMUyfJYw4SjH1zu4VXuE6z0zO5Fc29aCqwwpY6aMR3Diu4PBazexZdPxnsCpLrfNSSSYqY08Xf97OfvuGYdhQ0HScts9kez1TjRC/KlgiRvtc4OsVjaCYjsfQzarsbpJAvQeSa5sPfGXQ62eya0tMJxsbQp3yV/hStLWKschbOpIbQIDAQAB",
+
+  "version": "1.0.0",
+
+  "homepage_url": "http://www.sateraito.jp/",
+
+  "default_locale" : "ja",
+  "name"       : "__MSG_extension_name__",
+  "description": "__MSG_extension_description__",
+  "icons": {
+     "16": "images/sateraito16.png",
+     "48": "images/sateraito48.png",
+    "128": "images/sateraito128.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "nativeMessaging"
+  ],
+
+  "host_permissions": [
+    "https://sateraito-apps-gososhinboshi.appspot.com/"
+  ],
+
+  "action": {
+    "default_icon": {
+      "16": "images/sateraito16.png",
+      "24": "images/sateraito24.png"
+    },
+    "default_title": "__MSG_page_button_title__"
+  },
+  "background": {
+    "service_worker": "scp_background.js"
+  },
+  "author": "Sateraito Office",
+
+  "content_scripts": [
+    {
+      "js" : [
+        "scp_contents.js"
+      ],
+      "matches" : [
+                    "https://mail.google.com/mail/*",
+                    "https://calendar.google.com/calendar/*",
+                    "https://drive.google.com/drive/*",
+                    "https://outlook.office.com/*",
+                    "https://*.sharepoint.com/*",
+                    "https://*.worksmobile.com/*",
+                    "https://*.facebook.com/*",
+                    "https://*.workplace.com/*",
+                    "https://www.chatwork.com/*"
+                  ],
+      "run_at"  : "document_idle"
+    },
+    {
+      "matches" : [
+                    "https://mail.google.com/mail/*",
+                    "https://calendar.google.com/calendar/*",
+                    "https://drive.google.com/drive/*",
+                    "https://outlook.office.com/*",
+                    "https://*.sharepoint.com/*",
+                    "https://*.worksmobile.com/*",
+                    "https://www.chatwork.com/*"
+                  ],
+      "css": ["common.css"]
+    },
+    {
+      "matches" : [
+                    "https://*.facebook.com/*",
+                    "https://*.workplace.com/*"
+                  ],
+      "css": ["workplace.css"]
+    }
+  ],
+
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*"
+    ],
+    "matches": [
+      "https://mail.google.com/*",
+      "https://calendar.google.com/*",
+      "https://drive.google.com/*",
+      "https://outlook.office.com/*",
+      "https://*.sharepoint.com/*",
+      "https://*.worksmobile.com/*",
+      "https://www.chatwork.com/*"
+    ]
+  }],
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  }
+}

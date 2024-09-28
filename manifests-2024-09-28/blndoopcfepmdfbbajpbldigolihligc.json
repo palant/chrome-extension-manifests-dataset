@@ -1,0 +1,70 @@
+---
+name: ClickCV
+version: 0.5.7
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-08-24T06:55:12.000Z'
+size: 915KiB
+languages:
+  - English (United States)
+description: >-
+  Instantly generate tailored resumes every time you click apply on your
+  favorite job board.
+publisher_account: Castle Point Innovations
+publisher_address: |-
+  6305 Island Pine Way, San Jose, CA 95119, USA
+  San Jose, CA 95119
+  US
+extension_website: clickcv.app
+privacy_policy: >-
+  https://app.termly.io/policy-viewer/policy.html?policyUUID=f57cfa10-fc42-4b3d-b335-ec8b09657249
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ClickCV",
+  "description": "Instantly generate tailored resumes every time you click apply on your favorite job board.",
+  "version": "0.5.7",
+  "permissions": [
+    "storage",
+    "identity",
+    "identity.email"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*", "*://*.indeed.com/*", "*://*.careerbuilder.com/*", "*://*.ziprecruiter.com/*"],
+      "js": ["libs/compromise.min.js", "libs/stopword.cjs.min.js", "content.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "192": "icons/icon192.png",
+      "512": "icons/icon512.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["success.html", "cancel.html", "loading.gif"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "192": "icons/icon192.png",
+    "512": "icons/icon512.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

@@ -1,0 +1,76 @@
+---
+name: MyレコーダーChromeアシスタント
+version: 0.9.4
+category_slug: productivity/workflow
+rating: 3.857142857142857
+rating_count: 7
+user_count: 3000
+release_date: '2024-07-11T12:17:44.000Z'
+size: 76.7KiB
+languages:
+  - 日本語
+description: 勤怠管理システム「Myレコーダー | KING OF TIME」を快適に使えるようにするための拡張機能です。
+publisher_account: shoito
+support_website: https://github.com/shoito/kot-chrome-assistant/wiki
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MyレコーダーChromeアシスタント",
+  "short_name": "Myレコーダーアシスト",
+  "version": "0.9.4",
+  "manifest_version": 3,
+  "description": "勤怠管理システム「Myレコーダー | KING OF TIME」を快適に使えるようにするための拡張機能です。",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "src/options/options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "Myレコーダーアシスタント"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "tabs"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "modify_headers",
+      "enabled": true,
+      "path": "modify_headers.json"
+    }]
+  },
+  "host_permissions": [
+    "https://s2.ta.kingoftime.jp/independent/recorder/personal/*",
+    "https://s3.ta.kingoftime.jp/independent/recorder/personal/*",
+    "https://s2.ta.kingoftime.jp/independent/recorder2/personal/*",
+    "https://s3.ta.kingoftime.jp/independent/recorder2/personal/*",
+    "https://slack.com/api/*",
+    "https://hooks.slack.com/services/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://s2.ta.kingoftime.jp/independent/recorder/personal/*",
+        "https://s3.ta.kingoftime.jp/independent/recorder/personal/*",
+        "https://s2.ta.kingoftime.jp/independent/recorder2/personal/*",
+        "https://s3.ta.kingoftime.jp/independent/recorder2/personal/*"
+      ],
+      "js": [
+        "src/inject/inject.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  }
+}

@@ -1,0 +1,96 @@
+---
+name: Auction Watch List
+version: 0.6.7
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2020-08-23T11:47:02.000Z'
+size: 139KiB
+languages:
+  - English (United States)
+description: Watch list for eBidAuctionlocal site.
+publisher_account: scirelli
+support_website: https://ebidlocal.cirelli.org/help
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name":"Auction Watch List",
+    "version": "0.6.7",
+    "description": "Watch list for eBidAuctionlocal site.",
+    "manifest_version": 2,
+    "minimum_chrome_version": "29",
+
+    "background": { 
+        "scripts": [
+            "background.js"
+        ],
+        "persistent":false
+    },
+
+    "options_page": "optionsPage/options.html",
+    "options_ui": {
+        "page": "optionsPage/options.html",
+        "open_in_tab": false
+    },
+
+    "page_action" :{
+        "default_icon" :  "icon-128.png",
+        "default_title" : "Auction Watch List",
+        "default_popup":  "popup/watchlist/popup.html"
+    },
+
+    "icons" : {
+        "24" : "icon-24.png",
+        "32" : "icon-32.png",
+        "48" : "icon-48.png",
+        "128" : "icon-128.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "*://auction.ebidlocal.com/cgi-bin/mmlist.cgi*"
+            ],
+            "js": [
+                "contentScripts/watchlist/js/custom-elements.min.js",
+                "contentScripts/watchlist/js/extras/Array.js",
+                "contentScripts/watchlist/js/extras/Function.js",
+                "contentScripts/watchlist/js/extras/String.js",
+                "contentScripts/watchlist/content.js"
+            ],
+            "css":[
+            ]
+        }
+    ],
+
+    "externally_connectable": {
+        "matches": ["*://*.ebidlocal.com/*"]
+    },
+
+    "web_accessible_resources": [
+        "contentScripts/**/*.css",
+
+        "contentScripts/**/*.js",
+        "contentScripts/watchlist/js/*.js",
+        "contentScripts/watchlist/js/main.js",
+        "contentScripts/watchlist/js/components/*.js",
+        "contentScripts/watchlist/js/extras/*.js",
+        "contentScripts/watchlist/js/utils/*.js",
+
+        "contentScripts/watchlist/templates/*.html",
+
+        "contentScripts/watchlist/css/*.css"
+    ],
+
+    "permissions" : [
+        "tabs",
+        "activeTab",
+        "webNavigation",
+        "*://*.ebidlocal.com/*",
+         "storage"
+    ],
+    "content_security_policy": "script-src 'self'; object-src 'self'"
+}

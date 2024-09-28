@@ -1,0 +1,82 @@
+---
+name: Kameleoon
+version: 4.0.4
+category_slug: productivity/developer
+rating: 5
+rating_count: 10
+user_count: 1000
+release_date: '2024-08-29T09:04:37.000Z'
+size: 2.52MiB
+languages:
+  - English
+description: >-
+  Interact directly with the platform and use a powerful suite of easy-to-use
+  debugging and troubleshooting tools.
+publisher: Kameleoon
+publisher_address: |-
+  12 Rue de la Chaussée d’Antin
+  Paris 75009
+  FR
+support_website: https://help.kameleoon.com/en
+privacy_policy: https://www.kameleoon.com/en/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Kameleoon",
+  "version": "4.0.4",
+  "description": "Interact directly with the platform and use a powerful suite of easy-to-use debugging and troubleshooting tools.",
+  "minimum_chrome_version": "88",
+  "devtools_page": "devtools.html",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "tabs",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup.html",
+        "index.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/socket.io.js", "js/injector.js"],
+      "all_frames": true,
+      "world": "ISOLATED"
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/kameleoon_chrome_injector_window.js"],
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  }
+}

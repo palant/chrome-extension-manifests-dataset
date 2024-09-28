@@ -1,0 +1,102 @@
+---
+name: kimchi-reader
+version: 0.9.7
+category_slug: productivity/education
+rating: 4.857142857142857
+rating_count: 7
+user_count: 700
+release_date: '2024-09-22T16:35:57.000Z'
+size: 16.49MiB
+languages:
+  - English
+description: A reader for korean learner
+publisher_account: Alaanor
+extension_website: kimchi-reader.app
+privacy_policy: https://kimchi-reader.app/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "kimchi-reader",
+  "version": "0.9.7",
+  "description": "A reader for korean learner",
+  "homepage_url": "https://kimchi-reader.app/",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "identity",
+    "storage",
+    "offscreen",
+    "tabCapture"
+  ],
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "64": "icon-64.png",
+    "128": "icon-128.png"
+  },
+  "action": {
+    "default_icon": "./icon-128.png",
+    "default_popup": "./popup/index.html"
+  },
+  "options_ui": {
+    "page": "./options/index.html",
+    "open_in_tab": true,
+    "browser_style": false
+  },
+  "background": {
+    "service_worker": "./background/index.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/dict/action_verb/*.json",
+        "static/dict/descriptive_verb/*.json",
+        "static/dict/auxiliary_action_verb/*.json",
+        "static/dict/auxiliary_descriptive_verb/*.json",
+        "static/dict/noun/*.json",
+        "static/dict/pronoun/*.json",
+        "static/dict/determiner/*.json",
+        "static/dict/numeral/*.json",
+        "static/dict/adverb/*.json",
+        "static/dict/interjection/*.json",
+        "static/dict/bound_noun/*.json",
+        "static/locales/common/*.json",
+        "static/locales/*.json",
+        "static/fonts/*.woff2",
+        "static/data/*.json",
+        "inject/netflix_seek.js",
+        "inject/netflix_override.js",
+        "inject/youtube_fullscreen.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.netflix.com/*",
+        "https://www.youtube.com/*",
+        "https://www.viki.com/*",
+        "https://m.youtube.com/*"
+      ],
+      "js": [
+        "contentScripts/index.global.js"
+      ],
+      "css": [
+        "contentScripts/style.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "commands": {
+    "parse": {
+      "description": "Parse the current page"
+    }
+  },
+  "minimum_chrome_version": "116"
+}

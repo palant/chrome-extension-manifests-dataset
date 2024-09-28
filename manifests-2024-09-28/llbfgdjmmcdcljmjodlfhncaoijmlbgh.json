@@ -1,0 +1,82 @@
+---
+name: Easy Capture Tool
+version: '1.0'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 35
+release_date: '2021-07-03T03:56:51.000Z'
+size: 119KiB
+languages:
+  - English
+description: Save images from around the web to Invent Value
+publisher_account: Fresh Consulting
+support_website: https://www.inventvalue.com
+privacy_policy: https://www.freshconsulting.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Easy Capture Tool",
+  "description": "Save images from around the web to Invent Value",
+  "version": "1.0",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/images/select-cursor.svg"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["/callback.html", "/callback.css", "/callback.js"],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "host_permissions": ["*://*/*", "<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*", "<all_urls>"],
+      "exclude_matches": [
+        "*://*.localhost/*",
+        "*://*.inventvalue.com/*",
+        "*://*.inventvalue.dev/*"
+      ],
+      "js": ["hook.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.localhost/*",
+        "*://*.inventvalue.com/*",
+        "*://*.inventvalue.dev/*"
+      ],
+      "js": ["installed.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/logo-16.png",
+      "32": "/images/logo-32.png",
+      "48": "/images/logo-48.png",
+      "128": "/images/logo-128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/logo-16.png",
+    "32": "/images/logo-32.png",
+    "48": "/images/logo-48.png",
+    "128": "/images/logo-128.png"
+  }
+}

@@ -1,0 +1,99 @@
+---
+name: GamerPay extension
+version: 1.0.9
+category_slug: productivity/tools
+rating: 4.3
+rating_count: 10
+user_count: 5000
+release_date: '2024-07-10T12:37:29.000Z'
+size: 186KiB
+languages:
+  - English
+description: GamerPay integration with Steam
+publisher: GamerPay ApS
+publisher_account: gamerpay-extension
+publisher_address: |-
+  Otto Busses Vej 5, st th
+  København SV 2450
+  DK
+support_website: https://help.gamerpay.gg/
+privacy_policy: https://gamerpay.gg/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GamerPay extension",
+  "short_name": "GamerPay",
+  "version": "1.0.9",
+  "description": "GamerPay integration with Steam",
+  "icons": {
+    "16": "icons/gp-16x16.png",
+    "48": "icons/gp-48x48.png",
+    "96": "icons/gp-96x96.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.steamcommunity.com/tradeoffer/*"
+      ],
+      "js": [
+        "src/lib/page_scripts/trade_offer.js"
+      ],
+      "css": [
+        "src/global.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.steamcommunity.com/id/*/inventory*",
+        "*://*.steamcommunity.com/profiles/*/inventory*"
+      ],
+      "js": [
+        "src/lib/page_scripts/inventory.js"
+      ],
+      "css": [
+        "src/global.css"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.steamcommunity.com/tradeoffer/new/*",
+    "*://*.steamcommunity.com/id/*/inventory*",
+    "*://*.steamcommunity.com/profiles/*/inventory*",
+    "*://*.gamerpay.gg/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.steamcommunity.com/*",
+      "*://*.gamerpay.gg/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/model_frame.html",
+        "src/model_frame.js"
+      ],
+      "matches": [
+        "https://steamcommunity.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "src/version.txt"
+      ],
+      "matches": [
+        "https://gamerpay.gg/*"
+      ]
+    }
+  ]
+}

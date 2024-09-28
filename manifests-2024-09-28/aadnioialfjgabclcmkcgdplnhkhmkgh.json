@@ -1,0 +1,83 @@
+---
+name: 百度地图工具
+version: 0.6.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 119
+release_date: '2023-10-31T11:31:49.000Z'
+size: 29.49KiB
+languages:
+  - 中文 (简体)
+description: |-
+  查看百度地图全景（街景）后，自动在地图标注全景位置，以便知晓哪里被查看过。
+  另有 显示全景拍摄日期、坐标拾取（查看手选点经纬度，支持GCJ02、WGS84、BD09、BD09MC等）、标记手选点、标记搜索列表 等功能。
+publisher_account: 大风
+support_website: https://choa.fun/p/1258225
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "百度地图工具",
+  "description": "查看百度地图全景（街景）后，自动在地图标注全景位置，以便知晓哪里被查看过。\n另有 显示全景拍摄日期、坐标拾取（查看手选点经纬度，支持GCJ02、WGS84、BD09、BD09MC等）、标记手选点、标记搜索列表 等功能。",
+  "version": "0.6.2",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "64": "images/icon-64.png",
+    "128": "images/icon-128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAg1EH9ptJZjbj8baI54W9PmPnYUBLSKhVo2LHQQx91uNOPHDvitdT9lPIz0Z6u2wmaRX6auRkpRrUXW7sW4XsJR2ce4j0KH+B+o5Q94Z0Z5Vi8gmumlbEgjTy1ZfF84wz4GV8rkDIuztByCkVsS1EU3a8ti1F6ZCt1RJPsdTTQTQ0lmjmcTh2THd1STCwTuK9zBfFH22YNS4wG59YnST4rxfL+ZCZulHqNIC5YxqW2PhtgQkH/+qMRVzGpLJUv/Byl+wY4QEDE9LVVwEGfTWcaV1PPl7DjvZNtuO0ou1hWCZALMjMojaoZHqEfG+QpeEjQdtlqsrHtlEKEztIITGvUwIDAQAB",
+  "background": {
+    "service_worker": "js/service_worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "html/popup.html",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "64": "images/icon-64.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "百度地图工具"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://map.baidu.com/*",
+        "https://ditu.baidu.com/*"
+      ],
+      "js": [
+        "js/content-script.js",
+        "js/gcoord.global.prod.js"
+      ],
+      "css": [
+        "css/content-css.css"
+      ],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://map.baidu.com/*",
+    "https://ditu.baidu.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://map.baidu.com/*",
+      "https://ditu.baidu.com/*"
+    ]
+  },
+  "minimum_chrome_version": "91",
+  "homepage_url": "https://github.com/chaofunchengfeng/BaiduMapToy"
+}

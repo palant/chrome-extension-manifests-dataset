@@ -1,0 +1,81 @@
+---
+name: Flickr Fixr
+version: 2.6.0
+category_slug: lifestyle/social
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-08-19T05:28:12.000Z'
+size: 123KiB
+languages:
+  - English
+description: Makes Flickr almost awesome - while waiting for SmugMug to fully fix it ;-)
+publisher_account: Stig Nygaard
+extension_website: rockland.dk
+support_website: https://www.flickr.com/groups/flickrhacks/discuss/72157655601688753/
+privacy_policy: https://rockland.dk/userscript/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Flickr Fixr",
+  "short_name": "Flickr Fixr",
+  "description": "Makes Flickr almost awesome - while waiting for SmugMug to fully fix it ;-)",
+  "version": "2.6.0",
+  "author": "Stig Nygaard",
+  "homepage_url": "https://github.com/StigNygaard/Stigs_Flickr_Fixr",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.flickr.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'"
+  },
+  "icons": {
+    "16": "icons/fr16.png",
+    "32": "icons/fixr32.png",
+    "48": "icons/fixr48.png",
+    "64": "icons/fixr64.png",
+    "96": "icons/fixr96.png",
+    "128": "icons/fixr128.png",
+    "256": "icons/fixr256.png"
+  },
+  "action": {
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "128.0",
+      "id": "{266065e3-e12f-4eb1-9ba0-9506ae8f6c9e}"
+    }
+  },
+  "minimum_chrome_version": "121.0",
+  "minimum_opera_version": "107.0",
+  "minimum_edge_version": "121.0",
+  "background": {
+    "scripts": ["background/flickr_fixr.js"],
+    "service_worker": "background/flickr_fixr.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.flickr.com/*", "*://*.flickr.net/*"],
+      "exclude_matches": ["*://api.flickr.com/*", "*://identity.flickr.com/*", "*://*.flickr.com/signin/*", "*://*.flickr.com/signup/*", "*://*.flickr.com/account/*"],
+      "js": ["options/options.js", "Stigs_Flickr_Fixr.user.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "inject/timeout.js" ],
+      "matches": [ "https://*.flickr.com/*" ]
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  }
+}

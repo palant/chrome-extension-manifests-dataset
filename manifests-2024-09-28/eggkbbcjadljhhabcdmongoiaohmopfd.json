@@ -1,0 +1,108 @@
+---
+name: miniOrange Browser Extension Beta
+version: 4.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 316
+release_date: '2024-07-10T11:35:37.000Z'
+size: 193KiB
+languages:
+  - English (United States)
+description: Secure auto login to any app
+publisher_account: miniOrange
+support_website: https://idp.miniorange.com/steps-to-setup-secure-browser-sso-apps/
+privacy_policy: https://www.miniorange.com/usecases/miniOrange_Privacy_Policy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "name": "miniOrange Browser Extension Beta",
+   "author": "miniOrange",
+   "short_name": "miniOrange SSO",
+   "version": "4.0.1",
+   "manifest_version": 3,
+   "description": "Secure auto login to any app",
+   "web_accessible_resources": [
+    {
+        "resources": [
+            "html/widget.html",
+            "html/fill-password.html",
+            "html/strong-password.html",
+            "images/icon32-black.png",
+            "images/icon32.png",
+            "images/arrow32.png"
+        ],
+        "matches": [
+            "<all_urls>"
+        ]
+    }
+   ],
+   "icons": {
+       "32": "images/icon32.png",
+       "128": "images/icon128.png"
+   },
+   "action": {
+       "default_icon": {
+        "32": "images/icon32.png",
+        "128": "images/icon128.png"
+       },
+       "default_popup": "html/popup.html"
+   },
+   "content_scripts": [
+       {
+           "all_frames": true,
+           "css": ["css/mocustomcss.css"],
+           "matches": ["<all_urls>"],
+           "run_at": "document_start"
+       },
+       {
+           "all_frames": true,
+           "js": [
+               "js/jquery-1.9.1.js",
+               "js/appDetails.js",
+               "js/extension.js",
+               "js/lib/uri-js/URI.js"
+            ],
+           "matches": ["<all_urls>"],
+           "run_at": "document_start"
+       },
+       {
+           "all_frames": true,
+           "js": [
+               "js/mo-widget.js",
+               "js/spinitiated/initialize.js",
+               "js/jquery-1.9.1.js",
+               "js/sso-mo-login.js",
+               "js/common.js",
+               "js/parser.js",
+               "js/checkFieldVisibility.js",
+               "js/detectFields.js",
+               "js/gmail-configure-sf.js",
+               "js/lib/js-mcrypt/mcrypt.js",
+               "js/lib/js-mcrypt/rijndael.js",
+               "js/lib/js-mcrypt/Serpent.js",
+               "js/lib/uri-js/URI.js",
+               "js/jsSelector.js"
+           ],
+           "matches": ["<all_urls>"],
+           "run_at": "document_end"
+       }
+   ],
+
+   "background": {
+        "service_worker": "js/background.js"
+    },
+   "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+    },
+   "externally_connectable": {
+       "matches": ["*://*.google.com/*"]
+   },
+   "host_permissions": [
+        "https://*/*",
+        "http://*/*"
+    ],
+   "permissions": ["storage", "privacy", "management", "cookies", "tabs", "scripting", "contextMenus"]
+}

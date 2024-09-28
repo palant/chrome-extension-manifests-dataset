@@ -1,0 +1,97 @@
+---
+name: 'Salesflare: Email Finder & LinkedIn/Gmail CRM'
+version: 6.4.2
+category_slug: productivity/tools
+rating: 4.8
+rating_count: 20
+user_count: 3000
+release_date: '2024-09-28T03:19:08.000Z'
+size: 630KiB
+languages:
+  - English
+description: Salesflare Chrome extension for Gmail and LinkedIn
+publisher_account: Salesflare
+publisher_address: |-
+  Bakkersdreef 43
+  Kalmthout 2920
+  BE
+extension_website: salesflare.com
+support_website: https://howto.salesflare.com
+privacy_policy: https://salesflare.com/terms.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Salesflare: Email Finder & LinkedIn/Gmail CRM",
+    "version": "6.4.2",
+    "description": "Salesflare Chrome extension for Gmail and LinkedIn",
+    "manifest_version": 3,
+    "icons": {
+        "16": "images/salesflare-icon-16.png",
+        "48": "images/salesflare-icon-48.png",
+        "128": "images/salesflare-icon-128.png"
+    },
+    "action": {
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "scripting",
+        "declarativeNetRequest",
+        "declarativeContent"
+    ],
+    "host_permissions": [
+        "https://mail.google.com/",
+        "https://*.linkedin.com/*",
+        "https://*.googleusercontent.com/proxy/*"
+    ],
+    "background": {
+        "service_worker": "worker.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://mail.google.com/*"],
+            "js": [
+                "gmail.js", "pageWorld.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.linkedin.com/*"],
+            "js": ["linkedin.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/add_to_account_menu.png",
+                "images/arrow_left.png",
+                "images/arrow_right.png",
+                "images/loading.gif",
+                "images/salesflare-icon-16.png",
+                "images/salesflare-icon-48.png",
+                "images/template.png",
+                "pageWorld.js"
+            ],
+            "matches": ["<all_urls>"],
+            "extension_ids": []
+        }
+    ],
+    "declarative_net_request" : {
+        "rule_resources" : [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "rules/rules_redirect.json"
+            },
+            {
+                "id": "ruleset_2",
+                "enabled": true,
+                "path": "rules/rules_headers.json"
+            }
+        ]
+    }
+}
+

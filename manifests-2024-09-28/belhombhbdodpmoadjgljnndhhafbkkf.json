@@ -1,0 +1,106 @@
+---
+name: Work Visa Sponsors Extension
+version: 1.4.7
+category_slug: productivity/tools
+rating: 5
+rating_count: 5
+user_count: 305
+release_date: '2024-02-12T06:30:56.000Z'
+size: 6.51MiB
+languages:
+  - English
+description: >-
+  Notifies users of the likelihood for VISA sponsorship while viewing job
+  vacancy listings on popular job boards.
+publisher: 9660Technologies Limited
+publisher_account: 9660technologies
+publisher_address: |-
+  3b Aliu Iboyimi St
+  Okota
+  Lagos, Lagos 102214
+  NG
+extension_website: workvisasponsors.co.uk
+support_website: https://workvisasponsors.co.uk/contact
+privacy_policy: https://workvisasponsors.co.uk/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Work Visa Sponsors Extension",
+  "version": "1.4.7",
+  "description": "Notifies users of the likelihood for VISA sponsorship while viewing job vacancy listings on popular job boards.",
+  "icons": {
+    "48": "assets/images/fav.png",
+    "128": "assets/images/fav.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms",
+    "unlimitedStorage"
+  ],
+  
+  "host_permissions": [
+    "https://workvisasponsors.co.uk/*",
+    "https://*.indeed.com/*",
+    "https://*.totaljobs.com/*",
+    "https://*.glassdoor.com/*",
+    "https://*.glassdoor.co.uk/*",
+    "https://*.linkedin.com/*"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_popup": "html/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/jquery-3.6.0.min.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["js/bootstrap.min.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+        "matches": ["https://workvisasponsors.co.uk/*"],
+        "js": ["scripts/core/subaction.js"]
+    },
+     {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "scripts/platforms/linkedinScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.indeed.com/*"
+      ],
+      "js": [
+        "scripts/platforms/indeedScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.glassdoor.com/*", "https://*.glassdoor.co.uk/*"
+      ],
+      "js": [
+        "scripts/platforms/glassdoorScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.totaljobs.com/*"
+      ],
+      "js": [
+        "scripts/platforms/totaljobsScript.js"
+      ]
+    }
+  ]
+}

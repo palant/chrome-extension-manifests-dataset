@@ -1,0 +1,118 @@
+---
+name: Mark&Go
+version: 0.2.22
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 63
+release_date: '2022-03-10T23:47:08.000Z'
+size: 8.83MiB
+languages:
+  - English
+description: Mark students' exams through highlights and go!
+publisher_account: onekin.org
+privacy_policy: https://onekin.org?page_id=10
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appShortName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.2.22",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "icons": {
+    "256": "images/mag/icon-512.png"
+  },
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*",
+        "file:///*/*"
+      ],
+      "exclude_matches": [
+        "*://*/*grade/grading/*",
+        "*://*/*mod/assign/view.php*",
+        "*://*/*course/modedit.php?add=assign*"
+      ],
+      "js": [
+        "scripts/contentScript.js"
+      ],
+      "css": [
+        "styles/contentScript.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*/*grade/grading/*",
+        "*://*/*mod/assign/view.php*"
+      ],
+      "js": [
+        "scripts/moodleContentScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*/*course/modedit.php?add=assign*"
+      ],
+      "js": [
+        "scripts/moodleAssignmentAddContentScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*/*course/view.php*"
+      ],
+      "js": [
+        "scripts/moodleResumption.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*/*mod/assign/view.php*"
+      ],
+      "js": [
+        "scripts/moodleEstimation.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "page_action": {
+    "default_icon": "images/mag/icon-38-bw.png",
+    "default_title": "__MSG_browserActionTitle__"
+  },
+  "options_page": "pages/options.html",
+  "options_ui": {
+    "page": "pages/options.html",
+    "chrome_style": false,
+    "open_in_tab": true
+  },
+  "permissions": [
+    "https://hypothes.is/",
+    "activeTab",
+    "storage",
+    "downloads",
+    "notifications",
+    "file://*/*",
+    "contextMenus"
+  ],
+  "web_accessible_resources": [
+    "pages/*.html",
+    "content/*",
+    "images/*"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAzwi0PFfgFsQLO9m+ur61E2t0xOkKnGcjfRL1RShuf03qCb9HVDkG771nzZZxENtGAtZNyctLqp/zRgT+JUFp5PzYLfpCxs6O2fEHT5RYoJC7EnEjIOA3Q0eZ1PBFE0A+RlaMlY67rQ3HbDrK7KcKn0DTJ/FNzqL6N1v7bdXGJ3rHoZfMY1Sn+F1ULLZxsCRxXxpmTMVN1OU+U1vOteZLd49RsqPsipTwQwBcy5ss9EycoaoMo2yec7nCiPnoUYhW+nRS+zULQQUumxIA7olDFaGAZvOTceo0xdIJFeN0ajdjzAcxA2Gj/5nK3VVJKhjSJPe2RRKaqdWyhGKeoiBAowIDAQAB"
+}

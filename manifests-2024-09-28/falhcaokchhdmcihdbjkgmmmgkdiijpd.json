@@ -1,0 +1,67 @@
+---
+name: ADAMatic
+version: 2.0.0
+category_slug: productivity/education
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2024-07-13T12:52:09.000Z'
+size: 56.3KiB
+languages:
+  - English
+description: Auto-login and tweaks for University of Basel's ADAM
+publisher_account: chnet
+extension_website: thechnet.github.io/adamatic
+support_website: https://github.com/thechnet/adamatic/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "ADAMatic",
+ "version": "2.0.0",
+ "description": "Auto-login and tweaks for University of Basel's ADAM",
+ "icons": {
+  "16": "img/icon16.png",
+  "48": "img/icon48.png",
+  "128": "img/icon128.png"
+ },
+ "action": {
+  "default_icon": {
+   "16": "img/icon16.png",
+   "48": "img/icon48.png",
+   "128": "img/icon128.png"
+  },
+  "default_popup": "src/popup.html"
+ },
+ "background": {
+  "service_worker": "src/worker.js"
+ },
+ "content_scripts": [
+  {
+   "matches": [ "*://adam.unibas.ch/login.php*" ],
+   "js": [ "src/content_scripts/unibas.js" ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": [ "*://wayf.switch.ch/SWITCHaai/WAYF?entityID=https%3A%2F%2Fadam.unibas.ch*" ],
+   "js": [ "src/content_scripts/switch.js" ]
+  },
+  {
+   "matches": [ "*://unibas.login.eduid.ch/idp/profile/SAML2/Redirect/SSO?execution=*" ],
+   "js": [ "src/content_scripts/eduid.js" ]
+  },
+  {
+   "matches": [ "*://adam.unibas.ch/ilias.php*" ],
+   "js": [ "src/content_scripts/ilias.js" ]
+  }
+ ],
+ "permissions": [ "storage" ],
+ "web_accessible_resources": [
+  {
+   "resources": [ "img/icon128.png" ],
+   "matches": [ "*://unibas.login.eduid.ch/*" ]
+  }
+ ]
+}

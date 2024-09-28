@@ -1,0 +1,94 @@
+---
+name: WhatsBooster
+version: 2.0.1.1
+category_slug: lifestyle/social
+rating: 4
+rating_count: 4
+user_count: 2000
+release_date: '2024-05-03T10:06:15.000Z'
+size: 5.29MiB
+languages:
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - español
+  - italiano
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+description: WhatsBooster - Give your WhatsApp super powers
+publisher: Henckel Dev
+publisher_account: Vitor Henckel
+publisher_address: |-
+  Perto da Praia
+  Florianópolis, SC 88054-000
+  BR
+extension_website: whatsbooster.site
+support_website: https://whatsbooster.site
+privacy_policy: https://henckel.com.br/whatsolx.html
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "2.0.1.1",
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "homepage_url": "https://henckel.com.br/whatsbooster",
+  "default_locale": "en",
+  "icons": {
+    "16": "img/WhatsBooster_16.png",
+    "32": "img/WhatsBooster_32.png",
+    "48": "img/WhatsBooster_48.png",
+    "64": "img/WhatsBooster_64.png",
+    "128": "img/WhatsBooster_128.png"
+  },
+  "background": {
+    "service_worker": "js/worker.js"
+  },
+  "action": {
+    "default_popup": "pages/index.html",
+    "default_icon": "img/WhatsBooster_128.png",
+    "default_title": "__MSG_appDesc__"
+  },
+  "permissions": [
+    "activeTab",
+    "idle",
+    "scripting",
+    "storage",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://web.whatsapp.com/*",
+    "*://henckel.com.br/*",
+    "*://*.web.app/*",
+    "*://*.firebaseio.com/*",
+    "*://*.firebaseapp.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": [
+        "js/configElements.js",
+        "js/lockScreenStart.js",
+        "js/schedulerStart.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/"],
+      "js": ["js/exportingTools.js", "js/backCustom.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*", "css/*", "vendor/*", "img/*", "fonts/*"],
+      "matches": ["https://web.whatsapp.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://henckel.com.br/*"]
+  }
+}

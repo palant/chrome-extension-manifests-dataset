@@ -1,0 +1,76 @@
+---
+name: Logisr Logistics Automator
+version: '1.5'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 15
+release_date: '2022-09-27T07:47:55.000Z'
+size: 1.87MiB
+languages:
+  - English (United States)
+description: Send hundreds of emails to brokers on TruckersEdge and find loads quicker.
+publisher_account: aflydev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "version": "1.5",
+    "name": "Logisr Logistics Automator",
+    "description": "Send hundreds of emails to brokers on TruckersEdge and find loads quicker.",
+    "icons": {
+        "16": "/images/Red-icon-16.png",
+        "32": "/images/Red-icon-32.png",
+        "48": "/images/Red-icon-48.png",
+        "128": "/images/Red-icon-128.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/images/Red-icon-16.png",
+            "32": "/images/Red-icon-32.png",
+            "48": "/images/Red-icon-48.png",
+            "128": "/images/Red-icon-128.png"
+        }
+    },
+    "permissions": ["storage", "identity", "identity.email"],
+    "content_scripts": [
+        {
+            "matches": ["https://truckersedge.dat.com/*"],
+            "js": ["docstart_script.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://truckersedge.dat.com/*"],
+            "css": ["search_page.css", "build/static/css/main.08566963.css"],
+            "js": [
+                "libs/jquery-3.3.1.min.js",
+                "search_page_content_script.js",
+                "build/static/js/main.68379f1f.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["patch_xhr_prototype.js", "build/static/media/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAl3R1WPk8mYeesspdgpdIWedjDKuNc7kzyJf1w7jukUUmgs4wsEBCui3GMf8SV6nyXCJ9i6HdAxoyAEOYhe4Bk+1sdWALIV7tuW2Gxmi5miQtH1PVwNaidINgZ2al4z7u17XssPRi0G6ejLKJJDR/5n003T+eHoed16Sslo0KUZAf/orjQsZyv76QnOcbb/gQlFS2ePTXDIChHdj2R5Os0wnJh1hqjB9+FT9i/yTMpvjJ/S2q51aL8BEQUxkLXmxoH+J0G1NnaWNFm90eptkjAHY4PANwgRsEI2w6XgDGkF8Vrfy+mYIHghQ61xIyLpsnlsLVXWhyxf86TxncO8bEtwIDAQAB",
+    "oauth2": {
+        "client_id": "734685575840-egus8hhq7ngntmhupqcgsgv986n776q3.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/gmail.readonly",
+            "https://www.googleapis.com/auth/contacts.readonly",
+            "https://mail.google.com/"
+        ]
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "externally_connectable": {
+        "matches": ["https://gmailapitesting.com:8081/"]
+    }
+}

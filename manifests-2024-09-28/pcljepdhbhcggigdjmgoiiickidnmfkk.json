@@ -1,0 +1,136 @@
+---
+name: Order Chuẩn
+version: '1.3'
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 12
+release_date: '2021-10-15T09:33:46.000Z'
+size: 2.62MiB
+languages:
+  - Tiếng Việt
+description: >-
+  Orderchuan.com - Công cụ giúp mua hàng Amazon.com, Mercari.com, Rakuten.com
+  thuận tiện hơn
+publisher_account: dongnt.hut
+extension_website: orderchuan.com
+support_website: https://orderchuan.com/lien-he
+privacy_policy: https://ohp.com.vn/term.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Order Chuẩn",
+  "version": "1.3",
+  "description": "Orderchuan.com - Công cụ giúp mua hàng Amazon.com, Mercari.com, Rakuten.com thuận tiện hơn",
+  "manifest_version": 2,
+  "permissions": [
+    "storage",
+    "*://*.orderchuan.com/*",
+    "*://*.amazon.com/*",
+    "*://*.amazon.co.jp/*"
+  ],
+  "browser_action": {
+    "default_icon": "/assets/icons/icon_16_active.png",
+    "default_popup": "index.html?#/popup",
+    "default_title": "OrderChuan.Com"
+  },
+  "icons": {
+    "16": "/assets/icons/icon_16_active.png",
+    "48": "/assets/icons/icon_48_active.png",
+    "128": "/assets/icons/icon_128_active.png"
+  },
+  "author": "OrderChuan.Com",
+  "content_scripts": [
+    {
+      "js": [
+        "contentPage.js",
+        "/assets/js/jquery.min.js",
+        "/assets/libs/toastr/toastr.min.js",
+        "/assets/js/lodash.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.amazon.com/*"
+      ],
+      "css": [
+        "styles.css",
+        "/assets/libs/toastr/toastr.min.css"
+      ],
+      "js": [
+        "amz_us_contentPage.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.amazon.co.jp/*"
+      ],
+      "css": [
+        "styles.css",
+        "/assets/libs/toastr/toastr.min.css"
+      ],
+      "js": [
+        "amz_us_contentPage.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.mercari.com/*"
+      ],
+      "css": [
+        "styles.css",
+        "/assets/libs/toastr/toastr.min.css"
+      ],
+      "js": [
+        "mercari_contentPage.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.item.rakuten.co.jp/*"
+      ],
+      "css": [
+        "styles.css",
+        "/assets/libs/toastr/toastr.min.css"
+      ],
+      "js": [
+        "rakuten_contentPage.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.orderchuan.com/protected/gio-hang",
+        "*://*.orderchuan.vn/protected/gio-hang",
+        "http://127.0.0.1/*"
+      ],
+      "css": [
+      ],
+      "js": [
+        "orderchuan_contentPage.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "scripts": [
+      "backgroundPage.js"
+    ],
+    "persistent": false
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "web_accessible_resources": [
+    "/assets/js/jquery.min.js",
+    "/assets/chrome-extension-template/toolbar.html",
+    "/assets/icons/icon_128_active.png",
+    "/assets/libs/*"
+  ]
+}

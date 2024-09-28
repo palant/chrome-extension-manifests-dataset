@@ -1,0 +1,103 @@
+---
+name: Marketplace Analytics Item Finder
+version: 0.3.8
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 49
+release_date: '2023-08-06T14:01:10.000Z'
+size: 1.47MiB
+languages:
+  - English
+description: conveniently compare Amazon product prices against other marketplaces
+publisher_account: marketplaceanalyticsco
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Marketplace Analytics Item Finder",
+    "version": "0.3.8",
+    "manifest_version": 3,
+    "description": "conveniently compare Amazon product prices against other marketplaces",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "default_locale": "en",
+    "background": {
+        "service_worker": "src/bg/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.ebay.com/itm/*"
+            ],
+            "js": [
+                "js/hmac-sha256.js",
+                "js/cryptojs-enc-base64-min.js",
+                "js/jquery/jquery.min.js",
+                "src/KeyManager.js",
+                "src/AmzManager.js",
+                "src/AmazonMws.js",
+                "src/EbayWebProductParser.js",
+                "src/ProfitConfigManager.js",
+                "src/ProfitCalculator.js",
+                "src/ebay_inject.js"
+            ],
+            "css": [
+                "css/ebay_inject.css"
+            ]
+        },
+        {
+            "matches": [
+                "*://www.ebay.com/deals"
+            ],
+            "include_globs": [
+                "*#fromExtension*"
+            ],
+            "js": [
+                "js/jquery/jquery.min.js",
+                "src/deals_inject.js"
+            ],
+            "css": [
+                "css/deals_inject.css"
+            ]
+        }
+    ],
+    "action": {
+        "default_icon": {
+            "16": "icons/icon19.png",
+            "24": "icons/icon19.png",
+            "32": "icons/icon19.png"
+        },
+        "default_title": "Marketplace Analytics Item Finder"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "*://*.ebay.com/*",
+        "*://*.amazon.com/*",
+        "*://mws.amazonservices.com/*",
+        "*://webservices.amazon.com/*",
+        "*://api.airtable.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "html/*",
+                "img/*"
+            ],
+            "extension_ids": [
+                "odghnmadjdhcbecnienmckcekgpkchai"
+            ]
+        }
+    ],
+    "options_page": "html/options.html",
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjVrvXw6QT04oILQV2ldVjf+RGCg2NUG2wgf1k4dmMPAx5qAa50CAfPtTPKfLjw7Rx0VnVtpHGYjbRqrHr9yo7pTz4SvuK1F7wgkwzkM7qz2kIn7avWN0uFwdG4ptLjAUBWxktXvd0bc+EMGFaKFtSrDAcDHLUzldpVIpV0D+f+X7OV62+M5rwaUYNk3t/Kw4N4GTuecJCs/ZpFE55OdLEErMYuiXGFB0bk4fIqkEecDvFemLUCt8XmL99eBiVb4+kqjLE9ybl88do/u+/IpGDhsIs6em2bBuraU87vpgeKoi7qVHRLHuSZ7x6VU6v10+k1DmrPLGhDGwDVhIzj5waQIDAQAB"
+}

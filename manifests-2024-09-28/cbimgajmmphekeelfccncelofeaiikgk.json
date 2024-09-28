@@ -1,0 +1,53 @@
+---
+name: CmdK
+version: 1.0.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-02-03T04:02:25.000Z'
+size: 3.2MiB
+languages:
+  - English
+description: >-
+  A browser extension that allows to create shortlinks with the word 'go'
+  followed by the shortened link, go/links
+publisher: cmdk
+publisher_account: developers
+publisher_address: |-
+  1988 Fairport Rd
+  Pickering, ON L1V 1T6
+  CA
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CmdK",
+  "description": "A browser extension that allows to create shortlinks with the word 'go' followed by the shortened link, go/links",
+  "version": "1.0.2",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "./images/logo.png"
+  },
+    "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": ["declarativeNetRequest"],
+  "host_permissions":["https://go/*", "https://*.cmdk.ai/*"],
+  "background": {
+    "service_worker": "./js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.cmdk.ai/*"],
+      "js": ["./js/data_injector.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

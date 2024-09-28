@@ -1,0 +1,66 @@
+---
+name: WA Web Bridge
+version: 3.0.3
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 277
+release_date: '2024-07-14T05:14:51.000Z'
+size: 55.28KiB
+languages:
+  - English
+description: >-
+  Seamlessly integrate WhatsApp messaging into web applications. Send messages
+  from your web apps directly to WhatsApp Web.
+publisher_account: naranarethiya
+support_website: https://github.com/naranarethiya/whatsapp-web-interaction-suite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version":3,
+    "name":"WA Web Bridge",
+    "version":"3.0.3",
+    "description": "Seamlessly integrate WhatsApp messaging into web applications. Send messages from your web apps directly to WhatsApp Web.",
+    "permissions":[
+        "tabs"
+    ],
+    "icons": {
+        "128": "icon-128.png"
+    },
+    "background":{
+        "service_worker":"src/background.js",
+        "type":"module"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["src/jquery-3.7.0.min.js", "src/content.js"]
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["src/webapp.js"],
+            "world": "MAIN"
+        },
+        {
+            "matches": ["https://web.whatsapp.com/*"],
+            "js": ["src/moduleraid.js", "src/util/whatsapp.js"],
+            "world": "MAIN"
+        },
+        {
+            "matches": ["https://web.whatsapp.com/*"],
+            "js": ["src/whatsappContent.js"]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["src/moduleraid.js", "src/util/whatsapp.js"],
+        "matches": ["https://web.whatsapp.com/*"]
+    }],
+    "externally_connectable": {
+        "matches": ["http://localhost/"]
+    }
+ }

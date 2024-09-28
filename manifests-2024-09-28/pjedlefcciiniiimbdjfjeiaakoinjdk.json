@@ -1,0 +1,94 @@
+---
+name: Avaya Spaces® Calling
+version: 2.0.23.8
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 1000
+release_date: '2024-02-09T09:48:08.000Z'
+size: 2.62MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+  - português (Brasil)
+  - русский
+  - 中文 (简体)
+  - 日本語
+  - 한국어
+description: Make Avaya phone calls from Avaya Spaces®
+publisher_account: Avaya
+support_website: https://support.avaya.com
+privacy_policy: https://www.avaya.com/en/privacy/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_AppName__",
+  "description": "__MSG_AppDesc__",
+  "version": "2.0.23.8",
+  "default_locale": "en",
+  "icons": { "16": "img/aura/16.png", "32": "img/aura/32.png", "128": "img/aura/128.png" },
+  "action": {
+    "default_icon": {
+      "16": "img/aura/16.png",
+      "32": "img/aura/32.png",
+      "48": "img/aura/48.png",
+      "128": "img/aura/128.png"
+    }
+  },
+  "permissions": ["tabs", "notifications", "idle", "alarms", "nativeMessaging", "background", "downloads", "downloads.shelf", "system.display", "storage", "activeTab", "scripting", "system.display"],
+  "host_permissions": ["<all_urls>"],
+  "background": { "service_worker": "background.js"},
+  "content_scripts": [
+    {
+      "matches": ["https://sso.apps.avaya.com/clients/workplace/token.redirect*"],
+      "js": ["contentScripts/oauth2.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*"],
+      "match_origin_as_fallback": true,
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": ["contentScripts/clickToDial.js"],
+      "css": ["css/clickToDial.css"]
+    },
+    {
+      "matches": ["https://*.avayacloud.com/*", "https://*.zang.io/*", "https://*.esna.com/*", "https://*.salesforce.com/*", "https://*.lightning.force.com/*"],
+      "match_origin_as_fallback": true,
+      "js": ["contentScripts/spaces.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.avayacloud.com/*", "https://*.zang.io/*", "https://*.esna.com/*", "https://*.salesforce.com/*", "https://*.lightning.force.com/*"],
+      "match_origin_as_fallback": true,
+      "all_frames": false,
+      "run_at": "document_end",
+      "js": ["contentScripts/popout.js"],
+      "css": ["css/popout.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html",
+        "background.html",
+        "cookiesWarning/cookiesWarning.html",
+        "img/aura/32.png",
+        "img/aura/errorNotification.svg",
+        "img/clickToCall.png",
+        "img/clickToCall--hover.png",
+        "img/aura/outbound-filled.svg",
+        "img/aura/callforward.png"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ]
+}

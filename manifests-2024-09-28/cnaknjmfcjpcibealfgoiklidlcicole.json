@@ -1,0 +1,131 @@
+---
+name: Sprinklr PR Helper Extension
+version: 1.0.4
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 36
+release_date: '2024-05-07T07:06:16.000Z'
+size: 803KiB
+languages:
+  - English
+description: Chrome Extension to help Sprinklr Frontend team review PRs
+privacy_policy: https://www.freeprivacypolicy.com/our-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sprinklr PR Helper Extension",
+  "description": "Chrome Extension to help Sprinklr Frontend team review PRs",
+  "version": "1.0.4",
+  "action": {
+    "default_popup": "src/app/index.html"
+  },
+  "icons": {
+    "16": "assets/images/favicon.png",
+    "32": "assets/images/favicon.png",
+    "48": "assets/images/favicon.png",
+    "128": "assets/images/favicon.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "activeTab",
+    "scripting",
+    "webNavigation",
+    "browsingData",
+    "declarativeContent"
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.sprinklr.com/*"
+      ],
+      "resources": [
+        "assets/*",
+        "src/assets/css/macrosContent.css"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/main.ts-33a5e8c2.js",
+        "assets/injectMacroButton.js-b7d0fc52.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://prod-gitlab-ui.sprinklr.com/*"
+      ],
+      "resources": [
+        "assets/index-217e19d3.js",
+        "assets/client-768346d9.js",
+        "assets/injectMRWidget.tsx-b09c09c8.js",
+        "assets/shim-1191915a.js",
+        "assets/config-cb4b40d0.js",
+        "assets/injectToolbar.tsx-93ef57bb.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "resources": [
+        "assets/chatgpt.ts-7c80887a.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "assets/main.ts-loader-035052cf.js"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/injectMRWidget.tsx-loader-a812f122.js",
+        "assets/injectToolbar.tsx-loader-216b6b13.js"
+      ],
+      "matches": [
+        "https://prod-gitlab-ui.sprinklr.com/*/sprinklr-ui-hub/*/merge_requests/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/injectMacroButton.js-loader-b98010a0.js"
+      ],
+      "css": [
+        "src/assets/css/macrosContent.css"
+      ],
+      "matches": [
+        "https://*/*/-/merge_requests*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "assets/chatgpt.ts-loader-f0963e27.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/?promptKey=*",
+        "https://chat.openai.com/?close=true"
+      ]
+    }
+  ]
+}

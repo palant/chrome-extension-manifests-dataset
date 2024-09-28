@@ -1,0 +1,103 @@
+---
+name: Vme! Call by your avatar and voice
+version: 1.4.13
+category_slug: lifestyle/fun
+rating: 2.869565217391304
+rating_count: 23
+user_count: 20000
+release_date: '2024-06-26T16:28:47.000Z'
+size: 46.24MiB
+languages:
+  - English
+  - 日本語
+description: >-
+  Display Live2D avatars and speak virtual voices during video calls on Google
+  Meet or Discord.
+publisher: HIGHBALL PTE. LTD
+publisher_account: vhigh
+support_website: https://vme.vhigh.tokyo/help
+privacy_policy: https://vme.vhigh.tokyo/docs/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "version": "1.4.13",
+  "default_locale": "en",
+  "icons": {
+    "16": "favicon.png",
+    "32": "favicon.png",
+    "48": "favicon.png",
+    "128": "favicon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "VMe!",
+    "default_icon": {
+      "16": "favicon.png",
+      "24": "favicon.png",
+      "32": "favicon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://discord.com/*",
+        "https://*.vercel.app/*",
+        "https://*.vhigh.tokyo/*"
+      ],
+      "exclude_matches": ["https://meet.google.com/"],
+      "js": ["contentScript.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "history",
+    "declarativeNetRequest",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://vhigh-avatar-gen1-sbt-metadata-api.vhigh.tokyo/",
+    "https://eth-mainnet.g.alchemy.com/*",
+    "https://discord.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "face_mesh/*",
+        "movenet/*",
+        "model/*",
+        "assets/css/bootstrap.min.css",
+        "js/live2d.min.js",
+        "js/live2dcubismcore.min.js",
+        "js/worklet/*",
+        "captureMotion.js",
+        "initDevice.js",
+        "images/*"
+      ],
+      "matches": [
+        "https://meet.google.com/*",
+        "https://discord.com/*",
+        "https://vhigh.tokyo/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://*/*;"
+  },
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["https://*.vercel.app/*", "https://*.vhigh.tokyo/*"]
+  }
+}

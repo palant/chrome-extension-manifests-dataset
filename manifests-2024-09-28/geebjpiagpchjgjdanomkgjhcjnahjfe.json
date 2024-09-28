@@ -1,0 +1,160 @@
+---
+name: clearspace
+version: 0.4.5
+category_slug: lifestyle/well_being
+rating: 4.758064516129032
+rating_count: 62
+user_count: 919
+release_date: '2024-06-07T05:13:43.000Z'
+size: 208KiB
+languages:
+  - English
+description: 'Enhanced browsing: more focus, less distraction'
+publisher: clearspace technologies
+publisher_account: extension
+publisher_address: |-
+  425 Divisadero St
+  STE 200
+  San Francisco, CA 94117
+  US
+extension_website: getclearspace.com
+support_website: >-
+  https://docs.google.com/forms/d/e/1FAIpQLScxPf5YF47vHn-djsQuauMEMR1zalKYIR4Rp0SbmSNh0GLxJA/viewform
+privacy_policy: https://www.notion.so/Privacy-Policy-05fb16506a294132acee914a8f6e5331
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "description": "Enhanced browsing: more focus, less distraction",
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icons/icon32.png"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "feedblocking-styles.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "webNavigation",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "version": "0.4.5",
+  "name": "clearspace",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/*",
+        "https://linkedin.com/*"
+      ],
+      "js": [
+        "src/feedblocking/blocker.js",
+        "src/feedblocking/linkedin.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/*",
+        "https://facebook.com/*"
+      ],
+      "js": [
+        "src/feedblocking/blocker.js",
+        "src/feedblocking/facebook.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.instagram.com/*",
+        "https://instagram.com/*"
+      ],
+      "js": [
+        "src/feedblocking/blocker.js",
+        "src/feedblocking/instagram.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.twitter.com/*",
+        "https://twitter.com/*",
+        "https://x.com/*",
+        "https://www.x.com/*"
+      ],
+      "js": [
+        "src/feedblocking/blocker.js",
+        "src/feedblocking/twitter.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://youtube.com/*"
+      ],
+      "js": [
+        "src/feedblocking/blocker.js",
+        "src/feedblocking/youtube.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.reddit.com/*"
+      ],
+      "js": [
+        "src/feedblocking/blocker.js",
+        "src/feedblocking/reddit.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/feedblocking/reader-mode.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://app.getclearspace.com/*"
+      ],
+      "js": [
+        "src/onboarding.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.getclearspace.com/*"
+    ]
+  }
+}

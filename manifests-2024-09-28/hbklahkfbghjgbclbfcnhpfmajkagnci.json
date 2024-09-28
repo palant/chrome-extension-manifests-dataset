@@ -1,0 +1,152 @@
+---
+name: AI-powered Notes on Videos - Video Notebook
+version: 1.0.1
+category_slug: productivity/education
+rating: 3.845744680851064
+rating_count: 188
+user_count: 100000
+release_date: '2024-09-03T05:16:50.000Z'
+size: 9.92MiB
+languages:
+  - English
+description: Video notetaking powered by OpenAI API on YouTube, Google Meet, Udemy & more!
+publisher_account: Video Notebook
+publisher_address: |-
+  226 Yale Rd
+  Menlo Park, CA 94025-5228
+  US
+extension_website: videonotebook.com
+support_website: https://videonotebook.com/support
+privacy_policy: https://www.videonotebook.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AI-powered Notes on Videos - Video Notebook",
+  "short_name": "Video Notebook",
+  "version": "1.0.1",
+  "description": "Video notetaking powered by OpenAI API on YouTube, Google Meet, Udemy & more!",
+  "icons": {
+    "48": "icons/tray_default.png"
+  },
+  "action": {
+    "default_title": "VideoNotebook.com"
+  },
+  "commands": {
+    "enable-ai-content": {
+      "suggested_key": {
+        "default": "Alt+A"
+      },
+      "description": "Enable AI content"
+    },
+    "add-screenshot-note": {
+      "suggested_key": {
+        "default": "Alt+S"
+      },
+      "description": "Add a screenshot"
+    },
+    "add-text-note": {
+      "suggested_key": {
+        "default": "Alt+Z"
+      },
+      "description": "Add a text note"
+    },
+    "add-marker-note": {
+      "suggested_key": {
+        "default": "Alt+B"
+      },
+      "description": "Add a bookmark"
+    }
+  },
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "exclude_matches": [
+        "*://videonotebook.com/*",
+        "*://meet.google.com/*"
+      ],
+      "exclude_globs": [
+        "*://*.videonotebook.com/notebooks/*"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "default-content.bundle.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "google-meet-content.bundle.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://localhost/*",
+        "https://*.videonotebook.com/*",
+        "https://*.youtube.com/embed/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "embed-page.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "sandbox": {
+    "pages": [
+      "sandbox.html"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest",
+    "webNavigation",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://www.google-analytics.com/",
+    "*://*.videonotebook.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "vendor/css/*",
+        "css/*",
+        "icons/*",
+        "assets/fonts/*",
+        "sandbox.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsCoUejKdbokDJqUvLVh8hGZyH00OdjjJdquxz/qAfhfDurWpEho2lkY5+t5n3LnDl8C3v8ZUnAm+te01pWmp7Vclg8a8n5IzZf4LLiCbXno+HEmDDtUCgmgL/MviiZn6exYoFgpZmviQlZ2RCypSIbnV2DKUr0K8Y17OtTMxxpVm7mW7d38ICdLjECluS3yUg/xl5ZAf82CTjt/4GT1ciLk4xOMdOT62quXHP7t7VepNaELov1UPPbe0ttpVW3Zdem0jxQn/Kb+/BYw+wVOYgp/5bQHWUBQElJdT2Q6lxPUldhTfUfTnGDUExMes14c5Eq+Cv/xskZTOyZIn5Vh8xwIDAQAB",
+  "externally_connectable": {
+    "matches": [
+      "*://*.videonotebook.com/*",
+      "http://localhost:9000/*",
+      "https://localhost:9000/*"
+    ]
+  }
+}

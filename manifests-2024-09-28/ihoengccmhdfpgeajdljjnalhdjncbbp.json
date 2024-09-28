@@ -1,0 +1,104 @@
+---
+name: IDX Privacy
+version: 0.1.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 1000
+release_date: '2024-05-17T08:05:52.000Z'
+size: 528KiB
+languages:
+  - English
+description: >-
+  IDX Privacy locates and blocks 3rd party online tracking systems and privacy
+  invasion attempts at once.
+publisher: Identity Theft Guard Solutions, Inc
+publisher_account: IDX
+publisher_address: |-
+  10300 SW Greenburg Rd
+  Suite 570
+  Tigard, OR 97223-5410
+  US
+support_website: https://www.idx.us/contact/customer-service
+privacy_policy: https://www.idx.us/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "description": "IDX Privacy locates and blocks 3rd party online tracking systems and privacy invasion attempts at once.",
+ "manifest_version": 3,
+  "name": "IDX Privacy",
+  "homepage_url": "https://www.myidcare.com/",
+ "author": "IDX Privacy rename",
+ "version": "0.1.6",
+ "action": {
+  "default_icon": "Resources/icon48.png",
+  "default_title": "IDX Privacy",
+  "default_popup": "popup.html"
+ },
+ "icons": {
+   "128": "Resources/icon128.png",
+   "48": "Resources/icon48.png"
+ },
+ "permissions": [
+  "privacy",
+  "cookies",
+  "storage",
+  "scripting",
+  "tabs",
+  "webNavigation",
+  "declarativeNetRequest",
+  "webRequest"
+ ],
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "id": "FilterRules",
+    "enabled": true,
+    "path": "FilterRules.json"
+   },
+   {
+    "id": "HardCodedRules",
+    "enabled": true,
+    "path": "HardCodedList.json"
+   },
+   {
+    "id": "UserAgentFilter",
+    "enabled": true,
+    "path": "UserAgentFilter.json"
+   }
+  ]
+ },
+ "content_scripts": [
+  {
+    "matches": [  
+   "http://*/*",
+   "https://*/*"],
+    "run_at": "document_start",
+    "js": ["src/pp.js", "src/fngs.js", "src/au.js"]
+  }
+   ],
+ "host_permissions": [
+  "http://*/*",
+  "https://*/*"
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "src/*",
+    "resources/*",
+    "src/fngs.js",
+    "src/pp.js",
+    "src/au.js"
+   ],
+   "matches": [
+    "http://*/*",
+    "https://*/*"
+   ]
+  }
+ ],
+ "background": {
+  "service_worker": "worker.js"
+ }
+}

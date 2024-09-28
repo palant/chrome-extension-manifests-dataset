@@ -1,0 +1,65 @@
+---
+name: Kagi Infinite Free Search
+version: 3.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 10
+release_date: '2024-08-01T23:16:34.000Z'
+size: 18.07KiB
+languages:
+  - English
+description: >-
+  Randomly chooses a Kagi search token for each web search, bypassing the search
+  limit.
+publisher: The Byte Collective EU
+publisher_account: arxify
+publisher_address: |-
+  925 Wilshire Blvd
+  Santa Monica, CA 90403-1891
+  US
+privacy_policy: https://arxify.es/extension-privacy.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kagi Infinite Free Search",
+  "version": "3.0.1",
+  "description": "Randomly chooses a Kagi search token for each web search, bypassing the search limit.",
+  "permissions": [
+    "cookies", 
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "search_url": "https://arxify.es/?q={searchTerms}",
+      "name": "Kagi Infinite",
+      "keyword": "kagi",
+      "suggest_url": "https://arxify.es/api/autosuggest?q={searchTerms}",
+      "encoding": "UTF-8",
+      "favicon_url": "https://arxify.es/Proyecto%20nuevo%20(2).png",
+      "is_default": true
+    }
+  },
+  "host_permissions": [
+    "https://arxify.es/*"
+  ],
+  "background": {
+    "service_worker": "random-search-engine.js"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://arxify.es/*"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

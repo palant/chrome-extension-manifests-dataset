@@ -1,0 +1,100 @@
+---
+name: 5250 Web Terminal Add-on
+version: 6.1.0.122
+category_slug: productivity/tools
+rating: 3
+rating_count: 2
+user_count: 251
+release_date: '2023-10-25T16:03:13.000Z'
+size: 270KiB
+languages:
+  - English (United States)
+description: >-
+  Browser extension for Green Screens 5250 Web Terminal to improve user
+  experience by enabling local user settings.
+publisher: Green Screens Ltd.
+publisher_address: |-
+  Preradovićeva ul. 1
+  Bjelovar 43000
+  HR
+support_website: >-
+  https://www.greenscreens.io/doc/manual/Green%20Screens%20Browser%20Extension%20Manual.pdf
+privacy_policy: https://www.greenscreens.io/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "description": "Browser extension for Green Screens 5250 Web Terminal to improve user experience by enabling local user settings.",
+    "author": "Green Screens Ltd.",
+    "name": "5250 Web Terminal Add-on",
+    "homepage_url": "http://www.greenscreens.io",
+    "version": "6.1.0.122",
+    "manifest_version": 3,
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "permissions": [
+        "nativeMessaging",
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting",
+        "contextMenus",
+        "notifications",
+        "declarativeContent"
+    ],
+    "host_permissions": [
+        "http://*/lite/*",
+        "https://*/lite/*",
+        "http://*/terminal/*",
+        "https://*/terminal/*"
+    ],
+    "omnibox": {
+        "keyword": "webterm"
+    },
+    "background": {
+        "service_worker": "assets/backend/app.min.js",
+        "type": "module"
+    },
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; script-src 'self'; object-src 'self'; img-src 'self' data:"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "assets/bridge/bridge.min.js"
+            ],
+            "matches": [
+                "http://*/lite/*",
+                "https://*/lite/*",
+                "http://*/terminal/*",
+                "https://*/terminal/*"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "options_page": "assets/options/index.html",
+    "options_ui": {
+        "open_in_tab": true,
+        "page": "assets/options/index.html"
+    },
+    "action": {
+        "default_icon": "icons/icon19.png",
+        "default_popup": "assets/popup/index.html",
+        "default_title": "Macros"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/colors/style.less",
+                "assets/colors/style.tpl"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

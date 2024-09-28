@@ -1,0 +1,90 @@
+---
+name: Pixels Game Assistant
+version: 0.6.5
+category_slug: lifestyle/games
+rating: 4.887792848335389
+rating_count: 811
+user_count: 100000
+release_date: '2024-09-27T11:19:03.000Z'
+size: 911KiB
+languages:
+  - English
+description: Dedicated assistant extension for Pixels gamers.
+publisher_account: Atomrigs devs
+extension_website: guildpal.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Pixels Game Assistant",
+  "description": "Dedicated assistant extension for Pixels gamers.",
+  "version": "0.6.5",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxXwNi9a4Pw8S6qEG6ZhjfhKuAgjHBxKX61uzuGurwGPdSRNBt6Ag51DDHh4tjHXbIRLnPTWMbr0NJIDJeBwAe3AMlv18S4G57MwVkJNw8BfZ8EWtcwrOdPxg5z4XmZLHpASg/IuKAEl4iNNZDq01Ebob20ESc8f1fDmn+StIumkxXADFDyXlJf6ZQVF2ofie/3Jgrv14SKzHjFAJPM2AXFfM9ALtKBb5EcAOvZgTq8q9QuDQ89kEwlLtKQNwoeftAua9ZKP9kwGQQo87ilTxpkCOZ1SjvTduKnS38ayZEl+FCTRxD1SXdAMF8EW0Avhcdxy4HjXusWhk1/N6F3HMpwIDAQAB",
+  "icons": {
+    "32": "images/favicon-32.png",
+    "48": "images/favicon-48.png",
+    "128": "images/favicon-128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content-at-start.js"],
+      "matches": ["https://play.pixels.xyz/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["scripts/content-at-end.js"],
+      "matches": ["https://play.pixels.xyz/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/sw.es.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/inpage-at-start.js", "scripts/inpage-at-end.js"],
+      "matches": ["https://play.pixels.xyz/*"],
+      "type": "module"
+    }
+  ],
+  "commands": {
+    "Ctrl+U": {
+      "suggested_key": {
+        "default": "Ctrl+U",
+        "mac": "Command+U"
+      },
+      "description": "Ctrl+U to reload"
+    }
+  },
+  "permissions": ["activeTab", "storage", "sidePanel"],
+  "host_permissions": [
+    "https://play.pixels.xyz/*",
+    "https://pixels-server.pixels.xyz/*",
+    "https://guildpal.com/*",
+    "https://pixels.guildpal.com/*"
+  ],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "sidebar_action": {
+    "default_icon": {
+      "32": "images/favicon-32.png",
+      "48": "images/favicon-48.png",
+      "128": "images/favicon-128.png"
+    },
+    "default_title": "Pixels Game Assistant",
+    "default_panel": "index.html",
+    "open_at_install": false
+  },
+  "action": {
+    "default_icon": "images/favicon-48.png",
+    "default_title": "Pixels Game Assistant"
+  },
+  "minimum_chrome_version": "114",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

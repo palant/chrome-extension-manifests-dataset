@@ -1,0 +1,74 @@
+---
+name: 蓝熊OZON数据分析与选品
+version: 1.2.2
+category_slug: productivity/tools
+rating: 4.2
+rating_count: 5
+user_count: 1000
+release_date: '2024-01-17T07:14:22.000Z'
+size: 878KiB
+languages:
+  - English
+  - русский
+  - 中文 (简体)
+description: 真正能用、好用、易用的Ozon插件，无需注册登录，无广告极简插件，快速查看Ozon商品销量、浏览量等数据。
+publisher_account: Gold e-Bridge
+support_website: https://www.goldebridge.com/ozon
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extname__",
+  "version": "1.2.2",
+  "description": "__MSG_extdescription__",
+  "default_locale": "zh_CN",
+  "action": {
+    "default_icon": "./assets/logo128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./assets/logo128.png",
+    "48": "./assets/logo128.png",
+    "128": "./assets/logo128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*.goldebridge.com/",
+    "*://*.ozonabc.com/",
+    "*://*.ozon.ru/"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ozon.ru/product/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

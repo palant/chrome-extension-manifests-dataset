@@ -1,0 +1,174 @@
+---
+name: Petapator
+version: '11.7'
+category_slug: productivity/education
+rating: 4.7
+rating_count: 90
+user_count: 1000
+release_date: '2024-09-17T04:14:47.000Z'
+size: 946KiB
+languages:
+  - English
+description: Increase your patent efficiency
+publisher_account: Petapator
+extension_website: petapator.com
+support_website: https://groups.google.com/forum/#!forum/user--petapator-aspator
+privacy_policy: https://www.petapator.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Petapator",
+  "version": "11.7",
+  "manifest_version": 3,
+  "description": "Increase your patent efficiency",
+  "action": {
+    "default_popup": "/manifest/action/default_popup/index.html"
+  },
+  "background": {
+    "service_worker": "/manifest/background/main.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "/manifest/options/options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "unlimitedStorage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://ppubs.uspto.gov/",
+    "https://worldwide.espacenet.com/",
+    "https://www.makebell.com/",
+    "https://www.ncbi.nlm.nih.gov/"
+  ],
+  "icons": {
+    "16": "/blobs/icons/petakata_icon_16.png",
+    "128": "/blobs/icons/petakata_icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://worldwide.espacenet.com/*",
+        "https://ppubs.uspto.gov/pubwebapp/*",
+        "https://patents.google.com/*",
+        "https://patentscope.wipo.int/search/en/result.jsf*",
+         "https://pubmed.ncbi.nlm.nih.gov/?term=*"
+      ],
+      "css": [
+        "/library/tostify/index.css"
+      ],
+      "js": [
+        "/library/tostify/index.js",
+        "/library/papaparse/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://worldwide.espacenet.com/*"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/library/waitForElement/index.js",
+        "/library/showdown/index.js",
+        "/library/getUserInputAndReplacePlaceholders/index.js",
+        "/manifest/content_scripts/espacenet/mini_chat_box/index.js",
+        "/manifest/content_scripts/espacenet/download_csv.js",
+        "/manifest/content_scripts/espacenet/searchRequestBody.js",
+        "/manifest/content_scripts/espacenet/insert_image.js",
+        "/manifest/content_scripts/espacenet/chatGPT.js"
+      ],
+      "css": [
+        "/manifest/content_scripts/espacenet/insert_image.css",
+        "/manifest/content_scripts/espacenet/chatGPT.css",
+       "/manifest/content_scripts/espacenet/mini_chat_box/index.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://ppubs.uspto.gov/pubwebapp/*"
+      ],
+      "css": [
+        "/manifest/content_scripts/uspto/insert_image.css"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+        "/manifest/content_scripts/uspto/download_csv.js",
+        "/manifest/content_scripts/uspto/insert_image.js",
+        "/manifest/content_scripts/uspto/searchRequestBody.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://patents.google.com/*"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+        "/library/showdown/index.js",
+        "/library/getUserInputAndReplacePlaceholders/index.js",
+        "/library/getPatentFromGoogle/index.js",
+        "/library/saveLLMData/index.js",
+        "/manifest/content_scripts/google/search_url.js",
+        "/manifest/content_scripts/google/download_csv.js",
+        "/manifest/content_scripts/google/chatGPT.js",
+        "/manifest/content_scripts/google/mini_chat_box.js"
+      ],
+      "css": [
+        "/manifest/content_scripts/google/chatGPT.css",
+        "/manifest/content_scripts/google/mini_chat_box.css",
+        "/library/primer/index.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://patentscope.wipo.int/search/en/result.jsf*"
+      ],
+      "css": [
+        "/library/primer/index.css",
+        "/manifest/content_scripts/wipo/insert_image.css",
+        "/manifest/content_scripts/wipo/mini_chat_box/index.css"
+      ],
+      "js": [
+        "/library/getPatentFromGoogle/index.js",
+        "/library/showdown/index.js",
+        "/library/waitForElement/index.js",
+        "/library/getUserInputAndReplacePlaceholders/index.js",
+        "/manifest/content_scripts/wipo/download_csv.js",
+        "/manifest/content_scripts/wipo/insert_image.js",
+        "/manifest/content_scripts/wipo/mini_chat_box/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://patentscope.wipo.int/search/en/detail.jsf*"
+      ],
+      "css": [
+        "/manifest/content_scripts/wipo/chatGPT.css"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+        "/library/showdown/index.js",
+        "/library/getPatentFromGoogle/index.js",
+        "/manifest/content_scripts/wipo/chatGPT.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://pubmed.ncbi.nlm.nih.gov/?term=*"
+      ],
+      "css": [
+        "/manifest/content_scripts/pubmed/search_result/index.css"
+      ],
+      "js": [
+        "/library/waitForElement/index.js",
+         "/library/showdown/index.js",
+        "/manifest/content_scripts/pubmed/search_result/index.js"
+       
+      ]
+    }
+  ]
+}

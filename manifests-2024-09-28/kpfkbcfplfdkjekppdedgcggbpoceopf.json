@@ -1,0 +1,64 @@
+---
+name: WebanalyticsTools
+version: '1.0'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2024-07-08T14:09:21.000Z'
+size: 68.79KiB
+languages:
+  - English
+description: >-
+  Search variable in the datalayer and the tc_vars and the hit piano analytics
+  and google analytics
+publisher_account: roadgreenproduction
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "WebanalyticsTools",
+  "version": "1.0",
+  "description": "Search variable in the datalayer and the tc_vars and the hit piano analytics and google analytics",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "webRequest",
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    { "world": "MAIN",
+      "js": ["scripts/content.js"],
+      "matches": ["<all_urls>"],
+      "content_security_policy": {
+        "extension_pages": "script-src script-src-elem 'unsafe-hashes' 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' https://cdn.jsdelivr.net/npm/html2canvas@1.0.0-rc.5/dist/html2canvas.min.js"
+  }},
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["inject.js"],
+      "all_frames": true
+    }
+  ],
+
+  "web_accessible_resources": [{ 
+    "resources": ["scripts/content.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  }
+  
+  
+}

@@ -1,0 +1,141 @@
+---
+name: Komodo Screen Recorder & SOP
+version: 2.3.0
+category_slug: productivity/workflow
+rating: 4.755102040816326
+rating_count: 49
+user_count: 20000
+release_date: '2024-09-26T08:06:18.000Z'
+size: 979KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - català
+  - dansk
+  - español
+  - italiano
+  - polski
+  - čeština
+  - Ελληνικά
+  - български
+  - русский
+  - हिन्दी
+  - বাংলা
+  - አማርኛ
+  - ‫العربية
+description: Record screen and get a magical SOP with an AI Summary
+publisher: Komodo Technologies
+publisher_account: kgrauer
+publisher_address: |-
+  200 Undercliff Ave
+  Edgewater, NJ 07020-1901
+  US
+extension_website: komododecks.com
+support_website: https://www.komododecks.com/
+privacy_policy: https://komododecks.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "version": "2.3.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhFvYQ/mQRjUI6SLRgESnLnW3FMu5AKzWyavSAZA6BGpRsmTIzfZOQneXQueTf99aQ7edUeVQyDBFZUgady8XgC2DQVTG5T7PVtstTAF4eFQgNhQDVg96Mp18YpiFRFjVadQkpWhA6zmrLGkvD2SLmutxhtt9UYyKnk4KKPgvnlPzX/2xfZDVUafPl8m9T4aW04ZLtPWlGcbxjUexZGNtNqLbljVBfHYXLyX1OsszntqoJ6gETzPubyHrpXEBM93j/RZMLmTu1udrmYz0AQYcgeqh0FtnNG4TxINCpIq07zI9Nry7XJ9Pz73RJN58fT+t1sMrmLbXquWf7DbsWv978wIDAQAB",
+  "manifest_version": 3,
+  "minimum_chrome_version": "127.0",
+  "default_locale": "en",
+  "permissions": [
+    "scripting",
+    "offscreen",
+    "activeTab",
+    "storage",
+    "notifications",
+    "clipboardWrite",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://*.komododecks.com/*",
+    "https://komododecks.com/*"
+  ],
+  "icons": {
+    "64": "static/images/icon/icon.png"
+  },
+  "action": {
+    "default_popup": "/dist/pages/auth_popup/popup.html",
+    "default_title": "Komodo"
+  },
+  "background": {
+    "service_worker": "dist/bg/rl-bg.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://spaces.vatom.com/*"
+      ],
+      "js": [
+        "dist/cs/ui-variants/rl-vatom-ui.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/cs/rl-cs.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "dist/cs/rl-gmail.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/*",
+        "dist/pages/iframes/*",
+        "dist/cs/ui-variants/*.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      }
+    },
+    "toggle-pause-recording": {
+      "description": "__MSG_Shortcut_Pause_Resume_a_recording__"
+    },
+    "toggle-pause-guide": {
+      "description": "__MSG_Shortcut_Pause_Resume_recording_guide_steps__"
+    },
+    "stop-recording": {
+      "description": "__MSG_Shortcut_Stop_a_recording__"
+    },
+    "hide-ui": {
+      "description": "__MSG_Shortcut_Hide_UI__"
+    }
+  },
+  "options_ui": {
+    "page": "dist/pages/options/options.html",
+    "open_in_tab": true
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.komododecks.com/*",
+      "https://komododecks.com/*"
+    ]
+  }
+}

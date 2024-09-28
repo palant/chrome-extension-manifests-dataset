@@ -1,0 +1,66 @@
+---
+name: Airbnb Review Summarizer
+version: 0.0.3
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 72
+release_date: '2023-06-06T09:56:06.000Z'
+size: 93.95KiB
+languages:
+  - English
+description: Summarize Airbnb reviews to be useful
+publisher_account: radicalblind
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Airbnb Review Summarizer",
+  "version": "0.0.3",
+  "description": "Summarize Airbnb reviews to be useful",
+  "action": {
+    "default_icon": "./assets/airbnb_openai.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/airbnb_openai.png",
+    "48": "./assets/airbnb_openai.png",
+    "128": "./assets/airbnb_openai.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://airbnb.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://airbnb.com/*/reviews*",
+        "https://*.airbnb.com/*/reviews*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

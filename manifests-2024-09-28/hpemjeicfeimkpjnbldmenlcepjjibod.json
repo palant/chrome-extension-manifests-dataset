@@ -1,0 +1,62 @@
+---
+name: Sales Compass
+version: 0.0.2.20
+category_slug: productivity/communication
+rating: 5
+rating_count: 5
+user_count: 64
+release_date: '2024-02-05T13:52:45.000Z'
+size: 247KiB
+languages:
+  - English
+description: 'Chart Your Sales Journey: Personalised Outreach, Empowered Connections'
+publisher: Neural River
+publisher_address: |-
+  8 Newcastle Close
+  Drighlington
+  Bradford BD11 1DF
+  GB
+support_website: https://salescompass.ai/contact/
+privacy_policy: https://salescompass.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sales Compass",
+  "version": "0.0.2.20",
+  "description": "Chart Your Sales Journey: Personalised Outreach, Empowered Connections",
+  "permissions": ["activeTab", "clipboardRead", "storage"],
+  "action": {
+    "default_icon": {
+
+      "128": "resources/icon200.png"
+    },
+    "default_popup": "src/html/popup.html" 
+
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*", "https://web.outreach.io/*", "https://app.salesloft.com/*"],
+      "js": ["src/extensions/papaparse.min.js", "src/scripts/csv_uploader.js", "src/scripts/utils.js", "src/scripts/email_generator.js", "src/scripts/menu.js", "src/scripts/text_analysis.js", "src/scripts/tone_matcher.js", "src/scripts/popup.js"],
+      "css": ["src/styles/fonts.css", "src/styles/menu.css", "src/styles/email_generator.css","src/styles/csv_uploader.css", "src/styles/text_analysis.css", "src/styles/tone_matcher.css", "src/styles/popup.css", "src/styles/floating_div.css"]
+      
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/fonts/*", "src/html/menu.html", "src/html/email_generator.html", "src/html/csv_uploader.html", "src/html/text_analysis.html", "src/html/tone_matcher.html", "resources/icon.png", "resources/icon200.png", "src/extensions/papaparse.min.js"],
+      "matches": ["https://*.linkedin.com/*", "https://web.outreach.io/*" , "https://app.salesloft.com/*"],
+      "use_dynamic_url": false
+    }
+  ],
+  "icons": {
+
+    "128": "resources/icon200.png"
+  },
+  "background": {
+    "service_worker": "src/scripts/background.js"
+  }
+
+}

@@ -1,0 +1,67 @@
+---
+name: Tor Wallet
+version: 1.0.0
+category_slug: productivity/tools
+rating: 4
+rating_count: 1
+user_count: 53
+release_date: '2024-02-18T03:40:24.000Z'
+size: 2.91MiB
+languages:
+  - English
+description: The private wallet
+publisher_account: torwallet.xyz
+support_website: https://tor-wallet-1.gitbook.io/tor-wallet/
+privacy_policy: https://torwallet.xyz/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Tor Wallet",
+  "description": "The private wallet",
+  "version": "1.0.0",
+  "action": {
+    "default_title": "Tor Wallet",
+    "default_popup": "action.html"
+  },
+  "icons": {
+    "512": "favicon.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval'; img-src 'self' data: blob:; connect-src 'self' data: https://raw.githubusercontent.com wss://snowflake.torproject.net;"
+  },
+  "background": {
+    "type": "module",
+    "service_worker": "service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content_script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }, 
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "injected_script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ]
+}

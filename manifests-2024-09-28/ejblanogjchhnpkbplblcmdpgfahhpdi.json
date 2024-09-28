@@ -1,0 +1,94 @@
+---
+name: LearnWithAI
+version: 1.0.12
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 294
+release_date: '2024-09-27T14:53:47.000Z'
+size: 30.28MiB
+languages:
+  - English (United States)
+description: >-
+  We collect educational app data for Learn with AI to improve our coaching for
+  students.
+publisher_account: gt.school
+privacy_policy: https://gt.school/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "LearnWithAI",
+  "description": "We collect educational app data for Learn with AI to improve our coaching for students.",
+  "version": "1.0.12",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApMZGmtCk5QWq50IQFdh0p5Eba9Xo0eTzh7o8Q2hH34OFI0k0jybCBuqO9LUGnCVC3x65La9jrwI8yhbo2vS8T/Ud39TBapwq3twHDreTm7DUMT3AnPzUgySNkenrLq9wwUQYC8gZdqdXR4QHOIlprW5uqeIjyy1Nz9ATQmreMa9GUravqQ0zi54p0WMcbUoRWj7reqyq/27bYcmVSs0gPSsI5EzZckji8e9U69WckxV9V8xPTG/wFNqiEuU+0HjEq+WmnOS7/psDVkUtF4Fep0ANDakLMxag4htcAE6gqBIVFt8F8EpIeqYjJhj9Xg4v0BGxfAv6bHLtzUHRGoo16QIDAQAB",
+  "icons": {
+    "16": "/assets/icons/learn-with-ai-16.png",
+    "64": "/assets/icons/learn-with-ai-64.png",
+    "128": "/assets/icons/learn-with-ai-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "background",
+    "contextMenus",
+    "identity",
+    "identity.email",
+    "storage",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "idle",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "nativeMessaging",
+    "notifications"
+  ],
+  "host_permissions": ["<all_urls>"],
+
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "index.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.ixl.com/*", "https://*.readtheory.org/*", "https://*.khanacademy.org/*"],
+      "js": ["apollo-client-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.ixl.com/*"],
+      "js": ["learning-input-validation-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.duolingo.com/*", "https://*.ixl.com/*"],
+      "js": ["third-party-app-credentials-popup-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset 1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.css", "*.jpeg", "*.js", "*.js.map", "*.json", "*.mp4", "*.png", "*.svg", "*.ttf", "assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

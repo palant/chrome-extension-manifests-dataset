@@ -1,0 +1,94 @@
+---
+name: Operata Collector
+version: 1.7.11
+category_slug: productivity/workflow
+rating: 3.6666666666666665
+rating_count: 6
+user_count: 100000
+release_date: '2024-09-04T01:36:53.000Z'
+size: 806KiB
+languages:
+  - English
+description: >-
+  A browser based data collector and agent messenger for alerting and reporting
+  issues.
+publisher: Operata Pty Ltd
+publisher_account: Operata
+publisher_address: |-
+  3/162 Collins St
+  Melbourne, VIC 3000
+  AU
+support_website: https://help.operata.com
+privacy_policy: https://operata.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Operata Collector",
+  "version": "1.7.11",
+  "description": "A browser based data collector and agent messenger for alerting and reporting issues.",
+  "icons": {
+    "16": "assets/icons/operata16.png",
+    "48": "assets/icons/operata48.png",
+    "128": "assets/icons/operata128.png"
+  },
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'none'; font-src 'self' data:; img-src * data: blob:; media-src 'none'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src https://api.operata.io https://api-dev.operata.io; "
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "dist/override.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "dist/bridge.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "permissions": [
+    "system.cpu",
+    "system.memory"
+  ],
+  "manifest_version": 3,
+  "web_accessible_resources": [{
+    "resources": [
+      "pc-override.js",
+      "operata.js",
+      "init-operata.js",
+      "js-event-bus.min.js",
+      "operata-agent-messenger.js",
+      "operata-agent-messenger.css",
+      "operata-logging-lib.js",
+      "connect-rtc-1.1.7.min.js",
+      "socket.io.min.js",
+      "jabra.browser.integration-3.0.js",
+      "jabra.connect.integration.v1.1.2.js",
+      "operata-heartbeat-audio.js",
+      "adaptors/*.js"
+    ],
+    "matches": ["<all_urls>"]
+  }]
+}
+

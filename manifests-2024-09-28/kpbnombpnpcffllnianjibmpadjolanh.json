@@ -1,0 +1,261 @@
+---
+name: ACG助手 - 专为哔哩哔哩(bilibili)定制，可视频下载消息推送
+version: 2.8.6(Official)
+category_slug: productivity/tools
+rating: 4.605234460196292
+rating_count: 3668
+user_count: 200000
+release_date: '2024-09-19T04:57:52.000Z'
+size: 3.39MiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+description: 哔哩哔哩(bilibili)视频下载、直播串流下载、动态消息和站内信消息推送、页面信息聚合等各种个性化功能的工具集
+publisher_account: Bilibili Helper Foundation
+extension_website: acghelper.com
+support_website: https://acghelper.com/
+privacy_policy: https://acghelper.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "minimum_chrome_version": "116.0.0",
+    "version": "2.8.6",
+    "name": "__MSG_global_extension_name__",
+    "short_name": "__MSG_global_extension_shortName__",
+    "description": "__MSG_global_extension_description__",
+    "default_locale": "zh_CN",
+    "omnibox": {
+        "keyword": "bh"
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "all_frames": true,
+            "matches": [
+                "*://*.bilibili.com/*"
+            ],
+            "js": [
+                "js/pages/global.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "all_frames": false,
+            "matches": [
+                "*://www.bilibili.com/",
+                "*://www.bilibili.com/?*",
+                "*://bilibili.com/",
+                "*://bilibili.com/?*",
+                "*://passport.bilibili.com/account/security*"
+            ],
+            "js": [
+                "js/pages/bound.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "all_frames": false,
+            "matches": [
+                "*://passport.bilibili.com/*"
+            ],
+            "js": [
+                "js/pages/binding.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "all_frames": true,
+            "matches": [
+                "*://*.bilibili.com/bangumi/play/ss*",
+                "*://*.bilibili.com/bangumi/play/ep*",
+                "*://*.bilibili.com/video/av*",
+                "*://*.bilibili.com/video/bv*",
+                "*://*.bilibili.com/video/BV*",
+                "*://www.bilibili.com/watchlater/*",
+                "*://www.bilibili.com/medialist/play/*",
+                "*://www.bilibili.com/list/*",
+                "*://www.bilibili.com/blackboard/activity-*",
+                "*://www.bilibili.com/blackboard/newplayer.html*",
+                "*://player.bilibili.com/player.html*",
+                "*://www.bilibili.com/festival*",
+                "*://www.bilibili.com/cheese/play/*"
+            ],
+            "js": [
+                "js/pages/video.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ],
+            "css": [
+                "styles/js/pages/video.css"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "all_frames": true,
+            "matches": [
+                "*://live.bilibili.com/*",
+                "*://live.bilibili.com/record/*",
+                "*://live.bilibili.com/blanc/*",
+                "*://*.bilibili.com/blackboard/live/activity-*"
+            ],
+            "js": [
+                "js/pages/live.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "all_frames": true,
+            "matches": [
+                "*://bilibili-helper.github.io/*",
+                "*://acghelper.com/*",
+                "*://*.acghelper.com/*",
+                "*://bilibilihelper.com/*",
+                "*://*.bilibilihelper.com/*",
+                "*://*.bilibili.com/cheese/play/*"
+            ],
+            "js": [
+                "js/pages/website.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "all_frames": false,
+            "matches": [
+                "*://www.bilibili.com/read/cv*"
+            ],
+            "js": [
+                "js/pages/article.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "all_frames": false,
+            "matches": [
+                "*://message.bilibili.com/*"
+            ],
+            "js": [
+                "js/pages/message.js",
+                "js/components.bundle.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "all_frames": true,
+            "matches": [
+                "*://*.bilibili.com/*"
+            ],
+            "js": [
+                "js/pages/contentFilterIsolate.js",
+                "js/vendors.bundle.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "all_frames": true,
+            "world": "MAIN",
+            "matches": [
+                "*://*.bilibili.com/*"
+            ],
+            "js": [
+                "js/pages/contentFilterMain.js",
+                "js/vendors.bundle.js"
+            ]
+        }
+    ],
+    "options_page": "html/config.html",
+    "icons": {
+        "16": "statics/images/bilibili-cat-256.png",
+        "48": "statics/images/bilibili-cat-256.png",
+        "128": "statics/images/bilibili-cat-256.png"
+    },
+    "background": {
+        "service_worker": "initBackground.sw.js"
+    },
+    "action": {
+        "default_icon": {
+            "19": "statics/images/bilibili-cat-256.png",
+            "38": "statics/images/bilibili-cat-256.png"
+        },
+        "default_title": "__MSG_global_extension_name__",
+        "default_popup": "html/popup.html"
+    },
+    "permissions": [
+        "notifications",
+        "alarms",
+        "contextMenus",
+        "webRequest",
+        "webNavigation",
+        "downloads",
+        "storage",
+        "cookies",
+        "tabs",
+        "offscreen",
+        "unlimitedStorage",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "declarativeNetRequestWithHostAccess",
+        "scripting"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "*"
+            ],
+            "matches": [
+                "https://*.bilibili.com/*",
+                "https://*.acghelper.com/*"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://www.googletagmanager.com https://www.google-analytics.com"
+    },
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "bindBilibiliAccount",
+                "enabled": true,
+                "path": "rules/bind_bilibili_account.json"
+            },
+            {
+                "id": "addOriginAndReferer",
+                "enabled": true,
+                "path": "rules/add_origin_referer.json"
+            }
+        ]
+    },
+    "host_permissions": [
+        "*://*.acghelper.com/*",
+        "*://*.bilibilihelper.com/*",
+        "*://*.crx.plus/*",
+        "*://*.bilibili.com/*",
+        "*://*.hdslb.com/*",
+        "*://*.bilivideo.com/*",
+        "*://*.mcdn.bilivideo.cn/*",
+        "*://*.akamaized.net/*"
+    ],
+    "version_name": "2.8.6(Official)",
+    "optional_permissions": [
+        "background"
+    ],
+    "side_panel": {
+        "default_path": "html/popup.html"
+    }
+}

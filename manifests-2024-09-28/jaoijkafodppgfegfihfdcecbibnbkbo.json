@@ -1,0 +1,105 @@
+---
+name: CClarity
+version: 0.1.18
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 14
+release_date: '2024-09-12T10:51:40.000Z'
+size: 551KiB
+languages:
+  - English (UK)
+description: >-
+  Get actionable target audience data from your LinkedIn engagement. Visit
+  Cclarity.io to learn more.
+publisher: CClarity Pte Ltd
+publisher_account: CClarity
+extension_website: cclarity.io
+privacy_policy: https://www.cclarity.io/privacy-policy
+---
+
+{
+  "name": "CClarity",
+  "description": "Get actionable target audience data from your LinkedIn engagement. Visit Cclarity.io to learn more.",
+  "version": "0.1.18",
+  "manifest_version": 3,
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "plugin.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'; style-src 'self' 'unsafe-inline' ;connect-src https://get.cclarity.io https://api.cclarity.io https://searchingfor.cclarity.io https://apistaging.cclarity.io http://localhost:8080 https://www.linkedin.com https://cclarity-media.s3.ap-southeast-1.amazonaws.com https://www.google-analytics.com https://api.june.so"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["js/host_preload_script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["js/vendor.js", "js/host_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"],
+    "accepts_tls_channel_id": false
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.js", "assets/*.css"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"]
+    },
+    {
+      "resources": ["js/main_script.js"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"]
+    },
+    {
+      "resources": ["*.json"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"]
+    },
+    {
+      "resources": ["assets/*.png"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"]
+    },
+    {
+      "resources": ["assets/*.svg"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"]
+    },
+    {
+      "resources": ["assets/icon/*.svg"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "assets/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "unlimitedStorage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.cclarity.io/*",
+    "*://localhost/*",
+    "*://cclarity-media.s3.ap-southeast-1.amazonaws.com/*",
+    "*://api.june.so/*"
+  ],
+  "homepage_url": "https://get.cclarity.io"
+}

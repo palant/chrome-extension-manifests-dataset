@@ -1,0 +1,74 @@
+---
+name: Crewlist for Chrome
+version: 1.1.6
+category_slug: lifestyle/social
+rating: 5
+rating_count: 2
+user_count: 4
+release_date: '2023-01-11T23:06:04.000Z'
+size: 228KiB
+languages:
+  - English
+description: Upgrade your Crewlist experience on Chrome
+publisher: Crewlist
+publisher_account: christian
+publisher_address: |-
+  79 Owairaka Avenue
+  Auckland 1025
+  NZ
+extension_website: crewlist.co.nz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Crewlist for Chrome",
+    "version": "1.1.6",
+    "description": "Upgrade your Crewlist experience on Chrome",
+    "manifest_version": 3,
+    "author": "Crewlist Ltd",
+    "action":{
+        "default_popup": "src/index.html",
+        "default_title": "Crewlist for Chrome"
+    },
+    "icons": { 
+  "16": "src/icon16.png",
+  "32": "src/icon32.png",
+  "48": "src/icon48.png",
+  "128": "src/icon128.png" 
+ },
+ "permissions": [
+  "storage"
+ ],
+    "content_scripts": [
+        {
+            "matches": [ "*://mail.google.com/*" ],
+            "css": ["src/stylesheet.gmail-cl-1.2.241.css"],
+            "js": [
+                "src/extensionInjector.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+ "background": {
+  "service_worker": "dist/background.js"
+ },
+    "web_accessible_resources": [{
+        "resources": [
+            "dist/gmailJsLoader.js",
+            "dist/extension.js",
+            "src/jquery-3.5.1.min.js",
+            "src/jquery.ba-throttle-debounce.min.js",
+            "src/sha512.js"
+        ],
+        "matches": ["<all_urls>"]
+    }],
+    "host_permissions": [
+        "https://*/*"
+    ],
+    "externally_connectable": {
+     "matches": [
+      "*://*.google.com/*"
+     ]
+ }
+}

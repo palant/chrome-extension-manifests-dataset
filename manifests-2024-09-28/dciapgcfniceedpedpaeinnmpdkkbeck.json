@@ -1,0 +1,75 @@
+---
+name: HLClock
+version: 1.5.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 14
+release_date: '2024-05-15T21:11:42.000Z'
+size: 54.62KiB
+languages:
+  - English (United States)
+description: Integrate Zendesk, Clockify and Hurricane Labs APIs for easier time tracking.
+publisher: Hurricane Labs
+publisher_address: |-
+  3401 Enterprise Pl
+  STE 105
+  Beachwood, OH 44122
+  US
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "HLClock",
+  "description": "Integrate Zendesk, Clockify and Hurricane Labs APIs for easier time tracking.",
+  "version": "1.5.3",
+  "icons": {
+    "128": "icons/hlclock_logo_128.png",
+    "48": "icons/hlclock_logo_48.png",
+    "16": "icons/hlclock_logo_16.png"
+  },
+  "background": {
+    "service_worker": "background.mjs",
+    "type": "module"
+  },
+  "permissions": [
+    "notifications",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://hurricanelabs.zendesk.com/*",
+    "https://portal.hurricanelabs.com/*",
+    "https://hurricanelabs-sandbox.app.opsgenie.com/*",
+    "https://hurricanelabs.app.opsgenie.com/*"
+  ],
+  "action": {
+    "default_popup": "ui/popup.html",
+    "default_title": "HLClock Options"
+  },
+  "content_scripts": [
+    {
+      "js": ["content_zendesk.js"],
+      "matches": [
+        "https://hurricanelabs.zendesk.com/*"
+      ]
+    },
+    {
+      "js": ["content_hlportal.js"],
+      "matches": [
+        "https://portal.hurricanelabs.com/*"
+      ]
+    },
+    {
+      "js": ["content_opsgenie.js"],
+      "matches": [
+        "https://hurricanelabs-sandbox.app.opsgenie.com/alert/list",
+        "https://hurricanelabs-sandbox.app.opsgenie.com/alert/detail/*",
+        "https://hurricanelabs.app.opsgenie.com/alert/list",
+        "https://hurricanelabs.app.opsgenie.com/alert/detail/*"
+      ]
+    }
+  ]
+}

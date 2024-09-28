@@ -1,0 +1,109 @@
+---
+name: Simplify Gmail
+version: 3.1.18
+category_slug: productivity/workflow
+rating: 4.4958677685950414
+rating_count: 605
+user_count: 30000
+release_date: '2024-08-17T11:10:36.000Z'
+size: 9.61MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - dansk
+  - español
+  - italiano
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - suomi
+  - čeština
+  - Ελληνικά
+  - русский
+  - українська
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: Make Gmail simpler, more capable, and more respectful
+publisher_account: Michael Leggett
+extension_website: simpl.fyi
+support_website: https://simpl.fyi/support
+privacy_policy: https://simpl.fyi/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Simplify Gmail",
+  "version": "3.1.18",
+  "description": "Make Gmail simpler, more capable, and more respectful",
+  "homepage_url": "https://simpl.fyi",
+  "default_locale": "en",
+  "manifest_version": 3,
+
+  "icons": {
+    "48": "img/app/icon48.png",
+    "128": "img/app/icon128.png",
+    "512": "img/app/icon512.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "css": ["css/images.css", "css/simplifyGmail.css"],
+      "js": ["js/simplifyGmail.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+
+  "action": {
+    "default_icon": {
+      "48": "img/app/icon48.png",
+      "128": "img/app/icon128.png"
+    },
+    "default_title": "Simplify for Gmail",
+    "default_popup": "prefs/popup.html"
+  },
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "simplifyTrackerList",
+        "enabled": true,
+        "path": "prefs/trackers.json"
+      }
+    ]
+  },
+
+  "background": {
+    "service_worker": "js/workers.js"
+  },
+
+  "options_ui": {
+    "page": "prefs/options.html",
+    "open_in_tab": true
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["prefs/*", "img/**", "fonts/*", "js/authUser.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ],
+
+  "permissions": ["storage", "declarativeNetRequestWithHostAccess"],
+  "optional_permissions": ["contentSettings"],
+  "host_permissions": ["https://mail.google.com/*", "https://*.googleusercontent.com/proxy/*"],
+
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self'; script-src 'self'; img-src 'self'"
+  }
+}

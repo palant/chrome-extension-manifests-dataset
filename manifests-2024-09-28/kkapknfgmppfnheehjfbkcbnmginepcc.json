@@ -1,0 +1,80 @@
+---
+name: Underleaf | Your copilot for Overleaf
+version: 1.0.4
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-09-27T09:19:04.000Z'
+size: 121KiB
+languages:
+  - English
+description: >-
+  Enhance your research and writing experience with Underleaf, an AI-powered
+  copilot built for Overleaf.
+publisher_account: Underleaf
+extension_website: underleaf.ai
+support_website: help@underleaf.ai
+privacy_policy: https://www.underleaf.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "version": "1.0.4",
+  "default_locale": "en",
+  "permissions": ["declarativeContent", "storage", "clipboardWrite", "alarms"],
+  "host_permissions": [
+    "https://arxiv.org/*",
+    "https://www.overleaf.com/*",
+    "https://underleaf.ai/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://arxiv.org/*"],
+      "js": ["arxivInject.js"]
+    },
+    {
+      "matches": ["https://www.overleaf.com/project/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+        "128": "assets/logo128.png"
+    },
+    "default_title": "__MSG_appName__"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/logo48.png"],
+      "matches": ["https://arxiv.org/*"]
+    },
+    {
+      "resources": ["styles.css", "injected.js", "assets/logo48.png"],
+      "matches": ["https://www.overleaf.com/*"]
+    },
+    {
+      "resources": ["fonts/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "assets/logo16.png",
+    "48": "assets/logo48.png",
+    "128": "assets/logo128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

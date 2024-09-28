@@ -1,0 +1,91 @@
+---
+name: GOMF
+version: 1.2.2.0
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2023-08-02T09:01:05.000Z'
+size: 28.65KiB
+languages:
+  - English
+description: GetOuttaMyFace - Control the Clarification and Info Panels on YouTube.
+publisher_account: nominal.ventures
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GOMF",
+  "description":"GetOuttaMyFace - Control the Clarification and Info Panels on YouTube.",
+  "version": "1.2.2.0",
+  "icons": {
+    "16": "img/icon16.png",
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "commands": {
+    "toggle-effect": {
+      "suggested_key": {
+        "default": "Alt+G"
+      },
+      "description": "Toggle the Clarification/Info Panels Effect on YouTube.com"
+    }
+  },
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": [
+    "storage",
+    "sidePanel",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "tabs"
+  ],
+  "action": {
+    "default_title": "Click or Press Alt-G to cycle the GOMF Effect."
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html",
+    "openPanelOnActionClick": true
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request" : {
+    "rule_resources" : [{
+          "id": "ruleset_1",
+          "enabled": true, 
+          "path": "rules.json"
+      }]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle",
+      "js": ["src/content.js"],
+      "css": ["css/content.css"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+                  "popup.html",
+                  "options.html",
+                  "css/*", 
+                  "icons/*", 
+                  "img/*", 
+                  "img",
+                  "src/*",
+                  "src"
+                ],
+    "matches": ["<all_urls>"]
+  }]
+}

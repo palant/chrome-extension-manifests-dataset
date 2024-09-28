@@ -1,0 +1,77 @@
+---
+name: structal
+version: 0.0.80
+category_slug: productivity/education
+rating: 5
+rating_count: 1
+user_count: 3000
+release_date: '2024-09-04T06:12:18.000Z'
+size: 2.38MiB
+languages:
+  - English
+description: Your embedded reading specialist.
+publisher: Structal, LLC
+publisher_account: structal
+publisher_address: |-
+  155 Seaport Blvd
+  Boston, MA 02210-2698
+  US
+extension_website: structal.ai
+privacy_policy: https://structal.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "structal",
+  "description": "Your embedded reading specialist.",
+  "version": "0.0.80",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./public/icon16.png",
+    "32": "./public/icon32.png",
+    "48": "./public/icon48.png",
+    "128": "./public/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["file://*/*", "*://*/*"],
+      "css": ["build/sdkcss.bundle.css"],
+      "js": ["build/contentScriptInject.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "build/background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "identity",
+    "identity.email",
+    "scripting",
+    "storage"
+  ],
+  "oauth2": {
+    "client_id": "402990127418-92ciak31iq0f7amp8hbgnk4nnneog750.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file",
+      "https://www.googleapis.com/auth/drive.install"
+    ]
+  },
+  "host_permissions": [
+    "https://structal.ai/*",
+    "https://api.structal.ai/*",
+    "http://localhost:3000/*",
+    "https://cdn.structal.ai/sample-story.pdf",
+    "file://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["public/viewer.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "public/popup.html"
+  }
+}

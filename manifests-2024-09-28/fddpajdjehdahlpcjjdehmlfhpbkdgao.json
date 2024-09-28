@@ -1,0 +1,162 @@
+---
+name: Chivican.com Order Tool
+version: 3.0.5
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 2
+user_count: 724
+release_date: '2024-09-16T09:19:15.000Z'
+size: 688KiB
+languages:
+  - Tiếng Việt
+description: Chivican.com - Order Tool
+publisher_account: dongnt.hut
+support_website: http://www.chivican.com/contact
+privacy_policy: https://ohp.com.vn/term.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chivican.com Order Tool",
+  "short_name": "Chivican.com Order Tool",
+  "version": "3.0.5",
+  "description": "Chivican.com - Order Tool",
+  "icons": {
+    "16": "app/assets/icons/icon_16_active.png",
+    "48": "app/assets/icons/icon_48_active.png",
+    "128": "app/assets/icons/icon_128_active.png"
+  },
+  "action": {
+    "default_icon": "app/assets/icons/icon_16_active.png",
+    "default_title": "Chivican.com"
+  },
+  "author": "Chivican.com",
+  "background": {
+    "service_worker": "app/assets/js/service-worker.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "app/assets/js/const.js",
+        "app/assets/js/jquery/jquery.min.js",
+        "app/assets/js/utils.js",
+        "app/assets/js/contentScriptHelper.js",
+        "app/assets/js/accounting.min.js",
+        "app/assets/js/cartHelper.js",
+        "app/assets/js/jquery/jquery-ui.min.js",
+        "app/assets/js/lodash/lodash.min.js"
+      ],
+      "css": [],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://world.taobao.com/item/*"
+      ],
+      "css": [
+        "app/assets/css/toolbar-taobao.css",
+        "app/assets/css/container-price.css"
+      ],
+      "js": [
+        "app/inject/taobao/taobao.contentscript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://item.taobao.com/*"
+      ],
+      "css": [
+        "app/assets/css/toolbar-taobao.css",
+        "app/assets/css/container-price.css"
+      ],
+      "js": [
+        "app/inject/taobao/item.taobao.contentscript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://detail.tmall.com/*"
+      ],
+      "css": [
+        "app/assets/css/toolbar-taobao.css",
+        "app/assets/css/container-price.css"
+      ],
+      "js": [
+        "app/inject/tmall/detail.tmall.contentscript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://world.tmall.com/*"
+      ],
+      "css": [
+        "app/assets/css/toolbar-taobao.css",
+        "app/assets/css/container-price.css"
+      ],
+      "js": [
+        "app/inject/tmall/tmall.contentscript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://detail.1688.com/*"
+      ],
+      "css": [
+        "app/assets/css/toolbar-taobao.css",
+        "app/assets/css/container-price.css"
+      ],
+      "js": [
+        "app/inject/1688/1688.contentscript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.chivican.com/gio-hang*"
+      ],
+      "css": [
+        "app/assets/js/toast/jquery.toast.css",
+        "app/assets/css/loading.css"
+      ],
+      "js": [
+        "app/assets/js/toast/jquery.toast.js",
+        "app/inject/chivican/chivican.contentscript.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.world.taobao.com/*",
+    "https://*.item.taobao.com/*",
+    "https://*.tmall.com/*",
+    "https://*.chivican.com/*",
+    "https://*.detail.1688.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "app/*",
+        "icons/icon_48_active.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+---
+name: SignalHire - find email or phone number
+version: 4.2.7
+category_slug: productivity/tools
+rating: 4.391849529780564
+rating_count: 319
+user_count: 300000
+release_date: '2024-09-04T11:18:51.000Z'
+size: 1.01MiB
+languages:
+  - English (United States)
+description: SignalHire is a great way to find contact information in a couple of clicks.
+publisher: SignalHire Sp. z o.o.
+publisher_account: signalhire.com
+publisher_address: |-
+  ZŁOTA Street, No. 75A, Loc. 7
+  WARSZAWA 00-819
+  PL
+extension_website: www.signalhire.com
+support_website: https://www.signalhire.com/privacy
+privacy_policy: https://signalhire.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SignalHire - find email or phone number",
+  "short_name": "SH",
+  "description": "SignalHire is a great way to find contact information in a couple of clicks.",
+  "version": "4.2.7",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "30": "icons/icon_30.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "type": "module",
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icons/icon_30.png",
+    "default_title": "Find contacts with SignalHire!",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "assets/content.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "contentLI.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://github.com/*",
+        "https://*.facebook.com/*",
+        "https://twitter.com/*"
+      ],
+      "js": [
+        "contentSocial.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.signalhire.com/*"
+      ],
+      "js": [
+        "contentSH.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "inject.js",
+        "injectLI.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs",
+    "scripting",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://www.signalhire.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'sha256-UkqLW2iCjMAcH5APyL9ClEdxwqu9gNPiwcEEy/1uteM='; connect-src *; img-src 'self' data: media-exp1.licdn.com;"
+  }
+}

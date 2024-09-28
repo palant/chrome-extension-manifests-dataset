@@ -1,0 +1,59 @@
+---
+name: Donando Messages
+version: 1.4.4
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 247
+release_date: '2024-07-31T19:14:22.000Z'
+size: 67.01KiB
+languages:
+  - español (Latinoamérica)
+description: >-
+  Esta extensión envía mensajes por whatsapp a los voluntarios de las colectas
+  digitales de Donando.
+publisher: Donando
+publisher_account: desarrollodonando
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name":"Donando Messages",
+  "version":"1.4.4",
+  "description": "Esta extensión envía mensajes por whatsapp a los voluntarios de las colectas digitales de Donando.",
+  "manifest_version": 3,
+  "icons":
+    {
+      "16": "assets/icons/16.ico",
+      "128": "assets/icons/16.ico"
+    },
+  "host_permissions": 
+    [
+      "https://web.whatsapp.com/*",
+      "https://app.donando.cl/*"
+    ],
+  "permissions": [
+      "background"    
+  ],
+  "action":
+    {
+      "default_title": "Donando Messages"
+    },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js":["whatsapp.js"],
+      "matches": ["https://web.whatsapp.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js":["backoffice.js"],
+      "matches": ["https://app.donando.cl/supervisor_backoffice/index", "https://app.donando.cl/backoffice/campaigns/*/edit_timeline"],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,177 @@
+---
+name: 'Luru: Revenue Workspace for Sales teams'
+version: 1.4.09.0602
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 209
+release_date: '2024-09-07T05:19:31.000Z'
+size: 9.91MiB
+languages:
+  - English
+description: >-
+  Luru is a zero friction revenue workspace that improves the productivity of
+  Sales Reps manifold.
+publisher_account: chrome
+publisher_address: |-
+  20/7 MUTHUKUMAR LAYOUT
+  Palakkad Road Pollachi TK
+  Coimbatore DT, Tamil Nadu 642001
+  IN
+extension_website: luru.app
+support_website: https://luru.freshdesk.com/support/home
+privacy_policy: https://www.luru.app/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Luru: Revenue Workspace for Sales teams",
+  "description": "Luru is a zero friction revenue workspace that improves the productivity of Sales Reps manifold.",
+  "version": "1.4.09.0602",
+  "manifest_version": 3,
+  "homepage_url": "https://www.luru.app/",
+  "default_locale": "en",
+  "permissions": [
+    "cookies",
+    "storage",
+    "activeTab",
+    "scripting",
+    "alarms",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://*.luru.app/"
+  ],
+  "icons": {
+    "16": "images/default/16.png",
+    "32": "images/default/32.png",
+    "48": "images/default/48.png",
+    "128": "images/default/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/default/16.png",
+      "32": "images/default/32.png",
+      "48": "images/default/48.png",
+      "128": "images/default/128.png"
+    },
+    "signed_out": {
+      "16": "images/signed-out/16.png",
+      "32": "images/signed-out/32.png",
+      "48": "images/signed-out/48.png",
+      "128": "images/signed-out/128.png"
+    }
+  },
+  "options_page": "/pages/newtab/index.html?force=true&redirect=/getting-started",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.zoom.us/j/*",
+        "http://*.zoom.us/j/*",
+        "https://*.zoom.us/s/*",
+        "http://*.zoom.us/s/*"
+      ],
+      "exclude_matches": [
+        "https://*.zoom.us/",
+        "http://*.zoom.us/"
+      ],
+      "js": [
+        "scripts/zoom/LuruPopup.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://meet.google.com/*",
+        "https://meet.google.com/*"
+      ],
+      "exclude_matches": [
+        "http://meet.google.com/",
+        "https://meet.google.com/",
+        "http://meet.google.com/?*",
+        "https://meet.google.com/?*"
+      ],
+      "js": [
+        "scripts/google-meet/LuruSetup.js"
+      ],
+      "css": [
+        "styles/google-meet/LuruDom.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://my.luru.app/signin_and_embed_meeting_note/*"
+      ],
+      "js": [
+        "scripts/luru-app/EmbeddedMeetingNote.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.my.luru.app/*"
+      ],
+      "js": [
+        "scripts/luru-app/LuruAppContentScript.js"
+      ],
+      "run_at": "document_start",
+      "exclude_matches": [
+        "https://*.my.luru.app/signin_and_embed_meeting_note/*"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/luruLogo.png"
+      ],
+      "matches": [
+        "http://meet.google.com/*",
+        "https://meet.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "pages/globalsearch/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "pages/embeddednote/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "pages/newtab/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "commands": {
+    "showLuruSearchBar": {
+      "suggested_key": {
+        "default": "Ctrl+J",
+        "chromeos": "Ctrl+J",
+        "linux": "Ctrl+U",
+        "mac": "Command+J",
+        "windows": "Ctrl+J"
+      },
+      "description": "Search with Luru"
+    }
+  }
+}

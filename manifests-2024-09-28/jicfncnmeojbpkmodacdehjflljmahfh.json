@@ -1,0 +1,74 @@
+---
+name: LinkSafe
+version: 1.3.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 44
+release_date: '2023-02-23T06:18:01.000Z'
+size: 245KiB
+languages:
+  - English
+description: >-
+  We bring life into your links. Linksafe is a revolution in how people use web
+  to achieve results.
+publisher_account: linksafedotio
+privacy_policy: https://linksafe.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "LinkSafe",
+    "version": "1.3.3",
+    "description": "We bring life into your links. Linksafe is a revolution in how people use web to achieve results.",
+    "manifest_version": 3,
+    "icons": {
+        "16": "assets/images/icons/16.png",
+        "32": "assets/images/icons/32.png",
+        "48": "assets/images/icons/48.png",
+        "128": "assets/images/icons/128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "assets/images/icons/16.png",
+            "32": "assets/images/icons/32.png",
+            "48": "assets/images/icons/48.png",
+            "128": "assets/images/icons/128.png"
+        },
+        "default_title": "LinkSafe",
+        "default_popup": "html/popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "permissions": ["storage", "activeTab", "tabs", "contextMenus", "bookmarks"],
+    "content_scripts": [
+        {
+            "matches": ["*://app.linksafe.io/*"],
+            "js": ["assets/js/injectExtID.js"]
+        },
+        {
+            "matches": ["*://*.google.com/search?q=*"],
+            "js": ["assets/js/google.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["assets/js/notifier.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "externally_connectable": {
+        "matches": ["*://app.linksafe.io/*"]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/images/icons/128.png"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": ["assets/css/google.css", "assets/css/google-dark.css"],
+            "matches": ["*://*.google.com/*"]
+        }
+    ]
+}

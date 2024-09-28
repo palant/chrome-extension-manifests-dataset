@@ -1,0 +1,107 @@
+---
+name: IDA
+version: '24.7'
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-08-28T08:10:49.000Z'
+size: 1.01MiB
+languages:
+  - English
+description: IBM Deployment Accelerator for Business Automation Workflow
+publisher_account: IBM SDC
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "IDA",
+  "description": "IBM Deployment Accelerator for Business Automation Workflow",
+  "version": "24.7",
+  "browser_action": {
+    "default_icon": "images/ida.png",
+    "default_title": "IDA",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "images/ida.png"
+  },
+  "background": {
+    "scripts": [
+      "js/libs/jquery.min.js",
+      "js/libs/jquery-ui.min.js",
+      "js/libs/sockjs-client-1.1.5.js",
+      "js/libs/stompjs-7.0.0.js",
+      "js/background/common/base64.js",
+      "js/background/common/plugin_util.js",
+      "js/background/common/window_util.js",
+      "js/background/utils/heart_beat.js",
+      "js/background/utils/request_util.js",
+      "js/background/utils/frame_util.js",
+      "js/background/utils/scripting_util.js",
+      "js/background/utils/websocket_util.js",
+      "js/background/checkstyle.js",
+      "js/background/recorder.js",
+      "worker.js"
+    ]
+  },
+  "content_scripts": [{
+      "css": [
+        "css/cover.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start",
+      "match_about_blank": true,
+      "all_frames": true
+    },{
+      "css": [
+        "css/checkstyle/custom.css"
+      ],
+      "matches": [
+        "*://*/WebPD/*",
+        "*://*/bas/WebPD/*"
+      ],
+      "js": [
+        "js/libs/jquery.min.js",
+        "js/contentscripts/webpd_tabs.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "js/contentscripts/record_trigger.js"
+      ],
+      "matches": [
+        "*://*/ida/*",
+        "*://*/ida"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "images/*.png",
+    "images/*.gif",
+    "js/*",
+    "css/*.css",
+    "css/*/*.css",
+    "fonts/*"
+  ],
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "webNavigation",
+    "storage",
+    "*://*/WebPD/*",
+    "*://*/bas/WebPD/*",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "optional_permissions": [
+    "notifications"
+  ]
+}

@@ -1,0 +1,83 @@
+---
+name: BizniSoft
+version: '2.7'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 9000
+release_date: '2023-10-25T12:53:25.000Z'
+size: 113KiB
+languages:
+  - Српски
+description: >-
+  Razmena podataka između BizniSoft-a i državnih portala (APR, ESF, eFaktura,
+  ePorezi) i štampanje fiskalnih izveštaja.
+publisher_account: p.zivanovic
+extension_website: www.biznisoft.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "BizniSoft",
+    "description": "Razmena podataka između BizniSoft-a i državnih portala (APR, ESF, eFaktura, ePorezi) i štampanje fiskalnih izveštaja.",
+    "version": "2.7",
+    "manifest_version": 3,
+    "icons": {
+        "16": "assets/images/icon16.png",
+        "32": "assets/images/icon32.png",
+        "48": "assets/images/icon48.png",
+        "128": "assets/images/icon128.png"
+    },
+    "background": {
+        "service_worker": "./js/background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": "assets/images/icon16.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://fin.apr.gov.rs/*"],
+            "css": ["./css/main.css"],
+            "js": [
+                "./vendor/jquery.js",
+                "./js/constants.js",
+                "./js/utils/bsAnalytics.js",
+                "./js/alerts.js",
+                "./js/content.js"
+            ]
+        },
+        {
+            "matches": ["*://*.purs.gov.rs/*"],
+            "css": ["./css/main.css"],
+            "js": [
+                    "./vendor/jquery.js", 
+                    "./vendor/accounting.min.js", 
+                    "./vendor/moment.min.js", 
+                    "./js/constants.js",
+                    "./js/utils/calc.js",
+                    "./js/utils/bsAnalytics.js",
+                    "./js/alerts.js", 
+                    "./js/utils/storage.js", 
+                    "./js/utils/formatters.js", 
+                    "./js/utils/filters.js", 
+                    "./js/utils/scrape.js",
+                    "./js/purs/searchInvoicesPage.js"]
+        }
+    ],
+    "permissions": ["downloads", "storage", "unlimitedStorage"],
+    "host_permissions": ["http://127.0.0.1:29147/*", "*://fin.apr.gov.rs/*"],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/images/icon16.png",
+                "assets/images/32.png",
+                "assets/images/icon48.png",
+                "assets/icons/close.png"
+            ],
+            "matches": ["*://fin.apr.gov.rs/*", "*://*.purs.gov.rs/*"]
+        }
+    ]
+}

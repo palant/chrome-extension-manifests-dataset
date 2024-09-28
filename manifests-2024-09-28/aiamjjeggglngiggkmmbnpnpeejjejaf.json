@@ -1,0 +1,81 @@
+---
+name: 'Read Smart Scheduler: Calendar + Time Manager'
+version: 0.7.0
+category_slug: productivity/tools
+rating: 4.785714285714286
+rating_count: 14
+user_count: 90000
+release_date: '2024-09-27T18:33:42.000Z'
+size: 1.47MiB
+languages:
+  - English (United States)
+description: Automate finding the best time for your meetings in Google Calendar.
+publisher_account: Read AI
+publisher_address: |-
+  2824 San Luis St
+  Richmond, CA 94804-5921
+  US
+extension_website: read.ai
+support_website: https://support.read.ai/hc/en-us/requests/new
+privacy_policy: https://www.read.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Read Smart Scheduler: Calendar + Time Manager",
+  "description": "Automate finding the best time for your meetings in Google Calendar.",
+  "version": "0.7.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Read Smart Scheduler"
+  },
+  "icons": {
+    "16": "logos/logomark_16.png",
+    "48": "logos/logomark_48.png",
+    "128": "logos/logomark_128.png"
+  },
+  "host_permissions": ["*://*.read.ai/"],
+  "permissions": ["cookies", "storage", "alarms"],
+  "optional_permissions": ["scripting"],
+  "optional_host_permissions": [
+    "https://*.mail.google.com/*",
+    "https://*.outlook.office.com/*",
+    "https://*.outlook.live.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*", "fonts/*", "index.css"],
+      "matches": [
+        "https://*.calendar.google.com/*",
+        "https://*.meet.google.com/*",
+        "https://*.mail.google.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.outlook.live.com/*",
+        "https://*.read.ai/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "assets/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.calendar.google.com/*",
+        "https://*.meet.google.com/*"
+      ],
+      "css": ["index.css"],
+      "js": ["assets/content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.read.ai/*"],
+      "css": ["index.css"],
+      "js": ["assets/rollcall.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

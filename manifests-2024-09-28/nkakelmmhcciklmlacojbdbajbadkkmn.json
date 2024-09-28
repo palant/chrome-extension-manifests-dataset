@@ -1,0 +1,75 @@
+---
+name: Kontematik
+version: 1.0.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 81
+release_date: '2021-09-05T07:46:50.000Z'
+size: 105KiB
+languages:
+  - English
+description: AI Copywriting assistant
+publisher_account: Kontematik
+support_website: https://kontematik.com
+privacy_policy: https://www.kontematik.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Kontematik",
+  "version": "1.0.0",
+  "description": "AI Copywriting assistant",
+  "browser_action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "scripts": [
+      "./dist/background/index.global.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/content/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.hubspot.com/*",
+        "https://*.hubspotpreview-na1.com/*"
+      ],
+      "js": [
+        "./dist/background/inline.global.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.kontematik.com/*",
+        "http://localhost:8000/*"
+      ],
+      "js": [
+        "./dist/content/authenticator.global.js"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "unlimitedStorage",
+    "storage"
+  ]
+}

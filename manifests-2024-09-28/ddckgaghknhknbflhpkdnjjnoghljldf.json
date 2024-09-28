@@ -1,0 +1,56 @@
+---
+name: Peek.ai for Chrome
+version: 1.0.2
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-08-05T04:51:10.000Z'
+size: 615KiB
+languages:
+  - English
+description: Generate quick video format summaries of your LinkedIn profile with 'Peek.ai'
+publisher_account: Sudhay Senthilkumar
+privacy_policy: https://peekai.sudhay.me/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Peek.ai for Chrome",
+  "description": "Generate quick video format summaries of your LinkedIn profile with 'Peek.ai'",
+  "version": "1.0.2",
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_icon": "assets/favicon_2.png",
+    "default_title": "Peek.ai",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/favicon_1.png",
+    "32": "assets/favicon_2.png",
+    "48": "assets/icon_128.png",
+    "128": "assets/icon_128.png"
+  },
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "scripts/background_scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/content_scripts/linkedin_entrypage_check.js"],
+      "matches": ["https://www.linkedin.com/*"]
+    },
+    {
+      "js": ["scripts/content_scripts/peekai_start_sync.js"],
+      "matches": [
+        "http://localhost:3000/sync/start",
+        "https://peekai.sudhay.me/sync/start"
+      ]
+    },
+    {
+      "js": ["scripts/content_scripts/document_capturers/document_capturer.js"],
+      "matches": ["https://www.linkedin.com/in/*"]
+    }
+  ]
+}

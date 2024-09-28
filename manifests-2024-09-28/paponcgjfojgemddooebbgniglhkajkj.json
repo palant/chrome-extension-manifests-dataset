@@ -1,0 +1,90 @@
+---
+name: Ambient light for YouTube™
+version: 2.38.10
+category_slug: make_chrome_yours/functionality
+rating: 4.82258064516129
+rating_count: 124
+user_count: 8000
+release_date: '2024-08-02T09:21:48.000Z'
+size: 947KiB
+languages:
+  - English
+description: Immerse yourself in YouTube™ videos with ambient light!
+publisher_account: Wezelkrozum
+support_website: https://github.com/WesselKroos/chrome-youtube-ambilight/issues
+privacy_policy: https://github.com/WesselKroos/youtube-ambilight/blob/master/PRIVACY-POLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ambient light for YouTube™",
+  "description": "Immerse yourself in YouTube™ videos with ambient light!",
+  "version": "2.38.10",
+  "homepage_url": "https://github.com/WesselKroos/youtube-ambilight",
+  "author": "Wessel Kroos",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "128": "images/icon-128.png"
+  },
+  "minimum_chrome_version": "88",
+  "browser_specific_settings": {
+    "gecko": {
+      "strict_min_version": "74.0"
+    }
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "24": "images/icon-24.png",
+      "32": "images/icon-32.png"
+    },
+    "default_popup": "options.html"
+  },
+  "background" : {
+    "service_worker" : "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "exclude_matches": ["https://www.youtube.com/live_chat*", "https://www.youtube.com/embed/*"],
+      "js": ["scripts/content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/embed/*"],
+      "js": ["scripts/content.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/live_chat*"],
+      "exclude_matches": ["https://www.youtube.com/live_chat?is_popout=1*"],
+      "css": [
+        "styles/live-chat.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "styles/content.css",
+      "scripts/injected.js",
+      "images/noise-1.png",
+      "images/noise-2.png",
+      "images/noise-3.png",
+      "images/donate.svg"
+    ],
+    "matches": ["https://www.youtube.com/*"]
+  }],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage"
+  ]
+}

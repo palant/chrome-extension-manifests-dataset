@@ -1,0 +1,80 @@
+---
+name: Ayudante para Factura Electronica AFIP
+version: '14.6'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 50
+release_date: '2022-09-14T10:52:59.000Z'
+size: 672KiB
+languages:
+  - español
+description: >-
+  Gestione clientes, productos, cobranzas y envie su factura electronica por
+  mail desde la pagina de comprobantes en linea de AFIP
+publisher_account: factureroafip
+extension_website: facturasafip.com.ar
+support_website: https://facturasafip.com.ar/preguntas.html
+privacy_policy: https://facturasafip.com.ar/PoliticaDePrivacidad.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ayudante para Factura Electronica AFIP",
+  "manifest_version": 2,
+  "version": "14.6",
+  "description": "Gestione clientes, productos, cobranzas y envie su factura electronica por mail desde la pagina de comprobantes en linea de AFIP",  
+  "author": "FacturasAfip - Sistema de facturacion y gestion",  
+  "homepage_url": "https://facturasafip.com.ar",
+  "icons": {
+      "128": "icon/logo.png"
+   },
+   "background": {
+    "scripts": ["background.js"]
+  },
+  "browser_action": {    
+    "default_icon": "icon/logo.png",
+    "default_popup": "newpopup.html",
+    "default_title": "FacturasAfip - Complemento de Facturacion"
+  },       
+  "content_scripts": [               
+         {             
+            "js": ["jquery.min.js", "jszip-utils.js", "jsPDF/jspdf.min.js", "jsPDF/pdfPlugins.js", "jsPDF/autotable.js", "jsPDF/barcode.js", "jsPDF/generoPDF.js", "VanillaQR.min.js", "facturaXML.js", "zip.min.js", "generada.js", "bootstrap.js", "jquery.toast.js", "comproPDF.js"],            
+   "css": ["bootstrap/css/bootstrap.min.css","jquery.toast.css","degradee.css"],
+   "matches": ["*://fe.afip.gob.ar/rcel/jsp/genComResumenDatos.do*"]
+         },
+        {             
+            "js": ["jquery.min.js", "step1.js", "bootstrap.js", "jquery.toast.js", "moment.js"],
+   "css": ["bootstrap/css/bootstrap.min.css","jquery.toast.css","degradee.css"],
+   "matches": ["*://fe.afip.gob.ar/rcel/jsp/buscarPtosVtas.do*"]
+         },         
+        {             
+            "js": [ "jquery.min.js", "clientes.js", "dist/js/tipped.min.js", "bootstrap.js", "jquery.toast.js"],
+   "css": ["bootstrap/css/bootstrap.min.css","jquery.toast.css", "dist/css/tipped.css", "degradee.css"],
+   "matches": ["*://fe.afip.gob.ar/rcel/jsp/genComDatosReceptor.do*"]
+         },
+         {             
+            "js": [ "jquery.min.js", "facturaXML.js", "zip.min.js", "facturacion.js", "bootstrap.js", "jquery.toast.js"],
+   "css": ["bootstrap/css/bootstrap.min.css","jquery.toast.css", "degradee.css"],
+   "matches": ["*://fe.afip.gob.ar/rcel/jsp/genComDatosOperacion.do*"]
+         },
+         {             
+            "js": [ "jquery.min.js", "prodserv.js", "bootstrap.js", "jquery.toast.js"],
+   "css": ["bootstrap/css/bootstrap.min.css","jquery.toast.css", "degradee.css"],
+   "matches": ["*://fe.afip.gob.ar/rcel/jsp/genComDatosEmisor.do*"]
+         },
+         {             
+            "js": [ "jquery.min.js", "login.js", "bootstrap.js", "jquery.toast.js"],
+   "css": ["bootstrap/css/bootstrap.min1.css","jquery.toast.css"],
+   "matches": ["*://auth.afip.gob.ar/contribuyente_/login.xhtml"]
+         }
+     ],
+    
+  "web_accessible_resources": [
+    "clientes.html", "facturacion.html", "vencimientos.html", "generada.html", "/bootstrap/css/*", "/icon/*", "login.html", "toolbar.html"
+  ],
+  
+  "permissions": ["storage", "https://facturasafip.com.ar/*"
+  ]
+}

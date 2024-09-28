@@ -1,0 +1,63 @@
+---
+name: Novel Speech
+version: 1.25.0
+category_slug: make_chrome_yours/accessibility
+rating: 4.333333333333333
+rating_count: 30
+user_count: 4000
+release_date: '2024-09-26T10:18:28.000Z'
+size: 57.22KiB
+languages:
+  - 日本語
+description: Web小説サイトで音声による小説の読み上げができます
+publisher_account: Q太
+extension_website: syosetu-yomiasari.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Novel Speech",
+  "version": "1.25.0",
+  "description": "Web小説サイトで音声による小説の読み上げができます",
+  "icons": {
+    "16": "images/sp16.png",
+    "48": "images/sp48.png",
+    "128": "images/sp128.png"
+  },
+  "action": {
+    "default_title": "Web小説読み上げ"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "run_at" : "document_end",
+    "matches": ["*://ncode.syosetu.com/*/*","*://novel18.syosetu.com/*/*","*://kakuyomu.jp/*/*","*://www.alphapolis.co.jp/*/*","*://estar.jp/*/*","*://novel.daysneo.com/*/*","*://syosetu.org/*/*","*://novelup.plus/*/*","*://www.aozora.gr.jp/*/*"],
+    "css" : ["controller.css"],
+    "js": ["speaker/Speaker.js", "speaker/SystemSpeaker.js", "speaker/BouyomiChanSpeaker.js", "speaker/VoiceVoxSpeaker.js", "parser/Parser.js", "parser/NarouParser.js", "parser/KakuyomuParser.js", "parser/AlphapolisParser.js", "parser/EverystaParser.js", "parser/NovelDaysParser.js", "parser/HamelnParser.js", "parser/NovelUpPlusParser.js", "parser/AozoraParser.js", "data-access.js", "engine.js", "keycodes.js", "main.js"]
+  }],
+  "homepage_url": "http://syosetu-yomiasari.com",
+  "options_ui" : {
+    "page" : "settings.html",
+    "open_in_tab":true
+  },
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": [
+    "declarativeNetRequest","tabs","storage"
+  ],
+  "host_permissions": [
+    "*://syosetu-yomiasari.com/*","*://localhost/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["*"],
+    "matches": ["*://*/*"]
+  }]
+}

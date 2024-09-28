@@ -1,0 +1,73 @@
+---
+name: Netflix 雙語字幕 - MemSub
+version: '2.2'
+category_slug: productivity/education
+rating: 5
+rating_count: 5
+user_count: 964
+release_date: '2024-04-01T07:47:43.000Z'
+size: 50.16KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+description: 紀錄 & 複習 Netflix 外文字幕！
+publisher_account: Johnny T.
+extension_website: memsub.app
+support_website: https://www.facebook.com/profile.php?id=61556973159719
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "2.2",
+  "default_locale": "zh_TW",
+  "permissions": [
+    "webRequest", 
+    "scripting", 
+    "tabs", 
+    "cookies"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+   "capture-subtitle": {
+     "suggested_key": {
+       "default": "Alt+M",
+       "mac": "Alt+M"
+     },
+     "description": "__MSG_shortcutName__"
+   }
+  },
+  "content_scripts": [{
+    "matches": ["*://*.netflix.com/watch/*"],
+    "js": ["./src/scripts/netflixMain.js", "./src/libs/lodash.min.js", "./src/libs/toastify.js"], 
+    "css": ["./src/css/toastify.css"]
+  }],
+  "host_permissions": [
+    "*://*.netflix.com/*", 
+    "https://*.memsub.app/*"
+  ],
+  "action": {
+    "default_popup": "main.html"
+  }, 
+  "externally_connectable": {
+    "matches": ["https://www.netflix.com/*", "<all_urls>"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["./src/scripts/netflixSubtitleHook.js", "./src/scripts/netflixMain.js"], 
+      "matches": ["*://*.netflix.com/*"]
+    }
+  ], 
+  "icons": {
+    "16": "./src/images/icon-16.png",
+    "32": "./src/images/icon-32.png",
+    "128": "./src/images/icon-128.png",
+    "512": "./src/images/icon-512.png"
+  }
+}

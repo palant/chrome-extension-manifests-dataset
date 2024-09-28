@@ -1,0 +1,204 @@
+---
+name: 'Younet: Personalized AI to write & respond'
+version: 0.1.74
+category_slug: productivity/communication
+rating: 5
+rating_count: 4
+user_count: 223
+release_date: '2024-06-13T05:08:06.000Z'
+size: 482KiB
+languages:
+  - English
+description: Write & Respond Anywhere with Personalized AI model.
+publisher: Younet, 2624465 Ontario Inc.
+publisher_account: Younet.ai
+publisher_address: |-
+  7191 Yonge St
+  Suite 812
+  Thornhill, ON L3T0C4
+  CA
+extension_website: younet.ai
+support_website: https://support.younet.ai/
+privacy_policy: https://younet.ai/terms-and-conditions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "YouNet",
+  "description": "Write & Respond Anywhere with Personalized AI model.",
+  "name": "Younet: Personalized AI to write & respond",
+  "version": "0.1.74",
+  "manifest_version": 3,
+  "homepage_url": "https://younet.ai",
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "16": "icons/favicon-16x16.png",
+      "32": "icons/favicon-32x32.png"
+    },
+    "default_popup": "src/entries/popup/index.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjkKGL3ul7fI3GNbjQ2dfCXh2NA5rmNjYbh+pJ34Bbodg+2vspHn67g3fYauYtnIG5dEdJ7etGvT6S9O2bwcRF7UUJjP/DG6XWdo0ozVrUyb36wwKAsweLEwnv5YOZQhsPpAJoIFF/DJzQQKKjtipXqQnBN34nwBpsuChuUwApjC9+7gH2VqW7I+eaXnSJK85zP1dpAL4kxsibgIeS1Doe0x6aGUelMVWC317+4IAhjaGgM+JtoYulXKbz3k8JVN0yT5RUOQagLwUxzFuwS+955n8sYTGu3LlxVl55PmJ7hx1kjkVorWc5FmO1gI91cgvVSGj/HeMIs2Yicy+oJaOaQIDAQAB",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/document/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "src/entries/contentScript/googleDocs.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "js": [
+        "src/entries/contentScript/getToken/index.js"
+      ],
+      "matches": [
+        "http://landing-staging.younet.ai/*",
+        "https://www.younet.ai/*"
+      ]
+    },
+    {
+      "js": [
+        "src/entries/contentScript/gmail/main.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "src/entries/contentScript/keyboard/index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end",
+      "exclude_matches": [
+        "*://docs.google.com/spreadsheets/*"
+      ]
+    },
+    {
+      "js": [
+        "src/entries/contentScript/toast/index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "src/entries/contentScript/InfoTooltip/InfoTooltip.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end",
+      "exclude_matches": [
+        "*://docs.google.com/spreadsheets/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*.younet.ai/*"
+  ],
+  "icons": {
+    "16": "icons/favicon-16x16.png",
+    "32": "icons/favicon-32x32.png",
+    "128": "icons/apple-touch-icon.png"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "tabs"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.younet.ai/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "resources": [
+        "assets/img/GPT-40.png",
+        "assets/icons/settings-svgrepo-com.svg",
+        "assets/icons/close-svgrepo-com.svg",
+        "assets/loading-ynt.gif",
+        "assets/img/logo-color.png",
+        "assets/img/logo-white.png"
+      ]
+    },
+    {
+      "resources": [
+        "assets/src/entries/contentScript/getToken/index-33d029dd.js",
+        "assets/browser-polyfill-547a2758.js",
+        "assets/service-77a029ef.js"
+      ],
+      "matches": [
+        "http://landing-staging.younet.ai/*",
+        "https://www.younet.ai/*"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "assets/src/entries/contentScript/gmail/main-bebb508d.js",
+        "assets/jsxRuntime.module-1b8709b2.js",
+        "assets/renderContent-fb6c93f2.js",
+        "assets/browser-polyfill-547a2758.js",
+        "assets/useIncludedUrls-f976ed34.js",
+        "assets/findAndClickReplyButton-224baa63.js",
+        "assets/store-9e2adc2a.js",
+        "assets/hooks-d37def18.js",
+        "assets/react-toastify.esm-4b28e5e6.js",
+        "assets/main-c2f69731.css",
+        "assets/useIncludedUrls-7092d731.css"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": [
+        "assets/GPT-Full-30a4578f.png",
+        "assets/Settings-0d458532.js",
+        "assets/browser-polyfill-547a2758.js",
+        "assets/config-54ba070b.js",
+        "assets/findAndClickReplyButton-224baa63.js",
+        "assets/getRangeAndRects-94a33791.js",
+        "assets/helpers-29333509.js",
+        "assets/hooks-d37def18.js",
+        "assets/index-4e990048.css",
+        "assets/index-861d9142.css",
+        "assets/jsxRuntime.module-1b8709b2.js",
+        "assets/loading-ynt-a56878c5.gif",
+        "assets/logo-color-24129a23.png",
+        "assets/react-toastify.esm-4b28e5e6.js",
+        "assets/renderContent-fb6c93f2.js",
+        "assets/service-77a029ef.js",
+        "assets/src/entries/contentScript/InfoTooltip/InfoTooltip-b95a7d74.js",
+        "assets/src/entries/contentScript/keyboard/index-1f6431ac.js",
+        "assets/src/entries/contentScript/toast/index-ee59b7a7.js",
+        "assets/store-9e2adc2a.js",
+        "assets/useIncludedUrls-7092d731.css",
+        "assets/useIncludedUrls-f976ed34.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

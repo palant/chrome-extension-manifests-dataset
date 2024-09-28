@@ -1,0 +1,232 @@
+---
+name: ELMessenger Pro
+version: 10.0.15
+category_slug: productivity/tools
+rating: 4.239130434782608
+rating_count: 46
+user_count: 5000
+release_date: '2024-08-25T08:13:06.000Z'
+size: 47.35MiB
+languages:
+  - English (United States)
+description: Manage contact on Facebook messenger
+publisher: QwertyFace Media, LLC
+publisher_account: andrew
+publisher_address: |-
+  721 Allen Drive
+  Grand Rapids, MN 55744
+  US
+extension_website: elmessengerpro.com
+support_website: https://elmlink.co/support
+privacy_policy: https://cloudki.io/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ELMessenger Pro",
+  "description": "Manage contact on Facebook messenger",
+  "version": "10.0.15",
+  "oauth2": {
+    "client_id": "60130079824-nnpe430s45elj7o67n8brdsdkb3ige12.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/drive"]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "action": {
+    "default_icon": "./images/elm.png",
+    "default_title": "ELMessenger Pro",
+    "default_popup": "popup-new.html"
+  },
+
+  "icons": {
+    "16": "./images/elm.png",
+    "48": "./images/elm.png",
+    "128": "./images/elm.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:9000/*"
+    ],
+    "accepts_tls_channel_id": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*", "https://www.messenger.com/*"],
+      "js": [
+        "./js/config.js",
+        "./js/jquery.min.js",
+        "./js/core.js",
+        "./js/tagify.min.js",
+        "./js/contentNav.js",
+        "./js/content.js",
+        "./js/friends.js",
+        "js/simpleNotify.js",
+        "./js/contentFunctions.js",
+        "./js/membersFriender.js",
+        "./js/group.js",
+        "./js/postFrienderComments.js",
+        "./js/friendsPage.js",
+        "./js/friendsPage-old.js"
+      ],
+      "css": [
+        "css/simpleNotifyStyle.css",
+        "./css/tagify.css",
+        "./css/dark.css",
+        "./css/content.css",
+        "./css/friendsPage.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://www.facebook.com/*action=getPostId*"],
+      "js": ["./js/getPostId.js"],
+      "run_at": "document_end",
+      "all_frames":false
+    },
+    {
+      "matches": ["https://www.facebook.com/*action=fixcontact*"],
+      "js": ["./js/fixContact.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["./js/emoji.min.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+
+    {
+      "matches": ["https://www.messenger.com/*"],
+      "js": ["./js/contentNav.js", "./js/content.js"],
+      "css": [
+        "./css/simpleNotifyStyle.css",
+        "./css/chosen.min.css",
+        "./css/content.css",
+        "./css/messenger.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+
+    {
+      "matches": ["https://www.facebook.com/*/members*action=friender*"],
+      "js": ["./js/frienderPage.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+
+    {
+      "matches": [
+        "https://www.facebook.com/friends/requests?action=controlFriendRequest*"
+      ],
+      "js": ["./js/friendRequests.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+
+    {
+      "matches": [
+        "https://www.facebook.com/messages/t/*action=sendmessage*",
+        "https://www.messenger.com/t/*action=sendmessage*",
+        "https://www.facebook.com/*action=grabName*",
+        "https://www.facebook.com/*action=getMemberUserProfileId*"
+      ],
+      "js": ["./js/sendMessage.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.facebook.com/messages/t/*action=sendmessage*",
+        "https://www.messenger.com/t/*action=sendmessage*",
+        "https://www.facebook.com/*action=grabName*",
+        "https://www.facebook.com/*action=getMemberUserProfileId*"
+      ],
+      "js": ["./js/messageSender.js"],
+      "run_at": "document_end",
+      "all_frames": false,
+      "world":"MAIN"
+    },
+    {
+      "matches": ["https://m.facebook.com/*"],
+      "js": [
+        "./js/config.js",
+        "./js/jquery.min.js",
+        "./js/core.js",
+        "./js/contentFunctions.js"
+      ],
+      "css": ["./css/content.css"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://m.facebook.com/messages/*action=mobileSendMessage",
+        "https://m.facebook.com/*action=mobileGrabName*"
+      ],
+      "js": ["./js/mobileSendMessage.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+
+    {
+      "matches": ["https://m.facebook.com/*action=replyComments*"],
+      "js": ["./js/replyComment.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://next.cloudki.io/*state=extension_token*"],
+      "js": ["./js/core.js", "./js/oauth.js", "./js/oauthContent.js"],
+      "css": ["./css/content.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "background": {
+    "service_worker": "js/background_worker.js"
+  },
+  "web_accessible_resources": [ {
+    "resources": ["images/*", "popup.html"],
+    "matches": [ "<all_urls>" ]
+  }],
+
+  "permissions": [
+    "storage",
+    "clipboardRead",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "cookies",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.googleapis.com/*",
+    "https://cloudki.io/*",
+    "https://app.cloudki.io/*",
+    "https://*.facebook.com/*",
+    "https://www.facebook.com/messages/t/*",
+    "https://www.messenger.com/*",
+    "https://m.facebook.com/*",
+    "https://res.cloudinary.com/*",
+    "http://res.cloudinary.com/*",
+    "https://elmessenger.cloudki.io/*",
+    "https://mbasic.facebook.com/*",
+    "http://localhost:5000/*",
+    "https://next.cloudki.io/*",
+    "https://elm-glitch.glitch.me/*",
+    "https://elm-prod.herokuapp.com/*",
+    "https://elmessengertest.herokuapp.com/*"
+  ]
+}

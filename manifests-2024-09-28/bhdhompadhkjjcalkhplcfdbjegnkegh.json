@@ -1,0 +1,95 @@
+---
+name: Add to Wishlistr
+version: 2.0.1
+category_slug: lifestyle/shopping
+rating: 4.285714285714286
+rating_count: 7
+user_count: 7000
+release_date: '2024-05-10T16:35:40.000Z'
+size: 590KiB
+languages:
+  - English (United States)
+description: Add items from any webpage to your Wishlistr.
+publisher_account: Digital Venues
+publisher_address: |-
+  488 Locust St, APT 308
+  APT 308
+  San Francisco, CA 94118
+  US
+extension_website: wishlistr.com
+support_website: https://www.wishlistr.com/help
+privacy_policy: https://www.wishlistr.com/about/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Add to Wishlistr",
+  "description": "Add items from any webpage to your Wishlistr.",
+  "version": "2.0.1",
+
+  "icons": {
+    "128": "img/icon_256.png",
+    "48": "img/icon_96.png",
+    "32": "img/icon_64.png",
+    "16": "img/icon_32.png"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*.wishlistr.com/your-list/settings/",
+        "http://*.wishlistr.com/your-list/settings",
+        "https://*.wishlistr.com/your-list/settings/",
+        "https://*.wishlistr.com/your-list/settings"
+      ],
+      "js": ["settings-listener.js"]
+    },
+    {
+      "matches": [
+        "http://*.wishlistr.com/tools/extension/auth.php",
+        "https://*.wishlistr.com/tools/extension/auth.php"
+      ],
+      "js": ["login-listener.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "action": {
+    "default_title": "Add item to Wishlistr",
+    "default_icon": "img/icon_38.png"
+  },
+
+  "options_ui": {
+    "page": "options.html"
+  },
+  "options_page": "options.html",
+
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.wishlistr.com/",
+    "http://*.wishlistr.com/"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "change-user.html",
+        "fonts/*.woff2"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "88"
+}

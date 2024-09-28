@@ -1,0 +1,80 @@
+---
+name: Firefly Click2Call
+version: '3.0'
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2024-01-04T10:28:53.000Z'
+size: 1.48MiB
+languages:
+  - English
+description: >-
+  Searches for phone numbers on web pages, allowing one-click calls for
+  logged-in Firefly Cloud PBX phone system users.
+publisher: טיפסי אינווישיין בע״מ
+publisher_account: FireFly Call Center
+extension_website: firefly-crm.co.il
+support_website: https://www.firefly-call.co.il/תמיכה
+privacy_policy: >-
+  https://www.firefly-call.co.il/%d7%9e%d7%93%d7%99%d7%a0%d7%99%d7%95%d7%aa-%d7%a4%d7%a8%d7%98%d7%99%d7%95%d7%aa
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Firefly Click2Call",
+  "description": "Searches for phone numbers on web pages, allowing one-click calls for logged-in Firefly Cloud PBX phone system users.",
+  "version": "3.0",
+  "icons": {
+    "128": "img/favicon/favicon.png"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "img/favicon/favicon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "vendors/mutation-summary.js",
+        "content.bundle.js"
+      ],
+      "all_frames": true,
+      "exclude_matches": [
+        "*://webphone.firefly-call.co.il/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*.png",
+        "img/*.jpg",
+        "img/*.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

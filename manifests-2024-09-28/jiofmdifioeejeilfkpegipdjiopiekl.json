@@ -1,0 +1,86 @@
+---
+name: YesCaptcha assistant
+version: 1.1.54
+category_slug: productivity/workflow
+rating: 3.6
+rating_count: 20
+user_count: 200000
+release_date: '2024-09-25T16:43:15.000Z'
+size: 651KiB
+languages:
+  - English
+  - 中文 (简体)
+description: reCaptcha/hCaptcha auto solver
+publisher_account: yescaptcha
+extension_website: yescaptcha.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "version": "1.1.54",
+  "manifest_version": 3,
+  "description": "__MSG_pluginDesc__",
+  "default_locale": "en",
+  "icons": {
+    "128": "image/log.png"
+  },
+  "action": {
+    "default_title": "__MSG_name__",
+    "default_icon": "image/log.png",
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "option/index.html",
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "content/captcha_manager.js",
+        "content/index.js"
+      ],
+      "css": [
+        "content/index.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "content/context_responder.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "alarms"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/injected.js",
+        "content/workStatus.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

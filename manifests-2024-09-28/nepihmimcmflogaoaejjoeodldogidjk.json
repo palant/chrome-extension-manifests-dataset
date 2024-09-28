@@ -1,0 +1,63 @@
+---
+name: SYF Apty Client
+version: 4.24.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 201
+release_date: '2024-05-09T06:00:24.000Z'
+size: 408KiB
+languages:
+  - English (United States)
+description: >-
+  Efficient user engagement and onboarding through real-time navigation,
+  guidance, tips, and data entry correction.
+publisher_account: Apty Inc.
+publisher_address: |-
+  13862 Allegheny Dr
+  Frisco, TX 75035-6832
+  US
+privacy_policy: https://support.apty.io/hc/en-us/articles/8823594740635-Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SYF Apty Client",
+  "description": "Efficient user engagement and onboarding through real-time navigation, guidance, tips, and data entry correction.",
+  "version": "4.24.0",
+  "icons": {
+    "16": "assets/icon/icon16.png",
+    "32": "assets/icon/icon32.png",
+    "48": "assets/icon/icon48.png",
+    "128": "assets/icon/icon128.png"
+  },
+  "host_permissions": ["https://*.apty.io/*", "http://localhost/*", "http://*.apty.io/*"],
+  "permissions": ["storage", "tabs"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';img-src * data: blob;"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["config.json", "window.var.js", "error-tracking.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://syf.coupahost.com/*", "https://syf-test.coupahost.com/*"],
+      "exclude_globs": ["*aptySalesforceIntegration*"],
+      "js": ["bundle.js"],
+      "css": ["commonstyles.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Apty Client"
+  }
+}

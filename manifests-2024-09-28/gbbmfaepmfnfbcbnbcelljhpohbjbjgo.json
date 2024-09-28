@@ -1,0 +1,98 @@
+---
+name: Splashtop NetID
+version: 1.1.0
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2024-04-25T09:53:22.000Z'
+size: 2.91MiB
+languages:
+  - English (United States)
+description: An extension to help you connect to secure/encrypted wireless network.
+publisher: Splashtop Inc.
+publisher_address: |-
+  10050 N. Wolfe Rd., Suite SW2-S260
+  Cupertino, CA 95014
+  US
+privacy_policy: https://www.mirroring360.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Splashtop NetID",
+  "description": "An extension to help you connect to secure/encrypted wireless network.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://test-api-foxpass.relay.splashtop.com/*",
+        "https://console.foxpass-dev-apne-1.foxpass.com/byod/auth/complete/",
+        "https://console.foxpass-dev-apne-1.foxpass.com/byod/auth/success/",
+        "https://console.foxtest.foxpass.com/byod/auth/complete/",
+        "https://console.foxpass-qa-apne-1.foxpass.com/byod/auth/success/",
+        "https://console.foxpass-qa-apne-1.foxpass.com/byod/*/auth/failure/*",
+        "https://console.foxpass-dev-apne-1.foxpass.com/byod/*/auth/failure/*"
+      ],
+      "js": [
+        "./js/content_script.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "platformKeys",
+    "enterprise.platformKeys",
+    "certificateProvider",
+    "identity",
+    "identity.email",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "icons": {
+    "16": "./images/logo_16.png",
+    "128": "./images/logo_128.png"
+  },
+  "options_page": "main.html",
+  "version": "1.1.0",
+  "background": {
+    "service_worker": "./js/bg.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ; object-src 'self'"
+  },
+  "storage": {
+    "managed_schema": "policyschema.json"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "main.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.foxpass.com/*",
+      "http://localhost:3000/*"
+    ]
+  },
+  "oauth2": {
+    "client_id": "475108460899-43g4iragbhab3n6js826n6hbsplbidla.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  }
+}

@@ -1,0 +1,66 @@
+---
+name: YouTube Spam Remover
+version: 2.4.1
+category_slug: lifestyle/social
+rating: 2.6666666666666665
+rating_count: 9
+user_count: 1000
+release_date: '2024-09-06T15:07:00.000Z'
+size: 650KiB
+languages:
+  - English (United States)
+description: Hides most YouTube spam comments
+publisher_account: Sami Pflibsen-Jones
+support_website: https://github.com/samipfjo/YouTube-Spam-Remover/issues/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "YouTube Spam Remover",
+  "version": "2.4.1",
+  "description": "Hides most YouTube spam comments",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://yt3.ggpht.com/*",
+    "https://raw.githubusercontent.com/samipfjo/YouTube-Spam-Remover/main/src/extern/opennsfwjs/model/*",
+    "https://raw.githubusercontent.com/samipfjo/YouTube-Spam-Remover/main/allowed-sites/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/watch*", "https://youtube.com/watch*", "https://www.youtube.com/shorts*", "https://youtube.com/shorts*"],
+      "js": ["yt-spam-remover.js", "opennsfw.min.js", "pixelmatch.min.js"],
+      "css": ["yt-spam-remover.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["yt-spam-remover-text-worker.js", "yt-spam-remover-opennsfw-worker.js", "opennsfw.min.js", "pixelmatch.min.js", "allowed-sites.json.gz"],
+      "matches": ["https://www.youtube.com/*", "https://youtube.com/*"]
+    }
+  ],
+  "action": {
+   "default_icon": {
+    "16": "icon16.png",
+    "48": "icon48.png"
+   },
+   "default_popup": "gui/ytsr-gui-tab.html"
+  },
+  "options_ui": {
+      "page": "gui/ytsr-gui-options.html",
+      "browser_style": true
+  },
+  "background": {
+    "service_worker": "yt-spam-remover-background.js"
+  }
+}

@@ -1,0 +1,69 @@
+---
+name: Message Ninja
+version: 0.0.8
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 17
+release_date: '2023-11-12T13:25:29.000Z'
+size: 315KiB
+languages:
+  - English (UK)
+description: Personalised messages in one click
+publisher_account: wmastover
+support_website: https://messageninja.ai
+privacy_policy: >-
+  https://docs.google.com/document/d/1-gG2F0r4bvGq9PGqRSI_qQUKpK9qJgKSz7yuq9eX1Bc/edit
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Message Ninja",
+  "description": "Personalised messages in one click",
+  "version": "0.0.8",
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*", "*://*.messageninja.ai/*"],
+      "js": [
+        "login.js",
+        "initializeUI.js",
+        "getProfileInfo.js",
+        "sendGPTQuery.js",
+        "copyToClipboard.js",
+        "storeVariable.js",
+        "tagClick.js"
+        
+        
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "/react/index.js", "/react/vendor.js", "/react/index.css"],
+      "matches": ["*://*.linkedin.com/*", "*://*.messageninja.ai/*"]
+    }
+  ],
+  "background": {  
+    "service_worker": "background.js"
+  }
+}

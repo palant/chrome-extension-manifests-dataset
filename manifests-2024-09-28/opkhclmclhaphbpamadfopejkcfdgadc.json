@@ -1,0 +1,83 @@
+---
+name: Verse Medical Orders
+version: 2.0.4
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 86
+release_date: '2024-09-03T03:33:54.000Z'
+size: 46.24KiB
+languages:
+  - English (United States)
+description: >-
+  Conveniently submit orders to versemedical.com by taking screen shots of user
+  information.
+publisher: Verse Medical
+publisher_account: google-chrome-store
+publisher_address: |-
+  158 W 27th St floor 10
+  New York, NY 10001
+  US
+extension_website: versemedical.com
+privacy_policy: https://versemedical.com/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Verse Medical Orders",
+  "description": "Conveniently submit orders to versemedical.com by taking screen shots of user information.",
+  "version": "2.0.4",
+  "manifest_version": 3,
+  "icons": {"48": "images/favicon.png"},
+  "permissions": [
+    "storage", 
+    "activeTab",
+    "scripting",
+    "unlimitedStorage",
+    "tabs"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources" :["images/logo.png", "images/wand.png", "rpa-content-script.css", "legacy-content-script.css", "wex-legacy-content-script.css"],
+      "matches": ["https://*.healogics.com/*", "https://*.ecwcloud.com/*", "https://demos.telerik.com/*", "file:///*", "https://www.woundexpert.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://versemedical.com/*",
+    "https://*.healogics.com/*",
+    "https://*.ecwcloud.com/*",
+    "https://backend-service.versemedical.com/*",
+    "http://localhost:30001/*",
+    "https://www.woundexpert.com/*",
+    "https://demos.telerik.com/*",
+    "file:///*",
+    "https://*.google.com/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_icon": "images/favicon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.healogics.com/*", "https://*.ecwcloud.com/*", "https://www.woundexpert.com/*", "https://demos.telerik.com/*", "file:///*"],
+      "js": ["common-scripts.js", "rpa-content-script.js", "wex-legacy-content-script.js", "legacy-content-script.js", "common-utils.js"],
+      "css": ["common-scripts.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://versemedical.com/extension/install_auth_token*",
+        "http://localhost:30001/extension/install_auth_token*"
+      ],
+      "js": ["auth_token_install.js"],
+      "css": ["auth_token_install.css"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

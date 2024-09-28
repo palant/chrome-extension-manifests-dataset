@@ -1,0 +1,76 @@
+---
+name: YouTube Notes
+version: '1.0'
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 57
+release_date: '2024-03-06T05:06:49.000Z'
+size: 17.66KiB
+languages:
+  - English
+description: Take timestamped notes of YouTube videos directly in the browser.
+publisher_account: fferrin
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "YouTube Notes",
+  "description": "Take timestamped notes of YouTube videos directly in the browser.",
+  "version": "1.0",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "yt-notes/popup.html",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/watch*"
+      ],
+      "css": [
+        "yt-notes/popup.css"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "content.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/watch*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://www.youtube.com/watch*"
+    ]
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Y",
+        "mac": "Command+I"
+      }
+    }
+  }
+}

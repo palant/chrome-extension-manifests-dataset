@@ -1,0 +1,65 @@
+---
+name: TS Sourcegraph Extension
+version: '1.0'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-09-26T09:53:16.000Z'
+size: 40.28KiB
+languages:
+  - English
+description: An extension to add features to your Sourcegraph experience
+publisher_account: chrome-web-store-publishers
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TS Sourcegraph Extension",
+  "description": "An extension to add features to your Sourcegraph experience",
+  "version": "1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "default.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "host_permissions": [
+    "https://monorepo-info.app.twosigma.com/api/v1/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sourcegraph.app.twosigma.com/*",
+        "https://sourcegraphqa.app.twosigma.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "scripts/display-commit-cr.js"
+      ],
+      "css": [
+        "styles/button.css"
+      ]
+    },
+    {
+      "js": [
+        "scripts/swmi_link.js"
+      ],
+      "matches": [
+        "https://sourcegraph.app.twosigma.com/*",
+        "https://sourcegraphqa.app.twosigma.com/*"
+      ],
+      "css": [
+        "styles/sourcegraph_link.css"
+      ]
+    }
+  ],
+  "icons": {
+    "16": "images/sg16.png",
+    "32": "images/sg32.png",
+    "48": "images/sg48.png",
+    "128": "images/sg128.png"
+  }
+}

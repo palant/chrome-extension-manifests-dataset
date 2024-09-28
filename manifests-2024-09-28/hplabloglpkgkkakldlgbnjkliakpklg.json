@@ -1,0 +1,119 @@
+---
+name: LinkMatch For HubSpot
+version: '5.11'
+category_slug: productivity/communication
+rating: 5
+rating_count: 6
+user_count: 3000
+release_date: '2024-09-27T07:17:22.000Z'
+size: 5.55MiB
+languages:
+  - English (United States)
+description: Automated LinkedIn sourcing for HubSpot
+publisher: Logical Pure Minds SRL
+publisher_account: Yuriy Yazlovytskyy
+publisher_address: |-
+  Strada Lazar Vicol, nr. 15, bl. E37 sc. A, ap. 47
+  Suceava 720245
+  RO
+extension_website: linkmatch.com
+support_website: https://linkmatch.com/faq/hubspot
+privacy_policy: https://linkmatch.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LinkMatch For HubSpot",
+  "manifest_version": 3,
+  "short_name": "LinkMatch",
+  "version": "5.11",
+  "description": "Automated LinkedIn sourcing for HubSpot",
+  "action": {
+    "default_icon": {
+      "19": "icon48.png",
+      "38": "icon48.png"
+    }
+  },
+  "permissions": [
+    "cookies",
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.hubapi.com/*",
+    "https://*.hubspot.com/*",
+    "https://*.linkedin.com/*",
+    "https://*.xing.com/*",
+    "https://*.linkmatch.net/*",
+    "https://linkmatch.net/*"
+  ],
+  "icons": {
+    "16": "icon48.png",
+    "48": "icon48.png",
+    "128": "icon48.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' https://www.youtube.com;",
+    "sandbox": "sandbox allow-scripts; script-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/*",
+        "https://*.xing.com/*"
+      ],
+      "js": [
+        "content-script-bundle.js"
+      ],
+      "css": [
+        "content-styles.css",
+        "content-styles1.css",
+        "content-script-styles.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "run_at": "document_end",
+      "css": [
+        "content-styles.css",
+        "content-script-styles.css"
+      ],
+      "js": [
+        "content-script-bundle.js"
+      ],
+      "matches": [
+        "https://www.linkedin.com/404/*",
+        "https://*.xing.com/404/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.hubspot.com/oauth/*"
+      ],
+      "js": [
+        "auth-token-hubspot-bundle.js"
+      ],
+      "css": [
+        "auth-token-hubspot-styles.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "main-world-script-bundle.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "options_page": "options_page.html",
+  "background": {
+    "service_worker": "background-script-bundle.js",
+    "type": "module"
+  }
+}

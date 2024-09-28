@@ -1,0 +1,78 @@
+---
+name: 'Texta.ai: AI Copilot and AI Writer Assistant'
+version: 0.6.2
+category_slug: productivity/tools
+rating: 4.24
+rating_count: 25
+user_count: 1000
+release_date: '2024-01-05T10:00:43.000Z'
+size: 9.41MiB
+languages:
+  - English
+description: >-
+  Boost your writing. Get answers to complex questions. Generate any content.
+  Summarize and Paraphrase. Powered by GPT-4, ChatGPT.
+publisher: Texta.ai
+publisher_address: |-
+  Little Falls Dr
+  Marshallton, DE 19808
+  US
+extension_website: texta.ai
+support_website: https://help.texta.ai/en/
+privacy_policy: https://texta.ai/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Texta.ai: AI Copilot and AI Writer Assistant",
+    "description": "Boost your writing. Get answers to complex questions. Generate any content. Summarize and Paraphrase. Powered by GPT-4, ChatGPT.",
+    "version": "0.6.2",
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "css": ["contentScript.css"],
+            "js": ["contentScript.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://docs.google.com/document/*"],
+            "run_at": "document_start",
+            "js": ["js/gdocInject.js", "js/docs.js"],
+            "world": "MAIN"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+          "resources": ["contentScript.css", "fonts/*.woff", "fonts/*.woff2", "images/*.png", "images/*.svg"],
+          "matches": ["<all_urls>"]
+        }
+    ],
+    "host_permissions": ["<all_urls>"],
+    "permissions": [
+        "tabs",
+        "storage",
+        "background",
+        "cookies"
+    ],
+    "icons": {
+        "16" : "icon-48.png",
+        "48" : "icon-48.png",
+        "128" : "icon-48.png"
+    },
+    "options_page": "options.html",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "commands": {
+        "activate_action": {
+            "suggested_key": {
+                "default": "Ctrl+M",
+                "mac": "MacCtrl+M"
+            },
+            "description": "Activate the extension"
+        }
+    },
+    "offline_enabled": false
+}

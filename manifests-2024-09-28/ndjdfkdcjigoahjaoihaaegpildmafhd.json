@@ -1,0 +1,117 @@
+---
+name: Eye Guard
+version: 1.0.7
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 3000
+release_date: '2024-07-03T14:34:55.000Z'
+size: 593KiB
+languages:
+  - English
+  - English (UK)
+  - English (United States)
+  - 中文 (简体)
+  - 中文 (繁體)
+description: >-
+  Protect your eyes by enabling dark mode for all websites, Embrace the dark
+  theme for a more comfortable viewing experience.
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Eye Guard",
+    "version": "1.0.7",
+    "description": "__MSG_extension_description__",
+    "default_locale": "en",
+    "icons": {
+        "16": "icons/eg_16.png",
+        "48": "icons/eg_48.png",
+        "128": "icons/eg_128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://example.com/doesNotExist"
+            ],
+            "js": [
+                "inject/fallback.js",
+                "inject/index.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "js": [
+                "inject/color-scheme-watcher.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": false,
+            "match_about_blank": false
+        }
+    ],
+    "permissions": [
+        "alarms",
+        "fontSettings",
+        "scripting",
+        "storage",
+        "unlimitedStorage"
+    ],
+    "optional_permissions": [
+        "contextMenus"
+    ],
+    "commands": {
+        "toggle": {
+            "suggested_key": {
+                "default": "Alt+Shift+D"
+            },
+            "description": "__MSG_toggle_extension__"
+        },
+        "addSite": {
+            "suggested_key": {
+                "default": "Alt+Shift+A"
+            },
+            "description": "__MSG_toggle_current_site__"
+        },
+        "switchEngine": {
+            "description": "__MSG_theme_generation_mode__"
+        }
+    },
+    "minimum_chrome_version": "106.0.0.0",
+    "action": {
+        "default_title": "Eye Guard",
+        "default_icon": {
+            "19": "icons/eg_active_19.png",
+            "38": "icons/eg_active_38.png"
+        },
+        "default_popup": "ui/popup/index.html"
+    },
+    "options_ui": {
+        "page": "ui/popup/index.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "default-src 'none'; script-src 'self'; style-src 'self'; img-src * data:; connect-src *; media-src 'none'; child-src 'none'; worker-src 'none'; object-src 'none'"
+    },
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "*://*/*"
+            ],
+            "resources": [
+                "inject/proxy.js"
+            ]
+        }
+    ]
+}

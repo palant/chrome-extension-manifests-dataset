@@ -1,0 +1,89 @@
+---
+name: Athena Photo Score Extension
+version: '1.0'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-07-14T08:08:31.000Z'
+size: 307KiB
+languages:
+  - English
+description: >-
+  This Chrome extension checks photo quality in Athena records, advising if a
+  photo needs retaking or if none is found.
+publisher_account: coherenteyecare
+privacy_policy: https://clinicweb.clearhealthcare.ai/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Athena Photo Score Extension",
+  "version": "1.0",
+  "description": "This Chrome extension checks photo quality in Athena records, advising if a photo needs retaking or if none is found.",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "webNavigation",
+    "activeTab",
+    "alarms"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://preview.athenahealth.com/*",
+        "https://athenanet.athenahealth.com/*",
+        "https://www.google.com/*"
+      ],
+      "js": [
+        "js/content.js",
+        "js/jquery.min.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "persistent":true,
+    "type": "module",
+    "service_worker": "js/background.js"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "icons": {
+    "16": "images/logo.png",
+    "48": "images/logo.png",
+    "128": "images/logo.png"
+  },
+  "settings": {
+    "app_name": "athena-photo-extension",
+    "dev": {
+      "actionID": 10,
+      "clientId": "local.664331d8255ad2.69623291",
+      "idp_api_url": "https://x0tsvnk92h.execute-api.us-east-2.amazonaws.com/prod"
+    },
+    "prod": {
+      "actionID": 8,
+      "clientId": "local.665d9019c52a28.72025148",
+      "idp_api_url": "https://4p866jqr26.execute-api.us-east-2.amazonaws.com/prod"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/login.png",
+        "images/refresh.png",
+        "images/logo.png"
+      ],
+      "matches": [
+        "https://preview.athenahealth.com/*",
+        "https://athenanet.athenahealth.com/*"
+      ]
+    }
+  ]
+}

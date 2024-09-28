@@ -1,0 +1,89 @@
+---
+name: JetBrains Toolbox Extension
+version: 2.4.0.31200
+category_slug: productivity/developer
+rating: 3.857142857142857
+rating_count: 119
+user_count: 100000
+release_date: '2024-05-15T04:47:49.000Z'
+size: 280KiB
+languages:
+  - English
+description: >-
+  Clone and open projects from GitHub, GitLab, Gitee, and Bitbucket in JetBrains
+  IDEs right from your browser
+publisher: JetBrains s.r.o
+publisher_account: JetBrains
+publisher_address: |-
+  Na Hřebenech II 1718/8
+  Praha 140 00
+  CZ
+extension_website: jetbrains.com
+support_website: https://youtrack.jetbrains.com/issues/TBX
+privacy_policy: https://www.jetbrains.com/legal/docs/privacy/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JetBrains Toolbox Extension",
+  "short_name": "Toolbox",
+  "description": "Clone and open projects from GitHub, GitLab, Gitee, and Bitbucket in JetBrains IDEs right from your browser",
+  "version": "2.4.0.31200",
+  "icons": {
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_icon": "icons/icon-disabled-128.png",
+    "default_title": "JetBrains Toolbox Extension",
+    "default_popup": "popups/disabled.html"
+  },
+  "background": {
+    "service_worker": "jetbrains-toolbox-background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["jetbrains-toolbox-github-public.js"]
+    },
+    {
+      "matches": ["https://gitee.com/*"],
+      "js": ["jetbrains-toolbox-gitee.js"]
+    },
+    {
+      "world": "MAIN",
+      "matches": ["https://gitee.com/*"],
+      "js": ["providers/gitee/assets/scripts.js"],
+      "css": ["providers/gitee/assets/styles.css"]
+    },
+    {
+      "matches": ["https://gitlab.com/*"],
+      "js": ["jetbrains-toolbox-gitlab-public.js"]
+    },
+    {
+      "matches": ["https://bitbucket.org/*"],
+      "js": ["jetbrains-toolbox-bitbucket-public.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://gitlab.com/*",
+    "https://bitbucket.org/*",
+    "https://gitee.com/*"
+  ],
+  "optional_host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}

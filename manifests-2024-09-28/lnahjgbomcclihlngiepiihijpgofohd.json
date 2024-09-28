@@ -1,0 +1,80 @@
+---
+name: AIntern
+version: '0.16'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 24
+release_date: '2023-08-21T04:29:24.000Z'
+size: 342KiB
+languages:
+  - English
+description: >-
+  AIntern helps you to summarize and analyze legal documents published at major
+  legal websites.
+
+
+  The websites that we are supporting…
+publisher: Makebell
+publisher_account: MakeBell
+privacy_policy: https://www.makebell.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "AIntern",
+    "version": "0.16",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "/manifest/background/index.js",
+        "type": "module"
+    },
+    "host_permissions": [
+        "*://*.hklii.hk/*",
+        "*://*.hklii.org/*",
+        "*://*.makebell.com/*"
+    ],
+    "icons": {
+        "16": "/manifest/icons/icon16.png",
+        "32": "/manifest/icons/icon32.png",
+        "48": "/manifest/icons/icon48.png",
+        "128": "/manifest/icons/icon128.png"
+    },
+    "action": {
+        "default_title": "Makebell",
+        "default_popup": "/manifest/action/default_popup/index.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://hklii.org/*",
+                "https://www.hklii.org/*",
+                "https://*.hklii.hk/*",
+                "https://hklii.hk/*"
+            ],
+            "js": [
+                "/library/waitForElement/index.js",
+                "/library/passMessage/index.js",
+                "/library/showdown/showdown.js",
+                "/manifest/content_scripts/hklii/index.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://apps.sfc.hk/*",
+                "https://sfc.hk/*"
+            ],
+            "js": [
+                "/library/waitForElement/index.js",
+                "/library/passMessage/index.js",
+                "/library/showdown/showdown.js",
+                "/manifest/content_scripts/sfc/index.js"
+            ]
+        }
+    ],
+    "permissions": [
+        "alarms",
+        "storage"
+    ]
+}

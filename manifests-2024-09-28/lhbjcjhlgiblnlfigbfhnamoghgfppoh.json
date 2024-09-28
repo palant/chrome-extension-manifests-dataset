@@ -1,0 +1,81 @@
+---
+name: Integrito — Analyze Text, Check Plagiarism&AI
+version: 1.3.7.1
+category_slug: productivity/tools
+rating: 4.814814814814815
+rating_count: 27
+user_count: 1000
+release_date: '2024-06-06T11:26:00.000Z'
+size: 2.64MiB
+languages:
+  - English
+description: >-
+  This extension is a helpful all-in-one tool for education and working with
+  texts.
+publisher: Teaching Writing Online Limited
+publisher_account: PlagiarismCheck.org Support
+publisher_address: |-
+  Dixcart House Addlestone Road
+  Bourne Business Park
+  Addlestone KT15 2LE
+  GB
+extension_website: plagiarismcheck.org
+support_website: https://plagiarismcheck.org/contact-us/
+privacy_policy: https://plagiarismcheck.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Integrito",
+  "name": "Integrito — Analyze Text, Check Plagiarism&AI",
+  "description": "This extension is a helpful all-in-one tool for education and working with texts.",
+  "manifest_version": 3,
+  "version": "1.3.7.1",
+  "icons": {
+    "16": "images/logo.ico",
+    "32": "images/logo32.png",
+    "48": "images/logo192.png",
+    "128": "images/logo512.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "notifications",
+    "scripting",
+    "webRequest",
+    "webNavigation"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Integrito — Analyze Text, Check Plagiarism&AI",
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo192.png",
+      "128": "images/logo512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://plagcheck.local/*", "*://plagiarismcheck.org/*"],
+      "js": ["browser-polyfill.js", "inject.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["canvas-inject.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://docs.google.com/document/d/*"],
+      "js": ["googledocs-inject.js"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com"
+  }
+}

@@ -1,0 +1,124 @@
+---
+name: Watson v3 - BETA
+version: 7.0.11
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 55
+release_date: '2024-06-18T11:54:23.000Z'
+size: 8.25MiB
+languages:
+  - English (United States)
+description: Wizard Assistant Tool for Technical Solution Operations & Needs
+publisher_account: criteotilt
+privacy_policy: https://www.criteo.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Watson v3 - BETA",
+  "description": "Wizard Assistant Tool for Technical Solution Operations & Needs",
+  "version": "7.0.11",
+  "options_ui": "html/options.html",
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://jira.criteois.com/secure/Dashboard.jspa*",
+        "https://top.criteo.com/*"
+      ],
+      "js": [
+        "libs/jquery/js/jquery.js",
+        "misc.js"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://criteo-sandbox-266.atlassian.net/*",
+        "https://criteo.atlassian.net/*",
+        "https://jira.criteois.com/*",
+        "https://dev2-jira.criteois.com/*"
+      ],
+      "exclude_matches": [
+        "*://*/wiki/*",
+        "*://*/*boards*"
+      ],
+      "js": [
+        "loadData.js"
+      ]
+    },
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "https://criteo-sandbox-266.atlassian.net/*",
+        "https://criteo.atlassian.net/*",
+        "https://jira.criteois.com/*",
+        "https://dev2-jira.criteois.com/*"
+      ],
+      "exclude_matches": [
+        "*://*/wiki/*",
+        "*://*/*boards*"
+      ],
+      "css": [
+        "css/main.css"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://top.criteo.com/*",
+        "https://tilt-watson.crto.in/*",
+        "https://tilt-watson.preprod.crto.in/*",
+        "https://criteo.service-now.com/*",
+        "https://cdn.jsdelivr.net/*"
+      ],
+      "js": [
+        "top.js",
+        "libs/jquery/ui/jquery-ui.min.js",
+        "libs/chartjs/dist/Chart.bundle.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "storage",
+    "tabs",
+    "activeTab",
+    "notifications",
+    "webRequest",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://top.criteo.com/*",
+    "https://criteo-sandbox-266.atlassian.net/*",
+    "https://criteo.atlassian.net/*",
+    "https://criteo.service-now.com/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["images/*"],
+    "matches": ["<all_urls>"]
+  }],
+  "action":
+  {
+    "default_icon": "images/icon.png",
+    "default_popup": "html/popup.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self'"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}

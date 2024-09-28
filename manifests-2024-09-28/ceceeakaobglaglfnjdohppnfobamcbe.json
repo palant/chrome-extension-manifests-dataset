@@ -1,0 +1,267 @@
+---
+name: LucidRetail LITE
+version: 2.9.10
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 3000
+release_date: '2024-09-25T13:03:12.000Z'
+size: 1.53MiB
+languages:
+  - English (United States)
+description: >-
+  LucidRetail LITE makes inventory intake much faster and cost effective by
+  removing the need to sticker products.
+publisher: Lucid Green
+publisher_address: |-
+  1412 Broadway, 22nd Floor
+  New York, NY 10018
+  US
+extension_website: lucidgreen.io
+support_website: https://help.lucidgreen.io/
+privacy_policy: https://www.lucidgreen.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LucidRetail LITE",
+  "description": "LucidRetail LITE makes inventory intake much faster and cost effective by removing the need to sticker products.",
+  "version": "2.9.10",
+  "manifest_version": 3,
+  "permissions": [
+    "system.storage",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://retail-dev.lucidgreen.io/*",
+      "https://*.backoffice.dutchie.com/*",
+      "https://*.pos.dutchie.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/common/label_urls_manager.js",
+        "scripts/common/constants.js",
+        "scripts/common/crossContextUtilities.js",
+        "scripts/web_accessible/external-pos-identifiers-look-up-table-web-accessible.js",
+        "scripts/web_accessible/utilities.js",
+        "media/img/LucidRetailLite2.svg",
+        "media/img/LucidRetailLite2_black.svg",
+        "media/img/alert_error.svg",
+        "media/img/alert_warning.svg",
+        "media/img/alert_info.svg",
+        "media/img/alert_success.svg",
+        "media/img/lucid-id-placeholder.svg"
+      ],
+      "matches": [
+        "https://*.treez.io/*",
+        "https://*.backoffice.dutchie.com/*",
+        "https://*.pos.dutchie.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/common/label_urls_manager.js",
+        "scripts/alerts/alertManager.js",
+        "scripts/common/constants.js",
+        "scripts/common/crossContextUtilities.js",
+        "scripts/common/inventory-ai.js",
+        "content.js",
+        "scripts/common/scanningUtils.js",
+        "scripts/common/mqttTransmitter.js"
+      ],
+      "css": [
+        "media/css/lrl-custom.css"
+      ],
+      "matches": [
+        "https://*.treez.io/*",
+        "https://*.backoffice.dutchie.com/*",
+        "https://*.pos.dutchie.com/*"
+      ],
+      "exclude_globs": [
+        "https://*.treez.io/portalDispensary/portal/PoleDisplay*",
+        "https://*.treez.io/onlinemenu*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "vendors/onscan-js/onscan.js",
+        "vendors/iframeResizer/iframeResizer.js",
+        "vendors/toastify-js/toastify.min.js",
+        "vendors/tippy-js/popper.min.js",
+        "vendors/tippy-js/tippy-bundle.umd.min.js"
+      ],
+      "css": [
+        "vendors/toastify-js/toastify.min.css"
+      ],
+      "matches": [
+        "https://*.treez.io/*",
+        "https://*.backoffice.dutchie.com/*",
+        "https://*.pos.dutchie.com/*"
+      ],
+      "exclude_globs": [
+        "https://*.treez.io/portalDispensary/portal/PoleDisplay*",
+        "https://*.treez.io/onlinemenu*"
+      ],
+      "all_frames": false,
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/dutchie/constants.js",
+        "scripts/dutchie/graphql-queries.js",
+        "scripts/dutchie/common.js",
+        "scripts/common/external-pos-identifiers-look-up-table.js"
+      ],
+      "matches": [
+        "https://*.backoffice.dutchie.com/*",
+        "https://*.pos.dutchie.com/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "scripts/dutchie/dutchie-inventory.js"
+      ],
+      "matches": [
+        "https://*.backoffice.dutchie.com/*"
+      ],
+      "all_frames": false,
+      "exclude_globs": [
+        "*pos.dutchie*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/alerts/removeLucidIDsLoggingAlerts.js",
+        "scripts/dutchie/dutchie-refund.js",
+        "scripts/dutchie/dutchie-pos.js"
+      ],
+      "matches": [
+        "https://*.pos.dutchie.com/*"
+      ],
+      "all_frames": false,
+      "include_globs": [
+        "*pos.dutchie*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/treez/constants.js",
+        "scripts/treez/common.js"
+      ],
+      "matches": [
+        "https://*.treez.io/portalDispensary/portal/Fulfillment*",
+        "https://*.treez.io/portalDispensary/*",
+        "https://*.treez.io/SellTreez*",
+        "https://app.treez.io/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "scripts/treez/cart/base-class.js",
+        "scripts/treez/cart/fulfillment-cart.js",
+        "scripts/treez/treez-fulfillment.js",
+        "scripts/common/external-pos-identifiers-look-up-table.js"
+      ],
+      "matches": [
+        "https://*.treez.io/portalDispensary/portal/Fulfillment*"
+      ],
+      "exclude_globs": [
+        "*portalDispensary/portal/PoleDisplay*"
+      ],
+      "all_frames": false,
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/treez/treez-inventory.js"
+      ],
+      "matches": [
+        "https://*.treez.io/portalDispensary/*"
+      ],
+      "all_frames": false,
+      "exclude_globs": [
+        "*Fulfillment*",
+        "*portalDispensary/portal/PoleDisplay*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/treez/cart/base-class.js",
+        "scripts/treez/cart/sell-treez-cart.js",
+        "scripts/alerts/removeLucidIDsLoggingAlerts.js",
+        "scripts/common/external-pos-identifiers-look-up-table.js",
+        "scripts/treez/treez-pos.js"
+      ],
+      "matches": [
+        "https://*.treez.io/SellTreez*"
+      ],
+      "exclude_globs": [
+        "*portalDispensary/portal/PoleDisplay*"
+      ],
+      "all_frames": false,
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/treez/treez-reloader.js"
+      ],
+      "matches": [
+        "https://*.treez.io/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "scripts/common/insertLogo.js"
+      ],
+      "matches": [
+        "https://*.treez.io/*",
+        "https://*.pos.dutchie.com/*",
+        "https://*.backoffice.dutchie.com/*"
+      ],
+      "exclude_globs": [
+        "https://*.treez.io/portalDispensary/portal/PoleDisplay*",
+        "https://*.treez.io/onlinemenu*"
+      ],
+      "all_frames": false,
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://*.treez.io/*",
+    "https://retail.lucidgreen.io/*",
+    "https://retail-dev.lucidgreen.io/*",
+    "https://*.pos.dutchie.com/*",
+    "https://*.backoffice.dutchie.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "service_worker/background.js"
+  },
+  "minimum_chrome_version": "110",
+  "icons": {
+    "128": "media/img/128.png",
+    "64": "media/img/64.png",
+    "32": "media/img/32.png"
+  }
+}

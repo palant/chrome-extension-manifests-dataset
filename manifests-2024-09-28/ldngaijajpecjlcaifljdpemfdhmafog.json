@@ -1,0 +1,154 @@
+---
+name: AbleToDarkMode
+version: '1.0'
+category_slug: lifestyle/well_being
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-07-08T09:24:45.000Z'
+size: 760KiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - español
+  - español (Latinoamérica)
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - हिन्दी
+  - বাংলা
+  - తెలుగు
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: Dark Mode Everywhere
+publisher_account: abletoremake
+privacy_policy: https://abletoremake.gumroad.com/l/onbvx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "AbleToDarkMode",
+    "version": "1.0",
+    "author": "AbleToRemake",
+    "description": "Dark Mode Everywhere",
+    "default_locale": "en",
+    "icons": {
+        "16": "icons/atdm_16.png",
+        "48": "icons/atdm_48.png",
+        "128": "icons/atdm_128.png"
+    },
+    "background": {
+        "service_worker": "background/index.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "inject/proxy.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true,
+            "world": "MAIN"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "inject/fallback.js",
+                "inject/index.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "match_about_blank": true,
+            "world": "ISOLATED"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "inject/color-scheme-watcher.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false,
+            "match_about_blank": false,
+            "world": "ISOLATED"
+        }
+    ],
+    "permissions": [
+        "alarms",
+        "fontSettings",
+        "scripting",
+        "storage"
+    ],
+    "optional_permissions": [
+        "contextMenus"
+    ],
+    "commands": {
+        "toggle": {
+            "suggested_key": {
+                "default": "Alt+Shift+D"
+            },
+            "description": "__MSG_toggle_extension__"
+        },
+        "addSite": {
+            "suggested_key": {
+                "default": "Alt+Shift+A"
+            },
+            "description": "__MSG_toggle_current_site__"
+        },
+        "switchEngine": {
+            "description": "__MSG_theme_generation_mode__"
+        }
+    },
+    "minimum_chrome_version": "106.0.0.0",
+    "action": {
+        "default_title": "AbleToDarkMode",
+        "default_icon": {
+            "19": "icons/atdm_active_19.png",
+            "38": "icons/atdm_active_38.png"
+        },
+        "default_popup": "ui/popup/index.html"
+    },
+    "options_ui": {
+        "page": "ui/popup/index.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "default-src 'none'; script-src 'self'; style-src 'self'; img-src * data:; connect-src *; navigate-to 'self' https://abletodarkmode.com/*; media-src 'none'; child-src 'none'; worker-src 'none'; object-src 'none'"
+    },
+    "host_permissions": [
+        "*://*/*"
+    ]
+}

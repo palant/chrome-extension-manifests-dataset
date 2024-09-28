@@ -1,0 +1,70 @@
+---
+name: YouTube AdSkipper
+version: 1.1.2
+category_slug: productivity/tools
+rating: 4.833333333333333
+rating_count: 12
+user_count: 4000
+release_date: '2024-09-10T11:04:44.000Z'
+size: 43.98KiB
+languages:
+  - English (UK)
+description: Auto Skip ads so that you don't need to click the skip button yourself!
+publisher_account: Mark
+privacy_policy: https://adskip.markgurney.dev/privacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "YouTube AdSkipper",
+    "description": "Auto Skip ads so that you don't need to click the skip button yourself!",
+    "version": "1.1.2",
+    "action": {
+        "default_popup": "src/index.html",
+        "default_icon": "assets/icon/48.png"
+    },
+    "icons": {
+        "16": "assets/icon/16.png",
+        "32": "assets/icon/32.png",
+        "48": "assets/icon/48.png",
+        "128": "assets/icon/128.png"
+    },
+    "permissions": [
+        "storage",
+        "identity",
+        "identity.email"
+    ],
+    "content_scripts": [
+        {
+            "js": ["src/content.js"],
+            "matches": [
+                "https://developer.chrome.com/docs/extensions/*",
+                "https://developer.chrome.com/docs/webstore/*",
+                "http://www.youtube.com/*",
+                "https://www.youtube.com/*"
+            ]
+        },
+        {
+            "js": ["src/before_document.js"],
+            "matches": [
+                "https://developer.chrome.com/docs/extensions/*",
+                "https://developer.chrome.com/docs/webstore/*",
+                "http://www.youtube.com/*",
+                "https://www.youtube.com/*"
+            ],
+            "run_at": "document_start",
+            "world": "MAIN"
+        }
+    ],
+    "background": {
+        "service_worker": "src/extension.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/badges/*"],
+            "matches": ["http://www.youtube.com/*", "https://www.youtube.com/*"]
+        }
+    ]
+}

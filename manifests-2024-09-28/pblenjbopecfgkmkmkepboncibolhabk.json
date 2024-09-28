@@ -1,0 +1,150 @@
+---
+name: GroupKit Cloud
+version: 2.2.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 4000
+release_date: '2024-01-31T17:33:50.000Z'
+size: 1.58MiB
+languages:
+  - English (United States)
+description: >-
+  GroupKit allows you to make more money from your group with less time and
+  effort.
+publisher_account: GroupKit
+publisher_address: |-
+  13519 East Chicago Street
+  Chandler, Arizona 85225
+  United States
+extension_website: groupkit.com
+support_website: https://support.groupkit.com/
+privacy_policy: https://groupkit.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "GroupKit Cloud",
+  "version": "2.2.1",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "description": "GroupKit allows you to make more money from your group with less time and effort.",
+  "short_name": "GroupKit",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": "icons/icon128.png",
+    "default_title": "GroupKit Cloud - Facebook™ Group CRM",
+    "default_popup": "popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "-comment-": "************* Globally used JS and CSS files ****************",
+      "matches": [
+        "*://*.facebook.com/*",
+        "https://*.groupkit.com/*",
+        "http://127.0.0.1:8000/*",
+        "https://*.guaranteed.dev/*"
+      ],
+      "js": [
+        "config.json.js",
+        "global.js",
+        "lib/js/axios.min.js",
+        "lib/js/jquery-3.2.1.min.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "-comment-": "************* Facebook specific JS and CSS files ****************",
+      "all_frames": true,
+      "matches": [
+        "*://*.facebook.com/*"
+      ],
+      "js": [
+        "config.json.js",
+        "lib/js/bugsnag.min.js",
+        "init-bugsnag.js",
+        "lib/js/jquery-3.2.1.min.js",
+        "lib/js/jquery-confirm.min.js",
+        "content/load-ui-html.js",
+        "content/facebook-ui.js",
+        "content/scraper.js",
+        "content/create-post.js"
+      ],
+      "css": [
+        "lib/css/jquery-confirm.min.css",
+        "lib/css/jconfirmcustom.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "-comment-": "************* Aweber JS and CSS files ****************",
+      "matches": [
+        "https://auth.aweber.com/oauth2/result*"
+      ],
+      "js": [
+        "global.js",
+        "content/aweber_login.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "-comment-": "************* Groupkit Cloud specific JS and CSS files ****************",
+      "matches": [
+        "https://*.groupkit.com/*",
+        "http://127.0.0.1:8000/*",
+        "https://*.guaranteed.dev/*"
+      ],
+      "js": [
+        "background/cloud.js",
+        "content/sender.js",
+        "content/scraper.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "lib/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "iframe/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "unlimitedStorage",
+    "storage",
+    "notifications",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*.facebook.com/*",
+    "https://*.facebook.com/*"
+  ]
+}

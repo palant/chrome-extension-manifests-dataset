@@ -1,0 +1,51 @@
+---
+name: ClaudeSave
+version: '1.7'
+category_slug: productivity/developer
+rating: 5
+rating_count: 4
+user_count: 65
+release_date: '2024-09-02T05:49:03.000Z'
+size: 283KiB
+languages:
+  - English
+description: A Chrome extension that saves conversations with Claude to gists.
+extension_website: hamel.dev
+support_website: https://hamel.dev
+privacy_policy: https://github.com/hamelsmu/claudesave/blob/main/privacy_policy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ClaudeSave",
+    "version": "1.7",
+    "description": "A Chrome extension that saves conversations with Claude to gists.",
+    "permissions": ["storage", "tabs", "webRequest", "clipboardWrite"],
+    "host_permissions": ["https://claude.ai/*", "https://api.claude.ai/*"],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_title": "ClaudeSave",
+        "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+        {   
+            "run_at": "document_end",
+            "matches": ["https://claude.ai/*"],
+            "js": ["utils/banner.js", "content.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["images/anthropic.png"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "icons": {
+        "128": "images/anthropic.png"
+    }
+}

@@ -1,0 +1,83 @@
+---
+name: PriceBlink Coupons and Price Comparison
+version: '9.4'
+category_slug: lifestyle/shopping
+rating: 4.6421219319081555
+rating_count: 1263
+user_count: 100000
+release_date: '2024-07-30T06:54:52.000Z'
+size: 1.24MiB
+languages:
+  - English (United States)
+description: >-
+  Finds Coupons and Compares Prices while you shop. Shows savings when you're
+  shopping, otherwise it stays hidden.
+publisher: Red Ventures, LLC
+publisher_account: PriceBlink
+publisher_address: |-
+  1423 Red Ventures Dr
+  Fort Mill, SC 29707-5019
+  US
+extension_website: priceblink.com
+support_website: http://www.priceblink.com/webcpns/page.php?sp_id=4
+privacy_policy: https://www.priceblink.com/webcpns/page.php?sp_id=7
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PriceBlink Coupons and Price Comparison",
+  "short_name": "PriceBlink",
+  "version": "9.4",
+  "description": "Finds Coupons and Compares Prices while you shop. Shows savings when you're shopping, otherwise it stays hidden.",
+ "permissions": ["tabs", "webRequest", "storage", "alarms"],
+ "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "background": {
+   "service_worker": "js/background.js"
+ },
+ "content_scripts": [ {
+  "all_frames": false,
+  "js": ["js/jquery.min.js", "js/purify.min.js","js/app.js", "js/iframe.js"],
+  "matches": [ "http://*/*", "https://*/*" ],
+  "run_at": "document_end"
+ }, {
+   "all_frames": false,
+   "js": [ "js/early.js" ],
+   "matches": [ "http://*/*", "https://*/*" ],
+   "run_at": "document_start"
+ }],
+   "web_accessible_resources": [
+      {
+        "resources": [
+          "fonts/*",
+          "images/*",
+          "html/*",
+          "js/*",
+          "css/*",
+          "js/iframe.js",
+          "js/webScript.js"
+        ],
+        "matches": [
+          "http://*/*",
+          "https://*/*"
+        ]
+      }
+   ],
+ "action": {
+   "default_icon": "images/icon_16.png",
+   "default_title": "PriceBlink",
+   "default_popup": "html/coupons_popup.html"
+ },
+ "icons": {
+      "16": "images/icon_16.png",
+      "48": "images/icon_48.png",
+      "128": "images/icon_128.png"
+   },
+ "options_ui": {
+  "page": "html/options.html"
+ }
+}

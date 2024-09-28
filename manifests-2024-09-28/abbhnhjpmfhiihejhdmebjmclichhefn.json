@@ -1,0 +1,54 @@
+---
+name: Stock Ticker Switcher
+version: 1.1.6
+category_slug: productivity/workflow
+rating: 3
+rating_count: 2
+user_count: 25
+release_date: '2024-05-16T06:52:24.000Z'
+size: 211KiB
+languages:
+  - English (United States)
+description: >-
+  Easily jump from a stock's page on Robinhood to the same ticker on Yahoo
+  Finance, or vice-versa.
+publisher_account: Brendan Doyle
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Stock Ticker Switcher",
+    "description": "Easily jump from a stock's page on Robinhood to the same ticker on Yahoo Finance, or vice-versa.",
+    "version": "1.1.6",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://robinhood.com/*",
+                "https://finance.yahoo.com/*"
+            ],
+            "js": [
+                "jquery.js",
+                "src/contentScripts/contentScript.js",
+                "src/sites/Robinhood.js",
+                "src/sites/YahooFinance.js"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "src/serviceWorkers/serviceWorker.js"
+    },
+    "action": {
+        "default_icon": "stsIcon128.png"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+    "permissions": ["tabs"],
+    "host_permissions": [
+        "https://robinhood.com/*",
+        "https://finance.yahoo.com/*"
+    ]
+}

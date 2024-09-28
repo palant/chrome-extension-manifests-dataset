@@ -1,0 +1,92 @@
+---
+name: Zinx
+version: 0.0.0.7
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2023-10-26T12:58:06.000Z'
+size: 1.62MiB
+languages:
+  - português (Brasil)
+description: Extensão criada para auxiliar Sellers da Amazon a terem melhores resultados.
+publisher: Seller Pro
+publisher_account: sellerprobrasil
+publisher_address: |-
+  Avenida Itália - Esplanada Independência, Taubaté - State of São Paulo, Brazil
+  Taubaté, SP 12020070
+  BR
+privacy_policy: https://www.sellerproanalytics.com.br/politica
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Zinx",
+    "description": "Extensão criada para auxiliar Sellers da Amazon a terem melhores resultados.",
+    "background": {
+        "service_worker": "./js/background.js"
+    },
+    "permissions": ["tabs", "storage"],
+    "host_permissions": ["https://*/*"],
+    "web_accessible_resources": [{
+        "matches": ["<all_urls>"],
+        "resources": ["./js/content.js"]
+    }],
+    "version": "0.0.0.7",
+    "author": "MKTP Sistemas",
+    "action": {
+        "default_icon": {
+            "16": "./assests/images/LOGO_38x38.png",
+            "32": "./assests/images/LOGO_38x38.png",
+            "48": "./assests/images/LOGO_38x38.png",
+            "128": "./assests/images/LOGO_38x38.png"
+        },
+        "default_title": "Zinx",
+        "default_popup": "./pages/index.html",
+        "newtab": ["./pages/analytics.html", "./pages/login.html", "./pages/notFound.html"]
+    },
+    "icons": {
+        "16": "./assests/images/LOGO_38x38.png",
+        "32": "./assests/images/LOGO_38x38.png",
+        "48": "./assests/images/LOGO_38x38.png",
+        "128": "./assests/images/LOGO_38x38.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.amazon.com.br/*"
+            ],
+            "js": [
+                "./js/content_all_pages.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.amazon.com.br/dp/*",
+                "*://*.amazon.com.br/*/dp/*"
+            ],
+            "js": [
+                "./js/helpers/usePage.js",
+                "./js/content.js"
+            ]
+        },
+        {
+            "matches": ["*://*.amazon.com.br/s*"],
+            "js": [
+                "./js/helpers/usePage.js",
+                "./js/helpers/useDate.js",
+                "./js/content_products.js"
+            ],
+            "exclude_matches": [
+                "*://*.amazon.com.br/dp/*",
+                "*://*.amazon.com.br/*/dp/*"
+            ],
+            "css": [
+                "./css/content_products.css"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,78 @@
+---
+name: Degit in Github
+version: 0.0.4
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 4
+release_date: '2022-04-28T07:34:14.000Z'
+size: 338KiB
+languages:
+  - English
+description: Fast copy a Degit command path in github repository pages
+publisher_account: linka
+support_website: https://github.com/aliuq/degit-webext
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Degit in Github",
+  "version": "0.0.4",
+  "description": "Fast copy a Degit command path in github repository pages",
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://github.com/*",
+        "https://github.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "commands": {
+    "copy-path": {
+      "description": "Copy the current page degit path",
+      "suggested_key": {
+        "default": "Alt+Shift+C",
+        "mac": "Alt+Shift+C"
+      }
+    }
+  },
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "host_permissions": [
+    "http://github.com/*",
+    "https://github.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

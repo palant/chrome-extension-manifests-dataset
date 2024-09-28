@@ -1,0 +1,80 @@
+---
+name: TapTalent
+version: 1.1.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 9
+user_count: 225
+release_date: '2024-09-11T06:54:00.000Z'
+size: 1.29MiB
+languages:
+  - English
+description: Effortlessly add leads to your Taptalent flows.
+publisher: CONSULTAGORA PTE. LTD.
+publisher_account: TapTalent
+extension_website: taptalent.ai
+privacy_policy: https://client.taptalent.io/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TapTalent",
+  "description": "Effortlessly add leads to your Taptalent flows.",
+  "version": "1.1.6",
+  "manifest_version": 3,
+  "homepage_url": "https://www.taptalent.ai",
+  "icons": {
+    "16": "icon16x16.png",
+    "48": "icon48x48.png",
+    "128": "icon128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "LinkedIn Extension",
+    "default_icon": "icon128x128.png"
+  },
+  "permissions": [
+    "webNavigation",
+    "webRequest",
+    "storage",
+    "scripting",
+    "activeTab",
+    "cookies"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["linkedinPageScript.js"],
+      "matches": ["*://*.linkedin.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["naukriJobApplicationScript.js"],
+      "matches": ["*://*.naukri.com/hiring/*", "*://resdex.naukri.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["taptalentTab.js"],
+      "matches": [
+        "http://localhost:3000/*",
+        "https://staging-client.taptalent.io/*",
+        "https://client.taptalent.io/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.naukri.com/hiring/*",
+    "*://resdex.naukri.com/*",
+    "http://localhost:3000/*",
+    "https://staging-client.taptalent.io/*",
+    "https://client.taptalent.io/*"
+  ]
+}

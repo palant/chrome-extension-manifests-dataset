@@ -1,0 +1,83 @@
+---
+name: GeoguessRating
+version: '1.11'
+category_slug: lifestyle/games
+rating: 5
+rating_count: 1
+user_count: 8
+release_date: '2024-09-27T21:11:13.000Z'
+size: 657KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Türkçe
+  - español
+  - italiano
+  - polski
+  - русский
+description: >-
+  The best way to experience GeoGuessr. Track your games, visualize your stats,
+  and understand when to play and the modes to improve.
+publisher_account: geoguessrating
+publisher_address: |-
+  60 Bd Saint-Michel
+  Paris 75006
+  FR
+support_website: https://www.geoguessrating.com/support
+privacy_policy: https://www.geoguessrating.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "GeoguessRating",
+    "description": "The best way to experience GeoGuessr. Track your games, visualize your stats, and understand when to play and the modes to improve.",
+    "version": "1.11",
+    "icons": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "permissions": [
+      "storage"
+    ],
+    "background": {
+      "service_worker": "service-workers/service-worker.js",
+      "type": "module"
+    },
+    "action": {
+      "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": [ "https://www.geoguessr.com/*" ],
+        "js": [
+          "browser-polyfill.js",
+          "content_scripts/geoguessr-init.js",
+          "content_scripts/hidden-intel.js"
+        ]
+      },
+      {
+        "matches": [ 
+            "https://api.geoguessrating.com/payment/success-co*",
+            "https://api.geoguessrating.com/payment/cancel-co*",
+            "https://api.geoguessrating.com/user/link-customer*"
+        ],
+        "js": [
+          "browser-polyfill.js",
+          "content_scripts/geoguessrating-redirect.js"
+        ]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "_locales/*/messages.json" ],
+        "matches": [ "https://www.geoguessr.com/*" ]
+      }
+    ],
+    "default_locale": "en"
+  }
+  

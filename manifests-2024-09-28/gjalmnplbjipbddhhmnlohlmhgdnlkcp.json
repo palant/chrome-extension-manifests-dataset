@@ -1,0 +1,82 @@
+---
+name: Shopify Live Orders by SimplyTrends.co
+version: 0.0.0.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 459
+release_date: '2022-10-27T12:22:32.000Z'
+size: 646KiB
+languages:
+  - English (United States)
+description: Track live sales on any Shopify store.
+publisher_account: SimplyTrends Team
+extension_website: simplytrends.co
+privacy_policy: https://www.simplytrends.co/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "Live Orders",
+    "name": "Shopify Live Orders by SimplyTrends.co",
+    "description": "Track live sales on any Shopify store.",
+    "version": "0.0.0.2",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "action": {},
+    "permissions": [
+        "scripting",
+        "storage",
+        "management"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "contentscript.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.simplytrends.co/crx/*"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "js": [
+                "simplytrends.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "simplytrends.js",
+                "entry.js",
+                "getShopifyInfoInDocument.js",
+                "contentscript.js",
+                "images/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

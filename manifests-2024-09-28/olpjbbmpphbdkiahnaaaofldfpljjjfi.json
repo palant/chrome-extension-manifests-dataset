@@ -1,0 +1,73 @@
+---
+name: CALMS Call Recording Pause
+version: '1.0'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 263
+release_date: '2021-12-24T04:21:28.000Z'
+size: 15.42KiB
+languages:
+  - English (UK)
+description: Turn on call privacy when on payment page
+publisher: Ctalk Limited
+publisher_address: |-
+  Wolseley House
+  Stafford ST18 0GA
+  GB
+support_website: https://www.ctalk.co.uk/support/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "CALMS Call Recording Pause",
+    "description": "Turn on call privacy when on payment page",
+    "version": "1.0",
+    "action": {
+      "default_icon": {
+        "16": "images/icon.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+      }
+    },
+    "icons": {
+      "16": "images/icon.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://payments.securetrading.net/process/payments/details"],
+        "js": ["privacy_st.js"],
+        "run_at": "document_start",
+        "all_frames": true
+      },
+      {
+        "matches": [
+          "https://*.calms-direct.com/calms2cms/creditcarddetails.jsp",
+          "https://www.retailfinancing-cms-pre.honda.co.uk/calms2cms/creditcarddetails.jsp",
+          "https://www.retailfinancing-cms.honda.co.uk/calms2cms/creditcarddetails.jsp"
+        ],
+        "js": ["privacy_calms_trigger.js"],
+        "run_at": "document_start",
+        "all_frames": true
+      },
+      {
+        "matches": [
+          "https://*.calms-direct.com/calms2cms/home.jsp",
+          "https://www.retailfinancing-cms-pre.honda.co.uk/calms2cms/home.jsp",
+          "https://www.retailfinancing-cms.honda.co.uk/calms2cms/home.jsp"
+        ],
+        "js": ["privacy_calms.js"],
+        "run_at": "document_start",
+        "all_frames": true
+      }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "permissions": ["background"],
+    "host_permissions": ["http://localhost:8051/*"]
+  }

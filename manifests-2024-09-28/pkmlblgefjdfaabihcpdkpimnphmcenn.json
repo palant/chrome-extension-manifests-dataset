@@ -1,0 +1,66 @@
+---
+name: Autobas to Fortnox
+version: '1.2'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-08-23T12:02:07.000Z'
+size: 65.36KiB
+languages:
+  - svenska
+description: >-
+  Transfers cart data from Autobas to Fortnox with one free daily transfer and
+  paid unlimited transfers
+publisher_account: Autoware
+privacy_policy: https://www.virtualstar.se/privacy-policy-for-autobas-to-fortnox-extension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Autobas to Fortnox",
+  "version": "1.2",
+  "description": "Transfers cart data from Autobas to Fortnox with one free daily transfer and paid unlimited transfers",
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+},
+"icons": {
+  "16": "logo-16.jpg",
+  "48": "logo-48.jpg",
+  "128": "logo-128.jpg"
+},
+  "host_permissions": [
+    "https://*.autobas.se/*",
+    "https://autobas.se/*",
+    "https://*.fortnox.se/*",
+    "https://extensionpay.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.fortnox.se/*"],
+      "js": ["ExtPay.js", "shared.js","fortnox.js"]
+    },
+    {
+      "matches": ["https://autobas.se/*"],
+      "js": ["shared.js","autobas.js"]
+    },
+    {
+      "matches": ["https://www.autobas.se/*"],
+      "js": ["shared.js","autobas.js"]
+    },
+    
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["ExtPay.js"],
+      "run_at": "document_start"
+    }
+  ]
+}

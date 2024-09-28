@@ -1,0 +1,121 @@
+---
+name: GLIDER.ai Connector
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 3
+rating_count: 2
+user_count: 284
+release_date: '2024-04-10T06:16:03.000Z'
+size: 1.18MiB
+languages:
+  - English
+description: >-
+  GLIDER.ai Connector allows recruiter to invite candidates from ATS to schedule
+  Glider tests/interviews without integrations.
+publisher: Glider AI
+publisher_account: GLIDER.ai
+publisher_address: |-
+  19925 Stevens Creek Blvd
+  STE. 100
+  Cupertino, CA 95014-2348
+  US
+support_website: https://glider.freshdesk.com/
+privacy_policy: https://glider.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appTitle__",
+  "description": "__MSG_appDescription__",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "default_locale": "en",
+  "action": {
+    "default_popup": "html/index.html",
+    "default_title": "__MSG_appDefaultTitle__",
+    "default_icon": {
+      "16": "images/icons/gliderai-16x16.png",
+      "32": "images/icons/gliderai-32x32.png",
+      "48": "images/icons/gliderai-48x48.png",
+      "128": "images/icons/gliderai-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icons/gliderai-16x16.png",
+    "32": "images/icons/gliderai-32x32.png",
+    "48": "images/icons/gliderai-48x48.png",
+    "128": "images/icons/gliderai-128x128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://*.glider.ai/*"
+  ],
+  "content_scripts": [
+    {
+      "js": ["js/atsIntegrations/Bullhorn/content.js", "js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.bullhornstaffing.com/*"],
+      "all_frames": true
+    },
+    {
+      "js": ["js/atsIntegrations/Bullhorn/contentIframe.js", "js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.bullhornstaffing.com/*"],
+      "all_frames": false
+    },
+    {
+      "js": ["js/atsIntegrations/JobDiva/content.js","js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.jobdiva.com/*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "js": ["js/atsIntegrations/JobDiva/contentIframe.js","js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.jobdiva.com/*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "js": ["js/atsIntegrations/JobDiva/contentMatchingCandidates.js","js/modules/third-party/jquery-v3.6.0.js", "js/modules/third-party/underscore-v1.13.2-min.js"],
+      "matches": ["https://*.jobdiva.com/employers/myjobs/new_searchjobsdone_sa_new.jsp*"],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://*.glider.ai/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["js/*"]
+    },
+    {
+      "resources": [
+        "js/atsIntegrations/JobDiva/web_accessible_resources.js"
+      ],
+      "matches": [
+        "https://*.jobdiva.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "options_page": "/html/options.html",
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "/html/options.html"
+  }
+}

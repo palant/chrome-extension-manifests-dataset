@@ -1,0 +1,164 @@
+---
+name: xLaw
+version: '3.18'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 15
+user_count: 4000
+release_date: '2024-09-19T21:54:39.000Z'
+size: 2.84MiB
+languages:
+  - eesti
+description: Adding legal information to EUR-Lex, Riigi Teataja, Riigikohus.ee, Likumi.lv
+publisher: ExtendLaw
+publisher_address: |-
+  Liivamäe 8-13
+  Tallinn, Harjumaa 10113
+  EE
+extension_website: xlaw.eu
+privacy_policy: https://xlaw.eu/en/privacypolicy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "xLaw",
+  "description": "Adding legal information to EUR-Lex, Riigi Teataja, Riigikohus.ee, Likumi.lv",
+  "version": "3.18",
+  "minimum_chrome_version": "104",
+  "permissions": [
+    "storage",
+    "scripting",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://xlaw.ee/"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "omnibox": {
+    "keyword": "x"
+  },
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "icons": {
+    "16": "img/16x16.png",
+    "32": "img/32x32.png",
+    "48": "img/48x48.png",
+    "128": "img/128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://xlaw.ee/*"
+      ],
+      "js": [
+        "dist/cs_xlaw_ee.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/akt/*",
+        "https://www.riigiteataja.ee/en/eli/*"
+      ],
+      "css": [
+        "css/buttons.css",
+        "css/font-inter.css",
+        "dist/cs_riigiteataja.css"
+      ],
+      "js": [
+        "dist/cs_riigiteataja.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigikohus.ee/lahendid*",
+        "https://www.riigikohus.ee/et/lahendid*"
+      ],
+      "css": [
+        "css/font-inter.css"
+      ],
+      "js": [
+        "dist/cs_riigikohus_permission.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://eur-lex.europa.eu/*"
+      ],
+      "css": [
+        "css/buttons.css",
+        "css/font-inter.css",
+        "dist/cs_eurlex.css"
+      ],
+      "js": [
+        "dist/cs_eurlex.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://curia.europa.eu/*"
+      ],
+      "js": [
+        "dist/cs_curia.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/kohtulahendid/detailid.html*"
+      ],
+      "css": [
+        "css/font-inter.css",
+        "css/buttons.css"
+      ],
+      "js": [
+        "dist/cs_kohtulahend_detailid.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/kohtulahendid/otsingutulemus.html*",
+        "https://www.riigiteataja.ee/kohtulahendite_liigitus.html*",
+        "https://www.riigiteataja.ee/akt_seosed_kohtulahenditega.html*"
+      ],
+      "js": [
+        "dist/cs_kohtulahendid.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.riigiteataja.ee/otsingu_tulemus.html*"
+      ],
+      "css": [
+        "dist/cs_riigiteataja_otsing.css"
+      ],
+      "js": [
+        "dist/cs_riigiteataja_otsing.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "img/16x16.png",
+      "32": "img/32x32.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "css/*",
+        "img/*",
+        "dist/*.css",
+        "dist/*.map"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

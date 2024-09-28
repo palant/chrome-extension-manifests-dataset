@@ -1,0 +1,63 @@
+---
+name: MedicoModded
+version: '118.1'
+category_slug: productivity/education
+rating: 5
+rating_count: 1
+user_count: 39
+release_date: '2024-09-05T15:19:02.000Z'
+size: 24.43KiB
+languages:
+  - English
+description: >-
+  Medicospira mods; Enables premium, copies question ids, fixes the wide
+  questions and removes annoying elements like the AI chat box
+publisher_account: Kira
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MedicoModded",
+  "version": "118.1",
+  "description": "Medicospira mods; Enables premium, copies question ids, fixes the wide questions and removes annoying elements like the AI chat box",
+  "permissions": [],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "world": "MAIN",
+      "all_frames": true,
+      "run_at": "document_idle",
+      "matches": ["*://*.medicospira.com/*"],
+      "js": ["injector.js"]
+    },
+    {
+      "matches": ["*://*.medicospira.com/*"],
+      "js": ["content.js"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://www.medicospira.com/uworld1/paypal/index.php",
+        "https://www.medicospira.com/uworld2/paypal/index.php",
+        "https://www.medicospira.com/uworld3/paypal/index.php"
+      ],
+      "js": ["redirect.js"]
+    },
+    {
+      "matches": ["*://*.medicospira.com/*exam.php*", "*://*.medicospira.com/*replay.php*"],
+      "css": ["exam-style.css"],
+      "js": ["exam-style.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
+  }
+}

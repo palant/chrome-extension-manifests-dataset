@@ -1,0 +1,152 @@
+---
+name: Fair AdBlocker MV3 (Beta)
+version: 2.1.10
+category_slug: productivity/workflow
+rating: 3
+rating_count: 2
+user_count: 1000
+release_date: '2023-04-18T07:51:16.000Z'
+size: 2.69MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - dansk
+  - eesti
+  - español
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - български
+  - עברית
+  - 日本語
+  - 한국어
+description: >-
+  Block annoying ads, popups, malware and tracking (even on Facebook & Youtube),
+  browse faster, and protect your privacy.
+publisher: Stands
+publisher_address: |-
+  Yosef Karo 7
+  Suit 22
+  Tel Aviv 6701407
+  Israel
+extension_website: standsapp.org
+support_website: https://support.standsapp.org/hc/en-us
+privacy_policy: https://www.standsapp.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "version": "2.1.10",
+    "manifest_version": 3,
+    "action": {
+        "default_icon": {
+            "19": "icons/19.png",
+            "38": "icons/38.png"
+        }, 
+        "default_popup": "index.html",
+        "default_title": "Fair AdBlocker"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "minimum_chrome_version": "108",
+    "permissions": [
+        "storage", "unlimitedStorage",
+        "activeTab", 
+        "scripting", "contextMenus", 
+        "alarms", "notifications",
+        "tabs",
+        "webRequest", "webNavigation",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback"
+    ],
+    "host_permissions": ["<all_urls>"],
+    "icons": {
+        "16": "icons/19.png",
+        "48": "icons/38.png",
+        "128": "icons/128.png"
+    },
+    "default_locale": "en",
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [ 
+                "content/core.js", 
+                "common/common.js",
+                "common/stndz.js",
+                "content/platform.js",
+                "content/messaging.js",
+                "content/doc-start.js"
+            ],
+            "match_about_blank": false,
+            "matches": [ "<all_urls>" ],
+            "run_at": "document_start"
+        }, {
+            "all_frames": false,
+            "js": [ "content/fb.js" ],
+            "match_about_blank": false,
+            "matches": [ "https://*.facebook.com/*" ],
+            "run_at": "document_end"
+        }, {
+            "all_frames": true,
+            "js": [ "content/yt.js" ],
+            "match_about_blank": false,
+            "matches": [ "https://*.youtube.com/*" ],
+            "run_at": "document_end"
+        }, {
+            "all_frames": true,
+            "js": [ "content/ph.js" ],
+            "match_about_blank": false,
+            "matches": [ "https://*.pornhub.com/*" ],
+            "run_at": "document_end"
+        }, {
+            "all_frames": true,
+            "js": [ "content/doc-end.js" ],
+            "match_about_blank": false,
+            "matches": [ "<all_urls>" ],
+            "run_at": "document_end"
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset_2",
+                "enabled": true,
+                "path": "declarativeNetRequests/ruleset_2.json"
+            },
+            {
+                "id": "ruleset_easylist",
+                "enabled": true,
+                "path": "declarativeNetRequests/ruleset_easylist.json"
+            }
+        ]
+    },
+    "web_accessible_resources": [ {
+        "matches": [ "<all_urls>" ],
+        "resources": [ 
+            "content/fromStore.js",
+            "content/basePageJS.js",
+            "content/popup-blocking.js", 
+            "content/youtubePageScript.js",
+            "content/pornhubPageScript.js",
+            "views/web_accessible/*" 
+        ]
+    } ]
+}

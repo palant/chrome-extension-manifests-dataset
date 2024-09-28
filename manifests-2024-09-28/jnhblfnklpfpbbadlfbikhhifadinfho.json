@@ -1,0 +1,91 @@
+---
+name: Senso Client
+version: 2.0.5.5
+category_slug: productivity/workflow
+rating: 1.394736842105263
+rating_count: 38
+user_count: 500000
+release_date: '2024-09-20T06:48:02.000Z'
+size: 197KiB
+languages:
+  - English (UK)
+description: The Senso.cloud Chromebook extension.
+publisher: Renato Software Ltd
+publisher_account: senso.cloud
+publisher_address: |-
+  11 High Street
+  Nottingham NG11 6DT
+  GB
+support_website: https://support.senso.cloud
+privacy_policy: https://www.senso.cloud/en-US/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Senso Client",
+  "description": "The Senso.cloud Chromebook extension.",
+  "version": "2.0.5.5",
+  "manifest_version": 2,
+  "minimum_chrome_version": "76",
+  "icons": {
+    "128": "/images/icon.png"
+  },
+  "storage": {
+    "managed_schema": "clientConfig.json"
+  },
+  "options_ui": {
+    "page": "/gui/config.html"
+  },
+  "background": {
+    "page": "background.html",
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "js": [ "gDocInjector.js" ],
+      "matches": [ "http://docs.google.com/document/*", "https://docs.google.com/document/*" ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [ "keyWatcher.js" ],
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "browser_action": {
+    "default_popup": "/gui/popup.html"
+  },
+  "incognito": "spanning",
+  "permissions": [
+    "alarms",
+    "desktopCapture",
+    "cookies",
+    "downloads",
+    "enterprise.deviceAttributes",
+    "enterprise.networkingAttributes",
+    "management",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "system.storage",
+    "identity",
+    "identity.email",
+    "tabs",
+    "storage",
+    "notifications"
+  ],
+  "oauth2": {
+    "client_id": "469012668272-3005m1rujagg04sq6s19fro3urf23sfh.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "web_accessible_resources": [
+    "gui/*",
+    "gDocSetFlags.js"
+  ]
+}

@@ -1,0 +1,97 @@
+---
+name: Paladin
+version: 1.0.9
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 21
+release_date: '2024-03-26T11:17:00.000Z'
+size: 16.12MiB
+languages:
+  - English
+description: Paladin Web3 Wallet - Your portal to the world of cryptocurrencies.
+publisher_account: MO Chain
+extension_website: getpaladin.org
+support_website: https://getpaladin.org
+privacy_policy: https://getpaladin.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Paladin",
+  "short_name": "Paladin",
+  "version": "1.0.9",
+  "description": "Paladin Web3 Wallet - Your portal to the world of cryptocurrencies.",
+  "author": "MO Chain",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "48": "icons/icon-48.png",
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Paladin"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "notifications",
+    "https://*.blockwallet.io/*",
+    "https://*.etherscan.io/*",
+    "https://*.bscscan.com/*",
+    "https://*.polygonscan.com/*"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "content.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://block-wallet.github.io/eth-ledger-bridge-keyring/*",
+        "https://connect.trezor.io/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "js": [
+        "vendor/trezor/trezor-content.js"
+      ],
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://*.blockwallet.io/*",
+    "https://*.etherscan.io/*",
+    "https://*.bscscan.com/*",
+    "https://*.polygonscan.com/*"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+O"
+      }
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["blankProvider.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "homepage_url": "https://getpaladin.org"
+}

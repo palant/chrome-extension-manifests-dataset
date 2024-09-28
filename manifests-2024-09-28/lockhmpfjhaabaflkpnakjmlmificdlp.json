@@ -1,0 +1,77 @@
+---
+name: PokeCard
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 2.3333333333333335
+rating_count: 3
+user_count: 66
+release_date: '2022-01-15T10:37:40.000Z'
+size: 21.04KiB
+languages:
+  - English (United States)
+description: Automatically verify and redeem Pokemon Trading Card Game (TCG) codes.
+publisher_account: VitCon
+publisher_address: |-
+  981/11 Cach Mang Thang Tam
+  Ho Chi Minh 700000
+  Vietnam
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "PokeCard",
+    "description": "Automatically verify and redeem Pokemon Trading Card Game (TCG) codes.",
+    "version": "1.0.2",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "declarativeNetRequest"
+    ],
+    "action": {
+        "default_popup": "page/popup.html",
+        "default_title": "Click to verify and redeem Pokemon TCG codes"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.pokemon.com/us/pokemon-trainer-club/enter-codes"
+            ],
+            "js": [
+                "js/content-script.js"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://www.pokemon.com/"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "js/page-context.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    },
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    }
+}

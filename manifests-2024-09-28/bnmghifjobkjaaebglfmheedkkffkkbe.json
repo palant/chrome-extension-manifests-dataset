@@ -1,0 +1,69 @@
+---
+name: ニコニ貢献ちょびっと補助ツール nikoni-koken-chobisup
+version: 1.0.2
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 131
+release_date: '2024-09-02T06:38:43.000Z'
+size: 59.05KiB
+languages:
+  - 日本語
+description: ニコニコ動画のニコニ貢献キャンペーンページで福引ページをまとめて新しいタブで開いたり、ニコニ貢献サポーターページの広告結果に追加データを表示したりするツール
+publisher_account: sbsbm10crab
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ニコニ貢献ちょびっと補助ツール nikoni-koken-chobisup",
+  "description": "ニコニコ動画のニコニ貢献キャンペーンページで福引ページをまとめて新しいタブで開いたり、ニコニ貢献サポーターページの広告結果に追加データを表示したりするツール",
+  "version": "1.0.2",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": [
+      "storage"
+  ],
+  "host_permissions": [
+    "https://koken.nicovideo.jp/campaign/*",
+    "https://blog.nicovideo.jp/",
+    "https://api.nicoad.nicovideo.jp/"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://koken.nicovideo.jp/campaign/*"],
+      "js": ["cs_CampaignOpen.js"],
+      "css": ["styles.css"]
+    },
+    {
+      "matches": [
+          "https://koken.nicovideo.jp/supporter/service/*",
+          "https://koken.nicovideo.jp/supporter/contents/*"
+      ],
+      "js": ["cs_DisplayAdResults.js"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

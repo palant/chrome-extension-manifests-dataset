@@ -1,0 +1,98 @@
+---
+name: Avaya Communicator for Web
+version: 1.0.20.2126
+category_slug: lifestyle/social
+rating: 4.344827586206897
+rating_count: 29
+user_count: 2000
+release_date: '2022-06-01T09:47:37.000Z'
+size: 3.91MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - Nederlands
+  - español
+  - español (Latinoamérica)
+  - italiano
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - ไทย
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: Avaya Communicator for Web
+publisher: Avaya Inc.
+publisher_account: Avaya
+publisher_address: |-
+  2605 Meridian Pkwy
+  Suite 200
+  Durham, NC 27713
+  US
+support_website: https://support.avaya.com/products/P1619/avaya-communicator-for-web/1.0.x
+privacy_policy: https://spaces.avayacloud.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "__MSG_extNameAvaya__",
+  "description": "__MSG_extNameAvaya__",
+  "default_locale": "en",
+  "version": "1.0.20.2126",
+  "icons": { "16": "img/avaya/16.png", "32": "img/avaya/32.png", "128": "img/avaya/128.png" },
+  "permissions": [ "notifications", "geolocation", "background", "management", "tabs", "idle", "http://*/*", "https://*/*", "https://esna.communications/*", "https://esna.communications.avaya/*" ],
+  "background": { "page": "app/avaya/background.html" },
+  "content_scripts": [ 
+    { "matches": [ "https://manage1.esna.com/oauth/token.redirect*", "https://sso.apps.avaya.com/clients/acweb/token.redirect*" ], "js": ["app/chrome/jsc.oauth2.inject.js"], "run_at": "document_start" },
+    { "matches": [ "http://*/*", "file://*/*", "https://*/*" ], "all_frames" : true, "run_at" : "document_end", "js" : [ "app/chrome/jsc.clicktodial.js" ], "css": [ "css/clicktodial.css" ]},
+    { "matches": [ "http://*/*", "file://*/*", "https://*/*" ], "all_frames" : true, "run_at" : "document_end", "js" : [ "app/chrome/jsc.tags.js" ], "css": [ "css/tags.css" ]},
+    { "matches": [ "https://*/sfcti/cti.bridge*.html*" ], "all_frames" : true, "run_at" : "document_end", "js" : [ "app/chrome/jsc.salesforce.js" ], "css": [ "css/salesforce.css" ] },
+    { "matches": [ "http://*/*", "file://*/*", "https://*/*" ], "all_frames" : false, "run_at" : "document_end", "js" : [ "app/chrome/jsc.popout.js" ], "css": [ "css/popout.css", "css3/inject.css" ]},
+    { "matches": [ "*://*.google.com/*/hovercard*" ], "all_frames" : true, "run_at": "document_start", "js": ["app/chrome/jsc.gmail.js"], "css": [ "css3/inject.css" ] },
+    { "matches": [ "https://teams.microsoft.com/*" ], "all_frames" : false, "run_at": "document_start", "js": ["app/chrome/jsc.teams.js"], "css": ["css3/teams.css"] },
+    {
+      "matches": [ "https://*.dynamics.com/*" ],
+      "js": [ 
+          "app/dynamics/js/d365-utils.js", 
+          "app/dynamics/js/d365-api.js", 
+          "app/dynamics/js/d365-watcher.js", 
+          "app/chrome/jsc.dynamics.js"
+      ],
+      "css": [ 
+        "app/dynamics/css/d365ext.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_idle"
+    }
+  ],
+  "browser_action": { "default_icon": "img/avaya/19d.png" },
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'; style-src 'self' 'unsafe-inline' https://static.apps.avaya.com; img-src 'self' 'unsafe-inline' data: http: https:;",
+  "web_accessible_resources": [ 
+    "img/avaya/32.png", 
+    "img/avaya/19.png", 
+    "img/avaya/p16.png", 
+    "img/avaya/p16h.png", 
+    "img/avaya/p16v.png", 
+    "img/common/event16.png", 
+    "img/common/esna.png", 
+    "app/avaya/app.html", 
+    "app/avaya/app3.html", 
+    "app/common/ntf.html", 
+    "jsc/chrome/jsc.popout.js", 
+    "css/popout.css", 
+    "css3/inject.css", 
+
+    "app/dynamics/js/d365-utils.js", 
+    "app/dynamics/js/d365-search.js", 
+    "app/dynamics/js/d365-driver.js", 
+    "app/dynamics/img/p16.png",
+    "app/dynamics/default-config.js"
+  ],
+  "commands": { "_execute_browser_action": { "suggested_key": { "windows": "Ctrl+Shift+I", "mac": "Ctrl+Shift+I", "chromeos": "Ctrl+Shift+I", "linux": "Ctrl+Shift+I" } } }
+}

@@ -1,0 +1,131 @@
+---
+name: Domesitka Utility
+version: 0.0.5
+category_slug: productivity/workflow
+rating: 1.7142857142857142
+rating_count: 7
+user_count: 1000
+release_date: '2023-08-13T07:09:36.000Z'
+size: 1.12MiB
+languages:
+  - English
+description: >-
+  Translate subtitles & download the courses on Domestika, Udemy, 21Draw and
+  more.
+publisher_account: nguyenxuancong.dev
+extension_website: save.courses
+privacy_policy: https://save.courses/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "version": "0.0.5",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "128": "icons/icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.domestika.org/*",
+        "https://*.udemy.com/*",
+        "https://*.21-draw.com/*"
+      ],
+      "js": [
+        "content/import-index.js"
+      ],
+      "css": [
+        "content/index.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.domestika.org/*my_courses"
+      ],
+      "js": [
+        "content/downloads/domestika/import-index.js"
+      ],
+      "css": [
+        "content/downloads/domestika/index.css"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "scripting",
+    "downloads",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "https://*.domestika.org/*",
+    "https://*.udemy.com/*",
+    "https://*.21-draw.com/*",
+    "https://translate.googleapis.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "shared/inceptor1.js"
+      ],
+      "matches": [
+        "https://*.domestika.org/*",
+        "https://*.udemy.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "shared/21draw.js"
+      ],
+      "matches": [
+        "https://*.21-draw.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "images/*",
+        "options/index.html",
+        "shared/offscreen.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content/index.js",
+        "content/downloads/domestika/index.js"
+      ],
+      "matches": [
+        "https://*.domestika.org/*",
+        "https://*.udemy.com/*",
+        "https://*.21-draw.com/*",
+        "https://translate.googleapis.com/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://save.courses/*"
+    ]
+  }
+}

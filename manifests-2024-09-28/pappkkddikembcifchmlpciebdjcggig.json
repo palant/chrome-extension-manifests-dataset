@@ -1,0 +1,109 @@
+---
+name: Kloojj
+version: 2.5.1
+category_slug: lifestyle/social
+rating: 5
+rating_count: 8
+user_count: 43
+release_date: '2021-08-12T08:41:24.000Z'
+size: 232KiB
+languages:
+  - English (United States)
+description: >-
+  Users can Bookmark Web Pages, Bookmark & Clip YouTube videos for their future
+  reference.
+publisher_account: Kloojj
+extension_website: www.kloojj.com
+privacy_policy: https://kloojj.com/legal?t=privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Kloojj",
+  "description": "Users can Bookmark Web Pages, Bookmark & Clip YouTube videos for their future reference.",
+  "icons": {
+    "128": "app/assets/images/extension-Kloojj-128.png",
+    "48": "app/assets/images/extension-Kloojj-48.png",
+    "32": "app/assets/images/extension-Kloojj-32.png",
+    "16": "app/assets/images/extension-Kloojj-16.png"
+  },
+  "version": "2.5.1",
+  "manifest_version": 2,
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q",
+        "mac": "MacCtrl+Shift+Q"
+      },
+      "description": "Opens popup.html"
+    },
+    "toggleNotePanel": {
+      "suggested_key": {
+        "default": "Ctrl+K",
+        "windows": "Ctrl+M",
+        "mac": "Command+K"
+      },
+      "description": "Toggle kloojj note panel"
+    }
+  },
+  "background": {
+    "scripts": [
+      "app/scripts/library/commonGlobals.js",
+      "app/scripts/backgroundScript/backgroundGlobals.js",
+      "app/scripts/backgroundScript/background.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "activeTab",
+    "http://*/*",
+    "https://*/"
+  ],
+  "browser_action": {
+    "default_popup": "app/popup/popup.html",
+    "default_icon": "app/assets/images/extension-Kloojj-128.png",
+    "detault_title": "Kloojj"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "exclude_matches": [
+        "*://localhost:*/*",
+        "*://*.kloojj.com/*"
+      ],
+      "css": [
+        "app/assets/css/style.css",
+        "app/assets/fonts/az-ext-font.css"
+      ],
+      "all_frames": true,
+      "js": [
+        "app/scripts/library/jquery.min.js",
+        "app/scripts/library/commonGlobals.js",
+        "app/scripts/contentScript/contentGlobals.js",
+        "app/scripts/contentScript/youtube.js",
+        "app/scripts/contentScript/html5Video.js",
+        "app/scripts/contentScript/content.js",
+        "app/scripts/contentScript/commonMessageHandler.js",
+        "app/scripts/contentScript/embeddedParent.js",
+        "app/scripts/contentScript/embedded.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "app/html/actionControls.html",
+    "app/html/toaster.html",
+    "app/assets/fonts/*.eot",
+    "app/assets/fonts/*.svg",
+    "app/assets/fonts/*.ttf",
+    "app/assets/fonts/*.woff",
+    "app/assets/svg/*.svg",
+    "app/assets/images/*"
+  ],
+  "options_page": "app/options/options.html"
+}

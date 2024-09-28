@@ -1,0 +1,79 @@
+---
+name: 'Clove: Carbon Offset for Online Shopping'
+version: 1.2.4
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 15
+release_date: '2022-09-26T06:46:19.000Z'
+size: 952KiB
+languages:
+  - English (United States)
+description: Offsetting Your Carbon Emissions From Online Purchases
+publisher: Clove
+publisher_address: |-
+  3670 Rollingside Dr
+  San Jose, CA 95148
+  US
+extension_website: joinclove.org
+privacy_policy: https://joinclove.org/privacyPolicy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2.4",
+  "name": "Clove: Carbon Offset for Online Shopping",
+  "description": "Offsetting Your Carbon Emissions From Online Purchases",
+  "action": {
+    "default_popup": "./popup.html",
+    "default_title": "Clove"  
+  },
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "host_permissions":[
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.amazon.com/*"
+      ],
+      "js": [
+        "cartMoneyExtract.js",
+        "productMoneyCO2.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./src/icons/icon16.png",
+    "32": "./src/icons/icon32.png",
+    "48": "./src/icons/icon48.png",
+    "128": "./src/icons/icon128.png"
+  },
+  "options_page": "options.html",
+  "oauth2": {
+    "client_id": "579159556398-53u9ikvrnld36mh8h5kj0tt8nr5at2e8.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "web_accessible_resources": [{
+    "resources": ["./src/popup/google-icon.png", "src/popup/firebase_config.js", "firebase/database"], 
+    "matches": ["<all_urls>"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://music.yandex.ru/;"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAz6l3Q4+OFZsTjXBGymJNAmuiKEWLtvM6cByf4jsG1zAxGNYhDts4lbAeRaKIjj6KaMbm0eSuJs7WnZbJyRHFapICIJ91X0Ks8qSdk5U4+cUaae+syiHRXJHZjHviXN6a3oAyfuB9S1KtQ6O/mZ7wvvVNHEsgi/QQG5i7eK2O53k5aPM/gtyjUD+QOUgG0MJg3YX501pKHzI5orptGfgWIBtJxi3ywD0EqEObX5Gd2GzMEReN0eupdRNhi18Kvzu7usaAqZ/V5OA6C/OxF0W+64FsAa9LsRuw+u93hPJfhoJljrh4Hv7vXB07nrWG40cL8ZfoOXGeUBKik37PKDpPgQIDAQAB"
+}

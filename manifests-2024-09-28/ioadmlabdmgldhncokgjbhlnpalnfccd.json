@@ -1,0 +1,133 @@
+---
+name: Quizbot
+version: 2.0.2.81
+category_slug: productivity/workflow
+rating: 3
+rating_count: 4
+user_count: 40000
+release_date: '2024-07-18T13:58:31.000Z'
+size: 573KiB
+languages:
+  - English
+description: Generates quizzes based off of text in the page.
+publisher: Don Johnston Incorporated
+publisher_address: |-
+  500 Unicorn Park Dr
+  Woburn, MA 01801
+  US
+extension_website: quizbot.com
+support_website: http://help.donjohnston.net
+privacy_policy: >-
+  https://login.donjohnston.net/tos/privacy-policy/educator-dashboard?rtm=a77ec891d9428e732720e7fbf7154d0e-44e01994ac5e4e43a16c4dccb013ece0
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Quizbot",
+    "version": "2.0.2.81",
+    "description": "Generates quizzes based off of text in the page.",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqDSIZFkeS6GXbxjoigXcotlHNBwFUmVjv61tC18C3HQWq09DLRTiRye81rz9tg/XK7zwdk4U+0r299+RSbmFSUvwGKgILyF3t/KGan6mbHrOKguuelfM46uXSUxke/PVSwomQhNn48zSHb1xyn1USUyeLoHlkY6gAmATpLTlK9jk8e463nchEA7LBwglSpTvo1aGDsr2H8dx4cwuMxos4UsKZ901VgotH5+XEU26kKLg+kmkuTv+y+u1rHy6zUW4jLUToEPcLZ4uJcQqDTSChxx9RiIXNmdR5+ta8wF3W7+3eBJZWzDEHU6Wv5u7TQ3pfmE5aIOK11gdrghOvBHeDQIDAQAB",
+    "icons": {
+        "16": "resources/icons/ttqActive_19.png",
+        "48": "resources/icons/ttqActive_38.png",
+        "128": "resources/icons/ttqActive_57.png"
+    },
+    "action": {
+        "default_icon": {
+            "19": "resources/icons/ttqActive_19.png"
+        },
+        "default_title": "Quizbot"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_matches": [
+                "https://accounts.google.com/*",
+                "https://read.learningally.org/*"
+            ],
+            "js": [
+                "thirdParty/jquery/jquery.min.js",
+                "common/core-libs.js",
+                "content/content-script-bundle.js"
+            ],
+            "css": [
+                "content/content.css"
+            ]
+        },
+        {
+            "all_frames": false,
+            "matches": [
+                "https://docs.google.com/document/create",
+                "https://docs.google.com/document/create?*",
+                "https://docs.google.com/document/u/*/create",
+                "https://docs.google.com/document/u/*/create?*",
+                "https://docs.google.com/document/u/*/d/*",
+                "https://docs.google.com/document/d/*"
+            ],
+            "js": [
+                "WebExtensions/preloads/gdocs-preload.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "background": {
+        "service_worker": "background-service.js",
+        "type": "module"
+    },
+    "permissions": [
+        "identity",
+        "tabs",
+        "scripting",
+        "notifications",
+        "unlimitedStorage",
+        "webRequest",
+        "storage"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "resources/icons/ttqActive_19.png",
+                "content/verify-google-account.html",
+                "content/google-granular-permissions.html",
+                "https://fonts.googleapis.com/*",
+                "libs/core-lib-gdocs-canvas.js",
+                "libs/google-docs-integration.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "ids": [
+            "ifajfiofeifbbhbionejdliodenmecna",
+            "mloajfnmjckfjbeeofcdaecbelnblden",
+            "cbcfbhjolgdaepkoaoepejclfggmdand"
+        ],
+        "matches": [
+            "https://quizbot.com/*",
+            "https://quizbot.stagedji.com/*",
+            "https://quizbot.qadji.com/*",
+            "https://*.devdji.com/*"
+        ]
+    },
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'none';"
+    },
+    "oauth2": {
+        "client_id": "259961381140-3oilm53a6rbhg6do943m2s4mh7sv7108.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/forms",
+            "https://www.googleapis.com/auth/drive"
+        ]
+    }
+}

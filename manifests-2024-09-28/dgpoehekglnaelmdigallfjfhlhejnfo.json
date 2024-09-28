@@ -1,0 +1,67 @@
+---
+name: Simply Dark
+version: 1.2.0
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-09-19T05:12:22.000Z'
+size: 32.54KiB
+languages:
+  - English
+description: A simple dark mode extension for Chrome
+publisher_account: jparkerweb
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Simply Dark",
+  "version": "1.2.0",
+  "description": "A simple dark mode extension for Chrome",
+  "author": "Justin Parker",
+  "permissions": ["activeTab", "storage", "tabs"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Turn Simply Dark on or off per website",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "content_security_policy": {
+    "script-src": "self",
+    "object-src": "self"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["earlyDarkMode.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["dark-mode.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "commands": {
+    "toggle-dark-mode": {
+      "description": "Toggle dark mode for current domain"
+    }
+  }
+}

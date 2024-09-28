@@ -1,0 +1,55 @@
+---
+name: SPYPRO
+version: '2.1'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 246
+release_date: '2023-08-05T07:36:06.000Z'
+size: 118KiB
+languages:
+  - English (United States)
+description: The easiest way to learn from top Etsy sellers - SPYPRO.IO
+publisher_account: SPYPRO.IO
+support_website: https://spyproio.tawk.help/
+privacy_policy: https://spypro.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "SPYPRO",
+ "version": "2.1",
+ "description": "The easiest way to learn from top Etsy sellers - SPYPRO.IO",
+ "permissions": ["tabs","webRequest","storage","cookies", "activeTab"],
+ "host_permissions": ["https://*/*","*://spypro.io/*","*://*.etsy.com/*"],
+ "icons": { "16": "images/spypro.png", "48": "images/spypro.png", "128": "images/spypro.png" },
+ "web_accessible_resources": [{ 
+   "resources": ["images/spypro.png","images/loading.gif","spypro.html"],
+   "matches": ["<all_urls>"]
+ }],
+ "action":{
+    "default_title": "SPYPRO",
+    "default_icon": "images/spypro.png",
+    "default_popup": "popup.html"
+ },
+ "content_scripts": [{
+  "js": [
+   "js/jquery.min.js", 
+   "js/content.js",
+   "js/import_shop.js"
+  ],
+  "css": [
+   "css/style.css"
+  ],
+  "matches": ["*://*.etsy.com/listing/*", "*://*.etsy.com/c/*","*://*.etsy.com/search*","*://*.etsy.com/people*","*://*.etsy.com/market*","*://*.etsy.com/*"],
+  "run_at": "document_end"
+ }],
+ "background":{
+  "service_worker": "js/background.js","type": "module"
+ },
+ "content_security_policy":{
+   "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "manifest_version": 3
+}

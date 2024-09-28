@@ -1,0 +1,94 @@
+---
+name: Valosan GMail Extension
+version: 1.71.618.1702
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 22
+release_date: '2024-06-19T07:31:46.000Z'
+size: 990KiB
+languages:
+  - English
+description: Easily pitch to your contacts from Valosan app.
+publisher: Valosan Oy
+publisher_address: |-
+  Eerikinkatu 28, 9th floor
+  Helsinki 00180
+  FI
+extension_website: valosan.com
+support_website: https://valosan.com/faq
+privacy_policy: https://valosan.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Valosan GMail Extension",
+  "short_name": "valosan-gmail-extension",
+  "version": "1.71.618.1702",
+  "author": "Ruslan Gainutdinov <ruslan@sanfrancisco.fi>",
+  "description": "Easily pitch to your contacts from Valosan app.",
+  "homepage_url": "https://valosan.com",
+
+  "action": {
+    "default_icon": {
+      "16": "images/valosan-icon-16x16-rounded-box.png",
+      "32": "images/valosan-icon-32x32-rounded-box.png",
+      "64": "images/valosan-icon-64x64-rounded-box.png",
+      "128": "images/valosan-icon-128x128-rounded-box.png",
+      "256": "images/valosan-icon-256x256-rounded-box.png"
+    },
+    "default_title": "Valosan GMail Extension",
+    "default_popup": "popup.html"
+  },
+
+  "icons": {
+    "16": "images/valosan-icon-16x16-rounded-box.png",
+    "32": "images/valosan-icon-32x32-rounded-box.png",
+    "64": "images/valosan-icon-64x64-rounded-box.png",
+    "128": "images/valosan-icon-128x128-rounded-box.png",
+    "256": "images/valosan-icon-256x256-rounded-box.png"
+  },
+
+  "background": {
+    "scripts": ["src/background.js"],
+    "service_worker": "src/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["src/valosanExtension.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["src/*", "assets/*", "images/*"],
+      "matches": ["*://*/*"],
+      "use_dynamic_url": true
+    }
+  ],
+
+  "permissions": ["storage", "declarativeNetRequest", "declarativeNetRequestFeedback"],
+
+  "host_permissions": [
+    "*://mail.google.com/*",
+    "*://*.googleusercontent.com/proxy/*",
+    "*://*.googleusercontent.com/meips/*",
+    "*://p.valosan.com/*",
+    "*://pdev.valosan.com/*"
+  ],
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

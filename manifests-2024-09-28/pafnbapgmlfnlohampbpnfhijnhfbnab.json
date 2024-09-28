@@ -1,0 +1,130 @@
+---
+name: idemeum for chrome
+version: 2.12.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 199
+release_date: '2024-08-28T11:37:39.000Z'
+size: 1.38MiB
+languages:
+  - English (United States)
+description: Passwordless login platform
+publisher: idemeum
+publisher_address: |-
+  830 Stewart Drive
+  Suite 229
+  Sunnyvale, CA 94085
+  US
+support_website: https://idemeum.com/contact/
+privacy_policy: https://docs.idemeum.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "idemeum for chrome",
+    "description": "Passwordless login platform",
+    "version": "2.12.1",
+    "manifest_version": 3,
+    "icons": {
+        "16": "/assets/images/idemeum16.png",
+        "32": "/assets/images/idemeum32.png",
+        "48": "/assets/images/idemeum48.png",
+        "128": "/assets/images/idemeum128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "connect-src 'self' https://*.idemeum.com https://*.idemeum.in https://*.idemeumlab.com ; child-src 'self' data:; script-src 'self';style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; object-src 'self';"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "exclude_matches": [
+                "https://*.idemeum.com/adminportal/*",
+                "https://*.idemeum.in/adminportal/*",
+                "https://*.idemeumlab.com/adminportal/*",
+                "https://*.idemeum.com/userportal/*",
+                "https://*.idemeum.in/userportal/*",
+                "https://*.idemeumlab.com/userportal/*",
+                "https://*.idemeum.com/saml/*",
+                "https://*.idemeum.in/saml/*",
+                "https://*.idemeumlab.com/saml/*"
+            ],
+            "js": [
+                "lib/locking.js",
+                "assets/js/jquery-3.6.0.min.js",
+                "autofill/autofill.js",
+                "autofill/autofiller.js",
+                "autofill/notificationBar.js",
+                "contentscript/inlineMenuLoader.js",
+                "contentscript/appManagerLoader.js",
+                "contentscript/idleListener.js",
+                "lib/passwordGenerator.js"
+            ],
+            "css": [
+                "assets/css/custom.css"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://*.idemeum.in/*",
+                "https://*.idemeum.com/*",
+                "https://*.idemeumlab.com/*"
+            ],
+            "js": [
+                "contentscript/portalScript.js",
+                "contentscript/idleListener.js",
+                "contentscript/common.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "background.html",
+        "default_icon": {
+            "16": "/assets/images/idemeum16.png",
+            "32": "/assets/images/idemeum32.png",
+            "48": "/assets/images/idemeum48.png",
+            "128": "/assets/images/idemeum128.png"
+        }
+    },
+    "permissions": [
+        "storage",
+        "alarms",
+        "idle",
+        "tabs",
+        "nativeMessaging"
+    ],
+    "host_permissions": [
+        "https://*/*",
+        "https://*.idemeum.com/*",
+        "https://*.idemeum.in/*",
+        "https://*.idemeumlab.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "drop-down/drop-down.html",
+                "app-manager/app-manager.html",
+                "inline-indicator/inline-indicator.html",
+                "notification/notification.html",
+                "/assets/images/*"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "file:///*"
+            ],
+            "use_dynamic_url": true
+        }
+    ]
+}

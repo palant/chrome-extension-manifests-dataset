@@ -1,0 +1,59 @@
+---
+name: Deskmy
+version: 1.5.1
+category_slug: productivity/communication
+rating: 5
+rating_count: 5
+user_count: 39
+release_date: '2024-03-05T02:10:25.000Z'
+size: 1.54MiB
+languages:
+  - português (Brasil)
+description: Toggle deskmy functions outside the tab and update the active app status
+publisher_account: Gabriel Evaristo
+extension_website: deskmy.com
+privacy_policy: https://deskmy.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Deskmy",
+  "version": "1.5.1",
+  "description": "Toggle deskmy functions outside the tab and update the active app status",
+  "permissions": ["tabs", "scripting", "storage"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "img/logo96.png",
+    "48": "img/logo192.png",
+    "128": "img/logo512.png"
+  },
+  "host_permissions": [
+    "*://*.app.deskmy.com/*",
+    "*://*.dashboard.deskmy.com/*",
+    "*://*.develop--deskmy.netlify.app/*",
+    "http://localhost:3000/"
+  ],
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "listeners.js"
+  },
+  "content_scripts": [
+    {
+      "match_about_blank": true,
+      "matches": ["<all_urls>"],
+      "js": ["livekitStatic/dist/livekit-client.umd.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.app.deskmy.com/*",
+      "*://*.dashboard.deskmy.com/*",
+      "*://*.develop--deskmy.netlify.app/*",
+      "http://localhost:3000/"
+    ]
+  }
+}

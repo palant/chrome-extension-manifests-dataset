@@ -1,0 +1,86 @@
+---
+name: bilimap
+version: 1.4.0
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 26
+release_date: '2023-04-18T13:30:27.000Z'
+size: 155KiB
+languages:
+  - 中文 (简体)
+description: 在B站视频页面生成弹幕图表, 展示符合特定规则的弹幕在某一时刻的数量。
+publisher_account: nightstreamheart
+support_website: https://nightstream.github.io/bilimap/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "bilimap",
+    "version": "1.4.0",
+    "manifest_version": 3,
+    "description": "在B站视频页面生成弹幕图表, 展示符合特定规则的弹幕在某一时刻的数量。",
+    "icons": {
+        "128": "icon/icon.png"
+    },
+    "action": 
+    {
+        "default_icon": "icon/icon.png",
+        "default_title": "bilimap",
+        "default_popup": "popup/popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.bilibili.com/video*",
+                "https://*.bilibili.com/bangumi*"
+            ],
+            "js": [
+                "content/bignumber.js",
+                "content/echarts.min.js",
+                "content/func.js",
+                "content/main.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://*.bilibili.com/video*",
+                "https://*.bilibili.com/bangumi*"
+            ],
+            "js": [
+                "content/regvideoevent.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [ "page/pagevideoinfo.js", "page/pagevideoaction.js" ],
+            "matches": [
+                "https://*.bilibili.com/*"
+            ]
+        }
+    ],
+    "omnibox": { "keyword" : "bav" },
+    "permissions": [
+        "activeTab",
+        "contextMenus",
+        "downloads",
+        "scripting",
+        "storage",
+        "tabs",
+        "unlimitedStorage"
+    ],
+    "host_permissions": [
+        "https://*.bilibili.com/*"
+    ],
+    "externally_connectable": {
+     "matches": ["*://*.bilibili.com/*"]
+    },
+    "homepage_url": "https://github.com/nightstream/bilimap"
+}

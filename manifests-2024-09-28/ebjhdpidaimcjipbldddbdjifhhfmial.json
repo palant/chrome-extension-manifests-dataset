@@ -1,0 +1,85 @@
+---
+name: Stanford Social Media Feed Analyzer
+version: 0.2.6
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 370
+release_date: '2024-09-25T22:17:55.000Z'
+size: 878KiB
+languages:
+  - English (United States)
+description: >-
+  A browser extension used for research purposes that collects some tweets from
+  your Twitter feed.
+publisher_account: Farnaz Jahanbakhsh
+privacy_policy: >-
+  https://docs.google.com/document/d/1P0bNRvcAxoDpcpE7EOf9xxY2oq-f_HCVEFHg_3E5bVU/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Stanford Social Media Feed Analyzer",
+  "version": "0.2.6",
+  "description": "A browser extension used for research purposes that collects some tweets from your Twitter feed.",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png",
+    "512": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js",
+        "dist/contentScripts/config.js",
+        "dist/contentScripts/libs/jquery.min.js",
+        "dist/contentScripts/libs/client.js",
+        "dist/contentScripts/libs/timeme.min.js",
+        "dist/contentScripts/libs/utils.js",
+        "dist/contentScripts/events.js",
+        "dist/contentScripts/logic.js",
+        "dist/contentScripts/launcher.js"
+      ],
+      "css": [
+        "public/main.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/injected.js"
+      ],
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost:3303; object-src 'self'"
+  }
+}

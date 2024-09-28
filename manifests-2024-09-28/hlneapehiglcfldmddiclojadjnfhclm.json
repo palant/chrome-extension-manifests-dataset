@@ -1,0 +1,83 @@
+---
+name: Adblock - best ad blocker
+version: 1.0.0
+category_slug: productivity/tools
+rating: 4
+rating_count: 1
+user_count: 796
+release_date: '2023-12-21T10:39:04.000Z'
+size: 1.5MiB
+languages:
+  - English
+description: Block ads and pop-ups on YouTube, spotify, Twitch, and your favorite websites.
+publisher_account: Odd Extensions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Adblock - best ad blocker",
+  "description": "Block ads and pop-ups on YouTube, spotify, Twitch, and your favorite websites.",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "bestadblocker16.png",
+    "48": "bestadblocker48.png",
+    "128": "bestadblocker128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Adblock - best ad blocker",
+    "default_icon": "bestadblocker16.png"
+  },
+  "permissions": ["declarativeNetRequest", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["https://*.twitch.tv/*"],
+      "js": ["adRemove.js", "removeTwitchAds.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["contentScriptSpotify.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["Youtube.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["adRemove.js", "removeTwitchAds.js"],
+      "matches": ["https://*.twitch.tv/*"]
+    },
+    {
+      "resources": [
+        "contentScriptSpotify.js",
+        "adsSweetalertSpotify.js",
+        "adsAdsRemoveSpotify.js",
+        "adswsHooksSpotify.js"
+      ],
+      "matches": ["https://open.spotify.com/*"]
+    }
+  ]
+}

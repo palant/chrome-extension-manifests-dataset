@@ -1,0 +1,77 @@
+---
+name: Mojo - Automatic Coupons at Checkout
+version: 3.2.0
+category_slug: lifestyle/shopping
+rating: 4.833333333333333
+rating_count: 72
+user_count: 5000
+release_date: '2024-01-03T14:02:29.000Z'
+size: 2.51MiB
+languages:
+  - Deutsch
+  - English
+  - English (Australia)
+  - English (UK)
+  - English (United States)
+  - Français
+description: Mojo automatically applies the best coupon codes at checkout!
+publisher_account: developer
+extension_website: mojocart.com
+privacy_policy: https://www.mojocart.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "version": "3.2.0",
+  "description": "__MSG_description__",
+  "icons": {
+    "16": "images/icons/icon16.png",
+    "48": "images/icons/icon48.png",
+    "128": "images/icons/icon128.png"
+  },
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_globs": [
+        "*://*facebook.*/*",
+        "*://*google.*/*",
+        "*://*youtube.*/*",
+        "*://*wikipedia.*/*",
+        "*://*instagram.*/*",
+        "*://*pinterest.*/*",
+        "*://*twitter.*/*"
+      ],
+      "js": ["content.js", "feature.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "all_frames": false,
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["scripts/support.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": ["cookies", "storage", "webRequest", "scripting"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_icon": "images/logo_gray@2x.png",
+    "default_title": "__MSG_name__"
+  },
+  "default_locale": "en_US",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["pages/*", "images/*", "fonts/*", "css/*", "scripts/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

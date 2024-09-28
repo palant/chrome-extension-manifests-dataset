@@ -1,0 +1,92 @@
+---
+name: JobPad Chrome Extension
+version: 4.3.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 29
+release_date: '2024-08-26T14:38:17.000Z'
+size: 199KiB
+languages:
+  - English (United States)
+description: >-
+  Your job search companion. Save and track jobs with AI customization. We think
+  you're gonna like it here.
+publisher_account: JobPad
+extension_website: myjobpad.com
+privacy_policy: https://myjobpad.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JobPad Chrome Extension",
+  "description": "Your job search companion. Save and track jobs with AI customization. We think you're gonna like it here.",
+  "version": "4.3.3",
+  "homepage_url": "https://mydev.jobpad.app/",
+  "incognito": "not_allowed",
+  "icons": {
+    "16": "assets/JobPadIcon16.png",
+    "32": "assets/JobPadIcon32.png",
+    "48": "assets/JobPadIcon48.png",
+    "128": "assets/JobPadIcon128.png"
+  },
+  "action": {
+    "default_title": "JobPad"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "optional_permissions": [],
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/uiTabManager.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://dashboard.myjobpad.com/u/*"
+      ],
+      "exclude_matches": [
+        "https://dashboard.myjobpad.com/u/goodbye"
+      ],
+      "js": [
+        "scripts/jobPadLogin.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://dashboard.myjobpad.com/u/logout",
+        "https://dashboard.myjobpad.com/u/goodbye"
+      ],
+      "js": [
+        "scripts/jobPadLogout.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://dashboard.myjobpad.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

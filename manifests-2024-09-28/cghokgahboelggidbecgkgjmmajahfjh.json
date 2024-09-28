@@ -1,0 +1,158 @@
+---
+name: Raspa
+version: 0.0.9
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 34
+release_date: '2023-03-17T07:23:50.000Z'
+size: 920KiB
+languages:
+  - English (UK)
+description: >-
+  Unleash your social media detective skills with our Chrome extension, the
+  ultimate companion for exploring your favorite platforms!
+publisher: Raspa.io
+publisher_account: admin
+publisher_address: |-
+  1225 Av. Juan Ponce de León
+  Suite MZ-4
+  San Juan 00907
+  PR
+extension_website: raspa.io
+support_website: https://raspa.io
+privacy_policy: https://raspa.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Raspa",
+    "description": "Unleash your social media detective skills with our Chrome extension, the ultimate companion for exploring your favorite platforms!",
+    "version": "0.0.9",
+    "background": {
+        "service_worker": "/background.js"
+    },
+    "options_page": "options.html",
+    "permissions": [
+        "https://*/*",
+        "<all_urls>",
+        "tabs",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://*/*"
+    ],
+    "icons": {
+        "48": "img/img.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.instagram.com/*",
+                "https://*.twitter.com/*",
+                "https://*.tiktok.com/*",
+                "https://*.youtube.com/*",
+                "https://*.twitch.tv/*",
+                "https://*.facebook.com/*",
+                "https://*.pinterest.com/*",
+                "https://podcasts.google.com/*",
+                "https://podcasts.apple.com/*",
+                "https://*.spotify.com/*"
+            ],
+            "js": ["injectScript.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://*.instagram.com/*",
+                "https://*.twitter.com/*",
+                "https://*.tiktok.com/*",
+                "https://*.youtube.com/*",
+                "https://*.twitch.tv/*",
+                "https://*.facebook.com/*",
+                "https://*.pinterest.com/*",
+                "https://podcasts.google.com/*",
+                "https://podcasts.apple.com/*",
+                "https://*.spotify.com/*"
+            ],
+            "js": ["urlactions.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://*.instagram.com/*"],
+            "js": ["IGContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.instagram.com/*"],
+            "js": ["instagram/pageObserver.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.twitter.com/*"],
+            "js": ["TwitterContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.twitter.com/*"],
+            "js": ["twitter/pageObserver.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.tiktok.com/*"],
+            "js": ["TiktokContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.tiktok.com/*"],
+            "js": ["tiktok/pageObserver.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.youtube.com/*"],
+            "js": ["YoutubeContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.youtube.com/*"],
+            "js": ["youtube/pageObserver.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["https://*.twitch.tv/*"],
+            "js": ["TwitchContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.twitch.tv/*", "https://*.youtube.com/*", "https://*.spotify.com/*", "https://*.tiktok.com/*"],
+            "js": ["injectFetch.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://*.facebook.com/*"],
+            "js": ["facebook/index.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.pinterest.com/*"],
+            "js": ["PinterestContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://podcasts.google.com/*"],
+            "js": ["GooglePodcastsContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://podcasts.apple.com/*"],
+            "js": ["ApplePodcastsContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.spotify.com/*"],
+            "js": ["SpotifyPodcastsContentScript.js", "overlay.js"]
+        },
+        {
+            "matches": ["https://*.raspa.io/*", "http://*.raspa.io/*"],
+            "js": ["InstallationCheck.js"]
+        }
+    ],
+
+    "web_accessible_resources": [{
+        "resources": ["xhr.js", "fonts/*", "IGPageScript.js", "tiktok/TiktokPageScript.js", "fetch.js", "YouTubePageScript.js"],
+        "matches": ["<all_urls>"]
+    }]
+}

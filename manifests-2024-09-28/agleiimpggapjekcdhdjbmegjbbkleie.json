@@ -1,0 +1,78 @@
+---
+name: Ground News - Bias Checker
+version: 3.1.2
+category_slug: lifestyle/news
+rating: 4.260869565217392
+rating_count: 46
+user_count: 30000
+release_date: '2023-10-12T04:50:25.000Z'
+size: 1.14MiB
+languages:
+  - English
+description: Explore the web and lookup articles you find on Ground News
+publisher: Snapwise Inc
+publisher_account: Ground News
+publisher_address: |-
+  151 Charles St W, Suite 199
+  Kitchener, ON N2G 1H6
+  CA
+extension_website: ground.news
+support_website: https://ground.news/frequently-asked-questions
+privacy_policy: https://ground.news/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ground News - Bias Checker",
+  "version": "3.1.2",
+  "description": "Explore the web and lookup articles you find on Ground News",
+  "icons": {
+    "16": "16.png",
+    "32": "32.png",
+    "48": "48.png",
+    "128": "128.png"
+  },
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["https://extension.ground.news/*"],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/vendor.js", "js/content_script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://ground.news/extension/*/toolbar*"],
+      "js": ["js/toolbar_content_script.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "frame.html",
+      "js/frame.js",
+      "popup.html",
+      "js/popup.js"
+    ],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "action": {
+    "default_icon": {
+      "16": "16.png",
+      "32": "32.png",
+      "48": "48.png",
+      "128": "128.png"
+    },
+    "default_title": "Ground News Explorer",
+    "default_popup": "menu.html"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.ground.news/*"]
+  },
+  "manifest_version": 3
+}

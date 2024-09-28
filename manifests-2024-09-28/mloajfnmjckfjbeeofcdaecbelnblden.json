@@ -1,0 +1,310 @@
+---
+name: Snap&Read
+version: 5.0.10.807
+category_slug: make_chrome_yours/accessibility
+rating: 2.700854700854701
+rating_count: 117
+user_count: 4000000
+release_date: '2024-09-26T12:28:59.000Z'
+size: 33.98MiB
+languages:
+  - English
+description: >-
+  Text reader (TTS) that simplifies vocabulary, translates text, reads
+  inaccessible text (OCR), and captures and cites sources.
+publisher: Don Johnston Incorporated
+publisher_address: |-
+  500 Unicorn Park Dr
+  Woburn, MA 01801
+  US
+extension_website: snapandread.com
+support_website: http://help.donjohnston.net/snapandread-universal
+privacy_policy: >-
+  https://login.donjohnston.net/tos/privacy-policy/educator-dashboard?rtm=a77ec891d9428e732720e7fbf7154d0e-44e01994ac5e4e43a16c4dccb013ece0
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Snap&Read",
+    "version": "5.0.10.807",
+    "manifest_version": 3,
+    "minimum_chrome_version": "109",
+    "description": "Text reader (TTS) that simplifies vocabulary, translates text, reads inaccessible text (OCR), and captures and cites sources.",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiRO0IGCVxw4QaDNovl6gsRAHOMvW2MzzvixIc5/NM5BnA+AQpdOjxQSg06mTMKvsZo5xmay4Kq0gpjl4LoNrr0DEHI5kDdr0MF/7qo+IdlB2gwpvMQcO/2rCfV8CrUAxe/f39PRtPDE165WorOQLsVCbUHqFvsj/6J8IGxI2LUFLX76P+IFnmADMthv2AWj6J7WQx1ImKXzIX+DYr4Igz9N5yE8SLFh0k5E3Sx+ov0N9T/Mpub/+TA9Qa55mkUTHZ0OHznLGXneb/CBRuYAvgKKwoZHt7YfCnP0wp3E69yLVkAwyd9a7sxgKb2NpbrOAXUH9pfWe9txpExuq9sNx1wIDAQAB",
+    "background": {
+        "service_worker": "background-service.js",
+        "type": "module"
+    },
+    "options_page": "options/options.html",
+    "icons": {
+        "16": "resources/graphics/sruIcon-16x16.png",
+        "48": "resources/graphics/sruIcon-48x48.png",
+        "128": "resources/graphics/sruIcon-128x128.png",
+        "256": "resources/graphics/sruIcon-256x256.png"
+    },
+    "action": {
+        "default_icon": {
+            "19": "resources/graphics/sruLoading_19.png",
+            "38": "resources/graphics/sruLoading_38.png"
+        },
+        "default_title": "Snap&Read",
+        "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "common/core-libs.js",
+                "common/core-bundle.js"
+            ],
+            "all_frames": false,
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_matches": [
+                "https://*.eschooldata.com/*",
+                "https://*.webex.com/*",
+                "https://*.cambiumast.com/*",
+                "https://*.cambiumtds.com/*",
+                "https://clever.com/oauth/*",
+                "https://read.learningally.org/*",
+                "https://accounts.google.com/*",
+                "https://accounts.youtube.com/*",
+                "https://login.microsoftonline.com/*",
+                "https://login.live.com/*",
+                "https://login.donjohnston.net/*",
+                "https://login.stagedji.com/*",
+                "https://login.qadji.com/*",
+                "https://app.writingprotocol.com/*",
+                "https://app.writingprotocol.qadji.com/*",
+                "https://app.writingprotocol.stagedji.com/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": false,
+            "matches": [
+                "https://docs.google.com/document/create",
+                "https://docs.google.com/document/create?*",
+                "https://docs.google.com/document/u/*/create",
+                "https://docs.google.com/document/u/*/create?*",
+                "https://docs.google.com/document/u/*/d/*",
+                "https://docs.google.com/document/d/*"
+            ],
+            "js": [
+                "WebExtensions/preloads/gdocs-preload.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": false,
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_matches": [
+                "https://*.eschooldata.com/*",
+                "https://*.webex.com/*",
+                "https://*.cambiumast.com/*",
+                "https://*.cambiumtds.com/*",
+                "https://clever.com/oauth/*",
+                "https://read.learningally.org/*",
+                "https://accounts.google.com/*",
+                "https://accounts.youtube.com/*",
+                "https://login.microsoftonline.com/*",
+                "https://login.live.com/*",
+                "https://login.donjohnston.net/*",
+                "https://login.stagedji.com/*",
+                "https://login.qadji.com/*",
+                "https://app.writingprotocol.com/*",
+                "https://app.writingprotocol.qadji.com/*"
+            ],
+            "css": [
+                "contentScripts/css/sru-toast.css",
+                "contentScripts/css/sru-distraction.css"
+            ],
+            "js": [
+                "thirdParty/jquery/jquery.min.js",
+                "thirdParty/mark/mark.min.js",
+                "thirdParty/pdfmake/pdfmake.min.js",
+                "thirdParty/pdfmake/vfs_fonts.js",
+                "thirdParty/citeproc/xmldom.js",
+                "thirdParty/citeproc/citeproc.js",
+                "libs/rewordify-ui.umd.js",
+                "contentScripts/content-script-core-bundle.js",
+                "contentScripts/content-script-bundle.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "all_frames": false,
+            "matches": [
+                "https://orbit.texthelp.com/*",
+                "https://orbitnote.staging.texthelp.com/*",
+                "https://pdf.dev.texthelp.com/*"
+            ],
+            "js": [
+                "libs/core-lib-text-mapper-orbitnote.umd.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "all_frames": false,
+            "matches": [
+                "https://docs.google.com/document/create",
+                "https://docs.google.com/document/create?*",
+                "https://docs.google.com/document/u/*/create",
+                "https://docs.google.com/document/u/*/create?*",
+                "https://docs.google.com/document/u/*/d/*",
+                "https://docs.google.com/document/d/*",
+                "https://docs.google.com/presentation/create",
+                "https://docs.google.com/presentation/create?*",
+                "https://docs.google.com/presentation/u/*/create",
+                "https://docs.google.com/presentation/u/*/create?*",
+                "https://docs.google.com/presentation/u/*/d/*",
+                "https://docs.google.com/presentation/d/*"
+            ],
+            "js": [
+                "libs/core-lib-text-mapper-google.umd.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "getFrameId",
+                "status",
+                "go.html",
+                "resources/images/speak.svg",
+                "resources/images/speak-active.svg",
+                "resources/images/screenshot.svg",
+                "resources/images/screenshot-active.svg",
+                "resources/images/simplify.svg",
+                "resources/images/simplify-active.svg",
+                "resources/images/translate.svg",
+                "resources/images/translate-active.svg",
+                "resources/images/close.svg",
+                "resources/images/close-hover.svg",
+                "resources/images/highlightOnMainToolbar.svg",
+                "resources/images/highlightMainToolbar.svg",
+                "resources/images/delete.svg",
+                "resources/images/toolbarCollapse.svg",
+                "resources/images/toolbarExpand.svg",
+                "resources/images/folder_dialog.gif",
+                "resources/images/indent.svg",
+                "resources/images/outdent.svg",
+                "resources/images/linkSource.svg",
+                "resources/images/sourceEdit.svg",
+                "resources/images/lessCitations.svg",
+                "resources/images/bulletToolbar_2icons.svg",
+                "resources/images/bulletToolbar_source.svg",
+                "resources/graphics/sruIcon-16X16.png",
+                "resources/images/translatedByGoogle.png",
+                "resources/images/dynDiv_resizeDiv_tl.svg",
+                "resources/images/dynDiv_resizeDiv_bl.svg",
+                "resources/images/dynDiv_resizeDiv_br.svg",
+                "resources/images/no-outlines.svg",
+                "resources/images/no-sources-tip.svg",
+                "resources/images/no-sources-link-text.svg",
+                "resources/images/wordnet-citation.svg",
+                "resources/images/loading.gif",
+                "resources/images/loading_image.svg",
+                "resources/fonts/*",
+                "resources/sprite/sr/sprite.css",
+                "resources/sprite/sprite-common.css",
+                "resources/sprite/sr/sr-sprite.svg",
+                "resources/sprite/sr/account_face.svg",
+                "resources/sprite/sr/arrow_drop_down.svg",
+                "resources/sprite/sr/arrow_drop_down_white.svg",
+                "resources/sprite/sr/arrow_drop_down_white_dim.svg",
+                "resources/sprite/sr/check.svg",
+                "resources/sprite/sr/power_settings_new.svg",
+                "common/ui/effects.css",
+                "contentScripts/css/main-container.css",
+                "contentScripts/css/toolbar.css",
+                "contentScripts/css/screen-selection.css",
+                "contentScripts/css/speech.css",
+                "contentScripts/css/cursors.css",
+                "contentScripts/html/main-container.html",
+                "contentScripts/html/pdf-popup-choice.html",
+                "contentScripts/css/pdf-popup-choice.css",
+                "contentScripts/html/define-word.html",
+                "contentScripts/css/define-word.css",
+                "contentScripts/html/remove-distractions.html",
+                "contentScripts/css/remove-distractions.css",
+                "contentScripts/css/sru-toast.css",
+                "contentScripts/css/overlay.css",
+                "contentScripts/css/amazonKindleDji.css",
+                "contentScripts/helpers/geometryController.css",
+                "thirdParty/jquery/jquery.min.js",
+                "WebExtensions/thirdParty/cryptojs/md5.js",
+                "thirdParty/citeproc/chicago-fullnote-bibliography.csl",
+                "thirdParty/citeproc/apa.csl",
+                "thirdParty/citeproc/mla.csl",
+                "thirdParty/citeproc/chicago-nb.csl",
+                "thirdParty/citeproc/locales-en-US.xml",
+                "WebExtensions/selection/*.js",
+                "libs/*.js",
+                "libs/core-lib-text-mapper.umd.js",
+                "common/core-lib-text-mapper-adapter.js",
+                "common/core-lib-utils-adapter.js",
+                "common/frames/dji-frame-preloader.js",
+                "libs/rewordify-ui.umd.js",
+                "contentScripts/pdf-popup-choice.js",
+                "WebExtensions/messaging/stub-message-sender.js",
+                "WebExtensions/tts/tts-messages.js",
+                "WebExtensions/tts/tts-stub.js",
+                "contentScripts/document-info.js",
+                "contentScripts/define-word.js",
+                "contentScripts/translate.js",
+                "contentScripts/toolbar.js",
+                "contentScripts/accessibility-controller.js",
+                "contentScripts/citations.js",
+                "contentScripts/content-script-manager.js",
+                "common/ui/*",
+                "WebAssembly/sr-rewordify.pvfs",
+                "WebAssembly/sr-rewordify.wasm"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "permissions": [
+        "tabs",
+        "scripting",
+        "tts",
+        "unlimitedStorage",
+        "notifications",
+        "webNavigation",
+        "contextMenus",
+        "webRequest",
+        "storage",
+        "offscreen"
+    ],
+    "externally_connectable": {
+        "ids": [
+            "imgmjcnolbhljlnimjbnmeokfljgjokj",
+            "emmgndmggimgmmpciejhnkcnlillakfn",
+            "ifajfiofeifbbhbionejdliodenmecna",
+            "mloajfnmjckfjbeeofcdaecbelnblden",
+            "cbcfbhjolgdaepkoaoepejclfggmdand",
+            "ioadmlabdmgldhncokgjbhlnpalnfccd",
+            "ibbhadmnjccbljgfehndobbpjghoccio",
+            "ikiamffdnlaifhblcjlmjhchbbegblfo",
+            "dkbcbhadpkbopmfmgbkacikhfgelohmo",
+            "imhhmknkhjkgoomhdbpgpfmjghhbgjic"
+        ],
+        "matches": [
+            "https://app.wordbank.io/*",
+            "https://app.wordbank.qadji.com/*",
+            "https://app.wordbank.stagedji.com/*"
+        ]
+    },
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'none';"
+    }
+}

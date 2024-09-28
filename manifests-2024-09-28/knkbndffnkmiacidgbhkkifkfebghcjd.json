@@ -1,0 +1,76 @@
+---
+name: LBS数据采集
+version: 2.4.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 697
+release_date: '2024-07-19T08:19:53.000Z'
+size: 414KiB
+languages:
+  - 中文 (简体)
+description: LBS数据采集工具
+publisher_account: douhapdemo
+privacy_policy: https://maoxiaoqi.com/privacyPolicy.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "LBS数据采集",
+  "version": "2.4.2",
+  "description": "LBS数据采集工具",
+  "icons": {
+    "16": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "img/logo.png",
+    "default_title": "LBS数据采集工具",
+    "default_popup": "page/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches":["<all_urls>"],
+      "js":["js/getUserMark.js"]
+    },
+    {
+      "matches": [
+        "*://*.google.com/maps*",
+        "*://*.yandex.com/maps*"
+      ],
+      "js": [
+        "js/content.js"
+      ],
+      "css": [
+        "css/DOMStyle.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/js/center_inject.js",
+        "/plugin/xlsx.full.min.js",
+        "/plugin/vue.min.js",
+        "/plugin/localforage.min.js",
+        "/plugin/message.js"
+      ],
+      "matches": [
+        "*://*.google.com/*",
+        "*://*.yandex.com/*"
+      ]
+    }
+  ]
+}

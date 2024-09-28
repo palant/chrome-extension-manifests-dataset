@@ -1,0 +1,108 @@
+---
+name: 'Privci: Privacy Extension for Chrome'
+version: 1.5.8
+category_slug: productivity/education
+rating: 5
+rating_count: 1
+user_count: 97
+release_date: '2024-07-25T09:52:59.000Z'
+size: 5.62MiB
+languages:
+  - English
+description: >-
+  Protects your personal data and digital identity by demystifying the privacy
+  claims of the websites you visit.
+publisher_account: Privci.io
+publisher_address: |-
+  7 Rostrevor Gardens
+  Hayes UB3 1AH
+  GB
+extension_website: www.privci.io
+support_website: https://secure.privci.com/support
+privacy_policy: https://secure.privci.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Privci: Privacy Extension for Chrome",
+  "version": "1.5.8",
+  "description": "Protects your personal data and digital identity by demystifying the privacy claims of the websites you visit.",
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "scripting",
+    "cookies",
+    "history",
+    "webRequest",
+    "identity",
+    "identity.email",
+    "idle",
+    "downloads",
+    "system.storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/tldts.js","js/jquery.min.js","js/jquery-ui.js","js/psl.js","js/contentscripts/content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/tldts.js","js/jquery.min.js","js/psl.js","js/contentscripts/inject.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "contentFinance.html",
+      "contentEntLong.html",
+      "contentEntPlus.html",
+      "contentEntMinus.html",
+      "contentBrShort.html",
+      "contentBrLong.html",
+      "contentFootprint.html",
+      "contentComplaince.html",
+      "contentAskPolicy.html",
+      "contentMyPolicy.html",
+      "images/header.png"
+    ],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "images/chrome.png"
+  },
+  "icons": {
+    "16": "images/chrome.png",
+    "32": "images/chrome.png",
+    "48": "images/chrome.png",
+    "128": "images/chrome.png"
+  },
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_page": "default-src 'self';script-src 'self'"
+  }
+}

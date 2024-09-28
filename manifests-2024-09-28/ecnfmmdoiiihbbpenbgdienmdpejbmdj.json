@@ -1,0 +1,94 @@
+---
+name: 'PerkSpot: Save While You Shop'
+version: 33.2.1
+category_slug: lifestyle/shopping
+rating: 4.878787878787879
+rating_count: 33
+user_count: 50000
+release_date: '2024-09-26T21:53:14.000Z'
+size: 1.6MiB
+languages:
+  - English (United States)
+description: Take the savings of your Discount Program with you wherever you shop online!
+publisher: PerkSpot
+publisher_address: |-
+  320 W Ohio St Unit 1W
+  Chicago, IL 60654-7816
+  US
+extension_website: perkspot.com
+support_website: https://support.perkspot.com/hc/en-us
+privacy_policy: https://docs.perkspot.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "version": "33.2.1",
+    "manifest_version": 3,
+    "name": "PerkSpot: Save While You Shop",
+    "description": "Take the savings of your Discount Program with you wherever you shop online!",
+    "icons": {
+        "16": "img/ps-16.png",
+        "48": "img/ps-48.png",
+        "128": "img/ps-128.png"
+    },
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{f1c5f3fd-070b-4925-baa4-3c957220b28f}",
+            "strict_min_version": "120.0"
+        }
+    },
+    "action": {
+        "default_popup": "index.html?psbxpopup=true"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*/*", "http://*/*"],
+            "run_at": "document_end",
+            "js": ["/static/js/modals.js", "/static/js/extensions.js"]
+        },
+        {
+            "matches": [
+                "https://signin.perkspot.com/bx/auth",
+                "https://signin-dev.perkspot.com/bx/auth",
+                "https://signin-qa.perkspot.com/bx/auth",
+                "http://localhost/bx/auth"
+            ],
+            "run_at": "document_end",
+            "js": ["/static/js/loginInterstitial.js"]
+        },
+        {
+            "matches": [
+                "https://*.perkspot.com/*",
+                "https://*.perkspot.local/*"
+            ],
+            "run_at": "document_start",
+            "js": ["/static/js/pscTokenWatcher.js"]
+        }
+    ],
+    "background": {
+        "service_worker": "/static/js/background.js",
+        "scripts": ["/static/js/background.js"],
+        "type": "module"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "cookies",
+        "identity",
+        "webNavigation",
+        "clipboardWrite",
+        "*://*.perkspot.com/*"
+    ],
+    "host_permissions": [
+        "https://perkspot.oktapreview.com/v1/introspect",
+        "*://*.perkspot.com/*",
+        "*://*.perkspot.local/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["/static/media/*"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

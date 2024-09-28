@@ -1,0 +1,88 @@
+---
+name: Zillow Data Exporter
+version: 1.4.1
+category_slug: productivity/tools
+rating: 4.3125
+rating_count: 16
+user_count: 5000
+release_date: '2024-08-23T03:01:56.000Z'
+size: 1.28MiB
+languages:
+  - English
+description: Export Zillow property listings to CSV or Excel in one click.
+publisher_account: Yann Hulot
+publisher_address: |-
+  13/4 Shirley Street 
+  Indooroopilly, Queensland 4068
+  Australia
+extension_website: propertydatalabs.com
+support_website: https://www.propertydatalabs.com/contact
+privacy_policy: https://propertydatalabs.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Zillow Data Exporter",
+  "description": "Export Zillow property listings to CSV or Excel in one click.",
+  "manifest_version": 3,
+  "version": "1.4.1",
+  "icons": {
+    "16": "16x16.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "16x16.png",
+      "48": "48x48.png",
+      "128": "128x128.png"
+    },
+    "default_title": "Zillow Data Exporter"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.zillow.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.zillowdataexporter.com/*"],
+      "js": ["zillowdataexporter.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.propertydatalabs.com/*"],
+      "js": ["zillowdataexporter.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["16x16.png", "48x48.png", "128x128.png"],
+      "matches": ["https://*.zillow.com/*"]
+    },
+    {
+      "resources": ["menu.html"],
+      "matches": ["https://*.zillow.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://*.zillow.com/*",
+    "https://*.zillowdataexporter.com/*",
+    "https://*.propertydatalabs.com/*"
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.zillowdataexporter.com/*", "*://*.propertydatalabs.com/*"]
+  },
+  "permissions": ["storage", "tabs", "downloads"],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src * 'self' data: https:; style-src 'self' 'unsafe-inline'; script-src 'self'; connect-src 'self' https://*.googleusercontent.com/* https://*.zillow.com/* https://www.zillowdataexporter.com/ https://www.propertydatalabs.com/; object-src 'self'"
+  }
+}

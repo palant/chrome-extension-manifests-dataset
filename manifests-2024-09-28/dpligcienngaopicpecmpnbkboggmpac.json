@@ -1,0 +1,69 @@
+---
+name: D-Notes
+version: 1.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2023-07-18T04:35:17.000Z'
+size: 1.38MiB
+languages:
+  - English
+description: A utility and Extension App for note-taking on top of Daftra ERP
+publisher_account: Taric Ov
+support_website: https://d-suite-website.vercel.app/
+privacy_policy: https://d-suite-website.vercel.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "D-Notes",
+  "version": "1.0.0",
+  "description": "A utility and Extension App for note-taking on top of Daftra ERP",
+  "action": {
+    "default_icon": "./assets/icon512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon16.png",
+    "48": "./assets/icon48.png",
+    "128": "./assets/icon128.png",
+    "512": "./assets/icon512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.daftra.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "https://*.daftra.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost:3303; object-src 'self'"
+  }
+}

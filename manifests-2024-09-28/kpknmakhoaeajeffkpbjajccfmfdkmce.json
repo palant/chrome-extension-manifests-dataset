@@ -1,0 +1,87 @@
+---
+name: JS Injector
+version: 0.0.2
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 28
+release_date: '2021-10-02T13:27:51.000Z'
+size: 1.88MiB
+languages:
+  - English (United States)
+description: >-
+  Automate testing and auto-populate forms by injecting javascript code and open
+  source libraries into the page.
+publisher_account: Joey
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "JS Injector",
+  "version": "0.0.2",
+  "manifest_version": 2,
+  "description": "Automate testing and auto-populate forms by injecting javascript code and open source libraries into the page.",
+  "icons": {
+    "16": "images/icon_16x16.png",
+    "48": "images/icon_48x48.png",
+    "128": "images/icon_128x128.png"
+  },
+  "browser_action": {
+    "default_title": "JS Injector",
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "scripts": [
+      "background/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "injected/start_content.js",
+        "injected/lib/jquery-3.5.1.min.js",
+        "injected/lib/moment-2.29.1.min.js",
+        "injected/lib/rxjs-7.3.0.min.js",
+        "injected/lib/d3-7.0.1.min.js",
+        "injected/lib/processing-1.6.6.min.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "injected/idle_content.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "injected/end_content.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "injected/lib/jquery-3.5.1.min.js",
+    "injected/lib/moment-2.29.1.min.js",
+    "injected/lib/d3-7.0.1.min.js",
+    "injected/lib/rxjs-7.3.0.min.js",
+    "injected/lib/processing-1.6.6.min.js"
+  ],
+  "permissions": [
+    "<all_urls>",
+    "activeTab",
+    "storage"
+  ]
+}

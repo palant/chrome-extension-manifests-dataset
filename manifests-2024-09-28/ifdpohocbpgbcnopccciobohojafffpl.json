@@ -1,0 +1,117 @@
+---
+name: Wave
+version: 1.0.2
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 11
+release_date: '2024-09-27T05:05:30.000Z'
+size: 4.06MiB
+languages:
+  - English
+description: Wave Chrome Extension Description
+publisher: Upward Spiral Technologies
+publisher_account: Wave Shopping
+publisher_address: |-
+  2810 North Church Street
+  269143
+  Wilmington, DE 19802
+  US
+extension_website: joinwave.com
+privacy_policy: https://www.joinwave.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Wave",
+  "version": "1.0.2",
+  "description": "Wave Chrome Extension Description",
+  "action": {
+    "default_popup": "./src/scripts/popup/popup.html"
+  },
+  "options_ui": {
+    "page": "./src/scripts/options/options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "js/service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "48": "./assets/icon-32.png",
+    "128": "./assets/icon-32.png"
+  },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "cookies",
+    "notifications",
+    "background",
+    "webRequest",
+    "unlimitedStorage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "./js/browser-polyfill.min.js",
+        "./js/content.js"
+      ],
+      "type": "module"
+    }
+  ],
+  "commands": {
+    "refresh_extension": {
+      "suggested_key": {
+        "default": "Ctrl+Space"
+      },
+      "description": "Refresh Extension"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "resources": [
+        "dist/js/index.js",
+        "dist/js/options.js",
+        "dist/js/popup.js",
+        "dist/js/service-worker.js",
+        "dist/js/shoppay.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "js/shoppay.js"
+      ],
+      "type": "module"
+    },
+    {
+      "resources": [
+        "img/*",
+        "fonts/*"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

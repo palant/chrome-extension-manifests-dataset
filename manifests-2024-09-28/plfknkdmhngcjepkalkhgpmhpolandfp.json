@@ -1,0 +1,122 @@
+---
+name: easyfundraising Donation Reminder
+version: 6.6.0
+category_slug: lifestyle/shopping
+rating: 4.606965174129353
+rating_count: 402
+user_count: 100000
+release_date: '2024-08-05T12:09:14.000Z'
+size: 4.45MiB
+languages:
+  - English (UK)
+description: >-
+  Never miss a donation for your charity or good cause again with the
+  easyfundraising donation reminder
+publisher: THE SUPPORT GROUP (UK) LIMITED
+publisher_account: easyfundraising
+publisher_address: |-
+  Suite 6 St. Chads House Cross Keys
+  LICHFIELD WS13 6DN
+  GB
+extension_website: easyfundraising.org.uk
+support_website: http://www.easyfundraising.org.uk/support/faq/
+privacy_policy: https://www.easyfundraising.org.uk/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "easyfundraising Donation Reminder",
+    "description": "Never miss a donation for your charity or good cause again with the easyfundraising donation reminder",
+    "version": "6.6.0",
+    "homepage_url": "https://www.easyfundraising.org.uk/",
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "permissions": [
+        "cookies",
+        "storage",
+        "tabs",
+        "webRequest"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_title": "easyfundraising Donation Reminder",
+        "default_popup": "popup.html",
+        "default_icon": {
+            "128": "icons/easyfundraising/default/128.png"
+        }
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "pageload.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_globs": [
+                "*://mail.*/*",
+                "*://*.youtube.*/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "serps.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "include_globs": [
+                "*://www.google.*/*",
+                "*://www.bing.*/*",
+                "*://www2.bing.*/*",
+                "*://uk.search.yahoo.*/*"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false
+        },
+        {
+            "js": [
+                "homepage.js"
+            ],
+            "matches": [
+                "*://*.easyfundraising.org.uk/*"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false
+        },
+        {
+            "js": [
+                "retailer.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_globs": [
+                "*://mail.*/*",
+                "*://*.google.*/*",
+                "*://*.bing.*/*",
+                "*://*.youtube.*/*",
+                "*://uk.search.yahoo.*/*",
+                "*://*.easyfundraising.org.uk/*"
+            ],
+            "run_at": "document_idle",
+            "all_frames": false
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["icons/*", "images/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "icons": {
+        "128": "icons/easyfundraising/default/128.png"
+    },
+    "minimum_chrome_version": "88"
+}

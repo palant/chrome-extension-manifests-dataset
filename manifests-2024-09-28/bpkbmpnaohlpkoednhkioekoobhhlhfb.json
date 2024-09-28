@@ -1,0 +1,75 @@
+---
+name: Simple Background Remover von Xidras.io
+version: '1.1'
+category_slug: lifestyle/art
+rating: null
+rating_count: null
+user_count: 511
+release_date: '2022-04-30T05:49:00.000Z'
+size: 110KiB
+languages:
+  - Deutsch
+  - English
+description: Bearbeite Hintergründe & erstelle perfekte Bilder mit 1-Klick!
+publisher_account: Xidras GmbH
+support_website: https://www.xidras.io/contact/
+privacy_policy: https://www.xidras.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "author": {
+    "name": "Xidras GmbH",
+    "email": "imprint@xidras.com",
+    "website": "https://xidras.io"
+  },
+  "version": "1.1",
+  "manifest_version": 3,
+  "default_locale": "de",
+
+  "homepage_url": "https://sbr.xidras.io/",
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "permissions": [
+    "contextMenus",
+    "notifications",
+    "tabs"
+  ],
+
+  "background": {
+    "service_worker": "./src/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file:///*"
+      ],
+      "js": ["./src/contentscripts/contentscript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://sbr.xidras.io/*",
+        "*://*.xidras.io/*"
+      ],
+      "js": ["./src/contentscripts/auth-pixel.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "icons": {
+    "16": "./public/icon.png",
+    "32": "./public/icon.png",
+    "48": "./public/icon.png",
+    "128": "./public/icon.png"
+  }
+}

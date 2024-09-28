@@ -1,0 +1,77 @@
+---
+name: Whitelist Links
+version: 1.0.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2023-05-21T05:30:01.000Z'
+size: 102KiB
+languages:
+  - English (United States)
+description: Block links in webpages that are not whitelisted
+publisher_account: eclatronic
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Whitelist Links",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "description": "Block links in webpages that are not whitelisted",
+    "homepage_url": "https://eclatronic.com",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "64": "icons/icon64.png",
+        "128": "icons/icon128.png"
+    },
+    "background": {
+        "service_worker": "src/bg/background.js"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://mail.google.com/*"
+    ],
+    "content_security_policy": {
+        "object-src": "'self' 'sha256-W04I4yx7GlZk7aLrFyfBRR5c2m1649HLr1IC8Qhax0M='",
+        "script-src": "'self' 'sha256-J8+4/wmqNoqVGih0Xof49bzVEIwR8aHhR5HvZK1wlzY='"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "exclude_matches": [],
+            "js": [
+                "js/jquery-3.6.0.min.js",
+                "js/jquery-ui.min.js",
+                "src/inject/whitelistLinksInject.js"
+            ],
+            "css": [
+                "js/jquery-ui.min.css",
+                "src/inject/whitelistLinksInject.css"
+            ]
+        }
+    ],
+    "options_ui": {
+        "page": "src/options/options.html",
+        "open_in_tab": true
+    },
+    "action": {
+        "default_title": "Edit link blocking whitelist",
+        "default_popup": "src/popup/popup.html"
+    },
+    "externally_connectable": {
+        "ids": [
+            "hbkjhhjokfknohhlcfcadoddfajgbald"
+        ],
+        "accepts_tls_channel_id": false,
+        "matches": []
+    }
+}

@@ -1,0 +1,74 @@
+---
+name: OpenLink Structured Data Sniffer
+version: 3.3.10
+category_slug: productivity/developer
+rating: 4.764705882352941
+rating_count: 17
+user_count: 7000
+release_date: '2024-06-24T08:51:29.000Z'
+size: 2.54MiB
+languages:
+  - English
+description: >-
+  Reveals structured metadata (Microdata, RDFa, JSON-LD, Turtle, etc.) embedded
+  within HTML documents.
+publisher_account: OpenLink Software
+support_website: https://shop.openlinksw.com/support_system/
+privacy_policy: https://www.openlinksw.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OpenLink Structured Data Sniffer",
+  "short_name": "OSD Sniffer",
+  "author":"OpenLink Software",
+  "homepage_url": "http://osds.openlinksw.com/",
+  "version": "3.3.10",
+  "manifest_version": 2,
+  "minimum_chrome_version": "18",
+  "description": "Reveals structured metadata (Microdata, RDFa, JSON-LD, Turtle, etc.) embedded within HTML documents.",
+  "icons": {
+      "16":  "images/icon16.png",
+      "48":  "images/icon48.png",
+      "128": "images/icon128.png" },
+  "browser_action": {
+    "default_icon": "images/icon16.png",
+    "default_title": "Show Document Metadata",
+    "default_popup": "panel.html"
+  },
+  "background": {
+    "page": "background.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["file:///*/*","*://*/*"],
+      "js": ["lib/jquery-3.1.0.min.js", "lib/microdatajs/jquery.microdata.js", 
+             "lib/microdatajs/jquery.microdata.json.js", "lib/RDFa.js", "lib/n3-browser.js", 
+             "lib/jquery.mark.js", "lib/namespace.js", "lib/posh.js", "utils.js", "helpers_ui.js", 
+             "browser.js", "settings.js", "sniffer_nano.js", "super_links.js",
+             "sniffer.js", "chat-inject.js", "social_sniffer.js"],
+      "css": ["content.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://openlinksoftware.github.io/*"],
+      "js": ["browser.js", "lib/solid-client-authn.bundle.js", "oidc-webid-inject.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage", 
+    "webRequest", 
+    "webRequestBlocking",
+    "*://*/*", 
+    "file:///*/*",
+    "contextMenus"
+  ],
+  "content_security_policy": 
+    "script-src 'self' 'unsafe-eval' chrome-extension://lib; object-src 'self' chrome-extension://lib; style-src 'self' 'unsafe-inline' chrome-extension://lib https://solid.openlinksw.com; media-src 'self' 'unsafe-inline' chrome-extension://lib ;"
+}

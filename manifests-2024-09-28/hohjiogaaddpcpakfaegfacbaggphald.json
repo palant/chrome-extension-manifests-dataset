@@ -1,0 +1,89 @@
+---
+name: TextRecruit Extension
+version: 4.0.4
+category_slug: lifestyle/social
+rating: 4.6
+rating_count: 10
+user_count: 10000
+release_date: '2024-09-26T18:33:07.000Z'
+size: 48.16KiB
+languages:
+  - English (United States)
+description: >-
+  The TextRecruit Everywhere Extension helps recruiters text candidates from
+  their ATS, job boards, or LinkedIn.
+publisher: iCIMS Inc.
+publisher_account: textrecruit-development
+publisher_address: |-
+  101 Crawfords Corner Rd
+  Holmdel, NJ 07733
+  US
+extension_website: textrecruit.com
+support_website: https://textrecruit.zendesk.com/hc/en-us
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TextRecruit Extension",
+  "short_name": "TextRecruit Extension",
+  "homepage_url": "https://www.icims.com/products/talent-cloud-platform/text-engagement/",
+  "description": "The TextRecruit Everywhere Extension helps recruiters text candidates from their ATS, job boards, or LinkedIn.",
+  "version": "4.0.4",
+  "content_security_policy": {
+    "script-src": "self",
+    "object-src": "self"
+  },
+  "permissions": ["storage"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "action": {
+    "default_icon": "./img/tr_bubble_grey_48.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "incognito": "not_allowed",
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["*.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_idle",
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "https://hangouts.google.com/*",
+        "*://mail.google.com/*",
+        "https://sso.texasroadhouse.com/*",
+        "https://js.stripe.com/*",
+        "https://login.microsoftonline.com/*",
+        "https://secure.ace.advertising.com/*",
+        "http://127.0.0.1/*",
+        "https://*.icimsmco.net/*",
+        "https://*.slack.com/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "all_frames": true
+    },
+    {
+      "run_at": "document_idle",
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "all_frames": false
+    }
+  ],
+  "icons": {
+    "48": "./img/icon48.png",
+    "128": "./img/icon128.png"
+  }
+}

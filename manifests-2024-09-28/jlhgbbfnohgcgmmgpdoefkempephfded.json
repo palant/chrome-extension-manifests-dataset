@@ -1,0 +1,94 @@
+---
+name: Polly for Google Slides
+version: 1.0.20
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 69
+release_date: '2024-08-13T06:35:20.000Z'
+size: 230KiB
+languages:
+  - English
+description: >-
+  Run engaging Q&As in key events like All Hands and Town Halls without leaving
+  Google Slides.
+publisher: Subcurrent, Inc.
+publisher_account: Polly
+publisher_address: |-
+  300 Lenora St
+  Seattle, WA 98121-2411
+  US
+extension_website: polly.ai
+support_website: https://www.polly.ai/help/kb-tickets/new
+privacy_policy: https://www.polly.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1e2lysf+WuZv7I1Y0NuVtiZ7CJ7KqmR7h+4GNcxmMbl0szgMHAcwmrO2UHvpuymQQkqiKyEvncULUPxrrqRkOC/pAnMlRrAHyJ5y5/Zi4S32g6dnq8Wtxj0thUeSyziIWVzTzXF3rDDkwkWBbVcxx8bqau2B3UmNI3HmqA1ama6fnbpcb+UMgFhO5Nl/CBgKuSDkBJdFRhuepefgKgxVz+NafaYux7Tp8y0JB3xezvjhrj6oET2zdaxaCZ/5n4mU8NY88k34/tQ42o7JP03Tz6dHIBlPXmGWrpg34jPNxKbBJY7ZQnY+V+qGEIIN9nW6PK3YK1j/yHS2TxSIRzgV+QIDAQAB",
+  "name": "__MSG_productionExtensionName__",
+  "version": "1.0.20",
+  "description": "__MSG_extensionDescription__",
+  "host_permissions": [
+    "https://api.web.polly.ai/*",
+    "https://http-intake.logs.datadoghq.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "webNavigation"
+  ],
+  "background": {
+    "service_worker": "background.iife.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/presentation/*/edit*",
+        "*://docs.google.com/*/presentation/*/edit*",
+        "*://docs.google.com/*/*/presentation/*/edit*"
+      ],
+      "js": [
+        "content-menubar-polly-menu/index.iife.js",
+        "content-polly-manager/index.iife.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://docs.google.com/presentation/*"
+      ],
+      "js": [
+        "content-presentation/index.iife.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css",
+        "*.svg",
+        "*.png"
+      ],
+      "matches": [
+        "https://docs.google.com/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://web.polly.ai/*"
+    ]
+  }
+}

@@ -1,0 +1,113 @@
+---
+name: DataGrows - Extension
+version: '1.02'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 159
+release_date: '2024-09-12T06:48:14.000Z'
+size: 765KiB
+languages:
+  - English (UK)
+description: >-
+  This extension will enable DataGrows users to download taxpayers as well as
+  request and submit IRP6 returns on their eFiling profile
+publisher_account: DataGrows
+publisher_address: |-
+  47 Sycamore Avenue
+  Roodepoort 1709
+  ZA
+extension_website: mydatagrows.com
+support_website: https://datagrows.co.za/contact-us
+privacy_policy: https://mydatagrows.com/privacyPolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DataGrows - Extension",
+  "short_name": "DataGrows",
+  "version": "1.02",
+  "description": "This extension will enable DataGrows users to download taxpayers as well as request and submit IRP6 returns on their eFiling profile",
+  "author": {
+    "email": "support@mydatagrows.com"
+  },
+  "homepage_url": "https://mydatagrows.com",
+  "externally_connectable": {
+    "matches": [
+      "https://beta.mydatagrows.com/databases/",
+      "https://mydatagrows.com/databases/*",
+      "https://datagrows.co.za/databases/*",
+      "https://secure.sarsefiling.co.za/*"
+    ]
+  },
+  "action": {
+    "default_title": "Click to open panel"
+  },
+  "content_security_policy": {
+    "extension_pages": "style-src 'self' 'unsafe-inline';script-src 'self'"
+  },
+  "side_panel": {
+    "default_title": "DataGrows",
+    "default_icon": "Logo_Icon_Only.png",
+    "default_width": 600,
+    "always_on_top": true,
+    "open_at_install": true,
+    "default_path": "index.html",
+    "type": "module"
+  },
+  "icons": {
+    "16": "Logo_Icon_Only.png",
+    "48": "Logo_Icon_Only.png",
+    "128": "Logo_Icon_Only.png"
+  },
+  "permissions": ["activeTab", "tabs", "webRequest", "sidePanel"],
+  "host_permissions": [
+    "https://mydatagrows.com/*",
+    "https://datagrows.co.za/*",
+    "https://beta.mydatagrows.com/*",
+    "https://secure.sarsefiling.co.za/*",
+    "https://api.mydatagrows.com/*",
+    "https://api.datagrows.co.za/*",
+    "https://betaapi.mydatagrows.com/*"
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "world": "ISOLATED",
+      "js": ["datagrows.js"],
+      "matches": [
+        "https://mydatagrows.com/*",
+        "https://datagrows.co.za/*",
+        "https://beta.mydatagrows.com/*"
+      ],
+      "exclude_globs": ["*error*"]
+    },
+    {
+      "world": "ISOLATED",
+      "js": ["sars.js"],
+      "matches": ["https://secure.sarsefiling.co.za/*"],
+      "exclude_matches": [
+        "https://secure.sarsefiling.co.za/efilingsecure/Error.aspx?Uncaught%20SyntaxError:%20Unexpected%20token%20%27%3C%27",
+        "https://secure.sarsefiling.co.za/EFDotNet/KeepSessionAlive.aspx?dt=*"
+      ],
+      "match_about_blank": false,
+      "all_frames": true,
+      "match_origin_as_fallback": false,
+      "mode": "module"
+    }
+  ],
+  "commands": {
+    "_execute_sidebar_action": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      },
+      "description": "Opens the side panel"
+    }
+  }
+}

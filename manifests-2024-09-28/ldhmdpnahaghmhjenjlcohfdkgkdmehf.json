@@ -1,0 +1,67 @@
+---
+name: Toolbar Timer
+version: 0.6.13
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 0
+release_date: '2023-10-12T02:14:09.000Z'
+size: 180KiB
+languages:
+  - English
+description: >-
+  Track time during screensharing in the webbrowser. Useful for use with
+  evernote, Excel Online or a Github codereview.
+publisher_account: Routerdieb
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Toolbar Timer",
+  "version": "0.6.13",
+  "manifest_version": 3,
+  "description": "Track time during screensharing in the webbrowser. Useful for use with evernote, Excel Online or a Github codereview.",
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*","http://*/*","file://*/*"],
+      "js": ["js/jquery-3.6.0.slim.min.js","js/inject_iframe.js"],
+   "css": ["/css/style.css","css/errorDiv.css"],
+   "run_at":"document_start"
+    },
+ {
+  "matches": ["https://*/*","http://*/*","file://*/*"],
+  "js": ["js/jquery-3.6.0.slim.min.js","js/href_target_top.js"],
+  "all_frames": true,
+  "run_at":"document_start"
+ }
+  ],
+  "web_accessible_resources": [{
+    "resources":["media/engine-start.mp3","media/ring.mp3","media/calendar-icon.png",
+  "media/gear-icon.png","css/styles.css","html/options.html","html/extension_iframe.html"],
+ "css":["css/styles.css"],
+ "matches": ["<all_urls>"],
+       "extension_ids": []
+  }],
+  "permissions": ["webNavigation","storage","declarativeNetRequest","tabs"],
+   "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+   "icons": { "64": "media/icon64.png"},
+   "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules_1.json"
+   }]
+   }
+}
+
