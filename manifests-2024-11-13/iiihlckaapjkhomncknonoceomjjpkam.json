@@ -1,0 +1,119 @@
+---
+name: Oneflex 확장 프로그램
+version: 0.0.7
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-10-21T08:35:29.000Z'
+size: 794KiB
+languages:
+  - English
+  - 한국어
+description: 타오바오/아마존 재팬 상품 페이지에서 바로 원플렉스로 상품을 전송할수 있는 확장 프로그램입니다.
+publisher: 콘버스
+publisher_account: conbus.onggumsa
+publisher_address: |-
+  테헤란로 242
+  1409호
+  강남구, 서울특별시 06221
+  KR
+support_website: https://www.oneflex.info/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "ko",
+  "name": "__MSG_extensionName__",
+  "version": "0.0.7",
+  "description": "__MSG_extensionDescription__",
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "options_page": "options/index.html",
+  "background": {
+    "service_worker": "background.iife.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": "512x512.png"
+  },
+  "icons": {
+    "128": "1024x1024.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "content/index.iife.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "content-ui/index.iife.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "css": [
+        "content.css"
+      ]
+    },
+    {
+      "world": "MAIN",
+      "js": [
+        "inject-script-taobao/index.iife.js"
+      ],
+      "matches": [
+        "*://item.taobao.com/*",
+        "*://detail.tmall.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "world": "MAIN",
+      "js": [
+        "inject-script-amazon/index.iife.js"
+      ],
+      "matches": [
+        "*://*.amazon.com/*",
+        "*://*.amazon.co.jp/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css",
+        "*.svg",
+        "icon-128.png",
+        "icon-34.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

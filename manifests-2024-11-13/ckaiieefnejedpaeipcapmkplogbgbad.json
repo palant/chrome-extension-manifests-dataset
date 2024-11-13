@@ -1,0 +1,145 @@
+---
+name: PREP ORDER
+version: 1.0.8
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 38
+release_date: '2024-10-27T13:37:04.000Z'
+size: 8.25MiB
+languages:
+  - Türkçe
+description: >-
+  Bu Chrome eklentisi, sellercentral, sellerflash, easyinventory ve
+  niceinventory gibi yazılımlar üzerinden sipariş verme sürecini…
+publisher_account: ext.preporder
+privacy_policy: https://preplarge.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "manifest_version": 3,
+   "name": "PREP ORDER",
+   "version": "1.0.8",
+   "permissions": [
+        "storage"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "icons": {
+        "16": "assets/images/icons/icon16.png",
+        "32": "assets/images/icons/icon32.png",
+        "48": "assets/images/icons/icon48.png",
+        "128": "assets/images/icons/icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "assets/images/icons/icon16.png",
+            "32": "assets/images/icons/icon32.png",
+            "48": "assets/images/icons/icon48.png",
+            "128": "assets/images/icons/icon128.png"
+        },
+        "default_title": "TAG PRINTER",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "assets/js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches" : [
+                "*://sellercentral.amazon.com/orders-v3*",
+                "*://sellercentral.amazon.com.mx/orders-v3*",
+                "*://sellercentral.amazon.ca/orders-v3*",
+                "*://sellercentral.amazon.co.uk/orders-v3*"
+            ],
+            "css"     : [
+                "/assets/libs/iziToast/iziToast.min.css"
+            ],
+            "js"      : [
+                "/assets/js/jquery.min.js",
+                "/assets/js/helper.js",
+                "/assets/js/simulate.js",
+                "/assets/libs/iziToast/iziToast.min.js",
+                "sellercentralContent.js"
+            ],
+            "exclude_matches": []
+        },
+        {
+            "matches" : [
+                "*://*/Cargo/Form",
+                "*://*/Cargo/CustomerShipmentList",
+                "*://www.amazon.com/*",
+                "*://panel.sellerflash.com/sellerOrder/*",
+                "*://dashboard.niceinventory.com/order/*",
+                "*://dashboard.easyinventory.com/order/*"
+            ],
+            "css"     : [
+                "/assets/libs/iziToast/iziToast.min.css"
+            ],
+            "js"      : [
+                "/assets/js/jquery.min.js",
+                "/assets/js/helper.js",
+                "/assets/js/simulate.js",
+                "/assets/libs/iziToast/iziToast.min.js",
+                "placeOrderContent.js"
+            ],
+            "exclude_matches": [],
+            "run_at": "document_start"
+        },
+        {
+            "matches" : [
+                "*://www.amazon.com/*"
+            ],
+            "css" : [],
+            "js"      : [
+                "/assets/js/jquery.min.js",
+                "/assets/libs/write-excel-file/write-excel-file.min.js",
+                "/assets/js/helper.js",
+                "/assets/js/simulate.js",
+                "buyerOrdersExcelExportContent.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches" : [
+                "*://panel.sellerflash.com/*"
+            ],
+            "css"     : [
+                "/assets/libs/iziToast/iziToast.min.css"
+            ],
+            "js"      : [
+                "/assets/js/jquery.min.js",
+                "/assets/js/helper.js",
+                "/assets/js/simulate.js",
+                "/assets/libs/iziToast/iziToast.min.js",
+                "addExcelAsinsToSFContent.js",
+                "sellerflashContent.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches" : [
+                "*://dashboard.niceinventory.com/*",
+                "*://dashboard.easyinventory.com/*"
+            ],
+            "css"     : [
+                "/assets/libs/iziToast/iziToast.min.css"
+            ],
+            "js"      : [
+                "/assets/js/jquery.min.js",
+                "/assets/js/helper.js",
+                "/assets/js/simulate.js",
+                "/assets/libs/iziToast/iziToast.min.js",
+                "niceInventoryContent.js"
+            ],
+            "run_at": "document_start"
+        }
+    ]
+}
+

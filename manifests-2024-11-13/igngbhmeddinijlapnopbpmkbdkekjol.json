@@ -1,0 +1,104 @@
+---
+name: Bodyguard.io Security Awareness
+version: 2.4.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 21
+release_date: '2022-11-18T00:37:13.000Z'
+size: 6.02MiB
+languages:
+  - English
+description: Next-gen security awareness
+publisher: Virtual Bodyguard BV
+publisher_account: Virtual Bodyguard
+publisher_address: |-
+  Eleanor Rooseveltlaan 29
+  Zoetermeer 2719 AB
+  NL
+privacy_policy: >-
+  https://bg-distribution.s3.eu-central-1.amazonaws.com/docs/bg-privacy-policy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Bodyguard.io Security Awareness",
+ "description": "Next-gen security awareness",
+ "version": "2.4.2",
+ "icons": {
+  "16": "resources/icons/icon-16.png",
+  "32": "resources/icons/icon-32.png",
+  "64": "resources/icons/icon.png"
+ },
+ "action": {
+  "default_popup": "resources/html/browser_action.html",
+  "default_icon": "resources/icons/icon.png",
+  "default_title": "Bodyguard",
+  "theme_icons": [{
+   "dark": "resources/icons/icon.png",
+   "light": "resources/icons/icon-dark.png",
+   "size": 64
+  }, {
+   "dark": "resources/icons/icon-32.png",
+   "light": "resources/icons/icon-dark-32.png",
+   "size": 32
+  }, {
+   "dark": "resources/icons/icon-16.png",
+   "light": "resources/icons/icon-dark-16.png",
+   "size": 16
+  }]
+ },
+ "background": {
+  "service_worker": "background_script_core.js"
+ },
+ "permissions": [
+  "nativeMessaging",
+  "downloads",
+  "tabs",
+  "storage",
+  "unlimitedStorage",
+  "scripting"
+ ],
+ "content_scripts": [
+  {
+   "matches": ["http://localhost:8080/*", "https://portal.dev.bodyguard.io/*", "https://portal.staging.bodyguard.io/*", "https://portal.prod.bodyguard.io/*"],
+   "run_at": "document_start",
+   "js": [
+    "resources/libs/browser-polyfill.js",
+    "resources/html/color.js",
+    "resources/html/portal.js"
+   ]
+  },
+  {
+   "matches": ["https://preview.dev.bodyguard.io/*", "https://preview.staging.bodyguard.io/*", "https://preview.prod.bodyguard.io/*"],
+   "run_at": "document_start",
+   "js": [
+    "resources/libs/browser-polyfill.js",
+    "resources/html/color.js",
+    "resources/html/wasm.js",
+    "resources/libs/FileSaver.js",
+    "resources/libs/bootstrap.bundle.js",
+    "resources/libs/jquery.slim.js",
+    "resources/libs/i18next.js",
+    "resources/libs/jquery-i18next.js",
+    "resources/libs/radialprogress.js"
+   ]
+  },
+  {
+   "matches": ["https://preview.dev.bodyguard.io/*", "https://preview.staging.bodyguard.io/*", "https://preview.prod.bodyguard.io/*"],
+   "run_at": "document_end",
+   "js": [
+    "resources/html/translate.js",
+    "resources/html/ui.js",
+    "resources/html/append.js"
+   ]
+  }
+ ],
+ "web_accessible_resources": [{
+  "resources": ["resources/*"],
+  "matches": ["https://preview.dev.bodyguard.io/*", "https://preview.staging.bodyguard.io/*", "https://preview.prod.bodyguard.io/*"]
+ }],
+ "host_permissions": ["*://*/*", "<all_urls>"]
+}

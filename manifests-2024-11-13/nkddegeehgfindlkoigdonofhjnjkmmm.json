@@ -1,0 +1,71 @@
+---
+name: Zellix - Buy on amazon with crypto
+version: 1.0.3
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 4
+release_date: '2024-11-02T05:22:41.000Z'
+size: 131KiB
+languages:
+  - English
+description: >-
+  Utility extension for finding product codes and enabling buy with crypto
+  button on amazon.com
+publisher_account: trajanking
+publisher_address: |-
+  770 Sherwood Dr.
+  Kaysville, UT 84037
+  US
+support_website: https://zellix.com/support
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Zellix - Buy on amazon with crypto",
+  "version": "1.0.3",
+  "description": "Utility extension for finding product codes and enabling buy with crypto button on amazon.com",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.amazon.com/*",
+    "https://*.zellix.com/*",
+    "https://api.coindesk.com/*",
+    "https://api.coingecko.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.amazon.com/*"],
+      "js": [
+        "config.js",
+        "utils.js",
+        "contentScript.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["images/*"],
+    "matches": ["https://*.amazon.com/*"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://api.coingecko.com; img-src 'self' https://m.media-amazon.com; default-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self'"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png"
+  },
+  "minimum_chrome_version": "88",
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

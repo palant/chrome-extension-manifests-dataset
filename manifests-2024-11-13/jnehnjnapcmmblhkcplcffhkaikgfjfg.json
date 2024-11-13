@@ -1,0 +1,72 @@
+---
+name: I Hear You Twitch
+version: 1.3.1
+category_slug: productivity/workflow
+rating: 4.714285714285714
+rating_count: 7
+user_count: 919
+release_date: '2024-11-05T11:38:18.000Z'
+size: 35.31KiB
+languages:
+  - English
+description: Plays a sound when new message comes in Twitch chat
+publisher_account: Chih-Hsuan Fan
+support_website: https://github.com/pc035860/i-hear-you-twitch/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "I Hear You Twitch",
+  "version": "1.3.1",
+
+  "description": "Plays a sound when new message comes in Twitch chat",
+
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.twitch.tv/*", "*://*.youtube.com/*"],
+      "js": ["contentscript.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+
+  "action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "I Hear You - Twitch"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "new_message.mp3",
+        "images/*.png"
+      ],
+      "matches": ["*://*.twitch.tv/*", "*://*.youtube.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

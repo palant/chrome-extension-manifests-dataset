@@ -1,0 +1,122 @@
+---
+name: xorkeesign India G2C
+version: 2.9.6
+category_slug: productivity/workflow
+rating: 4.619047619047619
+rating_count: 21
+user_count: 20000
+release_date: '2024-10-24T08:15:55.000Z'
+size: 1.46MiB
+languages:
+  - English
+description: >-
+  Digitally sign tax and other returns in Government of India citizen-facing web
+  applications.
+publisher: Odyssey Technologies Limited
+publisher_account: Odyssey Technologies Ltd
+publisher_address: |-
+  5th Floor, Dowlath Towers,
+  63, Taylors Road, Kilpauk
+  Chennai, Tamil Nadu 600010
+  IN
+privacy_policy: https://www.odysseytec.com/index.php/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "xorkeesign India G2C",
+ "description": "Digitally sign tax and other returns in Government of India citizen-facing web applications.",
+ "version": "2.9.6",
+ "manifest_version": 3,
+ "background": {
+  "service_worker": "background/background.js"
+ },
+ "content_scripts": [
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*eportal.incometax*", "*mcafoportal*", "*gst.gov*", "https://*tdscpc*", "*unifiedportal-emp.epfindia*", "https://*procure*", "https://*tender*", "https://*defproc*", "https://*eauction*", "https://*eproc*", "*content/mca*", "*dgft.gov*/CP*", "*old.icegate.*", "*coo.dgft*", "*foservices.icegate.*", "*ircep.gov.in*", "*ireps.gov.in*", "*wbhealthscheme.gov*"],
+   "js":["/common/defines.js", "/common/XSCUTILS.js", "/contentscript/CSUTILS.js", "/contentscript/contentscript.js", "/contentscript/xsg2cpopup.js"],
+   "css":["/contentscript/xsg2cpopup.css"],
+   "run_at":"document_start"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*eportal.incometax*"],
+   "js":["/contentscript/emb.js", "/contentscript/itr.js"],
+   "run_at":"document_idle"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*content/mca*"],
+   "js":["/contentscript/mca.js"],
+   "run_at":"document_idle"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*dgft.gov*/CP*"],
+   "js":["/contentscript/dgft.js"],
+   "run_at":"document_idle"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*mcafoportal*", "*gst.gov*"],
+   "js":["/contentscript/ems.js"],
+   "run_at":"document_start"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*unifiedportal-emp.epfindia*"],
+   "js":["contentscript/xshandle.js", "contentscript/cmpdf.js", "contentscript/xsjos.js", "/contentscript/epf.js", "/contentscript/dscservice.js"],
+   "run_at":"document_idle"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["https://*procure*", "https://*tender*", "https://*defproc*", "https://*eauction*", "https://*eproc*"],
+   "exclude_globs":["*ireps.gov*"],
+   "css":["/contentscript/epuploadfiles.css"],
+   "js":["/contentscript/xsxls.js", "/contentscript/xsjos.js", "/contentscript/xsjar.js", "/contentscript/xshandle.js", "/common/B64.js", "/background/xorkeesign.js", "/contentscript/epuploadfiles.js", "/contentscript/cppp.js", "contentscript/cmpdf.js"],
+   "run_at":"document_idle"
+  },
+  {
+   "matches":["https://www.odysseytec.com/*", "https://xorkeesign.com/*", "https://profile.xorkee.com/*"],
+   "js":["contentscript/g2c.js"],
+   "run_at":"document_start"
+  },
+  {
+   "matches":["https://*.gov.in/*"],
+   "include_globs":["*coo.dgft*"],
+   "js":["/contentscript/xshandle.js", "/contentscript/cmpdfv3.js", "/contentscript/coodgft.js"],
+   "run_at":"document_start"
+  }
+ ],
+ "permissions":["tabs", "webRequest", "declarativeNetRequest", "storage", "scripting"],
+ "optional_permissions":["downloads", "notifications"],
+ "host_permissions": ["https://*.gov.in/*"],
+ "optional_host_permissions":["https://*.co.in/*", "https://*.nic.in/*", "https://*.mahaitgov.in/*", "https://digidocuat.stockholding.com/*", "https://digidoc.stockholding.com/*"],
+ "content_security_policy": {"extension_pages":"connect-src data: https://xorkeesign.com https://*.gov.in; script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"},
+ "web_accessible_resources":[
+  {
+    "resources": ["/images/*", "/contentscript/*", "/common/*", "/font/*"],
+    "matches": ["https://*.gov.in/*", "https://*.co.in/*", "https://*.nic.in/*", "https://*.mahaitgov.in/*", "https://*.stockholding.com/*"]
+  }
+ ],
+ "externally_connectable":{
+  "matches": ["https://*.incometax.gov.in/*", "https://*.mca.gov.in/*", "https://*.gst.gov.in/*", "https://*.tdscpc.gov.in/*", "https://unifiedportal-emp.epfindia.gov.in/*", "https://www.dgft.gov.in/CP/*", "https://*.icegate.gov.in/*", "https://*.mahaonline.gov.in/*", "https://*.mahaitgov.in/*", "https://*.stockholding.com/*", "https://*.ircep.gov.in/*", "https://*.ireps.gov.in/*", "https://*.wbhealthscheme.gov.in/*"]
+ },
+ "icons": {
+  "16": "/images/icon16.png",
+  "32": "/images/icon32.png",
+  "48": "/images/icon48.png",
+  "128": "/images/icon128.png"
+ },
+ "action": {
+  "default_icon":{
+   "16": "images/icon16.png",
+   "24": "images/icon32.png",
+   "32": "images/icon32.png"
+  },
+  "default_title": "xorkeesign India G2C",
+  "default_popup": "actions.html"
+ }
+}

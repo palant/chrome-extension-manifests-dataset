@@ -1,0 +1,70 @@
+---
+name: ChatGPT Enhancer
+version: '2.1'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-07-22T09:04:26.000Z'
+size: 58.76KiB
+languages:
+  - English
+description: >-
+  Enhance your ChatGPT.com experience: Expand screen space, remember unsent
+  messages, hide avatars, and improve productivity.
+publisher_account: William Cooke
+publisher_address: |-
+  Pacific Pines Blvd
+  Pacific Pines, QLD 4211
+  AU
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatGPT Enhancer",
+  "version": "2.1",
+  "description": "Enhance your ChatGPT.com experience: Expand screen space, remember unsent messages, hide avatars, and improve productivity.",
+  "author": "William Cooke",
+  "permissions": [
+    "scripting",
+    "storage",
+    "webRequest",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "/background/background.js"
+  },
+  "action": {
+    "default_popup": "/content/popup.html",
+    "default_icon": {
+      "16": "/icons/icon-dark-16.png",
+      "32": "/icons/icon-dark-32.png",
+      "48": "/icons/icon-dark-48.png",
+      "128": "/icons/icon-dark-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "js": [
+        "/content/content.js",
+        "/content/tools.js",
+        "/content/content-logging.js",
+        "/libs/pako.min.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://chatgpt.com/*"],
+      "css": [
+        "/content/styles.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://chatgpt.com/*"
+  ]
+}

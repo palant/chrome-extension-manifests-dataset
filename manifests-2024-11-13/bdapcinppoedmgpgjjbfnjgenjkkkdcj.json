@@ -1,0 +1,137 @@
+---
+name: 세일즈구루
+version: 4.1.1
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 78
+release_date: '2024-08-15T05:33:18.000Z'
+size: 788KiB
+languages:
+  - 한국어
+description: 세일즈구루 공식 확장프로그램 - 온라인셀러를 위한 분석툴(데이터랩, 순위추적, 상품명 체크 등)
+publisher: 이지셀
+publisher_account: 세일즈구루
+publisher_address: |-
+  창룡대로194
+  수원시, 경기도 16231
+  KR
+extension_website: salesgulu.com
+privacy_policy: >-
+  https://sites.google.com/view/sales9ulu/%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EB%B3%B4%ED%98%B8%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "세일즈구루",
+ "description": "세일즈구루 공식 확장프로그램 - 온라인셀러를 위한 분석툴(데이터랩, 순위추적, 상품명 체크 등)",
+ "version": "4.1.1",
+ "action": {
+  "default_title": "세일즈구루",
+  "default_icon": "micon.png"
+ },
+ "icons": {
+  "16": "micon.png",
+  "48": "micon.png",
+  "128": "micon.png"
+ },
+ "background": {
+  "service_worker": "background.js",
+  "type": "module"
+ },
+ "options_page": "options.html",
+ "externally_connectable": {
+  "matches": [
+   "*://*.salesgulu.com/*",
+   "*://*.127.0.0.1/*"
+  ]
+ },
+ "content_scripts": [
+  {
+   "css": [
+    "sweetalert2.css"
+   ],
+   "matches": [
+    "*://*.salesgulu.com/*",
+    "*://*.naver.com/*",
+    "*://*.coupang.com/*",
+    "*://*.1688.com/*",
+    "*://*.taobao.com/*",
+    "*://*.tmall.com/*",
+    "*://*.yiwugo.com/*"
+   ],
+   "run_at": "document_end",
+   "js": [
+    "contentScript.js",
+    "inject.js",
+    "./lib/sweetalert2.js",
+    "./lib/crypto-js.js",
+    "./lib/hmac-sha256.js"
+   ]
+  }
+ ],
+ "content_security_policy": {
+  "script-src": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+ },
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "test.png",
+    "loading.gif",
+    "inject.js",
+    "/lib/sweetalert2.*",
+    "/lib/cheerio.*",
+    "/lib/crypto-js.js",
+    "sweetalert2.css",
+    "soho_1688.css",
+    "popup.html",
+    "injectcontent.html",
+    "options.html",
+    "detailpageinfo.html",
+    "iframeScript.js"
+   ],
+   "matches": [
+    "*://port-0-salesgulu-server-485qr6p2llsadcwgd.sel5.cloudtype.app/*",
+    "*://*.salesgulu.com/*",
+    "*://*.taobao.com/*",
+    "*://*.tmall.com/*",
+    "*://*.coupangcdn.com/*",
+    "*://*.1688.com/*",
+    "*://*.pstatic.net/*",
+    "*://*.naver.com/*",
+    "*://*.coupang.com/*",
+    "*://*.yiwugo.com/*"
+   ]
+  }
+ ],
+ "permissions": [
+  "webRequest",
+  "scripting",
+  "tts",
+  "tabs",
+  "activeTab",
+  "storage",
+  "unlimitedStorage",
+  "cookies",
+  "scripting",
+  "notifications",
+  "declarativeNetRequest"
+ ],
+ "host_permissions": [
+  "*://*.api.openai.com/*",
+  "*://port-0-salesgulu-server-485qr6p2llsadcwgd.sel5.cloudtype.app/*",
+  "*://*.salesgulu.com/*",
+  "*://*.store.kakao.com/*",
+  "*://*.naver.com/*",
+  "*://*.coupang.com/*",
+  "*://*.pstatic.net/*",
+  "*://*.alicdn.com/*",
+  "*://*.1688.com/*",
+  "*://*.taobao.com/*",
+  "*://*.tmall.com/*",
+  "*://*.coupangcdn.com/*",
+  "*://*.yiwugo.com/*"
+ ]
+}

@@ -1,0 +1,96 @@
+---
+name: Ctrl
+version: 2.0.26
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 57
+release_date: '2024-03-19T09:11:52.000Z'
+size: 58.29KiB
+languages:
+  - English (United States)
+description: Complete the busywork in your sales process 10x faster
+publisher: Get Ctrl Ltd
+publisher_address: |-
+  Daniel Frisch Street 3
+  Tel Aviv-Yafo 6473104
+  IL
+extension_website: getctrl.co
+support_website: https://www.getctrl.co
+privacy_policy: https://www.getctrl.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ctrl",
+  "description": "Complete the busywork in your sales process 10x faster",
+  "version": "2.0.26",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "storage"],
+  "action": {
+    "default_title": "Ctrl"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.getctrl.co/*"],
+      "js": ["ctrl_content.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.force.com/*", "https://*.salesforce.com/*"],
+      "js": ["salesforce_content.js"],
+      "css": ["ctrl-iframe.css", "ctrl-salesforce.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.hubspot.com/*"],
+      "js": ["hubspot_content.js"],
+      "css": ["ctrl-iframe.css", "ctrl-hubspot.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["gmail_content.js"],
+      "css": ["ctrl-gmail.css", "ctrl-iframe.css"]
+    },
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "js": ["general_content.js", "calendar_content.js"],
+      "css": ["ctrl-iframe.css"]
+    },
+    {
+      "matches": ["https://*.chorus.ai/*"],
+      "js": ["general_content.js"],
+      "css": ["ctrl-iframe.css"]
+    },
+    {
+      "matches": ["https://*.outlook.com/*", "https://*.outlook.live.com/*", "https://*.outlook.office.com/*"],
+      "js": ["general_content.js"],
+      "css": ["ctrl-iframe.css"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+0",
+        "mac": "Command+Shift+0"
+      }
+    }
+  },
+  "icons": {
+    "16": "icons/16x16.png",
+    "32": "icons/32x32.png",
+    "48": "icons/48x48.png",
+    "128": "icons/128x128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icon.svg", "inverseIcon.svg", "redIcon.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

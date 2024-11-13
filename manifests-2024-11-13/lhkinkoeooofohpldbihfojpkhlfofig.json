@@ -1,0 +1,55 @@
+---
+name: 'LeetBoost: Auto-Complete for LeetCode'
+version: '1.2'
+category_slug: productivity/developer
+rating: 4.928571428571429
+rating_count: 28
+user_count: 563
+release_date: '2024-07-27T01:57:23.000Z'
+size: 95.05KiB
+languages:
+  - English
+description: >-
+  Provides context-unaware intellisense for LeetCode code editor. Allows users
+  to make custom code snippets.
+publisher_account: nikesh.tadela
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "LeetBoost: Auto-Complete for LeetCode",
+    "version": "1.2",
+    "description": "Provides context-unaware intellisense for LeetCode code editor. Allows users to make custom code snippets.",
+    "permissions": ["storage","tabs"],
+    "background": {
+        "service_worker": "src/service-worker.js",
+        "type" : "module"
+    },
+    "icons": {
+        "128": "icons/logo.png"
+    },
+    "action": {
+        "default_icon" : "icons/logo.png",
+        "default_popup": "dist/index.html"
+    },
+    
+    "web_accessible_resources": [
+        {
+            "resources" : ["src/initialize.js","src/disable.js","src/enable.js"] , 
+            "matches" : ["https://leetcode.com/*"]
+        }
+    ],
+    "content_scripts" : [
+        {
+        "run_at": "document_end",
+        "js": ["src/content.js"],
+        "type" : "module",
+        "matches": [
+            "https://leetcode.com/problems/*",
+            "https://leetcode.com/contest/*"
+        ]
+        }
+    ]
+}

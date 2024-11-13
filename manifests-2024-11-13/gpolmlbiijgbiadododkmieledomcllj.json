@@ -1,0 +1,75 @@
+---
+name: 'Blabigo - #1 LinkedIn™ Content Tool'
+version: 1.1.4
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 229
+release_date: '2024-08-16T10:36:49.000Z'
+size: 153KiB
+languages:
+  - English
+description: Capture your LinkedIn™ performance data and analyze your result.
+publisher: Blabigo UG (haftungsbeschränkt)
+publisher_account: Blabigo
+publisher_address: |-
+  Wilhelm-Riehl-Straße 26
+  München 80687
+  DE
+extension_website: blabigo.com
+privacy_policy: https://blabigo.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Blabigo - #1 LinkedIn™ Content Tool",
+  "externally_connectable": {
+    "ids": ["bahehohkabejkbpdjffgmlaamhlcjkjd"],
+    "matches": [
+      "https://app.blabigo.com/dashboard/*",
+      "http://localhost:4200/dashboard/*"
+    ]
+  },
+  "description": "Capture your LinkedIn™ performance data and analyze your result.",
+  "version": "1.1.4",
+  "manifest_version": 3,
+  "icons": { "16": "blabigo.png", "48": "blabigo.png", "128": "blabigo.png" },
+  "permissions": ["activeTab", "background", "storage"],
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "blabigo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": [
+        "https://app.blabigo.com/dashboard/*",
+        "http://localhost:4200/dashboard/*"
+      ],
+      "js": ["token_management.js"]
+    },
+    {
+      "matches": ["https://*/*"],
+      "js": [
+        "toUnicodeVariant.min.js",
+        "bootstrap.bundle.min.js",
+        "scripts.js",
+        "chart.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["panel.js"],
+      "css": ["styles.css"],
+      "html": ["panel.html"]
+    }
+  ]
+}

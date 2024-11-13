@@ -1,0 +1,81 @@
+---
+name: UAILab
+version: 1.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 29
+release_date: '2024-09-11T18:16:45.000Z'
+size: 851KiB
+languages:
+  - português (Brasil)
+description: Uma extensão para simplificar atividades administrativas
+publisher_account: UAILab
+support_website: https://forms.gle/zzmwiGukGyecGhUx7
+privacy_policy: >-
+  https://drive.tjmg.jus.br/index.php/s/TGwPAyh7qepVhJk/download?path=%2FExtens%C3%A3o%20TJMG%20-%20UAILab&files=Politica%20de%20privacidade%20e%20termos%20de%20uso.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "UAILab",
+  "description": "Uma extensão para simplificar atividades administrativas",
+  "version": "1.0.1",
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/logo16.png",
+      "32": "assets/icons/logo32.png"
+    },
+    "default_title": "UAILab",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "assets/icons/logo48.png",
+    "128": "assets/icons/logo128.png"
+  },  
+  "options_page": "options.html",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.scdp.mg.gov.br/*", "https://scdphomologa.prodemge.gov.br/*", "http://127.0.0.1:5500/SCDP.html*", "https://pje.tjmg.jus.br/*", "https://pjerecursal.tjmg.jus.br/*"],
+  "background": {
+    "service_worker": "services/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["content_scripts/scdp/desabilitarCampos/index.js", "content_scripts/scdp/passagemRodoviaria/index.js"],
+      "matches": ["https://www.scdp.mg.gov.br/*"],
+      "include_globs": [
+        "https://www.scdp.mg.gov.br/scdp-web/pages/cadastrar_viagem/cadastrar_viagem_edit.xhtml*"
+      ]
+    },
+    {
+      "js": ["content_scripts/scdp/preenchimentoDefault/index.js"],
+      "matches": ["https://www.scdp.mg.gov.br/*"],
+      "include_globs": [
+        "https://www.scdp.mg.gov.br/scdp-web/pages/execucao_financeira/execucao_financeira_detalhes.xhtml*"
+      ]
+    },
+    {
+      "js": ["content_scripts/scdp/preenchimentoDefault/index.js"],
+      "matches": ["https://scdphomologa.prodemge.gov.br/*"],
+      "include_globs": [
+        "https://scdphomologa.prodemge.gov.br/scdp-web/pages/cadastrar_viagem/cadastrar_viagem_edit.xhtml*"
+      ]
+    },
+    {
+      "js": ["content_scripts/scdp/preenchimentoDefault/index.js"],
+      "matches": ["http://127.0.0.1:5500/SCDP.html*"]      
+    },
+    {
+      "js": ["vendor.js", "content_scripts/pje/download/index.js"],
+      "matches": ["https://pje.tjmg.jus.br/*", "https://pjerecursal.tjmg.jus.br/*"],
+      "include_globs": [
+        "https://pje.tjmg.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam*",
+        "https://pjerecursal.tjmg.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listAutosDigitais.seam*",
+        "https://pje.tjmg.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam*",
+        "https://pjerecursal.tjmg.jus.br/pje/Processo/ConsultaProcesso/Detalhe/listProcessoCompletoAdvogado.seam*"
+      ]
+    }
+  ]
+}

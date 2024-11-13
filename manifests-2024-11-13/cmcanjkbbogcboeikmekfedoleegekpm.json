@@ -1,0 +1,208 @@
+---
+name: WiseBuy - Preisvergleich
+version: 0.0.1 Beta
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 19
+release_date: '2021-05-11T04:13:08.000Z'
+size: 8.05MiB
+languages:
+  - Deutsch
+  - English
+description: >-
+  Wir optimieren Deinen online Warenkorb hinsichtlich Preis, Nachhaltigkeit und
+  Lieferung.
+publisher_account: reddlegroup
+privacy_policy: https://www.reddle.de
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.1.0",
+  "short_name": "__MSG_appShortName__",
+  "version_name": "0.0.1 Beta",
+  "author": "WiseBuy",
+  "homepage_url": "http://www.reddle.de",
+  "default_locale": "de",
+  "oauth2": {
+    "client_id": "113904405508-upf6404379qg7ip4ojh524dqhckb3vdl.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "permissions": [
+    "*://*.google.com/",
+    "identity",
+    "http://www.amazon.de/*",
+    "https://www.amazon.de/*",
+    "http://www.mediamarkt.de/*",
+    "https://www.mediamarkt.de/*",
+    "http://www.otto.de/*",
+    "https://www.otto.de/*",
+    "https://localhost:13337/",
+    "https://srv3.reddle.de:8001/*",
+    "http://127.0.0.1:8000/*",
+    "https://srv3.reddle.de/*",
+    "storage",
+    "https://srv1.reddle.de/*",
+    "https://srv.reddle.de/*"
+  ],
+  "icons": {
+    "16": "images/icon_16.png",
+    "19": "images/icon_19.png",
+    "32": "images/icon_32.png",
+    "38": "images/icon_38.png",
+    "48": "images/icon_48.png",
+    "64": "images/icon_64.png",
+    "96": "images/icon_96.png",
+    "128": "images/icon_128.png",
+    "256": "images/icon_256.png"
+  },
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ],
+    "persistent": false
+  },
+  "browser_action": {
+    "default_title": "__MSG_browserActionTitle__",
+    "default_popup": "pages/home.html",
+    "default_icon": {
+      "16": "images/icon_16.png",
+      "19": "images/icon_19.png",
+      "32": "images/icon_32.png",
+      "38": "images/icon_38.png",
+      "48": "images/icon_48.png",
+      "64": "images/icon_64.png",
+      "96": "images/icon_96.png",
+      "128": "images/icon_128.png",
+      "256": "images/icon_256.png"
+    }
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.de/gp/cart/view.html*",
+        "https://www.amazon.de/-/*/gp/cart/view.html*",
+        "https://www.amazon.de/gp/*/view.html*"
+      ],
+      "css": [
+        "styles/contentscript.css"
+      ],
+      "js": [
+        "scripts/amazon.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.amazon.de/gp/product/*",
+        "https://www.amazon.de/-/*/gp/product/*",
+        "https://www.amazon.de/-/*/dp/*"
+      ],
+      "css": [
+        "styles/addcart.scss"
+      ],
+      "js": [
+        "scripts/addcart-amazon.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.home24.de/checkout/cart*"
+      ],
+      "css": [
+        "styles/contentscript.css"
+      ],
+      "js": [
+        "scripts/home24.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.otto.de/order/basket*"
+      ],
+      "css": [
+        "styles/contentscript.css",
+        "styles/ottoscript.css"
+      ],
+      "js": [
+        "scripts/otto.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.zalando.de/cart/*"
+      ],
+      "css": [
+        "styles/contentscript.css",
+        "styles/ottoscript.css"
+      ],
+      "js": [
+        "scripts/zalando.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.mediamarkt.de/checkout*"
+      ],
+      "css": [
+        "styles/contentscript.css",
+        "styles/mediamarkt.css"
+      ],
+      "js": [
+        "scripts/mediamarkt.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://www.bonprix.de/cart*"
+      ],
+      "css": [
+        "styles/contentscript.css",
+        "styles/bonprix.css"
+      ],
+      "js": [
+        "scripts/bonprix.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*/suche/*"
+      ],
+      "js": [
+        "scripts/shoplist.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://ssl.google-analytics.com; object-src 'self'",
+  "manifest_version": 2,
+  "web_accessible_resources": [
+    "images/*",
+    "templates/images/*"
+  ]
+}

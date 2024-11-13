@@ -1,0 +1,60 @@
+---
+name: Geocache Solved
+version: '1.1'
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 22
+release_date: '2024-05-21T09:18:30.000Z'
+size: 45.49KiB
+languages:
+  - English
+description: Auto resolve geocache coords from solvedjigidi website
+publisher_account: Telesphore
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Geocache Solved",
+  "version": "1.1",
+  "description": "Auto resolve geocache coords from solvedjigidi website",
+  "action": {
+    "default_icon": {
+      "128": "icon.png"
+    },
+    "default_title": "Geocache Solved"
+  },
+  "icons": {
+    "128": "icon.png"
+  },
+  "host_permissions": [
+    "https://www.geocaching.com/*",
+    "https://solvedjigidi.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.geocaching.com/geocache/*",
+        "https://www.geocaching.com/seek/cache_details.aspx?*"
+      ],
+      "js": ["jquery.min.js","geocache.js"]
+    }
+  ],
+  "permissions": [
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "modify_response_ruleset",
+        "path": "jigidi.json",
+        "enabled": true
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "bg.js"
+  }
+}

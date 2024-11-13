@@ -1,0 +1,74 @@
+---
+name: Eggo
+version: 0.0.1
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-01-25T06:34:59.000Z'
+size: 3.76MiB
+languages:
+  - English (UK)
+description: Build your own virtual farm on Twitter
+publisher_account: Eggo Farm
+extension_website: eggo.farm
+privacy_policy: https://docs.eggo.farm/legal-docs/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Eggo",
+  "description": "Build your own virtual farm on Twitter",
+  "version": "0.0.1",
+  "permissions": ["storage"],
+  "background": {
+    "service_worker": "/background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "favicon-16x16.png",
+      "32": "favicon-32x32.png",
+      "48": "android-chrome-192x192.png",
+      "128": "android-chrome-384x384.png"
+    }
+  },
+  "icons": {
+    "16": "favicon-16x16.png",
+    "32": "favicon-32x32.png",
+    "48": "android-chrome-192x192.png",
+    "128": "android-chrome-384x384.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "https://api.eggo.farm/twitter/success?response=*"
+      ],
+      "js": ["/content.js"]
+    },
+     {
+       "matches": [
+         "*://twitter.com/*",
+         "*://x.com/*",
+         "https://api.eggo.farm/twitter/success?response=*"
+       ],
+       "js": ["/inject.js"],
+       "run_at": "document_start"
+     }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "eggo-etherum.js",
+        "img/farm-background.gif",
+        "fonts/*",
+        "game/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

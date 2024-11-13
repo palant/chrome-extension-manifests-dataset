@@ -1,0 +1,99 @@
+---
+name: UsaTrans - Авто из США
+version: 2.0.5
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 578
+release_date: '2024-08-15T20:02:36.000Z'
+size: 247KiB
+languages:
+  - English
+description: Simplify trading process for dealers
+publisher: Майями
+publisher_account: volkovw16
+publisher_address: |-
+  70200
+  Гуляйполе 70200
+  Украина
+support_website: https://usa-trans.pp.ua/privacy
+privacy_policy: https://usa-trans.pp.ua/privacy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "UsaTrans - Авто из США",
+  "description": "Simplify trading process for dealers",
+  "version": "2.0.5",
+  "icons": {
+    "16": "img/icon.png",
+    "32": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png",
+    "256": "img/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "webRequestBlocking",
+    "cookies",
+    "management",
+    "background",
+    "*://*.copart.com/*"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["https://*.copart.com/*"],
+      "js": ["js/index.js", "js/jquery.js"],
+      "css": ["copart/copart.css"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://g2auction.copart.com/*"],
+      "js": ["js/g2.js", "js/jquery.js"]
+    },
+
+    {
+      "js": [ "js/iaaiOverrideUserName.js" ],
+      "matches": [ "*://*.iaai.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "js/iaaiLogInPage.js" ],
+      "matches": [ "*://login.iaai.com/*" ]
+    },
+    {
+      "js": [ "js/iaaiScript.js" ],
+      "matches": [ "*://*.iaai.com/*" ]
+    },
+    {
+      "all_frames": true,
+      "js": [ "js/iaaiDashboard.js" ],
+      "matches": [ "*://*.iaai.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": [ "js/iaaiLiveAuction.js" ],
+      "matches": [ "*://portal.auctionnow.iaai.com/*" ]
+    }
+  ],
+  "background": {
+    "matches": ["https://*.copart.com/*", "*://*.iaai.com/*"],
+    "scripts": ["js/background.js"],
+    "persistent": true
+  },
+  "web_accessible_resources": ["*"],
+
+  "incognito": "not_allowed",
+  "externally_connectable": {
+    "matches": ["*://*.copart.com/*"]
+  },
+  "browser_action": {
+    "default_icon": "img/icon.png",
+    "default_popup": "popup/popup.html"
+  }
+}

@@ -1,0 +1,81 @@
+---
+name: korekthor
+version: 0.2.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 14
+release_date: '2024-09-25T01:37:55.000Z'
+size: 1.0MiB
+languages:
+  - čeština
+description: Nejlepší korektor chyb v češtině.
+publisher: ComVisoft s.r.o.
+publisher_account: korekthor
+publisher_address: |-
+  Strmá 798
+  Kobeřice 747 27
+  CZ
+extension_website: korekthor.cz
+privacy_policy: https://korekthor.cz/ochrana-udaju
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "korekthor",
+    "version": "0.2.2",
+    "description": "Nejlepší korektor chyb v češtině.",
+    "permissions": [
+      "storage",
+      "tabs"
+    ],
+    "host_permissions": ["*://*.korekthor.cz/*"],
+    "externally_connectable": {
+      "matches": ["*://*/*"]
+    },
+    "web_accessible_resources": [{
+      "resources": ["/setups/*.js", "/handlers/*.js", "/main/*.css", "/assets/*.svg", "/supportRoot/*.*"],
+      "matches": ["<all_urls>"]
+    }],
+    "content_scripts": [
+      {
+        "matches": ["*://docs.google.com/*"],
+        "run_at": "document_start",
+        "js": ["./main/docs.js"]
+      },
+      {
+        "matches": ["*://*/*"],
+        "run_at": "document_end",
+        "js": [
+          "./node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js",
+          "./main/others.js"
+        ]
+      },
+      {
+        "matches": ["*://*/*"],
+        "run_at": "document_start",
+        "js": [
+          "./main/font.js"
+        ]
+      }
+    ],
+    "action": {
+      "default_icon": {
+        "16": "assets/ext-icon.png",
+        "24": "assets/ext-icon.png",
+        "32": "assets/ext-icon.png"
+      },
+      "default_title": "korekthor",
+      "default_popup": "popup/popup.html"
+    },
+    "icons": {
+      "48": "assets/ext-icon.png",
+      "128": "assets/ext-icon.png"
+    },
+    "manifest_version": 3,
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    }
+}

@@ -1,0 +1,66 @@
+---
+name: Digizuite™ DAM Connector
+version: 2.0.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 82
+release_date: '2023-12-07T14:46:48.000Z'
+size: 26.1KiB
+languages:
+  - English (United States)
+description: >-
+  Add Digizuite Embedded UI to chrome and benefit from your single source of
+  truth.
+publisher_account: rnd.digizuite
+support_website: https://digizuite.atlassian.net/wiki/spaces/DD/pages/3294396417/DCE+5.5
+privacy_policy: https://www.digizuite.com/doc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Digizuite™ DAM Connector",
+  "version": "2.0.4",
+  "description": "Add Digizuite Embedded UI to chrome and benefit from your single source of truth.",
+  "action": {
+    "default_title": "Digizuite DAM",
+    "default_icon": {
+      "16": "src/assets/digizuite_logo16.png",
+      "32": "src/assets/digizuite_logo32.png",
+      "48": "src/assets/digizuite_logo48.png",
+      "128": "src/assets/digizuite_logo128.png"
+    }
+  },
+  "icons": {
+    "16": "src/assets/digizuite_logo16.png",
+    "32": "src/assets/digizuite_logo32.png",
+    "48": "src/assets/digizuite_logo48.png",
+    "128": "src/assets/digizuite_logo128.png"
+  },
+  "background": {
+    "service_worker": "src/background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "exclude_matches": [
+        "https://*.digizuite.com/*",
+        "https://*.digizuiteusa.com/*",
+        "https://*.atlassian.net/*"
+      ],
+      "all_frames": true,
+      "js": ["src/content-scripts/change-url-event.js", "src/content-scripts/asset-message-event.js"]
+    }
+  ],
+  "permissions": ["activeTab", "storage", "contextMenus"],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "homepage_url": "https://www.digizuite.com/",
+  "options_page": "src/options/options.html"
+}

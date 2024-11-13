@@ -1,0 +1,95 @@
+---
+name: Impact gegevens verzamelen
+version: 2.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-08-10T07:53:25.000Z'
+size: 826KiB
+languages:
+  - Nederlands
+description: >-
+  Op een privacy vriendelijke manier gegevens verzamelen ten behoeve van je
+  Impact hypotheek
+publisher: Credit Management en Investor Solutions B.V.
+publisher_account: Credit Management & Investor Solutions B.V.
+publisher_address: |-
+  Kingsfordweg 43-117
+  Amsterdam 1043 GP
+  NL
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Impact gegevens verzamelen",
+  "description": "Op een privacy vriendelijke manier gegevens verzamelen ten behoeve van je Impact hypotheek",
+  "version": "2.0.0",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://cmisnederland.nl/",
+  "icons": {
+    "32": "resources/logo32X32.png",
+    "48": "resources/logo48X48.png",
+    "128": "resources/logo128X128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://iwize.nl/*",
+        "https://*.aqopi.com/*",
+        "https://*.belastingdienst.nl/*",
+        "https://*.digid.nl/*",
+        "https://*.duo.nl/*",
+        "https://*.mijnpensioenoverzicht.nl/*",
+        "https://*.overheid.nl/*",
+        "https://*.uwv.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/content.js",
+        "content/actions.js",
+        "content/crypto.js",
+        "content/templateMatching.js",
+        "content/fetchBlob.js",
+        "content/downloadPdfByClick.js"
+      ]
+    },
+    {
+      "matches": ["https://mijn.duo.nl/*"],
+      "run_at": "document_start",
+      "js": ["content/fetchJsonWithAuthHeader.js"]
+    }
+  ],
+  "permissions": ["cookies", "webRequest", "storage"],
+  "host_permissions": [
+    "https://*.aqopi.com/*",
+    "https://*.belastingdienst.nl/*",
+    "https://*.digid.nl/*",
+    "https://*.duo.nl/*",
+    "https://*.mijnpensioenoverzicht.nl/*",
+    "https://*.overheid.nl/*",
+    "https://*.uwv.nl/*",
+    "https://iwize.nl/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "resources/logo32X32.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "Impact gegevens verzamelen"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["/resources/logo80X80.png", "/content/helpers/dljson.js", "/content/helpers/wrap.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.iwize.nl/*"]
+  }
+}

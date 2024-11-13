@@ -1,0 +1,196 @@
+---
+name: 小满助手
+version: 3.1.7
+category_slug: productivity/workflow
+rating: 2.5925925925925926
+rating_count: 27
+user_count: 100000
+release_date: '2024-11-08T05:37:43.000Z'
+size: 6.18MiB
+languages:
+  - 中文 (简体)
+description: 小满助手
+publisher: 深圳市小满科技有限公司
+publisher_account: 小满科技技术团队
+publisher_address: |-
+  南山区深南大道9678号
+  大冲商务中心B座14层
+  Shenzhen Shi, Guangdong Sheng 518000
+  CN
+extension_website: www.xiaoman.cn
+privacy_policy: https://www.xiaoman.cn/deep-know?activeIndex=2
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "小满助手",
+  "version": "3.1.7",
+  "description": "小满助手",
+  "action": {
+    "default_icon": {
+      "16": "./assets/img/icon@16.png",
+      "48": "./assets/img/icon@48.png",
+      "128": "./assets/img/icon@128.png"
+    },
+    "default_title": "正在运行",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/img/icon@16.png",
+    "48": "./assets/img/icon@48.png",
+    "128": "./assets/img/icon@128.png"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "tabs",
+    "background",
+    "cookies",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "response_header_rules",
+        "enabled": true,
+        "path": "./assets/filter-rules/whatsapp-rule.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.google.com/search*",
+        "*://*.google.com.hk/search*",
+        "*://*.google.com.tw/search*",
+        "*://*.google.com.au/search*",
+        "*://*.google.co.jp/search*",
+        "*://*.google.co.uk/search*",
+        "*://*.google.fr/search*",
+        "*://*.google.de/search*",
+        "*://*.google.it/search*",
+        "*://*.google.nl/search*",
+        "*://*.google.ch/search*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "./dist/content/google/style.css"
+      ],
+      "js": [
+        "./dist/content/google/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://*.xiaoman.cn/*",
+        "*://*.okki.com/*",
+        "*://*.xiaoman.site/*",
+        "*://*.xiaoman.co/*",
+        "*://*.xiaoman.cc/*",
+        "*://*.m.tips/*",
+        "*://web.whatsapp.com/*",
+        "*://*.linkedin.com/*",
+        "*://*.linkedin.cn/*",
+        "*://sobot.com/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "./dist/content/finder/style.css"
+      ],
+      "js": [
+        "./dist/content/finder/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/search/results/companies/*",
+        "*://www.linkedin.com/company/*",
+        "*://www.linkedin.com/search/results/people/*",
+        "*://www.linkedin.com/search/results/all/*",
+        "*://www.linkedin.com/in/*",
+        "*://www.linkedin.com/people/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "./dist/content/linkedin/style.css"
+      ],
+      "js": [
+        "./dist/content/linkedin/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./dist/content/main/index.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://web.whatsapp.com/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "./dist/content/whatsapp/style.css",
+        "./dist/content/whatsappExpose/style.css"
+      ],
+      "js": [
+        "./dist/content/whatsapp/content.js",
+        "./dist/content/whatsappExpose/content.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.xiaoman.cn/*",
+        "*://*.okki.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./dist/scripts/whatsappExpose.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*.xiaoman.cn/*",
+        "*://work.okki.com/*",
+        "*://*.okki.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "./dist/content/alibaba/content.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/img/*",
+        "dist/options/*",
+        "dist/scripts/*",
+        "dist/content/*",
+        "http://localhost:3303/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

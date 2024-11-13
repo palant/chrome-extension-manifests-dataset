@@ -1,0 +1,100 @@
+---
+name: Revamp For Salesforce
+version: 1.0.4
+category_slug: productivity/developer
+rating: 5
+rating_count: 5
+user_count: 333
+release_date: '2023-05-24T11:27:20.000Z'
+size: 126KiB
+languages:
+  - English
+description: Revamp Your Salesforce Experience.
+publisher_account: Sudeer Kamat
+---
+
+{
+    "name" : "Revamp For Salesforce",
+    "short_name": "Revamp SF",
+    "version" : "1.0.4",
+    "description" :"Revamp Your Salesforce Experience.",
+    "author": "Sudeer Kamat",
+    "manifest_version" : 3,
+    "homepage_url": "https://sfdcsaga.blogspot.com",
+    "background": {
+        "service_worker": "code/background.js"
+      },
+      "icons":
+      {
+        "128": "icon.png"
+      },
+      "action": {
+        "default_icon": {
+          "128": "icon.png"
+        },
+        "default_title": "Revamp For Salesforce",
+        "default_popup": "popup.html"
+      },
+      "content_scripts": [
+        {
+          "matches": ["https://*.lightning.force.com/*", "https://*.salesforce.com/*"],
+          "js": ["code/apiname.js"],
+          "css": ["css/saga-style.css"],
+          "run_at": "document_end",
+          "all_frames": true
+        },
+        {
+          "matches": ["https://*.salesforce.com/_ui/common/apex/debug/ApexCSIPage/*","https://*.salesforce.com/_ui/common/apex/debug/ApexCSIPage"],
+          "js": ["code/codecoveragesearch.js"],
+          "css": ["css/saga-style.css"],
+          "run_at":"document_end",
+          "all_frames": false
+        },
+        {
+          "matches": ["https://*.force.com/*", "https://*.salesforce.com/*"],
+          "js": ["lib/jquery.js", "code/darkTheme.js"],
+          "run_at": "document_start",
+          "all_frames": true
+        },
+        {
+          "matches": ["https://*.force.com/*", "https://*.salesforce.com/*","https://*.lightning.force.com/*"],
+          "js": ["lib/jquery.min.js"],
+          "run_at": "document_end",
+          "all_frames": true
+        },
+        {
+          "matches": ["https://*.salesforce.com/*","https://*.force.com/*","https://*.cloudforce.com/*","https://*.visualforce.com/*"],
+          "js": ["code/loadFields.js", "code/setupcheckall.js"],
+          "run_at": "document_end",
+          "all_frames": true
+      },
+      {
+        "matches": ["https://*.salesforce.com/changemgmt/inboundChangeSetDetailPage.apexp*", "https://*.my.salesforce.com/changemgmt/inboundChangeSetDetailPage.apexp*", "https://*.salesforce.com/changemgmt/outboundChangeSetDetailPage.apexp*", "https://*.my.salesforce.com/changemgmt/outboundChangeSetDetailPage.apexp*",
+        "https://*.force.com/changemgmt/inboundChangeSetDetailPage.apexp*", "https://*.force.com/changemgmt/outboundChangeSetDetailPage.apexp*" ],
+        "js": ["lib/jquery.min.js","code/packageGenerator.js" ],
+        "all_frames": true
+     }],
+    "permissions": [
+        "storage",
+        "activeTab",
+        "cookies",
+        "tabs",
+        "browsingData"
+    ],
+    "host_permissions": [
+      "https://*.lightning.force.com/*",
+      "https://*.force.com/*",
+      "https://*.salesforce.com/*",
+      "<all_urls>"
+  ],
+  "incognito":"split",
+  "web_accessible_resources": [{
+    "matches": ["https://*.salesforce.com/*","https://*/*","https://*.force.com/*","https://*.cloudforce.com/*","https://*.visualforce.com/*"],
+    "resources": ["code/setupcheckallinject.js","css/codecoveragesearch.css","css/*.css"]
+  }, 
+  {
+  "matches": ["https://*.lightning.force.com/*","https://*.salesforce.com/*"],
+  "resources": ["code/loadAllObjectsAndFields.js"]
+  }],
+  "update_url": "https://clients2.google.com/service/update2/crx"
+}

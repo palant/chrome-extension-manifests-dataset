@@ -1,0 +1,68 @@
+---
+name: AI Bar - Prompt ChatGPT from the URL bar
+version: '1.5'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 39
+release_date: '2024-05-15T14:55:15.000Z'
+size: 34.88KiB
+languages:
+  - English
+description: Type your prompt after "ai" in the Chrome URL bar and press return!
+publisher_account: mash
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AI Bar - Prompt ChatGPT from the URL bar",
+  "description": "Type your prompt after \"ai\" in the Chrome URL bar and press return!",
+  "version": "1.5",
+  "omnibox": {
+    "keyword": "ai"
+  },
+  "background": {
+    "service_worker": "src/service-worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "assets/icon_16.png",
+    "32": "assets/icon_32.png",
+    "48": "assets/icon_48.png",
+    "128": "assets/icon_128.png"
+  },
+  "host_permissions": [
+    "https://chatgpt.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chatgpt.com/*"
+      ],
+      "js": [
+        "src/debug.content.js",
+        "src/content.chatgpt.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/page.chatgpt.js"
+      ],
+      "matches": [
+        "https://chatgpt.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Customize which AI to prompt",
+    "default_popup": "src/popup.html"
+  }
+}

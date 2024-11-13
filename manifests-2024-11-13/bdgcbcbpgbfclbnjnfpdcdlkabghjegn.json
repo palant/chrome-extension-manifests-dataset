@@ -1,0 +1,110 @@
+---
+name: Hero Wars Guide
+version: 1.10.2
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 100
+release_date: '2024-03-11T05:36:33.000Z'
+size: 8.4MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+  - polski
+  - русский
+  - 中文 (简体)
+  - 日本語
+description: Recording and analysis video game player data automatically.
+publisher_account: Digital Guide
+privacy_policy: https://dg-guide.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_appName__",
+    "description": "__MSG_appDesc__",
+    "version": "1.10.2",
+    "default_locale": "en",
+    "homepage_url": "https://dg-guide.com",
+    "icons": {
+        "16": "icons/dg-01.png",
+        "48": "icons/dg-02.png",
+        "128": "icons/dg-03.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "icons/dg-01.png",
+            "48": "icons/dg-02.png",
+            "128": "icons/dg-03.png"
+        },
+        "default_title": "__MSG_appName__"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "*://*.dg-guide.com/*",
+        "*://*.nextersglobal.com/*",
+        "*://*.hero-wars.com/*"
+    ],
+    "background": {
+        "service_worker": "background/background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.hero-wars.com/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "app/preset.js",
+                "background/storage.js",
+                "background/filter.js",
+                "background/intercepter.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://*.dg-guide.com/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "app/preset.js",
+                "background/homepage.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "background/injected.js"
+            ],
+            "matches": [
+                "https://*.hero-wars.com/*",
+                "https://*.heroes-wb.nextersglobal.com/*",
+                "https://*.heroes-vk.nextersglobal.com/*",
+                "https://*.heroes-ok.nextersglobal.com/*",
+                "https://*.heroes-fb.nextersglobal.com/*",
+                "https://*.heroes-mm.nextersglobal.com/*",
+                "https://*.heroes-mg.nextersglobal.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "app/index.html"
+            ],
+            "matches": [
+                "https://*.dg-guide.com/*"
+            ]
+        }
+    ],
+    "minimum_chrome_version": "93"
+}

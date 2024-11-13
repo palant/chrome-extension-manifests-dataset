@@ -1,0 +1,79 @@
+---
+name: Opilot AI Assistant Extension
+version: 1.2.9
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 62
+release_date: '2024-10-16T16:55:22.000Z'
+size: 3.38MiB
+languages:
+  - English
+description: >-
+  💻 Opilot is your trusted AI assistant, providing support for many tasks:
+  private brainstorming, summarization of confidential…
+publisher: Opilot AI Pte. Ltd.
+extension_website: opilot.ai
+support_website: https://discord.com/invite/2wGN4vFvVm
+privacy_policy: https://www.termsfeed.com/live/d8608483-f53b-4723-ae6c-58a31b741e5b
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Opilot AI Assistant Extension",
+  "version": "1.2.9",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": ["https://excel.officeapps.live.com/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/reset_password.html"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["scripts/opilot-excel-online/*", "scripts/office.js"],
+      "matches": ["https://excel.officeapps.live.com/*"]
+    }
+  ],
+  "action": {
+    "default_title": "Opilot",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "side_panel": {
+    "default_path": "src/sidebar.html"
+  },
+  "options_ui": {
+    "page": "src/settings.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/content.js"]
+    },
+    {
+      "matches": ["https://excel.officeapps.live.com/*"],
+      "js": ["scripts/office.js"],
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "permissions": ["activeTab", "sidePanel", "contextMenus", "storage"]
+}

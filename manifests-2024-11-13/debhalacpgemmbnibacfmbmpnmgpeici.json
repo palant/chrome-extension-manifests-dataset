@@ -1,0 +1,93 @@
+---
+name: Hubt - Sistema de pedidos integrado ao WhatsApp
+version: 1.2.11
+category_slug: productivity/tools
+rating: 5
+rating_count: 12
+user_count: 1000
+release_date: '2024-11-01T06:30:34.000Z'
+size: 80.27KiB
+languages:
+  - português (Brasil)
+description: >-
+  Sistema de cardápio e pedidos para restaurantes, integrado ao WhatsApp. Com
+  impressão de pedidos e envio de mensagens automáticas.
+publisher: STARTLABS DESIGN E SISTEMAS LTDA ME
+publisher_account: Hubt
+publisher_address: |-
+  Rua Desembargador Vítor Lima, 260
+  Sala 908
+  Florianópolis, SC 88040-400
+  BR
+extension_website: hubt.com.br
+support_website: https://suporte.hubt.com.br/hc/pt-br/requests/new
+privacy_policy: https://www.hubt.com.br/privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Hubt - Sistema de pedidos integrado ao WhatsApp",
+  "short_name": "Hubt",
+  "version": "1.2.11",
+  "description": "Sistema de cardápio e pedidos para restaurantes, integrado ao WhatsApp. Com impressão de pedidos e envio de mensagens automáticas.",
+  "manifest_version": 3,
+  "permissions": ["storage", "scripting"],
+  "host_permissions": [
+    "https://*.hubt.com.br/",
+    "https://web.whatsapp.com/"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "css": ["style.css"],
+      "js": ["javascripts/hubtUtils.js","javascripts/content_script.js"],
+      "matches": ["https://web.whatsapp.com/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://pedido.hubt.com.br/*"],
+      "all_frames": true,
+      "run_at": "document_idle",
+      "js": ["javascripts/content_print.js"]
+    },
+    {
+      "matches": ["https://pedido.hubt.com.br/*","https://www.hubt.com.br/*"],
+      "all_frames": true,
+      "run_at": "document_idle",
+      "js": ["javascripts/content_event.js"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/favicon16.png",
+      "24": "images/favicon24.png",
+      "32": "images/favicon32.png",
+      "48": "images/favicon48.png",
+      "128": "images/favicon128.png",
+      "256": "images/favicon256.png"
+    },
+    "default_title": "Hubt - Sistema de pedidos integrado ao WhatsApp",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [{
+    "resources": ["fonts/*", "javascripts/wapi.js", "javascripts/wapiEvents.js"],
+    "matches": ["https://web.whatsapp.com/*"]
+  }],
+  "externally_connectable": {
+    "matches": ["https://*.hubt.com.br/*"]
+  },
+  "icons": {
+    "16": "images/favicon16.png",
+    "32": "images/favicon32.png",
+    "36": "images/icon36.png",
+    "72": "images/icon72.png",
+    "128": "images/icon128.png",
+    "256": "images/icon256.png"
+  }
+}

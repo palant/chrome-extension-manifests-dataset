@@ -1,0 +1,146 @@
+---
+name: VScreenshot Assistant
+version: 1.8.0
+category_slug: productivity/workflow
+rating: 4
+rating_count: 2
+user_count: 212
+release_date: '2024-10-24T19:15:18.000Z'
+size: 501KiB
+languages:
+  - 日本語
+description: YouTube他いくつかの動画配信プラットフォームでのスクリーンショット撮影を支援します。
+publisher_account: qitoi
+support_website: https://github.com/qitoi/vscreenshot-assistant/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extension_name__",
+  "version": "1.8.0",
+  "default_locale": "ja",
+  "description": "__MSG_extension_description__",
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "96": "img/icon-96.png",
+    "128": "img/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "contextMenus",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "https://i.ytimg.com/*",
+    "https://public.spwn.jp/*",
+    "https://img.cdn.nimg.jp/*",
+    "https://nfc-api.hololive-fc.com/*",
+    "https://nfc-api.tokinosora-fc.com/*"
+  ],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "__MSG_extension_name__",
+    "default_icon": {
+      "16": "img/icon-16-disabled.png",
+      "24": "img/icon-24-disabled.png",
+      "32": "img/icon-32-disabled.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-youtube.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.spwn.jp/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-spwn.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.nicovideo.jp/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-nicovideo.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.twitch.tv/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-twitch.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.hololive-fc.com/*",
+        "https://*.tokinosora-fc.com/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-hololive-fc.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.live.eplus.jp/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-streaming-plus.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.zan-live.com/*"
+      ],
+      "js": [
+        "js/vendor-contents.js",
+        "js/contents-zan.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://twitter.com/intent/tweet*",
+        "https://x.com/intent/post*"
+      ],
+      "js": [
+        "js/contents-twitter.js"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/inject-twitter.js"
+      ],
+      "matches": [
+        "*://*.twitter.com/*",
+        "*://*.x.com/*"
+      ]
+    }
+  ]
+}

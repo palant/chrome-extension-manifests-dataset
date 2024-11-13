@@ -1,0 +1,103 @@
+---
+name: Connect Companion (by ConnectPath)
+version: 1.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 35
+release_date: '2023-07-22T05:37:08.000Z'
+size: 1.47MiB
+languages:
+  - English (United States)
+description: >-
+  Click to call for Amazon Connect. Brought to you by ConnectPath, the fully
+  featured CX Manager for Amazon Connect.
+publisher_account: ConnectPath formerly Dextr
+support_website: https://www.connectpath.cx/support
+privacy_policy: https://www.cloudhesive.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Connect Companion (by ConnectPath)",
+  "version": "1.0.1",
+  "description": "Click to call for Amazon Connect. Brought to you by ConnectPath, the fully featured CX Manager for Amazon Connect.",
+  "manifest_version": 3,
+  "permissions": ["scripting", "storage", "tabs"],
+  "host_permissions": ["*://*/*"],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "http://localhost:8080/*",
+        "https://go.dextr.cloud/*",
+        "https://stage.dextr.cloud/*",
+        "https://go.dextrflex.com/*",
+        "https://go.connectpath.cx/*",
+        "https://digitalisland.dextrflex.com/*",
+        "https://digitalisland.connectpath.cx/*",
+        "https://*.awsapps.com/*",
+        "https://*.my.connect.aws/",
+        "https://*.atlassian.net/jira/*"
+      ],
+      "css": ["styles/all_urls.css"],
+      "js": [
+        "scripts/lib/observeDom.js",
+        "scripts/lib/findAndReplaceDOMText.js",
+        "scripts/lib/libPhoneNumber.js",
+        "scripts/content_scripts/all_urls.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://localhost:8080/*",
+        "https://go.dextr.cloud/*",
+        "https://stage.dextr.cloud/*",
+        "https://go.dextrflex.com/*",
+        "https://go.connectpath.cx/*",
+        "https://digitalisland.dextrflex.com/*",
+        "https://digitalisland.connectpath.cx/*",
+        "https://*.awsapps.com/*",
+        "https://*.my.connect.aws/"
+      ],
+      "js": ["scripts/content_scripts/init_ccp.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "assets/images/icon.png",
+    "32": "assets/images/icon.png",
+    "48": "assets/images/icon.png",
+    "128": "assets/images/icon.png"
+  },
+  "options_ui": {
+    "page": "pages/options/index.html",
+    "open_in_tab": false
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/images/icon.png",
+      "32": "assets/images/icon.png",
+      "48": "assets/images/icon.png",
+      "128": "assets/images/icon.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/call.js",
+        "scripts/inject.js",
+        "scripts/ccp_events.js",
+        "images/*.png",
+        "images/icon.png"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ]
+}

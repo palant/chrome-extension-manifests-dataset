@@ -1,0 +1,72 @@
+---
+name: Interceptor
+version: '2.6'
+category_slug: productivity/developer
+rating: 5
+rating_count: 2
+user_count: 131
+release_date: '2023-01-20T05:28:10.000Z'
+size: 180KiB
+languages:
+  - English
+description: A chrome extension to modify API response
+publisher_account: Mohit Arya
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Interceptor",
+  "version": "2.6",
+  "description": "A chrome extension to modify API response",
+  "permissions": [
+    "activeTab"
+  ],
+  "icons": {
+    "16": "src/images/icon16.png",
+    "48": "src/images/icon48.png",
+    "128": "src/images/icon128.png"
+  },
+  "manifest_version": 2,
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+I",
+        "mac": "Command+Shift+I"
+      },
+      "description": "Opens extension"
+    }
+  },
+  "incognito": "split",
+  "browser_action": {},
+  "background": {
+    "scripts": [
+      "src/utils/background-script.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "src/utils/content-script.js",
+        "src/utils/container-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "src/utils/mocker-script.js",
+    "src/utils/event-listener-script.js",
+    "dist/index.html",
+    "dist/bundle.js"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "externally_connectable": {
+    "matches": [
+      "*://*.example.com/*"
+    ]
+  }
+}

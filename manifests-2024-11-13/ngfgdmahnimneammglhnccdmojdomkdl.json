@@ -1,0 +1,105 @@
+---
+name: AdZero ad blocker
+version: 24.1017.5242.4
+category_slug: make_chrome_yours/privacy
+rating: 3
+rating_count: 4
+user_count: 2000
+release_date: '2024-10-24T15:01:00.000Z'
+size: 1.14MiB
+languages:
+  - English
+description: |-
+  Ad blocker extension for annoying ads on the Internet.
+
+  Stop ads and protect your privacy while surfing the Internet!
+     
+  AdZero…
+publisher: AdZero Interactive LLC
+publisher_account: lindabaker710420
+publisher_address: |-
+  15445 Ventura Blvd., #318
+  Sherman Oaks, CA 91403
+  US
+extension_website: adzero.org
+support_website: https://www.adzero.org/app/faq
+privacy_policy: https://www.adzero.org/pg/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AdZero ad blocker",
+  "short_name": "AdZero",
+  "version": "24.1017.5242.4",
+  "manifest_version": 3,
+  "description": "",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnXkYuparUhu3BwfUXMJL8JMrTVjG6VvAca8V5HHQLw85/+Hzed4nhkEmCtQBexKn80br0TWnZ+ZRZEdoYyNEUAKU+hJ2jLjlmyWB389GeOIzGSFLtPbINoJDeagpgjCBcGiMmnG4Ab6DHPqZGx+dqgmrsJExLs6dTnG4Gv9Sj6wsOy1whSexwblZ8D4dYnUxcU6+uQBOvwy6kCGeviz3btupbZqq5SnL1oczuXcT5HPgK6SVBP561z05Jq0jYzdHKwKet3nFOpemH6jzu+fmxM+3T3X5JDSI+qbmrT2uT7TLOE7cXBg+f4vQElQn/OvBe5lC4cinXLas2gJRi8AAAwIDAQAB",
+  "icons": {
+    "16": "images/logo/16.png",
+    "32": "images/logo/32.png",
+    "48": "images/logo/64.png",
+    "128": "images/logo/128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "host_permissions": [
+    "https://*.adzero.org/*",
+    "https://*.youtube.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.adzero.org/app/extn-instl-success"
+      ],
+      "js": [
+        "post_install_script.bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.youtube.com/*"
+      ],
+      "js": [
+        "ytcs.bundle.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.bundle.js",
+    "type": "module"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "adzero",
+        "enabled": false,
+        "path": "rulesets/adzero.json"
+      },
+      {
+        "id": "noop",
+        "enabled": true,
+        "path": "rulesets/noop.json"
+      }
+    ]
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "storage",
+    "tabs",
+    "cookies",
+    "scripting",
+    "activeTab"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "ytis.bundle.js"
+      ],
+      "matches": [
+        "https://*.youtube.com/*"
+      ]
+    }
+  ]
+}

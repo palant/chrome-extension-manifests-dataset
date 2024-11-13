@@ -1,0 +1,84 @@
+---
+name: フリマテンプレート拡張機能
+version: 2.8.13
+category_slug: lifestyle/shopping
+rating: 4.2
+rating_count: 5
+user_count: 2000
+release_date: '2024-11-12T11:19:15.000Z'
+size: 7.05MiB
+languages:
+  - 日本語
+description: >-
+  メルカリ・ラクマの商品テンプレート機能をパソコン(Web版)で使用できるようにする拡張機能です。出品フォームに入力したデータを Chrome
+  に保存、自動入力できます。
+publisher_account: oksoft
+extension_website: okay-soft.com
+support_website: https://twitter.com/furimatemplate
+privacy_policy: https://okay-soft.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "フリマテンプレート拡張機能",
+  "version": "2.8.13",
+  "description": "メルカリ・ラクマの商品テンプレート機能をパソコン(Web版)で使用できるようにする拡張機能です。出品フォームに入力したデータを Chrome に保存、自動入力できます。",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAmfWujPC5JM8sNJwGHwF34R6mnn34ltgF3GYWR2HQwWmuRtBX6qt+PHj0xIh6bfmf9JhqzSKszbrRJrQqtyiCm3lctLu2zETxydA+UW9jnTXAnsgRA46HLxME5I60tHsGvv3Fvt7Erd7+76KstjMwWiiEKFtwca6l0YWfgAORWSdXYLe/A9wsd5/KdwRRMGY66Eqku7PEB60Q6Qwn1DF+8Tgh6mF835hFJddxXpsBq1rPiCvYNwUHI5bMafuC8ZKJ7nMIZf2koGzn5hIO5xcURaCeJgAv5L11Es6ESp4ehMMXgVHubQmsiDbz67Gc1xqX9iPvbV++HyadgdJsAV9ssQIDAQAB",
+  "icons": {
+    "16": "icon/icon-16.png",
+    "24": "icon/icon-24.png",
+    "32": "icon/icon-32.png",
+    "48": "icon/icon-48.png",
+    "128": "icon/icon-128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon/icon-16.png",
+      "24": "icon/icon-24.png",
+      "32": "icon/icon-32.png",
+      "48": "icon/icon-48.png",
+      "128": "icon/icon-128.png"
+    },
+    "default_title": "メルカリテンプレート",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": "Ctrl+M",
+      "description": "ポップアップを表示"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://jp.mercari.com/*"],
+      "js": ["mercari.js"]
+    },
+    {
+      "matches": ["https://mercari-shops.com/*"],
+      "js": ["mercari-shops.js"]
+    },
+    {
+      "matches": ["https://fril.jp/*", "https://item.fril.jp/*"],
+      "js": ["rakuma.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; script-src-elem 'self' https://checkout.pay.jp/; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icon/*", "product.json"],
+      "extension_ids": ["lhhmenibcaeapphhcjkapgbolhamhioo"]
+    }
+  ],
+  "permissions": ["storage", "downloads", "unlimitedStorage", "identity", "identity.email"],
+  "host_permissions": ["https://img.fril.jp/", "https://us-central1-mercari-template.cloudfunctions.net/"],
+  "externally_connectable": {
+    "matches": ["https://furima-template.com/*"]
+  }
+}

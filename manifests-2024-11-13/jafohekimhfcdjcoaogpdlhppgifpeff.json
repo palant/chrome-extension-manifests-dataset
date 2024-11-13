@@ -1,0 +1,72 @@
+---
+name: Urbassist Racco
+version: 0.0.0.21
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 26
+release_date: '2024-06-30T16:34:04.000Z'
+size: 236KiB
+languages:
+  - Français
+description: Automatisation de déclaration de dossiers de raccordement Enedis par Urbassist
+publisher: Urbassist SAS
+publisher_address: |-
+  442 Rue Georges Besse
+  Nîmes 30000
+  FR
+support_website: https://www.urbassist.fr
+privacy_policy: >-
+  https://urbassist-public.s3.eu-west-3.amazonaws.com/ressources/policy/2023_09_13_policy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Urbassist Racco",
+  "version": "0.0.0.21",
+  "description": "Automatisation de déclaration de dossiers de raccordement Enedis par Urbassist",
+  "manifest_version": 3,
+  "permissions": ["activeTab", "webNavigation"],
+  "author": "sebastien@urbassist.fr",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "128": "/assets/img/logos/logo_128.png"
+    }
+  },
+  "icons": {
+    "128": "/assets/img/logos/logo_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://connect-racco.enedis.fr/*",
+        "https://*.operis.fr/*",
+        "https://*.geosphere.fr/*",
+        "https://*.ads.strasbourg.eu/*"
+      ],
+      "js": ["injected.js"],
+      "css": ["assets/css/injected.css"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U"
+      },
+      "description": "Ouvrir l'extension UrbaRacco"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js.map"],
+      "extension_ids": ["*"],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

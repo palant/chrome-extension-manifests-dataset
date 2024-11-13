@@ -1,0 +1,61 @@
+---
+name: Meet It
+version: 2.3.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 1
+release_date: '2021-06-24T11:14:31.000Z'
+size: 292KiB
+languages:
+  - English
+description: Go back to Meet tab, Mute and Unmute yourself from anywhere on Chrome.
+publisher_account: krish.thorcode
+support_website: https://github.com/krishnakrmahto97/meet-it
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Meet It",
+    "version": "2.3.1",
+    "description": "Go back to Meet tab, Mute and Unmute yourself from anywhere on Chrome.",
+    "background": {
+        "persistent": true,
+        "scripts": ["src/background.js"]
+    },
+    "permissions": ["contextMenus", "tabs", "notifications"],
+    "commands": {
+      "take-me-back-to-meet": {
+        "description": "Switch to meet tab",
+        "suggested_key": {
+          "default": "Ctrl+Shift+M",
+          "mac": "MacCtrl+Shift+Q"
+        }
+      },
+      "mute": {
+        "description": "Mute meet microphone",
+        "suggested_key": {
+          "default": "Ctrl+Shift+L",
+          "mac": "MacCtrl+Shift+A"
+        }
+      },
+      "unmute": {
+        "description": "Unmute meet microphone",
+        "suggested_key": {
+          "default": "Ctrl+Shift+K",
+          "mac": "MacCtrl+Shift+Z"
+        }
+      }
+    },
+    "content_scripts": [
+        {
+          "matches": ["http://meet.google.com/*", "https://meet.google.com/*"],
+          "js": ["src/content.js"],
+          "all_frames": true,
+          "run_at": "document_start"
+        }
+      ],
+      "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'" 
+}

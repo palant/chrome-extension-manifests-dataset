@@ -1,0 +1,61 @@
+---
+name: Steam Order Scanner
+version: 1.7.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 7
+user_count: 237
+release_date: '2021-02-16T08:53:35.000Z'
+size: 41.2KiB
+languages:
+  - English
+description: Helps keep your market buy orders profitable. Also adds some useful features.
+publisher_account: SORS
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Steam Order Scanner",
+  "short_name": "SORS",
+  "description": "Helps keep your market buy orders profitable. Also adds some useful features.",
+  "version": "1.7.1",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "*://steamcommunity.com/*",
+    "*://localhost/*"
+  ],
+  "browser_action": {
+    "default_icon": "ext/icon.png",
+    "default_popup": "ext/popup/popup.html"
+  },
+  "icons": {
+    "48": "ext/icon.png"
+  },
+  "background": {
+    "scripts": ["ext/background.js"]
+  },
+  "content_scripts": [{
+      "matches": [
+        "*://steamcommunity.com/market/",
+        "*://steamcommunity.com/market/#",
+        "*://steamcommunity.com/market"
+      ],
+      "js": ["site/market.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://steamcommunity.com/market/listings/*/*"],
+      "js": ["site/listings.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://steamcommunity.com/*"],
+      "js": ["site/cancel.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,108 @@
+---
+name: AwardTravel
+version: 2.0.2
+category_slug: lifestyle/travel
+rating: 4.6
+rating_count: 10
+user_count: 3000
+release_date: '2024-07-23T05:52:10.000Z'
+size: 783KiB
+languages:
+  - English (United States)
+description: >-
+  Displays points & miles costs for flights on Google Flights and hotel
+  information!
+publisher: 'CO: AwardTravel LLC'
+publisher_account: AwardTravel
+publisher_address: |-
+  131 Continental Drive
+  Ste 305
+  Newark, DE 19713
+  US
+extension_website: awardtravel.co
+support_website: https://www.awardtravel.co/contact
+privacy_policy: https://www.awardtravel.co/privacy-policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  
+  "name": "AwardTravel",
+  "description": "Displays points & miles costs for flights on Google Flights and hotel information!",
+  "version": "2.0.2",
+  "manifest_version": 3,
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": ["content.js", "hilton.js", "hyatt.js", "ihg.js", "marriott.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  
+  "externally_connectable": {
+    "matches": [
+      "*://*.awardtravel.co/*"
+    ]
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["*://www.google.com/travel/flights/search?*", "*://www.google.com/travel/flights/booking?*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    },
+    {
+      "matches": ["https://www.google.com/travel/search?*"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://www.awardtravel.co/*"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://*.marriott.com/*"],
+      "js": ["marriott.js"]
+    },
+    {
+      "matches": ["*://*.hyatt.com/*"],
+      "js": ["hyatt.js"]
+    },
+    {
+      "matches": ["*://*.ihg.com/*"],
+      "js": ["ihg.js"]
+    },
+    {
+      "matches": ["*://*.hilton.com/*"],
+      "js": ["hilton.js"]
+    }
+  ],
+  
+  "permissions": ["background", "webNavigation", "storage"],
+  "host_permissions": [
+    "*://www.google.com/travel/*",
+    "*://*.marriott.com/*",
+    "*://*.hyatt.com/*",
+    "*://*.ihg.com/*",
+    "*://*.hilton.com/*"
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/at_frame16.png",
+      "32": "images/at_frame32.png",
+      "48": "images/at_frame48.png",
+      "128": "images/at_frame128.png"
+    }
+  },
+  "icons": {
+    "16": "images/at_frame16.png",
+    "32": "images/at_frame32.png",
+    "48": "images/at_frame48.png",
+    "128": "images/at_frame128.png"
+  }
+}

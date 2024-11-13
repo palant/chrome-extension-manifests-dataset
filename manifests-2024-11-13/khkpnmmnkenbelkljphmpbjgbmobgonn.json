@@ -1,0 +1,57 @@
+---
+name: tldr.chrome
+version: '0.2'
+category_slug: productivity/workflow
+rating: 3
+rating_count: 1
+user_count: 128
+release_date: '2021-10-15T11:57:20.000Z'
+size: 332KiB
+languages:
+  - English
+description: Summarize any text
+publisher_account: ignatif
+publisher_address: |-
+  Stepana Kovnira
+  3
+  Kiev, Kiev 01011
+  Ukraine
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "tldr.chrome",
+  "description": "Summarize any text",
+  "version": "0.2",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": { "256": "logo/logo.png" },
+  "permissions": ["identity", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["tldr.css"],
+      "js": ["tldr.js"]
+    },
+    {
+      "matches": [
+        "http://localhost:4000/tldr/payment/success",
+        "https://www.ignatif.me/tldr/payment/success"
+      ],
+      "js": ["payment_success.js"]
+    }
+  ],
+  "oauth2": {
+    "client_id": "50503379753-ppcd44vk846li1je5cpk096ul9k9nau7.apps.googleusercontent.com",
+    "scopes": ["openid"]
+  },
+  "action": {
+    "default_icon": "logo/logo.png",
+    "default_title": "tl;dr chrome",
+    "default_popup": "./build/index.html"
+  },
+  "host_permissions": ["https://ignatif.me/*"]
+}

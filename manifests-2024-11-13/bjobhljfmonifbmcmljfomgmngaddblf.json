@@ -1,0 +1,80 @@
+---
+name: Arcaplus
+version: 1.3.2
+category_slug: make_chrome_yours/functionality
+rating: 5
+rating_count: 2
+user_count: 68
+release_date: '2024-10-01T06:31:56.000Z'
+size: 501KiB
+languages:
+  - 한국어
+description: 아카라이브의 사용감을 개선해줍니다.
+publisher_account: 착한친구
+support_website: https://arca.live/u/@%EC%B0%A9%ED%95%9C%EC%B9%9C%EA%B5%AC
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Arcaplus",
+  "description": "아카라이브의 사용감을 개선해줍니다.",
+  "version": "1.3.2",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Arcaplus",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "sfx/popcat.mp3" ],
+      "matches": ["<all_urls>"]
+    }
+ ],
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://arca.live/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules_blocked.json"
+      },
+      {
+        "id": "ruleset_2",
+        "enabled": true,
+        "path": "rules_allowed.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://arca.live/*"],
+      "run_at": "document_idle",
+      "js": [
+        "contentScript.js"
+      ],
+      "css": [
+        "css_inject/adBlock.css",
+        "css_inject/autoReload.css",
+        "css_inject/base64ToString.css",
+        "css_inject/arcaconDownloader.css"
+      ]
+    }
+  ]
+}

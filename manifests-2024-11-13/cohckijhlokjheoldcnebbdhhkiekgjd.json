@@ -1,0 +1,76 @@
+---
+name: 慢脚 - 快手视频下载助手
+version: 0.0.6
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 307
+release_date: '2024-10-15T02:30:51.000Z'
+size: 211KiB
+languages:
+  - 中文 (简体)
+description: 慢脚----快手视频一键下载，支持批量保存。
+publisher_account: suziwen1
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "慢脚 - 快手视频下载助手",
+  "version": "0.0.6",
+  "description": "慢脚----快手视频一键下载，支持批量保存。",
+  "author": "story-writer",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": ["*://*.kuaishou.com/*", "*://*.xiaoshujiang.com/*"],
+  "action": {
+    "default_title": "慢脚 - 快手视频下载助手",
+    "default_icon": "icons/icon48.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": ["downloads", "scripting", "activeTab",  "storage"],
+  "web_accessible_resources": [{
+    "resources":[
+      "imgs/*",
+      "content/*",
+      "*.js",
+      "*.css",
+      "*.png",
+      "*.webp",
+      "*.ttf",
+      "*.json",
+      "*.html",
+      "*.wasm"
+    ],
+    "matches": ["*://*.kuaishou.com/*", "*://*.xiaoshujiang.com/*"]
+  }],
+  "externally_connectable": {
+    "matches": ["*://*.kuaishou.com/*", "*://*.xiaoshujiang.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.kuaishou.com/*"],
+      "js": [
+        "content/main.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.kuaishou.com/*"],
+      "css": ["content/index.css"],
+      "js": [
+        "content/filesize.js",
+        "content/index.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

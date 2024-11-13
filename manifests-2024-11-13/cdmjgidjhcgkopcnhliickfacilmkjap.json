@@ -1,0 +1,135 @@
+---
+name: Demoleap
+version: 1.8.1.9
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 75
+release_date: '2024-03-26T23:55:16.000Z'
+size: 7.24MiB
+languages:
+  - English
+description: >-
+  Experience the power of Real-Time Guided Selling and drive your team to
+  success
+publisher: Demoleap
+publisher_account: Demoleap Inc.
+publisher_address: |-
+  Shlomo Ibn Gabirol St 30
+  Tel Aviv-Yafo 6407810
+  IL
+extension_website: demoleap.com
+support_website: https://help.demoleap.com
+privacy_policy: https://api.demoleap.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Demoleap",
+    "version": "1.8.1.9",
+    "description": "Experience the power of Real-Time Guided Selling and drive your team to success",
+    "permissions": ["tabs", "scripting", "storage", "webNavigation", "system.display", "clipboardRead"],
+    "host_permissions": ["<all_urls>"],
+    "background":
+    {
+        "service_worker": "scripts/background.js"
+    },
+    "action":
+    {
+        "default_icon":
+        {
+            "16": "images/icon_16.png",
+            "32": "images/icon_32.png",
+            "48": "images/icon_48.png",
+            "128": "images/icon_128.png"
+        },
+        "default_popup": "popup.html"
+    },
+    "icons":
+    {
+        "16": "images/icon_16.png",
+        "32": "images/icon_32.png",
+        "48": "images/icon_48.png",
+        "128": "images/icon_128.png"
+    },
+    "web_accessible_resources":
+    [
+        {
+            "resources": ["images/*.png"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": ["images/*.svg"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": ["content-scripts/google_slides_retrieve_viewer_data.js"],
+            "matches": ["https://docs.google.com/*"]
+        }
+    ],
+    "externally_connectable":
+    {
+        "matches": ["*://*.demoleap.com/*", "*://*.demoleaplabs.com/*"]
+    },
+    "content_scripts":
+    [
+        {
+            "matches": ["https://calendar.google.com/*"],
+            "all_frames": true,
+            "js": ["content-scripts/google_calendar.js", "content-scripts/google_calendar_demoleap_launcher.js"]
+        },
+        {
+            "matches": ["https://*.lightning.force.com/*","https://*.my.salesforce.com/*"],
+            "all_frames": false,
+            "js": ["content-scripts/salesforce.js"]
+        },
+        {
+
+            "matches": ["*://dashboard.demoleap.com/*","*://*.dashboard.demoleap.com/*", "*://*.demoleaplabs.com/*"],
+            "all_frames": true,
+            "js": ["content-scripts/dashboard-settings.js"]
+        },
+        {
+            "matches": ["https://app.getreprise.com/*"],
+            "all_frames": true,
+            "js": ["content-scripts/player_recorder.js"],
+            "match_origin_as_fallback": true
+        }
+    ],
+    "commands":
+    {
+        "play-next":
+        {
+            "suggested_key":
+            {
+                "windows": "Ctrl+Shift+X",
+                "mac": "Command+Shift+X"
+            },
+            "description": "Play next action"
+        },
+        "play-previous":
+        {
+            "suggested_key":
+            {
+                "windows": "Ctrl+Shift+Z",
+                "mac": "Command+Shift+Z"
+            },
+            "description": "Play previous action"
+        },
+        "record":
+        {
+            "suggested_key":
+            {
+                "windows": "Ctrl+Shift+C",
+                "mac": "Command+Shift+C"
+            },
+            "description": "Capture click path"
+        }
+    },
+    "content_security_policy":
+    {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "manifest_version": 3
+}

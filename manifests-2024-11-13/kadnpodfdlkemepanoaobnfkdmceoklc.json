@@ -1,0 +1,81 @@
+---
+name: Bearworks
+version: '1.7'
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 20
+release_date: '2024-11-11T18:33:48.000Z'
+size: 127KiB
+languages:
+  - English
+description: Bearworks enables people to sell together, anywhere.
+publisher_account: eng
+extension_website: bearworks.com
+support_website: https://bearworks.com
+privacy_policy: https://www.bearworks.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bearworks",
+  "version": "1.7",
+  "description": "Bearworks enables people to sell together, anywhere.",
+  "icons": {
+    "16": "images/favicon-16x16.png",
+    "32": "images/favicon-32x32.png",
+    "48": "images/bear.png",
+    "128": "images/bear.png"
+  },
+  "permissions": [
+    "webRequest",
+    "system.cpu",
+    "system.memory",
+    "management",
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": ["https://*/"],
+  "content_scripts": [
+    {
+      "js": [
+        "thirdParty/jquery-3.7.1.min.js",
+        "thirdParty/jszip-3.7.1.min.js",
+        "scripts/system-info.js"
+      ],
+      "matches": ["https://floor.beartests.com/*", "https://floor.bearworks.com/*", "http://localhost:5173/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "thirdParty/propelauth.min.js",
+        "thirdParty/jquery-3.7.1.min.js",
+        "thirdParty/jquery.modal.min.js",
+        "scripts/test-template.js",
+        "scripts/outreach-requests.js",
+        "scripts/outreach.js"
+      ],
+      "matches": ["https://web.outreach.io/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "thirdParty/propelauth.min.js",
+        "thirdParty/jquery-3.7.1.min.js",
+        "thirdParty/jquery.modal.min.js",
+        "scripts/apollo/template.js",
+        "scripts/apollo/styletemplate.js",
+        "scripts/apollo/main.js"
+      ],
+      "matches": ["https://app.apollo.io/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/worker/main.js",
+    "type": "module"
+  }
+}

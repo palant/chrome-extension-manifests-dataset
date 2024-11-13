@@ -1,0 +1,91 @@
+---
+name: Squaredance Pixel Helper
+version: 5.0.0
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 458
+release_date: '2024-07-04T16:15:34.000Z'
+size: 1.98MiB
+languages:
+  - English (United States)
+description: Squaredance Pixel Helper - A Chrome Extension
+publisher: Galactic Propeller Holdings Ltd.
+publisher_account: Squaredance
+publisher_address: |-
+  171 E Liberty St
+  Suite 310
+  Toronto, ON M6K 3P6
+  CA
+support_website: https://helper.squaredance.io/
+privacy_policy: https://www.squaredance.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Squaredance Pixel Helper",
+  "version": "5.0.0",
+  "description": "Squaredance Pixel Helper - A Chrome Extension",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/16.png",
+    "128": "icons/128.png"
+  },
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "rules",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "permissions": [
+    "tabs",
+    "background",
+    "webRequest",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "webNavigation",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://localhost/*",
+    "<all_urls>"
+  ],
+  
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+J",
+        "mac": "Command+J"
+      }
+    }
+  },
+  "action": {
+    "default_title": "Squaredance Pixel Helper",
+    "default_popup": "pages/popup.html"
+  },
+  "background": {
+    "service_worker": "js/backend.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_globs": [
+        "chrome://*"
+      ],
+      "match_about_blank": true,
+      "all_frames": true,
+      "js": [
+        "js/content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

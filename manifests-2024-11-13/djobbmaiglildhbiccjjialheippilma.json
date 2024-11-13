@@ -1,0 +1,92 @@
+---
+name: The Missing Piece
+version: 1.5.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 7
+release_date: '2024-01-30T04:41:26.000Z'
+size: 35.13KiB
+languages:
+  - English
+description: >-
+  'The Missing Piece' introduces a suite of features to the IITM placement &
+  internship portal, addressing its shortcomings.
+publisher: Self
+publisher_account: Jeevan Roy
+publisher_address: |-
+  IIT Madras
+  Chennai, Tamil Nadu 600036
+  IN
+support_website: https://placement.iitm.ac.in/students
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "The Missing Piece",
+  "version": "1.5.0",
+  "description": "'The Missing Piece' introduces a suite of features to the IITM placement & internship portal, addressing its shortcomings.",
+  "permissions": ["storage", "tabs", "declarativeNetRequest", "contextMenus", "activeTab"],
+  "icons": {
+  "16": "icons/icon16.png",
+  "32": "icons/icon32.png",
+  "48": "icons/icon48.png",
+  "128": "icons/icon128.png"
+},
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://placement.iitm.ac.in/*",
+      "https://internship.iitm.ac.in/*"],
+      "js": ["TitleChanger.js"]
+    },
+    {
+      "matches": ["https://placement.iitm.ac.in/students-all-companies*",
+      "https://internship.iitm.ac.in/students-all-companies*"],
+      "js": ["RedirectAfterRegister.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://placement.iitm.ac.in/students-all-companies*",
+        "https://internship.iitm.ac.in/students-all-companies*"],
+      "js": ["JumpToPageNo_x.js"]
+    },
+    {
+      "matches": ["https://placement.iitm.ac.in/students-all-companies*"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["https://internship.iitm.ac.in/students-all-companies*"],
+      "js": ["contentScriptInternshipPortal.js"]
+    },
+
+    {
+      "matches": ["https://placement.iitm.ac.in/students-applied-companies*",
+      "https://internship.iitm.ac.in/students-applied-companies*"],
+      "js": ["SLcounts.js"]
+    },
+    {
+      "matches": ["https://placement.iitm.ac.in/students-all-companies*",
+      "https://internship.iitm.ac.in/students-all-companies*"],
+      "js": ["CreateAndSyncScrollBar.js"]
+    },
+    {
+      "matches": ["https://placement.iitm.ac.in/students-all-companies-(please remove this)"],
+      "js": ["AllPagesSummaries.js"]
+    },
+    {
+      "matches": ["https://placement.iitm.ac.in/students-wellness"],
+      "js": ["AdditionalWellnessInfo.js"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["CopyLink.js"]
+    }
+  ],
+  "action": {}
+}

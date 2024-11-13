@@ -1,0 +1,59 @@
+---
+name: AutoEZproxy
+version: '1'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2024-07-03T05:48:52.000Z'
+size: 197KiB
+languages:
+  - English
+description: Automatically reload journal pages through your EZproxy
+privacy_policy: https://github.com/hamataku/AutoEZproxy?tab=readme-ov-file
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AutoEZproxy",
+  "description": "Automatically reload journal pages through your EZproxy",
+  "homepage_url": "https://github.com/hamataku/AutoEZproxy",
+  "version": "1",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "activeTab"],
+  "host_permissions": ["https://libproxy-db.org/proxies.json"],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/content.js", "js/common.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "all_frames": false,
+      "run_at": "document_start",
+      "js": ["js/loader.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

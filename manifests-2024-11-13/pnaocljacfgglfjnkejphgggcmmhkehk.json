@@ -1,0 +1,159 @@
+---
+name: 跟卖大师
+version: 1.2.18
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2024-09-02T04:51:43.000Z'
+size: 1.08MiB
+languages:
+  - 中文 (简体)
+description: 跟卖自动化
+privacy_policy: >-
+  https://docs.google.com/document/d/1j0KQ5H5viV2L__hOXHeLqAekik57cKySkn1oI3opJpE/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "跟卖大师",
+    "version": "1.2.18",
+    "description": "跟卖自动化",
+    "icons":{
+        "16":"./images/icon.png",
+        "48":"./images/icon.png",
+        "128":"./images/icon.png"
+    },
+    "action":{
+    "default_icon": "./images/icon.png",
+  "default_title": "跟卖大师",
+  "default_popup": "./pages/loginsucess.html"
+    },
+  
+    "content_scripts": [
+      {
+        "js": ["./js/exceljs.min.js","./js/FileSaver.min.js","./js/xlsx.js","./js/layui.js","./js/contentscript.js","./js/contentscriptbac.js"],
+        "css": [ "./css/layui.css","./css/my-styles.css"],
+        "matches": [
+          "https://sellercentral.amazon.com/product-search?ref=xx_catadd_favb_xx",
+          "https://www.amazon.com/"
+      ]
+     },
+     {
+      "matches": [
+        "https://sellercentral.amazon.com/hz/approvalrequest/*input-value*",
+        "https://sellercentral.amazon.com/hz/approvalrequest?asin=*",
+        "https://sellercentral.amazon.com/hz/myqdashboard*"
+      ],
+      "js": ["./js/getAuth.js"]
+     },
+     {
+      "matches": ["https://www.trademarkelite.com/trademark/trademark-search*"],
+      "js": ["./js/queryBrandAuth.js"]
+     },
+     {
+      "matches": [
+        "https://www.amazon.com/dp*",
+        "https://www.amazon.com/*/dp*"
+      ],
+      "exclude_matches": ["https://www.amazon.com/dp*aod=1*"],
+      "js": ["./js/getAsinDetail.js"]
+     },
+     {
+      "matches": ["https://sellercentral.amazon.com/hz/approvalrequest/restrictions/approve*"],
+      "js": ["./js/submidButton.js"]
+     },
+     {
+      "matches": ["https://www.amazon.com/sp?ie=UTF8&seller=*"],
+      "js": ["./js/getSoldUrl.js"]
+     },
+     {
+      "matches": ["https://www.amazon.com/*marketplaceID*"],
+      "js": ["./js/getAllAsinDataForPageUrl.js"]
+     },
+     {
+      "matches": ["https://sellercentral.amazon.com/learn*"],
+      "js": ["./js/learn.js"]
+     },
+     {
+      "matches": ["https://sellercentral.amazon.com/hz/approvalrequest/confirmation*"],
+      "js": ["./js/getBaoJiaAuth.js","./js/retry.js"]
+     },
+
+     {
+      "matches": ["https://www.amazon.com/dp/*/ref=olp-opf-redir?aod=*"],
+      "js": ["./js/getSolds.js"]
+     },
+
+     {
+      "matches": ["https://www.baidu.com/s?wd=site*"],
+      "js": ["./js/exceljs.min.js","./js/FileSaver.min.js","./js/xlsx.js","./js/layui.js","./js/dieLink.js"],
+      "css": [ "./css/layui.css","./css/my-styles.css"]
+      
+     },
+     {
+      "matches": ["https://sellercentral.amazon.com/abis/listing/syh*"],
+      "js": ["./js/autoRefresh.js","./js/retry.js"]
+     },
+     {
+      "matches": ["https://health.amazon.com/*"],
+      "js": ["./js/health.js"]
+     },
+     {
+      "matches": [
+        "https://www.amazon.co.uk/search*",
+        "https://www.google.com/search*"
+      ],
+      "js": ["./js/dieUrlQuery.js"]
+     },
+     {
+      "matches": [
+        "https://www.amazon.com/*/page/*"
+      ],
+      "js": ["./js/dieData.js"]
+     },
+     {
+      "js": ["./js/exceljs.min.js","./js/FileSaver.min.js","./js/layui.js","./js/dieWeb.js"],
+      "css": [ "./css/layui.css","./css/my-styles.css"],
+      "matches": [
+        "https://www.google.com/",
+        "https://www.baidu.com/"
+      ]
+
+     },
+     {
+      "matches": ["https://www.amazon.com/s?k*"],
+      "js": ["./js/skip.js"]
+     },
+     {
+      "matches": ["https://www.google.com/sorry*"],
+      "js": ["./js/renji.js"]
+     }
+
+  ],
+
+   "web_accessible_resources": [
+    
+    {
+      "resources": ["images/icon/del.png","images/icon.jpg","images/tupian.jpeg"],
+      "matches": ["https://www.amazon.com/*"]
+      
+    }
+  ],
+
+    "background": {
+      "service_worker": "js/serviceworker.js",
+      "type": "module"
+    },
+  
+
+    "host_permissions":
+ [
+      "http://*/*",
+        "https://*/*"
+ ],
+
+    "permissions":["tabs","scripting","activeTab","storage","notifications","webNavigation"]
+  }

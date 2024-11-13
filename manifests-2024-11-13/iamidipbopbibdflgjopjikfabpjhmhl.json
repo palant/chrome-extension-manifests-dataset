@@ -1,0 +1,89 @@
+---
+name: 淘購代付小幫手
+version: 2.0.1
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-10-22T02:17:35.000Z'
+size: 1.16MiB
+languages:
+  - 中文 (繁體)
+description: 淘購代付小幫手讓您在淘寶購物過程中完全不需要切換到 taogo 網站獲取朋友帳號，也不需要從淘寶複製貼上前一步取得的代付連結，將淘寶購物的過程變得更簡單。
+publisher_account: CYBERINFO. CO., LTD.
+publisher_address: |-
+  忠孝東路四段560號4樓
+  信義區, 台北市 110
+  TW
+extension_website: taogo.com.tw
+privacy_policy: https://www.taogo.com.tw/help/guide/1?id=39
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "淘購代付小幫手",
+  "description": "淘購代付小幫手讓您在淘寶購物過程中完全不需要切換到 taogo 網站獲取朋友帳號，也不需要從淘寶複製貼上前一步取得的代付連結，將淘寶購物的過程變得更簡單。",
+  "manifest_version": 3,
+  "version": "2.0.1",
+  "action": {
+    "browser_style": true,
+    "default_title": "淘購代付小幫手",
+    "default_icon": "icon/128x128.png",
+    "default_popup": "main.html"
+  },
+  "host_permissions": [
+    "*://*.taobao.com/*",
+    "*://*.taogo.com.tw/*",
+    "*://*.alipay.com/*",
+    "*://*.tmall.com/*"
+  ],
+  "background": {
+    "service_worker": "bg.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.taobao.com/*", "*://shenghuo.alipay.com/*", "*://*.tmall.com/*/confirm_order*" , "*://cashiersa127.alipay.com/*/cashiermain*"],
+      "css": ["content.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.taobao.com/*/confirm_order.*", "*://*.taobao.com/*/buy_now.*", "*://*.tmall.com/*/confirm_order*", "*://*.tmall.com/*/buy_now*"],
+      "js": ["content_confirm.js"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "matches": ["*://cashiersa127.alipay.com/*"],
+      "js": ["content_agencyPay.js"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "matches": ["*://shenghuo.alipay.com/*/peerpayApply.*"],
+      "js": ["content_friend.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://shenghuo.alipay.com/*/choosePeerPayer.*"],
+      "js": ["content_paylink.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "icons": {
+    "16": "icon/16x16.png",
+    "19": "icon/19x19.png",
+    "32": "icon/32x32.png",
+    "38": "icon/38x38.png",
+    "48": "icon/48x48.png",
+    "64": "icon/64x64.png",
+    "128": "icon/128x128.png"
+  },
+  "homepage_url": "https://www.taogo.com.tw/"
+}

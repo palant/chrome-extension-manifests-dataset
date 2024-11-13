@@ -1,0 +1,159 @@
+---
+name: Temu选品助手 - 免费Temu选品与数据分析
+version: 1.2.8
+category_slug: productivity/tools
+rating: 4.253333333333333
+rating_count: 75
+user_count: 50000
+release_date: '2024-11-10T05:23:56.000Z'
+size: 977KiB
+languages:
+  - 中文 (简体)
+description: 永久免费的Temu选品数据与分析工具，数据更精准。官方网站：temushuju.com
+publisher_account: Shopee虾皮数据
+extension_website: temushuju.com
+support_website: https://temushuju.com/
+privacy_policy: https://docs.qq.com/doc/DWnBiUmh4UGR5Y2xx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Temu选品助手 - 免费Temu选品与数据分析",
+  "version": "1.2.8",
+  "description": "永久免费的Temu选品数据与分析工具，数据更精准。官方网站：temushuju.com",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Temu选品助手",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "cookies",
+    "storage",
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback", 
+    "declarativeNetRequestWithHostAccess",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.temu.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "temuContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://seller.kuajingmaihuo.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "sellerContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.shein.com/*",
+        "*://*.shein.com.hk/*",
+        "*://*.shein.com.vn/*",
+        "*://*.shein.co.uk/*",
+        "*://*.shein.in/*",
+        "*://*.shein.tw/*",
+        "*://*.shein.com.mx/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "sheinContentScript.js"
+      ],
+      "css":[
+        "sheinContentScript.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.temushuju.com/*",
+        "*://*.geekbi.com/*",
+        "*://*.geekbi.cn/*",
+        "*://localhost/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "apiContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.alisold.com/*",
+        "*://localhost/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "alisoldContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "unionContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.1688.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "alibabaContentScript.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.js",
+        "sheinInject.js",
+        "apiInject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "assets/img/logo.svg",
+        "temuContentScript.css",
+        "sellerContentScript.css",
+        "popup.css",
+        "unionContentScript.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

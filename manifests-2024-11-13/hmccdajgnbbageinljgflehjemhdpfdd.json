@@ -1,0 +1,71 @@
+---
+name: ReviCare Extension Chrome
+version: '1.4'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 12
+release_date: '2024-10-24T07:52:45.000Z'
+size: 212KiB
+languages:
+  - Français
+description: Automatise l'envoi de demandes d'avis pour Revicare à partir de Doctolib.
+publisher_account: ReviCare
+extension_website: revicare.fr
+privacy_policy: https://revicare.fr/confidentialite.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ReviCare Extension Chrome",
+  "version": "1.4",
+  "description": "Automatise l'envoi de demandes d'avis pour Revicare à partir de Doctolib.",
+  "permissions": ["tabs", "storage"],
+  "host_permissions": [
+    "https://*.doctolib.fr/*",
+    "https://revicare.fr/*",
+    "https://*.revicare.fr/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "vendor/sweetalert2/sweetalert2.min.js",
+        "vendor/sweetalert2/sweetalert2.min.css"
+      ],
+      "matches": [
+        "https://pro.doctolib.fr/*",
+        "https://revicare.fr/*",
+        "https://*.revicare.fr/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://pro.doctolib.fr/*",
+        "*://revicare.fr/*",
+        "*://*.revicare.fr/*"],
+      "js": ["vendor/sweetalert2/sweetalert2.min.js", "contentScript.js"],
+      "css": ["vendor/sweetalert2/sweetalert2.min.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}

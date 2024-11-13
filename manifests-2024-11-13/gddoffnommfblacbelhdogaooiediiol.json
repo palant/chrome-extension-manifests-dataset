@@ -1,0 +1,111 @@
+---
+name: OKKI io 外贸客户开发邮箱地址查找工具
+version: 0.2.3
+category_slug: productivity/workflow
+rating: 4.916666666666667
+rating_count: 108
+user_count: 9000
+release_date: '2024-10-29T07:10:31.000Z'
+size: 3.05MiB
+languages:
+  - 中文 (简体)
+description: OKKI.io 轻松好用的外贸获客小插件
+publisher: 深圳市小满科技有限公司
+publisher_account: 小满科技技术团队
+publisher_address: |-
+  南山区深南大道9678号
+  大冲商务中心B座14层
+  Shenzhen Shi, Guangdong Sheng 518000
+  CN
+extension_website: okki-io.xiaoman.cn
+privacy_policy: https://www.xiaoman.cn/deep-know?activeIndex=2
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "OKKI io 外贸客户开发邮箱地址查找工具",
+  "version": "0.2.3",
+  "description": "OKKI.io 轻松好用的外贸获客小插件",
+  "action": {
+    "default_icon": "./assets/img/icon.png",
+    "default_popup": "dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/img/icon@128.png",
+    "48": "./assets/img/icon@128.png",
+    "128": "./assets/img/icon@128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://okki-io.dev.xiaoman.cn/*",
+        "*://okki-io.xiaoman.cn/*",
+        "*://leads-iteration-4-4-1094757.story.dev.xiaoman.cn/*",
+        "*://okki-free.xiaoman.cn/*",
+        "*://okki-free.dev.xiaoman.cn/*",
+        "*://okki-free.beta.xiaoman.cn/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ],
+      "run_at": "document_end",
+      "exclude_matches": [
+        "*://*.xiaoman.cn/*",
+        "*://*.xiaoman.site/*",
+        "*://*.xiaoman.co/*",
+        "*://*.xiaoman.cc/*",
+        "*://web.whatsapp.com/*",
+        "*://crm.xiaoman.cn/*",
+        "*://accounts.google.com/gsi/*"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.xiaoman.cn/*"
+      ],
+      "js": [
+        "dist/contentScripts/observe.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/observe.global.js",
+        "dist/contentScripts/style.css",
+        "assets/*",
+        "dist/options/*",
+        "dist/pages/*",
+        "http://localhost:3303/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

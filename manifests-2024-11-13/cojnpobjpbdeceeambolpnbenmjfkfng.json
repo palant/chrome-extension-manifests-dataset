@@ -1,0 +1,113 @@
+---
+name: Smilematic
+version: 1.0.2.9
+category_slug: lifestyle/shopping
+rating: 4.986666666666666
+rating_count: 75
+user_count: 1000
+release_date: '2023-03-16T12:12:21.000Z'
+size: 216KiB
+languages:
+  - English (United States)
+description: >-
+  Automatically redirects Amazon to Amazon Smile ensuring your favorite charity
+  always gets a free donation when you shop Amazon.com
+publisher: NextGen Shopping LLC
+publisher_account: CouponFollow, LLC
+publisher_address: |-
+  40 Triangle Center # 203
+  Yorktown Heights, NY 10598-4100
+  US
+extension_website: couponfollow.com
+support_website: https://couponfollow.com/smilematic/faq
+privacy_policy: https://couponfollow.com/checkout/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Smilematic",
+  "description": "Automatically redirects Amazon to Amazon Smile ensuring your favorite charity always gets a free donation when you shop Amazon.com",
+  "version": "1.0.2.9",
+  "manifest_version": 3,
+  "icons": {
+    "32": "images/smilematicLogo32.png",
+    "38": "images/smilematicLogo38.png",
+    "64": "images/smilematicLogo64.png",
+    "128": "images/smilematicLogo128.png",
+    "256": "images/smilematicLogo256.png"
+  },
+  "action": {
+    "default_title": "Smilematic",
+    "default_popup": "html/popup/popup.html",
+    "default_icon": {
+      "32": "images/smilematicLogo32.png",
+      "38": "images/smilematicLogo38.png",
+      "64": "images/smilematicLogo64.png",
+      "128": "images/smilematicLogo128.png",
+      "256": "images/smilematicLogo256.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://smile.amazon.com/gp/buy/thankyou/*",
+        "*://smile.amazon.co.uk/gp/buy/thankyou/*",
+        "*://smile.amazon.de/gp/buy/thankyou/*"
+      ],
+      "js": [
+        "initLeaveFeedbackBanner.js"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "initLeaveFeedbackBanner.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://smile.amazon.com/*",
+        "*://smile.amazon.co.uk/*",
+        "*://smile.amazon.de/*",
+        "*://www.amazon.com/*",
+        "*://www.amazon.co.uk/*",
+        "*://www.amazon.de/*"
+      ],
+      "js": [
+        "initSelectedCharity.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://www.amazon.com/*",
+    "*://www.amazon.de/*",
+    "*://www.amazon.co.uk/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "html/content/leaveFeedbackBanner.html",
+        "images/smilematicLogo32.png",
+        "images/smilematicLogo38.png",
+        "images/smilematicInactive32.png",
+        "images/smilematicInactive38.png",
+        "images/smilematicInactive64.png",
+        "images/smilematicInactive128.png",
+        "images/smilematicInactive256.png",
+        "fonts/LatoLatinRegular.woff2",
+        "fonts/LatoLatinSemibold.woff2"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    }
+  ]
+}

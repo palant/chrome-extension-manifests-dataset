@@ -1,0 +1,98 @@
+---
+name: Netflix 1080p Lite BETA
+version: '1.27'
+category_slug: lifestyle/entertainment
+rating: 2.3333333333333335
+rating_count: 3
+user_count: 123
+release_date: '2024-09-06T11:38:19.000Z'
+size: 2.41MiB
+languages:
+  - English
+description: Enables 1080p resolution and 5.1 surround sound playback on Netflix.
+publisher_account: goodhabitapp
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Netflix 1080p Lite BETA",
+  "description": "Enables 1080p resolution and 5.1 surround sound playback on Netflix.",
+  "version": "1.27",
+  "author": "goodhabit",
+  "icons": {
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://assets.nflxext.com/*/ffe/player/html/*",
+        "*://www.assets.nflxext.com/*/ffe/player/html/*",
+        "*://netflix.com/*",
+        "*://www.netflix.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content_script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_start_mellowtel.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "cadmium-playercore-6.0033.414.911-1080p.js",
+        "netflix_max_bitrate.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules_1.json"
+      },
+      {
+        "id": "ruleset_2",
+        "enabled": true,
+        "path": "rules_2.json"
+      }
+    ]
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "tabs"
+  ],
+  "action": {
+    "default_icon": "img/icon128.png"
+  },
+  "content_security_policy": {},
+  "host_permissions": [
+    "*://assets.nflxext.com/*/ffe/player/html/*",
+    "*://www.assets.nflxext.com/*/ffe/player/html/*",
+    "*://netflix.com/*",
+    "*://www.netflix.com/*",
+    "\u003Call_urls\u003E"
+  ]
+}

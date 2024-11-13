@@ -1,0 +1,127 @@
+---
+name: Criador de faturas do AliExpress.
+version: 1.0.3
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 88
+release_date: '2024-04-16T04:45:14.000Z'
+size: 226KiB
+languages:
+  - English
+description: Crie fatura do AliExpress.
+publisher_account: New AliexpressI nvoice
+extension_website: aliexpressinvoice.store
+support_website: https://aliexpressinvoice.store/
+privacy_policy: https://aliexpressinvoice.store/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Criador de faturas do AliExpress.",
+    "version": "1.0.3",
+    "manifest_version": 3,
+    "description": "Crie fatura do AliExpress.",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "./assets/icon/icon16.png",
+        "32": "./assets/icon/icon32.png",
+        "48": "./assets/icon/icon48.png",
+        "64": "./assets/icon/icon64.png",
+        "128": "./assets/icon/icon128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "action": {
+        "default_title": "AliExpressInvoice",
+        "default_icon": "./assets/icon/icon128.png",
+        "default_popup": "popup.html"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "./assets/js/extra.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/accounting.min.js",
+                "./assets/js/utilities.js",
+                "./assets/js/models/OrderItem.js",
+                "./assets/js/models/Order.js",
+                "./assets/js/models/DataStorage.js",
+                "./assets/js/interface.js",
+                "./assets/js/ordersPage.js"
+            ],
+            "css": [
+                "./assets/css/interface.css"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/p/order/index.html*"
+            ]
+        },
+        {
+            "js": [
+                "./lib/accounting.min.js",
+                "./assets/js/utilities.js",
+                "./assets/js/models/OrderItem.js",
+                "./assets/js/models/Order.js",
+                "./assets/js/models/DataStorage.js",
+                "./assets/js/interface.js",
+                "./assets/js/orderDetail.js"
+            ],
+            "css": [
+                "./assets/css/interface.css"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/p/order/detail.html*"
+            ]
+        },
+        {
+            "js": [
+                "./assets/js/utilities.js",
+                "./assets/js/models/OrderItem.js",
+                "./assets/js/models/Order.js",
+                "./assets/js/models/DataStorage.js",
+                "./assets/js/interface.js",
+                "./assets/js/logisticDetail.js"
+            ],
+            "css": [
+                "./assets/css/interface.css"
+            ],
+            "matches": [
+                "*://track.aliexpress.com/logisticsdetail.htm*"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/*.png",
+                "/*.gif",
+                "/options.html"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "downloads"
+    ],
+    "host_permissions": [
+        "*://*.aliexpress.com/*"
+    ]
+}

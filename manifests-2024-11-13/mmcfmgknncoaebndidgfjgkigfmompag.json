@@ -1,0 +1,103 @@
+---
+name: FastDM
+version: 1.5.2
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-08-23T09:13:43.000Z'
+size: 1.76MiB
+languages:
+  - português (Brasil)
+  - português (Portugal)
+description: >-
+  Extensão para enviar mensagens automáticas no Instagram. Ideal para contatar
+  influenciadores e propor parcerias.
+publisher: MAYCON DOUGLAS SOUZA CASTRO 70299584119
+publisher_account: Maycon Castro
+publisher_address: |-
+  2A CIRCULAR
+  QUADRA 07;LOTE 13
+  Río Verde, GO 75905869
+  BR
+support_website: https://lcgdigital.com.br/fale-conosco/
+privacy_policy: https://lcgdigital.com.br/politica-de-privacidade-fastdm
+---
+
+{
+   "manifest_version": 3,
+   "name": "FastDM",
+   "version": "1.5.2",
+   "default_locale": "pt_BR",
+   "description": "__MSG_description__",
+   "icons": {
+      "128": "icons/logo.png"
+   },
+   "action": {
+      "default_icon": {
+         "128": "icons/logo.png"
+      }
+   },
+   "background": {
+      "service_worker": "js/background.js"
+   },
+    "options_page": "options.html",
+   "permissions": [
+      "storage",
+      "declarativeNetRequest",
+      "declarativeNetRequestFeedback",
+      "cookies",
+      "alarms",
+      "webRequest",
+      "activeTab"
+   ],
+   "host_permissions": [
+      "*://*.instagram.com/*",
+      "*://*.facebook.com/*",
+      "*://*.linkedradar.com/*",
+      "*://*.lcgdigital.com.br/*"
+   ],
+   "content_scripts": [
+      {
+         "all_frames": true,
+         "css": [],
+         "js": ["js/content-script.js"],
+         "matches": ["*://*.instagram.com/*", "*://*.lcgdigital.com.br/*"],
+         "run_at": "document_end"
+      },
+      {
+         "all_frames": true,
+         "css": [],
+         "js": ["js/content-script-start.js"],
+         "matches": ["*://*.instagram.com/*", "*://*.lcgdigital.com.br/*"],
+         "run_at": "document_start"
+      },
+      {
+         "js": ["js/bulk-script.js"],
+         "matches": ["*://*.instagram.com/*", "*://*.lcgdigital.com.br/*"],
+         "run_at": "document_end"
+      },
+      {
+         "js": ["js/verification.js"],
+         "matches": ["*://*.lcgdigital.com.br/*"],
+         "run_at": "document_end"
+      }
+   ],
+   "declarative_net_request": {
+      "rule_resources": [
+         {
+            "enabled": true,
+            "id": "ruleset_1", 
+            "path": "rules_1.json"
+         }
+      ]
+   },
+   "options_page": "./app.html",
+   "update_url": "https://clients2.google.com/service/update2/crx",
+   "web_accessible_resources": [
+      {
+         "matches": ["*://*.instagram.com/*", "*://*.lcgdigital.com.br/*"],
+         "resources": ["js/ijsource.js", "js/bulk-ijsource.js", "inject/*"]
+      }
+   ]
+}

@@ -1,0 +1,114 @@
+---
+name: VA Vicky
+version: '1.011'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 28
+release_date: '2023-03-17T06:46:05.000Z'
+size: 7.08MiB
+languages:
+  - English (United States)
+description: Follow up on your leads with this amazing comment auto responder.
+publisher_account: BOS
+support_website: https://vavicky.com/support
+privacy_policy: https://app.mysocial360.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "VA Vicky",
+  "short_name": "VA Vicky",
+  "version": "1.011",
+  "description": "Follow up on your leads with this amazing comment auto responder.",
+  "manifest_version": 3,
+  "homepage_url": "https://vavicky.com",
+  "minimum_chrome_version": "88",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "VA Vicky",
+    "default_icon": {
+      "16": "./logo16.png",
+      "32": "./logo16.png",
+      "48": "./logo512.png",
+      "128": "./logo512.png",
+      "192": "./logo512.png",
+      "512": "./logo512.png"
+    }
+  },
+  "permissions": [
+    "gcm",
+    "clipboardRead",
+    "identity",
+    "identity.email",
+    "storage",
+    "tabs",
+    "notifications",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://ajax.googleapis.com/",
+    "https://connect.facebook.net/",
+    "https://app.mysocial360.com/*"
+  ],
+  "icons": {
+    "16": "./logo16.png",
+    "32": "./logo16.png",
+    "48": "./logo512.png",
+    "128": "./logo512.png",
+    "512": "./logo512.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://*.fbsbx.com/;"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.mysocial360.com/oauth*",
+        "https://beta.app.vavicky.com/vavicky*"
+      ],
+      "js": [
+        "./messages/auth.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://web.facebook.com/messages",
+        "https://www.facebook.com/messages",
+        "https://web.facebook.com/messages*",
+        "https://www.facebook.com/messages*",
+        "https://*.facebook.com/messages/t/*"
+      ],
+      "run_at": "document_end",
+      "css": [
+        "./styles.css"
+      ],
+      "js": [
+        "./libs/jquery.js",
+        "./libs/sweetalert.js",
+        "./functions/delay.js",
+        "./functions/get.messages.js",
+        "./functions/get.paths.js",
+        "./functions/init.visuals.js",
+        "./functions/message.person.js",
+        "./content/messenger.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

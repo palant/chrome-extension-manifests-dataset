@@ -1,0 +1,69 @@
+---
+name: Piñata Calculator
+version: 2.6.0
+category_slug: lifestyle/fun
+rating: 5
+rating_count: 9
+user_count: 75
+release_date: '2024-03-30T21:50:55.000Z'
+size: 224KiB
+languages:
+  - Ελληνικά
+description: Piñata Calculator for e-food
+publisher_account: Iosifidis Nikolaos
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Piñata Calculator",
+ "version": "2.6.0",
+ "description": "Piñata Calculator for e-food",
+ "permissions": ["tabs", "clipboardWrite"],
+ "action": {
+  "default_title": "Piñata",
+  "default_icon": "content/joker-icon.png",
+  "default_popup": "html/popup.html"
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://www.e-food.gr/delivery/*"],
+   "js": ["third-party/jquery-3.7.1.min.js", "scripts/common.js", "scripts/content/common.js", "scripts/content/content-delivery.js"]
+  },
+  {
+   "matches": ["https://www.e-food.gr/orders/*"],
+   "exclude_matches": ["https://www.e-food.gr/orders/thankyou*"],
+   "js": ["third-party/jquery-3.7.1.min.js", "scripts/common.js", "scripts/content/common.js", "scripts/content/content-orders.js"]
+  },
+  {
+   "matches": ["https://www.e-food.gr/account/orders*", "https://www.e-food.gr/orders/thankyou*"],
+   "js": ["third-party/jquery-3.7.1.min.js", "scripts/common.js", "scripts/content/common.js", "scripts/content/account-orders.js"]
+  },
+  {
+   "matches": ["https://www.e-food.gr/*"],
+   "exclude_matches": [
+    "https://www.e-food.gr/delivery/*",
+    "https://www.e-food.gr/orders/form*",
+    "https://www.e-food.gr/account/orders*",
+    "https://www.e-food.gr/orders/thankyou*"
+   ],
+   "js": ["third-party/jquery-3.7.1.min.js", "scripts/common.js", "scripts/content/common.js", "scripts/content/content.js"],
+   "run_at": "document_start"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": ["scripts/common.js", "scripts/injectable/shop-info-export.js", "scripts/injectable/orders-export.js"],
+   "matches": ["<all_urls>"]
+  }
+ ],
+ "manifest_version": 3,
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "browser_specific_settings": {
+  "gecko": {
+   "id": "{3d5b05ca-8be7-4428-bd98-137be2328b19}"
+  }
+ }
+}

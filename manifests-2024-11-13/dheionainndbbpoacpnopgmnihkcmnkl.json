@@ -1,0 +1,149 @@
+---
+name: 'Gmelius for Gmail: Shared Inboxes and Labels, Email Automation & Analytics'
+version: 9.0.15
+category_slug: productivity/workflow
+rating: 4.566229985443959
+rating_count: 687
+user_count: 50000
+release_date: '2024-11-08T08:00:50.000Z'
+size: 1.95MiB
+languages:
+  - Deutsch
+  - English
+  - Filipino
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - čeština
+  - Ελληνικά
+  - русский
+  - עברית
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Put some Genius into Gmail. Gmelius turns it into your team's central
+  workspace with full collaboration, automation, and analytics.
+publisher: Gmelius SA
+publisher_account: Gmelius
+publisher_address: |-
+  Avenue Louis-Casaï 71
+  Cointrin 1216
+  CH
+extension_website: gmelius.com
+support_website: https://help.gmelius.com
+privacy_policy: https://gmelius.com/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extName__",
+  "short_name": "Gmelius",
+  "author": "Gmelius Ltd",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "9.0.15",
+  "manifest_version": 3,
+  "homepage_url": "https://gmelius.com",
+  "permissions": [
+    "activeTab",
+    "declarativeNetRequest",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/*",
+    "https://*.googleusercontent.com/*",
+    "https://gmelius.io/*",
+    "https://app.gmelius.com/*"
+  ],
+  "optional_host_permissions": [
+    "https://gml.email/*"
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "html/proxyIframe.html",
+        "proxy.bundle.js",
+        "pageWorld.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": "icons/icon32.png",
+    "default_title": "My Gmelius Dashboard",
+    "default_popup": "html/dashboard.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "app.bundle.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "exclude_matches": [
+        "*://mail.google.com/*/?mui=ca",
+        "*://mail.google.com/tasks/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "authentication.bundle.js"
+      ],
+      "matches": [
+        "https://gmelius.io/authorize*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "authentication.bundle.js"
+      ],
+      "matches": [
+        "https://app.gmelius.com/authorize*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; worker-src 'self'"
+  },
+  "incognito": "split",
+  "options_page": "html/dashboard.html",
+  "externally_connectable": {
+    "matches": [
+      "https://gmelius.io/*",
+      "https://app.gmelius.com/*"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "blockTrackerImageRuleset",
+        "enabled": true,
+        "path": "declarativeNetRequest/blockTrackerImageRuleset.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,92 @@
+---
+name: Safelinks Skipper — Remove/Fix Outlook Safe Links
+version: 0.0.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 24
+release_date: '2024-10-18T09:09:55.000Z'
+size: 49.26KiB
+languages:
+  - English
+description: Automatically replaces Safe Links from Outlook
+publisher_account: dantechguy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Safelinks Skipper — Remove/Fix Outlook Safe Links",
+  "version": "0.0.3",
+
+  "description": "Automatically replaces Safe Links from Outlook",
+  "icons": {
+    "128": "icons/icon.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "https://*.safelinks.protection.outlook.com/"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "safelinks",
+      "enabled": true,
+      "path": "url_redirect/rule.json"
+    }]
+  },
+  "content_scripts": [
+    {
+      "js": ["url_replace/replace.js"],
+      "run_at": "document_idle",
+      "matches": [
+        "https://*.outlook.office365.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.hotmail.com/*",
+        "https://*.mail.live.com/*",
+        "https://*.mail.microsoft.com/*",
+        "https://*.outlook.cn/*",
+        "https://*.outlook.com/*",
+        "https://*.outlook.ha.office365.com/*",
+        "https://*.outlook.live.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.outlook.office.de/*",
+        "https://*.outlook.office365.com/*",
+        "https://*.outlook.office365.us/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/icon.png"],
+      "matches": [
+        "https://*.outlook.office365.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.hotmail.com/*",
+        "https://*.mail.live.com/*",
+        "https://*.mail.microsoft.com/*",
+        "https://*.outlook.cn/*",
+        "https://*.outlook.com/*",
+        "https://*.outlook.ha.office365.com/*",
+        "https://*.outlook.live.com/*",
+        "https://*.outlook.office.com/*",
+        "https://*.outlook.office.de/*",
+        "https://*.outlook.office365.com/*",
+        "https://*.outlook.office365.us/*"
+      ]
+    },
+    {
+      "resources": ["url_redirect/redirect.html", "url_redirect/redirect.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "onboarding/onboarding.js"
+  }
+}

@@ -1,0 +1,94 @@
+---
+name: BZTurk
+version: 2.0.17
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 168
+release_date: '2024-09-27T13:37:22.000Z'
+size: 9.9MiB
+languages:
+  - English
+description: >-
+  This update includes a free trial, Guides, auto acceptance toggle, new UI,
+  performance boost, bug fixes, and security updates.
+publisher: Marketraja Integrated Business Solutions
+publisher_account: BZTurk
+publisher_address: |-
+  2/77, Ganga Street, Central Excise Colony
+  Iyer Bangalow
+  Madurai, Tamil Nadu 625014
+  IN
+extension_website: www.bzturk.com
+support_website: https://www.bzturk.com/contact
+privacy_policy: https://www.bzturk.com/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "BZTurk",
+  "description": "This update includes a free trial, Guides, auto acceptance toggle, new UI, performance boost, bug fixes, and security updates.",
+  "version": "2.0.17",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Open the popup"
+  },
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "permissions": [ 
+  "activeTab",
+  "storage",
+  "contextMenus",
+  "notifications"
+ ],
+    "host_permissions": [
+  "https://worker.mturk.com/",
+  "https://forum.turkerview.com/",
+  "https://api.bzturk.com/",
+  "https://www.mturkcrowd.com/",
+  "https://www.amazon.com/ap/signin?*openid.return_to=https://worker.mturk.com/projects/*/tasks/accept_random*"
+    ],
+  "web_accessible_resources": [{
+   "resources": [
+   "frame.html",
+   "index.html",
+   "finder.html", 
+   "#/finder",
+   "js/content.js"   
+   ],
+   "matches": ["<all_urls>"]
+ }],
+    "content_scripts": [{
+        "js": [
+  "js/content.js"],
+  "matches": ["<all_urls>"],
+  "run_at": "document_start",
+  "all_frames": true
+    },
+    {
+      "js": ["js/hit-tracker-live-update-hit.js"],
+      "matches": ["https://worker.mturk.com/projects/*/tasks/*"],
+      "run_at": "document_end"
+    },
+
+    {
+      "js": ["js/hit-tracker-live-update-queue.js"],
+      "matches": ["https://worker.mturk.com/tasks*"],
+      "run_at": "document_end"
+    },
+
+    {
+      "js": ["js/hit-tracker.js"],
+   "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    }
+ 
+ ],
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  }
+}

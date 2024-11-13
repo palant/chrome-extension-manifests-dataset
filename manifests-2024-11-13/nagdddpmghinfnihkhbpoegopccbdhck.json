@@ -1,0 +1,53 @@
+---
+name: FUT Tracker
+version: 1.0.3
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-10-10T15:33:14.000Z'
+size: 14.47KiB
+languages:
+  - English (UK)
+description: Track and store stats of pack pulls on the EAFC Web App.
+publisher_account: FUT Tracker
+privacy_policy: https://fut-tracker.co.uk/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "FUT Tracker",
+    "version": "1.0.3",
+    "description": "Track and store stats of pack pulls on the EAFC Web App.",
+    "permissions": [
+        "storage"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.ea.com/ea-sports-fc/ultimate-team/web-app/*"],
+            "js": [
+            "content/apis.js", 
+            "content/extractDOMData.js", 
+            "content/packs.js", 
+            "content/picks.js", 
+            "content/packTracker.js"
+        ],
+            "run_at": "document_end",
+            "type": "module"
+        }
+    ],
+    "web_accessible_resources": [
+    {
+      "resources": ["login.html", "logout.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

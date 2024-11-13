@@ -1,0 +1,79 @@
+---
+name: DocMate AI Extension
+version: 0.0.1
+category_slug: make_chrome_yours/functionality
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-10-30T09:01:43.000Z'
+size: 941KiB
+languages:
+  - English
+description: >-
+  Our Google Chrome extension for DocMate AI. Helps you easily Contribute and
+  chat with your MedMate
+privacy_policy: https://docmate.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "DocMate AI Extension",
+    "version": "0.0.1",
+    "description": "Our Google Chrome extension for DocMate AI. Helps you easily Contribute and chat with your MedMate",
+    "commands": {
+        "paste_text": {
+            "suggested_key": {
+                "default": "Alt+P",
+                "mac": "Alt+P"
+            },
+            "description": "Paste predefined text"
+        }
+    },
+    "icons": {
+        "48": "images/logo.png"
+    },
+
+    "permissions": ["activeTab", "sidePanel", "storage", "tabs", "scripting"],
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "action": {
+        "default_popup": "pages/index.html#/popup",
+        "default_icon": {
+            "48": "images/logo.png"
+        }
+    },
+    "side_panel": {
+        "default_path": "pages/index.html"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["dist/*"],
+            "matches": ["*://*/*"]
+        },
+        {
+            "resources": ["images/*"],
+            "matches": ["*://*/*"]
+        },
+        {
+            "resources": ["pages/*"],
+            "matches": ["*://*/*"]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "exclude_matches": [
+                "*://localhost/*",
+                "https://docmate.ca/*",
+                "https://*.docmate.dev/*",
+                "https://staging.docmate.ca/*"
+            ],
+
+            "js": ["dist/extension-bot.js"]
+        }
+    ],
+    "host_permissions": ["*://*/*"]
+}

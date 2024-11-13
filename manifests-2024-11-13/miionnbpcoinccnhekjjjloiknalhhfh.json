@@ -1,0 +1,116 @@
+---
+name: Hubflo Clipper
+version: 1.9.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 212
+release_date: '2024-05-07T07:56:03.000Z'
+size: 323KiB
+languages:
+  - English
+  - Français
+description: Populate your Hubflo CRM Hubflo in 1 click from LinkedIn, Gmail and Outlook.
+publisher: Hubflo
+publisher_address: |-
+  49 RUE DE PONTHIEU
+  Paris 8e Arrondissement 75008
+  FR
+extension_website: hubflo.com
+privacy_policy: https://www.hubflo.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Hubflo Clipper",
+  "version": "1.9.1",
+  "description": "Populate your Hubflo CRM Hubflo in 1 click from LinkedIn, Gmail and Outlook.",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Invoice Hubflo Template"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-main.js"
+      ],
+      "css": [
+        "/assets/style.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.png",
+        "assets/*.svg",
+        "content-scripts/gmailJsLoader.js",
+        "content-scripts/extension.js",
+        "content-scripts/messageViewHandler.js",
+        "popup/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js"
+      ],
+      "matches": [
+        "*://*/*",
+        "https://societeinfo.com/*",
+        "*://*.hubflo.com/*",
+        "*://*.linkedin.com/*",
+        "*://mail.google.com/*",
+        "*://inbox.google.com/*",
+        "https://*.openai.com/*"
+      ]
+    }
+  ],
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "tabs",
+    "webRequest",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "https://societeinfo.com/*",
+    "*://*.hubflo.com/*",
+    "*://*.linkedin.com/*",
+    "*://mail.google.com/",
+    "*://inbox.google.com/",
+    "https://*.openai.com/"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://mail.google.com/*"
+    ]
+  },
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-inline' 'unsafe-eval'"
+  }
+}

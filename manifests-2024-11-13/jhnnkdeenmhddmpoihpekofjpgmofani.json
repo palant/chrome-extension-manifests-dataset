@@ -1,0 +1,125 @@
+---
+name: Ermes Web-Care
+version: 2.0.1
+category_slug: make_chrome_yours/privacy
+rating: 4.974025974025974
+rating_count: 77
+user_count: 329
+release_date: '2024-07-16T11:36:31.000Z'
+size: 5.49MiB
+languages:
+  - italiano
+description: Ermes Web-Care
+publisher: Ermes Cyber Security S.p.A.
+publisher_address: |-
+  Corso Bernardino Telesio, 29
+  Torino, TO 10146
+  IT
+support_website: https://webcare.ermes.company/
+privacy_policy: https://ermes.company/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ermes Web-Care",
+  "short_name": "ermes-web-care",
+  "description": "Ermes Web-Care",
+  "version": "2.0.1",
+  "version_name": "2.0.1",
+  "incognito": "split",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "manifest_version": 3,
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ad",
+        "enabled": false,
+        "path": "ads-dnr.json"
+      },
+      {
+        "id": "cryptominer",
+        "enabled": false,
+        "path": "cryptominers-dnr.json"
+      },
+      {
+        "id": "tracking",
+        "enabled": false,
+        "path": "tracking-dnr.json"
+      },
+      {
+        "id": "trackingExtra",
+        "enabled": false,
+        "path": "tracking-extra-dnr.json"
+      }
+    ]
+  },
+  "action": {
+    "default_popup": "resources/popup/popup.html"
+  },
+  "permissions": [
+    "management",
+    "storage",
+    "tabs",
+    "webNavigation",
+    "webRequest",
+    "unlimitedStorage",
+    "alarms",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "history",
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "web-accessible-resources/*"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "inject-cosmetics.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "match_about_blank": true
+    },
+    {
+      "js": [
+        "messages-manager.js"
+      ],
+      "matches": [
+        "https://webcare-app.ermes.company/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://webcare-app.ermes.company/*",
+      "https://webcare.ermes.company/*"
+    ]
+  },
+  "author": "Ermes Cyber Security S.p.A.",
+  "icons": {
+    "48": "resources/icons/icon_48.png",
+    "96": "resources/icons/icon_96.png"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ]
+}

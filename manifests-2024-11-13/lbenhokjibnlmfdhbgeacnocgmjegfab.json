@@ -1,0 +1,115 @@
+---
+name: 'EternalWallet: EVM Wallet (BSC, ETH + more)'
+version: 1.8.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2022-12-19T06:29:11.000Z'
+size: 6.45MiB
+languages:
+  - English
+description: All your EVM accounts in a single wallet
+publisher: Eternal Industries
+publisher_account: eternalcrypto02
+publisher_address: |-
+  29 Egan Cres
+  Vasse, WA 6280
+  AU
+support_website: https://t.me/eternaldomains
+privacy_policy: https://docs.eternal.domains/eternal-wallet-privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "https://www.eternalWallet.com",
+  "homepage_url": "https://www.eternalWallet.com",
+  "version": "1.8.1",
+  "name": "EternalWallet: EVM Wallet (BSC, ETH + more)",
+  "short_name": "EternalWallet",
+  "permissions": [
+    "unlimitedStorage",
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E",
+        "chromeos": "Alt+Shift+E",
+        "linux": "Alt+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "All your EVM accounts in a single wallet",
+  "icons": {
+    "16": "assets/img/icons/icon16.png",
+    "32": "assets/img/icons/icon32.png",
+    "64": "assets/img/icons/icon64.png",
+    "192": "assets/img/icons/icon192.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "assets/img/icons/icon16.png",
+      "32": "assets/img/icons/icon32.png",
+      "64": "assets/img/icons/icon64.png",
+      "192": "assets/img/icons/icon192.png"
+    },
+    "default_title": "EternalWallet",
+    "default_popup": "action.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/inject.js",
+        "scripts/*.js.map"
+      ],
+      "use_dynamic_url": false,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*.web3/*",
+    "*://*.anon/*",
+    "*://*.bsc/*"
+  ],
+  "minimum_chrome_version": "95",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

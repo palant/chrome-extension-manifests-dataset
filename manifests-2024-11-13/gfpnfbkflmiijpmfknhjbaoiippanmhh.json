@@ -1,0 +1,81 @@
+---
+name: Canvas Hack
+version: 1.6.7
+category_slug: productivity/tools
+rating: 4.166666666666667
+rating_count: 24
+user_count: 2000
+release_date: '2024-10-30T05:47:38.000Z'
+size: 3.18MiB
+languages:
+  - English (United States)
+description: Cheat on quizzes easily, and maintain a low-profile on all Canvas tests.
+publisher_account: blazerhm
+extension_website: canvashack.com
+support_website: https://discord.gg/CtpHA6XC2u
+privacy_policy: https://canvashack.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Canvas Hack",
+    "description": "Cheat on quizzes easily, and maintain a low-profile on all Canvas tests.",
+    "version": "1.6.7",
+    "permissions": ["activeTab", "scripting", "storage"],
+    "icons": {
+        "16": "icons/ch.png",
+        "48": "icons/ch.png",
+        "128": "icons/ch.png"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/icon.png",
+            "48": "icons/icon.png",
+            "128": "icons/icon128.png"
+        }
+    },
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://extensionpay.com/*"],
+            "js": ["ExtPay.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["ExtPay.js", "content.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "*://*.instructure.com/courses/*/quizzes/*/take*",
+                "*://*.edu/courses/*/quizzes/*/take*",
+                "*://*.org/courses/*/quizzes/*/take*"
+            ],
+            "js": ["quizanswers.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "externally_connectable": {
+        "matches": ["https://api.canvashack.com/*"]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "bar.html", "style.css", "icons/home.png", "icons/reload.png", "quizanswers.js", "content.js", "inject.js", "ExtPay.js"
+            ],
+            "matches": ["<all_urls>"],
+            "use_dynamic_url": true
+        }
+    ]
+}

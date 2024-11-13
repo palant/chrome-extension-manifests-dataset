@@ -1,0 +1,225 @@
+---
+name: Norton Safe Search
+version: 3.23.0.20
+category_slug: productivity/tools
+rating: 2.4310344827586206
+rating_count: 290
+user_count: 6000000
+release_date: '2024-10-09T06:05:29.000Z'
+size: 2.45MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - dansk
+  - español
+  - italiano
+  - magyar
+  - polski
+  - português (Brasil)
+  - română
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - русский
+  - עברית
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Search safely online by enabling Norton Safe Search as your default search
+  provider for maximum protection on Chrome.
+publisher: NortonLifeLock Inc.
+publisher_account: NortonLifeLock Inc
+publisher_address: |-
+  60 E Rio Salado Pkwy ste 1000
+  Tempe, AZ 85281
+  US
+extension_website: norton.com
+privacy_policy: https://www.nortonlifelock.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "action": {
+        "default_icon": {
+            "16": "Icon-16.png",
+            "24": "Icon-24.png",
+            "32": "Icon-32.png"
+        }
+    },
+    "author": "NortonLifeLock Inc",
+    "background": {
+        "service_worker": "serviceWorker.js"
+    },
+    "chrome_settings_overrides": {
+        "search_provider": {
+            "encoding": "UTF-8",
+            "favicon_url": "https://searchsafe.norton.com/img/logoicon.ico",
+            "is_default": true,
+            "keyword": "nortonsafe",
+            "name": "Norton Safe",
+            "search_url": "https://searchsafe.norton.com/search?omnisearch=yes&q={searchTerms}",
+            "suggest_url": "https://ss-sym.search.ask.com/ss?limit=10&li=ff&hl=__MSG_langCodeIAC__&q={searchTerms}"
+        }
+    },
+    "content_scripts": [
+        {
+            "all_frames": false,
+            "js": [
+                "content/libs/uri.min.js",
+                "content/scripts/SymBfwCS.js",
+                "content/scripts/BfwNotificationCenterProxy.js",
+                "content/scripts/NSSSDarkModeCS.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "all_frames": true,
+            "js": [
+                "content/scripts/SymBfwCS.js",
+                "content/scripts/NSSS_CS.js",
+                "content/scripts/portalInstallFlowCS.js",
+                "content/scripts/NSSSDarkModeCS.js",
+                "content/scripts/webCommunication.js"
+            ],
+            "matches": [
+                "https://*.norton.com/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "all_frames": false,
+            "js": [
+                "ContextInit.js",
+                "content/scripts/SymBfwCS.js",
+                "content/scripts/NSSS_CS.js",
+                "content/scripts/NSSSDarkModeCS.js",
+                "content/scripts/keepAssistHelper.js"
+            ],
+            "matches": [
+                "https://nortonsafe.search.ask.com/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": false,
+            "js": [
+                "content/scripts/keepAssistDSP.js"
+            ],
+            "matches": [
+                "https://nortonsafe.search.ask.com/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": true,
+            "css": [
+                "content/ui/annotationStyles.css"
+            ],
+            "include_globs": [
+                "https://*.google.*/*",
+                "https://nortonsafe.search.ask.com/*",
+                "https://*.adsensecustomsearchads.com/*",
+                "https://*.syndicatedsearch.goog/*"
+            ],
+            "js": [
+                "content/libs/react-latest.min.js",
+                "content/libs/react-dom-latest.min.js",
+                "content/scripts/SymBfwCS.js",
+                "content/scripts/annotationCS.js"
+            ],
+            "matches": [
+                "https://*/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "all_frames": true,
+            "css": [
+                "content/ui/annotationStyles.css"
+            ],
+            "js": [
+                "content/libs/react-latest.min.js",
+                "content/libs/react-dom-latest.min.js",
+                "content/scripts/SymBfwCS.js",
+                "content/scripts/annotationCS.js"
+            ],
+            "matches": [
+                "https://*.syndicatedsearch.goog/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "all_frames": true,
+            "css": [
+                "content/ui/annotationStyles.css"
+            ],
+            "include_globs": [
+                "https://*.yahoo.*/*"
+            ],
+            "js": [
+                "content/libs/react-latest.min.js",
+                "content/libs/react-dom-latest.min.js",
+                "content/scripts/SymBfwCS.js",
+                "content/scripts/annotationCS.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "default_locale": "en",
+    "description": "__MSG_dsDesc__",
+    "host_permissions": [
+        "https://*.norton.com/*"
+    ],
+    "icons": {
+        "128": "Icon-128.png",
+        "16": "Icon-16.png",
+        "32": "Icon-32.png",
+        "48": "Icon-48.png",
+        "64": "Icon-64.png"
+    },
+    "incognito": "split",
+    "manifest_version": 3,
+    "name": "__MSG_dsName__",
+    "options_page": "content/ui/settings.html",
+    "permissions": [
+        "tabs",
+        "storage",
+        "scripting",
+        "alarms",
+        "declarativeNetRequest",
+        "webRequest"
+    ],
+    "version": "3.23.0.20",
+    "version_name": "3.23.0.20",
+    "web_accessible_resources": [
+        {
+            "extension_ids": [],
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "content/scripts/*.js",
+                "content/libs/*.js",
+                "content/ui/content-page.css",
+                "content/ui/homePage.css",
+                "content/ui/*.html"
+            ]
+        }
+    ]
+}

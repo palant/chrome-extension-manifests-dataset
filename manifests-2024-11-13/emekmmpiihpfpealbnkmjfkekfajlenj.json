@@ -1,0 +1,110 @@
+---
+name: MetaBackOffice tecnikè srl
+version: '1.29'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 143
+release_date: '2023-05-12T15:48:20.000Z'
+size: 3.14MiB
+languages:
+  - italiano
+description: Il plugin per estendere il tuo backoffice Assicurativo
+publisher: tecnikè s.r.l.
+publisher_account: tecnikè
+publisher_address: |-
+  Via Guido Monaco, 72
+  Arezzo, AR 52100
+  IT
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MetaBackOffice tecnikè srl",
+  "description": "Il plugin per estendere il tuo backoffice Assicurativo",
+  "version": "1.29",
+  "manifest_version": 2,
+
+  "icons": {
+    "16": "resources/img/icon16.png",
+    "48": "resources/img/icon48.png",
+    "128": "resources/img/icon128.png"
+  },
+
+  "background": {
+    "scripts": [
+      "js/jquery-2.1.1.js",
+      "js/site.js",
+      "libs/dayjs.min.js",
+      "libs/survey.jquery.min.js",
+      "libs/pdf-lib.js",
+      "libs/pdf-lib.min.js",
+      "automa/scriptsMessageWrapper.js",
+      "automa/pluginFileSupport.js",
+      "automa/configSupport.js",
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "http://*.siaspa.com/*",
+    "https://*.allianz.it/*",
+    "https://*.siaspa.com/*",
+    "https://*.axa-italia.it/*",
+    "https://*.helvetia.it/*",
+    "https://*.anima.cloud/*",
+    "https://*.groupama.it/*",
+    "https://italy2.grupporealemutua.it/FIM/sps/IDPRMA/saml20/login",
+    "https://*.grupporealemutua.it/*",
+    "https://*.italiana.it/*",
+    "https://pass.helvetia.it/nclogin.submit?LOGIN",
+    "https://agenzia1.ucloud.it/*",
+    "https://fed-web.groupama.it/*",
+    "background",
+    "storage",
+    "tabs",
+    "notifications",
+    "clipboardRead"
+  ],
+  "browser_action": {
+    "default_title": "MetaBackOffice",
+    "default_icon": "resources/img/icon.png",
+    "default_popup": "view/popup.html"
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
+  "content_scripts": [
+    {
+      "matches": [ "http://*.siaspa.com/*", "https://*.siaspa.com/*" ],
+      "all_frames": true,
+      "js": [
+        "automa/scriptsMessageWrapper.js",
+        "automa/pluginFileSupport.js",
+        "automa/backgroundScriptSelector.js",
+        "automa/scriptsUtility.js"
+      ]
+    },
+    {
+      "matches": [ "https://pass.helvetia.it/nclogin.submit?LOGIN", "https://*.axa-italia.it/*", "https://*.allianz.it/*", "https://*.helvetia.it/*", "https://*.groupama.it/*", "https://*.grupporealemutua.it/*", "https://italy2.grupporealemutua.it/FIM/sps/IDPRMA/saml20/login", "https://*.italiana.it/*" ],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": [
+        "automa/scriptsMessageWrapper.js",
+        "automa/scriptsUICapture.js"
+      ]
+    },
+    {
+      "matches": [ "https://agenzia1.ucloud.it/*" ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "js": [
+        "automa/scriptsMessageWrapper.js",
+        "automa/pluginFileSupport.js",
+        "automa/backgroundScriptSelector.js",
+        "automa/scriptsUICapture.js",
+        "automa/scriptsUtility.js",
+        "automa/sniff-commonFunctions.js"
+      ]
+    }
+  ]
+
+}

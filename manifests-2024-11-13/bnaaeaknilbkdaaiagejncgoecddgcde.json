@@ -1,0 +1,90 @@
+---
+name: RecruitGPT
+version: 1.0.1
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 7
+release_date: '2024-08-11T20:15:20.000Z'
+size: 16.43MiB
+languages:
+  - Deutsch
+description: >-
+  Lassen Sie sich individualisierte Nachrichten zur Kontaktaufnahme auf LinkedIn
+  schreiben.
+publisher: Nexapage
+publisher_account: Nexapage Inh. Finn Strzelczyk
+publisher_address: |-
+  In den Sieben Stücken 9E
+  Hannover 30655
+  DE
+extension_website: recrugpt.com
+privacy_policy: https://www.recrugpt.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "RecruitGPT",
+  "description": "Lassen Sie sich individualisierte Nachrichten zur Kontaktaufnahme auf LinkedIn schreiben.",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "permissions": [
+    "storage", 
+    "tabs", 
+    "webNavigation", 
+    "scripting", 
+    "activeTab"
+  ], 
+  "host_permissions": ["*://*.linkedin.com/in/*", "*://*.linkedin.com/talent/*", "*://*.linkedin.com/sales/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/talent/*"],
+      "css": ["assets/plugins/global/plugins.bundle.css", "assets/css/style.bundle.css", "styles/popup.css", "assets/plugins/global/sourcemaps/tiny-slider.css.map"],
+      "js": ["assets/plugins/global/plugins.bundle.js", "assets/js/scripts.bundle.js", "recruiterContentScript.js"]
+    },
+    {
+      "matches": ["*://*.linkedin.com/sales/*"],
+      "css": ["assets/plugins/global/plugins.bundle.css", "assets/css/style.bundle.css", "styles/popup.css", "assets/plugins/global/sourcemaps/tiny-slider.css.map"],
+      "js": ["assets/plugins/global/plugins.bundle.js", "assets/js/scripts.bundle.js", "salesNavigatorContentScript.js"]
+    },
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "css": ["styles/popup.css"],
+      "js": ["pasteMessageContentScript.js"]
+    },
+    {
+      "matches": ["*://*.linkedin.com/in/*"],
+      "css": ["assets/plugins/global/plugins.bundle.css", "assets/css/style.bundle.css", "styles/popup.css", "assets/plugins/global/sourcemaps/tiny-slider.css.map"],
+      "js": ["assets/plugins/global/plugins.bundle.js", "assets/js/scripts.bundle.js", "publicProfileContentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "icons/*", "*" ],
+      "matches": [ "*://*.linkedin.com/*" ]
+    }
+  ],
+  "action": {
+    "default_title": "LinkedIn-GPT",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/icons/16x-off.png",
+      "32": "/icons/32x-off.png",
+      "48": "/icons/48x-off.png",
+      "128": "/icons/128x-off.png"
+    }
+  },
+  "icons": {
+    "16": "/icons/16x-on.png",
+    "32": "/icons/32x-on.png",
+    "48": "/icons/48x-on.png",
+    "128": "/icons/128x-on.png"
+  },
+  "externally_connectable": {
+    "matches": ["http://localhost:4200/*", "https://*.recrugpt.com/*"]
+  }
+}

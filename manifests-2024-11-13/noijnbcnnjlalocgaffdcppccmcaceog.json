@@ -1,0 +1,76 @@
+---
+name: 给赞
+version: 1.0.7
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 29
+release_date: '2018-10-15T04:35:18.000Z'
+size: 122KiB
+languages:
+  - 中文 (简体)
+description: 给赞，让赞赏更简单！
+publisher_account: geizaninc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+
+  "name": "给赞",
+  "description": "给赞，让赞赏更简单！",
+  "version": "1.0.7",
+
+  "icons": {
+    "16": "img/icon19.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+
+  "browser_action": {
+    "default_icon": "img/icon19.png",
+    "default_popup": "popup/main/main.html",
+    "default_title": "给赞"
+  },
+
+  "background": {
+    "page": "background/background.html"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+
+  "content_scripts": [
+    {
+      "js": [ "content/content-script.js", "content/edit/content-script.js" ],
+      "css": [ "content/edit/content.css" ],
+      "matches": [ "*://mp.weixin.qq.com/cgi-bin/appmsg?t=media/appmsg_edit*", "*://mp.weixin.qq.com/cgi-bin/appmsgtemplate?action=edit*" ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "content/content-script.js", "content/send/content-script.js" ],
+      "matches": [ "*://mp.weixin.qq.com/cgi-bin/masssendpage?t=mass/send*" ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "content/content-script.js", "content/main/content-script.js" ],
+      "matches": [ "*://mp.weixin.qq.com/cgi-bin/home?t=home/index*" ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "content/content-script.js", "content/message/content-script.js" ],
+      "matches": [ "*://mp.weixin.qq.com/cgi-bin/message?t=message/list*", "*://mp.weixin.qq.com/cgi-bin/user_tag*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "content/content-script.js", "content/comment/content-script.js" ],
+      "matches": [ "*://mp.weixin.qq.com/misc/appmsgcomment?action=list_latest_comment*"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://res.wx.qq.com; object-src 'self'",
+  "web_accessible_resources": ["content/*/injected-script.js", "content/injected-script.js", "img/*.png"]
+}

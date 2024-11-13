@@ -1,0 +1,95 @@
+---
+name: Instapaper
+version: 3.1.2
+category_slug: productivity/workflow
+rating: 3.781609195402299
+rating_count: 522
+user_count: 200000
+release_date: '2024-11-06T10:10:04.000Z'
+size: 180KiB
+languages:
+  - English
+description: Instapaper browser extension to save links for offline reading.
+publisher: Instant Paper, Inc.
+publisher_account: accounts
+publisher_address: |-
+  1750 Vallejo Street
+  San Francisco, CA 94123
+  US
+extension_website: www.instapaper.com
+support_website: https://instapaper.zendesk.com
+privacy_policy: https://instapaper.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Instapaper",
+  "description": "Instapaper browser extension to save links for offline reading.",
+  "version": "3.1.2",
+
+  "options_page": "options.html",
+  "icons": {
+    "16": "img/insta_logo_tiny.png",
+    "48": "img/insta_logo_small.png",
+    "128": "img/insta_logo.png"
+  },
+  "commands": {
+    "ctrl-shift-s": {
+      "suggested_key": { "default": "Ctrl+Shift+S" },
+      "description": "Save article"
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "js/readlater.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+        "16": "img/insta_logo_small.png",
+        "32":  "img/insta_logo_small@2x.png"
+    }
+  },
+  "content_scripts": [
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "exclude_matches": ["https://instapaper.com/read/*", "https://*.instapaper.com/read/*"],
+        "js": ["js/bookmarklet.js", "js/deflate-base64-min.js", "js/highlights-ugly.js", "js/premium.js", "js/tags.js"],
+        "css": ["css/instapaper.css", "css/ipicons.css", "css/highlights.css", "css/premium.css", "css/tags.css"],
+        "run_at": "document_start"
+    },
+    {
+        "matches": ["http://twitter.com/*", "https://twitter.com/*", "http://x.com/*", "https://x.com/*"],
+        "js": ["js/twitter.js"]
+    },
+    {
+        "matches": ["https://news.ycombinator.com/*"],
+        "js": ["js/hackernews.js"]
+    },
+    {
+        "matches": ["https://lobste.rs/*"],
+        "js": ["js/lobsters.js"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+        "*.png",
+        "*.svg"
+    ],
+    "matches": [
+        "http://*/*",
+        "https://*/*"
+    ]
+  }]
+}

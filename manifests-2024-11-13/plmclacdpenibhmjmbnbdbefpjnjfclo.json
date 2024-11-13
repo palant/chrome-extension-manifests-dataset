@@ -1,0 +1,99 @@
+---
+name: D&D Beyond DM-Screen & Spell List Manager
+version: 1.0.1
+category_slug: lifestyle/fun
+rating: 3.875
+rating_count: 8
+user_count: 2000
+release_date: '2022-09-09T10:53:11.000Z'
+size: 13.6MiB
+languages:
+  - Deutsch
+  - English
+description: Customizable DM Screen for D&D Beyond Campaigns & Spell List Manager
+publisher_account: silas
+support_website: https://dmscreen.silas.link/contact
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.0.1",
+  "short_name": "D&D DM-Screen",
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.dndbeyond.com/campaigns/*",
+        "https://dndbeyond.com/campaigns/*"
+      ],
+      "js": ["contentScript.bundle.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.dndbeyond.com/monsters/*"
+      ],
+      "js": [
+        "monsterAttackSave.bundle.js",
+        "monsterSettings.bundle.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.dndbeyond.com/?dmScreen=1&c=*",
+        "https://silas.link/blank.html?c=*"
+      ],
+      "js": ["prepareScreen.bundle.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.dndbeyond.com/profile/*/characters/*?dmScreen=1",
+        "https://dndbeyond.com/profile/*/characters/*?dmScreen=1",
+        "https://www.dndbeyond.com/characters/*?dmScreen=1",
+        "https://dndbeyond.com/characters/*?dmScreen=1"
+      ],
+      "js": [
+        "valueExtractor.bundle.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.dndbeyond.com/profile/*/characters/*",
+        "https://dndbeyond.com/profile/*/characters/*",
+        "https://www.dndbeyond.com/characters/*",
+        "https://dndbeyond.com/characters/*"
+      ],
+      "js": [
+        "settings.bundle.js",
+        "spellList.bundle.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "action": {
+    "default_icon": "img/dndSingle64.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.dndbeyond.com/",
+    "https://dndbeyond.com/"
+  ],
+  "icons": {
+    "128": "img/dndScreen128.png"
+  }
+}

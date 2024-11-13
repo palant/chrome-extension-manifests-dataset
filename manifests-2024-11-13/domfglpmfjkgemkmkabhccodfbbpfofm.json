@@ -1,0 +1,77 @@
+---
+name: Yahoo!簡単セットアップ
+version: 1.4.0
+category_slug: productivity/tools
+rating: 3.2
+rating_count: 5
+user_count: 60000
+release_date: '2023-10-01T06:39:11.000Z'
+size: 99.21KiB
+languages:
+  - 日本語
+description: Yahoo! JAPANのトップページやYahoo!検索を簡単にご利用いただけます。
+publisher: LINEヤフー株式会社
+publisher_account: LY Corporation
+extension_website: www.yahoo.co.jp
+support_website: https://support.yahoo-net.jp/PccHelpcenter/s/
+privacy_policy: https://www.lycorp.co.jp/ja/company/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_ext_name__",
+  "version": "1.4.0",
+  "default_locale": "ja",
+
+  "description": "__MSG_ext_desc__",
+  "icons": {
+    "128": "icon/Y_128.png"
+  },
+  "minimum_chrome_version": "104",
+  "action": {
+    "default_icon": {
+      "38": "icon/Icon_38x38.png"
+    },
+    "default_title": "Yahoo!簡単セットアップ"
+  },
+
+  "author": "Yahoo! JAPAN",
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+
+  "chrome_settings_overrides": {
+    "startup_pages": ["https://www.yahoo.co.jp/?fr=top_ga1_ext2_startup"],
+    "search_provider": {
+      "name": "Yahoo! JAPAN",
+      "keyword": "search.yahoo.co.jp",
+      "search_url": "https://search.yahoo.co.jp/search?p={searchTerms}&fr=top_ext2_pane&ei=UTF-8",
+      "suggest_url": "https://search.yahooapis.jp/AssistSearchService/V2/webassistSearch?p={searchTerms}&appid=AM9RN5Kxg65vuqxdr4rbYDb70jVo.5QsIfsLoNuAkX.m2Z87CG1BySYNzGbrswH6Fid2dqgDjG6WlgArfV8-&output=iejson&src=srch&fr=top_ext2_pane",
+      "favicon_url": "https://search.yahoo.co.jp/favicon.ico",
+      "encoding": "utf-8",
+      "is_default": true
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.yahoo.co.jp/*"],
+      "js": ["scripts/contentScripts.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "permissions": ["bookmarks", "tabs"],
+  "host_permissions": ["https://*.yahoo.co.jp/", "https://*.yahooapis.jp/"],
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/logger.js"],
+      "matches": ["https://*.yahoo.co.jp/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.yahoo.co.jp/*"]
+  }
+}

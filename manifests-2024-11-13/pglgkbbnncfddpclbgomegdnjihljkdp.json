@@ -1,0 +1,99 @@
+---
+name: CRM and Inbox for LinkedIn
+version: 5.7.1
+category_slug: productivity/workflow
+rating: 4.878504672897196
+rating_count: 107
+user_count: 10000
+release_date: '2024-10-23T06:27:34.000Z'
+size: 1.87MiB
+languages:
+  - English
+description: Your professional relationships' CRM built for teams & creators.
+publisher: LeadDelta Inc.
+publisher_address: |-
+  207 Bank Street
+  465
+  Ottawa, ON K2P 2N2
+  CA
+extension_website: leaddelta.com
+support_website: https://help.leaddelta.com/en/
+privacy_policy: https://leaddelta.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CRM and Inbox for LinkedIn",
+  "version": "5.7.1",
+  "manifest_version": 3,
+  "description": "Your professional relationships' CRM built for teams & creators.",
+  "homepage_url": "https://leaddelta.com/",
+  "icons": {
+    "16": "icons/16x16.png",
+    "48": "icons/48x48.png",
+    "128": "icons/128x128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "icons/128x128.png",
+    "default_title": "LeadDelta",
+    "default_popup": "src/page_action/page_action.html"
+  },
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "src/declarative_net_request_rules.json"
+    }]
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "identity",
+    "activeTab",
+    "contextMenus",
+    "webRequest",
+    "declarativeNetRequest",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://*.leaddelta.com/*",
+    "https://api.leaddelta.com/*"
+  ],
+  "content_security_policy": 
+  {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/*",
+        "*://*/*"
+      ],
+      "js": [
+        "src/inject/index.js",
+        "src/inject/other.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [],
+  "externally_connectable": {
+    "matches": [
+      "https://*.leaddelta.com/*"
+    ]
+  },
+  "incognito": "not_allowed",
+  "oauth2": {
+    "client_id": "523347845712-irgth9vpg5kjc31edv2rthugn8cploro.apps.googleusercontent.com",
+    "scopes": [
+      "email"
+    ]
+  }
+}

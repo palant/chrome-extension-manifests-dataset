@@ -1,0 +1,176 @@
+---
+name: Kee - Password Manager
+version: 4.0.6
+category_slug: make_chrome_yours/privacy
+rating: 4.5
+rating_count: 90
+user_count: 50000
+release_date: '2024-06-17T06:27:43.000Z'
+size: 2.53MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Türkçe
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - slovenský
+  - suomi
+  - čeština
+  - русский
+  - українська
+  - 中文 (简体)
+  - 日本語
+description: >-
+  Kee adds private, secure and easy password management features which save time
+  and keep your private data more secure.
+publisher: Kee Vault Ltd
+publisher_address: |-
+  27 Old Gloucester Street
+  London WC1N 3AX
+  GB
+extension_website: kee.pm
+support_website: https://forum.kee.pm/t/help-and-support/24
+privacy_policy: https://www.kee.pm/extension-privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kee - Password Manager",
+  "version": "4.0.6",
+  "description": "Kee adds private, secure and easy password management features which save time and keep your private data more secure.",
+  "default_locale": "en",
+  "version_name": "4.0.6",
+  "background": {
+    "service_worker": "./dist/background/index.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_globs": [
+        "https://app-dev.kee.pm:8087/*",
+        "https://app-beta.kee.pm/*",
+        "https://app.kee.pm/*",
+        "https://keevault.pm/*"
+      ],
+      "js": [
+        "./dist/page/index.global.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "https://app-dev.kee.pm:8087/*",
+        "https://app-beta.kee.pm/*",
+        "https://app.kee.pm/*",
+        "https://keevault.pm/*"
+      ],
+      "js": [
+        "./dist/vault/index.global.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "./assets/images/16.png",
+    "32": "./assets/images/32.png",
+    "48": "./assets/images/48.png",
+    "64": "./assets/images/64.png",
+    "96": "./assets/images/96.png",
+    "128": "./assets/images/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "./assets/images/16.png",
+      "32": "./assets/images/32.png",
+      "48": "./assets/images/48.png",
+      "64": "./assets/images/64.png"
+    },
+    "default_title": "Kee",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/settings/index.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "alarms",
+    "tabs",
+    "contextMenus",
+    "storage",
+    "clipboardWrite",
+    "webNavigation",
+    "activeTab",
+    "privacy",
+    "webRequestAuthProvider",
+    "webRequest",
+    "notifications",
+    "unlimitedStorage",
+    "idle",
+    "scripting",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/linkContentScriptToKeeVaultWebsite.js"
+      ],
+      "matches": [
+        "*://*.kee.pm/*",
+        "*://*.keevault.pm/*"
+      ]
+    },
+    {
+      "resources": [
+        "dist/panels/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      }
+    },
+    "primary-action": {
+      "suggested_key": {
+        "default": "Alt+Shift+V"
+      },
+      "description": "__MSG_KB_shortcut_simple_2_desc__"
+    },
+    "generate-password": {
+      "suggested_key": {
+        "default": "Alt+Shift+G"
+      },
+      "description": "__MSG_Menu_Button_copyNewPasswordToClipboard_label__"
+    },
+    "detect-forms": {
+      "suggested_key": {
+        "default": "Alt+Shift+M"
+      },
+      "description": "__MSG_Menu_Button_fillCurrentDocument_label__"
+    }
+  },
+  "minimum_chrome_version": "123"
+}

@@ -1,0 +1,79 @@
+---
+name: Available Reads
+version: 5.2.1
+category_slug: productivity/workflow
+rating: 4.747474747474747
+rating_count: 99
+user_count: 4000
+release_date: '2023-10-09T04:59:50.000Z'
+size: 253KiB
+languages:
+  - English
+description: >-
+  Displays availability of ebooks and audiobooks from your local library on
+  GoodReads pages.
+publisher_account: rhollister
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Available Reads",
+  "short_name": "AvailableReads",
+  "version": "5.2.1",
+  "manifest_version": 3,
+  "description": "Displays availability of ebooks and audiobooks from your local library on GoodReads pages.",
+  "homepage_url": "http://github.com/rhollister",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "src/options/index.html"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.goodreads.com/*"
+      ],
+      "js": [
+        "src/goodreads_inject.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.overdrive.com/libraries"
+      ],
+      "js": [
+        "src/overdrive_inject.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/throbber.gif",
+        "icons/icon25.png",
+        "icons/icon25-hover.png",
+        "icons/icon48.png",
+        "src/options/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {},
+  "host_permissions": [
+    "*://www.goodreads.com/*",
+    "*://*.overdrive.com/*"
+  ]
+}

@@ -1,0 +1,66 @@
+---
+name: 검색도감 확장프로그램
+version: 0.7.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 5
+user_count: 238
+release_date: '2024-11-01T09:49:07.000Z'
+size: 52.27MiB
+languages:
+  - 한국어
+description: 검색도감 확장 프로그램
+publisher_account: dpp.ai0720
+privacy_policy: https://tidal-smartphone-731.notion.site/bd01f11399c142778c5ddbebf8e41fa0
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "검색도감 확장프로그램",
+  "icons": {
+    "16": "icon/icon-16x16.png",
+    "48": "icon/icon-32x32.png",
+    "64": "icon/icon-64x64.png",
+    "128": "icon/icon-128x128.png"
+  },
+  "version": "0.7.3",
+  "description": "검색도감 확장 프로그램",
+  "permissions": ["cookies"],
+  "host_permissions": ["<all_urls>"],
+
+  "content_scripts": [
+    {
+      "matches": ["https://search.shopping.naver.com/*", "https://www.seobook.kr/*"],
+      "css": ["/src/style.css"],
+      "js": ["dist/apexcharts.js", "dist/chart.js", "dist/content_script.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://smartstore.naver.com/*", "https://brand.naver.com/*", "https://shopping.naver.com/*", "https://www.seobook.kr/*"],
+      "js": ["dist/smartstore_script.js"]
+    },
+    {
+      "matches": ["https://www.seobook.kr/*"],
+      "js": ["dist/crawling.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/chart.js", "dist/apexcharts.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

@@ -1,0 +1,162 @@
+---
+name: Marketplace Wizard
+version: 2.0.0.6
+category_slug: lifestyle/shopping
+rating: 4.428571428571429
+rating_count: 7
+user_count: 359
+release_date: '2024-05-02T13:17:24.000Z'
+size: 6.38MiB
+languages:
+  - English
+description: Helps you to drop products to the Facebook Marketplace
+publisher: MP Wizard
+publisher_address: |-
+  6101 San Felipe St
+  Houston, TX 77057
+  US
+privacy_policy: https://www.freeprivacypolicy.com/live/84a08182-c0eb-424f-a283-fe4f8cfcc4fd
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Marketplace Wizard",
+  "description": "Helps you to drop products to the Facebook Marketplace",
+  "version": "2.0.0.6",
+
+  "background": {
+    "service_worker": "./js/service-worker.js"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "logo/16.png",
+      "32": "logo/32.png"
+    },
+    "default_title": "Marketplace Wizard",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.ebay.com/*itm/*",
+        "*://*.ebay.com/p/*",
+        "*://walmart.com/*",
+        "*://*.amazon.com/*/dp/*",
+        "*://*.amazon.com/*"
+      ],
+      "css": [
+        "/css/content.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.amazon.com/*"
+      ],
+      "js": [
+        "/js/amazon-tool.js"
+      ],
+      "css": [
+        "./css/content.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.ebay.com/*itm/*",
+        "*://*.ebay.com/p/*",
+        "*://*.walmart.com/*",
+        "*://*.amazon.com/*/dp/*",
+        "*://*.amazon.com/*"
+      ],
+      "js": [
+        "/js/config.js",
+        "/js/core.js",
+        "/js/jquery.min.js",
+
+        "/js/libs/simpleBar.js",
+        "/js/gatherer.js",
+        "/js/fontsInjector.js"
+      ],
+      "css": [
+        "/css/content.css",
+        "/css/libs/simpleBar.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.facebook.com/marketplace/create/item*"
+      ],
+      "js": [
+        "/js/config.js",
+        "/js/core.js",
+        "/js/jquery-3.6.0.min.js",
+        "/js/facebookBuddy.js"
+      ],
+      "css": [
+        "./css/content.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.facebook.com/marketplace/item/*"
+      ],
+      "js": [
+        "/js/config.js",
+        "/js/core.js",
+        "/js/jquery-3.6.0.min.js",
+        "/js/facebookChecker.js"
+      ],
+      "css": [
+        "./css/content.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.facebook.com/marketplace/edit/*",
+        "*://*.facebook.com/marketplace/item/*"
+      ],
+      "js": [
+        "/js/config.js",
+        "/js/core.js",
+        "/js/jquery-3.6.0.min.js",
+        "/js/facebookreprice.js",
+        "/js/facebookChecker.js"
+      ],
+      "css": [
+        "./css/content.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*/*extCheckPrice*"
+      ],
+      "js": [
+        "/js/config.js",
+        "/js/core.js",
+        "/js/priceChecker.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "clipboardRead"
+  ],
+  "host_permissions": [ "https://mpwizard.online/*" ],
+  "icons": {
+    "16": "logo/16.png",
+    "32": "logo/32.png",
+    "64": "logo/64.png",
+    "128": "logo/128.png"
+  }
+}

@@ -1,0 +1,63 @@
+---
+name: Owledge
+version: 0.0.5
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 32
+release_date: '2024-04-16T18:56:38.000Z'
+size: 8.8MiB
+languages:
+  - English (United States)
+description: All your files in a single search.
+publisher_account: pesauvage
+extension_website: owledge.app
+privacy_policy: https://owledge.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Owledge",
+    "description": "All your files in a single search.",
+    "version": "0.0.5",
+    "icons": {
+        "128": "logo.png"
+    },
+    "permissions": [ "storage" ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "src/main/launcher.html",
+        "default_icon": "logo.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://search.owledge.app/*", "http://localhost:3000/*"],
+            "css": [],
+            "js": ["src-compiled/owledge/owledge.compiled.js"]
+        },
+        {
+            "matches": ["https://drive.google.com/*"],
+            "css": ["src-compiled/gdrive/gdrive.css", "src-compiled/main/searchbar.css"],
+            "js": ["src-compiled/gdrive/gdrive.compiled.js"]
+        },
+        {
+            "matches": ["https://www.figma.com/*"],
+            "css": ["src-compiled/figma/figma.css"],
+            "js": ["src-compiled/figma/figma.compiled.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [ "*" ],
+            "matches": [ "https://drive.google.com/*" ]
+        },
+        {
+            "resources": [ "*" ],
+            "matches": [ "https://figma.com/*" ]
+        }
+    ]
+}

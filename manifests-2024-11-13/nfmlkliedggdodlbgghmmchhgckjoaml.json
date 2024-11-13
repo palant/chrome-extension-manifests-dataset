@@ -1,0 +1,146 @@
+---
+name: Spotify Ad Blocker - Blockify
+version: 1.6.7.1
+category_slug: productivity/tools
+rating: 4.726641998149861
+rating_count: 2162
+user_count: 100000
+release_date: '2024-10-22T05:02:03.000Z'
+size: 2.1MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Filipino
+  - Français
+  - Nederlands
+  - Tiếng Việt
+  - Türkçe
+  - español
+  - italiano
+  - português (Brasil)
+  - svenska
+  - русский
+description: >-
+  Blockify is a Spotify Ad Blocker that blocks & removes audio ads from Spotify
+  using Spotify adblock technology.
+publisher_account: ValueFoundry
+extension_website: getblockify.com
+support_website: >-
+  https://chromewebstore.google.com/detail/spotify-ad-blocker-blocki/nfmlkliedggdodlbgghmmchhgckjoaml/support
+privacy_policy: https://getblockify.com/privacy-policy.html
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "short_name": "Spotify Ad Blocker",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "homepage_url": "https://getblockify.com",
+  "version": "1.6.7.1",
+  "icons": {
+    "32": "images/32.png",
+    "48": "images/48.png",
+    "64": "images/64.png",
+    "128": "images/128.png",
+    "256": "images/256.png"
+  },
+  "author": "Spotify Ad Blocker: Blockify",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*/*"],
+      "js": ["css.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["content_script.js", "mute.js"],
+      "css": ["styles.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["adi.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "css": ["yt.css"],
+      "js": ["yt.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": 
+  [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "extension_ids": ["*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "32": "images/32.png",
+      "48": "images/48.png",
+      "64": "images/64.png",
+      "128": "images/128.png",
+      "256": "images/256.png"
+    },
+    "default_title": "Blockify Ad Blocker"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "scripting",
+    "storage",
+    "background",
+    "activeTab",
+    "webNavigation", 
+    "tabs"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+      "id": "ruleset_1a",
+      "enabled": true,
+      "path": "rules.json"
+      },
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "ruleset_1.json"
+      },    
+      {
+        "id": "ruleset_2",
+        "enabled": true,
+        "path": "ruleset_2.json"
+      }
+    ]
+  },
+  "commands": 
+  {
+    "open_spotify": 
+    {
+      "suggested_key": 
+      {
+        "default": "Alt+S",
+        "windows": "Alt+S",
+        "mac": "Alt+S",
+        "chromeos": "Alt+S",
+        "linux": "Alt+S"
+      },
+      "description": "Press Alt + S to open Spotify (option + S for MacOS)"
+    }
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "offline_enabled": true
+}

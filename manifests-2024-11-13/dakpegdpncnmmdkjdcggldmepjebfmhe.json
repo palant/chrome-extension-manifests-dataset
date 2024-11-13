@@ -1,0 +1,70 @@
+---
+name: Larus
+version: '3.0'
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 3
+user_count: 68
+release_date: '2021-09-16T12:56:29.000Z'
+size: 68.41KiB
+languages:
+  - English
+description: Larus extension for copart
+publisher_account: laruslogistics1
+privacy_policy: >-
+  https://docs.google.com/document/d/1rQYtvpTxWYl0ka3_FBVCSwjeAZRcJ1mJpBgArp4Yvo8/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Larus",
+  "version": "3.0",
+  "description": "Larus extension for copart",
+  "icons": {
+    "128": "icon.png"
+  },
+  "content_security_policy": "script-src 'self' https://kit.fontawesome.com/19ff28de9a.js; object-src 'self'",
+  "browser_action": {
+    "default_title": "Copart",
+    "default_popup": "/popup/popup.html"
+  },
+  "background": {
+    "scripts": ["/background.js"], 
+    "persistent" : true
+  },
+  "content_scripts": [
+    {
+    "matches": ["https://www.copart.com/login/"],
+    "js": ["/auth.js"]
+    },
+    {
+      "matches": ["https://www.copart.com/lot/*"],
+      "all_frames": true,
+      "js": ["/lot.js"]
+    },
+    {
+      "matches": ["https://www.copart.com/ru/lot/*"],
+      "all_frames": true,
+      "js": ["/lot.js"]
+    },
+    {
+      "matches": ["https://www.copart.com/lotsWon/"],
+      "all_frames": true,
+      "js": ["/lotsWon.js"]
+    },
+    {
+      "matches": ["https://www.copart.com/helpWithLicensing/"],
+      "all_frames": true,
+      "js": ["/exit.js"]
+    },
+    {
+      "matches": ["https://www.copart.com/*"],
+      "all_frames": true,
+      "exclude_matches": ["https://www.copart.com/login/", "https://www.copart.com/helpWithLicensing/", "https://www.copart.com/ru/lot/*", "https://www.copart.com/lot/*", "https://www.copart.com/lotsWon/*"],
+      "js": ["/parser.js"]
+    }
+    
+  ]
+}

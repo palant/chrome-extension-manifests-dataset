@@ -1,0 +1,126 @@
+---
+name: Get Game
+version: '1.001'
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2023-08-02T12:33:10.000Z'
+size: 2.92MiB
+languages:
+  - English
+description: >-
+  Instant AI-powered social media responses and 300+ hook lines to level up your
+  interactions
+publisher_account: M2K Developments
+extension_website: m2kdevelopments.com
+support_website: https://m2kdevelopments.com/getgame/support
+privacy_policy: https://www.m2kdevelopments.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Get Game",
+  "short_name": "Get Game",
+  "version": "1.001",
+  "description": "Instant AI-powered social media responses and 300+ hook lines to level up your interactions",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "homepage_url": "https://m2kdevelopments.com/getgame",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Get Game",
+    "default_icon": {
+      "16": "logo192.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo192.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "identity",
+    "gcm",
+    "notifications",
+    "storage"
+  ],
+  "icons": {
+    "16": "logo192.png",
+    "32": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png",
+    "512": "logo192.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://getgame.render.com/api/google/*",
+        "https://getgame.render.com/api/linkedin/*"
+      ],
+      "js": [
+        "./content/oauth.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./libs/toastr.js",
+        "./libs/toastify.js",
+        "./libs/jquery-3.7.0.min.js",
+        "./content.js"
+      ],
+      "css": [
+        "./libs/toastify.css",
+        "./libs/toastr.css",
+        "./styles.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/messages/*",
+        "https://*.messenger.com/t/*"
+      ],
+      "js": [
+        "./content/messenger.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/messaging/thread/*"
+      ],
+      "js": [
+        "./content/linkedin.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

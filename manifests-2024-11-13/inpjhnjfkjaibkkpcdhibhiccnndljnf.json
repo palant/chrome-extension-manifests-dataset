@@ -1,0 +1,75 @@
+---
+name: Devyce Softphone Extension
+version: 0.12.3
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 775
+release_date: '2024-10-14T20:13:50.000Z'
+size: 58.04KiB
+languages:
+  - English
+description: >-
+  Extend the capabilities of the Devyce Softphone, including click to call and
+  call control across tabs.
+publisher: Devyce Limited
+publisher_account: Devyce
+publisher_address: |-
+  2 Minster Court
+  London EC3R 7BB
+  GB
+extension_website: devyce.com
+support_website: https://devyce.com/contact-us/
+privacy_policy: https://devyce.com/app-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Devyce Softphone Extension",
+  "description": "Extend the capabilities of the Devyce Softphone, including click to call and call control across tabs.",
+  "version": "0.12.3",
+  "permissions": ["tabs", "webNavigation"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "http://localhost:3000/*",
+        "https://softphone.devyce.io/*"
+      ],
+      "js": ["assets/js/iframe.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://localhost:3000/*", "https://softphone.devyce.io/*"],
+      "js": ["assets/js/softphone.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["http://localhost:3000/*", "https://*.devyce.io/*"],
+      "js": ["assets/js/links.js"],
+      "run_at": "document_end",
+      "css": ["assets/css/devyceStyles.css"],
+      "all_frames": true,
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/imgs/logo16.png",
+      "24": "assets/imgs/logo24.png",
+      "32": "assets/imgs/logo32.png"
+    }
+  }
+}

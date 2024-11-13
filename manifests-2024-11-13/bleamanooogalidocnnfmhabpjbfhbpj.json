@@ -1,0 +1,160 @@
+---
+name: The Panda
+version: 0.1.3
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 64
+release_date: '2022-09-18T03:52:11.000Z'
+size: 128KiB
+languages:
+  - 한국어
+description: 더판다 상품소싱을 위한 확장 프로그램입니다
+publisher: 더판다
+publisher_account: lhseokool
+publisher_address: |-
+  상암로51길 61
+  강동구, 서울특별시 05292
+  KR
+privacy_policy: https://www.privacypolicies.com/live/ea188cc1-3a74-4a49-ac36-534eff7b07b3
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "The Panda",
+  "description": "더판다 상품소싱을 위한 확장 프로그램입니다",
+  "icons": {
+    "16": "/images/icon16.png",
+    "32": "/images/icon32.png",
+    "48": "/images/icon48.png",
+    "128": "/images/icon128.png"
+  },
+  "version": "0.1.3",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "./script/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./script/jquery-3.6.0.min.js", "./script/helper.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*.taobao.com/*"],
+      "js": ["./script/taobao.list.js"],
+      "css": ["./style/style.css", "./style/taobao.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.item.taobao.com/*"],
+      "js": ["./script/taobao.item.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.detail.tmall.com/*"],
+      "js": ["./script/tmall.item.js"],
+      "css": ["./style/style.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.aliexpress.com/item/*"],
+      "js": ["./script/aliexpress.item.js"],
+      "css": ["./style/style.css", "./style/taobao.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/premium/category/*",
+        "https://*.aliexpress.com/*",
+        "https://*.aliexpress.com/category/*"
+      ],
+      "js": ["./script/aliexpress.list.js"],
+      "css": ["./style/style.css", "./style/taobao.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.1688.com/*"],
+      "js": ["./script/1688.list.js"],
+      "css": ["./style/style.css", "./style/taobao.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.detail.1688.com/*"],
+      "js": ["./script/1688.item.js"],
+      "css": ["./style/style.css", "./style/taobao.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://sell.smartstore.naver.com/*"],
+      "js": ["./script/smartstore.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://thepanda.ai/*", "*://*.thepanda.ai/*"],
+      "js": ["./script/smartstore.link.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://thepanda.ai/*", "*://*.thepanda.ai/*"],
+      "js": ["./script/panda.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://thepanda.ai/*", "*://*.thepanda.ai/*"],
+      "css": ["./style/style.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://thepanda.ai/sourcing/*", "*://*.thepanda.ai/sourcing/*"],
+      "js": ["./script/panda.sourcing.js"],
+      "css": ["./style/style.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "host_permissions": [
+    "https://*.taobao.com/*",
+    "https://*.tmall.com/*",
+    "https://*.tmall.hk/*",
+    "https://*.aliexpress.com/*",
+    "https://*.1688.com/*",
+    "https://www.percenty.co.kr/*",
+    "https://sell.smartstore.naver.com/*",
+    "https://gomentee.com/*",
+    "https://*.aliexpress.com/*",
+    "https://*.naver.com/*",
+    "https://sell.smartstore.naver.com/*"
+  ],
+  "incognito": "not_allowed",
+  "action": {
+    "default_icon": {
+      "32": "/images/logo.png"
+    }
+  },
+  "permissions": ["storage", "tabs", "cookies"],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*.taobao.com/*",
+        "https://detail.tmall.com/*",
+        "https://*.detail.tmall.com/*",
+        "https://*.1688.com/*",
+        "https://detail.tmall.hk/*",
+        "https://gomentee.com/*",
+        "https://*.aliexpress.com/*",
+        "https://sell.smartstore.naver.com/*"
+      ],
+      "resources": [
+        "*/item_taobao_com_inject.js",
+        "/script/taobao.item.inject.js",
+        "/script/tmall.item.inject.js",
+        "*.png*",
+        "script/*",
+        "*.svg*",
+        "/images/*"
+      ]
+    }
+  ]
+}

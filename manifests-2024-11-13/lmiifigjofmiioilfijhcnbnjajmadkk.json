@@ -1,0 +1,89 @@
+---
+name: Kancolle fleet capture
+version: 2.2.0
+category_slug: lifestyle/fun
+rating: 4.5
+rating_count: 2
+user_count: 65
+release_date: '2023-12-13T21:41:23.000Z'
+size: 58.97KiB
+languages:
+  - 日本語
+description: ブラウザゲーム「艦隊これくしょん」の艦娘詳細をキャプチャ＆連結して生成します
+publisher_account: tawashi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "description": "ブラウザゲーム「艦隊これくしょん」の艦娘詳細をキャプチャ＆連結して生成します",
+  "manifest_version": 3,
+  "name": "Kancolle fleet capture",
+  "homepage_url": "https://tawashi13th.blog.fc2.com/",
+  "version": "2.2.0",
+
+  "icons": {
+    "48": "icon/icon_48.png",
+    "96": "icon/icon_96.png"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854/",
+        "*://www.dmm.com/netgame/social/-/gadgets/=/app_id=854854"
+      ],
+      "js": [
+        "event.js",
+        "content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*/kcs2/index.php*"
+      ],
+      "js": [
+        "event.js",
+        "canvas.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "action": {
+    "default_icon": "icon/icon_19.png"
+  },
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": false,
+        "path": "rules_1.json"
+      }
+    ]
+  },
+
+  "permissions": [
+    "downloads",
+    "storage",
+    "unlimitedStorage",
+    "tabs",
+    "declarativeNetRequest"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

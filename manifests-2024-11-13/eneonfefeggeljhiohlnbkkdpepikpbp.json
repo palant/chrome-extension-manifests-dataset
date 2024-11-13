@@ -1,0 +1,72 @@
+---
+name: Lefty
+version: '1.11'
+category_slug: lifestyle/social
+rating: 3
+rating_count: 2
+user_count: 748
+release_date: '2024-01-31T17:32:01.000Z'
+size: 56.64KiB
+languages:
+  - English
+description: Lefty extension for Instagram and TikTok
+publisher: MODERN AGENCY
+publisher_account: Lefty
+publisher_address: |-
+  64 Rue Tiquetonne
+  Paris 75001
+  FR
+extension_website: lefty.io
+support_website: https://help.lefty.io
+privacy_policy: >-
+  http://help.lefty.io/en/articles/2070888-lefty-privacy-policy?_ga=2.191533804.737105600.1585815637-1159171987.1568384431
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Lefty",
+  "version": "1.11",
+  "description": "Lefty extension for Instagram and TikTok",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["tabs", "scripting"],
+  "host_permissions": ["*://*.instagram.com/"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.instagram.com/*", "*://*.tiktok.com/@*"],
+      "js": ["build_plugin/web/plugin.dart.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "128": "icons/128.png"
+  },
+  "action": {
+    "default_icon": "icons/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "build/web/plugin.*",
+        "public/iframe.html",
+        "public/pipe.js",
+        "public/content.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "https://geralt.lefty.io/*",
+      "https://plugin.lefty.io/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; style-src https:* 'self' 'unsafe-inline'; font-src https:* 'self' data:; frame-src *;"
+  }
+}

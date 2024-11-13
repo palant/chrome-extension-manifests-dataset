@@ -1,0 +1,84 @@
+---
+name: AD Block for Twitch - Twitch ADBlock
+version: 1.1.0
+category_slug: productivity/tools
+rating: 1.8
+rating_count: 5
+user_count: 389
+release_date: '2023-12-26T09:21:22.000Z'
+size: 1.11MiB
+languages:
+  - English
+description: >-
+  Instantly eliminate unwanted adverts, intrusive notifications within a matter
+  of a few clicks using AdBlock For Twitch.
+publisher_account: netflix party
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AD Block for Twitch - Twitch ADBlock",
+  "description": "Instantly eliminate unwanted adverts, intrusive notifications within a matter of a few clicks using AdBlock For Twitch.",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "twitch16x16.png",
+    "48": "twitch48x48.png",
+    "128": "twitch128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "AD Block for Twitch - Twitch ADBlock",
+    "default_icon": "twitch16x16.png"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "storage"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.twitch.tv/*"
+      ],
+      "js": [
+        "adRemove.js",
+        "removeTwitchAds.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "adRemove.js",
+        "removeTwitchAds.js"
+      ],
+      "matches": [
+        "https://www.twitch.tv/*"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

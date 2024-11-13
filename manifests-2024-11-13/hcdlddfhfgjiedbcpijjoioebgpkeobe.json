@@ -1,0 +1,84 @@
+---
+name: Projector
+version: 4.2.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 702
+release_date: '2024-11-06T04:11:11.000Z'
+size: 383KiB
+languages:
+  - English
+description: A Projectorsoft web extension for website guides.
+publisher_account: Projectorsoft
+publisher_address: |-
+  10272 Jonamac Avenue
+  Huntley, IL 60142
+  US
+extension_website: projectorsoft.com
+privacy_policy: https://projectorsoft.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Projector",
+  "version": "4.2.1",
+  "description": "A Projectorsoft web extension for website guides.",
+  "action": {
+    "default_icon": "./assets/logo.png"
+  },
+  "icons": {
+    "16": "./assets/logo.png",
+    "48": "./assets/logo.png",
+    "128": "./assets/logo.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "./dist/contentScripts/frameInjection.mjs"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/elementSelection/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  }
+}

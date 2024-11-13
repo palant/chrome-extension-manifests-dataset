@@ -1,0 +1,147 @@
+---
+name: Sauce for Strava™
+version: 8.7.2
+category_slug: lifestyle/entertainment
+rating: 4.74
+rating_count: 100
+user_count: 40000
+release_date: '2024-11-11T22:14:11.000Z'
+size: 1.2MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+description: >-
+  Additional functionality for your cycling and running analysis.  This
+  extension upgrades the Strava™ website.
+publisher_account: Sauce, LLC
+extension_website: sauce.llc
+support_website: https://www.sauce.llc/support
+privacy_policy: https://www.sauce.llc/sauce4strava/pages/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "default_locale": "en",
+    "name": "Sauce for Strava™",
+    "short_name": "Sauce",
+    "description": "__MSG_app_desc__",
+    "homepage_url": "https://www.sauce.llc",
+    "author": "Sauce, LLC",
+    "version": "8.7.2",
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "contextMenus",
+        "alarms",
+        "offscreen"
+    ],
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "64": "images/icon64.png",
+        "128": "images/icon128.png",
+        "256": "images/icon256.png"
+    },
+    "action": {
+        "default_icon": {
+            "19": "images/icon19.png",
+            "38": "images/icon38.png",
+            "48": "images/icon48.png",
+            "64": "images/icon64.png",
+            "128": "images/icon128.png",
+            "256": "images/icon256.png"
+        },
+        "default_title": "Sauce for Strava™",
+        "default_popup": "pages/options.html?popup"
+    },
+    "options_ui": {
+        "page": "pages/options.html",
+        "open_in_tab": true
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://www.strava.com/*"
+            ],
+            "js": [
+                "src/ext/webext.js",
+                "src/common/base.js",
+                "src/common/base_init.js",
+                "src/common/proxy.js",
+                "src/ext/proxy.js",
+                "src/common/storage.js",
+                "src/ext/storage.js",
+                "src/ext/locale.js",
+                "src/ext/boot.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://www.strava.com/*"
+            ],
+            "world": "MAIN",
+            "js": [
+                "src/common//base.js",
+                "src/site/preloader.js",
+                "src/site/base_init.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://www.strava.com/activities/*"
+            ],
+            "world": "MAIN",
+            "js": [
+                "src/site/export_activity_photos.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://www.strava.com/*"
+            ],
+            "css": [
+                "css/site/common.css"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://www.strava.com/sauce/*"
+            ],
+            "css": [
+                "css/site/repurpose.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "build.json",
+                "src/*",
+                "lib/*",
+                "css/*",
+                "templates/*",
+                "images/*",
+                "pages/*"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "minimum_chrome_version": "120",
+    "background": {
+        "service_worker": "src/bg/main.mjs",
+        "type": "module"
+    }
+}

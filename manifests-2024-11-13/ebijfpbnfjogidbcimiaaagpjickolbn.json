@@ -1,0 +1,116 @@
+---
+name: OKIS Web Clipper
+version: 1.0.8
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 64
+release_date: '2024-03-30T05:15:02.000Z'
+size: 400KiB
+languages:
+  - polski
+description: OKIS najlepszy przyjaciel każdego handlowca, który tworzy oferty i kosztorysy.
+publisher: KIS LIST MAGDALENA KNAPPE
+publisher_account: app.kislist
+publisher_address: |-
+  1-254 Ul. Zielone Zacisze
+  Warszawa 03-294
+  PL
+extension_website: app.kisoffer.com
+support_website: https://kisoffer.com/krok-po-kroku
+privacy_policy: https://kisoffer.com/polityka-prywatnosci
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "default_locale": "pl",
+  "version": "1.0.8",
+  "action": {
+    "default_icon": "icons/color-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "icons/color-16.png",
+    "64": "icons/color-64.png",
+    "128": "icons/color-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://app.kisoffer.com/extension-login"
+      ],
+      "js": [
+        "js/injection.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/kiser-edit-initiator.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "commands": {
+    "select-pic": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+X",
+        "mac": "Command+Shift+X"
+      },
+      "description": "__MSG_selectPic__"
+    },
+    "save-item": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "Command+Shift+S"
+      },
+      "description": "__MSG_saveItem__"
+    },
+    "take-screenshot": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q",
+        "mac": "Command+Shift+Q"
+      },
+      "description": "__MSG_takeScreenshot__"
+    },
+    "clear-data": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Z",
+        "mac": "Command+Shift+Z"
+      },
+      "description": "__MSG_clearData__"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "resources": [
+        "pick/*",
+        "css/*",
+        "js/*",
+        "icons/*"
+      ]
+    }
+  ]
+}

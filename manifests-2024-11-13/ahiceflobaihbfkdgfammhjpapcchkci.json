@@ -1,0 +1,71 @@
+---
+name: Mazrica
+version: '13.24'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-10-22T09:12:51.000Z'
+size: 1.23MiB
+languages:
+  - English
+description: Mazrica - クラウド営業支援ツール
+publisher: mazrica inc.
+support_website: https://intercom.help/senses_manual/ja/
+privacy_policy: https://mazrica.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "13.24",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./images/icon-16.png",
+    "128": "./images/icon-120.png"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Mazrica MV3",
+    "default_icon": {
+      "16": "./images/icon-16.png",
+      "128": "./images/icon-120.png"
+    }
+  },
+  "permissions": ["scripting", "storage"],
+  "host_permissions": [
+    "https://accounts.google.com/",
+    "https://mail-attachment.googleusercontent.com/",
+    "https://mail.google.com/",
+    "https://*.googleusercontent.com/",
+    "https://sense-api.mazrica.com/"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://calendar.google.com/*",
+        "https://sense-api.mazrica.com/auth/google_oauth2/callback*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "css": [
+        "mystyles.css"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

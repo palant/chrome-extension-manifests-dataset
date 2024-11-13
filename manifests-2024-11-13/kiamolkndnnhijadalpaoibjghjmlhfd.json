@@ -1,0 +1,90 @@
+---
+name: Risk Analyst Tools
+version: '2.0'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-03-25T05:54:58.000Z'
+size: 2.22MiB
+languages:
+  - English
+description: This extension allows RAs to gather additional information on merchant sites.
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Risk Analyst Tools",
+  "description": "This extension allows RAs to gather additional information on merchant sites.",
+  "version": "2.0",
+  "content_scripts": [
+    {
+      "matches": ["*://*.gofundme.com/*", "*://gofundme.com/*"],
+      "js": ["gofundme_fb_profile.js", "select_search.js"]
+    },
+    {
+      "matches": ["*://*.youcaring.com/*", "*://youcaring.com/*"],
+      "js": ["youcaring_fb_profile.js", "select_search.js"]
+    },
+    {
+      "matches": ["*://*.fundly.com/*", "*://fundly.com/*"],
+      "js": ["fundly_fb_profile.js", "select_search.js"]
+    },
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["gmail_gaps_loader.js"]
+    },
+    {
+      "matches": [
+        "*://jira.corp.stripe.com/*",
+        "*://jira.qa.corp.stripe.com/*"
+      ],
+      "js": ["jira_branch_creator.js", "jira_comments_expander.js"]
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": [
+        "token_clicks.js",
+        "topmodel_search.js",
+        "jira_clicks.js",
+        "support_tix.js",
+        "action_id_clicks.js"
+      ]
+    },
+    {
+      "matches": ["https://dashboard.stripe.com/login?redirect=*"],
+      "js": ["dashboard_links.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["resources/jquery-3.2.1.min.js"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["resources/gmail.js", "gmail_gaps.js"],
+      "matches": ["*://mail.google.com/*"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "background_script.js"
+  },
+
+  "permissions": ["activeTab", "contextMenus", "storage"],
+
+  "host_permissions": ["https://ajax.googleapis.com/", "https://q.stripe.com/"],
+
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+  "action": {
+    "default_popup": "options.html"
+  }
+}

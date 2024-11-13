@@ -1,0 +1,81 @@
+---
+name: Previdenciarista
+version: 2.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 11
+user_count: 9000
+release_date: '2024-10-01T16:36:22.000Z'
+size: 513KiB
+languages:
+  - português (Brasil)
+description: Extensão de apoio ao sistema prev.
+publisher: Previdenciarista
+publisher_account: prev-developers
+publisher_address: |-
+  R. Paul Harris, 91
+  sala 7
+  Santa Maria, RS 97015480
+  BR
+extension_website: previdenciarista.com
+support_website: https://ajuda.previdenciarista.com/
+privacy_policy: https://previdenciarista.com/politica-de-privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Previdenciarista",
+  "author": "Previdenciarista",
+  "version": "2.0.1",
+  "description": "Extensão de apoio ao sistema prev.",
+  "icons": {
+    "16": "prev-icon16.png",
+    "48": "prev-icon48.png",
+    "128": "128-cinza.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Prev extensão"
+  },
+  "background": {
+    "service_worker": "app/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["app/contentScriptMeuINSS.js"],
+      "run_at": "document_start",
+      "matches": ["*://*.inss.gov.br/*"]
+    },
+    {
+      "js": ["app/contentScriptPrevSistema.js"],
+      "run_at": "document_start",
+      "matches": [
+        "*://*.prev.app/*",
+        "*://*.prevhml.app/*",
+        "*://*.prevfeature.app/*",
+        "*://*.localhost/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*.inss.gov.br/*",
+    "*://*.prevhml.app/*",
+    "*://*.prev.app/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["prev-icon16.png", "prev-icon48.png", "128-cinza.png"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["app/xhrOverrideScript.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

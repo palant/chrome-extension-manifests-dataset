@@ -1,0 +1,82 @@
+---
+name: 1-Click Business
+version: 1.0.3
+category_slug: productivity/workflow
+rating: 4
+rating_count: 1
+user_count: 29
+release_date: '2023-04-03T05:56:10.000Z'
+size: 1.64MiB
+languages:
+  - Français
+description: Toutes les informations d'une société en une recherche.
+publisher: Kieron AUDIFFREN
+publisher_address: |-
+  '
+  Lyon 69000
+  FR
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "Kieron AUDIFFREN",
+  "name": "1-Click Business",
+  "version": "1.0.3",
+  "description": "Toutes les informations d'une société en une recherche.",
+  "action": {
+    "default_icon": {
+      "16": "/icons/16x16-white.png",
+      "32": "/icons/32x32-white.png",
+      "48": "/icons/48x48-white.png",
+      "128": "/icons/128x128-white.png"
+    }
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "minimum_chrome_version": "93",
+  "permissions": ["storage", "bookmarks"],
+  "icons": {
+    "16": "/icons/16x16-white.png",
+    "32": "/icons/32x32-white.png",
+    "48": "/icons/48x48-white.png",
+    "128": "/icons/128x128-white.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "googleModal.html"],
+      "matches": ["https://www.google.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://www.manageo.fr/entreprises/*",
+    "https://www.societe.com/etablissement/*",
+    "https://www.societe.com/societe/*",
+    "https://www.digiscript69.fr/*",
+    "https://*.kompass.com/*",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.google.com/*"],
+      "js": ["googleContentScript.js"],
+      "run_at": "document_end",
+      "css": ["styles/googleContentScript.css", "styles/googleModal.css"]
+    },
+    {
+      "matches": ["https://*.linkedin.com/company/*"],
+      "js": ["getPeopleUrl.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.linkedin.com/search/results/people/*"],
+      "js": ["getPeoplesFromCompany.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,78 @@
+---
+name: daglo - 모든 음성을 다 글로
+version: 1.2.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 10
+user_count: 3000
+release_date: '2024-03-18T05:29:56.000Z'
+size: 8.72MiB
+languages:
+  - 한국어
+description: >-
+  음성을 빠르고 정확하게 텍스트로 변환하는 서비스입니다. 다글로의 놀라운 AI 음성 인식 기술로 중요한 순간을 기록하고, 정보를 모으고,
+  활용하세요.
+publisher: (주)액션파워
+publisher_account: ActionPower Corp.
+publisher_address: |-
+  남부순환로 1838
+  CS타워 11층
+  관악구, 서울특별시 08788
+  KR
+support_website: https://daglo.ai
+privacy_policy: https://daglo.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "daglo - 모든 음성을 다 글로",
+  "description": "음성을 빠르고 정확하게 텍스트로 변환하는 서비스입니다. 다글로의 놀라운 AI 음성 인식 기술로 중요한 순간을 기록하고, 정보를 모으고, 활용하세요.",
+  "version": "1.2.5",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage"],
+  "icons": {
+    "16": "/images/logo_16.png",
+    "32": "/images/logo_32.png",
+    "48": "/images/logo_48.png",
+    "128": "/images/logo_128.png"
+  },
+  "web_accessible_resources": [{
+    "matches": ["https://www.youtube.com/*"],
+    "resources": [
+      "assets/font/NotoSansKR-Regular.otf",
+      "assets/font/NotoSansKR-Medium.otf",
+      "assets/font/*.woff",
+      "assets/font/*.woff2"
+    ]
+  }],
+  "content_scripts":[
+    {
+      "matches": ["https://www.daglo.ai/*", "https://daglo.ai/*"],
+      "js" : ["daglo-login.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js" : [
+        "assets/language/default.js", "assets/language/ko.js", "assets/language/en.js", 
+        "modules/jquery/dist/jquery.js", "daglo-youtube.js", "toggleIcon.js"
+      ],
+      "css" : ["daglo-ext-font.css", "daglo-youtube.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"], 
+      "js" : [
+        "assets/language/default.js", "assets/language/ko.js", "assets/language/en.js", 
+        "modules/jquery/dist/jquery.js", "daglo-youtube.js", "toggleIcon.js"
+      ],
+      "css" : ["daglo-ext-font.css", "daglo-youtube.css"],
+      "run_at": "document_end",
+      "all_frames":true
+    }
+  ]
+}

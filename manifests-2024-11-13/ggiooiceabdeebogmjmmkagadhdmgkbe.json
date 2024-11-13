@@ -1,0 +1,81 @@
+---
+name: GoodWallet
+version: 0.1.0
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 2
+user_count: 35
+release_date: '2021-05-01T06:29:06.000Z'
+size: 304KiB
+languages:
+  - English
+description: Get the best deals while supporting your favorite charity. At no cost to you.
+publisher_account: GoodWallet
+extension_website: goodwallet.us
+support_website: https://goodwallet.us
+privacy_policy: https://goodwallet.us/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "GoodWallet",
+  "version": "0.1.0",
+  "manifest_version": 2,
+  "description": "Get the best deals while supporting your favorite charity. At no cost to you.",
+  "homepage_url": "https://goodwallet.us",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "src/bg/init.js",
+      "src/bg/bg_support_functions.js",
+      "src/config.js",
+      "src/commonJS/dataProvider.js",
+      "src/commonJS/apiService.js",
+      "src/commonJS/utils_global.js"
+    ],
+    "persistent": true
+  },
+  "browser_action": {
+    "default_icon": "icons/icon19.png",
+    "default_title": "GoodWallet",
+    "default_popup": "src/browser_action/browser_action.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/config.js",
+        "src/contentScripts/temp_coupons.js",
+        "src/contentScripts/inject_events.js",
+        "lib/umbrella/umbrella.min.js",
+        "lib/jquery/jquery.min.js",
+        "src/commonJS/utils_global.js",
+        "lib/mustache/mustache.min.js",
+        "src/contentScripts/get_token.js",
+        "src/contentScripts/inject_activate_cashback.js",
+        "src/contentScripts/inject_apply_coupons.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "clipboardWrite",
+    "cookies",
+    "storage",
+    "tabs",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    "src/partials/*.*",
+    "./resources/*",
+    "src/contentScripts/*.*",
+    "src/commonJS/utils_global.js"
+  ],
+  "content_security_policy": "script-src 'self' object-src 'self'"
+}

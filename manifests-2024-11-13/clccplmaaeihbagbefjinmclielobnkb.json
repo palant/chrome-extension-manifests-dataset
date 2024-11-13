@@ -1,0 +1,130 @@
+---
+name: Cerby's browser extension
+version: 1.0.413
+category_slug: productivity/workflow
+rating: 4.764705882352941
+rating_count: 17
+user_count: 10000
+release_date: '2024-11-08T16:53:40.000Z'
+size: 6.57MiB
+languages:
+  - English (United States)
+description: The Cerby extension allows you to quickly and easily manage your accounts.
+publisher: Cerby Inc
+publisher_account: Cerby, Inc.
+publisher_address: |-
+  1272 Caroline Street
+  Alameda, CA 94501
+  US
+privacy_policy: https://www.cerby.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cerby's browser extension",
+  "author": "Cerby inc.",
+  "version": "1.0.413",
+  "manifest_version": 3,
+  "description": "The Cerby extension allows you to quickly and easily manage your accounts.",
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "icons": {
+    "16": "icons/icon_on_16px.png",
+    "32": "icons/icon_on_32px.png",
+    "48": "icons/icon_on_48px.png",
+    "128": "icons/icon_on_128px.png",
+    "512": "icons/icon_on_512px.png"
+  },
+  "action": {
+    "default_icon": "icons/icon_on_48px.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "build/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "build/contentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "build/collectV2.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.cerby.com/*"
+      ],
+      "js": [
+        "build/cerbyCS.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "build/inContextNotifications.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "cookies",
+    "tabs",
+    "webNavigation",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*/",
+    "http://*/",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "menu.html",
+        "in-context-notifications.html",
+        "feedback-loop-notifications.html",
+        "capture-and-create-notifications.html",
+        "ui-module-dialog.html",
+        "create-account.html",
+        "suggest-request-seat.html",
+        "/oauth2/*",
+        "assets/*",
+        "fonts/*",
+        "icons/*",
+        "build/unsafeClick.js",
+        "signup-menu.html",
+        "lastpass-sso-login.html",
+        "lastpass-sso-callback.html",
+        "error.html",
+        "okta-tiles-tenants-flow.html",
+        "login-checks.html"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ]
+}

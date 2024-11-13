@@ -1,0 +1,67 @@
+---
+name: Chat Privacy - Beta
+version: 0.0.2
+category_slug: lifestyle/fun
+rating: 5
+rating_count: 3
+user_count: 67
+release_date: '2022-08-10T07:50:41.000Z'
+size: 16.14KiB
+languages:
+  - English (United States)
+description: We will blur your chat if you don't want to be seen
+publisher_account: rub1cc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Chat Privacy - Beta",
+  "version": "0.0.2",
+  "manifest_version": 3,
+  "description": "We will blur your chat if you don't want to be seen",
+  "action": {
+    "browser_style": true,
+    "default_popup": "popup/popup.html",
+    "default_title": "Chat Privacy",
+    "default_icon": {
+      "16": "icons/icon-16.png",
+      "32": "icons/icon-32.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://web.telegram.org/*"],
+      "js": ["init-tele.js"],
+      "css": ["style.css"]
+    },
+    {
+      "matches": ["*://web.whatsapp.com/*"],
+      "js": ["init-wa.js"],
+      "css": ["style.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["*://web.telegram.org/*", "*://web.whatsapp.com/*"],
+      "resources": [
+        "css/lastMessages.css",
+        "css/conversations.css",
+        "css/usernames.css",
+        "css/profilePictures.css",
+        "css/wa/lastMessages.css",
+        "css/wa/conversations.css",
+        "css/wa/usernames.css",
+        "css/wa/profilePictures.css"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://web.telegram.org/*",
+    "*://web.whatsapp.com/*"
+  ],
+  "permissions": ["storage", "tabs", "scripting"]
+}

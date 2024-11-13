@@ -1,0 +1,111 @@
+---
+name: 探迹拓客助手
+version: 2.1.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 1000
+release_date: '2024-09-26T05:24:17.000Z'
+size: 611KiB
+languages:
+  - 中文 (简体)
+description: 更快速寻找客户
+publisher: 广州探迹科技有限公司
+publisher_address: |-
+  海珠区新港东路1128号
+  智通广场C塔15-18楼
+  Guangzhou Shi, Guangdong Sheng 510308
+  CN
+support_website: >-
+  https://common.tungee.com/help-center/detail?detailKey=6554bc1b53d93b67ccc4d3ff
+privacy_policy: https://www.tungee.com/declaration
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "探迹拓客助手",
+  "version": "2.1.1",
+  "description": "更快速寻找客户",
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "options_page": "src/common/options/index.html",
+  "background": {
+    "service_worker": "src/common/background/index.js",
+    "type": "module"
+  },
+  "icons": {
+    "48": "logo-48.png"
+  },
+  "action": {
+    "default_popup": "src/common/popup/index.html",
+    "default_icon": {
+      "16": "logo-16.png",
+      "48": "logo-48.png",
+      "128": "logo-128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "src/common/foreginTrade/index.js",
+        "iconfont.js"
+      ],
+      "css": [
+        "assets/css/content.chunk.css",
+        "assets/css/sales-foregin-trade.chunk.css"
+      ]
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "https://www.linkedin.com/*",
+        "https://user.tungee.com/*"
+      ],
+      "js": [
+        "src/common/sales/index.js",
+        "iconfont.js"
+      ],
+      "css": [
+        "assets/css/content.chunk.css",
+        "assets/css/sales.chunk.css"
+      ]
+    }
+  ],
+  "devtools_page": "src/common/devtools/index.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "icon-34.png",
+        "logo-16.png",
+        "logo-48.png",
+        "logo-128.png",
+        "XHRScript.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "sales-browser-plugin@tungee.com"
+    }
+  }
+}

@@ -1,0 +1,88 @@
+---
+name: Tobny
+version: 0.8.1
+category_slug: make_chrome_yours/functionality
+rating: 5
+rating_count: 1
+user_count: 22
+release_date: '2024-03-15T12:04:09.000Z'
+size: 20.43KiB
+languages:
+  - English
+description: Navigate in Natural Language. A mini GPT right in your browser.
+publisher_account: Florian Heinze
+extension_website: tobny.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Tobny",
+  "description": "Navigate in Natural Language. A mini GPT right in your browser.",
+
+  "version": "0.8.1",
+  "manifest_version": 3,
+
+  "icons": {
+    "128": "icon128.png"
+  },
+
+  "homepage_url": "https://tobny.com/",
+  
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Tobny",
+      "search_url": "https://tobny.com/chat?q={searchTerms}",
+      "keyword": "t",
+      "encoding": "UTF-8",
+      "favicon_url": "https://tobny.com/favicon.png",
+      "is_default": true
+    }
+  },
+
+  
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["sidePanel", "scripting"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "action": {
+    "default_title": "Open Tobny panel"
+  },
+
+  "side_panel": {
+    "default_path": "panel.html"
+  },
+
+  "externally_connectable": {
+    "matches": ["https://tobny.com/*"]
+  },
+
+  "content_scripts": [
+    {
+      "js": ["scripts/portal.js"],
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://gemini.google.com/app*"
+      ],
+      "include_globs": ["*tobny=*"]
+    }
+      ],
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      }
+    },
+    "new-tab": {
+      "suggested_key": {
+        "default": "Alt+Space"
+      },
+      "description": "New tab with panel"
+    }
+      }
+
+  }

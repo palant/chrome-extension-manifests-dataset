@@ -1,0 +1,79 @@
+---
+name: Eucera Copilot
+version: '0.7'
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 8
+release_date: '2024-10-16T04:27:17.000Z'
+size: 1.03MiB
+languages:
+  - English (United States)
+description: AI-driven assistance to enhance email writing and add training documentation.
+publisher: Eucera Services
+publisher_account: Eucera AI
+publisher_address: |-
+  Coronach
+  SUNNYVALE, CA 94087
+  US
+support_website: https://eucera.ai/docs/getting_started/platform-overview/
+privacy_policy: https://eucera.ai/docs/privacy/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Eucera Copilot",
+    "version": "0.7",
+    "description": "AI-driven assistance to enhance email writing and add training documentation.",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": "eucera_logo.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [{
+        "resources": [
+          "eucera_logo.png",
+          "copilotContent.js",
+          "copilotLauncher.js",
+          "iframeUtils.js",
+          "copilotContent.html",
+          "copilotLauncher.html",
+          "*.map"
+        ],
+        "matches": [
+             "<all_urls>", 
+             "*://*/*"
+        ]
+    }],
+    "externally_connectable": {
+      "matches": [
+            "*://app.eucera.ai/*",
+            "http://localhost:3000/*"
+        ]
+    },
+    "content_scripts": [
+        {
+          "matches": [
+            "<all_urls>", 
+             "*://*/*"
+            ],
+          "js": ["getPageContent.js"],
+          "all_frames": false
+        },
+        {
+          "matches": ["*://mail.google.com/*"],
+          "js": ["marked.js", "contentScript.js"],
+          "css": ["contentScript.css"],
+          "all_frames": false
+        }
+    ],
+    "permissions": ["activeTab", "scripting", "storage", "tabs"],
+    "host_permissions": [
+        "<all_urls>", 
+        "*://*/*"
+      ]
+}

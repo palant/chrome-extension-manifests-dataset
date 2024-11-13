@@ -1,0 +1,142 @@
+---
+name: SpeakTube - Voice for YouTube Subtitles
+version: 1.0.2
+category_slug: productivity/tools
+rating: 4.454237288135594
+rating_count: 295
+user_count: 2000
+release_date: '2024-11-09T06:24:25.000Z'
+size: 337KiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - italiano
+  - lietuvių
+  - português (Brasil)
+  - português (Portugal)
+  - svenska
+  - ไทย
+  - 日本語
+  - 한국어
+description: Listen to YouTube subtitles in multiple languages with our Chrome extension
+publisher_account: software.labs.apps
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ 
+    "manifest_version": 3,
+    "name": "__MSG_name__",
+    "description": "__MSG_description__",
+    "short_name": "SpeakerYoutube",
+    "version": "1.0.2",
+    "default_locale": "en",
+    "icons": {
+        "16": "icon16.png",
+        "48": "icon48.png",
+        "128": "icon128.png"
+    },
+    "action": {
+        "default_icon": "icon128.png",
+        "default_title": "__MSG_name__",
+        "default_popup": "index.html"
+    },
+    "background": {
+        "service_worker": "worker.js"
+    },
+    "content_scripts": [
+        
+      {
+        "matches": ["*://*.youtube.com/*"],
+        "run_at": "document_start",
+        "css":[
+             "css/sweetalert2.min.css",
+             "css/dark.css"
+        ],
+        "js": [
+           "js/sweetalert2.all.min.js",
+           "tools/alertaviso.js"
+        ]
+      },
+      {
+            "matches": [
+              "<all_urls>"
+            ],
+            "js": [
+              "context/content.js"
+            ],
+            "css":[
+               "css/barra.css"
+            ],
+            "all_frames": true,
+            "run_at": "document_end"
+      },
+      {
+
+          "js": [ 
+              "/tools/avance/miniatura/miniplayer.js",
+              "/tools/avance/button.js"  
+          ],
+          "matches": [ 
+              "*://www.youtube.com/watch?v=*"
+          ],
+          "run_at": "document_start"
+      },
+      {
+        "js": [ 
+            "/tools/avance/miniatura/common.js", 
+            "/tools/avance/miniatura/inject.js"
+        ],
+        "matches": [
+            "*://*.youtube.com/*" 
+        ],
+        "run_at": "document_start"
+      }
+  
+   ],
+    "permissions": [
+      "tabs",
+      "activeTab",
+      "storage",
+      "background",
+      "scripting",
+      "declarativeContent"
+    ],
+    "web_accessible_resources": [{
+        "resources":[
+            "*.css",
+            "*.js",
+            "*.jpg",
+            "*.JPG",
+            "*.PNG",
+            "*.png"
+        ],
+        "matches": ["<all_urls>"]
+    }],
+    "content_security_policy": {
+       "extension_pages": "trusted-types policy-name; script-src 'self'; object-src 'self'"
+    },
+    "host_permissions": [
+      "*://*.youtube.com/*"
+    ],
+    "commands": {
+      "enableEvent": {
+        "description": "__MSG_KeyboardShortcutNameEnableEvent__"
+      },
+      "disableEvent": {
+        "description": "__MSG_KeyboardShortcutNameDisableEvent__"
+      }
+    }
+}

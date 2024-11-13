@@ -1,0 +1,72 @@
+---
+name: Sentry Cookie Sync
+version: 1.4.3
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 149
+release_date: '2024-09-25T03:42:50.000Z'
+size: 1.18MiB
+languages:
+  - English
+description: Sync cookies for local frontend development of sentry.io
+publisher: Sentry.io
+publisher_address: |-
+  45 Fremont St
+  San Francisco, CA 94105-2228
+  US
+support_website: https://github.com/getsentry/cookie-sync/issues
+privacy_policy: https://sentry.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sentry Cookie Sync",
+  "version": "1.4.3",
+  "icons": {
+    "32": "assets/icons/favicon-32.png",
+    "128": "assets/icons/favicon-128.png",
+    "180": "assets/icons/favicon-180.png",
+    "192": "assets/icons/favicon-192.png"
+  },
+  "description": "Sync cookies for local frontend development of sentry.io",
+  "homepage_url": "https://github.com/getsentry/cookie-sync",
+  "short_name": "Cookie Sync",
+  "permissions": [
+    "cookies",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.sentry.io/*",
+    "https://*.sentry.dev/*",
+    "https://*.dev.getsentry.net/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "author": "Ryan Albrecht",
+  "minimum_chrome_version": "88",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Sentry Cookie Sync"
+  },
+  "background": {
+    "service_worker": "js/serviceworker.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.sentry.dev/auth/login/",
+        "https://dev.getsentry.net:7999/auth/login/",
+        "https://*.dev.getsentry.net:7999/auth/login/",
+        "https://new.staging.getsentry.net/auth/login"
+      ],
+      "js": [
+        "js/contentScript.bundle.js"
+      ]
+    }
+  ]
+}

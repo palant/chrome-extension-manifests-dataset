@@ -1,0 +1,133 @@
+---
+name: Meeting Voice Captions Translate
+version: '1.2'
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 74
+release_date: '2024-09-13T10:57:35.000Z'
+size: 90.73KiB
+languages:
+  - English
+description: >-
+  Google Meet Voice Captoins Translate, Microsoft Teams Voice Captions
+  Translate.
+publisher_account: Danny
+privacy_policy: https://note.eceg.shop/meet/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_application_title__",
+    "description": "__MSG_application_description__",
+    "version": "1.2",
+    "default_locale": "en",
+    "icons": {
+        "16": "images/icon-16.png",
+        "32": "images/icon-32.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "homepage_url": "https://meet.eceg.shop",
+    "action": {
+        "default_icon": {
+            "16": "images/icon-16.png",
+            "32": "images/icon-32.png",
+            "48": "images/icon-48.png",
+            "128": "images/icon-128.png"
+        }
+    },
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "contextMenus",
+        "tabs"
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "data/easydlg.js",
+                "content_teams_meet_dailog.js",
+                "content_google_meet.js"
+            ],
+            "css": [
+                "data/easydlg.css",
+                "data/meeting_voice_text.css"
+            ],
+            "matches": [
+                "https://meet.google.com/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "data/easydlg.js",
+                "content_teams_meet_dailog.js",
+                "content_ms_teams.js"
+            ],
+            "css": [
+                "data/easydlg.css",
+                "data/meeting_voice_text.css"
+            ],
+            "matches": [
+                "https://teams.live.com/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "content_eceg_meet.js"
+            ],
+            "matches": [
+                "*://note.eceg.shop/meet",
+                "*://note.eceg.shop/meet/*",
+                "*://localhost/meet",
+                "*://localhost/meet/*"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "host_permissions": [
+        "https://*.openai.com/*",
+        "https://*.googleapis.com/*",
+        "https://*.live.com/*",
+        "https://*.google.com/*",
+        "https://*.microsofttranslator.com/*",
+        "https://*.microsoft.com/*"        
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "content_teams_meet_dailog.js",
+                "data/easydlg.css",
+                "data/easydlg.js",
+                "data/meeting_voice_text.css"
+            ],
+            "matches": [
+                "*://*.google.com/*",
+                "*://*.live.com/*"
+            ]
+        }
+    ],
+    "commands": {
+        "showVoiceCaptions": {
+            "suggested_key": {
+                "default": "Alt+T"
+            },
+            "description": "Google Meet Translate"
+        },
+        "showVoiceCaptions2": {
+            "suggested_key": {
+                "default": "Shift+Alt+T"
+            },
+            "description": "Google Meet Translate"
+        }
+    }
+}

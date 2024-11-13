@@ -1,0 +1,145 @@
+---
+name: ByteBelli
+version: 0.0.0.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 8
+release_date: '2024-11-06T08:53:56.000Z'
+size: 380KiB
+languages:
+  - English
+description: >-
+  Extension for ByteBelli web app (bytebelli.com) to save and annotate content
+  from websites natively.
+publisher_account: isabelle.ilyia
+publisher_address: |-
+  708 Spring St NW
+  Atlanta, GA 30308-1094
+  US
+extension_website: bytebelli.com
+privacy_policy: http://bytebelli.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ByteBelli",
+  "description": "Extension for ByteBelli web app (bytebelli.com) to save and annotate content from websites natively.",
+  "version": "0.0.0.3",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon48.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "http://localhost/*",
+        "https://localhost/*"
+      ],
+      "js": [
+        "src/scripts/main.tsx-loader.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*"
+      ],
+      "js": [
+        "src/scripts/siteSaves/twitterSave.tsx-loader.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://instagram.com/*",
+        "*://www.instagram.com/*"
+      ],
+      "js": [
+        "src/scripts/siteSaves/instagramSave.tsx-loader.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://youtube.com/*",
+        "*://www.youtube.com/*"
+      ],
+      "js": [
+        "src/scripts/siteSaves/youtubeSave.tsx-loader.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://news.ycombinator.com/*",
+        "*://www.ycombinator.com/*"
+      ],
+      "js": [
+        "src/scripts/siteSaves/hnSave.tsx-loader.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://reddit.com/*",
+        "*://www.reddit.com/*"
+      ],
+      "js": [
+        "src/scripts/siteSaves/redditSave.tsx-loader.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "permissions": [
+    "contextMenus",
+    "commands",
+    "storage",
+    "identity",
+    "activeTab"
+  ],
+  "oauth2": {
+    "client_id": "24061352908-5eog00ac2cpk2b3qk3t9u6kn32orco8q.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  },
+  "commands": {
+    "toggle-icon-position": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+4",
+        "mac": "Command+Shift+4"
+      },
+      "description": "Toggle icon position"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "env": {
+    "NEXT_PUBLIC_SUPABASE_URL": "https://sjnxdkoqfwuhjxxatbqt.supabase.co",
+    "NEXT_PUBLIC_SUPABASE_ANON_KEY": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNqbnhka29xZnd1aGp4eGF0YnF0Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTM1Mjc0MDQsImV4cCI6MjAyOTEwMzQwNH0.aTT1mSVTYEQYEAh5qKyJzeE9UEHfzeZMWebcIC4swjE",
+    "ENVIRONMENT": "development"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "**/*",
+        "*"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}

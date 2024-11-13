@@ -1,0 +1,101 @@
+---
+name: CartaCx WhatsApp Múltiple
+version: 3.4.5
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 742
+release_date: '2024-11-07T18:51:35.000Z'
+size: 505KiB
+languages:
+  - español (Latinoamérica)
+description: Extensión de CartaCx para envío de cartas por WhatsApp
+publisher: ADP PUNTO MX
+publisher_account: devlog
+publisher_address: |-
+  Blvd. Adolfo López Mateos 1936
+  Oficina 402
+  Ciudad de México, CDMX 01049
+  MX
+extension_website: adpunto.mx
+support_website: https://www.adpdev.com/adp/cartas/system/crisp-chat/index.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "version": "3.4.5",
+    "manifest_version":3,
+    "name":"CartaCx WhatsApp Múltiple",
+    "description":"Extensión de CartaCx para envío de cartas por WhatsApp",
+
+    "action":{
+        "default_icon": "img/cartas-logo16.png",
+        "default_title" : "CartaCx WhatsApp Múltiple",
+        "default_popup": "popup.html"
+    },
+
+    "icons": {
+        "16": "img/cartas-logo16.png",
+        "32": "img/cartas-logo32.png",
+        "48": "img/cartas-logo48.png",
+        "128": "img/cartas-logo128.png"
+    },
+
+    "background":{
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "permissions":[
+        "tabs",
+        "activeTab", 
+        "scripting",
+        "storage",
+        "webRequest",
+        "webNavigation"
+    ],
+
+    "host_permissions": [
+        "https://www.adpdev.com/adp/cartas/*",
+        "https://app.carta.cx/*",
+        "https://0cg43psd3f.execute-api.us-east-1.amazonaws.com/*"
+    ],
+
+    "externally_connectable": {
+        "ids": ["*"],
+        "matches": [
+            "https://www.adpdev.com/*",
+            "https://app.carta.cx/*"
+        ]
+    },
+
+    "commands": {
+        "open-whatsapp": {
+          "suggested_key": {
+            "default": "Ctrl+Shift+O",
+            "mac": "Command+Shift+O"
+          },
+          "description": "Abre WhatsApp Web"
+        }
+    },
+    "content_scripts":[
+        {
+            "matches": ["https://*.web.whatsapp.com/*"],
+            "js": ["js/content-script-whatsapp.js"],
+            "world": "MAIN"
+        },
+        {
+            "matches": ["https://nsomx.my.site.com/*"],
+            "js": ["js/content-script-salesforce.js"]
+        },
+        {
+            "matches": ["https://*.web.whatsapp.com/*"],
+            "js": ["js/whatsappContent.js"]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["js/content-script-whatsapp.js"],
+        "matches": ["https://*.web.whatsapp.com/*"]
+    }]
+
+}

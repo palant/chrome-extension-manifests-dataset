@@ -1,0 +1,83 @@
+---
+name: OpenLink YouID
+version: 1.7.20
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 73
+release_date: '2024-11-11T15:10:15.000Z'
+size: 2.26MiB
+languages:
+  - English
+description: YouID selector.
+publisher_account: OpenLink Software
+support_website: http://support.openlinksw.com/
+privacy_policy: https://www.openlinksw.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OpenLink YouID",
+  "short_name": "opl_youid",
+  "author":"OpenLink Software",
+  "version": "1.7.20",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "description": "YouID selector.",
+  "icons": {
+      "16":  "images/icon20.png",
+      "48":  "images/icon48.png",
+      "128": "images/icon128.png" },
+  "action": {
+    "default_icon": "images/icon20.png",
+    "default_title": "YouID",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["file:///*/*","*://*/*"],
+      "js": ["browser.js","content-script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://openlinksoftware.github.io/*"],
+      "js": ["browser.js", "lib/solid-client-authn.bundle.js", "oidc-webid-inject.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.google.com/robots.txt*", 
+                  "http://www.facebook.com/robots.txt*",
+                  "https://login.live.com/oauth20_desktop.srf*", 
+                  "http://id.myopenlink.net/OAuthCallback*",
+                  "https://id.myopenlink.net/OAuthCallback*"],
+      "js": ["oauth2/oauth2_inject.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "options_page": "options.html",
+
+  "host_permissions": [
+    "<all_urls>", "https://accounts.google.com/o/oauth2/token"
+  ],
+  "permissions": [
+    "storage", 
+    "declarativeNetRequest",
+    "tabs"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "oauth2/oauth2.html" ],
+      "matches": [ "*://*/*" ]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self' ; style-src 'self' 'unsafe-inline' chrome-extension://lib https://solid.openlinksw.com; media-src 'self' 'unsafe-inline' chrome-extension://lib ;"
+  }
+}

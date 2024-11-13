@@ -1,0 +1,143 @@
+---
+name: Slate
+version: 1.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-10-29T05:33:38.000Z'
+size: 2.39MiB
+languages:
+  - English
+description: One Patent One Review
+publisher_account: Dev
+extension_website: greyb.com
+support_website: https://www.greyb.com/contact-us/
+privacy_policy: https://www.greyb.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Slate",
+    "description": "One Patent One Review",
+    "version": "1.0.0",
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "icons": {
+        "16": "/images/slate_logo.png",
+        "32": "/images/slate_logo.png",
+        "48": "/images/slate_logo.png",
+        "128": "/images/slate_logo.png"
+    },
+    "web_accessible_resources": [
+        {
+          "resources": ["images/moon.svg","images/sun.svg","images/refresh.svg"],
+          "matches": ["<all_urls>"]
+        }
+      ],      
+    "content_scripts": [
+        {
+            "matches": [
+                "https://tryslate.greyb.com/*",
+                "https://slate.greyb.com/*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/enhance-slate.js",
+                "content-script/minimize-slate-content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*",
+                "https://slate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/build-taxonomy.js"
+            ],
+            "css":["css/taxonomy_template.css"]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage*",
+                "https://slate.greyb.com/engage*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/patent-prior-art.js",
+                "content-script/ai-summary/suggest-document-summary.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*",
+                "https://slate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/ai-summary/summary-in-list-view.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/?utm_source=slate_extension*",
+                "https://slate.greyb.com/?utm_source=slate_extension*"
+            ],
+            "js": [
+                "content-script/login-with-slate.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/*",
+                "https://slate.greyb.com/*"
+            ],
+            "js": [
+                "content-script/slate/prior_art/project_id.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/*",
+                "https://slate.greyb.com/engage/*"
+            ],
+            "js": [
+                "content-script/slate/prior_art/search_string.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://tryslate.greyb.com/engage/search?ws*",
+                "https://slate.greyb.com/engage/search?ws*"
+            ],
+            "js": [
+                "content-script/auto-interesting-insight.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/slate_popup.html",
+        "default_icon": {
+            "16": "/images/slate_logo.png",
+            "32": "/images/slate_logo.png",
+            "48": "/images/slate_logo.png",
+            "128": "/images/slate_logo.png"
+        }
+    },
+    "host_permissions": [
+        "https://tryslate.greyb.com/*",
+        "https://usecatalyst.tech/*",
+        "https://patents.google.com/*",
+        "https://getpatentplus.com/*",
+        "https://slate.greyb.com/*"
+    ]
+}

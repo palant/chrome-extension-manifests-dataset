@@ -1,0 +1,91 @@
+---
+name: Gloww for Google Calendar
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 6
+user_count: 112
+release_date: '2024-03-07T08:31:10.000Z'
+size: 36.08KiB
+languages:
+  - English
+description: Schedule interactive Gloww video meetings right from your Google Calendar.
+publisher: Gloww Video
+publisher_account: Gloww
+extension_website: gloww.com
+support_website: https://gloww.com/help
+privacy_policy: https://gloww.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": {
+    "email": "extensions@gloww.com"
+  },
+  "name": "Gloww for Google Calendar",
+  "description": "Schedule interactive Gloww video meetings right from your Google Calendar.",
+  "homepage_url": "https://gloww.com",
+  "version": "1.0.2",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAh4b1mB3bPH+roRdnquBysKf8kU3FdObx7k1Pw3eea+VQxEQuN0VCUzLVjwLsr1mgvELICEYxdRF0NXS5gf2SUMme3iLoK6xSdcn6Ezx5HJijeAI9weMPrUkgsHJ12xMZOVmblm/vjVmnw2zHnZq+fi7SCpK65ax6qAgRw+vnyQdOs0Xk/V+E9PGrF7kP0aOT2EUEj1Q2fgDdzcdhHdQFw+i2qRHAYI+ZTErDu/7ZDPTD9B3HilbS8mzthJXzMJyAkjR7QziIMMdx3IXa2r2HMxrXC87/lxQrPU9vFAYW04a/4sgVyWY6/ycn5aOwghIYZ7uoEDf6NrEf0KD+vxTHgQIDAQAB",
+  "icons": {
+    "16": "assets/images/gloww_16x16.png",
+    "48": "assets/images/gloww_48x48.png",
+    "128": "assets/images/gloww_128x128.png"
+  },
+  "background": {
+    "service_worker": "pages/background/background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "*://app-dev.gloww.com/*",
+      "*://app-playground.gloww.com/*",
+      "*://app-stg.gloww.com/*",
+      "*://app.gloww.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:3000/*",
+        "https://*.gloww.com/*",
+        "https://calendar.google.com/calendar/*",
+        "https://outlook.live.com/owa/*"
+      ],
+      "js": [
+        "pages/utils/utils.js",
+        "pages/content/pageUtils.js",
+        "pages/content/renderers/pageRenderer.js",
+        "pages/content/renderers/googleCalendarRenderer.js",
+        "pages/content/pageHandler.js",
+        "pages/content/content.js"
+      ],
+      "css": [
+        "assets/css/all.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://calendar.google.com/*",
+        "https://outlook.live.com/*"
+      ],
+      "resources": [
+        "assets/images/camera_gloww.png",
+        "assets/images/disabled_camera.png"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": "assets/images/gloww_16x16.png"
+  },
+  "default_locale": "en"
+}

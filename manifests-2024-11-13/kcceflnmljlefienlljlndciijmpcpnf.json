@@ -1,0 +1,118 @@
+---
+name: Sangoma Meet
+version: 5.5.1
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 722
+release_date: '2024-07-08T18:38:54.000Z'
+size: 199KiB
+languages:
+  - English (United States)
+description: >-
+  This extension adds Sangoma Meet button to Google Calendar UI to simplify
+  adding Sangoma meeting details into a calendar invite.
+publisher: Sangoma
+publisher_account: sangoma-cloud-apps
+publisher_address: |-
+  100 Renfrew Drive, Suite 100
+  Markham, ON L3R 9R6
+  CA
+privacy_policy: https://www.sangoma.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sangoma Meet",
+  "description": "This extension adds Sangoma Meet button to Google Calendar UI to simplify adding Sangoma meeting details into a calendar invite.",
+  "version": "5.5.1",
+  "icons": {
+    "16": "icon-16x16.png",
+    "48": "icon-48x48.png",
+    "128": "icon-128x128.png"
+  },
+  "background": {
+    "service_worker": "sw.js"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "background",
+    "notifications",
+    "offscreen",
+    "scripting",
+    "tabs"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://calendar.google.com/calendar/*"
+      ],
+      "js": [
+        "jquery.js",
+        "RandomUtil.js",
+        "RoomnameNumeric.js",
+        "meet-calendar.js"
+      ],
+      "css": [
+        "sangoma.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.meet.sangoma.com/"
+      ],
+      "js": [
+        "auth/auth_content_script.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.meet.sangoma.com/static/msredirect.html*"
+      ],
+      "js": [
+        "util/inject.js",
+        "auth/auth_content_script.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [
+    "https://*.meet.sangoma.com/*",
+    "https://calendar.google.com/*"
+  ],
+  "web_accessible_resources": [
+    { 
+      "resources": [
+        "auth/msal-browser.min.js",
+        "cpaas-pkce-auth/index.js",
+        "auth/auth_lib.js",
+        "img/check.svg",
+        "img/copy.svg",
+        "img/config.svg",
+        "img/expand.svg",
+        "img/collapse.svg",
+        "img/delete.svg",
+        "img/drop.svg",
+        "icon-48x48.png",
+        "icon-white-48x48.png",
+        "icon-blue.svg",
+        "icon-grey.svg"
+      ],
+      "matches": [
+        "https://*.meet.sangoma.com/*",
+        "https://calendar.google.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Create Sangoma Meeting",
+    "default_popup": "popup.html"
+  }
+}

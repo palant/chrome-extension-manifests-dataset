@@ -1,0 +1,115 @@
+---
+name: VisaJar - View US Visa Slots at US Consulates
+version: 2.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 1000
+release_date: '2023-10-10T05:56:53.000Z'
+size: 165KiB
+languages:
+  - English (United States)
+description: >-
+  View available US Visa Slots in India from community & contribute to help one
+  another.
+publisher_account: VisaJar.com
+support_website: https://visajar.com/contact
+privacy_policy: https://visajar.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "VisaJar - View US Visa Slots at US Consulates",
+    "version": "2.0.1",
+    "manifest_version": 3,
+    "description": "View available US Visa Slots in India from community & contribute to help one another.",
+    "icons": {
+        "16": "img/VisaJarLogo.png",
+        "32": "img/VisaJarLogo.png",
+        "48": "img/VisaJarLogo.png",
+        "128": "img/VisaJarLogo.png"
+    },
+    "action": {
+        "default_title": "US Visa Slots at India Consulates",
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "img/VisaJarLogo.png",
+            "24": "img/VisaJarLogo.png",
+            "32": "img/VisaJarLogo.png"
+        }
+    },
+    "author": "contact@visajar.com",
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://portal.ustraveldocs.com/scheduleappointment",
+                "https://portal.ustraveldocs.com/*pplicant*ome",
+                "https://portal.ustraveldocs.com/*/scheduleappointment",
+                "https://portal.ustraveldocs.com/*/*pplicant*ome",
+                "https://*.usvisascheduling.com/en-US/*"
+            ],
+            "js": [
+                "js/html2canvas.js",
+                "js/content.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://portal.ustraveldocs.com/",
+                "https://portal.ustraveldocs.com/?country=*"
+            ],
+            "js": [
+                "js/oldPortal.js"
+            ],
+            "css": [
+                "css/content.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://atlasauth.b2clogin.com/*/oauth*/*"
+            ],
+            "js": [
+                "js/newPortal.js"
+            ],
+            "css": [
+                "css/content.css"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "index.html"
+            ]
+        }
+    ],
+    "host_permissions": [
+        "https://*.usvisascheduling.com/*"
+    ],
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": true
+    },
+    "externally_connectable": {
+        "matches": [
+            "*://*.visajar.com/*",
+            "https://d1cbh3kw2dp2bi.cloudfront.net/*"
+        ]
+    }
+}

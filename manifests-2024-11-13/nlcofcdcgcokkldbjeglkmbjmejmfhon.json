@@ -1,0 +1,69 @@
+---
+name: HIVO Extension
+version: 0.0.7
+category_slug: lifestyle/art
+rating: 5
+rating_count: 1
+user_count: 83
+release_date: '2024-04-30T19:21:01.000Z'
+size: 161KiB
+languages:
+  - English (UK)
+description: Extension for the HIVO Library
+publisher: HIVO PTY LTD
+publisher_account: dev
+publisher_address: |-
+  608 Stirling Highway
+  Mosman Park, WA 6012
+  AU
+support_website: https://support.hivo.com.au/
+privacy_policy: https://www.hivo.com.au/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "HIVO Extension",
+  "description": "Extension for the HIVO Library",
+  "version": "0.0.7",
+  "permissions": [
+    "cookies",
+    "storage",
+    "downloads",
+    "downloads.open"
+  ],
+  "host_permissions": [
+    "https://app.hivo.co/api/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.hivo.co/api/extension/chrome/redirect?type=google",
+        "https://app.hivo.co/api/extension/chrome/redirect?type=azureAd"
+      ],
+      "js": ["oauth2/injection.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": ["download-and-open-externally-button.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_popup": "build/index.html",
+    "default_title": "Open the popup"
+  },
+  "icons": {
+    "16": "images/hivo16.png",
+    "32": "images/hivo32.png",
+    "48": "images/hivo48.png",
+    "128": "images/hivo128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "manifest_version": 3
+}

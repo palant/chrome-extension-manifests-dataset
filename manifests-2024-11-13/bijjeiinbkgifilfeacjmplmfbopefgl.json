@@ -1,0 +1,98 @@
+---
+name: Jumbleberry Steward
+version: 3.2.5
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 16
+release_date: '2024-02-23T19:44:19.000Z'
+size: 182KiB
+languages:
+  - English (United States)
+description: A Multi-Function Assistant
+publisher: Galactic Propeller Holdings Ltd.
+publisher_account: Squaredance
+publisher_address: |-
+  171 E Liberty St
+  Suite 310
+  Toronto, ON M6K 3P6
+  CA
+support_website: https://admin.jumbleberry.com/
+privacy_policy: https://jumbleberry.com/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Jumbleberry Steward",
+  "description": "A Multi-Function Assistant",
+  "version": "3.2.5",
+  "offline_enabled": true,
+  "permissions": [
+    "background",
+    "webRequest",
+    "webRequestBlocking",
+    "cookies",
+    "*://localhost/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "page" : "background.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mediaclicktrker.com/tool/sales/add_sales*",
+        "*://*.mediaclicktrker.com/tool/sales/add_sales*"
+      ],
+      "all_frames" : true,
+      "js": ["assets/js/add-sales-inject.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://mediaclicktrker.com/tool/sales/upload_sales*",
+        "*://*.mediaclicktrker.com/tool/sales/upload_sales*"
+      ],
+      "all_frames" : true,
+      "js": ["assets/js/upload-sales-inject.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://mediaclicktrker.com/popup/modal/advertiser/account/extras*",
+        "*://*.mediaclicktrker.com/popup/modal/advertiser/account/extras*"
+      ],
+      "all_frames" : true,
+      "js": ["assets/js/vanity-inject.js"],
+      "run_at": "document_idle"
+    }, {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": ["assets/js/jquery.js", "assets/js/plax.js", "lib/watcher.js", "lib/overlay.js", "lib/listener.js"],
+      "css": ["assets/css/overlay.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.mediaclicktrker.com/*"]
+  },
+  "icons": {
+    "128": "assets/images/icon128.png"
+  },
+  "web_accessible_resources": [
+    "assets/html/pixels.html",
+    "assets/images/logo-black.png",
+    "assets/images/logo-white.png",
+    "assets/images/loader.gif",
+    "assets/js/jquery.js",
+    "assets/js/pixels.js",
+    "assets/js/vanity.js",
+    "assets/js/upload-sales.js",
+    "assets/js/add-sales.js",
+    "assets/fonts/gilroy.ttf"
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+}

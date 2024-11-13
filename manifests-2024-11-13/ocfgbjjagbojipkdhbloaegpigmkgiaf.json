@@ -1,0 +1,72 @@
+---
+name: Emnehjelper
+version: 1.2.2
+category_slug: productivity/education
+rating: 5
+rating_count: 2
+user_count: 74
+release_date: '2024-10-25T10:35:05.000Z'
+size: 61.6KiB
+languages:
+  - Norsk
+description: >-
+  Viser statistikk om karakterer, arbeidsmengde og vanskelighetsgrad rett i
+  studieplanen din og på alle emnesidene til NTNU-emner.
+publisher_account: Kristoffer Osen
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Emnehjelper",
+    "version": "1.2.2",
+    "description": "Viser statistikk om karakterer, arbeidsmengde og vanskelighetsgrad rett i studieplanen din og på alle emnesidene til NTNU-emner.",
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "https://www.karakterweb.no/ntnu/*",
+        "https://api.emnr.no/course/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.ntnu.no/studier/emner/*",
+                "https://www.ntnu.edu/studies/courses/*"
+            ],
+            "js": [
+                "utils.js",
+                "course-page.js"
+            ],
+            "css": [
+                "/styles/course-page.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://www.ntnu.no/studier/*"
+            ],
+            "js": [
+                "utils.js",
+                "course-list.js"
+            ],
+            "css": [
+                "/styles/course-list.css"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "action": {
+        "default_title": "Hei! Klar for å utforske NTNU-emner? 🎓✨",
+        "default_popup": "about.html",
+        "default_icon": "/media/e-h1024.png"
+    },
+    "icons": {
+        "128": "/media/e-h128.ico"
+    }
+}

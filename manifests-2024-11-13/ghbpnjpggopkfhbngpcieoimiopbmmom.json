@@ -1,0 +1,69 @@
+---
+name: PubMed Citation Bar
+version: '2.0'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2024-11-12T09:34:34.000Z'
+size: 723KiB
+languages:
+  - English (United States)
+description: >-
+  Enhances PubMed with citation metrics, Altmetric scores, impact filtering, and
+  more. Quickly identify high-impact medical research.
+publisher_account: tomlaheyh
+support_website: https://sites.google.com/view/pubmedcitationbar/home
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "PubMed Citation Bar",
+ "version": "2.0",
+ "description": "Enhances PubMed with citation metrics, Altmetric scores, impact filtering, and more. Quickly identify high-impact medical research.",
+ "permissions": [
+   "activeTab",
+   "storage",
+   "scripting",
+   "tabs"
+ ],
+ "host_permissions": [
+   "https://pubmed.ncbi.nlm.nih.gov/*",
+   "https://icite.od.nih.gov/*",
+   "https://docs.google.com/*",
+   "https://sites.google.com/view/pubmedcitationbar/*",
+   "https://eutils.ncbi.nlm.nih.gov/*"
+ ],
+ "background": {
+   "service_worker": "background.js",
+   "type": "module"
+ },
+ "action": {
+   "default_popup": "popup.html",
+   "default_area": "navbar",
+   "default_icon": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+   }
+ },
+ "content_scripts": [
+   {
+     "matches": ["https://pubmed.ncbi.nlm.nih.gov/*"],
+     "js": ["content.js"]
+   }
+ ],
+ "web_accessible_resources": [
+   {
+     "resources": [
+       "getJournalRankingData.js", 
+       "insertCitationBar.js", 
+       "Top-Journals.csv", 
+       "journalRanking-2023.csv",
+       "SJR-2023.csv"
+     ],
+     "matches": ["https://pubmed.ncbi.nlm.nih.gov/*"]
+   }
+ ]
+}

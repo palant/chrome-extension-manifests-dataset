@@ -1,0 +1,75 @@
+---
+name: TweetExtract - Export Tweet from any User
+version: 1.3.1
+category_slug: productivity/workflow
+rating: 2
+rating_count: 4
+user_count: 281
+release_date: '2024-11-08T04:16:36.000Z'
+size: 1.22MiB
+languages:
+  - English
+description: >-
+  One click to export tweet and post list of any X/Twitter account, save as
+  CSV/Excel/JSON file.
+publisher_account: allysonx
+privacy_policy: https://twdm.extensionsfox.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.3.1",
+  "homepage_url": "https://tweetexport.extensionsfox.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.twitter.com/*",
+    "*://*.x.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.twitter.com/*",
+        "https://*.x.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

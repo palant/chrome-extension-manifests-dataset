@@ -1,0 +1,97 @@
+---
+name: ZaX - Tiện ích mở rộng cho Zalo
+version: 24.11.1
+category_slug: productivity/workflow
+rating: 3.6666666666666665
+rating_count: 9
+user_count: 5000
+release_date: '2024-11-12T05:30:36.000Z'
+size: 1.74MiB
+languages:
+  - Tiếng Việt
+description: >-
+  Trợ lý AI soạn tin nhắn, Đăng nhập nhiều Zalo, Dịch tin nhắn, Zalo Dark Mode,
+  Chặn đã xem/ đã nhận/ đang soạn tin,..
+publisher_account: ZaX Lab
+support_website: https://zaxapp.org
+privacy_policy: https://zaxapp.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ZaX - Tiện ích mở rộng cho Zalo",
+  "version": "24.11.1",
+  "description": "__MSG_appDesc__",
+  "default_locale": "vi",
+  "author": "ZaX Lab",
+  "homepage_url": "http://zaxapp.org",
+  "icons": {
+    "16": "images/popup/zax-icon-16.png",
+    "32": "images/popup/zax-icon-32.png",
+    "48": "images/popup/zax-icon-48.png",
+    "128": "images/popup/zax-icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://chat.zalo.me/*"],
+      "run_at": "document_end",
+      "css": ["css/embed-app/zax.css"],
+      "js": ["js/content_script.js"]
+    }
+  ],
+  "commands": {
+    "Ctrl+M": {
+      "suggested_key": {
+        "default": "Ctrl+M",
+        "mac": "Command+M"
+      },
+      "description": "Reload ZaX Extension"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": ["tabs", "scripting", "declarativeNetRequest"],
+  "host_permissions": ["*://chat.zalo.me/*", "*://id.zalo.me/*", "*://*.zaxapp.org/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "rules_block_typing",
+        "enabled": false,
+        "path": "rules/rules_block_typing.json"
+      },
+      {
+        "id": "rules_block_seen",
+        "enabled": false,
+        "path": "rules/rules_block_seen.json"
+      },
+      {
+        "id": "rules_block_delivered",
+        "enabled": false,
+        "path": "rules/rules_block_delivered.json"
+      },
+      {
+        "id": "rules_block_online",
+        "enabled": false,
+        "path": "rules/rules_block_online.json"
+      }
+    ]
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "images/popup/zax-icon-16.png",
+      "32": "images/popup/zax-icon-32.png",
+      "48": "images/popup/zax-icon-48.png",
+      "128": "images/popup/zax-icon-128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["css/*", "js/embed-app/zax.js"],
+      "matches": ["*://chat.zalo.me/*"]
+    }
+  ]
+}

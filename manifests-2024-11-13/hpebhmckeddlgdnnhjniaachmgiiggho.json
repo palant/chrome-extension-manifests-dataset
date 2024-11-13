@@ -1,0 +1,112 @@
+---
+name: Temu商家助手
+version: 1.1.4
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 1000
+release_date: '2024-10-24T07:33:33.000Z'
+size: 4.28MiB
+languages:
+  - English
+  - 中文 (简体)
+description: Temu商家助手，目标是为商家提供好用的运营工具和财务工具
+publisher_account: Future Inc.
+privacy_policy: https://kuajing-help.com/privacy/ch
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "zh_CN",
+  "name": "__MSG_extensionName__",
+  "version": "1.1.4",
+  "description": "__MSG_extensionDescription__",
+  "permissions": [
+    "storage",
+    "webRequest",
+    "cookies"
+  ],
+  "background": {
+    "service_worker": "background.iife.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": "temu34.png"
+  },
+  "icons": {
+    "34": "temu34.png",
+    "128": "temu128.png",
+    "300": "temu300.png"
+  },
+  "host_permissions": [
+    "https://kuajinghelp.top/*",
+    "https://google.com/*",
+    "https://*.kuajingmaihuo.com/*",
+    "https://agentseller.temu.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self' https://kuajinghelp.top;script-src 'self'; object-src 'self';connect-src 'self' https://kuajinghelp.top https://google.com;img-src 'self' https://kuajinghelp.top;"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.kuajingmaihuo.com/*",
+        "*://agentseller.temu.com/*"
+      ],
+      "js": [
+        "fetch-content/index.iife.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://*.kuajinghelp.top/*",
+        "https://*.kuajingmaihuo.com/*",
+        "https://agentseller.temu.com/*"
+      ],
+      "js": [
+        "base-content/index.iife.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.kuajingmaihuo.com/*",
+        "*://agentseller.temu.com/*"
+      ],
+      "js": [
+        "content/index.iife.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.kuajingmaihuo.com/*",
+        "*://agentseller.temu.com/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css",
+        "*.svg",
+        "temu128.png",
+        "temu34.png",
+        "temu300.png",
+        "images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

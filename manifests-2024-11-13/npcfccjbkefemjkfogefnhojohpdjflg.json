@@ -1,0 +1,147 @@
+---
+name: Scrab.in - LinkedIn Prospecting Tool
+version: 4.7.5
+category_slug: lifestyle/social
+rating: 4.576271186440678
+rating_count: 118
+user_count: 10000
+release_date: '2024-10-25T09:45:44.000Z'
+size: 1.84MiB
+languages:
+  - English
+  - español
+description: Boost Your LinkedIn Prospecting with a Powerful Email Finder Chrome Extension
+publisher: Servicios de programación estructurada y diseño de paginas web SL
+publisher_account: Scrab.in
+publisher_address: |-
+  C. de Badajoz, 32
+  Barcelona, Barcelona 08005
+  ES
+extension_website: scrab.in
+support_website: https://help.findthatlead.com/en/?q=Scrab.in
+privacy_policy: https://scrab.in/en/privacy
+---
+
+{
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "manifest_version": 3,
+    "default_locale": "en",
+    "name": "__MSG_extension_name__",
+    "description": "__MSG_manifest_description__",
+    "version": "4.7.5",
+    "minimum_chrome_version": "88.0",
+    "action": {
+        "default_popup": "./Views/popup.html",
+        "default_icon": "./Assets/Images/icon-128.png"
+    },
+    "icons": {
+        "128": "./Assets/Images/icon-128.png",
+        "16": "./Assets/Images/icon-16.png",
+        "48": "./Assets/Images/icon-48.png",
+        "32": "./Assets/Images/icon-32.png",
+        "64": "./Assets/Images/icon-64.png"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "cookies",
+        "alarms",
+        "unlimitedStorage",
+        "declarativeNetRequest",
+        "browsingData"
+    ],
+    "host_permissions": [
+        "*://*.linkedin.com/*",
+        "*://linkedin.com/*",
+        "http://localhost:3009/*",
+        "*://*/*",
+        "<all_urls>"
+    ],
+    "background": {
+        "service_worker": "./Scripts/BackgroundScript/background.js"
+    },
+    "web_accessible_resources": [
+        {
+          "resources": [
+            "*.*"
+          ],
+          "matches": [
+            "*://*.linkedin.com/*",
+            "*://linkedin.com/*",
+            "*://*/*",
+            "<all_urls>"
+          ]
+        }
+      ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.linkedin.com/*"
+            ],
+            "css": [
+                "./Assets/CSS/style.css",
+                "./Libs/jquery-ui.css"
+            ],
+            "all_frames": false,
+            "js": [
+                "./Libs/jquery-1.12.4.js",
+                "./Libs/jquery-ui.js",
+                "./Libs/toast.min.js",
+                "./Libs/alert.min.js",
+                "./Libs/moment.js",
+                "./Assets/JS/web.api.js",
+                "./Assets/JS/dom-tools.js",
+                "./Assets/JS/linkedin.api.js",
+                "./Assets/JS/notify.min.js",
+                "./Scripts/ContentScript/content.port.js",
+                "./Scripts/ContentScript/content_script.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_matches": [
+                "*://*.linkedin.com/*",
+                "*://*.slack.com/*",
+                "*://slack-infra-canvas.slack.com/*", 
+                "*://*.slack-edge.com/*"
+            ],
+            "css": [],
+            "all_frames": false,
+            "js": [
+                "./Libs/jquery-1.12.4.js",
+                "./Libs/moment.js",
+                "./Libs/toast.min.js",
+                "./Scripts/ContentScript/global.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://*.findthatlead.com/*",
+                "*://*.scrab.in/*"
+            ],
+            "js": [
+                "./Scripts/ContentScript/extension_installed.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        },
+        {
+            "matches":["*://scrabin.crisp.help/*"],
+            "js":["./Libs/jquery-1.12.4.js","./Assets/JS/help.page.js"]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://api.scrab.in/*",
+            "https://app.scrab.in/*",
+            "https://app-new.scrab.in/*"
+        ]
+    },
+    "content_security_policy": {
+       "extension_pages": "script-src 'self'; object-src 'self'"
+      }
+    }

@@ -1,0 +1,88 @@
+---
+name: 'ReadLayer: automatic highlights in Web & PDF'
+version: 0.4.2
+category_slug: productivity/tools
+rating: 4.666666666666667
+rating_count: 3
+user_count: 69
+release_date: '2024-04-18T10:58:24.000Z'
+size: 5.55MiB
+languages:
+  - English
+description: Automatically highlights similar keywords or phrases on the web or PDFs
+publisher_account: readlayer
+extension_website: readlayer.com
+support_website: https://docs.readlayer.com
+privacy_policy: https://readlayer.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ReadLayer: automatic highlights in Web & PDF",
+  "description": "Automatically highlights similar keywords or phrases on the web or PDFs",
+  "version": "0.4.2",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "background": {
+    "service_worker": "/scripts/background.ts.js"
+  },
+  "permissions": ["storage", "activeTab", "contextMenus", "downloads", "webNavigation", "alarms"],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["/css/hlight.css"],
+      "js": ["/scripts/hlight.ts.js"]
+    },
+    {
+      "matches": ["https://readlayer.com/welcome"],
+      "run_at": "document_end",
+      "js": ["/scripts/webnotifier.ts.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {"resources": ["/pdfviewer/web/viewer.html", "images/*.svg"], "matches": ["<all_urls>"]}
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "ReadLayer",
+    "default_icon": {
+      "16": "/images/monocle_16x16.png",
+      "32": "/images/monocle_32x32.png",
+      "48": "/images/monocle_48x48.png",
+      "128": "/images/monocle_128x128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/monocle_16x16.png",
+    "32": "/images/monocle_32x32.png",
+    "48": "/images/monocle_48x48.png",
+    "128": "/images/monocle_128x128.png"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+F"
+      },
+      "description": "Search"
+    },
+    "prev_hl": {
+      "suggested_key": {
+        "default": "Ctrl+Left",
+        "mac": "Ctrl+Shift+Left"
+      },
+      "description": "Previous highlight"
+    },
+    "next_hl": {
+      "suggested_key": {
+        "default": "Ctrl+Right",
+        "mac": "Ctrl+Shift+Right"
+      },
+      "description": "Next highlight"
+    }
+  }
+}

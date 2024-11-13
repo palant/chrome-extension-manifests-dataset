@@ -1,0 +1,78 @@
+---
+name: Mail Seen - Unlimited Email Tracker for Gmail
+version: 5.4.1
+category_slug: productivity/workflow
+rating: 4.513513513513513
+rating_count: 37
+user_count: 1000
+release_date: '2024-11-07T03:43:01.000Z'
+size: 5.86MiB
+languages:
+  - English
+description: Know when your emails are opened!
+publisher: Red Numbers srl
+publisher_account: Onepaper.ai
+publisher_address: |-
+  Stefan cel Mare 2
+  radauti, Suceava 725400
+  RO
+extension_website: mailseen.com
+support_website: https://www.mailseen.com/
+privacy_policy: >-
+  https://docs.google.com/document/d/10AAlucs3J2I4LshQ_5axZXJHYa74-_ZHWw-SfkATe4M/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mail Seen - Unlimited Email Tracker for Gmail",
+  "version": "5.4.1",
+  "description": "Know when your emails are opened!",
+  "permissions": [
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/",
+    "https://authapi-f6o7ittoia-uc.a.run.app/"
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["datasources.js","content.js","stats.js","feed.js","UIcomponents.js","threadview.js","charts/chart1.js","intro.js"]
+
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["static/eyecrosseddark.png","static/arrowdark.png","static/send-mail.png","static/eyewhite.png","static/send.png","static/eye.png","static/file.png","pdfGenerator.js","static/refreshwhite.png","static/close.png","static/speed.png","static/date.png","static/eyecrossed.png","intro.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "static/icon16.png",
+      "48": "static/icon48.png",
+      "128": "static/icon128.png"
+    }
+  },
+
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

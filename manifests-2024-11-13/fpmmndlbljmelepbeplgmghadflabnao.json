@@ -1,0 +1,70 @@
+---
+name: Purified Streaming
+version: 0.3.3
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-07-13T07:55:04.000Z'
+size: 80.85KiB
+languages:
+  - English
+description: >-
+  Censor audio for bad language on Netflix and YouTube, as well as all text on
+  any other webpage.
+publisher_account: Samuel C
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Purified Streaming",
+  "description": "Censor audio for bad language on Netflix and YouTube, as well as all text on any other webpage.",
+  "version": "0.3.3",
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://*.churchofjesuschrist.org/*"],
+      "js": [
+        "chromeStorageFunctions.js",
+        "utils.js",
+        "script.js"]
+    },
+    {
+      "matches": ["https://www.netflix.com/*"],
+      "js": [
+        "chromeStorageFunctions.js", 
+        "syllablesParsing.js", 
+        "script.js", 
+        "monitorNetflix.js"
+      ]
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": [
+        "chromeStorageFunctions.js", 
+        "queue.js",
+        "syllablesParsing.js", 
+        "utils.js",
+        "script.js",
+        "monitorYt.js" 
+      ]
+    }
+  ], 
+  "action": {
+    "default_icon": "Cursing-Extension-Icon.png",
+    "default_title": "Filter Settings",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "128": "Cursing-Extension-Icon.png"
+  }
+}

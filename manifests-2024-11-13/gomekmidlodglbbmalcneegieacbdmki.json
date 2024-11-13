@@ -1,0 +1,157 @@
+---
+name: Avast Online Security & Privacy
+version: 22.12.6
+category_slug: make_chrome_yours/privacy
+rating: 4.442349611839841
+rating_count: 26149
+user_count: 7000000
+release_date: '2024-09-02T10:51:36.000Z'
+size: 2.49MiB
+languages:
+  - English
+description: Avast browser security and web reputation plugin.
+publisher_account: Avast Software
+extension_website: www.avast.com
+support_website: https://support.avast.com/
+privacy_policy: https://www.avast.com/products-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Avast Online Security & Privacy",
+  "description": "Avast browser security and web reputation plugin.",
+  "version": "22.12.6",
+  "manifest_version": 3,
+  "author": "Avast",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icons/icon-avast64.png",
+    "default_title": "Avast Online Security & Privacy"
+  },
+  "icons": {
+    "32": "icons/icon-avast32.png",
+    "64": "icons/icon-avast64.png",
+    "128": "icons/icon-avast128.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "scripting",
+    "storage",
+    "alarms",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "client/main.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "client/gpc.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "client/cookie/cookieConsent.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "client/*.css",
+        "fonts/*.woff2",
+        "icons/*.png",
+        "icons/*.svg",
+        "locales/*.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "client/gpcWindowSetting.js"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "AdTracking_Allowed",
+        "enabled": true,
+        "path": "/rulesets/AdTracking_Allowed.json"
+      },
+      {
+        "id": "Others_Allowed",
+        "enabled": true,
+        "path": "/rulesets/Others_Allowed.json"
+      },
+      {
+        "id": "Social_Allowed",
+        "enabled": true,
+        "path": "/rulesets/Social_Allowed.json"
+      },
+      {
+        "id": "WebAnalytics_Allowed",
+        "enabled": true,
+        "path": "/rulesets/WebAnalytics_Allowed.json"
+      },
+      {
+        "id": "AdTracking",
+        "enabled": false,
+        "path": "/rulesets/AdTracking.json"
+      },
+      {
+        "id": "Others",
+        "enabled": false,
+        "path": "/rulesets/Others.json"
+      },
+      {
+        "id": "Social",
+        "enabled": false,
+        "path": "/rulesets/Social.json"
+      },
+      {
+        "id": "WebAnalytics",
+        "enabled": false,
+        "path": "/rulesets/WebAnalytics.json"
+      }
+    ]
+  },
+  "incognito": "split",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+L"
+      },
+      "description": "Open AOSP UI"
+    }
+  }
+}

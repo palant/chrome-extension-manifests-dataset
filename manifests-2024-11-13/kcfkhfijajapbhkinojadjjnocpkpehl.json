@@ -1,0 +1,75 @@
+---
+name: Reddit Inbox Remake
+version: 2.1.9
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-11-12T02:20:52.000Z'
+size: 194KiB
+languages:
+  - English (United States)
+description: >-
+  Bringing inbox efficiency to the old.reddit inbox experience. Fork of Reddit
+  Inbox Revamp
+publisher_account: KINK3D
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Reddit Inbox Remake",
+  "version": "2.1.9",
+  "description": "Bringing inbox efficiency to the old.reddit inbox experience. Fork of Reddit Inbox Revamp",
+  "icons": {
+    "16": "Icons/16.png",
+    "48": "Icons/48.png",
+    "128": "Icons/128.png"
+  },
+  "background": {
+    "service_worker": "js/background/bg.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*.reddit.com/*", "https://*.reddit.com/*"],
+      "js": ["js/global/extension-scanner.js", "js/content-all/notification_icons.js"],
+      "css": ["css/notification_icons.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*.reddit.com/message/rir_*", "https://*.reddit.com/message/rir_*"],
+      "js": [
+        "js/content-inbox/jquery.min.js",
+        "js/content-inbox/snuownd.js",
+        "js/global/constants.js",
+        "js/global/command-events.js",
+        "js/global/extension-scanner.js",
+        "js/content-inbox/global.js",
+        "js/content-inbox/alerts.js",
+        "js/content-inbox/config.js",
+        "js/content-inbox/generic.js",
+        "js/content-inbox/commenttools.js",
+        "js/content-inbox/inbox.js",
+        "js/content-inbox/dbhelper.js",
+        "js/legacy/idb.js"
+      ],
+      "css": ["css/ui.css", "css/popups.css", "css/alerts.css"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/jquery.min.map", "template/*", "images/*", "Icons/*", "manifest.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,104 @@
+---
+name: NTU 選課小幫手
+version: 1.0.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 37
+release_date: '2024-04-16T03:35:53.000Z'
+size: 1.59MiB
+languages:
+  - 中文 (繁體)
+description: >-
+  一個可以搜尋NTU課程成績分布的 Google Chrome 插件，專門服務國立臺灣大學(NTU, National Taiwan
+  University)的學生
+publisher_account: ntugradeviewer
+privacy_policy: https://weiiiii0622.github.io/NTU-Grade-Viewer/Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "NTU 選課小幫手",
+  "description": "一個可以搜尋NTU課程成績分布的 Google Chrome 插件，專門服務國立臺灣大學(NTU, National Taiwan University)的學生",
+  "version": "1.0.2",
+  "icons": {
+    "16": "icon.png",
+    "24": "icon.png",
+    "32": "icon.png",
+    "64": "icon.png",
+    "128": "icon.png",
+    "512": "icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon.png",
+      "24": "icon.png",
+      "32": "icon.png",
+      "64": "icon.png",
+      "128": "icon.png",
+      "512": "icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://course.ntu.edu.tw/*",
+        "https://if190.aca.ntu.edu.tw/graderanking/*",
+        "https://cool.ntu.edu.tw/*"
+      ],
+      "js": [
+        "js/vendor.js",
+        "js/content_script.js"
+      ]
+    }
+  ],
+  "commands": {
+    "open-dialog": {
+      "suggested_key": {
+        "default": "Alt+G"
+      },
+      "description": "開啟 NTU 選課小幫手搜尋面板"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "scripting",
+    "tabs",
+    "activeTab",
+    "cookies",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dialog.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://ntu.edu.tw/*",
+    "https://if190.aca.ntu.edu.tw/*",
+    "<all_urls>"
+  ],
+  "optional_permissions": [],
+  "optional_host_permissions": [],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ntucool",
+        "enabled": true,
+        "path": "rules/ntucool.json"
+      }
+    ]
+  }
+}

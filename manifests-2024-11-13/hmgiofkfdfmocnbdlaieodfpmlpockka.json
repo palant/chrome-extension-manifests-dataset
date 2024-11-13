@@ -1,0 +1,121 @@
+---
+name: Myndr voor school v2 Basispoort
+version: 2.0.15
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 25
+release_date: '2024-11-10T19:52:53.000Z'
+size: 370KiB
+languages:
+  - English
+  - Nederlands
+description: >-
+  Internet is top! Maar soms nét iets te aanwezig. Myndr zorgt dat het internet
+  beter aansluit op wat je daadwerkelijk nodig hebt.
+publisher: Myndr
+publisher_address: |-
+  Marspoortstraat 13
+  Zutphen 7201 JA
+  NL
+extension_website: www.myndr.nl
+support_website: https://www.myndr.nl/nl/contact/
+privacy_policy: https://www.myndr.nl/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "version": "2.0.15",
+ "name": "__MSG_ext_name__",
+ "description": "__MSG_ext_description__",
+ "homepage_url": "https://www.myndr.nl/",
+ "default_locale": "nl",
+ "icons": {
+  "16": "images/logo-16.png", "32": "images/logo-32.png",
+  "48": "images/logo-48.png", "128": "images/logo-128.png"
+ },
+ "action": {
+  "default_title": "__MSG_ext_tooltip__",
+  "default_popup": "/html/popup.html",
+  "default_icon": {
+   "16": "images/logo-16.png", "32": "images/logo-32.png",
+   "48": "images/logo-48.png", "128": "images/logo-128.png"
+  }
+ },
+ "offline_enabled": true,
+ "permissions": [
+  "tabs",
+  "storage",
+  "notifications",
+  "alarms",
+  "contextMenus",
+  "enterprise.hardwarePlatform"
+ ],
+ "host_permissions": [
+  "*://*.myndr.net/*",
+  "https://api.protocoldirectory.net/*",
+  "https://6ntg4fu5o2.execute-api.eu-north-1.amazonaws.com/*",
+  "https://logs.mezmo.com/*"
+ ],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "background": {
+  "service_worker": "js/app.js"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "http://*/*",
+    "https://*/*"
+   ],
+   "exclude_matches": [
+    "*://*.myndr.net/*",
+    "*://*.protocoldirectory.net/*",
+    "*://*.basispoort.nl/*"
+   ],
+   "js": [
+    "js/enforceAccessPolicy.js"
+   ],
+   "all_frames": true,
+   "run_at": "document_start"
+  },
+  {
+   "matches": [
+    "https://*.myndr.net/auth/redirect-sso?*",
+    "https://*.myndr.net/auth/saml-sso-ext?*"
+   ],
+   "js": [
+    "js/pickUpSsoReturn.js"
+   ],
+   "run_at": "document_start"
+  },
+  {
+   "matches": ["https://*.myndr.nl/*","https://myndr.nl/*","https://*.myndr.com/*","https://myndr.com/*","https://*.myndr.net/*","https://myndr.net/*"],
+   "css": ["policies/myndr.css"],
+   "js": ["policies/myndr.js"]
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "matches": [
+    "<all_urls>"
+   ],
+   "resources": [
+    "html/block.html",
+    "html/deny.html",
+    "html/options.html",
+    "html/popup.html",
+    "html/status.html",
+    "images/*",
+    "fonts/*",
+    "policies/*"
+   ]
+  }
+ ],
+ "storage": {
+  "managed_schema": "storage-schema.json"
+ }
+}

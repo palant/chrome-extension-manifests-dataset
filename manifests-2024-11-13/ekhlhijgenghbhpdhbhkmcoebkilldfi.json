@@ -1,0 +1,67 @@
+---
+name: Letterboxd IMDb Trivia
+version: 1.5.4
+category_slug: lifestyle/fun
+rating: 4.733333333333333
+rating_count: 15
+user_count: 1000
+release_date: '2024-09-09T04:21:34.000Z'
+size: 69.04KiB
+languages:
+  - English
+description: Shows IMDb trivia on Letterboxd movie pages.
+publisher_account: Robert Gerlach
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Letterboxd IMDb Trivia",
+  "version": "1.5.4",
+  "description": "Shows IMDb trivia on Letterboxd movie pages.",
+  "minimum_chrome_version": "101",
+  "content_scripts": [
+    {
+      "js": ["js/jquery-3.3.1.min.js", "js/xss.js", "js/content.js"],
+      "css" : ["css/styles.css"],
+      "matches" : ["https://letterboxd.com/film/*"],
+      "run_at" : "document_end"
+    },
+    {
+      "js": ["js/jquery-3.3.1.min.js", "js/imdb-iframe.js"],
+      "matches" : ["https://www.imdb.com/*"],
+      "run_at" : "document_end",
+      "all_frames" : true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "js/reload-letterboxd.js", "img/*.png" ],
+      "matches": [ "https://letterboxd.com/*" ]
+    },
+    {
+      "resources": [ "js/imdb-iframe.js" ],
+      "matches": [ "https://www.imdb.com/*" ]
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "https://letterboxd.com/film/*", "https://www.imdb.com/*"
+  ],
+  "icons" : {
+    "16" : "img/icon-16.png",
+    "32" : "img/icon-32.png",
+    "48" : "img/icon-48.png"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": false
+  }
+}

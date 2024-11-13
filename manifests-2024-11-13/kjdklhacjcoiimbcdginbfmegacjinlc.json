@@ -1,0 +1,59 @@
+---
+name: X Guard
+version: 1.0.4
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-09-19T10:14:05.000Z'
+size: 79.93KiB
+languages:
+  - English
+description: Filters out content on X based on user-selected exclusion topics.
+publisher_account: ferdousbhai
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "X Guard",
+  "version": "1.0.4",
+  "description": "Filters out content on X based on user-selected exclusion topics.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["contextMenus", "storage"],
+  "host_permissions": ["https://api.groq.com/*", "https://x.com/*"],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/*"
+      ],
+      "js": [
+        "src/config/platforms.js",
+        "src/utils/debounce.js",
+        "src/content.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "x-guard@example.com",
+      "strict_min_version": "109.0"
+    }
+  }
+}

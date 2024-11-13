@@ -1,0 +1,83 @@
+---
+name: What DEALS May Come
+version: '1.1'
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-05-26T04:53:11.000Z'
+size: 85.73KiB
+languages:
+  - English (United States)
+description: >-
+  Save Money AND Time with these Fast and Easy Product Links as you shop on
+  top-rated websites.
+publisher_account: nominal.ventures
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "What DEALS May Come",
+  "description":"Save Money AND Time with these Fast and Easy Product Links as you shop on top-rated websites.",
+  "version": "1.1",
+  "icons": {
+    "16": "img/icon16.png",
+    "32": "img/icon32.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png"
+  },
+  "commands": {
+    "check_product_identifier": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+C",
+        "mac": "Command+Shift+C"
+      },
+      "description": "Check product identifier"
+    }
+  },
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request" : {
+    "rule_resources" : [{
+          "id": "ruleset_1",
+          "enabled": true, 
+          "path": "rules.json"
+      }]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "js": [
+        "src/content.js"],
+      "css": ["css/content.css"]
+    }
+  ],
+  "action": {
+  },
+  "web_accessible_resources": [{
+    "resources": [
+                  "popup.html",
+                  "options.html",
+                  "css/*", 
+                  "icons/*", 
+                  "img/*", 
+                  "src/*",
+                  "src/modules/*",
+                  "src"
+                ],
+    "matches": ["https://amazon.com/*","https://walmart.com/*","https://target.com/*"]
+  }]
+}

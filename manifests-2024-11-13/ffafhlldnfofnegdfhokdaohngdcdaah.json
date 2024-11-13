@@ -1,0 +1,74 @@
+---
+name: Safety Web - Adblock for Web
+version: 1.0.3
+category_slug: make_chrome_yours/privacy
+rating: 4
+rating_count: 18
+user_count: 2000
+release_date: '2024-09-22T15:27:23.000Z'
+size: 508KiB
+languages:
+  - Deutsch
+  - English
+description: >-
+  Keep the browser secure with Safety Web that stops tracking, remove ads and
+  prevent malicious activity
+publisher_account: tomnordyk
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_name__",
+    "version": "1.0.3",
+    "description": "__MSG_desc__",
+    "manifest_version": 3,
+    "default_locale": "en",
+    "permissions": ["tabs", "declarativeNetRequest", "storage"],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "blockLIST",
+                "enabled": true,
+                "path": "./res/my.json"
+            },
+            {
+                "id": "advLIST",
+                "enabled": false,
+                "path": "./res/adv.json"
+            },
+            {
+                "id": "antiprnLIST",
+                "enabled": false,
+                "path": "./res/antiprn.json"
+            },
+            {
+                "id": "suspLIST",
+                "enabled": false,
+                "path": "./res/susp.json"
+            }
+        ]
+    },
+    "icons": { "48": "./icons/48.png", "64": "./icons/64.png" },
+    "content_scripts": [
+        {
+            "js": ["./block/yt_blocks.js"],
+            "run_at": "document_start",
+            "matches": ["<all_urls>"]
+        },
+        {
+            "js": ["./block/content.js"],
+            "run_at": "document_end",
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Adblock Unlimited"
+    },
+    "options_page": "options.html",
+    "background": {
+        "service_worker": "./worker.js"
+    },
+    "host_permissions": ["<all_urls>"]
+}

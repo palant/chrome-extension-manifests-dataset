@@ -1,0 +1,212 @@
+---
+name: Pedigree Thief
+version: 3.0.20
+category_slug: productivity/workflow
+rating: 4.36
+rating_count: 25
+user_count: 2000
+release_date: '2024-10-15T03:34:58.000Z'
+size: 505KiB
+languages:
+  - English (UK)
+description: >-
+  Creates ahnentafels from Pedigree Trees (plus other tools to assist with data
+  input to Genealogical DNA Analysis Tool).
+publisher_account: PeffersGen
+privacy_policy: https://drive.google.com/open?id=1Eo6QYYYP1-CbvCcuittHgWQBvLWzbQJ5
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Pedigree Thief",
+  "version": "3.0.20",
+  "description": "Creates ahnentafels from Pedigree Trees (plus other tools to assist with data input to Genealogical DNA Analysis Tool).",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/PedigreeThief16.png",
+    "48": "images/PedigreeThief48.png",
+    "128": "images/PedigreeThief128.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://app.gedmatch.com/GEDCOM/pedigree_text.php"],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/gedmatch/pedigree_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://app.gedmatch.com/people_match2.php"],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/gedmatch/peopleMatch2_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://gw.geneanet.org/*"],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/geneanet/pedigree_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.geni.com/list/ancestors/*"],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/geni/pedigree_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://app.gedmatch.com/OneToManyFreeOriginalResults.php?*",
+        "https://app.gedmatch.com/OneToManyTier1Simple.php",
+        "https://app.gedmatch.com/OneToManyFreeLimited.php*",
+        "https://app.gedmatch.com/OneToManyTier1Full.php**",
+        "https://app.gedmatch.com/OneToManyTier1Full.php"
+      ],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/gedmatch/oneToMany_content.js"
+      ],
+      "run_at": "document_end"
+    },
+
+    {
+      "matches": [
+        "https://www.myheritage.com/dna/results/*",
+        "https://www.myheritage.com/dna/ethnicity/*",
+        "https://www.myheritage.com/dna/matches/*",
+        "https://www.myheritage.com/dna/tools/*",
+        "https://www.myheritage.se/dna/results/*",
+        "https://www.myheritage.se/dna/ethnicity/*",
+        "https://www.myheritage.se/dna/matches/*",
+        "https://www.myheritage.se/dna/tools/*"
+      ],
+      "js": [
+        "database/Dexie.js",
+        "sites/common/initialise_content.js",
+        "sites/myheritage/matches/matches_content.js"
+      ],
+      "run_at": "document_end"
+    },
+
+    {
+      "matches": [
+        "https://www.myheritage.com/dna/chromosome-browser/compare*",
+        "https://www.myheritage.se/dna/chromosome-browser/compare*"
+      ],
+      "js": [
+        "database/Dexie.js",
+        "sites/common/initialise_content.js",
+        "sites/myheritage/chromosome/chromosome_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.myheritage.com/dna/match/*",
+        "https://www.myheritage.se/dna/match/*"
+      ],
+      "js": [
+        "database/Dexie.js",
+        "sites/common/initialise_content.js",
+        "sites/myheritage/match/match_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.myheritage.com/pedigree-tree*",
+        "https://www.myheritage.se/pedigree-tree*"
+      ],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/myheritage/pedigree/pedigree_content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.wikitree.com/treewidget/*"],
+      "js": [
+        "sites/common/initialise_content.js",
+        "sites/wikitree/pedigree_content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://app.gedmatch.com/*",
+        "*://gw.geneanet.org/*",
+        "*://www.geni.com/*",
+        "*://www.myheritage.com/*",
+        "*://www.myheritage.se/*",
+        "*://www.wikitree.com/*"
+      ],
+      "resources": [
+        "sites/common/utilities.mjs",
+        "options/optionsInStorage.mjs"
+      ]
+    },
+    {
+      "matches": ["*://www.myheritage.com/*", "*://www.myheritage.se/*"],
+      "resources": [
+        "database/db_common.mjs",
+        "sites/myheritage/myheritage_downloads.mjs",
+        "sites/myheritage/pedigree/extract_pedigree.mjs",
+        "sites/myheritage/matches/extract_matches.mjs",
+        "sites/myheritage/match/extract_match.mjs",
+        "sites/myheritage/chromosome/extract_chromosome.mjs",
+        "sites/myheritage/matches/import_files.mjs"
+      ]
+    },
+    {
+      "matches": ["*://app.gedmatch.com/*"],
+      "resources": [
+        "sites/gedmatch/extract_oneToMany.mjs",
+        "sites/gedmatch/extract_peopleMatch2.mjs",
+        "sites/gedmatch/extract_pedigree.mjs"
+      ]
+    },
+    {
+      "matches": ["*://gw.geneanet.org/*"],
+      "resources": ["sites/geneanet/extract_pedigree.mjs"]
+    },
+    {
+      "matches": ["*://www.geni.com/*"],
+      "resources": ["sites/geni/extract_pedigree.mjs"]
+    },
+    {
+      "matches": ["*://www.wikitree.com/*"],
+      "resources": ["sites/wikitree/extract_pedigree.mjs"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "background/background.mjs",
+    "type": "module"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage",
+    "clipboardWrite",
+    "contextMenus",
+    "declarativeContent"
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/PedigreeThief16.png",
+      "48": "images/PedigreeThief48.png",
+      "128": "images/PedigreeThief128.png"
+    },
+    "default_title": "Pedigree Thief",
+    "default_popup": "popup/popup.html"
+  }
+}

@@ -1,0 +1,106 @@
+---
+name: T-akıbet v2
+version: 1.0.55
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 688
+release_date: '2024-11-11T11:55:39.000Z'
+size: 4.62MiB
+languages:
+  - Türkçe
+description: Avukatlar için UYAP asistanı.
+publisher_account: t-akıbet
+publisher_address: |-
+  1308/3. Sokak No:8
+  Gebze, Kocaeli 41400
+  TR
+privacy_policy: https://t-akibet.com/gizlilik-politikasi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "T-akıbet v2",
+  "description": "Avukatlar için UYAP asistanı.",
+  "version": "1.0.55",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "alarms",
+    "cookies",
+    "downloads"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://t-akibet.com/*"
+    ]
+  },
+  "short_name": "T-akıbet v2",
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_icon": "images/icon128.png",
+    "default_popup": "pages/popup.html"
+  },
+  "host_permissions": [
+    "https://*.t-akibet.com/*",
+    "*://avukatbeta.uyap.gov.tr/*",
+    "*://gonderitakip.ptt.gov.tr/*",
+    "*://www.resmigazete.gov.tr/*"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://avukatbeta.uyap.gov.tr/*"
+      ],
+      "js": [
+        "scripts/bootstrapHelper.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://avukatbeta.uyap.gov.tr/*"
+      ],
+      "css": [
+        "styles/contentscript.css"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/injectionAB.js",
+        "public/pdf.worker.js",
+        "pages/viewer.html",
+        "web_accessible_resources/uyapindex.html",
+        "web_accessible_resources/reminder_notification.mp3",
+        "web_accessible_resources/notif_bg.png",
+        "web_accessible_resources/download.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

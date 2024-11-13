@@ -1,0 +1,73 @@
+---
+name: Z lister
+version: '2.03'
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 302
+release_date: '2024-11-04T20:18:05.000Z'
+size: 4.15MiB
+languages:
+  - English (United States)
+description: Z lister is a powerful A.I. tool for real estate agents!
+publisher_account: Social Auto Group
+extension_website: socialautogroup.com
+support_website: https://www.realestatescrape.com
+privacy_policy: https://realestatescrape.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Z lister",
+  "author": "SAG",
+  "manifest_version": 3,
+  "description": "Z lister is a powerful A.I. tool for real estate agents!",
+  "version": "2.03",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "logo.png",
+    "default_popup": "popup.html",
+    "default_title": "zlister"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "content_security_policy": {
+    "extension_page": "script-src 'self' https://sag.gemquery.com; object-src 'self'"
+  },
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [
+    "https://sag.gemquery.com/webhook/real-estate-listing",
+    "https://sag.gemquery.com/csv-files/listings-david-west-sells-houses.csv",
+    "https://www.zillow.com/*",
+    "https://www.facebook.com/marketplace/create/rental",
+    "https://www.facebook.com/events/create",
+    "https://photos.zillowstatic.com/*",
+    "https://my.matterport.com/*",
+    "https://cdn-2.matterport.com/*",
+    "https://www.zillowstatic.com/*",
+    "https://api.lofty.com/v1.0/leads"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["https://www.zillow.com/*"],
+      "js": ["zillow_buttons_ui.js", "zillow_property_data.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://www.zillow.com/profile/*"],
+      "js": ["zillow_buttons_ui.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["fb_marketplace_upload.js", "fb_page_upload.js", "fb_event_upload.js"]
+    }
+  ]
+}

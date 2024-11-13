@@ -1,0 +1,100 @@
+---
+name: Loadex
+version: 3.2.4
+category_slug: productivity/workflow
+rating: 4.7272727272727275
+rating_count: 11
+user_count: 584
+release_date: '2024-11-12T18:55:01.000Z'
+size: 1.17MiB
+languages:
+  - English
+description: >-
+  Loadex simplifies the process of sending emails directly from the load board
+  with just one click.
+publisher: Beksultan Incorporated
+publisher_account: loadexweb
+publisher_address: |-
+  2835 N Damen Ave apt 2r
+  Chicago, IL 60618-8350
+  US
+extension_website: loadex.net
+support_website: https://loadex.net/#footer
+privacy_policy: https://loadex.net/privacy-and-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Loadex",
+  "version": "3.2.4",
+  "description": "Loadex simplifies the process of sending emails directly from the load board with just one click.",
+  "manifest_version": 3,
+  "author": "songhee24",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon-16x16.png",
+    "32": "icons/icon-32x32.png",
+    "48": "icons/icon-48x48.png",
+    "128": "icons/icon-128x128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA6y8cLfrLKFeVcLoqylBrCNej7YocsZAP2uvSf6/YRv2x4hP3EPmwoNLEq11FAleYYxJrAA+eB8w8J8p/9c9K+pXkRJCsQ79nIxhOMeyWWFQdrkyzHlSUDaumIVZUzAh0AnbdVEtyza9//T7YEJHqlDfGk0xI2+w3TrUitlVusdRs8I9zTqUJHxt7ksDzp3jlKnl3XaWd1RPN9GoRQnUyOi2D9E+afC+yHUWJEZ+xbFQoaQEPHPl7RTKsCVCNMpwEJsBpYMeJiKBg4CQboL0lJi4cABbp9G56ia6/E9B1JU2M6if769h3N6qQ1OVXA9Qt63EMl6uq6hUR+TObeZfTtwIDAQAB",
+  "oauth2": {
+    "client_id": "100265208865-j6593p24dfnduuk76d1lmshhr8n7jfk9.apps.googleusercontent.com",
+    "scopes":["https://www.googleapis.com/auth/gmail.send"],
+    "redirect_url": "https://fbhlmobhmeicoclioegndhmmifojkcbl.chromiumapp.org/"
+  },
+  "permissions": [
+    "tabs",
+    "history",
+    "storage",
+    "identity.email",
+    "identity"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://power.dat.com/*", "https://www.google.com/maps/*"],
+      "js": [
+        "dat/datContentScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://main.truckstop.com/*"],
+      "js": [
+        "truckStop/truckStopContentScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://one.dat.com/*", "https://www.google.com/maps/*"],
+      "js": [
+        "datOne/datOneContentScript.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self'; script-src-elem 'self' https://maps.googleapis.com"
+  },
+  "sandbox": {
+    "pages": ["previewMap.html"]
+  },
+  "web_accessible_resources": [{
+    "resources": ["*.svg", "*.png", "*.html", "*.mp3"],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:5173/*",
+      "https://app.loadex.net/*",
+      "https://app.dev.loadex.net/*"
+    ]
+  }
+}

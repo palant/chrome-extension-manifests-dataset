@@ -1,0 +1,167 @@
+---
+name: Sendoso
+version: 4.4.0
+category_slug: lifestyle/social
+rating: 4.2
+rating_count: 5
+user_count: 10000
+release_date: '2024-07-26T02:04:11.000Z'
+size: 3.92MiB
+languages:
+  - English
+description: >-
+  The Official Sendoso Chrome Extension. We source, store, ship, and track ROI
+  for anything you ever need to send.
+publisher_account: sendoso-chrome-extension
+extension_website: sendoso.com
+privacy_policy: https://sendoso.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sendoso",
+  "description": "The Official Sendoso Chrome Extension. We source, store, ship, and track ROI for anything you ever need to send.",
+  "version": "4.4.0",
+  "minimum_chrome_version": "88",
+  "icons": {
+    "128": "img/icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "img/icon.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "cookies",
+    "activeTab",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://app.sendoso.com/*",
+    "https://*.salesforce.com/*",
+    "https://*.salesloft.com/*",
+    "https://*.hubspot.com/contacts/*/contact/*/",
+    "https://*.lightning.force.com/*",
+    "https://*.visual.force.com/*",
+    "https://*.outreach.io/*",
+    "https://*.amazon.co.uk/*",
+    "https://*.amazon.com/*",
+    "https://mail.google.com/",
+    "https://*.activehosted.com/app/deals/*",
+    "https://*.activehosted.com/app/contacts/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "gmail/gmail-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.co.uk/*"
+      ],
+      "css": [
+        "css/amazon.css",
+        "css/common.css"
+      ],
+      "js": [
+        "amazon/amazon-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.salesloft.com/*"
+      ],
+      "css": [
+        "css/common.css",
+        "css/salesloft.css"
+      ],
+      "js": [
+        "salesloft/salesloft-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.outreach.io/*"
+      ],
+      "css": [
+        "css/outreach.css",
+        "css/common.css"
+      ],
+      "js": [
+        "outreach/outreach-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.activehosted.com/*"
+      ],
+      "css": [
+        "css/active-campaign-widget.css",
+        "css/common.css"
+      ],
+      "js": [
+        "activeCampaign/active-campaign-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.hubspot.com/*"
+      ],
+      "css": [
+        "css/hubspot.css",
+        "css/common.css"
+      ],
+      "js": [
+        "hubspot/hubspot-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.salesforce.com/*",
+        "https://*.visual.force.com/*",
+        "https://*.visualforce.com/*"
+      ],
+      "exclude_matches": [
+        "https://login.salesforce.com/*"
+      ],
+      "css": [
+        "css/style.css"
+      ],
+      "js": [
+        "salesforce/salesforce-script.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.lightning.force.com/*"
+      ],
+      "css": [
+        "css/style.css"
+      ],
+      "js": [
+        "salesforceLighteningReady/salesforce-script.js"
+      ]
+    }
+  ],
+  "incognito": "split"
+}

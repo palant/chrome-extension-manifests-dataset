@@ -1,0 +1,78 @@
+---
+name: Buyzos (beta)
+version: 0.1.6
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 2
+release_date: '2021-02-11T07:42:44.000Z'
+size: 288KiB
+languages:
+  - English
+description: Buy Amazon products from original creators
+publisher: 'Raab & Co. '
+publisher_address: |-
+  5142 Hollister Avenue #548
+  Santa Barbara, CA 93111
+  USA
+extension_website: www.buyzos.com
+support_website: https://buyzos.com/contact
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "version": "0.1.6",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "content/icon-128.png"
+  },
+  "browser_action": {
+    "default_title": "__MSG_name__"
+  },
+  "background": {
+    "scripts": [
+      "scripts/jquery-3.3.1.js",
+      "scripts/language.js",
+      "scripts/background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.amazon.com/*",
+        "*://amazon.com/*"
+      ],
+      "js": [
+        "content_scripts/amazon-cs.js"
+      ],
+      "css": [
+        "content/inject.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.amazon.com/*",
+        "*://amazon.com/*"
+      ],
+      "js": [
+        "content_scripts/link-resolver.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    "content/*.*",
+    "scripts/*.*"
+  ],
+  "default_locale": "en",
+  "manifest_version": 2
+}

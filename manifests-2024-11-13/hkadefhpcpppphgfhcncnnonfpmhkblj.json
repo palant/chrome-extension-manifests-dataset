@@ -1,0 +1,93 @@
+---
+name: Instant YouTube
+version: 1.1.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 79
+release_date: '2022-06-05T10:56:03.000Z'
+size: 193KiB
+languages:
+  - English
+description: Watch YouTube videos anywhere
+publisher_account: Xie Yuguo
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Instant YouTube",
+  "version": "1.1.1",
+  "manifest_version": 3,
+  "description": "Watch YouTube videos anywhere",
+  "author": "Xie Yuguo",
+  "homepage_url": "https://github.com/ExxEss/Instant-Youtube",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "incognito": "spanning",
+  "permissions": [
+    "contextMenus",
+    "nativeMessaging",
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "dist/src/js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "images/Logo.png",
+    "default_popup": "dist/src/html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*",
+        "<all_urls>",
+        "file://*/*"
+      ],
+      "js": [
+        "dist/src/js/content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/embed/*"
+      ],
+      "js": [
+        "dist/src/js/iframe.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "dist/src/js/href.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "128": "images/Logo.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

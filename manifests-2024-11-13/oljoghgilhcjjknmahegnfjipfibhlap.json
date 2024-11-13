@@ -1,0 +1,106 @@
+---
+name: MerchFlow for Merch by Amazon
+version: 4.0.24
+category_slug: productivity/workflow
+rating: 4.848739495798319
+rating_count: 119
+user_count: 2000
+release_date: '2024-11-01T13:35:01.000Z'
+size: 4.3MiB
+languages:
+  - English (United States)
+description: A lightweight and fast product manager App for Merch by Amazon sellers.
+publisher_account: Merch Apps
+extension_website: merchflow.app
+support_website: https://www.facebook.com/groups/merchflow.insiders/
+privacy_policy: https://merchflow.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "background": {
+        "service_worker": "service_worker.js",
+        "type": "module"
+    },
+    "name": "MerchFlow for Merch by Amazon",
+    "version": "4.0.24",
+    "manifest_version": 3,
+    "description": "A lightweight and fast product manager App for Merch by Amazon sellers.",
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "alarms",
+        "offscreen"
+    ],
+    "host_permissions": [
+        "*://*.gumroad.com/*",
+        "*://*.amazon.com/*",
+        "*://*.amazon.de/*",
+        "*://*.amazon.co.uk/*",
+        "*://*.amazon.it/*",
+        "*://*.amazon.fr/*",
+        "*://*.amazon.es/*",
+        "*://*.amazon.co.jp/*",
+        "*://*.merchflow.app/*",
+        "*://*.sentry.io/*"
+    ],
+    "web_accessible_resources": [
+        {
+        "resources": [ "assets/*", "app/*", "backup/tags.html", "backup/advanced.html", "sentry.js" ],
+        "matches": [ "https://merch.amazon.com/*" ]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "*://merch.amazon.com/designs/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "sentry.js",
+                "content/plugins/js/jquery.min.js",
+                "content/plugins/js/toastr.min.js",
+                "content/autopilot.js"
+            ],
+            "css": [
+                "content/plugins/css/toastr.min.css"
+            ],
+            "all_frames": false
+        },
+        {
+            "matches": [
+                "https://merch.amazon.com/*"
+            ],
+            "run_at": "document_idle",
+            "css": [
+                "content/css/navFix.css"
+            ],
+            "js": [
+                "content/plugins/js/jquery.min.js",
+                "content/updateNav.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://merch.amazon.com/resource/merchflow/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "app/inset.js"
+            ]
+        }
+    ],
+    "icons": {
+        "256": "assets/icon256.png",
+        "48": "assets/icon48.png",
+        "128": "assets/icon128.png",
+        "16": "assets/icon16.png"
+    },
+    "action": {
+        "default_icon": "assets/icon128.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'"
+    }
+}

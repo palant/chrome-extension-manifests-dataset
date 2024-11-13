@@ -1,0 +1,70 @@
+---
+name: Qt QA Squish Integration
+version: 3.0.0
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 5
+release_date: '2024-10-23T12:38:52.000Z'
+size: 32.26KiB
+languages:
+  - English
+description: >-
+  Enables Qt QA Squish GUI Tester to drive Chrome for performing automated GUI
+  tests.
+publisher: The Qt Company Oy
+publisher_address: |-
+  Miestentie 7
+  Espoo 02150
+  FI
+privacy_policy: https://www.qt.io/terms-conditions/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Qt QA Squish Integration",
+    "description": "Enables Qt QA Squish GUI Tester to drive Chrome for performing automated GUI tests.",
+    "version": "3.0.0",
+    "manifest_version": 3,
+    "permissions": [ "tabs", "scripting", "browsingData", "webNavigation", "storage", "nativeMessaging", "declarativeNetRequest" ],
+    "host_permissions": [ "http://*/*", "https://*/*", "<all_urls>" ],
+    "icons" : {
+        "16": "webext_icon16.png",
+        "32": "webext_icon32.png",
+        "48": "webext_icon48.png",
+        "64": "webext_icon64.png",
+        "128": "webext_icon128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["ispagehooked.js", "runinwebpage.js"]
+        }, {
+            "matches": ["http://*/*", "https://*/*"],
+            "all_frames": true,
+            "run_at": "document_start",
+            "js": [
+                "wasmarguments.js"
+            ]
+        }
+      ],
+    "web_accessible_resources": [{
+        "resources": ["ispagehooked_.js"],
+        "matches": ["<all_urls>"]
+    }],
+    "options_ui": {
+        "page": "options.html"
+      },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "declarative_net_request" : {
+        "rule_resources" : [{
+          "id": "ruleset",
+          "enabled": true,
+          "path": "disable_csp.json"
+        }]
+    }
+}

@@ -1,0 +1,78 @@
+---
+name: Ringover VoIP Phone for Odoo - Click2Dial
+version: 1.1.1
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 17
+release_date: '2024-10-09T11:59:10.000Z'
+size: 3.86MiB
+languages:
+  - English (United States)
+description: >-
+  Effortlessly make and receive calls in Odoo! Click phone numbers to dial, sync
+  contacts, track call history, and boost productivity.
+publisher_account: RingOver
+extension_website: ringover.com
+support_website: support.ringover.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+  "manifest_version": 3,
+
+  "name": "Ringover VoIP Phone for Odoo - Click2Dial",
+
+  "version": "1.1.1",
+
+  "description": "Effortlessly make and receive calls in Odoo! Click phone numbers to dial, sync contacts, track call history, and boost productivity.",
+
+  "icons": {
+    "128": "icons/logo-128.png",
+    "16": "icons/logo-16.png",
+    "32": "icons/logo-32.png",
+    "64": "icons/logo-64.png"
+  },
+
+  "content_scripts": [
+
+    {
+      "run_at": "document_end",
+      "matches": ["http://localhost:8069/*", "https://*.odoo.com/*"],
+      "js": [
+        "content_scripts/vendors/libphonenumber.min.js",
+        "content_scripts/vendors/ringover-sdk.js",
+        "content_scripts/content.js"
+      ],
+      "css": ["content_scripts/content.css"]
+    },
+
+    {
+      "run_at": "document_end",
+      "matches": ["https://app.ringover.com/*"],
+      "all_frames": true,
+      "js": [
+        "content_scripts/ringover_export.js"
+      ],
+      "world": "MAIN"
+    }
+
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "host_permissions": ["http://localhost:8069/*", "https://*.odoo.com/*", "https://app.ringover.com/*"],
+
+  "permissions": ["tabs"],
+
+  "action": {
+    "default_title": "Ringover VOIP Phone for Odoo",
+    "default_icon": "icons/logo-64.png",
+    "default_popup": "/options/popup.html"
+  }
+}

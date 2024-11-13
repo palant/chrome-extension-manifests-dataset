@@ -1,0 +1,88 @@
+---
+name: Fytted
+version: '1.02'
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 1
+user_count: 35
+release_date: '2024-07-17T07:23:17.000Z'
+size: 4.47MiB
+languages:
+  - English (United States)
+description: >-
+  The Fytted Chrome extension helps shoppers find their perfect sizes by
+  integrating size guide for supported websites.
+publisher_account: Fytted
+publisher_address: |-
+  14040 Panay Way
+  Apt 217
+  Marina Del Rey, CA 90292
+  US
+support_website: https://extension.fytted.com/
+privacy_policy: https://www.fytted.com/privacy
+---
+
+{
+  "manifest_version": 3,
+  "name": "Fytted",
+  "version": "1.02",
+  "description": "The Fytted Chrome extension helps shoppers find their perfect sizes by integrating size guide for supported websites.",
+  "permissions": ["storage", "tabs", "cookies"],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "action": {
+    "default_icon": {
+      "16": "assets/images/icon-disable16.png",
+      "32": "assets/images/icon-disable32.png",
+      "48": "assets/images/icon-disable48.png",
+      "64": "assets/images/icon-disable64.png",
+      "128": "assets/images/icon-disable128.png"
+    },
+    "default_title": "Fytted",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'none'; worker-src 'self'; connect-src *; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com data:; img-src * mediastream: blob: filesystem: data:; media-src * mediastream: blob: filesystem:; font-src 'self' https://fonts.gstatic.com data:; script-src 'self';",
+    "sandbox": "sandbox allow-scripts; default-src 'none'; worker-src 'self'; connect-src 'self'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com data:; img-src 'self' https://*.webqsee.com https://webqsee.com mediastream: blob: filesystem: data:; media-src 'self' https://*.webqsee.com https://webqsee.com mediastream: blob: filesystem:; font-src 'self' https://fonts.gstatic.com data:; script-src 'self' 'unsafe-eval'; frame-src 'self'; child-src 'self'; form-action 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["assets/vendors/jquery-ui-1.13.3/jquery-ui.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "assets/js/vendors/jquery.min.js",
+        "assets/vendors/jquery-ui-1.13.3/jquery-ui.js",
+        "content-script.js",
+        "assets/inject/js/injector.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["assets/inject/js/inject.popup.js"],
+      "type": "module",
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "resources": ["assets/*"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "32": "assets/images/icon32.png",
+    "48": "assets/images/icon48.png",
+    "64": "assets/images/icon64.png",
+    "128": "assets/images/icon128.png"
+  }
+}

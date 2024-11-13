@@ -1,0 +1,105 @@
+---
+name: SamaCare CoPilot
+version: 1.40.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 3000
+release_date: '2024-11-12T23:29:42.000Z'
+size: 3.45MiB
+languages:
+  - English (United States)
+description: >-
+  Web Extension that helps SamaCare's users to submit prior authorizations on
+  external portals
+publisher: SamaCare, Inc.
+publisher_address: |-
+  149 New Montgomery St ste 425
+  San Francisco, CA 94105
+  US
+privacy_policy: https://www.samacare.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SamaCare CoPilot",
+  "description": "Web Extension that helps SamaCare's users to submit prior authorizations on external portals",
+  "version": "1.40.0",
+  "action": {
+    "default_icon": {
+      "16": "favicon-16.png",
+      "32": "favicon-32.png",
+      "48": "favicon-48.png",
+      "128": "favicon-128.png"
+    },
+    "default_title": "Click to open panel"
+  },
+  "background": {
+    "service_worker": "js/backgroundPage.js"
+  },
+  "icons": {
+    "16": "favicon-16.png",
+    "32": "favicon-32.png",
+    "48": "favicon-48.png",
+    "128": "favicon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://localhost:8080/*",
+    "https://app.samacare.com/*",
+    "https://provider.samacare.com/*",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "css": [
+        "css/sc-global.css"
+      ],
+      "js": [
+        "js/contentScriptPortal.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://localhost:8080/*",
+        "https://app.samacare.com/*",
+        "https://provider.samacare.com/*"
+      ],
+      "js": [
+        "js/contentScriptSama.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/sc-icon.svg",
+        "images/sc-icon-circle.svg",
+        "images/exclamation-mark-in-circle.svg"
+      ],
+      "matches": [
+        "https://*/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://localhost:8080/*",
+      "https://app.samacare.com/*",
+      "https://provider.samacare.com/*"
+    ]
+  }
+}

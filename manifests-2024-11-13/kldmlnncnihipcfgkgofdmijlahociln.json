@@ -1,0 +1,71 @@
+---
+name: FADO
+version: 1.0.2
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 145
+release_date: '2023-11-20T05:05:12.000Z'
+size: 781KiB
+languages:
+  - English
+  - Tiếng Việt
+description: A shopping tool from fado.vn
+publisher: FADO GLOBAL JOINT STOCK COMPANY
+publisher_account: FADO GLOBAL
+publisher_address: |-
+  60 Nguyễn Đình Chiểu
+  Đa Kao
+  Quận 1, Ho Chi Minh City 700000
+  VN
+extension_website: fado.vn
+privacy_policy: https://fado.vn/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_icon": "static/assets/icon.png",
+    "default_popup": "popup.html",
+    "default_title": "Premium Global E-Commerce"
+  },
+  "background": {"service_worker": "static/js/sw.js"},
+  "content_scripts": [
+    {
+      "js": ["static/js/jquery.js", "static/js/content.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["static/js/jquery.js", "static/js/checkout.js"],
+      "matches": ["*://fado.vn/api/v3/extension/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["static/js/cart.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "content_scripts": "script-src 'self'; object-src 'self'",
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "default_locale": "vi",
+  "description": "A shopping tool from fado.vn",
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "icons": {
+    "128": "static/assets/icon.png"
+  },
+  "manifest_version": 3,
+  "name": "FADO",
+  "permissions": ["storage", "tabs", "cookies", "proxy"],
+  "version": "1.0.2",
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["static/assets/*"]
+    }
+  ]
+}

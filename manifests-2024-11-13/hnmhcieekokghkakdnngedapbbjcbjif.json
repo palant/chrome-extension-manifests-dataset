@@ -1,0 +1,108 @@
+---
+name: INNER CIRCLE DEETS
+version: '1.171'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 87
+release_date: '2023-12-20T14:31:32.000Z'
+size: 2.01MiB
+languages:
+  - English
+description: UPDATE ALL CLIENTS INSTANTLY WITH YOUR POSTS, LINKS OR ANY CONTENT, PRIVATELY!
+publisher_account: BOS
+support_website: https://innercircledeets.com/support
+privacy_policy: https://app.mysocial360.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "INNER CIRCLE DEETS",
+  "short_name": "Inner Circle Deets",
+  "version": "1.171",
+  "description": "UPDATE ALL CLIENTS INSTANTLY WITH YOUR POSTS, LINKS OR ANY CONTENT, PRIVATELY!",
+  "manifest_version": 3,
+  "homepage_url": "https://innercircledeets.com",
+  "minimum_chrome_version": "88",
+  "permissions": [
+    "gcm", 
+    "identity",
+    "identity.email",
+    "storage",
+    "notifications",
+    "cookies"
+  ],
+  "action": {
+    "default_title": "Start using Inner Circle Deets",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo16.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches":["https://beta.app.innercircledeets.com/innercircledeets/deets/*", "http://beta.app.innercircledeets.com/innercircledeets/deets/*"],
+      "css":["./libs/bootstrap.css"],
+      "js": ["./libs/sweetalert.js","./content/deets.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://accountscenter.facebook.com/profiles/",
+        "https://accountscenter.facebook.com/personal_info/",
+        "https://accountscenter.facebook.com/profiles/*",
+        "https://accountscenter.facebook.com/personal_info/*"
+      ],
+      "js": [
+        "./content/facebook.login.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches":["https://www.facebook.com/*", "https://web.facebook.com/*"],
+      "css":["./libs/bootstrap.css"],
+      "js": ["./content/facebook.invites.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://app.mysocial360.com/oauth/*",
+        "https://beta.app.innercircledeets.com/innercircledeets/api/*"
+      ],
+      "js": ["./messages/auth.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://winner.fbgroupmaster.com/*",
+        "http://winner.innercirclecontest.com/*",
+        "https://winner.innercirclecontest.com/*"
+      ],
+      "js": ["./content/fbgroupmaster.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+    "16": "logo16.png",
+    "32": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  }
+}

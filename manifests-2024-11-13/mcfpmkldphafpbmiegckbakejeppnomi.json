@@ -1,0 +1,125 @@
+---
+name: MyBook
+version: 1.8.7
+category_slug: productivity/developer
+rating: 5
+rating_count: 3
+user_count: 44
+release_date: '2024-11-13T03:50:13.000Z'
+size: 7.76MiB
+languages:
+  - English
+description: Make quality friends and track engagements
+publisher_account: tier5contentkeeper
+support_website: https://www.tier5.us/contact.html
+privacy_policy: https://tier5.us/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MyBook",
+  "version": "1.8.7",
+  "manifest_version": 3,
+  "description": "Make quality friends and track engagements",
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.svg",
+        "images/*.png",
+        "pickr.min.js"
+      ],
+      "matches": [
+        "<all_urls>"
+        
+      ]
+    }
+  ],
+  "icons": {
+    "16": "./images/16X16.png",
+    "48": "./images/48X48.png",
+    "128": "./images/128X128.png"
+  },
+  "action": {
+    "default_title": "Friender"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*"  
+      ],
+      "js": [
+        "jquery-3.1.0.min.js",
+        "arrive.js",
+        "pickr.min.js",
+        "commonContent.js",
+        "postContent.js"
+      ],
+      "css": [
+        "classic.min.css",
+        "content.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.friender.io/*",
+        "https://localhost:3000/*",
+        "http://localhost:3000/*"
+      ],
+      "js": [
+        "portalScript.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "declarativeNetRequest",
+    "alarms",
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "https://*.facebook.com/*",
+    "https://*.execute-api.us-east-2.amazonaws.com/*",
+    "https://*.execute-api.us-east-1.amazonaws.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://localhost:3000/*",
+      "https://stage.friender.io/*",
+      "https://beta.friender.io/*",
+      "https://app.friender.io/*",
+      "https://dev.friender.io/*",
+      "https://stage.friender.io/*",
+      "http://localhost:3000/*"
+    ],
+    "accepts_tls_channel_id": true
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'",
+    "content_scripts": "script-src 'self'; object-src 'none'"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "ruleset.json"
+      }
+    ]
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "windows": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F",
+        "linux": "Ctrl+Shift+F"
+      }
+    }
+  }
+}

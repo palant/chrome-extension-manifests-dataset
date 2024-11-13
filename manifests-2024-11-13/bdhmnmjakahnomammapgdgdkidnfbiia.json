@@ -1,0 +1,86 @@
+---
+name: StudentInsight
+version: 1.0.2.7
+category_slug: make_chrome_yours/functionality
+rating: 5
+rating_count: 2
+user_count: 97
+release_date: '2024-10-16T06:02:30.000Z'
+size: 120KiB
+languages:
+  - עברית
+description: >-
+  StudentInsight is a browser extension that enhances the Moodle experience and
+  syncs your StudentInsight data.
+publisher_account: Itai
+extension_website: studentinsight.co.il
+support_website: https://github.com/itailitai/HUJmate-chrome-extension
+privacy_policy: https://studentinsight.co.il/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "StudentInsight",
+  "description": "StudentInsight is a browser extension that enhances the Moodle experience and syncs your StudentInsight data.",
+  "version": "1.0.2.7",
+  "permissions": ["storage", "tabs"],
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.huji.ac.il/dataj/controller/*"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["https://moodle4.cs.huji.ac.il/*"],
+      "js": ["scripts/moodle-script.js"],
+      "run_at": "document_start",
+
+      "css": ["assets/moodle-css.css", "assets/dark-moodle.css"]
+    },
+    {
+      "matches": ["https://studentinsight.co.il/*"],
+      "js": ["scripts/hujinsight.js"]
+    }
+  ],
+
+  "host_permissions": ["https://*.studentinsight.co.il/*"],
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "default_title": "StudentInsight"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/moodlelogo.png",
+        "assets/loader.gif",
+        "assets/eye_on.png",
+        "assets/eye_off.png",
+        "assets/hujinsight.png"
+      ],
+      "matches": ["https://moodle4.cs.huji.ac.il/*"]
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "extension@hujinsight.com",
+      "update_url": "https://studentinsight.co.il/updates.json"
+    }
+  }
+}

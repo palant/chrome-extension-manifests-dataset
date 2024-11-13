@@ -1,0 +1,156 @@
+---
+name: Salesforce Toolkit
+version: 1.3.18
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 542
+release_date: '2024-10-29T08:46:50.000Z'
+size: 15.35MiB
+languages:
+  - English
+description: >-
+  Use SF Toolkit directly from chrome to visualize record details and analyze
+  User access, profile, permissions, etc
+publisher_account: guillaume.rebmann33
+extension_website: sf-toolkit.com
+privacy_policy: https://github.com/grebmann1/sfdx-ui-light/blob/master/privacy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Salesforce Toolkit",
+    "version": "1.3.18",
+    "description": "Use SF Toolkit directly from chrome to visualize record details and analyze User access, profile, permissions, etc",
+    "icons": {
+        "128": "images/sf-toolkit-icon-128.png"
+    },
+    "action": {
+        "default_title": "Click to open Salesforce Toolkit"
+    },
+    "commands": {
+        "overlay_toggle": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+E",
+                "linux": "Ctrl+Shift+E",
+                "mac": "Command+Shift+E",
+                "windows": "Ctrl+Shift+E"
+            },
+            "description": "Enable/Disable the Overlay"
+        },
+        "open_overlay_search": {
+            "description": "Overlay Open Search",
+            "suggested_key": {
+                "default": "Ctrl+Shift+S",
+                "linux": "Ctrl+Shift+S",
+                "mac": "Command+Shift+S",
+                "windows": "Ctrl+Shift+S"
+            }
+        },
+        "open_side_panel": {
+            "description": "Open Side Panel",
+            "suggested_key": {
+                "default": "Ctrl+Shift+Space",
+                "linux": "Ctrl+Shift+Space",
+                "mac": "Command+Shift+Space",
+                "windows": "Ctrl+Shift+Space"
+            }
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.sf-toolkit.com/*",
+                "http://localhost:3000/*"
+            ],
+            "run_at":"document_end",
+            "js": ["scripts/inject_toolkit.js"]
+        },
+        {
+            "matches": [
+                "https://*.salesforce.com/*",
+                "https://*.salesforce-setup.com/*",
+                "https://*.lightning.force.com/*",
+                "https://*.salesforce.mil/*",
+                "https://*.lightning.force.mil/*"
+            ],
+            "exclude_globs": [ "*salesforce.com/#/*" ],
+            "exclude_matches": [
+                "https://*/setup/secur/RemoteAccessAuthorizationPage.apexp*",
+                "https://*/_ui/common/apex/debug/*",
+                "https://*/_ui/*",
+                "https://test.salesforce.com/",
+                "https://login.salesforce.com/",
+                "https://*/loginflow/*"
+            ],
+            "run_at":"document_end",
+            "js": [
+                "scripts/inject_salesforce.js",
+                "assets/libs/require/require.js",
+                "assets/libs/monaco-editor/vs/editor/editor.main.js",
+                "assets/libs/monaco-editor/vs/basic-languages/javascript/javascript.js",
+                "assets/libs/monaco-editor/vs/basic-languages/apex/apex.js",
+                "assets/libs/monaco-editor/vs/basic-languages/css/css.js",
+                "assets/libs/monaco-editor/vs/basic-languages/html/html.js",
+                "assets/libs/monaco-editor/vs/basic-languages/java/java.js",
+                "assets/libs/monaco-editor/vs/basic-languages/xml/xml.js",
+                "assets/libs/monaco-editor/vs/basic-languages/markdown/markdown.js",
+                "assets/libs/monaco-editor/vs/basic-languages/typescript/typescript.js",
+                "assets/libs/monaco-editor/vs/language/html/htmlMode.js",
+                "assets/libs/monaco-editor/vs/language/json/jsonMode.js",
+                "assets/libs/monaco-editor/vs/language/typescript/tsMode.js",
+                "assets/libs/monaco-editor/vs/language/css/cssMode.js"
+            ],
+            "css" : [
+                "assets/styles/slds-sf-toolkit.css",
+                "assets/styles/inject.css",
+                "assets/styles/extension.css",
+                "assets/styles/web.css"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "scripts/*",
+                "assets/*",
+                "index.html*",
+                "offscreen.html*",
+                "callback.html*",
+                "openai/index.js",
+                "workers/openaiWorker/worker.js"
+            ]
+        }
+    ],
+    "options_ui": {
+        "page": "views/options.html",
+        "open_in_tab": true
+    },
+    "host_permissions": [
+        "https://*/*",
+        "*://*/*"
+    ],
+    "background": {
+        "service_worker": "scripts/background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "identity",
+        "cookies",
+        "storage",
+        "tabs",
+        "tabGroups",
+        "sidePanel",
+        "contextMenus",
+        "unlimitedStorage"
+    ],
+    "incognito": "spanning"
+  }

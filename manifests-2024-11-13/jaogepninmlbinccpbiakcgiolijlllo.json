@@ -1,0 +1,189 @@
+---
+name: WEB.DE MailCheck
+version: 8.0.6
+category_slug: productivity/communication
+rating: 3.4957264957264957
+rating_count: 351
+user_count: 100000
+release_date: '2024-07-19T05:33:15.000Z'
+size: 2.15MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+description: Der sichere Klick in Dein Postfach.
+publisher: 1&1 Mail & Media GmbH
+publisher_address: |-
+  Brauerstr. 48
+  Karlsruhe 76135
+  DE
+extension_website: web.de
+support_website: https://hilfe.web.de/mailcheck/googlechrome.html
+privacy_policy: https://agb-server.gmx.net/datenschutz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "short_name": "__MSG_appShortName__",
+  "description": "__MSG_appDescription__",
+  "version": "8.0.5.0",
+  "author": "__MSG_appAuthor__",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "background": {
+    "service_worker": "js/background-mailcheck.js"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/envelope-19.png",
+      "38": "images/envelope-38.png"
+    },
+    "default_title": "__MSG_browserActionTitle__"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "js/identify-to-site-cs.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*.web.de/*",
+        "https://*.gmx.net/*",
+        "https://*.gmx.de/*",
+        "https://*.gmx.ch/*",
+        "https://*.gmx.at/*",
+        "https://*.gmx.com/*",
+        "https://*.mail.com/*",
+        "https://*.1und1.de/*",
+        "https://*.1and1.com/*"
+      ]
+    },
+    {
+      "js": [
+        "js/aib-cs.js"
+      ],
+      "run_at": "document_idle",
+      "exclude_globs": [
+        "*/login/*"
+      ],
+      "matches": [
+        "https://*.web.de/*"
+      ]
+    },
+    {
+      "js": [
+        "js/aib-main-cs.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_idle",
+      "exclude_globs": [
+        "*/login/*"
+      ],
+      "matches": [
+        "https://*.web.de/*"
+      ]
+    },
+    {
+      "js": [
+        "js/portal-page-badge-cs.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "matches": [
+        "https://suche.web.de/*"
+      ]
+    },
+    {
+      "js": [
+        "js/webapp-start-proxy-cs.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "https://dl.web.de/backend/post.html",
+        "https://dl.gmx.net/backend/post.html",
+        "https://dl.gmx.com/backend/post.html",
+        "https://dl.mail.com/backend/post.html",
+        "https://dl.1und1.de/backend/post.html"
+      ]
+    },
+    {
+      "js": [
+        "js/backtab-ads-cs.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "matches": [
+        "https://www.adsensecustomsearchads.com/afs/ads?*",
+        "https://www.adsensecustomsearchads.com/afs/ads/*"
+      ]
+    },
+    {
+      "js": [
+        "js/brand-oauth2-cs.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "matches": [
+        "https://1und1.de/login/oauth2/*",
+        "https://www.1und1.de/login/oauth2/*",
+        "https://gmx.net/login/oauth2/*",
+        "https://www.gmx.net/login/oauth2/*",
+        "https://gmx.com/login/oauth2/*",
+        "https://www.gmx.com/login/oauth2/*",
+        "https://mail.com/login/oauth2/*",
+        "https://www.mail.com/login/oauth2/*",
+        "https://web.de/login/oauth2/*",
+        "https://www.web.de/login/oauth2/*"
+      ],
+      "include_globs": [
+        "*code=*"
+      ]
+    },
+    {
+      "js": [
+        "js/microsoft-web-auth-cs.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "https://login.live.com/*"
+      ],
+      "include_globs": [
+        "*/oauth20_desktop*code=*",
+        "*/oauth20_desktop*error=*"
+      ]
+    }
+  ],
+  "default_locale": "de",
+  "manifest_version": 3,
+  "version_name": "8.0.6",
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "tabs",
+    "scripting",
+    "storage",
+    "notifications",
+    "offscreen",
+    "contextMenus",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://*.web.de/*",
+    "https://*.gmx.net/*",
+    "https://*.1und1.de/*",
+    "https://*.uilogin.de/*",
+    "https://*.mail.com/*",
+    "https://accounts.google.com/*",
+    "https://www.googleapis.com/*",
+    "https://mail.google.com/*",
+    "https://*.live.com/*",
+    "*://localhost/*"
+  ],
+  "key": "MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQDGXNIZmQNEwqmqx57LfsAfvYYZYioHMaQFwBQlWV25SoNuoe0v5fM34HvtYqqtrJJoL+WwM8r1F181qhHCqaV7lzMO9+cJtQriiXLcNHxgygl1b6ESUlSTkHO4AWlmg7DfqqUueT80vzqcFZ3/NGZDXUNQlzE9W4CinelnX76W7wIDAQAB"
+}

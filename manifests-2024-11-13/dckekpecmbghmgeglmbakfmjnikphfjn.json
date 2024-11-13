@@ -1,0 +1,120 @@
+---
+name: SwitchBro - Save Broker Logins
+version: 1.0.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 91
+release_date: '2024-10-15T17:24:11.000Z'
+size: 1.34MiB
+languages:
+  - English
+description: >-
+  Let's you seamlessly switch between different accounts of a broker. Now you
+  can also save and login automatically to brokers.
+publisher_account: piyushfs
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "SwitchBro - Save Broker Logins",
+    "manifest_version": 3,
+    "version": "1.0.3",
+    "description": "Let's you seamlessly switch between different accounts of a broker. Now you can also save and login automatically to brokers.",
+    "permissions": [
+        "cookies",
+        "storage",
+        "tabs",
+        "scripting"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://login.dhan.co/*"
+            ],
+            "js": [
+                "dhan/injectlogin.js",
+                "dhan/injectcreds.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://web.dhan.co/*"
+            ],
+            "js": [
+                "dhan/injectweb.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://kite.zerodha.com/*"
+            ],
+            "js": [
+                "zerodha/injectcreds.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://login.fyers.in/*"
+            ],
+            "js": [
+                "fyers/injectcreds.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "host_permissions": [
+        "https://*.fyers.in/*",
+        "http://*.fyers.in/*",
+        "http://.fyers.in/",
+        "https://.fyers.in/",
+        "https://*.zerodha.com/*",
+        "http://*.zerodha.com/*",
+        "http://.zerodha.com/",
+        "https://.zerodha.com/",
+        "https://*.dhan.co/*",
+        "https://.dhan.co/",
+        "http://.dhan.co/",
+        "https://login.dhan.co/*"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "500": "icon500.png"
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "commands": {
+        "switch-up": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Up",
+                "mac": "Command+Shift+Up"
+            },
+            "description": "Switch account to one level above"
+        },
+        "switch-down": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Down",
+                "mac": "Command+Shift+Down"
+            },
+            "description": "Switch account to one level below"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "help.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ]
+}

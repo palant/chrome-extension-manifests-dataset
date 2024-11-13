@@ -1,0 +1,75 @@
+---
+name: Timer for Google Meet
+version: '10.0'
+category_slug: lifestyle/social
+rating: 2.761904761904762
+rating_count: 21
+user_count: 10000
+release_date: '2024-09-24T10:15:14.000Z'
+size: 398KiB
+languages:
+  - English
+  - italiano
+description: Realtime timer for google meet.
+publisher: Zoomcorder
+publisher_account: Zoomcorder.com
+publisher_address: |-
+  6450 Lusk Blvd
+  San Diego, CA 92121
+  US
+extension_website: meetingtv.us
+support_website: https://zoomcorder.com/support
+privacy_policy: https://zoomcorder.com/extension/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Timer for Google Meet",
+  "description": "Realtime timer for google meet.",
+  "default_locale": "en",
+  "version": "10.0",
+  "author": "DGT",
+  "permissions": ["storage"],
+
+  "host_permissions": [
+      "https://zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"
+  ],
+  "icons": {
+    "16": "./src/images/logo_16.png",
+    "32": "./src/images/logo_32.png",
+    "48": "./src/images/logo_48.png",
+    "128": "./src/images/logo_128.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "src/popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["src/sounds/ringtone.mp3", "/images/record.png", "/images/recimage.png", "/images/howto.jpg", "images/down.png", "images/8.gif"],
+        "matches": ["https://*.zoom.us/*", "https://*.zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*"]
+    }
+  ],
+
+  "content_scripts": [
+    {
+       "matches": ["https://*.zoom.us/*", "https://zoomgov.com/*", "https://meet.google.com/*", "https://*.gotomeet.me/*","https://*.gotowebinar.com/*" ],
+      "js": [
+        "src/sdk/socket.io-2.3.0.js",
+        "src/sdk/sentry-5.21.1.js",
+        "./src/content.js"
+      ],
+      "css": [
+        "./src/styles.css"
+      ]
+
+    }
+  ],
+
+   "content_security_policy": {"extension_pages": "script-src 'self'; object-src 'self'"}
+}

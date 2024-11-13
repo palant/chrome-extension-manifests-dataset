@@ -1,0 +1,95 @@
+---
+name: 'Qoala: Cashback y Cupones Automaticos'
+version: 4.27.2
+category_slug: lifestyle/shopping
+rating: 4.58303886925795
+rating_count: 283
+user_count: 50000
+release_date: '2024-11-12T16:10:49.000Z'
+size: 4.3MiB
+languages:
+  - español
+description: >-
+  Cupones descuento automáticos y cashback - Te devolvemos dinero por tus
+  compras
+publisher: Joinqoala S.L.
+publisher_account: Joinqoala SL
+publisher_address: |-
+  Avenida Puente Cultural 10
+  Bloque B, Piso 2, Puerta 4
+  SS de los Reyes, Madrid 28702
+  ES
+extension_website: joinqoala.com
+support_website: https://help.joinqoala.com/
+privacy_policy: https://joinqoala.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Qoala: Cashback y Cupones Automaticos",
+  "version": "4.27.2",
+  "description": "Cupones descuento automáticos y cashback - Te devolvemos dinero por tus compras",
+  "homepage_url": "https://joinqoala.com",
+  "icons": {
+    "128": "assets/images/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "assets/images/icon32.png",
+      "128": "assets/images/icon128.png",
+      "1024": "assets/images/icon1024.png"
+    },
+    "default_title": "Abre Qoala",
+    "default_popup": "/popup/Popup.html"
+  },
+  "permissions": ["activeTab", "alarms", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "/BackgroundWorker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.google.com/*",
+        "https://*.google.es/*",
+        "https://*.google.co.uk/*"
+      ],
+      "js": ["/content-scripts/googleSearch/googleSearch.js"]
+    },
+    {
+      "matches": ["https://*/*"],
+      "js": ["/content-scripts/store/StoreContentScript.js"]
+    },
+    {
+      "matches": ["https://*.joinqoala.com/*", "http://localhost:3000/*"],
+      "js": ["/content-scripts/auth/AuthContentScript.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.joinqoala.com/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/images/icon128.png",
+        "/assets/images/iconwhite128.png",
+        "/assets/images/drag_icon.svg",
+        "/content-scripts/store/cashbackPopup/CashbackPopup.html",
+        "/content-scripts/store/bigPoppa/BigPoppa.html",
+        "/content-scripts/store/cashbackExpirationPopup/CashbackExpirationPopup.html",
+        "/content-scripts/store/activateCashbackPopup/ActivateCashbackPopup.html",
+        "/content-scripts/store/nonTransactorCashbackPopup/NonTransactorCashbackPopup.html",
+        "/content-scripts/store/mobileCashbackPopup/MobileCashbackPopup.html",
+        "/content-scripts/store/redirectPopup/RedirectPopup.html",
+        "/content-scripts/store/successPopup/SuccessPopup.html",
+        "/content-scripts/store/peerPopup/PeerPopup.html",
+        "/content-scripts/store/autofillPopup/AutofillPopup.html",
+        "/content-scripts/store/actPopup/ACTPopup.html",
+        "/content-scripts/googleSearch/SearchTag.html"
+      ],
+      "matches": ["https://*/*"]
+    }
+  ]
+}

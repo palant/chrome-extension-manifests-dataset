@@ -1,0 +1,100 @@
+---
+name: Askman - Connect AI to pages
+version: 0.0.2
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-11-12T06:27:10.000Z'
+size: 2.9MiB
+languages:
+  - English
+description: >-
+  An tool that allows users to easily connect AI to their webpages, providing
+  chat and information retrieval capabilities.
+publisher_account: askman.dev
+extension_website: askman.dev
+support_website: https://github.com/askman-dev/askman-chrome-extension/discussions
+privacy_policy: >-
+  https://docs.google.com/document/d/1c1thQsqEWfeDNcywfwFqS1SwEXwF35FkaDtOfBE3bdQ/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extensionName__",
+  "version": "0.0.2",
+  "description": "__MSG_extensionDescription__",
+  "permissions": [
+    "tabs",
+    "notifications",
+    "storage",
+    "contextMenus"
+  ],
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-128.png"
+  },
+  "icons": {
+    "128": "icon-128.png",
+    "512": "icon-512.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "src/pages/contentInjected/index.js"
+      ],
+      "css": [
+        "assets/css/contentStyle1731228355576.chunk.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "src/pages/contentUI/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/conf/*.toml",
+        "assets/css/*.css",
+        "icon-128.png",
+        "icon-32.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "commands": {
+    "ChatPopupDisplay": {
+      "suggested_key": {
+        "default": "Ctrl+I",
+        "mac": "Command+I"
+      },
+      "description": "__MSG_extensionCommandChatPopupDisplay__"
+    }
+  }
+}

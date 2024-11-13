@@ -1,0 +1,52 @@
+---
+name: Bookmark Sync
+version: '1.0'
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-03-12T07:23:01.000Z'
+size: 21.25KiB
+languages:
+  - English
+description: Syncs bookmark folder with a server.
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Bookmark Sync",
+    "version": "1.0",
+    "description": "Syncs bookmark folder with a server.",
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "permissions": [
+      "bookmarks",
+      "background",
+      "storage"    
+    ],
+    "background": {
+      "service_worker": "background.js",
+      "type": "module"
+    },
+    "action": {
+      "default_popup": "index.html",
+      "default_icon": {
+        "16": "icon.png",
+        "48": "icon.png", 
+        "128": "icon.png"
+      }
+    },
+    "content_scripts": [
+      {
+        "matches": ["http://localhost/*"],
+        "js": ["index.js", "s3Connector.js", "storage.js", "bookmarkTree.js"]
+      }
+    ],
+    "host_permissions": [
+      "https://linked-bookmarks.s3.ap-southeast-2.amazonaws.com/*"
+    ]
+}
+  

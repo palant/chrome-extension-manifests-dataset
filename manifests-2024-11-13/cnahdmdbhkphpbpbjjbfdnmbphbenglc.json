@@ -1,0 +1,90 @@
+---
+name: Mutable Web
+version: 1.5.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2024-11-10T05:51:04.000Z'
+size: 3.39MiB
+languages:
+  - English
+description: Bridge to the Mutable Web
+publisher_account: Dapplets Project
+support_website: https://github.com/dapplets/mutable-web-monorepo/issues
+privacy_policy: https://dapplets.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mutable Web",
+  "version": "1.5.0",
+  "version_name": "1.5.0",
+  "description": "Bridge to the Mutable Web",
+  "author": "Dapplets Team <contact@dapplets.org>",
+  "short_name": "Mutable Web",
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "minimum_chrome_version": "95",
+  "icons": {
+    "128": "icons/icon128.png"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_globs": [
+        "https://social.dapplets.org/*",
+        "https://social.testnet.dapplets.org/*",
+        "https://*.social.testnet.apps.dapplets.org/*",
+        "http://localhost/*",
+        "http://127.0.0.1:3000/*",
+        "https://augm.link/*"
+      ],
+      "js": [
+        "custom-elements.min.js",
+        "contentscript.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://app.mynearwallet.com/*",
+        "https://testnet.mynearwallet.com/*"
+      ],
+      "js": [
+        "mnw-patch-inpage.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "callback.html",
+        "bootstrap.min.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://localhost/*",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

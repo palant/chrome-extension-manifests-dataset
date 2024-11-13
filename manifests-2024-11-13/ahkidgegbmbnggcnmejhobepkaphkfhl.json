@@ -1,0 +1,83 @@
+---
+name: GIF Blocker
+version: 0.2.1
+category_slug: lifestyle/art
+rating: 3.6578947368421053
+rating_count: 38
+user_count: 3000
+release_date: '2022-12-29T05:49:39.000Z'
+size: 51.42KiB
+languages:
+  - English
+description: >-
+  Block GIF and WebP animation images on HTML pages to reduce bandwidth and
+  resource usage
+publisher_account: rynu.smith
+support_website: https://webextension.org/listing/gif-blocker.html
+privacy_policy: https://add0n.com/policies/rynu.smith.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "GIF Blocker",
+  "description": "Block GIF and WebP animation images on HTML pages to reduce bandwidth and resource usage",
+  "version": "0.2.1",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources" : [{
+      "id": "ruleset_gif",
+      "enabled": true,
+      "path": "ruleset/ruleset_gif.json"
+    }, {
+      "id": "ruleset_webp",
+      "enabled": true,
+      "path": "ruleset/ruleset_webp.json"
+    }]
+  },
+  "homepage_url": "https://webextension.org/listing/gif-blocker.html",
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [{
+    "matches": ["*://*/*"],
+    "js": ["data/inject.js"],
+    "run_at": "document_start",
+    "match_about_blank": true,
+    "all_frames": true
+  }],
+  "web_accessible_resources": [{
+    "resources": ["/data/block.svg"],
+    "matches": ["*://*/*"]
+  }],
+  "icons": {
+    "16": "data/icons/16.png",
+    "32": "data/icons/32.png",
+    "48": "data/icons/48.png",
+    "64": "data/icons/64.png",
+    "128": "data/icons/128.png",
+    "256": "data/icons/256.png",
+    "512": "data/icons/512.png"
+  },
+  "action":{
+    "default_title": "GIF Blocker (enabled)"
+  },
+  "options_ui": {
+    "page": "data/options/index.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "description": "Press the action button"
+    }
+  }
+}

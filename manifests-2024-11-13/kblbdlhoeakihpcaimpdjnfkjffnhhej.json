@@ -1,0 +1,133 @@
+---
+name: Points Path
+version: 1.5.10
+category_slug: lifestyle/travel
+rating: 4.40625
+rating_count: 32
+user_count: 50000
+release_date: '2024-11-13T06:18:54.000Z'
+size: 5.99MiB
+languages:
+  - English (United States)
+description: Award search for Google Flights
+publisher: Tripsight, Inc.
+publisher_account: Points Path
+publisher_address: |-
+  245 East 35th Street
+  New York, NY 10016
+  US
+extension_website: pointspath.com
+privacy_policy: https://pointspath.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Points Path",
+  "description": "Award search for Google Flights",
+  "manifest_version": 3,
+  "version": "1.5.10",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_page": "script-src 'self' 'eval' 'unsafe-eval' 'wasm-unsafe-eval' 'https://*/*'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'eval' 'unsafe-eval' 'wasm-unsafe-eval' 'https://www.google-analytics.com/analytics.js' 'libs/exceljs.min.js'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/travel/flights*"
+      ],
+      "js": [
+        "flightsContent.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://localhost:3005/*",
+        "https://pointspath.com/*"
+      ],
+      "js": [
+        "checkoutContent.js"
+      ]
+    },
+    {
+      "world": "MAIN",
+      "matches": [
+        "https://www.delta.com/flightsearch/book-a-flight*"
+      ],
+      "js": [
+        "deltaMainContent.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.delta.com/flightsearch/book-a-flight*"
+      ],
+      "js": [
+        "deltaIsolatedContent.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "removeFrameHeaders",
+        "enabled": true,
+        "path": "declarativeNetRequest/removeFrameHeaders.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "https://www.google.com/travel/flights/*",
+    "https://api.delta.com/mwsb/service/shop*",
+    "https://pointspath.com/*",
+    "http://localhost:3005/*"
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webRequest",
+    "declarativeNetRequestWithHostAccess",
+    "cookies"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "fonts/CabinVariableFont.ttf"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "32293352348-lkar2th7uq4jv9vlve0khu6vfkuvk8mk.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "https://*.pointspath.com/*"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA2kZP/du6yGvNYQiqIEtIiH+xKfH4UAVMNhEdeUGVPc+hg68jKtanGc6WQzYK4jS9Eu+yynk96m+AU0J32m21qMi0dtv1uOBBeb+uxhAwwXJ++YWwd1CDvUQSkyF9IecIQLq1gxTf90H5N5q1sRdExuoc1oqxTFM5Butf52Rqsg1b33Q/KzXJi718nOxu79aKbKTlJVNCjHKwDySxXK5niuWQVEKlJ9LyGKYJeHQR8V5yxmKEPvK9MvggE/Bf4PjTuE9PrYo/tsckHp6I7qPs3vffAzwhIjeJBfairdY4UnvXLcB8uUCAWGvw3jYZLc650CoAeQzD9/76SPyivot/DQIDAQAB"
+}

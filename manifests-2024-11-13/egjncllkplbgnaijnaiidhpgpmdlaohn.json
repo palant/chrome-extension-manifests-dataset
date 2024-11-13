@@ -1,0 +1,107 @@
+---
+name: Shimee
+version: 0.2.3
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-03-06T03:10:11.000Z'
+size: 412KiB
+languages:
+  - English
+description: Transcribe your Google meets
+publisher: Proptech Zone Ltd.
+publisher_account: Shimee
+publisher_address: |-
+  Bingham Road
+  Rochester ME2 4JL
+  GB
+privacy_policy: >-
+  https://shimee.notion.site/shimee/Privacy-Policy-179d0e52bd924465abcb41a7239b0519
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Shimee",
+  "description": "Transcribe your Google meets",
+  "version": "0.2.3",
+  "action": {
+    "default_title": "Shimee",
+    "default_icon": "inactive.png",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "identity",
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://shim.ee/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "overlay/react/index.js"
+      ],
+      "css": [
+        "overlay/react/index.css"
+      ],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://meet.google.com/"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+  },
+  "oauth2": {
+    "client_id": "1058357389738-f282bhsdv6qccucuft4sjh8106qns2n0.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "resources": [
+        "inject.js",
+        "overlay/react/index.js",
+        "overlay/react/index.css",
+        "overlay/jotme-logo.png"
+      ]
+    },
+    {
+      "matches": [
+        "https://shim.ee/*"
+      ],
+      "resources": [
+        "icon16.png"
+      ]
+    }
+  ]
+}

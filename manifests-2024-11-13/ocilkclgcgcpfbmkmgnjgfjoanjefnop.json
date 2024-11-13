@@ -1,0 +1,78 @@
+---
+name: Social Trust - блокировщик рекламы ВКонтакте
+version: 0.24.21
+category_slug: lifestyle/social
+rating: 4.967741935483871
+rating_count: 124
+user_count: 30000
+release_date: '2024-02-01T22:31:24.000Z'
+size: 871KiB
+languages:
+  - English
+  - русский
+description: >-
+  Расширение для ВК, которое блокирует рекламу и фильтрует новостную ленту.
+  Имеет гибкие настройки по скрытию нежелательных постов.
+publisher_account: SocialTrust
+extension_website: socialtrust.ru
+privacy_policy: https://socialtrust.ru/privacy-ru
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_application_title__",
+  "description": "__MSG_application_description__",
+  "version": "0.24.21",
+  "author": "SocialTrust",
+  "default_locale": "ru",
+  "homepage_url": "https://socialtrust.ru/",
+  "icons": {
+    "256": "images/icon256.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": [
+    "scripts/*",
+    "_locales/*"
+  ],
+  "permissions": [
+    "*://vk.com/*",
+    "*://*.vk.com/*",
+    "*://socialtrust.ru/*"
+  ],
+  "optional_permissions": [
+    "*://*/*"
+  ],
+  "manifest_version": 2,
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "scripts/content.js"
+      ],
+      "matches": [
+        "https://vk.com/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "scripts/rate.js",
+        "scripts/adfilter.js",
+        "scripts/prepare.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

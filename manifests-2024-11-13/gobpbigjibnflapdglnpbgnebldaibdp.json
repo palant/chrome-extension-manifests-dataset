@@ -1,0 +1,113 @@
+---
+name: Douban Music Assistant (豆瓣音乐助手)
+version: 1.0.0
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 13
+release_date: '2021-07-05T08:55:39.000Z'
+size: 53.67KiB
+languages:
+  - 中文 (简体)
+description: 在豆瓣上开一扇通往音乐的窗
+publisher_account: Chi Zhang
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Douban Music Assistant (豆瓣音乐助手)",
+  "version": "1.0.0",
+  "description": "在豆瓣上开一扇通往音乐的窗",
+  "manifest_version": 2,
+  "browser_action": {
+      "default_icon": "icon_16.png",
+      "default_title": "Douban Music Assistant (豆瓣音乐助手)",
+      "default_popup": "popup.html",
+      "icons": ["icon_16.png"]
+  },
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "permissions": [
+      "identity"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "scripts": ["jquery-1.7.1.min.js", "config.js", "background.js"]
+  },
+  "content_scripts": [
+     {
+      "matches": [
+                  "*://music.douban.com/mine*",
+                  "*://music.douban.com/people/*/update*",
+                  "*://music.douban.com/people/*/do*",
+                  "*://music.douban.com/people/*/wish*",
+                  "*://music.douban.com/people/*/collect*",
+                  "*://music.douban.com/subject/*",
+                  "*://music.douban.com/tag/*",
+                  "*://music.douban.com/doulist/*",
+                  "*://music.douban.com/search/*",
+                  "*://music.douban.com/subject_search*",
+                  "*://search.douban.com/music/subject_search*",
+                  "*://music.douban.com/recommended*",
+                  "*://www.douban.com/update/*",
+                  "*://www.douban.com/people/*/statuses*",
+                  "*://www.douban.com/search*",
+                  "*://www.douban.com/*"
+                  ],
+      "css":["doubanspotify.css"]
+     },
+     {
+      "matches": [
+                  "*://music.douban.com/people/*/update*",
+                  "*://music.douban.com/people/*/do*",
+                  "*://music.douban.com/people/*/wish*",
+                  "*://music.douban.com/people/*/collect*"
+                 ],
+      "run_at": "document_end",
+      "js": ["jquery-1.7.1.min.js", "utils.js", "page.js"],
+      "all_frames": true
+     },
+     {
+       "matches": ["*://music.douban.com/subject/*"],
+       "run_at": "document_end",
+       "js": ["jquery-1.7.1.min.js", "subject.js"],
+       "all_frames": true
+     },
+     {
+       "matches": [
+                  "*://music.douban.com/subject_search*",
+                  "*://search.douban.com/music/subject_search*"
+                  ],
+       "run_at": "document_end",
+       "js": ["jquery-1.7.1.min.js", "utils.js", "search_page.js"],
+       "all_frames": true
+     },
+     {
+       "matches": [
+                  "*://music.douban.com/recommended*",
+                  "*://music.douban.com/tag/*"
+                  ],
+       "run_at": "document_end",
+       "js": ["jquery-1.7.1.min.js", "utils.js", "music_old_list.js"],
+       "all_frames": true
+     },
+     {
+       "matches": ["*://www.douban.com/",
+                   "*://www.douban.com/?p=*",
+                   "*://www.douban.com/people/*/statuses*"],
+       "run_at": "document_end",
+       "js": ["jquery-1.7.1.min.js", "utils.js", "update_page.js"],
+       "all_frames": true
+     },
+     {
+       "matches": ["*://www.douban.com/search*"],
+       "run_at": "document_end",
+       "js": ["jquery-1.7.1.min.js", "utils.js", "omni_search_page.js"],
+       "all_frames": true
+     }
+  ],
+  "icons": {
+    "16": "icon_16.png",
+    "48": "icon_48.png"
+  }
+}

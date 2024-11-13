@@ -1,0 +1,95 @@
+---
+name: VidGuide
+version: 1.8.7
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 469
+release_date: '2024-07-12T04:02:33.000Z'
+size: 4.85MiB
+languages:
+  - English
+description: >-
+  VidGuide™ is the best way to create and share Standard Operating Procedures
+  (SOPs) with your team using video.
+publisher: Built to Sell Inc.
+publisher_account: VidGuide™
+publisher_address: |-
+  18 King Street East, Suite 1400
+  Toronto, ON M5C 1C4
+  CA
+support_website: https://vidguide.zendesk.com
+privacy_policy: https://www.vidguide.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VidGuide",
+  "version": "1.8.7",
+  "description": "VidGuide™ is the best way to create and share Standard Operating Procedures (SOPs) with your team using video.",
+  "action": {
+    "default_popup": "html/popup.html",
+    "default_icon": {
+      "16": "ext-icon-16x16.png",
+      "48": "ext-icon-48x48.png",
+      "128": "ext-icon-128x128.png"
+    },
+    "record_icon": {
+      "16": "ext-icon-record-16x16.png",
+      "48": "ext-icon-record-48x48.png",
+      "128": "ext-icon-record-128x128.png"
+    }
+  },
+  "icons": {
+    "16": "ext-icon-16x16.png",
+    "48": "ext-icon-48x48.png",
+    "128": "ext-icon-128x128.png"
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.bundle.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [ "assets/scripts/userpilot-init.js", "assets/scripts/userpilot-app.js"],
+      "exclude_matches": ["https://*.vidguide.com/*"]
+    }
+  ],
+  "permissions": ["tabs", "activeTab", "scripting", "storage", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["http://*/*", "http://*/*", "<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources" : [{
+      "id": "csp-1",
+      "enabled": true,
+      "path": "rulesets/csp-1.json"
+    }, {
+      "id": "csp-2",
+      "enabled": false,
+      "path": "rulesets/csp-2.json"
+    }, {
+      "id": "csp-3",
+      "enabled": false,
+      "path": "rulesets/csp-3.json"
+    }, {
+      "id": "csp-4",
+      "enabled": false,
+      "path": "rulesets/csp-4.json"
+    }]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.jpg", "*.png", "*.svg", "*.html", "*.woff2"],
+      "matches": ["http://*/*", "http://*/*", "<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.vidguide.com/*", "http://localhost:8080/*"]
+  }
+}

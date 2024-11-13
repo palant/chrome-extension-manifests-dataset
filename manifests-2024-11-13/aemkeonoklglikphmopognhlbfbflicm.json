@@ -1,0 +1,71 @@
+---
+name: Discord member scraper
+version: 1.0.9
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 146
+release_date: '2024-07-17T09:17:04.000Z'
+size: 1.94MiB
+languages:
+  - English
+  - 中文 (简体)
+description: Scrape the member list and download them
+publisher_account: muepoints
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_chrome_extension_name__",
+  "version": "1.0.9",
+  "description": "__MSG_chrome_extension_description__",
+  "default_locale": "en",
+  "icons": {
+    "16": "./assets/icon16.png",
+    "19": "./assets/icon19.png",
+    "38": "./assets/icon38.png",
+    "48": "./assets/icon48.png",
+    "128": "./assets/icon128.png"
+  },
+  "action": {
+    "default_icon": "./assets/icon128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.discord.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*.discord.com/*"
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

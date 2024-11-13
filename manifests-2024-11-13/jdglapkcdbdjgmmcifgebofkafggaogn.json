@@ -1,0 +1,96 @@
+---
+name: Rabbit Hole
+version: 0.2.7
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 37
+release_date: '2020-10-20T16:17:55.000Z'
+size: 509KiB
+languages:
+  - English
+description: >-
+  Rabbit Hole is bookmarking with instant full-text archives and blazing-fast,
+  local search.
+publisher_account: Giant Things, LLC
+extension_website: getrabbithole.com
+support_website: https://getrabbithole.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Rabbit Hole",
+    "description": "Rabbit Hole is bookmarking with instant full-text archives and blazing-fast, local search.",
+    "version": "0.2.7",
+    "manifest_version": 2,
+    "permissions": ["storage", "activeTab", "tabs", "chrome://favicon/", "unlimitedStorage", "*://*/*"],
+    "browser_action": {
+        "default_popup": "index.html",
+        "default_icon": "assets/browser-icon-blue-48.png"
+    },
+    "icons": {
+        "16": "assets/rabbithole-logo-16.png",
+        "48": "assets/rabbithole-logo-48.png",
+        "128": "assets/rabbithole-logo-128.png"
+    },
+    "commands": {
+        "archive-cmd": {
+            "suggested_key": {
+                "default": "Alt+2",
+                "mac": "Alt+2",
+                "chromeos": "Alt+2",
+                "linux": "Alt+2"
+            },
+            "description": "Archive current page"
+        },
+        "archive-all-cmd": {
+            "suggested_key": {
+                "default": "Alt+Shift+3",
+                "mac": "Alt+Shift+3",
+                "chromeos": "Alt+Shift+3",
+                "linux": "Alt+Shift+3"
+            },
+            "description": "Archive all pages in window"
+        },
+        "archive-and-edit-cmd": {
+            "suggested_key": {
+                "default": "Alt+3",
+                "mac": "Alt+3",
+                "chromeos": "Alt+3",
+                "linux": "Alt+3"
+            },
+            "description": "Archive current page with edit dialog"
+        },
+        "_execute_browser_action": {
+            "suggested_key": {
+                "default": "Alt+Shift+L",
+                "mac": "Command+Shift+L",
+                "chromeos": "Alt+Shift+L",
+                "linux": "Alt+Shift+L"
+            }
+        }
+    },
+    "background": {
+        "scripts": ["js/background.js"],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.google.com/search*"],
+            "css": ["/static/googleSearch.css"],
+            "js": ["/static/googleSearch.js"]
+        }
+    ],
+    "options_page": "options.html",
+    "web_accessible_resources": [
+        "editDialog.html",
+        "archiveAll.html",
+        "static/archive_conf.html",
+        "static/archive_all_conf.html",
+        "static/star_conf.html",
+        "static/not_logged_in.html",
+        "assets/rabbithole-logo-48.png"
+    ],
+    "content_security_policy": "script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://apis.google.com https://www.googletagmanager.com; object-src 'self'"
+}

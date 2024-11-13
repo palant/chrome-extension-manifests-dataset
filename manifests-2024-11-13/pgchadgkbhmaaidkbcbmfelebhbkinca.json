@@ -1,0 +1,122 @@
+---
+name: MySocial360
+version: 1.0.0
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2022-01-27T12:02:26.000Z'
+size: 5.06MiB
+languages:
+  - English
+description: Get gifts from your favourite content creators by engaging with there content
+publisher_account: BOS
+support_website: https://mysocial360.com/support
+privacy_policy: https://app.mysocial360.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "MySocial360",
+  "short_name": "MySocial360",
+  "version": "1.0.0",
+  "description": "Get gifts from your favourite content creators by engaging with there content",
+  "manifest_version": 3,
+  "homepage_url": "https://app.mysocial360.com/app",
+  "minimum_chrome_version": "88",
+  "oauth2": {
+    "client_id": "782357863730-j2hc886h61g8cu8khr360e9bg69ecrok.apps.googleusercontent.com",
+    "scopes": [
+      "profile email",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/profile.agerange.read",
+      "https://www.googleapis.com/auth/profile.language.read",
+      "https://www.googleapis.com/auth/user.birthday.read",
+      "https://www.googleapis.com/auth/user.addresses.read",
+      "https://www.googleapis.com/auth/user.birthday.read",
+      "https://www.googleapis.com/auth/user.gender.read",
+      "https://www.googleapis.com/auth/user.phonenumbers.read"
+    ]
+  },
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "gcm", 
+    "identity",
+    "identity.email",
+    "storage",
+    "tabs",
+    "notifications"
+  ],
+  "host_permissions" : [
+    "https://ajax.googleapis.com/",
+    "https://connect.facebook.net/"
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo192.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mysocial360backend.herokuapp.com/*"],
+      "js": ["./static/js/content/auth.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.facebook.com/*/posts/*", "https://*.facebook.com/media/set*", 
+        "https://*.facebook.com/permalink*", "https://*.facebook.com/events/*",
+        "https://*.facebook.com/photo*", "https://*.facebook.com/video*", 
+        "https://*.facebook.com/*/videos/*", "https://*.facebook.com/watch*"],
+        
+      "run_at": "document_end",
+      "js": [
+        "./static/js/jquery.min.js",
+        "./static/js/attrchange.js",
+        "./static/js/attrchange_ext.js",
+        "./static/js/content/facebook.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.youtube.com/watch*", "https://*.youtube.com/channel/*", "https://*.youtube.com/c/*", "https://*.youtube.com/user/*"],
+      "run_at": "document_end",
+      "js": [
+        "./static/js/jquery.min.js",
+        "./static/js/content/youtube.js",
+        "./static/js/attrchange.js",
+        "./static/js/attrchange_ext.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.twitter.com/*/status/*"],
+      "run_at": "document_end",
+      "js": [
+        "./static/js/jquery.min.js",
+        "./static/js/content/twitter.js",
+        "./static/js/attrchange.js",
+        "./static/js/attrchange_ext.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "logo192.png",
+    "32": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  }
+}

@@ -1,0 +1,212 @@
+---
+name: No-Password
+version: '0.936'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 33
+release_date: '2023-07-14T10:46:19.000Z'
+size: 144KiB
+languages:
+  - English (United States)
+description: >-
+  Works in conjunction with the No-Password.com service to provide a no-fuss,
+  single sign-on experience
+publisher: NPU Consulting Services
+publisher_account: sonny.chee
+publisher_address: |-
+  1680 Bayshore Dr
+  Suite 601
+  Vancouver, BC V6G3H6
+  CA
+privacy_policy: https://www.no-password.com/privacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "No-Password",
+  "description": "Works in conjunction with the No-Password.com service to provide a no-fuss, single sign-on experience",
+  "version": "0.936",
+  "omnibox": {"keyword": "npwd"},
+  
+  "permissions": [
+    "browsingData",
+    "cookies",
+    "contextMenus",
+    "scripting",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "action": {
+    "default_icon": "icons/logo.png"
+  },
+
+  "icons": {
+    "16": "icons/logo16.png",
+    "32": "icons/logo32.png",
+    "48": "icons/logo48.png",
+    "128": "icons/logo128.png"
+  },
+
+  "web_accessible_resources": [{
+    "resources": [
+      "icons/*",
+      "dialogs/*.html",
+      "node_modules/async-mutex/index.mjs",
+      "wait.js",
+      "mutexes.js"
+    ],
+    "matches": ["https://*/*", "http://*/*"]
+  }],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "exclude_matches": [
+        "https://*.no-password.com/*", "http://*.no-password.ca/*",
+        "https://*.uuna.ca/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start",
+      "css": ["dialogs/popup.css"],
+      "js": [
+        "common.js",
+        "common_extensions.js",
+        "html_element_extensions.js",
+        "myform.js", 
+        "content_scripts/libs.js",
+        "content_scripts/platform2.js",
+        "content_scripts/dialogs.js", 
+        "content_scripts/elements.js", 
+        "content_scripts/signin.js", 
+        "content_scripts/messages.js",
+        "content_scripts/pwc.js",
+        "overrides/content_scripts.js"
+      ]
+    },
+    {
+      "matches": ["https://*/*"],
+      "exclude_matches": [
+        "https://*.no-password.com/*", "http://*.no-password.ca/*",
+        "https://*.uuna.ca/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/onload.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/signups/rsvped*", 
+        "http://*.no-password.ca/signups/rsvped*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "content_scripts/rsvped.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/signups/primary_device_registration*", 
+        "http://*.no-password.ca/signups/primary_device_registration*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "common.js", 
+        "content_scripts/platform.js",
+        "content_scripts/primary_device.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/venues*", "http://*.no-password.ca/venues*",
+        "https://*.no-password.com/edit_venue*", "http://*.no-password.ca/edit_venue*",
+        "https://*.uuna.ca/edit_venue*", "https://*.uuna.ca/venues*"
+      ],
+      "run_at": "document_idle",
+      "css": ["dialogs/popup.css"],
+      "js": [
+        "common.js", 
+        "common_extensions.js",
+        "html_element_extensions.js",
+        "myform.js", 
+        "content_scripts/platform.js",
+        "content_scripts/eso_logout.js",
+        "content_scripts/configs.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/users/edit", "http://*.no-password.ca/users/edit", "https://*.uuna.ca/users/edit",
+                    "https://*.no-password.com/invites/*", "http://*.no-password.ca/invites/*", "https://*.uuna.ca/invites/*",
+                    "https://*.no-password.com/helps", "http://*.no-password.ca/helps", "https://*.uuna.ca/helps",
+                    "https://*.no-password.com/security/*", "http://*.no-password.ca/security/*",
+                    "https://*.uuna.ca/security/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "common.js", 
+        "content_scripts/platform.js",
+        "content_scripts/eso_logout.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/eso/*", "http://*.no-password.ca/eso/*",
+        "https://*.uuna.ca/eso/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "common.js", 
+        "common_extensions.js",
+        "html_element_extensions.js",
+        "myform.js", 
+        "content_scripts/platform.js",
+        "content_scripts/eso_logout.js",
+        "content_scripts/eso_diagnostics.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/force_logout*", 
+        "http://*.no-password.ca/force_logout*", 
+        "https://*.uuna.ca/force_logout*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "common.js", 
+        "common_extensions.js",
+        "html_element_extensions.js",
+        "myform.js", 
+        "content_scripts/platform.js",
+        "content_scripts/eso_logout.js",
+        "content_scripts/simulate_logout.js"
+      ]
+    },
+    {
+      "matches": ["https://*.no-password.com/", "http://*.no-password.ca/",
+        "https://*.no-password.com/signups/*", "http://*.no-password.ca/signups/*",
+        "https://*.no-password.com/signin*", "http://*.no-password.ca/signin*",
+        "https://*.no-password.com/users/sign_in*", "http://*.no-password.ca/users/sign_in*"
+                  ], 
+      "run_at": "document_idle",
+      "js": [
+        "common.js", 
+        "common_extensions.js",
+        "html_element_extensions.js",
+        "myform.js", 
+        "content_scripts/libs.js",
+        "content_scripts/platform.js",
+        "content_scripts/uuna_login.js",
+        "overrides/content_scripts.js"
+      ]
+    }
+  ]
+
+}

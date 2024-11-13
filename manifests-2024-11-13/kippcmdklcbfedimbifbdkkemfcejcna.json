@@ -1,0 +1,72 @@
+---
+name: The Formula Button
+version: 0.0.4
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 47
+release_date: '2024-08-10T10:56:53.000Z'
+size: 208KiB
+languages:
+  - English
+description: >-
+  Your AI Copilot for all types of formulas. Create and edit complex formulas
+  with GPT-4 without switching tabs.
+privacy_policy: https://fs-website-azure.vercel.app/privacyPolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "The Formula Button",
+  "version": "0.0.4",
+  "description": "Your AI Copilot for all types of formulas. Create and edit complex formulas with GPT-4 without switching tabs.",
+  "action": {
+    "default_popup": "./src/scripts/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "js/service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "1": "./assets/logofs.png"
+  },
+  "permissions": [
+    "tabs",
+    "identity",
+    "identity.email"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/spreadsheets/*",
+        "*://www.notion.so/*",
+        "*://onedrive.live.com/*"
+      ],
+      "js": [
+        "./js/content.js"
+      ]
+    }
+  ],
+  "commands": {
+    "refresh_extension": {
+      "suggested_key": {
+        "default": "Ctrl+Space"
+      },
+      "description": "Refresh Extension"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "resources": [
+        "dist/js/index.js",
+        "dist/js/popup.js",
+        "dist/js/service-worker.js"
+      ]
+    }
+  ]
+}

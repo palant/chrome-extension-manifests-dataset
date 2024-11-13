@@ -1,0 +1,91 @@
+---
+name: Better Gatry
+version: 0.1.3
+category_slug: make_chrome_yours/accessibility
+rating: 5
+rating_count: 3
+user_count: 58
+release_date: '2024-08-08T15:15:39.000Z'
+size: 92.46KiB
+languages:
+  - English
+description: General improvements for gatry.com
+publisher_account: GataQuadrada
+extension_website: gata.dev
+support_website: http://gata.dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Better Gatry",
+    "short_name": "BttG",
+    "version": "0.1.3",
+    "description": "General improvements for gatry.com",
+    "homepage_url": "https://gata.dev",
+    "icons": {
+        "16": "images/icon-16.png",
+        "32": "images/icon-32.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+    },
+    "action": {
+        "default_title": "Hi!",
+        "default_icon": {
+            "16": "images/icon-16.png",
+            "32": "images/icon-32.png",
+            "48": "images/icon-48.png",
+            "128": "images/icon-128.png"
+        }
+    },
+    "background": {
+        "service_worker": "scripts/worker.js"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/fancybox.umd.js",
+                "scripts/jquery-3.7.0.min.js",
+                "scripts/interface.js",
+                "scripts/main.js"
+            ],
+            "css": ["styles/fancybox.css", "styles/main.css"],
+            "matches": ["*://gatry.com/*", "*://gatry.com.br/*"],
+            "run_at": "document_start"
+        },
+        {
+            "js": ["scripts/my-account.js"],
+            "matches": [
+                "*://gatry.com/usuarios/minha-conta*",
+                "*://gatry.com.br/usuarios/minha-conta"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": ["scripts/gatry-bridge.js"],
+            "matches": ["*://gatry.com/*", "*://gatry.com.br/*"],
+            "run_at": "document_end",
+            "world": "MAIN"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/icon-16.png",
+                "images/badge_admin.png",
+                "images/badge_aviador.png",
+                "images/badge_dev.png",
+                "images/badge_verified.png",
+                "templates/btn-dark-mode.js",
+                "templates/btn-settings.js",
+                "templates/menu.js",
+                "data/verified-users.js"
+            ],
+            "matches": ["*://gatry.com/*", "*://gatry.com.br/*"],
+            "use_dynamic_url": true
+        }
+    ],
+    "permissions": ["storage", "tabs"],
+    "host_permissions": ["https://gatry.com/", "https://gatry.com.br/"]
+}

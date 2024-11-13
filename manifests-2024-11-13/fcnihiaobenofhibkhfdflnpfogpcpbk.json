@@ -1,0 +1,109 @@
+---
+name: EZWrite
+version: 1.0.0
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-10-28T06:27:05.000Z'
+size: 897KiB
+languages:
+  - English
+description: Simplify your school experience with the help of AI!
+publisher_account: TsunamiWind
+extension_website: ezwrite.xyz
+privacy_policy: https://ezwrite.xyz/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "EZWrite",
+  "manifest_version": 3,
+  "description": "Simplify your school experience with the help of AI!",
+  "version": "1.0.0",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "scripting",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/query-pdf.js",
+        "scripts/login-contentscript.js",
+        "chrome-popup/*",
+        "style/*",
+        "content/*",
+        "webfonts/*",
+        "logo.png",
+        "images/*",
+        "scripts/script.js",
+        "scripts/jquery-3.1.1.min.js",
+        "scripts/injected-script.js",
+        "Readability.js"
+      ],
+      "matches": [
+        "<all_urls>",
+        "*://docs.google.com/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/*"
+      ],
+      "all_frames": false,
+      "run_at": "document_start",
+      "css": [
+        "style/ezwrite.css"
+      ],
+      "js": [
+        "scripts/docs-contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "Readability.js",
+        "chrome-popup/index.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "<all_urls>"
+    ]
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+E",
+        "mac": "MacCtrl+E"
+      },
+      "description": "Start EZWrite"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://cdn.amplitude.com/libs/analytics-browser-1.6.8-min.js.gz;"
+  }
+}

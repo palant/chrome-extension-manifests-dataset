@@ -1,0 +1,463 @@
+---
+name: 守候购物小助手
+version: 4.0.2
+category_slug: lifestyle/shopping
+rating: 4.540229885057471
+rating_count: 87
+user_count: 20000
+release_date: '2024-09-28T16:50:11.000Z'
+size: 1.34MiB
+languages:
+  - 中文 (简体)
+description: 为了让你能有一个更轻松的购物方式而努力的插件.
+publisher: 湖南暖桔信息科技有限公司
+publisher_account: 苦苦守候
+publisher_address: |-
+  岳麓区
+  长沙市, 湖南省 410000
+  中国
+extension_website: kukushouhou.com
+privacy_policy: https://kukushouhou.com/extension/PrivacyPolicy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "4.0.2",
+  "name": "守候购物小助手",
+  "author": "湖南暖桔信息科技有限公司",
+  "manifest_version": 3,
+  "description": "为了让你能有一个更轻松的购物方式而努力的插件.",
+  "homepage_url": "https://exzs.cn/extension/ShoppingAssistant.html",
+  "icons": {
+    "16": "/icon/icon-16.png",
+    "48": "/icon/icon-48.png",
+    "128": "/icon/icon-128.png"
+  },
+  "permissions": [
+    "alarms",
+    "clipboardWrite",
+    "scripting",
+    "storage",
+    "commands",
+    "notifications",
+    "cookies",
+    "contextMenus",
+    "declarativeNetRequestWithHostAccess",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*.jd.com/*",
+    "*://*.jd.hk/*",
+    "*://*.jingxi.com/*",
+    "*://*.yiyaojd.com/*",
+    "*://*.jkcsjd.com/*",
+    "*://*.3.cn/*",
+    "*://*.suning.com/*",
+    "*://*.tmall.com/*",
+    "*://*.tmall.hk/*",
+    "*://*.taobao.com/*",
+    "*://*.gome.com.cn/*",
+    "*://*.yhd.com/*",
+    "*://detail.vip.com/detail-*",
+    "*://www.vipglobal.hk/detail-*",
+    "*://m.vip.com/v3/index.html*",
+    "*://globalstore.amazon.cn/detailPage/*",
+    "https://kukushouhou.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icon/icon-128.png",
+        "/icon/icon-128-white.png",
+        "/icon/icon-qr.png",
+        "/main-world.json"
+      ],
+      "matches": [
+        "*://*.jd.com/*",
+        "*://*.jd.hk/*",
+        "*://*.jingxi.com/*",
+        "*://*.yiyaojd.com/*",
+        "*://*.jkcsjd.com/*",
+        "*://*.3.cn/*",
+        "*://*.suning.com/*",
+        "*://*.tmall.com/*",
+        "*://*.tmall.hk/*",
+        "*://*.taobao.com/*",
+        "*://*.gome.com.cn/*",
+        "*://*.yhd.com/*",
+        "*://detail.vip.com/*",
+        "*://www.vipglobal.hk/*",
+        "*://m.vip.com/*",
+        "*://globalstore.amazon.cn/*"
+      ]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+K"
+      },
+      "description": "激活快捷操作面板"
+    },
+    "tab_hide_all": {
+      "suggested_key": {
+        "default": "Alt+H"
+      },
+      "description": "隐藏当前页功能"
+    },
+    "close_all_mall": {
+      "suggested_key": {
+        "default": "Alt+Shift+Q"
+      },
+      "description": "关闭全部商城页(老板键)"
+    },
+    "quick_order": {
+      "suggested_key": {
+        "default": "Alt+P"
+      },
+      "description": "万能键"
+    }
+  },
+  "minimum_chrome_version": "102.0.0",
+  "incognito": "split",
+  "background": {
+    "service_worker": "extension/background/index.js"
+  },
+  "options_ui": {
+    "page": "extension/options/index.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": {
+      "16": "/icon/icon-16.png",
+      "48": "/icon/icon-48.png",
+      "128": "/icon/icon-128.png"
+    },
+    "default_title": "守候购物小助手",
+    "default_popup": "extension/popup/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.gome.com.cn/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/gm/_global/index.js"
+      ],
+      "css": [
+        "extension/content_scripts/gm/_global/index.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://item.m.gome.com.cn/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/gm/item_m/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://item.gome.com.cn/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/gm/item/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.jd.com/*",
+        "*://*.jd.hk/*",
+        "*://*.yiyaojd.com/*",
+        "*://*.jkcsjd.com/*",
+        "*://*.jingxi.com/*",
+        "*://*.yhd.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/_global/index.js"
+      ],
+      "css": [
+        "extension/content_scripts/jd/_global/index.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.m.jd.com/*",
+        "*://*.m.jd.hk/*",
+        "*://*.wqs.jd.com/*",
+        "*://*.wq.jd.com/*",
+        "*://wqitem.jd.com/*",
+        "*://wqitem.jd.hk/*",
+        "*://wqdeal.jd.com/*",
+        "*://wqdeal.jd.hk/*",
+        "*://m.jingxi.com/*",
+        "*://mitem.jkcsjd.com/*",
+        "*://yao.jkcsjd.com/*",
+        "*://*.jingxi.com/*",
+        "*://cs.jd.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/_m_global/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://pro.jd.com/*/active/*",
+        "*://pro.m.jd.com/*/active/*",
+        "*://h5static.m.jd.com/*/active/*",
+        "*://prodev.jd.com/*/active/*",
+        "*://prodev.m.jd.com/*/active/*"
+      ],
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/active/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://cart.jd.com/*",
+        "*://cart.jd.hk/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/cart/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://item.m.jd.com/*",
+        "*://item.m.jd.hk/*",
+        "*://mitem.jd.hk/*",
+        "*://m.yiyaojd.com/product/*",
+        "*://mitem.jkcsjd.com/product/*",
+        "*://wq.jd.com/item/*",
+        "*://wqs.jd.com/item/*",
+        "*://wqitem.jd.com/item/*",
+        "*://wqitem.jd.hk/item/*",
+        "*://m.jingxi.com/item/*",
+        "*://kpl.m.jd.com/product*",
+        "*://cs.jd.com/item/*",
+        "*://djg.jd.com/*",
+        "*://item-pro.m.yhd.com/production/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/item_m/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://item.jd.com/*",
+        "*://i-item.jd.com/*",
+        "*://ic-item.jd.com/*",
+        "*://item.jd.hk/*",
+        "*://item.yiyaojd.com/*",
+        "*://item.jkcsjd.com/*",
+        "*://item.paipai.com/*",
+        "*://pcitem.jd.hk/*",
+        "*://npcitem.jd.hk/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/item/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://list.jd.com/list.html*",
+        "*://search.jd.com/Search*",
+        "*://search.jd.com/search*",
+        "*://coll.jd.com/list.html*",
+        "*://www.jd.com/pinpai/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/list/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lives.jd.com/*"
+      ],
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/live/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://club.jd.com/myJdcomments/orderVoucher.action*",
+        "*://club.jd.com/afterComments/productPublish.action*"
+      ],
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/order_comment/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://trade.jd.com/shopping/order/getOrderInfo.action*",
+        "*://trade.jd.com/shopping/order/getPresalInfo.action*",
+        "*://trade.jd.hk/shopping/order/getOrderInfo.action*",
+        "*://trade.jd.hk/shopping/order/getPresalInfo.action*"
+      ],
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/order/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://union.jd.com/proManager/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/jd/union_list/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.suning.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/sn/_global/index.js"
+      ],
+      "css": [
+        "extension/content_scripts/sn/_global/index.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://m.suning.com/product/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/sn/item_m/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://product.suning.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/sn/item/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.tmall.com/*",
+        "*://*.tmall.hk/*",
+        "*://*.taobao.com/*",
+        "*://*.liangxinyao.com/*",
+        "*://*.alipay.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/tb/_global/index.js"
+      ],
+      "css": [
+        "extension/content_scripts/tb/_global/index.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://detail.m.tmall.com/*",
+        "*://h5.m.taobao.com/awp/core/detail.htm*",
+        "*://detail.m.liangxinyao.com/*",
+        "*://new.m.taobao.com/detail.htm*",
+        "*://main.m.taobao.com/detail/index.html*",
+        "*://main.m.taobao.com/security-h5-detail/home*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/tb/item_m/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://detail.tmall.com/*",
+        "*://world.taobao.com/item/*",
+        "*://world.tmall.com/item/*",
+        "*://detail.tmall.hk/*",
+        "*://world.tmall.hk/item/*",
+        "*://item.taobao.com/*",
+        "*://detail.liangxinyao.com/*",
+        "*://chaoshi.detail.tmall.com/*"
+      ],
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/tb/item/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://rate.taobao.com/remarkSeller.jhtml*",
+        "*://rate.taobao.com/remark_seller.jhtml*",
+        "*://rate.taobao.com/appendRate.htm*",
+        "*://rate.taobao.com/append_rate.htm*",
+        "*://ratewrite.tmall.com/rateDetail.htm*",
+        "*://ratewrite.tmall.com/rate_detail.htm*",
+        "*://trade.taobao.com/trade/trade_success.htm*"
+      ],
+      "all_frames": true,
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/tb/order_comment/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://m.vip.com/v3/index.html*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/vph/item_m/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://detail.vip.com/detail-*",
+        "*://www.vipglobal.hk/detail-*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/vph/item/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://globalstore.amazon.cn/detailPage/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "extension/chunks/vendor.js",
+        "extension/content_scripts/ymx/item_m/index.js"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+---
+name: SupplyPike Document Assistant
+version: 1.4.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 39
+release_date: '2023-07-06T21:28:42.000Z'
+size: 2.9MiB
+languages:
+  - English (United States)
+description: Find and download the right shipping documents faster than ever before.
+publisher_account: SupplyPike Internal
+extension_website: supplypike.com
+support_website: https://help.supplypike.com/en/
+privacy_policy: https://www.supplypike.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SupplyPike Document Assistant",
+  "version": "1.4.5",
+  "description": "Find and download the right shipping documents faster than ever before.",
+  "icons": {
+    "16": "icons/icon-dark-16.png",
+    "32": "icons/icon-dark-32.png",
+    "48": "icons/icon-dark-48.png",
+    "64": "icons/icon-dark-64.png",
+    "128": "icons/icon-dark-128.png"
+  },
+  "background": {
+    "service_worker": "background/background-script.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon-dark-16.png",
+      "32": "icons/icon-dark-32.png",
+      "48": "icons/icon-dark-48.png",
+      "64": "icons/icon-dark-64.png",
+      "128": "icons/icon-dark-128.png"
+    },
+    "default_title": "SupplyPike Document Assistant",
+    "default_popup": "popup/popup-page.html",
+    "browser_style": true,
+    "theme_icons": [
+      {
+        "light": "icons/icon-light-16.png",
+        "dark": "icons/icon-dark-16.png",
+        "size": 16
+      },
+      {
+        "light": "icons/icon-light-32.png",
+        "dark": "icons/icon-dark-32.png",
+        "size": 32
+      },
+      {
+        "light": "icons/icon-light-48.png",
+        "dark": "icons/icon-dark-48.png",
+        "size": 48
+      },
+      {
+        "light": "icons/icon-light-64.png",
+        "dark": "icons/icon-dark-64.png",
+        "size": 64
+      },
+      {
+        "light": "icons/icon-light-128.png",
+        "dark": "icons/icon-dark-128.png",
+        "size": 128
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": [
+        "content-scripts/find.js"
+      ]
+    },
+    {
+      "matches": ["https://explorer.supplypike.com/*"],
+      "js": [
+        "content-scripts/login.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["*.pdf"],
+    "matches": ["<all_urls>"]
+  }
+],
+  "permissions": [
+    "downloads",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://explorer.supplypike.com/*"
+  ]
+}

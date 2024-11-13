@@ -1,0 +1,266 @@
+---
+name: iTIC Copilot
+version: 1.11.0
+category_slug: productivity/education
+rating: 5
+rating_count: 5
+user_count: 15
+release_date: '2024-02-09T18:11:49.000Z'
+size: 488KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - català
+  - español
+  - italiano
+description: The browser extension every iTIC student should have!
+publisher_account: Eric Roy
+support_website: https://github.com/royalmo/itic-copilot
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_name__",
+    "description": "__MSG_extension_description__",
+    "version": "1.11.0",
+    "manifest_version": 3,
+    "author" : "Eric Roy",
+    "default_locale" : "en",
+
+    "icons": {
+        "16":  "assets/itic-favicon16.png",
+        "32":  "assets/itic-favicon32.png",
+        "48":  "assets/itic-favicon48.png",
+        "128": "assets/itic-favicon128.png"
+    },
+
+    "background": {
+        "service_worker": "js/background.js"
+    },
+
+    "background_firefox": {
+        "scripts": ["js/background.js"]
+    },
+
+    "permissions": [
+        "storage"
+    ],
+
+    "host_permissions": [
+        "*://*.upc.edu/*",
+        "*://www.overleaf.com/*"
+    ],
+
+    "action": {
+        "default_popup": "html/user_interface.html"
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "html/*.html",
+                "config/*.json",
+                "assets/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+
+    "content_scripts" : 
+    [
+        {
+            "matches": ["*://ocwitic.epsem.upc.edu/*"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/browser-info.js",
+                "include/jquery-3.4.1.min.js",
+                "include/jszip.min.js",
+                "include/FileSaver.js",
+                "include/turndown.js",
+                "include/fnon.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/fnon_controller.js",
+                "js/ocw/html_replacer.js",
+                "js/ocw/tree.js",
+                "js/ocw/file_downloader.js",
+                "js/ocw/landpage.js",
+                "js/ocw/easter_egg.js"
+                ],
+            "css": [
+                "include/fnon.min.css"
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": ["*://escriny.epsem.upc.edu/projects/*/repository/*"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "include/fnon.min.js",
+                "include/ace/ace.js",
+                "include/svnjs/dav.js",
+                "include/svnjs/svn.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/fnon_controller.js",
+                "js/escriny/editor.js"
+                ],
+            "css": [
+                "include/fnon.min.css"
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": ["*://thor.epsem.upc.edu/thor/PG/Grups.php?*"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "include/fnon.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/fnon_controller.js",
+                "js/timetables/selector.js"
+                ],
+            "css": [
+                "include/fnon.min.css"
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": ["*://sso.upc.edu/CAS/login?*", "*://sso.upc.edu/SAML2/SSOService.php*"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/autologger.js",
+                "js/upc_autologin.js"
+                ],
+            "css": [
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": ["*://escriny.epsem.upc.edu/login*"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/autologger.js",
+                "js/escriny/escriny_autologin.js"
+                ],
+            "css": [
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": [
+                "*://*.epsem.upc.edu/ca/estudis/graus/grau-en-enginyeria-de-sistemes-tic",
+                "*://*.epsem.upc.edu/es/estudios/grados/grado-en-ingenieria-en-sistemas-tic*"
+            ],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/student_plan/viewer_epsem.js"
+                ],
+            "css": [
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": [
+                "*://www.upc.edu/en/bachelors/ict-systems-engineering-manresa-epsem"
+            ],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/student_plan/viewer_upcweb.js"
+                ],
+            "css": [
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": ["*://escriny.epsem.upc.edu/"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/escriny/landpage.js",
+                "js/escriny/easter_egg.js"
+                ],
+            "css": [
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://thor.epsem.upc.edu/thor/PG/Horari.php"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "include/fnon.min.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/timetables/easter_egg.js"
+                ],
+            "css": [
+            ],
+            "run_at": "document_end"
+        },
+
+        {
+            "matches": ["*://www.overleaf.com/project/*"],
+            "all_frames": true,
+            "js": [
+                "include/browser-polyfill.min.js",
+                "include/jquery-3.4.1.min.js",
+                "include/jszip.min.js",
+                "include/jszip-utils.min.js",
+                "include/fnon.min.js",
+                "include/svnjs/dav.js",
+                "include/svnjs/svn.js",
+                "js/basics.js",
+                "js/settings.js",
+                "js/fnon_controller.js",
+                "js/overleaf/util.js"
+                ],
+            "css": [
+                "include/fnon.min.css"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id" : "{f821a73c-6f40-4a4b-aab8-5cd48c1bbfa8}"
+        }
+    }
+}

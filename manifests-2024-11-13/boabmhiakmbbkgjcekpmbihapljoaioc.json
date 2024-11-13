@@ -1,0 +1,105 @@
+---
+name: Watchtime Tracker
+version: 2.2.0
+category_slug: lifestyle/social
+rating: 4.149425287356322
+rating_count: 87
+user_count: 7000
+release_date: '2024-11-06T10:33:14.000Z'
+size: 592KiB
+languages:
+  - English
+description: Track your activity on Youtube and Twitch
+publisher_account: Lucas
+privacy_policy: https://lucask.dev/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Watchtime Tracker",
+  "version": "2.2.0",
+  "author": "xD33m",
+  "minimum_chrome_version": "88",
+  "icons": {
+    "16": "assets/icons/favicon-16.png",
+    "32": "assets/icons/favicon-32.png",
+    "48": "assets/icons/favicon-48.png",
+    "64": "assets/icons/favicon-64.png",
+    "128": "assets/icons/favicon-128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAozQju+yc2W58hKVFDMWJRqo7EwV02i8b3LXMbQ0S7j+1pSoCzgMNFwZTi6GN2vMRcVEZ/3yWdC+3KbHGqxtDy3Grmy8UHajoHQ4XAze+/JT6ZXKs4rN7y1rRB767pBA6pUbMyHiQ2A3YaKr4zW7JslbcFWt6/DebAoZfXwtio+D8BX1aKtMJrJBkr3nP48ftd92arvxb50fe9CQE5crcCZh6co338rIjEwV4+MpUjuQIzaATmhqkqo1nDMhsFiyXKGThUO77bLlYbzF/7Z5Se9XJzp3lePrupdxSyX0YSUFpKtXki0MzVQ9+tGZ8c3oUBwkkuZPDJEeHY3qvpDkgIQIDAQAB",
+  "description": "Track your activity on Youtube and Twitch",
+  "homepage_url": "https://analytics.lucask.dev/",
+  "short_name": "Watchtime Tracker",
+  "permissions": [
+    "storage",
+    "tabs",
+    "identity"
+  ],
+  "oauth2": {
+    "client_id": "800771478396-ubhjoqlgjmlf0th9t6i3h4mrfj73mn3q.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "optional_permissions": [
+    "downloads"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.twitch.tv/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/icons/favicon-16.png",
+      "32": "assets/icons/favicon-32.png",
+      "48": "assets/icons/favicon-48.png",
+      "64": "assets/icons/favicon-64.png",
+      "128": "assets/icons/favicon-128.png"
+    },
+    "default_title": "WatchtimeTracker"
+  },
+  "background": {
+    "service_worker": "js/background.bundle.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.twitch.tv/*"
+      ],
+      "js": [
+        "js/contentScript.bundle.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/youtubeHook.bundle.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "resources": [
+        "js/twitchHook.bundle.js"
+      ],
+      "matches": [
+        "*://*.twitch.tv/*"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

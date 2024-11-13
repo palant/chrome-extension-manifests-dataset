@@ -1,0 +1,139 @@
+---
+name: Engage AI
+version: 1.0.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 105
+release_date: '2024-10-02T18:17:22.000Z'
+size: 10.86MiB
+languages:
+  - English (United States)
+description: Manage Engagements with AI.
+publisher: QwertyFace Media, LLC
+publisher_account: andrew
+publisher_address: |-
+  721 Allen Drive
+  Grand Rapids, MN 55744
+  US
+extension_website: cloudki.io
+support_website: https://cloudki.io/support
+privacy_policy: https://cloudki.io/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Engage AI",
+  "description": "Manage Engagements with AI.",
+  "version": "1.0.2",
+  "oauth2": {
+    "client_id": "60130079824-nnpe430s45elj7o67n8brdsdkb3ige12.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/drive"]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src 'self' 'sha256-IyH6jb2W/VdnTFt0nfcYv3QmiWpnAAJ3LZtGJh83jXA=';"
+  },
+  "action": {
+    "default_icon": "./images/engageai.png",
+    "default_title": "Engage AI",
+    "default_popup": "popup-new.html"
+  },
+  "icons": {
+    "16": "./images/engageai.png",
+    "48": "./images/engageai.png",
+    "128": "./images/engageai.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:9000/*"
+    ],
+    "accepts_tls_channel_id": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*", "https://www.messenger.com/*"],
+      "js": [
+        "./js/config.js",
+        "./js/jquery.min.js",
+        "./js/core.js",
+        "js/simpleNotify.js"
+      ],
+      "css": [
+        "css/simpleNotifyStyle.css",
+        "./css/tagify.css",
+        "./css/dark.css",
+        "./css/content.css",
+        "./css/friendsPage.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://www.facebook.com/*action=getPostId*"],
+      "js": ["./js/getPostId.js"],
+      "run_at": "document_end",
+      "all_frames":false
+    },
+
+    {
+      "matches": ["https://m.facebook.com/*"],
+      "js": [
+        "./js/config.js",
+        "./js/jquery.min.js",
+        "./js/core.js"
+      ],
+      "css": ["./css/content.css"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://m.facebook.com/*action=replyComments*"],
+      "js": ["./js/replyComment.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "background": {
+    "service_worker": "js/background_worker.js"
+  },
+  "web_accessible_resources": [ {
+    "resources": ["images/*", "popup.html"],
+    "matches": [ "<all_urls>" ]
+  }],
+
+  "permissions": [
+    "storage",
+    "clipboardRead",
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "cookies",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.googleapis.com/*",
+    "https://cloudki.io/*",
+    "https://app.cloudki.io/*",
+    "https://*.facebook.com/*",
+    "https://www.facebook.com/messages/t/*",
+    "https://www.messenger.com/*",
+    "https://m.facebook.com/*",
+    "https://res.cloudinary.com/*",
+    "http://res.cloudinary.com/*",
+    "https://elmessenger.cloudki.io/*",
+    "https://mbasic.facebook.com/*",
+    "http://localhost:5000/*",
+    "https://next2.cloudki.io/*",
+    "https://elm-glitch.glitch.me/*",
+    "https://elm-prod.herokuapp.com/*",
+    "https://elmessengertest.herokuapp.com/*"
+  ]
+}

@@ -1,0 +1,70 @@
+---
+name: Save Resource Manager
+version: 1.2.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2024-05-11T07:02:05.000Z'
+size: 111KiB
+languages:
+  - English (UK)
+description: Download resources to your local computer
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Save Resource Manager",
+  "version": "1.2.0",
+  "description": "Download resources to your local computer",
+  "action": {
+    "default_icon": "./assets/unnamed.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/unnamed.png",
+    "48": "./assets/unnamed.png",
+    "128": "./assets/unnamed.png"
+  },
+  "permissions": [
+    "downloads"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.facebook.com/*"
+      ],
+      "js": [
+        "dist/facebook_download/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/parse/index.global.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/facebook_download/style.css",
+        "assets/image/icon_download_btn.svg"
+      ],
+      "matches": [
+        "https://www.facebook.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

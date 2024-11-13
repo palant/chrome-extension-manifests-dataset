@@ -1,0 +1,242 @@
+---
+name: 'Mote: free voice recorder'
+version: 0.7.6
+category_slug: productivity/communication
+rating: 4.660377358490566
+rating_count: 159
+user_count: 2000000
+release_date: '2024-11-05T12:41:35.000Z'
+size: 12.08MiB
+languages:
+  - Bahasa Indonesia
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - català
+  - español
+  - italiano
+  - polski
+  - Ελληνικά
+  - русский
+  - українська
+  - עברית
+  - हिन्दी
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: Mote - create voice messages and achieve more in less time
+publisher: Mote Technologies, Inc.
+publisher_address: |-
+  548 Market St, San Francisco
+  PMB 52828
+  San Francisco, CA 94104
+  US
+extension_website: mote.com
+support_website: https://support.mote.com/hc
+privacy_policy: https://www.mote.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "name": "__MSG_appName__",
+  "short_name": "Mote",
+  "author": "@justmoteHQ",
+  "icons": {
+    "16": "images/logos/mote-round-16.png",
+    "32": "images/logos/mote-round-32.png",
+    "48": "images/logos/mote-round-64.png",
+    "128": "images/logos/mote-round-128.png"
+  },
+  "default_locale": "en_US",
+  "version": "0.7.6",
+  "description": "__MSG_appDesc__",
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+Shift+M",
+        "mac": "MacCtrl+Shift+M"
+      },
+      "description": "Toggle Mote Popup"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "static/js/pluginPopupShadow.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://drive.google.com/*",
+        "https://classroom.google.com/*",
+        "https://docs.google.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/forms/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/forms.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/forms/u/*/d/*/edit*",
+        "https://docs.google.com/forms/d/*/edit*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/formsReadAloudCreator.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/forms/u/*/d/e/*/viewform*",
+        "https://docs.google.com/forms/u/*/d/e/*/startquiz*",
+        "https://docs.google.com/forms/u/*/d/e/*/formResponse*",
+        "https://docs.google.com/forms/d/e/*/viewform*",
+        "https://docs.google.com/forms/d/e/*/startquiz*",
+        "https://docs.google.com/forms/d/e/*/formResponse*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/formsReadAloudRecipient.js"
+      ],
+      "css": [
+        "static/css/mote-tts-highlight.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/presentation/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/slides.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/presentation/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/gSlidesReadAloud.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://docs.google.com/document/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/gDocsReadAloud.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://drive.google.com/*",
+        "https://docs.google.com/file/*",
+        "https://classroom.google.com/*/g/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/gdrive.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "static/js/gmail.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.instructure.com/courses/*/gradebook/speed_grader?assignment_id=*&student_id=*",
+        "https://*.instructure.com/courses/*/assignments/*/submissions/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "static/js/canvas.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/logos/mote-round-16.png",
+      "32": "images/logos/mote-round-32.png",
+      "48": "images/logos/mote-round-64.png",
+      "128": "images/logos/mote-round-128.png"
+    },
+    "default_title": "Mote - fast, friendly voice messaging"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.mote.com/*",
+      "https://mote.com/*",
+      "*://localhost/*"
+    ]
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "offscreen",
+    "enterprise.deviceAttributes",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "sounds/*",
+        "permissions.html",
+        "fonts/*",
+        "static/js/permissions.js",
+        "static/js/popup.js",
+        "locales/*",
+        "flags/*",
+        "worklets/*",
+        "popup.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+---
+name: CibuSplitter
+version: 0.1.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 129
+release_date: '2021-09-11T09:45:42.000Z'
+size: 26.19KiB
+languages:
+  - עברית
+description: >-
+  CibuSplitter is a chrome extension intended to split group-order created in
+  wolt to multiple Cibus cards.
+publisher_account: Dekel Braunstein
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "CibuSplitter",
+    "description": "CibuSplitter is a chrome extension intended to split group-order created in wolt to multiple Cibus cards.",
+    "version": "0.1.4",
+    "manifest_version": 3,
+    "permissions": ["activeTab", "storage"],
+    "host_permissions": [
+        "https://wolt.com/*",
+        "https://www.mysodexo.co.il/Auth.aspx?*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/images/favicon.png",
+            "32": "/images/favicon.png",
+            "48": "/images/favicon.png",
+            "128": "/images/favicon.png"
+        }
+    },
+    "icons": {
+        "16": "/images/favicon.png",
+        "32": "/images/favicon.png",
+        "48": "/images/favicon.png",
+        "128": "/images/favicon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://wolt.com/*",
+                "https://www.mysodexo.co.il/Auth.aspx?*"
+            ],
+            "js": ["injector.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["content.js"],
+            "matches": ["https://wolt.com/*"]
+        },
+        {
+            "resources": ["sibus-content.js"],
+            "matches": ["https://www.mysodexo.co.il/*"]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+            "https://wolt.com/*",
+            "https://www.mysodexo.co.il/Auth.aspx?*"
+        ]
+    }
+}

@@ -1,0 +1,81 @@
+---
+name: 薪招
+version: 3.1.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-02-17T05:07:03.000Z'
+size: 413KiB
+languages:
+  - 中文 (简体)
+description: 一键导入简历至薪人薪事招聘系统
+publisher_account: zhengjiangjie95
+---
+
+{
+    "manifest_version": 3,
+    "name": "薪招",
+    "version": "3.1.2",
+    "description": "一键导入简历至薪人薪事招聘系统",
+    "background": {
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "icons": {
+        "16": "img/16.png",
+        "48": "img/38.png",
+        "128": "img/76.png"
+    },
+    "action": {
+        "default_icon": {
+            "19": "img/38-gray.png",
+            "38": "img/38-gray.png"
+        },
+        "default_title": "薪招",
+        "default_popup": "popup.html"
+    },
+    "externally_connectable": {
+        "matches": ["*://localhost/*", "*://*.xinrenxinshi.com/*", "*://www.saasphb.com/*", "*://*.s114.devtest.vip/*"]
+    },
+    "content_security_policy": {
+        "sandbox": "script-src 'self' 'unsafe-eval';sandbox allow-scripts;"
+      },
+    "content_scripts": [{
+        "all_frames": true,
+        "matches": [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "js": [
+            "js/content.js"
+        ],
+        "css": [
+            "css/xinzhao.css"
+        ],
+        "run_at": "document_start"
+    }],
+    "permissions": [
+        "cookies",
+        "tabs",
+        "storage",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [ "<all_urls>"],
+    "declarative_net_request":{
+        "rule_resources":[{
+            "id":"request",
+            "enabled": true,
+            "path": "json/request.json"
+        }]
+    },
+        
+    "homepage_url": "https://www.xinrenxinshi.com",
+    "web_accessible_resources": [
+        {
+            "resources": [ "manifest.json","img/logo.png","img/16.png","img/38.png","img/76.png"],
+            "matches": [ "<all_urls>" ]
+        }
+    ],
+    "update_url": "https://clients2.google.com/service/update2/crx"
+}

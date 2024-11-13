@@ -1,0 +1,92 @@
+---
+name: Nerimity RPC
+version: 0.2.8
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 194
+release_date: '2024-10-14T06:56:03.000Z'
+size: 45.76KiB
+languages:
+  - English
+description: >-
+  Share your playing Spotify music or YouTube video details with users on
+  Nerimity!
+publisher_account: supertigerrrrr
+support_website: https://github.com/Nerimity/nerimity-rpc-extension/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "permissions": ["storage"],
+  "name": "Nerimity RPC",
+  "version": "0.2.8",
+  "description": "Share your playing Spotify music or YouTube video details with users on Nerimity!",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "resources": [
+        "WebSocketRPC.js",
+        "ExtensionRPC.js",
+        "options.js",
+        "utils.js"
+      ]
+    },
+    {
+      "matches": ["https://*.youtube.com/*"],
+      "resources": [
+        "WebSocketRPC.js",
+        "ExtensionRPC.js",
+        "options.js",
+        "utils.js",
+        "youtube_inject.js"
+      ]
+    },
+    {
+      "matches": ["https://atomic.radio/*"],
+      "resources": [
+        "WebSocketRPC.js",
+        "ExtensionRPC.js",
+        "options.js",
+        "utils.js"
+      ]
+    }
+  ],
+
+  "content_scripts": [
+    {
+      "js": ["youtube_content.js"],
+      "run_at": "document_start",
+      "matches": ["https://*.youtube.com/*"]
+    },
+    {
+      "js": ["spotify_content.js"],
+      "run_at": "document_start",
+      "matches": ["https://open.spotify.com/*"]
+    },
+    {
+      "js": ["nerimity_content.js"],
+      "run_at": "document_start",
+      "matches": ["https://nerimity.com/*", "http://local.nerimity.com/*"]
+    },
+    {
+      "js": ["atomicradio_content.js"],
+      "run_at": "document_start",
+      "matches": ["https://atomic.radio/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "service_worker.js"
+  }
+}

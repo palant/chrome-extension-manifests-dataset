@@ -1,0 +1,76 @@
+---
+name: Hide Politics
+version: '1.2'
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2024-11-09T04:34:08.000Z'
+size: 25.89KiB
+languages:
+  - English (United States)
+description: Blocks political content on X.
+publisher_account: jason
+privacy_policy: https://hidepolitics.netlify.app/tos
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Hide Politics",
+  "version": "1.2",
+  "description": "Blocks political content on X. ",
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "oauth2": {
+    "client_id": "170625860573-0979dcjivghgbto658u0a39sn29dgd7u.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "host_permissions": [
+    "https://political-content-blocker.fly.dev/*",
+    "https://www.googleapis.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://political-content-blocker.fly.dev/ https://www.googleapis.com"
+  },  
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.x.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "type": "module"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "modules/*.js",
+        "supabase.min.js",
+        "modules/cleanupUtils.js",
+        "modules/hideTweet.js",
+        "modules/initializePort.js",
+        "modules/observeContent.js",
+        "modules/processTweet.js",
+        "modules/tweetUtils.js",
+        "modules/trendingSectionHandler.js"
+      ],
+      "matches": [
+        "*://*.x.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

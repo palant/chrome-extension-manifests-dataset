@@ -1,0 +1,210 @@
+---
+name: Screen Recorder, Webcam Recorder - Dubb Video
+version: 6.0.17
+category_slug: productivity/communication
+rating: 4.847058823529411
+rating_count: 170
+user_count: 20000
+release_date: '2024-11-10T08:57:15.000Z'
+size: 7.59MiB
+languages:
+  - English
+description: Dubb Video Messaging Platform
+publisher: DUBB LLC
+publisher_account: dubb-team
+publisher_address: |-
+  25101 The Old Rd #245
+  Stevenson Ranch, CA 91381-2206
+  US
+extension_website: dubb.com
+support_website: https://support.dubb.com
+privacy_policy: https://dubb.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Screen Recorder, Webcam Recorder - Dubb Video",
+  "version": "6.0.17",
+  "description": "Dubb Video Messaging Platform",
+  "author": "Dubb",
+  "action": {
+    "default_icon": "assets/icon-512.png",
+    "default_title": "Record Screen and Webcam Videos"
+  },
+  "options_ui": {
+    "page": "dist/pages/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "dist/pages/side-panel/index.html"
+  },
+  "icons": {
+    "16": "assets/icon-512.png",
+    "48": "assets/icon-512.png",
+    "128": "assets/icon-512.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "scripting",
+    "activeTab",
+    "background",
+    "unlimitedStorage",
+    "desktopCapture",
+    "tabCapture",
+    "storage",
+    "notifications",
+    "tabs",
+    "sidePanel"
+  ],
+  "commands": {
+    "recording-confirm": {
+      "description": "Stop recording and upload",
+      "suggested_key": {
+        "default": "Alt+U"
+      }
+    },
+    "recording-pause-and-resume": {
+      "description": "Pause and resume recording",
+      "suggested_key": {
+        "default": "Alt+P"
+      }
+    },
+    "recording-stop": {
+      "description": "Cancel recording",
+      "suggested_key": {
+        "default": "Alt+C"
+      }
+    },
+    "webcam-toggle": {
+      "description": "On/Off webcam"
+    },
+    "annotation-toggle": {
+      "description": "On/Off annotation tool"
+    }
+  },
+  "host_permissions": [
+    "<all_urls>",
+    "*://*/*",
+    "https://chrome.google.com/"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "dist/content-scripts/dubb.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "*://dubb.com/*",
+        "*://*.dubb.com/*",
+        "*://dubb.qa/*",
+        "*://*.dubb.qa/*",
+        "*://dubb.dev/*",
+        "*://*.dubb.dev/*"
+      ]
+    },
+    {
+      "js": [
+        "dist/content-scripts/gmail.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "dist/content-scripts/linkedin.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://*.linkedin.com/*",
+        "*://linkedin.com/*"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "dist/content-scripts/lofty.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://*.lofty.com/*",
+        "*://lofty.com/*"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "dist/content-scripts/followupboss.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://*.followupboss.com/*"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "dist/content-scripts/wiseagent.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://thewiseagent.com/*",
+        "*://*.thewiseagent.com/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "dist/content-scripts/salesforce.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://*.force.com/*",
+        "*://*.salesforce.com/*"
+      ],
+      "all_frames": true
+    },
+    {
+      "js": [
+        "dist/content-scripts/zoho.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://crm.zoho.com/*",
+        "*://crm.zoho.in/*"
+      ],
+      "all_frames": false
+    },
+    {
+      "js": [
+        "dist/content-scripts/sierra.js"
+      ],
+      "run_at": "document_end",
+      "matches": [
+        "*://*.sierrainteractivedev.com/*"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "**/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval' ; object-src 'self'"
+  }
+}

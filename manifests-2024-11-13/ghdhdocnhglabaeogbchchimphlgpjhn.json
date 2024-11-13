@@ -1,0 +1,88 @@
+---
+name: CHOICE
+version: 1.0.524
+category_slug: lifestyle/entertainment
+rating: 4.6
+rating_count: 10
+user_count: 32
+release_date: '2024-07-22T09:06:36.000Z'
+size: 500KiB
+languages:
+  - English
+description: >-
+  Effortlessly personalize your OTT viewing by skipping unwanted scenes with
+  your preferences and feedbacks securely kept private.
+publisher_account: CHOICE
+support_website: https://waitlist.choiceai.in/
+privacy_policy: https://waitlist.choiceai.in/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CHOICE",
+  "description": "Effortlessly personalize your OTT viewing by skipping unwanted scenes with your preferences and feedbacks securely kept private.",
+  "version": "1.0.524",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "assets/choice_C.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.jiocinema.com/*"],
+      "js": [
+        "logger.js",
+        "const.js",
+        "jio_cinema.js",
+        "createStyledButton.js",
+        "createFloatingBox.js",
+        "showFloatingObject.js",
+        "insertBoxAfterButton.js",
+        "checkForElementsIfPageLoaded.js",
+        "waitingForVideoToPlay.js",
+        "createCustomTagBox.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["logger.js", "youtube.js", "createStyledButton.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "floatingBox.js",
+        "ContentTagsPopUp.html",
+        "assets/close.png",
+        "assets/Vector.png",
+        "assets/rectangle.png",
+        "assets/profile.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.bundle.js",
+    "type": "module"
+  },
+  "permissions": [
+    "cookies",
+    "webNavigation",
+    "scripting",
+    "https://waitlist.choiceai.in/movie_list",
+    "https://www.jiocinema.com/*",
+    "https://choice-mgva.onrender.com/*"
+  ],
+  "host_permissions": [
+    "https://waitlist.choiceai.in/movie_list",
+    "https://www.jiocinema.com/*",
+    "https://choice-mgva.onrender.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://waitlist.choiceai.in https://choice-mgva.onrender.com"
+  }
+}

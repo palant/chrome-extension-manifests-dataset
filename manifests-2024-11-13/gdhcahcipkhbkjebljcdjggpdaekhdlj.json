@@ -1,0 +1,86 @@
+---
+name: Cyberlearn & Gaps Auto-login
+version: '1.4'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 28
+release_date: '2024-11-04T09:52:52.000Z'
+size: 82.58KiB
+languages:
+  - Français
+description: Cyberlearn & Gaps with SWITCH edu-ID auto-login
+publisher_account: Kévin Jordil
+support_website: https://github.com/KevinJordil/CyberlearnGapsAutoLogin/issues
+privacy_policy: https://www.privacypolicies.com/live/2b368cf5-c315-4bf8-8ac1-7e6b2bbbde35
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Cyberlearn & Gaps Auto-login",
+    "manifest_version": 3,
+    "version": "1.4",
+    "description": "Cyberlearn & Gaps with SWITCH edu-ID auto-login",
+    "icons": {
+        "128": "icon/icon128.png"
+    },
+    "action": {
+        "default_icon": "icon/icon128.png",
+        "default_popup": "html/popup.html",
+        "default_title": "Cyberlearn & Gaps Auto-login"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://cyberlearn.hes-so.ch/*",
+                "https://moodle.msengineering.ch/*"
+            ],
+            "exclude_matches": [
+                "https://cyberlearn.hes-so.ch/login/index.php",
+                "https://moodle.msengineering.ch/login/index.php"
+            ],
+            "js": [
+                "js/cyberloginaccess.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://cyberlearn.hes-so.ch/login/index.php",
+                "https://moodle.msengineering.ch/login/index.php"
+            ],
+            "js": [
+                "js/cyberlogin.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://hes-so.login.eduid.ch/idp/profile/SAML2/Redirect/SSO*"
+            ],
+            "js": [
+                "js/hessologin.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://gaps.heig-vd.ch/*",
+                "https://mse.hes-so.ch/*"
+            ],
+            "js": [
+                "js/gapslogin.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+        "https://moodle.msengineering.ch/*",
+        "https://cyberlearn.hes-so.ch/*",
+        "https://hes-so.login.eduid.ch/*"
+    ]
+}

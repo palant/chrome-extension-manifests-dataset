@@ -1,0 +1,78 @@
+---
+name: 'Crunchbase Scraper: Export Crunchbase search'
+version: 1.0.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 80
+release_date: '2024-08-06T08:05:22.000Z'
+size: 1.14MiB
+languages:
+  - English
+description: >-
+  Scrape Crunchbase
+  companies,contacts,people,investors,acquisitions,funding,hubs,schools and
+  events from searches to CSV/EXCEL/JSON
+publisher_account: wfrasheri
+extension_website: niomaker.com
+privacy_policy: https://crunchbase-scraper.niomaker.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.0.0",
+  "homepage_url": "https://crunchbase-scraper.niomaker.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*.crunchbase.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://*.crunchbase.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "/assets/inject.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

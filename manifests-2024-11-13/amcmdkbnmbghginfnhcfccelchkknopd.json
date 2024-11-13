@@ -1,0 +1,103 @@
+---
+name: aliInvoice
+version: 1.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 31
+release_date: '2024-01-05T12:31:32.000Z'
+size: 188KiB
+languages:
+  - English (United States)
+description: generate invoice from aliexpress
+publisher_account: savemyday666
+privacy_policy: >-
+  https://docs.google.com/document/d/12SAzhmiYu3io5qncQbVpoJjDWI53u5NYPbA9lVLR5rA
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "aliInvoice",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "description": "generate invoice from aliexpress",
+  "action": {
+    "default_icon": "src/static/img/icon_16.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "host_permissions": [
+    "https://*.aliexpress.com/",
+    "https://*.aliexpress.us/",
+    "https://api.savemydayapp.com/*"
+  ],
+  "icons": {
+    "16": "src/static/img/icon_16.png",
+    "32": "src/static/img/icon_32.png",
+    "64": "src/static/img/icon_64.png",
+    "128": "src/static/img/icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "./src/static/lib/bootstrap.min.css",
+        "./src/static/lib/bootstrap-datepicker.standalone.min.css"
+      ],
+      "js": [
+        "./src/static/lib/jquery.min.js",
+        "./src/static/lib/bootstrap.min.js",
+        "./src/static/lib/accounting.min.js",
+        "./src/static/lib/moment.min.js",
+        "./src/static/lib/bootstrap-datepicker.min.js",
+        "./src/static/lib/dataBase.js",
+        "./src/utils.js",
+        "./src/modules/Order.js",
+        "./src/components/orderIndex.js"
+      ],
+      "matches": [
+        "https://*.aliexpress.com/p/order/index.htm*",
+        "https://*.aliexpress.us/p/order/index.htm*"
+      ]
+    },
+    {
+      "css": [
+        "./src/static/lib/bootstrap.min.css",
+        "./src/static/invoice.css"
+      ],
+      "js": [
+        "./src/static/lib/jquery.min.js",
+        "./src/static/lib/bootstrap.min.js",
+        "./src/static/lib/accounting.min.js",
+        "./src/static/lib/dataBase.js",
+        "./src/static/lib/JsBarcode.all.min.js",
+        "./src/utils.js",
+        "./src/modules/Order.js",
+        "./src/components/orderDetail.js"
+      ],
+      "matches": [
+        "https://*.aliexpress.com/p/order/detail.htm*",
+        "https://*.aliexpress.us/p/order/detail.htm*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/static/img/*"
+      ],
+      "matches": [
+        "*://*.aliexpress.com/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,91 @@
+---
+name: OptMeowt
+version: 5.0.1
+category_slug: make_chrome_yours/privacy
+rating: 4
+rating_count: 6
+user_count: 3000
+release_date: '2024-06-10T10:06:31.000Z'
+size: 3.57MiB
+languages:
+  - English (United States)
+description: >-
+  OptMeowt allows Web users to make use of their rights to opt out from the sale
+  and sharing of personal data
+publisher: Wesleyan University
+publisher_account: privacy-tech-lab
+publisher_address: |-
+  Department of Mathematics and Computer Science
+  265 Church Street, Science Tower 655
+  Middletown, CT 06459
+  US
+extension_website: privacytechlab.org
+support_website: https://github.com/privacy-tech-lab/gpc-optmeowt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OptMeowt",
+  "author": "privacy-tech-lab",
+  "version": "5.0.1",
+  "description": "OptMeowt allows Web users to make use of their rights to opt out from the sale and sharing of personal data",
+  "permissions": [
+    "declarativeNetRequest",
+    "webRequest",
+    "webNavigation",
+    "storage",
+    "activeTab",
+    "cookies",
+    "tabs",
+    "scripting"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "universal_GPC",
+        "enabled": true,
+        "path": "rules/universal_gpc_rules.json"
+      },
+      {
+        "id": "GPC_exceptions",
+        "enabled": true,
+        "path": "rules/gpc_exceptions_rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "128": "assets/face-icons/icon128-face-circle.png"
+  },
+  "action": {
+    "default_title": "OptMeowt",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/contentScript.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "web_accessible_resources": [{
+   "resources": ["content-scripts/injection/gpc-dom.js"],
+   "matches": ["<all_urls>"]
+ }],
+  "manifest_version": 3,
+  "incognito": "spanning",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval'; object-src 'self'"
+  }
+}

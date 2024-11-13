@@ -1,0 +1,61 @@
+---
+name: 虾米小助手
+version: '2.1'
+category_slug: lifestyle/fun
+rating: 5
+rating_count: 1
+user_count: 26
+release_date: '2015-09-24T11:34:58.000Z'
+size: 69.52KiB
+languages:
+  - 中文 (简体)
+description: 针对虾米网(xiami.com)做各种功能体验优化扩展
+publisher_account: 罐头
+---
+
+{
+ "name": "虾米小助手",
+ "description": "针对虾米网(xiami.com)做各种功能体验优化扩展",
+ "version": "2.1",
+ "manifest_version": 2,
+ "homepage_url":"http://2happy.sinaapp.com/xiami-plus-chrome-plugin/readme.html",
+ "permissions": ["contextMenus", "storage"],
+ "icons": {
+  "16": "icon/icon16x16.png",
+  "48": "icon/icon48x48.png",
+  "128": "icon/icon128x128.png"
+ },
+   "options_page": "options.html",
+ "options_ui": {
+  "page": "options.html",
+  "chrome_style": true
+ },
+ "background": {
+  "scripts":["default_setting.js", "bgScript.js"]
+ },
+ "content_scripts":[
+  {
+   "matches":["http://www.xiami.com/play", "http://www.xiami.com/play?*"],
+   "js":["default_setting.js", "lib/jquery-1.11.3.min.js", "contentScripts/playerContentScript.js"]
+  },
+  {
+   "matches":["http://www.xiami.com/search*"],
+   "run_at":"document_end",
+   "js":["default_setting.js", "lib/jquery-1.11.3.min.js", "contentScripts/searchContentScript.js"],
+   "css":["contentScripts/search.css"]
+  },
+  {
+   "matches":["http://www.xiami.com/space/lib-song*", "http://www.xiami.com/space/lib-album*", "http://www.xiami.com/space/lib-artist*"],
+   "run_at":"document_end",
+   "js":["lib/jquery-1.11.3.min.js", "default_setting.js", "contentScripts/libContentScript.js"],
+   "css":["contentScripts/lib.css"]
+  },
+  {
+   "matches":["http://www.xiami.com/*", "http://i.xiami.com/*"],
+   "run_at":"document_end",
+   "js":["lib/jquery-1.11.3.min.js", "default_setting.js", "contentScripts/songListContentScript.js"],
+   "css":[]
+  }
+ ],
+ "update_url":"https://clients2.google.com/service/update2/crx"
+}

@@ -1,0 +1,108 @@
+---
+name: Fonzer plug & call
+version: 1.6.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 252
+release_date: '2024-10-24T10:19:14.000Z'
+size: 975KiB
+languages:
+  - Nederlands
+description: Plug & call Chrome extensie voor de Hosted PBX van Fonzer
+publisher: Digifoon Group B.V.
+publisher_account: Digifoon Group BV
+publisher_address: |-
+  Modemstraat 1
+  Amsterdam 1033 RW
+  NL
+privacy_policy: https://www.qallerapp.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Fonzer plug & call",
+    "short_name": "Fonzer p c",
+    "manifest_version": 3,
+    "description": "Plug & call Chrome extensie voor de Hosted PBX van Fonzer",
+    "version": "1.6.2",
+    "background": {
+      "service_worker": "service-worker.js",
+      "type": "module"
+    },
+    "icons": {
+      "16": "img/fonzer/icon16.png",
+      "48": "img/fonzer/icon48.png",
+      "128": "img/fonzer/icon128.png"
+    },
+    "action": {
+      "default_icon": "img/fonzer/icon128.png",
+      "default_title": "Fonzer plug & call",
+      "default_popup": "panel.html"
+    },
+    "permissions": [
+      "contextMenus",
+      "scripting",
+      "notifications",
+      "storage",
+      "alarms"
+    ],
+    "host_permissions": [
+      "https://realtime.api.kwebbl.net/*",
+      "http://c2d.fonzer.com/*",
+      "https://fonzer.c2d.qaller.net/*",
+      "https://c2d.qaller.net/*",
+      "<all_urls>"
+    ],
+    "commands": {
+      "toggle-feature": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+K",
+          "mac": "Command+Shift+K"
+        },
+        "description": "Plaats een oproep dmv selecteren van tekst en vervolgens de hotkey te gebruiken."
+      }
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'",
+      "sandbox": "sandbox allow-scripts; script-src 'self' https://ajax.googleapis.com https://unpkg.com https://ssl.google-analytics.com; object-src 'self'"
+    },
+    "content_scripts": [{
+        "matches": [
+          "http://*/*",
+          "https://*/*"
+        ],
+        "js": [
+          "click_2_dial.js"
+        ],
+        "run_at": "document_end",
+        "all_frames": true
+      },
+      {
+        "matches": [
+          "http://c2d.fonzer.com/*",
+          "https://fonzer.c2d.qaller.net/*",
+          "https://c2d.qaller.net/*"
+        ],
+        "js": [
+          "sync.js"
+        ],
+        "run_at": "document_end"
+      }
+    ],
+    "web_accessible_resources": [{
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "img/inline-phone.png",
+        "i18n/en/en.json",
+        "i18n/en/fonzer.json",
+        "i18n/nl/nl.json",
+        "i18n/nl/fonzer.json"
+      ]
+    }]
+  }
+    

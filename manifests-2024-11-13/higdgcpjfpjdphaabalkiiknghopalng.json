@@ -1,0 +1,163 @@
+---
+name: Web Copilot - Your AI Companion
+version: 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 9
+release_date: '2024-09-30T09:14:54.000Z'
+size: 3.82MiB
+languages:
+  - English (United States)
+description: >-
+  WebCopilot AI is a powerful Chrome extension that transforms your browsing
+  experience with AI-driven assistance.
+publisher_account: Jerry
+extension_website: webcopilot.onl
+support_website: https://www.webcopilot.onl
+privacy_policy: https://www.webcopilot.onl/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.0.0",
+  "name": "Web Copilot - Your AI Companion",
+  "description": "WebCopilot AI is a powerful Chrome extension that transforms your browsing experience with AI-driven assistance.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "src/assets/icon.png",
+    "32": "src/assets/icon.png",
+    "48": "src/assets/icon.png",
+    "128": "src/assets/icon.png"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Toggle WebCopilot Sidebar"
+  },
+  "host_permissions": [
+    "https://*.bing.com/",
+    "https://*.duckduckgo.com/",
+    "http://localhost:3000/",
+    "https://www.webcopilot.onl/",
+    "<all_urls>"
+  ],
+  "oauth2": {
+    "client_id": "164674413870-ib47b1rakgcj1rices26q7521sndtulg.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/chatplaygroundReferral.js-loader-4c00d0ff.js"
+      ],
+      "matches": [
+        "https://www.webcopilot.onl/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/initQuickMenu.jsx-loader-8fbe6a8d.js",
+        "assets/main.jsx-loader-1c78885e.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "css": [
+        "assets/main-7981b258.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "sidePanel",
+    "declarativeNetRequestWithHostAccess",
+    "tabs",
+    "activeTab",
+    "contextMenus"
+  ],
+  "commands": {
+    "open-app": {
+      "suggested_key": {
+        "default": "Alt+J",
+        "windows": "Alt+J",
+        "linux": "Alt+J",
+        "mac": "Command+J"
+      },
+      "description": "Open WebCopilot app"
+    },
+    "open-sidebar": {
+      "suggested_key": {
+        "default": "Ctrl+B"
+      },
+      "description": "Open the Web Copilot"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_bing",
+        "enabled": true,
+        "path": "src/declarative-net-rules/bing.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "src/pages/ai-sidebar/index.html",
+        "src/assets/logo.png",
+        "src/pages/ai-sidebar/main.jsx"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://www.webcopilot.onl/*"
+      ],
+      "resources": [
+        "assets/chatplaygroundReferral.js-1b28b498.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "<all_urls>",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/logo-ea393c6c.png",
+        "assets/useStorage-4289e443.js",
+        "assets/default-51338952.js",
+        "assets/emotion-element-5486c51c.browser.esm-bc067cb0.js",
+        "assets/usePrompts-48f0c982.js",
+        "assets/logs-838b450a.js",
+        "assets/RecursiveItem-201c583f.js",
+        "assets/generatePromptInSidebar-78a78926.js",
+        "assets/index-50b96446.js",
+        "assets/initQuickMenu.jsx-74158256.js",
+        "assets/useSettings-2ce7d1ec.js",
+        "assets/getStoredPrompts-13b10f24.js",
+        "assets/main.jsx-367a7e48.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "side_panel": {
+    "default_path": "src/pages/ai-sidebar/index.html",
+    "openPanelOnActionClick": false
+  }
+}

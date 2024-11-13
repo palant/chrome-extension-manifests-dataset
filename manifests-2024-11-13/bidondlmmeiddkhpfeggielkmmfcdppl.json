@@ -1,0 +1,121 @@
+---
+name: LARA
+version: 1.1.0
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2021-03-31T14:17:27.000Z'
+size: 2.86MiB
+languages:
+  - English
+description: Chrome Extension for laranow.com. Create highlights for PDFs and Websites.
+publisher: Numen Capital
+publisher_account: Numen Capital LLP
+publisher_address: |-
+  150 Brompton Road
+  London SW3 1HX
+  United Kingdom
+support_website: https://www.laranow.com
+privacy_policy: https://www.laranow.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LARA",
+  "version": "1.1.0",
+  "manifest_version": 2,
+  "description": "Chrome Extension for laranow.com. Create highlights for PDFs and Websites.",
+  "homepage_url": "https://laranow.com",
+  "icons": {
+    "16": "icons/lara_icon16.png",
+    "48": "icons/lara_icon48.png",
+    "128": "icons/lara_icon128.png"
+  },
+  "browser_action": {
+    "default_title": "TSRWPCX",
+    "default_popup": "popup.html"
+  },
+  "default_locale": "en",
+  "background": {
+    "scripts": [
+      "lara/background.js",
+      "options/migration.js",
+      "preserve-referer.js",
+      "pdfHandler.js",
+      "extension-router.js",
+      "pdfHandler-vcros.js",
+      "suppress-update.js"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://*.laranow.com/*"
+      ],
+      "js": [
+        "lara/content.js"
+      ],
+      "css": [
+        "lara/content.css"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "ftp://*/*",
+        "file://*/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "css": [
+        "contentstyle.css"
+      ],
+      "js": [
+        "contentscript.js"
+      ]
+    }
+  ],
+  "storage": {
+    "managed_schema": "preferences_schema.json"
+  },
+  "file_browser_handlers": [
+    {
+      "id": "open-as-pdf",
+      "default_title": "Open with PDF Viewer",
+      "file_filters": [
+        "filesystem:*.pdf"
+      ]
+    }
+  ],
+  "permissions": [
+    "fileBrowserHandler",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>",
+    "tabs",
+    "activeTab",
+    "webNavigation",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "content/web/viewer.html",
+    "http:/*",
+    "https:/*",
+    "ftp:/*",
+    "file:/*",
+    "chrome-extension:/*",
+    "blob:*",
+    "data:*",
+    "filesystem:/*",
+    "drive:*",
+    "lara/content.css",
+    "lara/popup.css"
+  ]
+}

@@ -1,0 +1,80 @@
+---
+name: 若鱼 - 智慧教育平台教材下载器
+version: 1.0.5
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 31
+release_date: '2024-10-17T03:28:42.000Z'
+size: 9.86MiB
+languages:
+  - 中文 (简体)
+description: 若鱼----一键轻松下载智慧教育平台 视频/PDF 教材
+publisher_account: catfishmonster
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "若鱼 - 智慧教育平台教材下载器",
+  "version": "1.0.5",
+  "description": "若鱼----一键轻松下载智慧教育平台 视频/PDF 教材",
+  "author": "ruoyu",
+  "options_page": "setting.html",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": ["<all_urls>"],
+  "action": {
+    "default_title": "若鱼 - 智慧教育平台教材下载器",
+    "default_icon": "icons/icon48.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": ["downloads", "scripting", "activeTab",  "storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "web_accessible_resources": [{
+    "resources":[
+      "imgs/*",
+      "content/*",
+      "*.js",
+      "*.css",
+      "*.png",
+      "*.webp",
+      "*.ttf",
+      "*.json",
+      "*.html",
+      "*.wasm"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.smartedu.cn/*"],
+      "js": [
+        "content/main.js"
+      ],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.smartedu.cn/*"],
+      "css": ["content/index.css"],
+      "js": [
+        "content/filesize.js",
+        "content/index.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

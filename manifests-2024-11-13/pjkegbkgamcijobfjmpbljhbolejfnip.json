@@ -1,0 +1,78 @@
+---
+name: ScamWall
+version: 0.1.9
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 6
+release_date: '2022-09-18T04:09:01.000Z'
+size: 4.4MiB
+languages:
+  - English
+description: Protect You and Your Loved Ones From Scammers
+publisher: iMaidItUp LLC
+publisher_account: ScamWall
+publisher_address: |-
+  2400 Old Milton Pkwy
+  #293
+  Alpharetta, GA 30004-1759
+  US
+extension_website: scamwall.io
+support_website: https://scamwall.io
+privacy_policy: https://scamwall.io/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ScamWall",
+  "description": "Protect You and Your Loved Ones From Scammers",
+  "version": "0.1.9",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background-scripts/background.js"
+  },
+  "icons": {
+    "16": "/imgs/icons/icon16.png",
+    "32": "/imgs/icons/icon32.png",
+    "48": "/imgs/icons/icon48.png",
+    "128": "/imgs/icons/icon128.png"
+  },
+  "permissions": ["storage", "tabs", "downloads", "webRequest"],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://mail.google.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": [
+        "content-scripts/extensionInjector.js",
+        "content-scripts/extensionId.js"
+      ],
+      "css": ["content-scripts/style.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches" : ["<all_urls>"],
+      "js" : [
+        "content-scripts/detectScamPopup.js",
+        "content-scripts/commonPW.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content-scripts/gmailJsLoader.js",
+        "content-scripts/extension.js",
+        "content-scripts/getApproval.js"
+      ],
+      "matches": ["*://mail.google.com/*"]
+    }
+  ],
+  "host_permissions": ["https://*/*"]
+}

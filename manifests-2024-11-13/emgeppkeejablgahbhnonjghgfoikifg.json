@@ -1,0 +1,86 @@
+---
+name: CozyTwitter
+version: 0.0.0.1
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-03-31T04:25:29.000Z'
+size: 482KiB
+languages:
+  - English
+description: A Twitter feed re-ranker to focus on your mutuals and friends
+publisher: YouTiki
+publisher_address: |-
+  5900 Balcones Drive
+  STE 100
+  Austin, TX 78731
+  US
+privacy_policy: https://www.youtiki.com/about_search_organizer.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "CozyTwitter",
+    "version": "0.0.0.1",
+    "description": "A Twitter feed re-ranker to focus on your mutuals and friends",
+    "author": "Pasha",
+    "background": {
+        "service_worker": "background.js"
+
+    },
+
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "64": "images/icon64.png",
+        "96": "images/icon96.png",
+        "128": "images/icon128.png"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://twitter.com/home*", "https://www.twitter.com/home*"],
+            "js": [
+                "axios.cjs",
+                "keys.js",
+                "oath_index.js",
+                "twitter_oath.js",
+                "twitterUI.js",
+                "content.js"
+            ],
+            "css":[ "cozy_twitter.css"],
+            "run_at": "document_end"
+        },
+        {
+          "matches": ["https://www.youtiki.com/api/twitter/*"],
+          "js": ["session.js"]
+        }
+    ],
+
+    "options_page": "options.html",
+    "popup": "popup.html",
+
+    "permissions": [
+        "storage",
+        "unlimitedstorage",
+        "https://*.twitter.com/*"
+    ],
+    "host_permissions": [
+        "https://*.twitter.com/*",
+        "https://www.twitter.com/*",
+        "https://publish.twitter.com/*",
+        "https://www.youtiki.com/*",
+        "http://www.cozytwitter.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "matches": ["<all_urls>"],
+            "resources": ["images/*"]
+        }
+
+    ]
+}

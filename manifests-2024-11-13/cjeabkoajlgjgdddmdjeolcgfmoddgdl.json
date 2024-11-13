@@ -1,0 +1,67 @@
+---
+name: Discord Lite
+version: '1.0'
+category_slug: lifestyle/social
+rating: 5
+rating_count: 9
+user_count: 554
+release_date: '2024-08-26T09:49:16.000Z'
+size: 14.43KiB
+languages:
+  - English (United States)
+description: >-
+  Open one or more Discord channels in a compact popup window with simplified UI
+  and no sidebars.
+publisher_account: farmingmelody
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Discord Lite",
+  "version": "1.0",
+  "description": "Open one or more Discord channels in a compact popup window with simplified UI and no sidebars.",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://discord.com/channels/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Discord Popup",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://discord.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "all_frames": false,
+      "world": "ISOLATED"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'none'; default-src 'self'; style-src 'self'; connect-src 'self' https://discord.com; img-src 'self' data:; frame-src 'none'; frame-ancestors 'none'; upgrade-insecure-requests"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["popup.css"],
+      "matches": ["https://discord.com/*"]
+    }
+  ]
+}

@@ -1,0 +1,116 @@
+---
+name: CMS Enrollment extension
+version: 0.2.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 251
+release_date: '2024-01-08T04:07:19.000Z'
+size: 102KiB
+languages:
+  - English
+description: Enroll in courses on CMS with just one click!
+publisher_account: Akshat
+privacy_policy: https://akshat-oke.github.io/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CMS Enrollment extension",
+  "description": "Enroll in courses on CMS with just one click!",
+  "version": "0.2.4",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [
+    "*://cms.bits-hyderabad.ac.in/*"
+  ],
+  "permissions": [
+    "storage",
+    "cookies"
+  ],
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/course/*fromCMS=1*"
+      ],
+      "exclude_matches": [
+        "*://*/*view.php*"
+      ],
+      "js": [
+        "open_course.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/course/*view.php*"
+      ],
+      "js": [
+        "util/close_tab.js",
+        "util/log_recent.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/enrol/*"
+      ],
+      "exclude_matches": [
+        "*://*/*unenrolself.php*"
+      ],
+      "js": [
+        "enrol_in_course.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/my/"
+      ],
+      "js": [
+        "unenrol.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/enrol/self/unenrolself.php*"
+      ],
+      "js": [
+        "confirm_unenrol.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/user/managetoken.php*"
+      ],
+      "js": [
+        "chrono.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://cms.bits-hyderabad.ac.in/mod/forum/discuss.php*"
+      ],
+      "js": [
+        "util/arrow_nav.js"
+      ],
+      "css": [
+        "util/arrow.css"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.chrono.crux-bphc.com/*"
+    ]
+  },
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

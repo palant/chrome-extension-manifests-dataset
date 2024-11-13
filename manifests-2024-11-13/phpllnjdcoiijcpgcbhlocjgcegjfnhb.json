@@ -1,0 +1,67 @@
+---
+name: Consent Mode Inspector by InfoTrust
+version: 3.3.2
+category_slug: productivity/tools
+rating: 4.894736842105263
+rating_count: 19
+user_count: 10000
+release_date: '2024-10-23T10:44:48.000Z'
+size: 304KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+description: >-
+  Check the status of Consent Mode, display gcs & gcd parameters, and view real
+  time consent signals.🔐
+publisher_account: ryan.bulcher
+privacy_policy: https://app.taginspector.com/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Consent Mode Inspector by InfoTrust",
+ "short_name": "CoMo Inspector",
+ "version": "3.3.2",
+ "default_locale": "en",
+ "description": "Check the status of Consent Mode, display gcs & gcd parameters, and view real time consent signals.🔐",
+ "icons": {
+  "128": "/assets/logo.png"
+ },
+ "permissions": ["webRequest", "storage", "downloads"],
+ "host_permissions": ["<all_urls>"],
+ "background": {
+  "service_worker": "background.js"
+ },
+ "action": {
+  "default_popup": "index.html"
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://*/*", "http://*/*"],
+   "js": ["inject.js"],
+   "world": "MAIN",
+   "run_at": "document_start"
+  },
+  {
+   "matches": ["https://*/*", "http://*/*"],
+   "js": ["relay-content-script.js"],
+   "run_at": "document_start"
+  },
+  {
+   "matches": ["https://*/*", "http://*/*"],
+   "js": ["startup.js"],
+   "run_at": "document_start"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": ["index.html"],
+   "matches": ["<all_urls>"]
+  }
+ ]
+}

@@ -1,0 +1,73 @@
+---
+name: Zeko Tools
+version: '1.0'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 22
+release_date: '2024-05-10T09:01:01.000Z'
+size: 140KiB
+languages:
+  - English
+description: This is Zeko's personal extension!
+publisher_account: zeko zhang
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Zeko Tools",
+  "version": "1.0",
+  "description": "This is Zeko's personal extension!",
+  "icons": {
+ "16": "icon_r16.png",
+ "32": "icon_r32.png",
+ "48": "icon_r48.png",
+ "128": "icon_r128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon_r16.png",
+      "48": "icon_r48.png",
+      "128": "icon_r128.png"
+    },
+ "default_title": "Zeko Tools"
+  },
+  "permissions": ["tabs", "storage", "notifications"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://zoom-sso.awsapps.com/start/user-consent/login-success.html"],
+      "js": ["content.js"]
+    },
+ {
+  "matches": ["*://zoom.okta.com/oauth2/v1/authorize*", "*://zoom.okta.com/app/*"],
+  "js": ["oktacontent.js"],
+  "run_at": "document_idle"
+ },
+ {
+  "matches": ["*://zoom.okta.com/app/UserHome*"],
+  "js": ["testcontent.js"],
+  "run_at": "document_idle"
+ },
+ {
+  "matches": ["*://device.sso.us-east-1.amazonaws.com/?user_code*", "*://zoom-sso.awsapps.com/start/*", "*://zoom-sso.awsapps.com/start/user-consent/authorize.html?clientId*"],
+  "js": ["awscontent.js"],
+  "run_at": "document_idle"
+ },
+ {
+  "matches": ["*://id.atlassian.com/login*"],
+  "js": ["atlassiancontent.js"],
+  "run_at": "document_idle"
+ },
+ {
+  "matches": ["*://app.asana.com/-/saml/consume*", "*://app.asana.com/-/login*"],
+  "js": ["asanacontent.js"],
+  "run_at": "document_idle"
+ }
+  ]
+}

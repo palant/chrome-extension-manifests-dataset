@@ -1,0 +1,117 @@
+---
+name: Free Email Tracker - Gmail
+version: 4.6.7
+category_slug: productivity/workflow
+rating: 4.566666666666666
+rating_count: 60
+user_count: 3000
+release_date: '2024-10-04T07:16:27.000Z'
+size: 2.89MiB
+languages:
+  - English (United States)
+description: >-
+  Email tracking extension for Gmail. Email tracking and URL tracking for free
+  without any signature. Unlimited Email tracking.
+publisher: Aptare Engage Technologies Pvt Ltd
+publisher_account: Developer
+publisher_address: |-
+  16A Kaliammal colony
+  Thudiyalur
+  Coimbatore, Tamil Nadu 641034
+  IN
+extension_website: salesgear.io
+privacy_policy: https://www.salesgear.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "4.6.7",
+  "name": "Free Email Tracker - Gmail",
+  "short_name": "Mail Tracker",
+  "description": "Email tracking extension for Gmail. Email tracking and URL tracking for free without any signature. Unlimited Email tracking.",
+  "icons": {
+    "128": "images/Logo/logo128.png",
+    "64": "images/Logo/logo64.png",
+    "32": "images/Logo/logo32.png",
+    "16": "images/Logo/logo16.png"
+  },
+  "action": {
+    "default_icon": "images/Logo/logo64.png",
+    "default_title": "Email tracker extension for Gmail - Salesgear"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.force.com/lightning/*",
+        "https://*.pipedrive.com/*",
+        "https://crm.zoho.in/*",
+        "https://crm.zoho.com/*",
+        "https://crmsandbox.zoho.com/*",
+        "*://*.hubspot.com/*",
+        "*://*.salesforce.com/*",
+        "*://crmplus.zoho.com/*",
+        "*://crmplus.zoho.in/*"
+      ],
+      "js": ["crm-main.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["gmail-main.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*", "https://linkedin.com/*"],
+      "js": ["linkedin-main.js", "linkedin-finder-main.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://app.salesgear.io/*", "https://app.salesgearqe.com/*"],
+      "js": ["web-content-main.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["live-feed-setting-main.js"],
+      "run_at": "document_end",
+      "exclude_matches": ["https://mail.google.com/*"]
+    }
+  ],
+  "homepage_url": "https://www.salesgear.io/",
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "gcm",
+    "tabs",
+    "activeTab",
+    "notifications",
+    "storage",
+    "declarativeNetRequest",
+    "cookies",
+    "scripting",
+    "system.display"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": ["<all_urls>"]
+}

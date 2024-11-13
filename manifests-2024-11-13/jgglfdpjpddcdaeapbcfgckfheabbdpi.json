@@ -1,0 +1,135 @@
+---
+name: AAMC MCAT Interface by Jack Westin
+version: 1.6.2
+category_slug: productivity/workflow
+rating: 3.865979381443299
+rating_count: 97
+user_count: 30000
+release_date: '2024-11-13T06:57:55.000Z'
+size: 689KiB
+languages:
+  - English
+description: >-
+  This extension allows users who have purchased AAMC practice material to view
+  it in the proper intended MCAT exam format.
+publisher: Jack Westin
+publisher_account: Jack Westin Team
+publisher_address: |-
+  1616 W Oak St
+  Denton, TX 76201
+  US
+extension_website: www.jackwestin.com
+support_website: https://jackwestin.com/contact
+privacy_policy: https://jackwestin.com/tos
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "AAMC MCAT Interface by Jack Westin",
+  "description": "This extension allows users who have purchased AAMC practice material to view it in the proper intended MCAT exam format.",
+  "version": "1.6.2",
+  "host_permissions": [
+    "https://www.mcatofficialprep.org/*",
+    "https://www.jackwestin.com/*",
+    "https://jackwestin.com/*",
+    "https://cms.jackwestin.com/*"
+  ],
+  "permissions": ["tabs", "storage", "activeTab", "scripting"],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "icons": {
+    "180": "images/icon180.png"
+  },
+  "action": {
+    "default_title": "MCAT Extension",
+    "default_icon": "images/icon180.png",
+    "default_popup": "popup/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*.*", "images/*.*", "font/*.*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.mcatofficialprep.org/account/user-portal/courses"
+      ],
+      "js": [
+        "js/lib/jquery-3.3.1.min.js",
+        "js/lib/bugsnag.web-worker.min.js",
+        "js/ExtensionUtils.js",
+        "js/userPortalContentScript.js"
+      ],
+      "css": ["css/_shared.css", "css/userPortalContentScript.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://www.mcatofficialprep.org/app/*"],
+      "js": [
+        "js/lib/jquery-3.3.1.min.js",
+        "js/lib/smtp.js",
+        "js/lib/modal.js",
+        "js/lib/easytimer.min.js",
+        "js/UIBuilders.js",
+        "js/UIParsers.js",
+        "js/config/aamc-mcat-section-bank.js",
+        "js/config/mcat-biology-question-pack-v-1.js",
+        "js/config/mcat-biology-question-pack-v-2.js",
+        "js/config/mcat-cars-question-pack-v-1.js",
+        "js/config/mcat-cars-question-pack-v-2.js",
+        "js/config/mcat-chemistry-question-pack.js",
+        "js/config/mcat-official-prep-cars-diagnostic-tool-course.js",
+        "js/config/mcat-physics-question-pack.js",
+        "js/config/online-flashcards.js",
+        "js/config/online-practice-questions-official-guide.js",
+        "js/config/mcat-sample-test.js",
+        "js/config/aamc-mcat-practice-exam-1.js",
+        "js/config/aamc-mcat-practice-exam-2.js",
+        "js/config/aamc-mcat-practice-exam-3.js",
+        "js/config/aamc-mcat-practice-exam-4.js",
+        "js/config/free-practice-exam.js",
+        "js/config/index.js",
+        "js/JwResult.js",
+        "js/JwTimer.js",
+        "js/StoredHighlightsUtils.js",
+        "js/Passage.js",
+        "js/ExtensionUtils.js",
+        "js/ExtensionUI.js",
+        "js/ExtensionController.js",
+        "js/content.js"
+      ],
+      "css": [
+        "css/FontAwesome.css",
+        "css/modals.css",
+        "css/form-controls.css",
+        "css/jw-popup.css",
+        "css/loading.css",
+        "css/navigation-view.css",
+        "css/result_view.css",
+        "css/validation_popup.css",
+        "css/_shared.css",
+        "css/extended-solutions.css",
+        "css/style_content.css"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://jackwestin.com/*"],
+      "js": ["js/ExtensionUtils.js", "js/jackWestinContentScript.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://ssl.google-analytics.com;"
+  },
+  "sandbox": {
+    "pages": ["jw-extension.html"]
+  }
+}

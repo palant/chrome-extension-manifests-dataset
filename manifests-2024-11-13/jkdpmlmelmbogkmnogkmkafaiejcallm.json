@@ -1,0 +1,113 @@
+---
+name: PageTip
+version: 1.0.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 9
+release_date: '2023-07-25T04:55:30.000Z'
+size: 194KiB
+languages:
+  - English (United States)
+description: >-
+  Get in-page access to ChatGPT, translate, rephrase, and view hyperlinks in
+  place with PageTip
+publisher: PAGECAP LLC
+publisher_account: PageCap LLC
+publisher_address: |-
+  3400 COTTAGE WAY, STE G2 #11835
+  SACRAMENTO, CA 95825
+  US
+support_website: https://www.pagecap.io/web/pagetip/help.html
+privacy_policy: https://pagecap.io/web/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "PageTip",
+    "version": "1.0.2",
+    "description": "Get in-page access to ChatGPT, translate, rephrase, and view hyperlinks in place with PageTip",
+    "permissions": [
+        "activeTab", 
+        "storage",
+        "contextMenus",
+        "clipboardWrite",
+        "declarativeNetRequestWithHostAccess"
+    ],
+
+    "host_permissions": [
+        "*://*/*"
+    ],
+
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "ruleset",
+            "enabled": true,
+            "path": "ruleset.json"
+        }]
+    },
+
+    "externally_connectable": {
+        "matches": ["https://*.pagecap.io/*"]
+    },
+
+    "background": {
+        "service_worker": "background.bundle.js"
+    },
+
+    "icons": {
+        "16": "images/pagetip-16.png",
+        "32": "images/pagetip-32.png",
+        "48": "images/pagetip-48.png",
+        "128": "images/pagetip-128.png"
+    },
+
+    "commands": {
+        "toggleActivation": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+1",
+                "mac": "Command+Shift+1"
+            },
+            "description": "Toggle PageTip",
+            "global": true
+        }
+    },
+
+    "action": {
+        "default_title": "PageTip",
+
+        "default_icon": {
+            "16": "images/pagetip-16.png",
+            "32": "images/pagetip-32.png",
+            "48": "images/pagetip-48.png",
+            "128": "images/pagetip-128.png"
+        }
+    },
+
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "run_at": "document_idle",
+            "js": ["content.bundle.js"],
+            "all_frames": true
+        }
+    ],
+
+    "options_page": "options.html",
+
+    "web_accessible_resources": [
+        {
+            "resources": ["images/*.png", "css/*.css"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+
+    "manifest_version": 3
+}

@@ -1,0 +1,64 @@
+---
+name: LinkedIn unhumbled
+version: '420'
+category_slug: lifestyle/well_being
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2024-08-01T13:12:31.000Z'
+size: 2.69MiB
+languages:
+  - English
+description: >-
+  Make LinkedIn Bearable Again! Inject clown emojis into 'humbled' and 'proud'
+  posts and overlay cringe selfies with confused-dog.GIF
+publisher_account: Flex Apps
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "LinkedIn unhumbled",
+  "version": "420",
+  "description": "Make LinkedIn Bearable Again! Inject clown emojis into 'humbled' and 'proud' posts and overlay cringe selfies with confused-dog.GIF",
+  "permissions": [
+    "webNavigation", "scripting", "storage"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*"
+  ],
+  "options_page": "./src/settings/settings.html",
+  "background": {
+    "service_worker": "./src/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["src/content/contentScript.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/content/modifyText.js",
+        "src/content/modifyImages.js",
+        "assets/dog.gif"
+      ],
+      "matches": ["https://*.linkedin.com/*"]
+    }
+  ],
+  "icons": {
+    "48": "./assets/icons/icon48.png",
+    "128": "./assets/icons/icon128.png"
+  },
+  "action": {
+    "default_icon": "./assets/icons/icon48.png",
+    "default_popup": "./src/popup/popup.html",
+    "default_title": "LinkedIn unhumbled"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,68 @@
+---
+name: Read2Learn
+version: '0.7'
+category_slug: productivity/education
+rating: 5
+rating_count: 1
+user_count: 14
+release_date: '2024-08-01T09:12:47.000Z'
+size: 4.58MiB
+languages:
+  - English
+description: Learning English by reading articles with Click to Translate feature
+publisher_account: shenli3514
+extension_website: englearn.ai
+privacy_policy: https://gist.github.com/shenli/15df90925dd6d93ede78cb73223ed34b
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Read2Learn",
+  "version": "0.7",
+  "description": "Learning English by reading articles with Click to Translate feature",
+  "options_page": "options.html",
+  "icons": {
+    "48": "icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "identity",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://www.englearn.ai/*",
+    "https://api.mymemory.translated.net/*",
+    "<all_urls>"
+  ],
+  "action": {
+    "default_title": "AI-Powered English Article Reading"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["click-to-translate.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://www.englearn.ai/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src https://fonts.gstatic.com;"
+  },
+  "web_accessible_resources": [{
+    "resources": ["styles.css", "flashcard-popup.html", "flashcard-styles.css", "icon.png", "options.css"],
+    "matches": ["<all_urls>"]  
+  }]
+}
