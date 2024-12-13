@@ -1,0 +1,69 @@
+---
+name: Tesorio for Gmail
+version: 0.0.3
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 19
+release_date: '2024-10-17T10:22:53.000Z'
+size: 3.69MiB
+languages:
+  - English
+description: Enhance Gmail with Tesorio data.
+publisher: Tesorio
+publisher_address: |-
+  548 Market St #78583
+  San Francisco, CA 94104-5401
+  US
+extension_website: tesorio.com
+privacy_policy: https://www.tesorio.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Tesorio for Gmail",
+  "description": "Enhance Gmail with Tesorio data.",
+  "version": "0.0.3",
+  "icons": {
+    "16": "icons/icon16.png",
+    "24": "icons/icon24.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": { "service_worker": "background.js", "type": "module" },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "24": "icons/icon24.png",
+      "32": "icons/icon32.png"
+    },
+    "default_popup": ""
+  },
+  "permissions": ["cookies", "scripting", "declarativeNetRequest", "storage"],
+  "host_permissions": ["https://mail.google.com/", "*://*.tesorio.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*"],
+      "run_at": "document_end",
+      "js": ["contentEntry.js"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "tesorio_cross_origin",
+        "enabled": true,
+        "path": "tesorio_cross_origin_rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.map", "*.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ]
+}

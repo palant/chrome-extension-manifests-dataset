@@ -1,0 +1,77 @@
+---
+name: Onoff Business | Click2Call & SMS
+version: 0.13.1
+category_slug: productivity/workflow
+rating: 4.75
+rating_count: 4
+user_count: 2000
+release_date: '2024-11-08T15:52:00.000Z'
+size: 4.87MiB
+languages:
+  - English
+  - Français
+description: >-
+  Initiate a call or send an SMS in a couple of clicks without leaving the
+  website you are on!
+publisher_account: Ketevan
+privacy_policy: https://www.onoffbusiness.com/en/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "version": "0.13.1",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "__MSG_appTitle__",
+    "default_icon": "assets/icon.png"
+  },
+  "permissions": ["declarativeNetRequest", "scripting", "storage", "tabs", "unlimitedStorage"],
+  "host_permissions": [
+    "https://staging-apigateway.onoffapp.net/mobile/*",
+    "https://production-server.onoffapp.net/mobile/*",
+    "https://*.onoffbusiness.com/*",
+    "https://*.onoff.app/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_globs": ["*://*.onoff.app*", "*://app*.onoffbusiness.com*", "*://phone*.onoff*"],
+      "js": ["content.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "widget.html",
+        "assets/actions-icon.png",
+        "assets/audio/calls_outgoing_ringback_128kbps.mp3",
+        "*.map"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

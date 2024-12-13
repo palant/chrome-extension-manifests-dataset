@@ -1,0 +1,130 @@
+---
+name: Focus Ex
+version: 4.1.7
+category_slug: lifestyle/well_being
+rating: 3.6
+rating_count: 5
+user_count: 603
+release_date: '2024-10-22T18:57:54.000Z'
+size: 6.99MiB
+languages:
+  - English
+description: >-
+  Focus Ex is a tool aiding online reading for those with attention issues, by
+  customizing text and reducing visual distractions.
+publisher_account: Szabolcs Vatány
+extension_website: focusex-extension.webflow.io
+privacy_policy: https://focus-ex.web.app/focus-ex-privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Focus Ex",
+  "version": "4.1.7",
+  "description": "Focus Ex is a tool aiding online reading for those with attention issues, by customizing text and reducing visual distractions.",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "<all_urls>",
+    "https://extensionpay.com/*",
+    "https://www.google-analytics.com/",
+    "https://api.chatgpt.com/",
+    "https://focus-ex.web.app/"
+  ],
+  "externally_connectable": {
+    "ids": ["dlchhkpnfagokiecakphcgilhgdimkkg"],
+    "matches": [
+      "*://*.focus-ex.web.app/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://www.google-analytics.com https://extensionpay.com https://europe-west1-focus-ex.cloudfunctions.net"
+  },  
+  "content_scripts": [
+    {
+      "matches": ["https://extensionpay.com/*","*://*.focus-ex.web.app/*"], 
+      "js": ["ExtPay.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "content.js",
+        "highlight_features/readability.js",
+        "highlight_features/sentences.js",
+        "highlight_features/focus.js",
+        "feature_scripts/page_content.js",
+        "feature_scripts/focus_font.js",
+        "feature_scripts/color_handler.js",
+        "menu/svg.js",
+        "menu/menu_modal.js",
+        "menu/menu_tools.js",
+        "menu/menu_sliders.js",
+        "menu/menu_feedback.js",
+        "menu/menu_support.js",
+        "menu/menu.js",
+        "popups/news.js",
+        "popups/tutorial.js",
+        "popups/notification.js",
+        "popups/feedback.js"
+      ],
+      "css": ["page.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "feature_scripts/clear_noise.js",
+        "ExtPay.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_title": "Focus Ex",
+    "default_icon": {
+      "16": "icons/icon-on-16.png",
+      "48": "icons/icon-on-48.png",
+      "128": "icons/icon-on-128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/FocusSans-VariableVF3.ttf",
+        "ExtPay.js",
+        "resources/news-21-10-24.mp4",
+        "resources/launch-new.mp4",
+        "resources/pin-new.mp4",
+        "resources/tools-new.mp4",
+        "resources/feedback-new.mp4"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "commands": {
+    "toggle-extension": {
+      "suggested_key": {
+        "default": "Alt+Shift+F",
+        "mac": "Alt+Shift+F"
+      },
+      "description": "Toggle extension on/off"
+    }
+  },
+  "icons": {
+    "16": "icons/icon-on-16.png",
+    "48": "icons/icon-on-48.png",
+    "128": "icons/icon-on-128.png"
+  }
+}

@@ -1,0 +1,77 @@
+---
+name: Inbox2Notion
+version: 1.0.57
+category_slug: productivity/workflow
+rating: 5
+rating_count: 10
+user_count: 777
+release_date: '2024-12-07T05:31:00.000Z'
+size: 3.88MiB
+languages:
+  - English
+description: The power of Notion in your Inbox 🚀
+publisher: Activelabs
+publisher_account: Inbox2Notion
+publisher_address: |-
+  529-329 Howe St
+  Vancouver, BC V6C 3N2
+  CA
+extension_website: inbox2notion.com
+support_website: https://help.inbox2notion.com
+privacy_policy: https://inbox2notion.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Inbox2Notion",
+  "description": "The power of Notion in your Inbox 🚀",
+
+  "version": "1.0.57",
+
+  "icons": {
+    "128": "images/i2n-logo-bg-white.png"
+  },
+  "action": {
+    "default_popup": "pages/app/index.html#action_popup",
+    "default_icon": "images/i2n-logo-bg-white.png",
+    "default_title": "Open Inbox2Notion"
+  },
+  "permissions": ["scripting", "storage", "activeTab", "tabs"],
+  "host_permissions": ["https://mail.google.com/", "https://inbox.google.com/", "https://api.notion.com/", "https://*.notion.so/*"],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "js": ["js/content_main.js"],
+      "css": ["css/content_main.css", "css/notification.css", "css/labels.css", "css/pipeline.css", "css/tabulator.min.css", "css/fonts.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://auth.inbox2notion.com/*"],
+      "js": ["js/supabase-oauth-process.js"]
+    },
+    {
+      "matches": ["https://inbox2notion.com/install*"],
+      "js": ["js/content_greeting.js"]
+    },
+    {
+      "matches": ["https://inbox2notion.com/upgrade-success*"],
+      "js": ["js/content_upgrade.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/content-modules/*", "images/*", "html/*", "webfonts/*", "*"],
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"]
+    },
+    {
+      "resources": ["pageWorld.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ]
+}

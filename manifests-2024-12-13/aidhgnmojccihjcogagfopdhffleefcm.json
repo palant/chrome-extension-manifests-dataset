@@ -1,0 +1,61 @@
+---
+name: Lemverse - Arrange your Gmail inbox
+version: '0.1'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2022-11-30T11:39:29.000Z'
+size: 657KiB
+languages:
+  - English
+description: >-
+  Reverse your Gmail Conversations, add labels in a better way, Organise mails
+  under labels, sort your inbox.
+publisher_account: Pearl Lemon
+extension_website: gmailfiend.com
+privacy_policy: https://pearllemon.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Lemverse - Arrange your Gmail inbox",
+    "version": "0.1",
+    "manifest_version": 3,
+    "action": {
+        "default_title": "Click Me",   
+        "default_popup": "popup.html",
+        "default_icon": {
+          "128": "./assets/lemverse_icon.png"
+        }
+      },
+      "icons": {
+        "128": "./assets/lemverse_icon.png"
+      },
+    "description": "Reverse your Gmail Conversations, add labels in a better way, Organise mails under labels, sort your inbox.",
+    "background": {
+      "service_worker": "./js/service_worker.js"
+    },
+    "permissions": ["storage", "tabs"],
+    "content_scripts": [
+        {
+          "matches": ["*://*/*"],
+          "js": ["./js/content_script.js","./js/content.js"],
+          "css" : ["./styles/dropdown.css","./styles/content-style.css", "./styles/style.css"],
+          "run_at": "document_start",
+          "all_frames": false
+        }
+      ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+      "sandbox": "script-src 'self' 'wasm-unsafe-eval'; sandbox allow-scripts; script-src 'self' 'https://api.symbl.ai/'; object-src 'self'"
+    },
+    "web_accessible_resources": [
+      {
+          "resources": [ "assets/*.svg", "dropdown.html", "js/dropdown.js" ],
+          "matches": [ "https://mail.google.com/*" ]
+      }
+  ]
+  }
+  

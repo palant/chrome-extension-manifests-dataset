@@ -1,0 +1,82 @@
+---
+name: TransferChain Pass
+version: 1.2.8
+category_slug: make_chrome_yours/privacy
+rating: 5
+rating_count: 5
+user_count: 122
+release_date: '2024-12-05T12:17:45.000Z'
+size: 1.23MiB
+languages:
+  - English
+description: TransferChain Pass
+publisher: TransferChain AG
+publisher_account: TransferChain
+publisher_address: |-
+  Lättichstrasse 6
+  Baar 6340
+  CH
+extension_website: transferchain.io
+support_website: https://transferchain.io/support-center
+privacy_policy: https://transferchain.io/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2.8",
+  "name": "TransferChain Pass",
+  "description": "TransferChain Pass",
+  "homepage_url": "https://transferchain.io",
+  "icons": {
+    "16": "icon_16.png",
+    "32": "icon_32.png",
+    "64": "icon_64.png",
+    "128": "icon_128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "icon_16.png",
+      "32": "icon_32.png",
+      "64": "icon_64.png",
+      "128": "icon_128.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "js": ["scripts/jquery-3.7.1.slim.min.js", "scripts/messaging.js", "scripts/client.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["http://*/*", "https://*/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "resources": ["focus-on-field.html", "save-password.html"]
+    }
+  ],
+  "incognito": "spanning",
+  "host_permissions": ["http://*/*", "https://*/*", "*://*.transferchain.io"],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "webNavigation"
+  ]
+}

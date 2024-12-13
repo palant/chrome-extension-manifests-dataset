@@ -1,0 +1,102 @@
+---
+name: 'Artis.net : Gestionnaire de mots de passe'
+version: 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 64
+release_date: '2024-03-19T03:50:33.000Z'
+size: 2.23MiB
+languages:
+  - Français
+description: Gestionnaire de mots de passe pour Artis.net
+publisher: ARTIS
+publisher_account: Artis.net
+publisher_address: |-
+  14 Av. Jules Verne
+  Saint-Sébastien-sur-Loire 44230
+  FR
+support_website: https://portail.artis.fr/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "__MSG_appName__",
+ "short_name": "__MSG_appName__",
+ "description": "__MSG_extDesc__",
+ "version": "1.0.0",
+ "default_locale": "fr",
+ "icons": {
+  "16": "images/icon16.png",
+  "32": "images/icon32.png",
+  "48": "images/icon48.png",
+  "128": "images/icon128.png"
+ },
+ "author": "service-client@artis.fr",
+ "action": {
+  "default_title": "__MSG_actionTitle__",
+  "default_popup": "popup/index.html"
+ },
+ "content_scripts": [{
+  "all_frames": true,
+  "js": ["content/autofill.js", "content/autofiller.js"],
+  "matches": ["http://*/*", "https://*/*", "file:///*"],
+  "run_at": "document_start"
+ }, {
+  "all_frames": false,
+  "js": ["content/message_handler.js"],
+  "matches": ["http://*/*", "https://*/*", "file:///*"],
+  "run_at": "document_start"
+ }, {
+  "all_frames": true,
+  "css": ["content/autofill.css"],
+  "matches": ["http://*/*", "https://*/*", "file:///*"],
+  "run_at": "document_end"
+ }, {
+  "all_frames": true,
+  "js": ["content/misc-utils.js"],
+  "matches": ["http://*/*", "https://*/*", "file:///*"],
+  "run_at": "document_end"
+ }],
+ "background": {
+  "service_worker": "background.js",
+  "type": "module"
+ },
+ "permissions": ["tabs", "contextMenus", "storage", "unlimitedStorage", "clipboardRead", "clipboardWrite", "alarms", "scripting"],
+ "host_permissions": ["http://*/*", "https://*/*"],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+ },
+ "commands": {
+  "_execute_action": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+Y",
+    "linux": "Ctrl+Shift+U"
+   },
+   "description": "__MSG_commandOpenPopup__"
+  },
+  "autofill_login": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+F",
+    "mac": "Command+Shift+F"
+   },
+   "description": "__MSG_commandAutofillDesc__"
+  },
+  "generate_password": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+G",
+    "mac": "Command+Shift+G"
+   },
+   "description": "__MSG_commandGeneratePasswordDesc__"
+  },
+  "lock_vault": {
+   "description": "__MSG_commandLockVaultDesc__"
+  }
+ },
+ "web_accessible_resources": [{
+  "resources": ["images/icon128.png"],
+  "matches": ["<all_urls>"]
+ }]
+}

@@ -1,0 +1,63 @@
+---
+name: Slack Printer
+version: 1.10.0
+category_slug: productivity/workflow
+rating: 2.210526315789474
+rating_count: 19
+user_count: 1000
+release_date: '2022-07-21T10:38:42.000Z'
+size: 1.06MiB
+languages:
+  - English (United States)
+description: elegantly export slack messages
+publisher_account: hhhust
+extension_website: slackext.com
+support_website: https://slackext.com/printer
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.10.0",
+  "name": "Slack Printer",
+  "manifest_version": 3,
+  "description": "elegantly export slack messages",
+  "action": {
+    "default_title": "Slack Printer",
+    "default_popup": "printer-popup.html"
+  },
+  "icons": {
+    "16": "img/icon-16.png",
+    "48": "img/icon-48.png",
+    "128": "img/icon-128.png"
+  },
+  "web_accessible_resources": [{
+    "resources": ["js/inject.bundle.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "background": {
+    "service_worker": "js/background.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "persistent": true,
+      "matches": [
+        "https://*.slack.com/*"
+      ],
+      "js": [
+        "js/content.bundle.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://slackext.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://slackext.com https://ssl.google-analytics.com/; style-src * 'unsafe-inline' 'self' blob:; img-src * 'self' data: https:;"
+  }
+}

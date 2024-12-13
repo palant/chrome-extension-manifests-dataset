@@ -1,0 +1,85 @@
+---
+name: braincache
+version: 0.0.4
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2022-06-21T11:52:37.000Z'
+size: 278KiB
+languages:
+  - English
+description: stop forgetting stuff, for good.
+publisher_account: braincache.co
+extension_website: braincache.co
+support_website: https://braincache.co
+privacy_policy: https://www.freeprivacypolicy.com/live/25f92938-c9d9-4c4d-8943-b687eaae987e
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "braincache",
+  "description": "stop forgetting stuff, for good.",
+  "version": "0.0.4",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "bin/ext/background.js"
+  },
+  "permissions": ["storage", "activeTab", "contextMenus"],
+  "host_permissions": ["*://*/*"],
+  "action": {
+    "default_popup": "bin/ext/popup/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "bin/app/index.html",
+        "bin/app/*.js",
+        "bin/app/*.css",
+        "assets/*.svg"
+      ],
+      "matches": ["<all_urls>"],
+      "use_dynamic_url": true
+    }
+  ],
+  "commands": {
+    "braincache": {
+      "suggested_key": {
+        "default": "Alt+Shift+S",
+        "mac": "Alt+Shift+S"
+      },
+      "description": "braincache"
+    },
+    "sendQ": {
+      "suggested_key": {
+        "default": "Alt+A",
+        "mac": "Alt+A"
+      },
+      "description": "open editor and send current text selection to question."
+    },
+    "sendA": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "open editor and send current text selection to answer."
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["bin/ext/content.js"]
+    },
+    {
+      "matches": ["https://*.notion.so/*"],
+      "js": ["bin/ext/notion.js"]
+    }
+  ],
+  "icons": {
+    "16": "/assets/braincache16.png",
+    "32": "/assets/braincache32.png",
+    "48": "/assets/braincache48.png",
+    "128": "/assets/braincache128.png"
+  }
+}

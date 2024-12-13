@@ -1,0 +1,83 @@
+---
+name: 'Userback: Visual Feedback & Bug Reporting'
+version: 6.0.3
+category_slug: productivity/developer
+rating: 4.717948717948718
+rating_count: 39
+user_count: 4000
+release_date: '2024-09-10T09:52:00.000Z'
+size: 1.01MiB
+languages:
+  - English
+description: Userback is a visual feedback & bug reporting tool for websites
+publisher: Userback PTY LTD
+publisher_account: Userback
+publisher_address: |-
+  9 Aspire St
+  Rochedale, QLD 4123
+  AU
+extension_website: userback.io
+support_website: https://support.userback.io
+privacy_policy: https://www.userback.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Userback: Visual Feedback & Bug Reporting",
+  "description": "Userback is a visual feedback & bug reporting tool for websites",
+  "version": "6.0.3",
+  "author": "Userback",
+  "action": {
+    "default_icon": {
+      "16"  : "/icons/icon16.png",
+      "48"  : "/icons/icon48.png",
+      "96"  : "/icons/icon96.png",
+      "128" : "/icons/icon128.png",
+      "256" : "/icons/icon256.png"
+    },
+    "default_title": "Userback",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16"  : "/icons/icon16.png",
+    "48"  : "/icons/icon48.png",
+    "128" : "/icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "/worker.js"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["/vendor/snap.svg-min.js"]
+  },{
+    "matches": [
+        "https://*.app.userback.io/capture/*",
+        "https://*.app.userback.io/viewer/*"
+    ],
+    "js": ["/scripts/content.js"]
+  }, {
+    "matches": ["https://app.userback.io/login/?redirect=extension", "https://app.userback.io/sso/callback/*"],
+    "js": ["/scripts/popup_login.js"]
+  }],
+  "web_accessible_resources": [{
+    "resources": ["/vendor/vumeter-processor.js"],
+    "matches": ["https://userback.io/*"]
+  }],
+  "permissions": [
+    "desktopCapture",
+    "tabCapture",
+    "notifications",
+    "storage",
+    "unlimitedStorage",
+    "activeTab",
+    "tabs",
+    "contextMenus",
+    "scripting",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ]
+}

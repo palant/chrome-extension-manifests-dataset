@@ -1,0 +1,119 @@
+---
+name: Vinty
+version: 0.0.0.6
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 13
+release_date: '2024-11-22T22:59:31.000Z'
+size: 611KiB
+languages:
+  - Français
+description: >-
+  Optimisez votre temps et la gestion de vos achats/reventes Vinted grâce aux
+  nouvelles informations disponibles dans votre messagerie
+publisher_account: Nicolas ROSE
+support_website: https://www.facebook.com/ext.vinty
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Vinty",
+    "description" : "Optimisez votre temps et la gestion de vos achats/reventes Vinted grâce aux nouvelles informations disponibles dans votre messagerie",
+
+    "version": "0.0.0.6",
+    "manifest_version": 3,
+
+    "icons": {
+        "96": "/images/vinty_96.png"
+    },
+
+    "background": {
+        "service_worker": "/js/worker.js"
+
+    },
+
+    "action": {
+        
+        "default_icon": {
+            "96": "/images/vinty_96.png"
+        }
+    },
+
+
+    "permissions": [
+        "storage",
+        "unlimitedStorage"
+    ],
+
+    "host_permissions": [
+        "https://*/*"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.vinted.fr/*",
+                "https://www.vinted.be/*",
+                "https://www.vinted.lu/*"
+            ],
+            "run_at":  "document_start",
+            "js": [
+                "/js/lib/jquery-3.7.0.min.js",
+                "/js/vinted.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://www.vinted.fr/inbox/*",
+                "https://www.vinted.be/inbox/*",
+                "https://www.vinted.lu/inbox/*"
+            ],
+            "run_at":  "document_idle",
+            "js": [
+                "/js/lib/tailwind.min.js",
+                "/js/lib/flowbite.min.js",
+                "/js/lib/moment-with-locales.js",
+                "/js/lib/datepicker.min.js"
+            ],  
+            "css": [
+
+                "/css/flowbite.min.css",
+                "/css/datepicker.min.css",
+                "/css/vinty.css"
+   ]
+        },
+        {
+            "matches": [
+                "https://www.vinted.fr/inbox/*",
+                "https://www.vinted.be/inbox/*",
+                "https://www.vinted.lu/inbox/*"
+            ],
+            "exclude_matches": [
+                "https://*.vinted.fr/member/general/*",
+                "https://www.vinted.fr/api*"
+            ],
+            "run_at":  "document_idle",
+            "js": [
+                "/js/vinted.inbox.js"
+            ]
+        }
+    ],
+
+    "web_accessible_resources": [{
+        "resources": [
+            "/images/country/*.png",
+            "/images/*.png",
+            "/images/*.svg",
+            "/images/*.gif",
+            "/webfonts/*.eot",
+            "/webfonts/*.svg",
+            "/webfonts/*.woff",
+            "/webfonts/*.woff2",
+            "/webfonts/*.ttf",
+            "/ma_injtd.js"
+        ],
+        "matches": ["<all_urls>"]
+    }]
+}

@@ -1,0 +1,73 @@
+---
+name: CloudKeeper Tuner
+version: 2.2.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 14
+release_date: '2024-12-09T12:33:49.000Z'
+size: 1.99MiB
+languages:
+  - English
+description: Engineering Productivity
+publisher: CloudKeeper (Singapore) Pte. Ltd.
+publisher_account: CloudKeeper
+extension_website: cloudkeeper.com
+support_website: https://www.cloudkeeper.com/contact-us
+privacy_policy: https://www.cloudkeeper.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "2.2.0",
+  "manifest_version": 3,
+  "name": "CloudKeeper Tuner",
+  "description": "Engineering Productivity",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "assets/icon32.png"
+  },
+  "permissions": ["tabs", "storage", "activeTab", "scripting"],
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["costwiseHook.js"],
+      "matches": [
+        "https://tuner.cloudkeeper.com/*",
+        "https://be.cloudonomic.com/*"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.aws.amazon.com/*"],
+      "js": [
+        "aws.js",
+        "costwiseHook.js"
+      ],
+      "permissions": ["https://tuner.cloudkeeper.com/*","https://be.cloudonomic.com/*"
+    ],
+      "css" : [],
+      "match_about_blank": true,
+      "all_frames": true
+    }
+  ],
+  "host_permissions": ["https://tuner.cloudkeeper.com/*","https://be.cloudonomic.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.*"],
+      "matches": ["https://*.aws.amazon.com/*"]
+    },
+    {
+      "resources": ["costwiseHook.js"],
+      "matches": ["http://*/*"]
+    }
+  ]
+}

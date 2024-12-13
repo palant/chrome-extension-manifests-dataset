@@ -1,0 +1,80 @@
+---
+name: Turnspeed
+version: 1.0.1
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2023-05-05T04:59:05.000Z'
+size: 160KiB
+languages:
+  - English
+description: This extension will help the user to send referrals to google contacts
+publisher_account: support
+privacy_policy: https://www.rolustech.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Turnspeed",
+  "description": "This extension will help the user to send referrals to google contacts",
+  "version": "1.0.1",
+  "author": "Rolustech",
+  "icons": {
+    "16": "./assets/images/icon16.png",
+    "48": "./assets/images/icon48.png",
+    "128": "./assets/images/icon128.png"
+  },
+  "background": {
+    "service_worker": "./assets/js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "./assets/images/icon16.png",
+      "48": "./assets/images/icon48.png",
+      "128": "./assets/images/icon128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "host_permissions": ["http://*/", "https://*/"],
+  "default_locale": "en",
+  "options_ui": {
+    "page": "./assets/views/options.html",
+    "open_in_tab": false,
+    "browser_style": true
+  },
+  "permissions": ["storage", "tabs", "management", "notifications", "identity", "identity.email", "cookies"],
+  "content_security_policy": {
+    "script-src": "self",
+    "default-src": "https://ajax.googleapis.com",
+    "object-src": "self"
+  },
+  "oauth2": {
+    "client_id": "777961541760-i12253hrdkv3np8tld9gt12kuthnoig2.apps.googleusercontent.com",
+    "project_id": "turnspeed-370110",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.readonly",
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": ["./assets/lib/jquery/jquery.min.js", "./assets/js/add_context_menu_chrome.js"],
+      "css": ["./assets/css/gmail_divs.css"],
+      "matches": ["https://mail.google.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["./assets/lib/jquery/jquery.min.js", "./assets/js/turnspeed_profile.js"],
+      "matches": ["https://staging5.rolustech.com/*"],
+      "run_at": "document_start"
+    }
+  ]
+}

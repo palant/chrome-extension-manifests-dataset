@@ -1,0 +1,153 @@
+---
+name: QuickMinutes™
+version: v2.1.7
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 68
+release_date: '2022-07-04T07:43:40.000Z'
+size: 710KiB
+languages:
+  - English (UK)
+description: QuickMinutes™
+publisher: QuickMinutes
+publisher_account: admin
+publisher_address: |-
+  3 Dunmanus Park
+  Cork T23 W6K3
+  IE
+extension_website: quickminutes.com
+support_website: https://support.quickminutes.com/portal/en-gb/kb/qm-support
+privacy_policy: https://quickminutes.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "QuickMinutes™",
+    "short_name": "QuickMinutes™",
+    "description": "QuickMinutes™",
+    "icons": {
+        "16": "img/16.png",
+        "32": "img/32.png",
+        "48": "img/48.png",
+        "96": "img/96.png",
+        "128": "img/128.png"
+    },
+    "version": "2.1.7",
+    "version_name": "v2.1.7",
+    "author": "salman tariq <salman@quickminutes.com>",
+    "action": {
+        "default_icon": "img/32.png",
+        "default_title": "QuickMinutes™",
+        "default_popup": "popup.html"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "scripting"
+    ],
+    "host_permissions": [
+         "*://localhost/quickminutes2.0/*",
+        "*://*.quickminutes.com/*",
+        "*://calendar.google.com/*",
+        "*://meet.google.com/*",
+        "*://mail.google.com/*"
+    ],
+
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "jquery.min.js", "environment.js", "embeds/google_calendar/inject_sidebar.js", "embeds/google_calendar/inject.js", "embeds/google_calendar/inject_styledevents.js"
+            ],
+            "matches": [
+                "*://*.mail.google.com/*"
+            ],
+
+            "css": [
+                "embeds/google_calendar/inject.css"
+            ],
+            "run_at": "document_end",
+            "all_frames": false,
+            "match_about_blank": true
+        },
+        {
+            "matches": ["https://meet.google.com/*"],
+            "css": ["embeds/google_meet/inject.css",
+                "add_modules/bootstrap/bootstrap.css",
+                "add_modules/icons/bootstrap-icons.css"
+            ],
+            "js": [
+                "environment.js",
+                "embeds/google_meet/inject.js"
+            ]
+        },
+
+        {
+            "js": [
+                "js/quickminutes.js"
+            ],
+            "matches": [
+                "http://localhost/quickminutes2.0/*",
+                "*://*.quickminutes.com/*"
+            ],
+            "run_at": "document_end",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "js": [
+                "js/content.js"
+            ],
+            "matches": [
+                "*://localhost/quickminutes2.0/*",
+                "*://*.quickminutes.com/*",
+                "*://calendar.google.com/*"
+            ],
+            "run_at": "document_end",
+            "all_frames": false,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "*://calendar.google.com/*"
+            ],
+            "run_at": "document_end",
+            "css": [
+                "add_modules/datepicker/css/window-date-picker.css",
+                "embeds/components/google_calendar/google_calendar.css"
+            ],
+            "js": [
+                "jquery.min.js",
+                "environment.js",
+                "embeds/components/google_calendar/js/render.js",
+                "embeds/components/google_calendar/js/google_calendar.js"
+            ]
+        },
+        {
+            "matches": ["*://calendar.google.com/*"],
+            "run_at": "document_end",
+            "js": [
+                "jquery.min.js",
+                "utils.js",
+                "environment.js",
+                "embeds/google_calendar/inject_connect.js",
+                "embeds/google_calendar/inject_styledevents.js"
+            ],
+            "css": ["embeds/google_calendar/inject.css"]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["img/*", "embeds/*", "add_modules/*","mixpanelcdn.js"],
+            "matches": ["*://*/*"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline' https://cdn.mxpnl.com/libs/mixpanel-2-latest.min.js  https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com https://www.googletagmanager.com"
+    }
+}

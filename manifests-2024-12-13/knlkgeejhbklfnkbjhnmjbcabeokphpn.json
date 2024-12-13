@@ -1,0 +1,104 @@
+---
+name: ChatGPT & Gemini File Uploader
+version: 2.2.0
+category_slug: productivity/tools
+rating: 3.7222222222222223
+rating_count: 18
+user_count: 3000
+release_date: '2024-09-14T11:27:37.000Z'
+size: 1.26MiB
+languages:
+  - English
+description: Enhanced PDF file uploader for ChatGPT and Google Gemini with extra features.
+publisher_account: fileuploader.app
+privacy_policy: https://www.fileuploader.app/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extensionName__",
+  "version": "2.2.0",
+  "description": "__MSG_extensionDescription__",
+  "permissions": [
+    "background",
+    "storage",
+    "unlimitedStorage",
+    "cookies"
+  ],
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-34.png"
+  },
+  "options_page": "src/pages/options/index.html",
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chat.openai.com/*",
+        "*://chatgpt.com/*",
+        "*://chat.zhile.io/*"
+      ],
+      "js": [
+        "src/pages/contentInjected/index.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://gemini.google.com/*",
+        "*://chat.openai.com/*",
+        "*://chatgpt.com/*",
+        "*://chat.zhile.io/*"
+      ],
+      "css": [
+        "assets/css/contentStyle1726179839830.chunk.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://gemini.google.com/*",
+        "*://chat.openai.com/*",
+        "*://chatgpt.com/*",
+        "*://chat.zhile.io/*"
+      ],
+      "js": [
+        "src/pages/contentUI/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/pages/interceptor/index.js",
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "icon-128.png",
+        "icon-34.png"
+      ],
+      "matches": [
+        "*://gemini.google.com/*",
+        "*://chat.openai.com/*",
+        "*://chatgpt.com/*",
+        "*://chat.zhile.io/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*.google.com/*",
+    "*://*.openai.com/*",
+    "*://*.chatgpt.com/*",
+    "*://localhost/*",
+    "*://fileuploader.app/*",
+    "*://*.fileuploader.app/*"
+  ]
+}

@@ -1,0 +1,90 @@
+---
+name: xdata
+version: 1.1.9
+category_slug: productivity/tools
+rating: 3.8823529411764706
+rating_count: 34
+user_count: 20000
+release_date: '2024-09-27T07:16:18.000Z'
+size: 6.13MiB
+languages:
+  - English (United States)
+description: Collect tweets and earn $Wafer token
+publisher_account: Web3Go-Developer
+support_website: https://web3go.xyz/#/about
+privacy_policy: https://web3go.xyz/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "xdata",
+  "version": "1.1.9",
+  "description": "Collect tweets and earn $Wafer token",
+  "action": {
+    "default_icon": "assets/xData.png",
+    "default_popup": "dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "dist/background/index.global.js"
+  },
+  "icons": {
+    "16": "assets/xData.png",
+    "48": "assets/xData.png",
+    "128": "assets/xData.png"
+  },
+  "permissions": [
+    "cookies",
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://xdata.web3go.xyz/",
+    "https://xdata-dev.web3go.xyz/",
+    "https://xdata.din.lol/",
+    "https://xdata-dev.din.lol/",
+    "http://127.0.0.1:3001/"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_idle",
+      "matches": [
+        "https://x.com/*"
+      ],
+      "exclude_matches": [
+        "https://x.com/?*",
+        "https://x.com/logout",
+        "https://x.com/i/flow/login"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "dist/contentScripts/style.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*"
+      ],
+      "matches": [
+        "https://x.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "dist/contentScripts/inject.js"
+      ],
+      "matches": [
+        "https://x.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

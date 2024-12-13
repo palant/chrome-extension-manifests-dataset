@@ -1,0 +1,101 @@
+---
+name: FastSave
+version: 3.7.8
+category_slug: lifestyle/entertainment
+rating: 3.4375
+rating_count: 304
+user_count: 900000
+release_date: '2024-11-19T18:43:12.000Z'
+size: 360KiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - català
+  - dansk
+  - español
+  - español (Latinoamérica)
+  - italiano
+  - latviešu
+  - lietuvių
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - русский
+  - українська
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Repost Instagram stories, save video, photo and Reels. Browse Instagram site
+  like a mobile app.
+publisher_account: wilosadi
+privacy_policy: https://flydoflex.com/privacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "version": "3.7.8",
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "64": "icons/64.png",
+    "128": "icons/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "js/*", "js/storyIn.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "cookies",
+    "webRequest",
+    "downloads",
+    "tabs",
+    "system.display",
+    "declarativeNetRequest"
+  ],
+  "background": {
+    "service_worker": "js/serviceWorker.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["<all_urls>"],
+      "js": ["js/main.js", "js/content.js", "js/mobileTransform.js"],
+      "css": ["css/main.css"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.instagram.com/*"],
+      "js": ["js/inject.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  }
+}

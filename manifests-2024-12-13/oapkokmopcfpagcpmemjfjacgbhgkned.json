@@ -1,0 +1,64 @@
+---
+name: Moodle & Panopto Helper
+version: '1.2'
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 18
+release_date: '2024-12-03T05:49:37.000Z'
+size: 17.93KiB
+languages:
+  - English (United States)
+description: >-
+  Nettoie les liens Moodle pour ouvrir dans un nouvel onglet proprement et
+  ajoute un bouton de téléchargement vidéo Panopto.
+publisher_account: psg.suporter
+privacy_policy: >-
+  https://docs.google.com/document/d/1NcSZOhw3P_2F2d9821CGVxJVIPCYnCY782PU2e-OvN0/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Moodle & Panopto Helper",
+    "version": "1.2",
+    "description": "Nettoie les liens Moodle pour ouvrir dans un nouvel onglet proprement et ajoute un bouton de téléchargement vidéo Panopto.",
+    "permissions": ["activeTab", "scripting", "storage", "clipboardWrite", "downloads"],
+    "host_permissions": [
+        "https://*.technion.ac.il/*",
+        "https://*.panopto.com/*",
+        "https://*.panopto.eu/*"
+    ],
+    "icons": {
+        "64": "icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://*.technion.ac.il/*"],
+            "js": ["moodle.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://*.panopto.com/Panopto/Pages/Viewer.aspx?*id=*",
+                "https://*.panopto.eu/Panopto/Pages/Viewer.aspx?*id=*",
+                "https://*.panopto.com/Panopto/Pages/Embed.aspx?*id=*",
+                "https://*.panopto.eu/Panopto/Pages/Embed.aspx?*id=*",
+                "https://*.panopto.com/Panopto/Pages/Sessions/List.aspx*",
+                "https://*.panopto.eu/Panopto/Pages/Sessions/List.aspx*"
+            ],
+            "js": ["panopto.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["notify-library.js"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

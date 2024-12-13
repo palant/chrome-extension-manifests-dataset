@@ -1,0 +1,61 @@
+---
+name: Homely - Property Offer Assistant
+version: 1.0.5
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 5
+user_count: 6
+release_date: '2024-12-12T07:01:09.000Z'
+size: 55.08KiB
+languages:
+  - English (United States)
+description: >-
+  Submit and manage property lease offers directly on Zillow with automated
+  document handling and electronic signatures.
+privacy_policy: >-
+  https://homely-asset-files-us-east-1.s3.us-east-1.amazonaws.com/LegalForms/Privacy+Policy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Homely - Property Offer Assistant",
+  "version": "1.0.5",
+  "description": "Submit and manage property lease offers directly on Zillow with automated document handling and electronic signatures.",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.zillow.com/*",
+    "https://*.auth0.com/*",
+    "https://*.execute-api.us-east-1.amazonaws.com/prod/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.amazonaws.com/*",
+      "https://*.execute-api.us-east-1.amazonaws.com/prod/*"
+    ],
+    "accepts_tls_channel_id": false,
+    "ids": [
+      "hkohgcjjjcekinieniejpjmemhabcjhf"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.zillow.com/*"],
+      "js": ["content.bundle.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  },
+  "web_accessible_resources": [{
+    "resources": ["popup.html", "popup.css"],
+    "matches": ["<all_urls>"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://*.execute-api.us-east-1.amazonaws.com https://*.auth0.com"
+  }
+}

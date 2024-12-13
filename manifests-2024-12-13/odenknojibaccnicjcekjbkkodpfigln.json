@@ -1,0 +1,81 @@
+---
+name: Yontil(연틸) - Yonsei Utils
+version: 1.1.4
+category_slug: productivity/tools
+rating: 4.5
+rating_count: 4
+user_count: 140
+release_date: '2024-12-10T04:14:16.000Z'
+size: 207KiB
+languages:
+  - 한국어
+description: 연세대의 여러 사이트들에서 사용할 수 있는 편의 기능들을 제공합니다. (자동 로그인, 런어스 홈에서 할 일 바로보기)
+publisher_account: Seunghyun Min
+support_website: https://github.com/minseunghyun/yontil
+privacy_policy: >-
+  https://htmlpreview.github.io?https://raw.githubusercontent.com/MinSeungHyun/yontil/master/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Yontil(연틸) - Yonsei Utils",
+  "description": "연세대의 여러 사이트들에서 사용할 수 있는 편의 기능들을 제공합니다. (자동 로그인, 런어스 홈에서 할 일 바로보기)",
+  "version": "1.1.4",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://ys.learnus.org/login/method/sso.php*"],
+      "js": ["js/content-scripts/learnus-login-page.js"]
+    },
+    {
+      "matches": ["https://infra.yonsei.ac.kr/sso/PmSSOService*"],
+      "js": ["js/content-scripts/infra-login-page.js"]
+    },
+    {
+      "matches": ["https://ys.learnus.org/*"],
+      "js": ["js/content-scripts/learnus-all-pages.js", "js/vendor.js"]
+    },
+    {
+      "matches": [
+        "https://portal.yonsei.ac.kr/*",
+        "https://infra.yonsei.ac.kr/*"
+      ],
+      "js": ["js/content-scripts/yonsei-all-pages.js", "js/vendor.js"]
+    },
+    {
+      "matches": [
+        "https://ys.learnus.org/",
+        "https://ys.learnus.org/index.php*"
+      ],
+      "js": ["js/content-scripts/learnus-main-page.js"],
+      "css": ["css/learnus-main-page.css"]
+    }
+  ],
+
+  "permissions": ["storage", "alarms"],
+  "host_permissions": [
+    "https://ys.learnus.org/*",
+    "https://portal.yonsei.ac.kr/*",
+    "https://infra.yonsei.ac.kr/*"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["update-learnus-sesskey-script.js"],
+      "matches": ["https://ys.learnus.org/*"]
+    }
+  ]
+}

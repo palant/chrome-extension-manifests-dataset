@@ -1,0 +1,90 @@
+---
+name: RealEyes.ai — Detect Deepfakes Across Online Platforms
+version: '1.6'
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 5
+release_date: '2024-12-04T08:28:50.000Z'
+size: 64.42KiB
+languages:
+  - English
+description: >-
+  Adds an overlay icon on images which allows the image to be analyzed for
+  deepfake manipulation
+publisher_account: slonweiss
+publisher_address: |-
+  10275 Oletha Ln
+  Los Angeles, CA 90077-2415
+  US
+extension_website: realeyes.ai
+support_website: https://realeyes.ai/contact-us/
+privacy_policy: https://realeyes.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RealEyes.ai — Detect Deepfakes Across Online Platforms",
+  "description": "Adds an overlay icon on images which allows the image to be analyzed for deepfake manipulation",
+  "version": "1.6",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "notifications",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://api.realeyes.ai/*",
+    "https://realeyes.ai/*",
+    "https://signin.realeyes.ai/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/*",
+        "https://*.facebook.com/*",
+        "https://*.twitter.com/*",
+        "https://*.x.com/*",
+        "https://*.instagram.com/*",
+        "https://*.reddit.com/*"
+      ],
+      "js": ["social-content.js"],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://realeyes.ai/*"],
+      "js": ["website-content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/realeyes-ai-icon.png"],
+      "matches": [
+        "https://*.linkedin.com/*",
+        "https://*.instagram.com/*",
+        "https://*.facebook.com/*",
+        "https://*.twitter.com/*",
+        "https://*.x.com/*",
+        "https://*.reddit.com/*"
+      ]
+    }
+  ],
+  "icons": {
+    "48": "icons/realeyes-ai-icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-ancestors 'none'"
+  }
+}

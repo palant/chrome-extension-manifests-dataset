@@ -1,0 +1,85 @@
+---
+name: Knoll
+version: 0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-11-29T09:27:37.000Z'
+size: 247KiB
+languages:
+  - English (United States)
+description: >-
+  Build and create custom knowledge repositories that you can easily incorporate
+  into LLMs.
+extension_website: knollapp.com
+privacy_policy: >-
+  https://docs.google.com/document/d/1ZbBc2XZwGbr-cFD8FVIHNiWL75P7w7ulBVeGvYqIdaU/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Knoll",
+  "version": "0.0.1",
+  "description": "Build and create custom knowledge repositories that you can easily incorporate into LLMs.",
+  "action": {
+    "default_icon": "./assets/logo.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/logo.png",
+    "48": "./assets/logo.png",
+    "128": "./assets/logo.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://knollapp.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js",
+        "dist/contentScripts/config.js",
+        "dist/contentScripts/libs/jquery.min.js",
+        "dist/contentScripts/libs/client.js",
+        "dist/contentScripts/libs/timeme.min.js",
+        "dist/contentScripts/libs/utils.js",
+        "dist/contentScripts/events.js",
+        "dist/contentScripts/logic.js",
+        "dist/contentScripts/launcher.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/injected.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

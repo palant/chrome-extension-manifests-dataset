@@ -1,0 +1,93 @@
+---
+name: GSC Extension
+version: 1.2.6
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 17
+release_date: '2024-12-06T04:52:29.000Z'
+size: 52.32KiB
+languages:
+  - español (Latinoamérica)
+description: >-
+  Maneja múltiples plataformas de música (Spotify, Apple Music, Tidal, Amazon
+  Music, SoundCloud) y verifica si el usuario es premium.
+publisher_account: info
+extension_website: globalstreamingcommunity.com
+privacy_policy: https://globalstreamingcommunity.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GSC Extension",
+  "version": "1.2.6",
+  "description": "Maneja múltiples plataformas de música (Spotify, Apple Music, Tidal, Amazon Music, SoundCloud) y verifica si el usuario es premium.",
+  "permissions": ["storage", "tabs"],
+  "host_permissions": [
+    "https://*.spotify.com/*",
+    "https://*.music.apple.com/*",
+    "https://*.tidal.com/*",
+    "https://music.amazon.es/*",
+    "https://music.amazon.com/*",
+    "https://*.soundcloud.com/*",
+    "https://*.globalstreamingcommunity.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon.png",
+      "48": "icons/icon.png",
+      "128": "icons/icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.spotify.com/*"],
+      "js": ["spotify_content.js"]
+    },
+    {
+      "matches": ["*://*.music.apple.com/*"],
+      "js": ["apple_music_content.js"]
+    },
+    {
+      "matches": ["*://*.tidal.com/*"],
+      "js": ["tidal_content.js"]
+    },
+    {
+      "matches": ["https://music.amazon.es/*", "https://music.amazon.com/*"],
+      "js": ["amazon_music_content.js"]
+    },
+    {
+      "matches": ["*://*.soundcloud.com/*"],
+      "js": ["soundcloud_content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "apple_music_script.js",
+        "spotify_script.js",
+        "tidal_script.js",
+        "amazon_music_script.js",
+        "soundcloud_script.js"
+      ],
+      "matches": [
+        "https://*.music.apple.com/*",
+        "https://*.spotify.com/*",
+        "https://*.tidal.com/*",
+        "https://music.amazon.es/*",
+        "https://music.amazon.com/*",
+        "https://*.soundcloud.com/*",
+        "https://*.globalstreamingcommunity.com/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.globalstreamingcommunity.com/*"]
+  }
+}

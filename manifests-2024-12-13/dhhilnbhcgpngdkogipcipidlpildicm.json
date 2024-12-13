@@ -1,0 +1,109 @@
+---
+name: Netflix Advanced Filter (Beta)
+version: 1.0.0beta2
+category_slug: productivity/tools
+rating: 1
+rating_count: 1
+user_count: 20
+release_date: '2024-04-29T04:47:38.000Z'
+size: 406KiB
+languages:
+  - English
+  - עברית
+description: Filter your Netflix list by viewed or rated content
+publisher_account: Yedidya
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "1.0.0.2",
+  "author": "Yedidya Aberjel",
+  "version_name": "1.0.0beta2",
+  "default_locale": "en",
+  "permissions": ["storage", "tabs", "scripting"],
+  "host_permissions": ["https://www.netflix.com/*"],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "images/icons/funnel_16.png",
+      "32": "images/icons/funnel_32.png",
+      "64": "images/icons/funnel_64.png",
+      "128": "images/icons/funnel_128.png"
+    },
+    "commands": {
+      "_execute_action": {
+        "suggested_key": {
+          "default": "Ctrl+Shift+F",
+          "mac": "MacCtrl+Shift+F"
+        }
+      }
+    }
+  },
+  "icons": {
+    "16": "images/icons/funnel_16.png",
+    "32": "images/icons/funnel_32.png",
+    "64": "images/icons/funnel_64.png",
+    "128": "images/icons/funnel_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.netflix.com/*"],
+      "exclude_matches": [
+        "https://www.netflix.com/settings*",
+        "https://www.netflix.com/account*"
+      ],
+      "js": ["scripts/filterMenu.js"]
+    },
+    {
+      "matches": ["https://www.netflix.com/settings/viewed*"],
+      "js": ["scripts/viewed.js"]
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/browse/genre/34399",
+        "https://www.netflix.com/browse/genre/*?bc=34399"
+      ],
+      "js": ["scripts/browseMoviesPage.js"]
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/browse",
+        "https://www.netflix.com/latest"
+      ],
+      "js": ["scripts/mainBrowsePage.js"]
+    },
+    {
+      "matches": [
+        "https://www.netflix.com/browse/original-audio*",
+        "https://www.netflix.com/browse/audio*",
+        "https://www.netflix.com/browse/subtitles*",
+        "https://www.netflix.com/browse/my-list",
+        "https://www.netflix.com/browse/m/popular-titles",
+        "https://www.netflix.com/browse/m/new-release",
+        "https://www.netflix.com/browse/m/watch-it-again",
+        "https://www.netflix.com/browse/genre/34399?so=su",
+        "https://www.netflix.com/browse/genre/34399?so=yr",
+        "https://www.netflix.com/browse/genre/34399?so=az",
+        "https://www.netflix.com/browse/genre/34399?so=za",
+        "https://www.netflix.com/browse/genre/*?bc=34399&so=su",
+        "https://www.netflix.com/browse/genre/*?bc=34399&so=yr",
+        "https://www.netflix.com/browse/genre/*?bc=34399&so=az",
+        "https://www.netflix.com/browse/genre/*?bc=34399&so=za"
+      ],
+      "js": ["scripts/browseByLanguage.js"]
+    },
+    {
+      "matches": ["https://www.netflix.com/search?q=*"],
+      "exclude_matches": ["https://www.netflix.com/search?q=*&jbv=*"],
+      "js": ["scripts/searchVideoGallery.js"]
+    }
+  ]
+}

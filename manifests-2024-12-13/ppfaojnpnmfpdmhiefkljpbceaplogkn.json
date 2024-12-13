@@ -1,0 +1,82 @@
+---
+name: Email Signature Parser
+version: '1.1'
+category_slug: productivity/workflow
+rating: 3
+rating_count: 2
+user_count: 340
+release_date: '2023-05-09T07:54:34.000Z'
+size: 740KiB
+languages:
+  - English
+description: >-
+  Extract contact data from email signatures using AI within your Gmail inbox
+  and automatically send them to webhooks.
+publisher_account: Parsio.io
+extension_website: parsio.io
+support_website: https://parsio.io/chrome-signature-parser
+privacy_policy: https://parsio.io/data-protection
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Email Signature Parser",
+    "short_name": "emailsigparser",
+    "version": "1.1",
+    "author": "Parsio.io <sigparser@parsio.io>",
+    "description": "Extract contact data from email signatures using AI within your Gmail inbox and automatically send them to webhooks.",
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png",
+            "48": "icons/icon48.png",
+            "128": "icons/icon128.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "service-worker.js"
+    },
+
+    "permissions": ["storage", "activeTab", "scripting"],
+
+    "content_scripts": [{
+            "js": ["assets/js/turndown-7.1.2.js"],
+            "matches": ["<all_urls>"],
+            "run_at": "document_start"
+        },
+
+        {
+            "js": ["scripts/content.js"],
+            "matches": ["<all_urls>"]
+        },
+
+        {
+            "js": ["scripts/event-listener.js"],
+            "matches": ["*://mail.google.com/*"]
+        },
+
+        {
+            "js": ["gmail/extensionInjector.js"],
+            "matches": ["*://mail.google.com/*"],
+            "run_at": "document_start"
+        }
+    ],
+
+    "web_accessible_resources": [{
+            "resources": ["assets/*"],
+            "matches": ["<all_urls>"]
+        },
+        {
+            "resources": [
+                "gmail/gmailJsLoader.js",
+                "gmail/extension.js"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "host_permissions": ["https://*/*"]
+}

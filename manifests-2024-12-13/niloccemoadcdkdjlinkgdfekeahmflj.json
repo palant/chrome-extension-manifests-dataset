@@ -1,0 +1,126 @@
+---
+name: Save to Pocket
+version: 4.0.6
+category_slug: productivity/workflow
+rating: 4.226987581615671
+rating_count: 7811
+user_count: 2000000
+release_date: '2022-11-07T19:38:17.000Z'
+size: 356KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - español (Latinoamérica)
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: The easiest, fastest way to capture articles, videos, and more.
+publisher: Mozilla Corporation
+publisher_account: pocket-chrome-publishers
+publisher_address: |-
+  149 New Montgomery St 4th floor
+  San Francisco, CA 94105
+  US
+extension_website: getpocket.com
+support_website: https://help.getpocket.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Save to Pocket",
+  "version": "4.0.6",
+  "description": "The easiest, fastest way to capture articles, videos, and more.",
+  "default_locale": "en",
+  "icons": {
+    "16": "assets/images/icon-16.png",
+    "48": "assets/images/icon-48.png",
+    "128": "assets/images/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "38": "assets/images/action-icon.png"
+    },
+    "default_title": "Save to Pocket"
+  },
+  "background": {
+    "service_worker": "pages/background/index.js",
+    "type": "module"
+  },
+  "options_page": "pages/options/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "pages/injector/import-content.js"
+      ],
+      "css": [
+        "assets/fonts/fonts.css",
+        "assets/pocket-save-extension.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://getpocket.com/extension_login_success*"
+      ],
+      "js": [
+        "pages/import-login.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://getpocket.com/login?e=4"
+      ],
+      "js": [
+        "pages/import-logout.js"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://getpocket.com/*"
+  ],
+  "permissions": [
+    "tabs",
+    "contextMenus",
+    "cookies",
+    "storage"
+  ],
+  "commands": {
+    "save-to-pocket-action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+P",
+        "windows": "Ctrl+Shift+P",
+        "mac": "Command+Shift+P",
+        "chromeos": "Ctrl+Shift+P",
+        "linux": "Ctrl+Shift+P"
+      },
+      "description": "Save page to Pocket"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "pages/injector/content.js",
+        "pages/login.js",
+        "pages/logout.js"
+      ],
+      "matches": [
+        "*://*/*",
+        "*://getpocket.com/*"
+      ]
+    }
+  ]
+}

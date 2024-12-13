@@ -1,0 +1,77 @@
+---
+name: FTA Buddy
+version: '1.11'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2024-08-24T19:36:59.000Z'
+size: 179KiB
+languages:
+  - English
+description: Enable the field monitor and notes sync for FTA Buddy app
+publisher_account: Filip Kin
+extension_website: ftabuddy.com
+support_website: https://github.com/Filip-Kin/FTA-Buddy/issues
+privacy_policy: https://ftabuddy.com/app/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "FTA Buddy",
+    "description": "Enable the field monitor and notes sync for FTA Buddy app",
+    "version": "1.11",
+    "permissions": [
+        "storage",
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://10.0.100.5/*"
+    ],
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [
+                "http://10.0.100.5/FieldMonitor",
+                "http://10.0.100.5/FieldMonitor/"
+            ],
+            "js": [
+                "injector.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://ftabuddy.com/*",
+                "http://localhost:5173/*"
+            ],
+            "js": [
+                "app.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "injected.js"
+            ],
+            "matches": [
+                "http://10.0.100.5/*",
+                "https://ftabuddy.com/*"
+            ]
+        }
+    ],
+    "icons": {
+        "48": "img/logo48.png",
+        "128": "img/logo128.png"
+    },
+    "action": {
+        "default_popup": "menu.html",
+        "default_icon": "img/logo.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}

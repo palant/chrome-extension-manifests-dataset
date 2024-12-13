@@ -1,0 +1,96 @@
+---
+name: OfficeSuite UC® for Chrome™
+version: 5.0.0.5
+category_slug: productivity/workflow
+rating: 3.4
+rating_count: 5
+user_count: 1000
+release_date: '2024-08-21T01:30:51.000Z'
+size: 4.28MiB
+languages:
+  - English (United States)
+description: >-
+  Click any phone number within Chrome to instantly launch a call on your
+  selected phone.
+publisher_account: Windstream Communications
+privacy_policy: https://www.windstream.com/about/legal/Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OfficeSuite UC® for Chrome™",
+  "short_name": "WIN-OSUC-4GOOG",
+  "version": "5.0.0.5",
+  "description": "Click any phone number within Chrome to instantly launch a call on your selected phone.",
+  "permissions": [
+    "background",
+    "notifications",
+    "identity",
+    "identity.email",
+    "http://*/*",
+    "https://*/*",
+    "file://*/*",
+    "storage",
+    "contextMenus"
+  ],
+  "browser_action": {
+    "default_icon": "webimages/icon128.png",
+    "default_popup": "web/user_info_popup.html"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": [ "lib/jquery.min.js", "lib/sockjs.min.js", "lib/stomp.min.js", "backgroundConstants.js", "background.js", "popupNotifier.js", "dynamicsCrmConnector.js", "commonUtils.js", "callEventsMessageListener.js" ]
+  },
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>" ],
+      "all_frames": true,
+      "js": [ "lib/jquery.min.js", "lib/libphonenumber.js", "bvpnparser.js" ],
+      "run_at": "document_end",
+      "css": [ "css/officeSuiteExtensionAlert.css", "css/clickOptions.css", "css/we-menu-bar.css" ]
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "all_frames": false,
+      "js": [ "lib/jquery.min.js", "lib/jquery-ui.js", "backgroundConstants.js", "osInjector.js" ],
+      "run_at": "document_end",
+      "css": [ "css/we-sidebar.css" ]
+    },
+    {
+      "css": [ "css/we-menu-bar.css" ],
+      "matches": [ "https://app.hubspot.com/contacts/*/contact/**" ],
+      "all_frames": true,
+      "js": [ "lib/jquery.min.js", "/lib/popper.min.js", "/lib/tippy-bundle.umd.min.js", "hubspot-injector.js" ],
+      "run_at": "document_end"
+    },
+    {
+      "css": [],
+      "js": [ "office365ContactSelector.js" ],
+      "matches": [ "*://outlook.office365.com/*", "*://outlook.office.com/*" ]
+    },
+    {
+      "css": [ "css/teams-win.css" ],
+      "js": [ "teamsParser.js" ],
+      "matches": [ "https://teams.microsoft.com/*" ],
+      "all_frames": false
+    },
+    {
+      "css": [],
+      "js": [ "googleContactsParser.js" ],
+      "matches": [ "*://contacts.google.com/search/*?winCall=true" ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    "webimages/*",
+    "web/*",
+    "css/*"
+  ],
+  "oauth2": {
+    "client_id": "1063771683822-nkmlrpcfms39gqo1sabrkgmgnklqd0nf.apps.googleusercontent.com",
+    "scopes": [ "https://www.googleapis.com/auth/userinfo.profile https://www.googleapis.com/auth/userinfo.email https://www.googleapis.com/auth/contacts https://www.googleapis.com/auth/contacts.readonly" ]
+  },
+  "icons": { "128": "webimages/icon128.png" },
+  "manifest_version": 2
+}

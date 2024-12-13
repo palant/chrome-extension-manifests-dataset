@@ -1,0 +1,86 @@
+---
+name: Devana extension
+version: '1.1'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 104
+release_date: '2024-11-27T02:53:33.000Z'
+size: 318KiB
+languages:
+  - Français
+description: Extension to use devana in web browser
+publisher: Scriptor Artis
+publisher_address: |-
+  Le Château de Ranrouët
+  Herbignac 44410
+  FR
+extension_website: devana.ai
+support_website: https://www.devana.ai
+privacy_policy: https://app.devana.ai/fr/cgu
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Devana extension",
+  "version": "1.1",
+  "description": "Extension to use devana in web browser",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "identity",
+    "contextMenus",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/sidebar/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "side_panel": {
+    "default_path": "dist/sidebar/index.html"
+  }
+}

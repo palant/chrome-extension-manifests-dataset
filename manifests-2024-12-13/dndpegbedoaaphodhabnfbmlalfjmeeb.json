@@ -1,0 +1,68 @@
+---
+name: CDA Connect Plus
+version: 0.3.6
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 12
+release_date: '2024-09-03T06:52:12.000Z'
+size: 76.89KiB
+languages:
+  - English (United States)
+description: A browser extension that makes using CDA Connect easier
+publisher_account: John Gully
+privacy_policy: https://github.com/johngully/cda-connect-plus/blob/main/PRIVACYPOLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name":"CDA Connect Plus",
+  "description": "A browser extension that makes using CDA Connect easier",
+  "version": "0.3.6",
+  "icons": {
+    "16": "cda-blue-16.png",
+    "32": "cda-blue-32.png",
+    "48": "cda-blue-48.png",
+    "128": "cda-blue-128.png"
+  },
+  "action": {
+    "name": "CDA Connect Plus",
+    "permissions": [ "tabs" ],
+    "default_popup": "popup.html"
+  },
+  "content_scripts":[
+    {
+      "matches":["*://coramdeoacademy.myschoolapp.com/*"],
+      "js":[
+        "utils/object-hash.js",
+        "utils/date.js",
+        "utils/html-utils.js",
+        "assignments.js",
+        "assignment-visibility.js",
+        "calendar.js",
+        "router.js"
+      ],
+      "css": ["assignments.css", "calendar.css"]
+    },
+    {
+      "matches":["*://coramdeoacademy.myschoolapp.com/*?pl=*"],
+      "js": [
+        "utils/object-hash.js",
+        "utils/html-utils.js",
+        "assignment-visibility.js",
+        "print-format.js"
+      ],
+      "css": ["print-format.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches":["*://coramdeoacademy.myschoolapp.com/*"],
+      "resources": ["visible.svg", "visible-off.svg"]
+    }
+  ],
+  "permissions": [ "storage" ]
+}

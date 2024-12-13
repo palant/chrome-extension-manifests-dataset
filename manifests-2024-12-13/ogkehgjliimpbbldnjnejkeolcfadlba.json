@@ -1,0 +1,85 @@
+---
+name: LinkedIn CRM Integration(HubSpot/Salesforce)
+version: 1.2.3
+category_slug: productivity/workflow
+rating: 3
+rating_count: 1
+user_count: 14
+release_date: '2024-10-16T09:56:17.000Z'
+size: 88.33KiB
+languages:
+  - English
+description: >-
+  Import LinkedIn profiles into your CRM (HubSpot, Salesforce),
+  capture,edit,sync and enrich email phone leads from LinkedIn contacts.
+publisher_account: Mallory Dell
+extension_website: nioleads.com
+privacy_policy: https://nioleads.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.2.3",
+  "homepage_url": "https://nioleads.com",
+  "action": {
+    "default_icon": "./assets/icon-512.png"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "cookies",
+    "tabs",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.nioleads.com/*"
+  ],
+  "commands": {
+    "sync": {
+      "suggested_key": {
+        "default": "Ctrl+K",
+        "mac": "Command+K"
+      },
+      "description": "Sync to CRM on the current page."
+    }
+  },
+  "background": {
+    "service_worker": "./dist/background/index.global.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "manifest.json"
+      ],
+      "matches": [
+        "*://*.nioleads.com/*",
+        "http://localhost:5173/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,70 @@
+---
+name: Salesforce Commander
+version: 0.9.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-10-25T09:13:18.000Z'
+size: 255KiB
+languages:
+  - English
+description: Get more done in Salesforce - Quickly access any page using your keyboard!
+publisher_account: urieyal
+support_website: https://github.com/uris-tools/Salesforce-Commander
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Salesforce Commander",
+ "version": "0.9.0",
+ "manifest_version": 3,
+ "description": "Get more done in Salesforce - Quickly access any page using your keyboard!",
+ "action": {
+  "default_icon": "images/sf-commander32.png",
+  "default_popup": "popup.html",
+  "default_title": "Salesforce Commander"
+ },
+ "icons": {
+  "16": "images/sf-commander16.png",
+  "32": "images/sf-commander32.png",
+  "48": "images/sf-commander48.png",
+  "128": "images/sf-commander128.png"
+ },
+ "web_accessible_resources": [
+  {
+   "resources": ["images/*"],
+   "matches": ["*://*/*"]
+  }
+ ],
+ "background": {
+  "service_worker": "serviceWorker.js",
+  "type": "module"
+ },
+ "content_scripts": [
+  {
+   "css": ["styles/main.css"],
+   "matches": ["https://*.force.com/*", "https://*.salesforce.com/*", "https://*.salesforce-setup.com/*", "https://*.cloudforce.com/*"],
+   "all_frames": true,
+   "js": ["contentScript.js", "shared.js", "popup.js"],
+   "run_at": "document_end"
+  }
+ ],
+ "commands": {
+  "showSearchBox": {
+   "description": "Open Search Box",
+   "suggested_key": {
+    "default": "Ctrl+Shift+Space"
+   }
+  },
+  "alternativeShowSearchBox": {
+   "description": "Open Search Box (Alternative shortcut)",
+   "suggested_key": {
+    "default": "Ctrl+Space"
+   }
+  }
+ },
+ "permissions": ["management", "storage", "clipboardRead", "cookies", "scripting"],
+ "host_permissions": ["https://*.force.com/*", "https://*.salesforce.com/*", "https://*.cloudforce.com/*"]
+}

@@ -1,0 +1,94 @@
+---
+name: manaba Enhanced for Tsukuba
+version: 3.3.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 7
+user_count: 1000
+release_date: '2022-12-01T10:34:54.000Z'
+size: 63.21KiB
+languages:
+  - English
+  - 日本語
+description: Make your manaba a little bit more comfortable
+publisher_account: Masaki Kobayashi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "manaba Enhanced for Tsukuba",
+  "version": "3.3.1",
+  "description": "Make your manaba a little bit more comfortable",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "webRequest",
+    "webRequestBlocking",
+    "downloads",
+    "*://manaba.tsukuba.ac.jp/*"
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true,
+    "open_in_tab": true
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://manaba.tsukuba.ac.jp/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "contentScript/main.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://manaba.tsukuba.ac.jp/*"
+      ],
+      "include_globs": [
+        "https://manaba.tsukuba.ac.jp/ct/course_*_report_*"
+      ],
+      "js": [
+        "contentScript/reportTemplate.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://manaba.tsukuba.ac.jp/*"
+      ],
+      "include_globs": [
+        "https://manaba.tsukuba.ac.jp/ct/course_*_grade"
+      ],
+      "js": [
+        "contentScript/showRelativeGradesPosition.js"
+      ]
+    }
+  ],
+  "commands": {
+    "manaba-enhanced:open-in-respon": {
+      "suggested_key": {
+        "default": "Alt+R"
+      },
+      "description": "Open selected Respon code in Respon"
+    },
+    "manaba-enhanced:open-assignments-page": {
+      "description": "Open unsubmitted assignments page"
+    }
+  },
+  "default_locale": "ja"
+}

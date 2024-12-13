@@ -1,0 +1,74 @@
+---
+name: Projektově.CZ - pro přehledné řízení projektů
+version: '3.2'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 23
+release_date: '2019-06-24T14:28:05.000Z'
+size: 562KiB
+languages:
+  - čeština
+description: >-
+  Dodá tlačítko pro rychlé přidání e-mailu (Gmail) k úkolu v Projektově.CZ a
+  stopky pro snadné sledování stráveného času nad úkoly.
+publisher: Projektově.CZ s.r.o.
+publisher_address: |-
+  Kukučínova 10
+  Ostrava 70900
+  Czech Republic
+extension_website: www.projektove.cz
+support_website: https://www.projektove.cz/kontakt
+privacy_policy: https://www.projektove.cz/obchodni-podminky
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "3.2",
+  "name": "Projektově.CZ - pro přehledné řízení projektů",
+  "short_name": "Rozšíření Projektově.CZ",
+  "description": "Dodá tlačítko pro rychlé přidání e-mailu (Gmail) k úkolu v Projektově.CZ a stopky pro snadné sledování stráveného času nad úkoly.",
+  "author": "Projektově.CZ s.r.o.",
+  "homepage_url": "https://www.projektove.cz",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_title": "Menu Projektově.CZ",
+    "default_popup": "popup.html"
+  },
+  "omnibox": { "keyword" : "pro" },
+  "icons": {
+    "16": "img/icon16.png",
+    "48": "img/icon48.png",
+    "128": "img/icon128.png",
+    "512": "img/icon512.png" 
+  },
+  "web_accessible_resources": [
+    "inject.html"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": ["vendor/js/inboxsdk.js", "vendor/js/textversion.js", "js/inject.bundle.js"],
+      "css": ["vendor/css/react-select.css", "vendor/css/_datepicker.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "background": {
+    "scripts": ["js/background.bundle.js"]
+  },
+  "permissions": [ 
+    "storage",
+    "https://mail.google.com/",
+    "https://inbox.google.com/",
+    "https://*.projektove.cz/"
+  ],
+  "content_security_policy": "default-src 'self' https://*.projektove.cz; script-src 'self' 'unsafe-eval'; connect-src https://*.projektove.cz; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:;"
+}

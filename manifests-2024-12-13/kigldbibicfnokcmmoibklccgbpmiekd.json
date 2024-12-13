@@ -1,0 +1,88 @@
+---
+name: 'Labels for LinkedIn: Inlabels'
+version: 1.7.1
+category_slug: productivity/tools
+rating: 4.75
+rating_count: 8
+user_count: 134
+release_date: '2024-11-18T17:30:13.000Z'
+size: 1.79MiB
+languages:
+  - English (United States)
+description: Add labels to your inbox without leaving LinkedIn
+publisher_account: InLabels
+extension_website: inlabels.in
+support_website: https://inlabels.in/support
+privacy_policy: https://inlabels.in/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Labels for LinkedIn: Inlabels",
+  "version": "1.7.1",
+  "description": "Add labels to your inbox without leaving LinkedIn",
+  "minimum_chrome_version": "126",
+  "icons": {
+    "16": "assets/icon/icon-16.png",
+    "32": "assets/icon/icon-32.png",
+    "48": "assets/icon/icon-48.png",
+    "128": "assets/icon/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "unlimitedStorage"
+  ],
+  "background": {
+    "service_worker": "src/service_worker/background.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "js": [
+        "src/content_scripts/main.js"
+      ],
+      "css": [
+        "src/global.css"
+      ]
+    },
+    {
+      "world": "MAIN",
+      "run_at": "document_start",
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "js": [
+        "src/content_scripts/filter.js"
+      ]
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://*.inlabels.in/*"
+      ],
+      "js": [
+        "src/content_scripts/auth.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.linkedin.com/*"
+    ]
+  },
+  "oauth2": {
+    "client_id": "1029804740367-0fipgrm2ocoghmi3bg35qgq66rqk2966.apps.googleusercontent.com",
+    "client_id_for_web": "1029804740367-srqc96c1ot7qgdbhst5944qjjhs0o7mj.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ],
+    "redirect_path": "back"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA11RoCC1pv0Dmv27Wu4LPVTGbplwuoVl7fhvJY50dtTG5spWzpzpneY/eC9oK95ma8gWwJfD/OU46SNHBRQ6+unXRApND1EZC65bJoLEsqnwSJpTHD4xl7zy6f00ki89n/nvYVLXxQwgnF5/b8mxyjlYcfv+fmzQNbubnwu9e8pGqsymelJ//8bNmMwSjC5v/C+AeeKEPTVmhnJy/bYpSEI6BtxIQIzKIRx+t7atD7pZd/Amf4bEYtC+DZaQ+LY/89SNdwZ560KQrZLt2IWVocSoyug7e8mP+KkCOgFDeFwqn5oYX2Kgt0cQG5L2l9NR+jx7eeVyUTJmpUyeFAJkfNQIDAQAB"
+}

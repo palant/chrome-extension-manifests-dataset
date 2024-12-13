@@ -1,0 +1,69 @@
+---
+name: Socialsonic LinkedIn AI
+version: 1.0.0
+category_slug: lifestyle/social
+rating: 5
+rating_count: 4
+user_count: 634
+release_date: '2024-09-17T10:53:39.000Z'
+size: 1.4MiB
+languages:
+  - English (United States)
+description: >-
+  LinkedIn growth assistant. Create viral content, analyze performance, find top
+  posts, and engage strategically.
+publisher: Writesonic, Inc.
+publisher_account: Writesonic
+publisher_address: |-
+  1209 Orange Street
+  Wilmington, DE 19801
+  US
+extension_website: socialsonic.com
+support_website: support@writesonic.com
+privacy_policy: https://socialsonic.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Socialsonic LinkedIn AI",
+  "description": "LinkedIn growth assistant. Create viral content, analyze performance, find top posts, and engage strategically.",
+  "version": "1.0.0",
+  "icons": {
+    "128": "./images/logo-socialsonic.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "./images/logo-socialsonic.png"
+    },
+    "default_popup": "./pages/popup/popup.html"
+  },
+  "background": {
+    "service_worker": "./js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.socialsonic.com/*", "https://dev.socialsonic.ai/*", "http://localhost:3000/*"],
+      "js": ["./js/content_auth.js"],
+      "all_frames": false,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["./js/content_main.js"],
+      "css": ["./css/content_main.css"],
+      "all_frames": false,
+      "run_at": "document_start"
+    }
+  ],
+
+  "permissions": ["storage", "cookies", "tabs", "alarms"],
+  "host_permissions": ["https://app.socialsonic.com/*", "https://dev.socialsonic.ai/*", "http://localhost:3000/*", "*://*.linkedin.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["css/*", "images/*", "fonts/*", "pages/*"],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

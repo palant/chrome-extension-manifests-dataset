@@ -1,0 +1,78 @@
+---
+name: 'VU Quiz Firewall Bypass: Allow GDB & Quiz Copy/Paste - Skip Lesson Videos'
+version: 1.0.5
+category_slug: productivity/tools
+rating: 4.797297297297297
+rating_count: 148
+user_count: 10000
+release_date: '2024-06-30T10:55:21.000Z'
+size: 182KiB
+languages:
+  - English (United States)
+description: >-
+  Enable copy paste on quiz and gdb pages, mark lesson videos as viewed, and
+  bypass VU quiz firewall.
+publisher_account: gptquizapp
+privacy_policy: https://fmedu.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VU Quiz Firewall Bypass: Allow GDB & Quiz Copy/Paste - Skip Lesson Videos",
+  "version": "1.0.5",
+  "description": "Enable copy paste on quiz and gdb pages, mark lesson videos as viewed, and bypass VU quiz firewall.",
+  "minimum_chrome_version": "101",
+  "action": {
+    "default_icon": "./icon-256.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./icon-256.png",
+    "48": "./icon-512.png",
+    "128": "./icon-512.png"
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "declarativeNetRequestWithHostAccess",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.vu.edu.pk/*",
+    "*://vu-db-worker.gptquiz.workers.dev/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ua_rules",
+        "enabled": true,
+        "path": "ua_rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.vu.edu.pk/FormativeAssessment/FAQuizQuestions.aspx?*",
+        "*://*.vu.edu.pk/Quiz/QuizQuestion.aspx?*",
+        "*://vulms.vu.edu.pk/GDB/StudentMessage.aspx*"
+      ],
+      "js": ["content_script.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://*.vu.edu.pk/*"],
+      "js": ["content_script_2.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

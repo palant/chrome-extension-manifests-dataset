@@ -1,0 +1,66 @@
+---
+name: Forminder
+version: 3.0.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 11
+user_count: 172
+release_date: '2024-11-25T07:32:54.000Z'
+size: 45.55KiB
+languages:
+  - English (United States)
+description: Memorizes if you have filled out a Google Form.
+publisher_account: Forminder
+privacy_policy: https://www.freeprivacypolicy.com/live/d8d70c2e-fe18-4329-a138-637f9382e196
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Forminder",
+    "version": "3.0.0",
+    "description": "Memorizes if you have filled out a Google Form.",
+    "permissions": [
+        "storage",
+        "identity",
+        "tabs"
+    ],
+    "host_permissions": [
+      "https://docs.google.com/forms/*",
+      "https://us-central1-forminder-1fe5f.cloudfunctions.net/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "web_accessible_resources": [
+    {
+      "resources": ["allForms.html","content/images/icon128.jpg"],
+      "matches": ["<all_urls>"]
+    }
+    ],
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["reminder.js"]
+        },
+        {
+            "matches": ["https://docs.google.com/forms/*","https://*.typeform.com/*", "https://airtable.com/*/form","https://*.qualtrics.com/jfe/form/*"],
+            "js": ["content.js"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "content/images/icon128.jpg",
+            "48": "content/images/icon128.jpg",
+            "128": "content/images/icon128.jpg"
+        }
+    },
+    "oauth2": {
+      "client_id": "198271957167-r3uuc5ue7v6rb82a0nireil4m2r16ple.apps.googleusercontent.com",
+      "scopes": [
+          "https://www.googleapis.com/auth/userinfo.email"
+      ]
+    }
+}

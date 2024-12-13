@@ -1,0 +1,135 @@
+---
+name: BGU Spark
+version: 1.8.3
+category_slug: productivity/tools
+rating: 4.764705882352941
+rating_count: 17
+user_count: 2000
+release_date: '2024-11-08T06:51:17.000Z'
+size: 15.0MiB
+languages:
+  - עברית
+description: Get the BGU's web-experience out of the stone age.
+publisher_account: kshayk16
+privacy_policy: https://ghostwrites.ai/privacy-policy-bgu-spark
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BGU Spark",
+  "description": "Get the BGU's web-experience out of the stone age.",
+  "version": "1.8.3",
+  "permissions": [
+    "storage",
+    "cookies",
+    "commands"
+  ],
+  "host_permissions": [
+    "*://moodle.bgu.ac.il/*"
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "commands": {
+    "open_popup": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Open popup"
+    }
+  },
+  "action": {
+    "default_popup": "html/popup.html",
+    "default_icon": "images/icon48.png"
+  },
+  "options_ui": {
+    "page": "html/options.html"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://moodle.bgu.ac.il/moodle/*"
+      ],
+      "exclude_matches": [
+        "*://moodle.bgu.ac.il/moodle/*.pdf*"
+      ],
+      "js": [
+        "js/autoLogin.js"
+      ],
+      "css": [
+        "css/contentStyle.css",
+        "css/overallStyle.css",
+        "lib/font-awesome-4.7.0/css/font-awesome.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://moodle.bgu.ac.il/moodle/*"
+      ],
+      "exclude_matches": [
+        "https://moodle.bgu.ac.il/moodle/local/mydashboard/*"
+      ],
+      "js": [
+        "js/contentScript.js",
+        "js/taskManager.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://moodle.bgu.ac.il/moodle/my/"
+      ],
+      "js": [
+        "js/scrapeCourses.js",
+        "js/dashboard.js",
+        "js/scrapeAvailableCourses.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://moodle.bgu.ac.il/moodle/blocks/video/viewvideo.php*",
+        "*://moodle.bgu.ac.il/moodle/mod/videostream/view.php*"
+      ],
+      "js": [
+        "js/skipButtonInjector.js",
+        "js/removeVolumeLimit.js",
+        "js/resumeVideoFromLastTime.js",
+        "js/videoCompleteTracking.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://moodle.bgu.ac.il/moodle/mod/assign/view.php?id=*&action=editsubmission"
+      ],
+      "js": [
+        "js/markSubmissionDone.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://gezer1.bgu.ac.il/meser/main.php"
+      ],
+      "js": [
+        "js/autoLogins/gezerAutoLogin.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/tosaf.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

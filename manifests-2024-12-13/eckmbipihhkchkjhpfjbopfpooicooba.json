@@ -1,0 +1,88 @@
+---
+name: 'PricesDance: Amazon price history'
+version: 1.2.2
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-11-27T08:56:55.000Z'
+size: 58.04KiB
+languages:
+  - English (United States)
+description: >-
+  With PricesDance browser extension, see Amazon price history BEFORE you buy
+  and track price drops AFTER your order to claim refunds!
+publisher_account: PricesDance
+extension_website: pricesdance.com
+support_website: https://pricesdance.com/#feedback
+privacy_policy: https://pricesdance.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PricesDance: Amazon price history",
+  "version": "1.2.2",
+  "description": "With PricesDance browser extension, see Amazon price history BEFORE you buy and track price drops AFTER your order to claim refunds!",
+  "permissions": [],
+  "host_permissions": [
+    "https://www.amazon.com/*",
+    "https://*.pricesdance.com/*",
+    "https://graph.bitbns.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.amazon.com/*/orders*",
+        "https://www.amazon.com/*/order-history*",
+        "https://www.amazon.com/*/order-details*",
+        "https://www.amazon.com/your-orders/search/*"
+      ],
+      "js": [
+        "util.js",
+        "AmazonInvoice.js",
+        "AmazonItem.js",
+        "AmazonOrderPage.js"
+      ],
+      "css": ["pricesdance.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.amazon.com/dp/*",
+        "https://www.amazon.com/*/dp/*",
+        "https://www.amazon.com/gp/product/*",
+        "https://www.amazon.com/*/gp/product/*"
+      ],
+      "js": [
+        "util.js",
+        "loading.js",
+        "AmazonItem.js",
+        "priceChart.js",
+        "AmazonItemPage.js"
+      ],
+      "css": ["pricesdance.css"],
+      "run_at": "document_idle",
+      "persistent": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["priceChart.html", "loading.html", "schema/amazon.json"],
+      "matches": ["https://www.amazon.com/*"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_popup": "popup.html",
+    "default_title" : "PricesDance"
+  }
+}

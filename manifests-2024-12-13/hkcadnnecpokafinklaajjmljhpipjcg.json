@@ -1,0 +1,151 @@
+---
+name: Adjukössze Webshopadomány
+version: 4.9.3
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 7
+user_count: 725
+release_date: '2024-10-31T09:51:50.000Z'
+size: 2.24MiB
+languages:
+  - magyar
+description: >-
+  Az online vásárlások értékének átlagosan 2,5%-a az Ön által választott
+  társadalmi szervezethez kerül.
+publisher: Fundacja FaniMani
+publisher_account: FaniMani.pl
+publisher_address: |-
+  Macieja Palacza 144
+  Poznań 60-278
+  PL
+extension_website: webshopadomany.adjukossze.hu
+privacy_policy: https://webshopadomany.adjukossze.hu/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_manifest_name__",
+  "description": "__MSG_manifest_description_short__",
+  "author": "FaniMani.pl",
+  "version": "4.9.3",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "default_locale": "hu",
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/widget.js",
+        "content_scripts/pitdonation.js"
+      ],
+      "css": [
+        "assets/css/vars.css",
+        "assets/css/widget.css",
+        "assets/css/widget_theme.css",
+        "assets/css/pitdonation.css",
+        "assets/css/pitdonation_theme.css"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*://google.??",
+        "*://google.??/*",
+        "*://google.???",
+        "*://google.???/*",
+        "*://google.co.uk",
+        "*://google.co.uk/*",
+        "*://www.google.??",
+        "*://www.google.??/*",
+        "*://www.google.???",
+        "*://www.google.???/*",
+        "*://www.google.co.uk",
+        "*://www.google.co.uk/*",
+        "*://bing.com/*",
+        "*://www.bing.com/*",
+        "*://szukaj.wp.pl/*",
+        "*://szukaj.onet.pl/*",
+        "*://szukaj.interia.pl/*",
+        "*://yandex.com/*",
+        "*://www.yandex.com/*",
+        "*://duckduckgo.com/*",
+        "*://search.yahoo.com/*",
+        "*://search.brave.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/serp.js",
+        "content_scripts/pitdonation.js",
+        "content_scripts/serphotels.js"
+      ],
+      "css": [
+        "assets/css/vars.css",
+        "assets/css/serp.css",
+        "assets/css/serp_theme.css",
+        "assets/css/pitdonation.css",
+        "assets/css/pitdonation_theme.css",
+        "assets/css/serphotels.css",
+        "assets/css/serphotels_theme.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://webshopadomany.adjukossze.hu/*",
+        "*://*.webshopadomany.adjukossze.hu/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/webshopadomany.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "cookies",
+    "tabs"
+  ],
+  "icons": {
+    "16": "assets/img/extension-icon/status-default-16.png",
+    "32": "assets/img/extension-icon/status-default.png",
+    "48": "assets/img/extension-icon/status-default-48.png",
+    "128": "assets/img/extension-icon/status-default-128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://webshopadomany.adjukossze.hu/*",
+      "*://*.webshopadomany.adjukossze.hu/*"
+    ]
+  },
+  "host_permissions": [
+    "https://webshopadomany.adjukossze.hu/",
+    "*://*/*"
+  ],
+  "action": {
+    "default_popup": "content_scripts/popup.html",
+    "default_icon": {
+      "32": "assets/img/extension-icon/status-default.png"
+    }
+  },
+  "incognito": "split"
+}

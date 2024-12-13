@@ -1,0 +1,88 @@
+---
+name: RINKT Record & Play
+version: 2.3.0
+category_slug: make_chrome_yours/accessibility
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-11-16T11:09:56.000Z'
+size: 466KiB
+languages:
+  - English
+description: >-
+  Design your own automation workflows. Effortlessly record and replay web
+  actions using our intuitive web app and browser extension.
+publisher_account: RINKT
+publisher_address: |-
+  4 Wintergreen Close
+  London E6 5UQ
+  GB
+support_website: support@rinkt.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RINKT Record & Play",
+  "description": "Design your own automation workflows. Effortlessly record and replay web actions using our intuitive web app and browser extension.",
+  "content_security_policy": {
+    "script-src": "self https://apis.google.com https://www.gstatic.com https://www.googleapis.com https://securetoken.googleapis.com",
+    "object-src": "self"
+  },
+  "author": "rinkt",
+  "version": "2.3.0",
+  "action": {
+    "default_icon": {
+      "16": "icon-16.png",
+      "32": "icon-32.png"
+    },
+    "default_popup": "popup/index.html",
+    "default_title": "Rinkt recorder and player"
+  },
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content_script.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/startup_script.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/serviceWorker.js"
+  },
+
+  "permissions": [
+    "nativeMessaging",
+    "tabs",
+    "webNavigation",
+    "storage",
+    "debugger",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/",
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["js/embedded.js"],
+    "matches": ["<all_urls>"]
+  }],
+  "offline_enabled": true,
+  "externally_connectable": {
+    "matches": ["https://*.rinkt.com/*"]
+  }
+}

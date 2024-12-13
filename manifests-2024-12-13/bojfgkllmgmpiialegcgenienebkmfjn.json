@@ -1,0 +1,72 @@
+---
+name: Автоматическое решение Интерактивных Образовательных Модулей (ИОМ)
+version: 1.3.9
+category_slug: productivity/education
+rating: 4.202247191011236
+rating_count: 89
+user_count: 100000
+release_date: '2024-11-25T08:46:47.000Z'
+size: 366KiB
+languages:
+  - English
+description: >-
+  Автоматическое решение Интерактивных Образовательных Модулей (ИОМ) для системы
+  сертификации.
+publisher_account: DreamDev
+support_website: https://t.me/iomauto
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Автоматическое решение Интерактивных Образовательных Модулей (ИОМ)",
+  "short_name": "iomauto",
+  "version": "1.3.9",
+  "manifest_version": 3,
+  "description": "Автоматическое решение Интерактивных Образовательных Модулей (ИОМ) для системы сертификации.",
+  "homepage_url": "https://t.me/iomauto",
+  "icons": {
+    "16": "./images/icon16.png",
+    "48": "./images/icon48.png",
+    "128": "./images/icon128.png"
+  },
+
+  "default_locale": "en",
+
+  "permissions": [
+    "storage"
+  ],
+
+  "action": {
+  },
+
+  "host_permissions": [
+    "https://*.edu.rosminzdrav.ru/*",
+    "https://*.edu.rosminzdrav.ru/quiz-wrapper/*",
+    "https://24forcare.com/*",
+    "https://reshnmo.ru/*"
+  ],
+  "content_scripts": [
+    {
+      "js": [
+        "./src/constants.js",
+        "./src/inject/utils.js",
+        "./src/inject/normalize.js",
+        "./src/inject/search-answers.js",
+        "./src/inject/execute-questions.js",
+        "./src/inject/content-script.js"
+      ],
+      "matches": ["https://*.edu.rosminzdrav.ru/quiz-wrapper/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "css": ["./src/inject/content-script.css"],
+      "matches": ["https://*.edu.rosminzdrav.ru/quiz-wrapper/*"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "./src/bg/background.js",
+    "type": "module"
+  }
+}

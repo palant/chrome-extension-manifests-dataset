@@ -1,0 +1,124 @@
+---
+name: NeetoRecord - Screen & Webcam Recorder
+version: 1.2.8
+category_slug: productivity/communication
+rating: 5
+rating_count: 18
+user_count: 2000
+release_date: '2024-12-08T09:20:53.000Z'
+size: 7.8MiB
+languages:
+  - English (United States)
+description: >-
+  Easily record your screen and share the video instantly. Perfect for remote
+  work.
+publisher_account: 'neeto '
+support_website: https://neetorecordhelp.neetokb.com/
+privacy_policy: https://neeto.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "NeetoRecord - Screen & Webcam Recorder",
+  "version": "1.2.8",
+  "description": "Easily record your screen and share the video instantly. Perfect for remote work.",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA1sHeYC4umpEeyEXB4yLlHGuQ1Mr6O2SJkeihZfQf4+wmW1a+sx82nwULjfMXpVQuWsYEyaYLDLTCLhl4Sx+9cKL5C1DSUYeONhxcj5vcI9fiqTEsCAsLyB+8YIJ6M60XInu16y8J02FGAIdYI2UONqHFDqzJiCVOfgmNzK8Jr3t4WZNcvOmBsZl1TZWs5meT8NR4nVx1io/W0CgxDt8N0/KDHVU+QE4sGrHxHc7tkPwa75+EWMppQCL9aavMlSUTBj/UOCmT0P9d95Hiq/TdMtsW/eP1dgAEdxi0qPvDGPCijqbcquLt3lE7jI3XcW3y+5OjQC5yHhYCHOyfYfP3ZwIDAQAB",
+  "icons": {
+    "16": "./public/icons/icon16.png",
+    "48": "./public/icons/icon48.png",
+    "128": "./public/icons/icon128.png"
+  },
+  "commands": {
+    "discard": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "Discard recording"
+    },
+    "pause_or_resume": {
+      "suggested_key": {
+        "default": "Alt+Shift+K"
+      },
+      "description": "Pause or resume recording"
+    },
+    "restart": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Restart recording"
+    },
+    "start_or_stop": {
+      "suggested_key": {
+        "default": "Alt+Shift+E"
+      },
+      "description": "Stop recording"
+    }
+  },
+  "action": {
+    "default_title": "neetoRecord"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "components/contentScript/import-index.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "contextMenus",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "components/options/index.html",
+        "components/cameraPermission/index.html",
+        "public/NoiseSuppressorWorklet.js"
+      ],
+      "matches": [
+        "https://*.neetorecord.net/*",
+        "https://*.neetorecord.com/*",
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "components/contentScript/index.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://*.lvh.me:9037/*",
+      "https://*.neetorecord.net/*",
+      "https://*.neetorecord.com/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  }
+}

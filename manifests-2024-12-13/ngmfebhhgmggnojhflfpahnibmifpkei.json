@@ -1,0 +1,116 @@
+---
+name: Alinvoice
+version: '2.0'
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 27
+release_date: '2023-08-18T06:19:36.000Z'
+size: 361KiB
+languages:
+  - English
+description: Generate printable invoices from your AliExpress orders.
+publisher_account: Alinvoice
+extension_website: alinvoice.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Alinvoice",
+  "description": "Generate printable invoices from your AliExpress orders.",
+  "version": "2.0",
+  "icons": {
+    "128": "/static/icon_128.png"
+  },
+  "default_locale": "en",
+  "minimum_chrome_version": "110",
+  "manifest_version": 3,
+  "options_page": "/src/dashboard.html",
+  "background": {
+    "matches": ["*://*.aliexpress.com/p/order/index.html*", "*://*.aliexpress.us/p/order/index.html*" ],
+    "service_worker": "/src/background.js",
+    "type": "module"
+  },
+  "omnibox": { "keyword" : "ali" },
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_icon": {
+      "128": "/static/icon_128.png"
+    },
+    "default_popup": "/src/popup.html"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["*://*.aliexpress.com/p/order/index.html*", "*://*.aliexpress.us/p/order/index.html*" ],
+      "css": [
+        "/src/tailwind.css",
+        "/src/datepicker.css",
+        "/src/orders_page.css"
+      ],
+      "js": [
+        "/src/js/orders_page_app.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["*://*.aliexpress.com/p/order/detail.html*", "*://*.aliexpress.us/p/order/detail.html*" ],
+      "css": [
+        "/src/tailwind.css",
+        "/src/orders_detail_page.css"
+      ],
+      "js": [
+        "/src/js/orders_detail_page_app.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["*://track.aliexpress.com/logisticsdetail.htm*", "*://track.aliexpress.us/logisticsdetail.htm*" ],
+      "css": [
+        "/src/tailwind.css",
+        "/src/orders_track_page.css"
+      ],
+      "js": [
+        "/src/js/orders_track_page_app.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.alinvoice.com/*" ],
+      "js": [
+        "/src/js/hey_connect.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.alinvoice.com/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/static/icon_128.png",
+        "/src/orders_page.tpl.html"
+      ],
+      "matches": [ "*://*.aliexpress.com/*", "*://*.aliexpress.us/*" ]
+    },
+    {
+      "resources": [
+        "/src/js/hey_connect.js"
+      ],
+      "matches": [ "https://*.alinvoice.com/*"],
+      "use_dynamic_url": true
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "downloads",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*.aliexpress.com/p/order/detail.html*",
+    "*://*.aliexpress.us/p/order/detail.html*" 
+  ]
+}

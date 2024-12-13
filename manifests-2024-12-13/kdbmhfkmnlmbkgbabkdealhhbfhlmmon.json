@@ -1,0 +1,631 @@
+---
+name: SteamDB
+version: '4.11'
+category_slug: lifestyle/shopping
+rating: 4.728070175438597
+rating_count: 684
+user_count: 400000
+release_date: '2024-12-05T06:11:18.000Z'
+size: 367KiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - Filipino
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - हिन्दी
+  - বাংলা
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  Adds SteamDB links and new features on the Steam store and community. View
+  lowest game prices and stats.
+publisher_account: SteamDB
+extension_website: steamdb.info
+support_website: https://steamdb.info/faq/
+privacy_policy: https://steamdb.info/extension/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "version": "4.11",
+ "author": "SteamDB",
+ "name": "SteamDB",
+ "short_name": "SteamDB",
+ "description": "__MSG_extension_description__",
+ "default_locale": "en",
+ "homepage_url": "https://steamdb.info/",
+ "options_ui":
+ {
+  "open_in_tab": true,
+  "page": "options/options.html"
+ },
+ "icons":
+ {
+  "16": "icons/16.png",
+  "32": "icons/32.png",
+  "48": "icons/48.png",
+  "64": "icons/64.png",
+  "128": "icons/128.png"
+ },
+ "permissions":
+ [
+  "storage"
+ ],
+ "host_permissions":
+ [
+  "https://steamdb.info/*",
+  "https://steamcommunity.com/*",
+  "https://*.steampowered.com/*"
+ ],
+ "background":
+ {
+  "service_worker": "scripts/background.js"
+ },
+ "web_accessible_resources":
+ [
+  {
+   "resources":
+   [
+    "options/options.html",
+
+    "icons/white.svg",
+    "icons/pcgamingwiki.svg",
+    "icons/steamhunters.svg",
+    "icons/image.svg",
+    "icons/achievements_completed.svg",
+
+    "styles/appicon.css",
+    "styles/inventory-sidebar.css",
+
+    "scripts/community/inventory.js",
+    "scripts/community/agecheck_injected.js",
+    "scripts/community/filedetails_award_injected.js",
+    "scripts/community/market_injected.js",
+    "scripts/community/multibuy_injected.js",
+    "scripts/community/profile_award_injected.js",
+    "scripts/community/tradeoffer_injected.js",
+    "scripts/store/account_licenses_injected.js",
+    "scripts/store/invalidate_cache_injected.js",
+    "scripts/store/registerkey_injected.js",
+    "scripts/store/subscriptions.js"
+   ],
+   "matches":
+   [
+    "https://store.steampowered.com/*",
+    "https://steamcommunity.com/*"
+   ]
+  },
+  {
+   "resources":
+   [
+    "options/options.html"
+   ],
+   "matches":
+   [
+    "https://steamdb.info/*"
+   ]
+  }
+ ],
+ "content_scripts":
+ [
+  {
+   "run_at": "document_start",
+   "matches":
+   [
+    "https://steamdb.info/*"
+   ],
+   "exclude_matches":
+   [
+    "https://steamdb.info/api/*",
+    "https://steamdb.info/static/*",
+    "https://steamdb.info/embed/*"
+   ],
+   "js":
+   [
+    "scripts/common.js",
+    "scripts/steamdb/global.js"
+   ]
+  },
+  {
+   "run_at": "document_start",
+   "all_frames": true,
+   "matches":
+   [
+    "https://store.steampowered.com/*",
+    "https://steamcommunity.com/*"
+   ],
+   "js":
+   [
+    "scripts/common.js"
+   ]
+  },
+
+
+
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://store.steampowered.com/*"
+   ],
+   "exclude_matches":
+   [
+    "https://store.steampowered.com/account/ackgift/*",
+    "https://store.steampowered.com/account/redeemwalletcode/*",
+    "https://store.steampowered.com/actions/*",
+    "https://store.steampowered.com/api/*",
+    "https://store.steampowered.com/broadcast/*",
+    "https://store.steampowered.com/buyitem/*",
+    "https://store.steampowered.com/dynamicstore/*",
+    "https://store.steampowered.com/join/*",
+    "https://store.steampowered.com/login/*",
+    "https://store.steampowered.com/public/*",
+    "https://store.steampowered.com/saleaction/*",
+    "https://store.steampowered.com/supportmessages/*",
+    "https://store.steampowered.com/videos/*",
+    "https://store.steampowered.com/vtt/*",
+    "https://store.steampowered.com/widget/*"
+   ],
+   "js":
+   [
+    "scripts/global.js",
+    "scripts/store/invalidate_cache.js"
+   ],
+   "css":
+   [
+    "styles/global.css",
+    "styles/store.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://store.steampowered.com/app/*"
+   ],
+   "js":
+   [
+    "scripts/store/app_error.js",
+    "scripts/store/app.js"
+   ],
+   "css":
+   [
+    "styles/store.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://store.steampowered.com/news/app/*"
+   ],
+   "js":
+   [
+    "scripts/store/app_error.js",
+    "scripts/store/app_news.js"
+   ],
+   "css":
+   [
+    "styles/store.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://store.steampowered.com/app/*"
+   ],
+   "js":
+   [
+    "scripts/store/app_images.js"
+   ]
+  },
+  {
+   "run_at": "document_start",
+   "matches":
+   [
+    "https://store.steampowered.com/account/licenses*"
+   ],
+   "js":
+   [
+    "scripts/store/account_licenses.js"
+   ],
+   "css":
+   [
+    "styles/account_licenses.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://store.steampowered.com/account/registerkey*"
+   ],
+   "js":
+   [
+    "scripts/store/registerkey.js"
+   ],
+   "css":
+   [
+    "styles/store.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://store.steampowered.com/sub/*"
+   ],
+   "js":
+   [
+    "scripts/store/sub.js"
+   ],
+   "css":
+   [
+    "styles/store.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://store.steampowered.com/bundle/*"
+   ],
+   "js":
+   [
+    "scripts/store/bundle.js"
+   ]
+  },
+  {
+   "all_frames": true,
+   "matches":
+   [
+    "https://store.steampowered.com/widget/*"
+   ],
+   "js":
+   [
+    "scripts/store/widget.js"
+   ],
+   "css":
+   [
+    "styles/store.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://store.steampowered.com/app/*/agecheck",
+    "https://store.steampowered.com/agecheck/*"
+   ],
+   "js":
+   [
+    "scripts/store/app_error.js",
+    "scripts/store/agecheck.js"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://store.steampowered.com/explore*"
+   ],
+   "js":
+   [
+    "scripts/store/explore.js"
+   ]
+  },
+
+
+
+  {
+   "run_at": "document_start",
+   "matches":
+   [
+    "https://store.steampowered.com/app/*",
+    "https://steamcommunity.com/app/*",
+    "https://steamcommunity.com/sharedfiles/filedetails*",
+    "https://steamcommunity.com/workshop/filedetails*",
+    "https://steamcommunity.com/workshop/browse*",
+    "https://steamcommunity.com/workshop/discussions*"
+   ],
+   "js":
+   [
+    "scripts/appicon.js"
+   ]
+  },
+
+
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://steamcommunity.com/*"
+   ],
+   "exclude_matches":
+   [
+    "https://steamcommunity.com/actions/*",
+    "https://steamcommunity.com/chat/*",
+    "https://steamcommunity.com/login/*",
+    "https://steamcommunity.com/miniprofile/*",
+    "https://steamcommunity.com/public/*",
+    "https://steamcommunity.com/openid/*"
+   ],
+   "js":
+   [
+    "scripts/global.js"
+   ],
+   "css":
+   [
+    "styles/global.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/id/*",
+    "https://steamcommunity.com/profiles/*"
+   ],
+   "js":
+   [
+    "scripts/community/profile.js"
+   ],
+   "css":
+   [
+    "styles/community.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://steamcommunity.com/id/*/inventory*",
+    "https://steamcommunity.com/profiles/*/inventory*"
+   ],
+   "js":
+   [
+    "scripts/community/profile_inventory.js"
+   ],
+   "css":
+   [
+    "styles/inventory.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://steamcommunity.com/id/*/stats*",
+    "https://steamcommunity.com/profiles/*/stats*"
+   ],
+   "js":
+   [
+    "scripts/community/achievements.js",
+    "scripts/community/achievements_profile.js"
+   ],
+   "css":
+   [
+    "styles/achievements.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://steamcommunity.com/id/*/stats/CSGO*",
+    "https://steamcommunity.com/profiles/*/stats/CSGO*"
+   ],
+   "js":
+   [
+    "scripts/community/achievements_cs2.js"
+   ],
+   "css":
+   [
+    "styles/achievements_cs2.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/stats/*/achievements*"
+   ],
+   "js":
+   [
+    "scripts/community/achievements.js",
+    "scripts/community/achievements_global.js"
+   ],
+   "css":
+   [
+    "styles/community.css",
+    "styles/achievements.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/tradeoffer/*"
+   ],
+   "exclude_matches":
+   [
+    "https://steamcommunity.com/tradeoffer/*/confirm*"
+   ],
+   "js":
+   [
+    "scripts/community/tradeoffer.js"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/id/*/recommended/*",
+    "https://steamcommunity.com/profiles/*/recommended/*"
+   ],
+   "js":
+   [
+    "scripts/community/profile_recommended.js"
+   ],
+   "css":
+   [
+    "styles/community.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/id/*/badges*",
+    "https://steamcommunity.com/profiles/*/badges*"
+   ],
+   "js":
+   [
+    "scripts/community/profile_badges.js"
+   ],
+   "css":
+   [
+    "styles/community.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/id/*/gamecards/*",
+    "https://steamcommunity.com/profiles/*/gamecards/*"
+   ],
+   "js":
+   [
+    "scripts/community/profile_gamecards.js"
+   ],
+   "css":
+   [
+    "styles/community.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/app/*",
+    "https://steamcommunity.com/sharedfiles/filedetails*",
+    "https://steamcommunity.com/workshop/filedetails*",
+    "https://steamcommunity.com/workshop/browse*",
+    "https://steamcommunity.com/workshop/discussions*"
+   ],
+   "js":
+   [
+    "scripts/community/gamehub.js"
+   ],
+   "css":
+   [
+    "styles/community.css"
+   ]
+  },
+  {
+   "matches":
+   [
+    "https://steamcommunity.com/sharedfiles/filedetails*",
+    "https://steamcommunity.com/workshop/filedetails*"
+   ],
+   "js":
+   [
+    "scripts/community/filedetails.js"
+   ]
+  },
+  {
+   "all_frames": true,
+   "matches":
+   [
+    "https://steamcommunity.com/sharedfiles/filedetails*",
+    "https://steamcommunity.com/workshop/filedetails*"
+   ],
+   "js":
+   [
+    "scripts/community/filedetails_guide.js"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://steamcommunity.com/market/multibuy*"
+   ],
+   "js":
+   [
+    "scripts/community/multibuy.js"
+   ]
+  },
+  {
+   "run_at": "document_start",
+   "matches":
+   [
+    "https://steamcommunity.com/market/*"
+   ],
+   "js":
+   [
+    "scripts/community/market.js"
+   ],
+   "css":
+   [
+    "styles/market.css"
+   ]
+  },
+  {
+   "run_at": "document_end",
+   "matches":
+   [
+    "https://steamcommunity.com/app/*",
+    "https://steamcommunity.com/games/*",
+    "https://steamcommunity.com/sharedfiles/*",
+    "https://steamcommunity.com/workshop/*"
+   ],
+   "js":
+   [
+    "scripts/community/agecheck.js"
+   ]
+  },
+  {
+   "all_frames": true,
+   "matches":
+   [
+    "https://steamcommunity.com/market/*",
+    "https://steamcommunity.com/id/*/inventory*",
+    "https://steamcommunity.com/profiles/*/inventory*"
+   ],
+   "js":
+   [
+    "scripts/community/market_ssa.js"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,71 @@
+---
+name: Zipsale Marketplace Lister
+version: 0.0.26
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 2
+user_count: 2000
+release_date: '2024-12-09T12:34:18.000Z'
+size: 76.26KiB
+languages:
+  - English (UK)
+description: Connect to third party marketplaces
+publisher: ZIPSALE LTD
+publisher_account: ilya
+publisher_address: |-
+  64 New Cavendish Street, London
+  England, W1G 8TB
+  London W1G 8TB
+  GB
+privacy_policy: https://zipsale.co.uk/legal
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Zipsale Marketplace Lister",
+    "description": "Connect to third party marketplaces",
+    "version": "0.0.26",
+    "manifest_version": 3,
+    "permissions": [
+        "tabs",
+        "cookies",
+        "storage"
+    ],
+    "host_permissions": [
+        "https://web.zipsale.co.uk/*",
+        "http://127.0.0.1:8000/*",
+        "*://*.vinted.co.uk/*",
+        "*://*.facebook.com//*",
+        "*://*.vestiairecollective.com/*"
+    ],
+    "action": {
+        "default_icon": "icons/logo.png",
+        "default_popup": "popup.html"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://www.facebook.com/marketplace/*"],
+            "js": ["lib/jquery-3.6.1.min.js", "utils/parsing.js", "popup.js", "facebook.js"]
+        },
+        {
+            "matches": ["https://web.zipsale.co.uk/*", "https://web.zipsale.co.uk/users/settings/marketplaces*", "http://127.0.0.1:8000/*"],
+            "js": ["chrome_extension_id_injection.js"]
+        }
+    ],
+    "externally_connectable" : {
+        "matches": ["https://web.zipsale.co.uk/*", "http://127.0.0.1:8000/*"]
+    },
+    "background": {
+        "service_worker": "popup.js"
+    },
+    "icons": {
+        "16": "icons/zipsale_16.png",
+        "32": "icons/zipsale_32.png",
+        "48": "icons/zipsale_48.png",
+        "128": "icons/zipsale_128.png"
+    }
+}

@@ -1,0 +1,104 @@
+---
+name: Warm Welcome
+version: 2.3.2
+category_slug: lifestyle/social
+rating: 4.5
+rating_count: 8
+user_count: 1000
+release_date: '2024-01-03T10:27:36.000Z'
+size: 3.98MiB
+languages:
+  - English (United States)
+description: Personal client communication through video in one simple app.
+publisher: Warm Welcome
+publisher_address: |-
+  19550 Amber Meadow Drive
+  Suite 130 - 1022
+  Bend, OR 97702
+  US
+support_website: http://help.warmwelcome.com/
+privacy_policy: https://www.warmwelcome.com/tos
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Warm Welcome",
+  "version": "2.3.2",
+  "browser_action": {
+    "default_icon": "./dist/icons/logo-32.png"
+  },
+  "description": "Personal client communication through video in one simple app.",
+  "icons": {
+    "16": "./dist/icons/logo-16.png",
+    "48": "./dist/icons/logo-48.png",
+    "128": "./dist/icons/logo-128.png"
+  },
+  "background": {
+    "scripts": [
+      "./dist/background-bundle.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://mail.google.com/*",
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/main-bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://mail.google.com/*",
+        "https://*.warmwelcome.com/*",
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/parser-bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "js": [
+        "./dist/gmail-bundle.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "js": [
+        "./dist/linkedin-bundle.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "web_accessible_resources": [
+    "dist/images/*.png",
+    "dist/images/*.svg",
+    "dist/images/*.gif",
+    "pages/recorder.html",
+    "pages/gmail-options.html",
+    "pages/linkedin-options.html"
+  ],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabCapture",
+    "desktopCapture",
+    "http://*/*",
+    "https://*/*"
+  ]
+}

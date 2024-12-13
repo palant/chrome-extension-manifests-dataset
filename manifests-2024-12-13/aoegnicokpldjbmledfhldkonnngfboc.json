@@ -1,0 +1,64 @@
+---
+name: UN Jobs Search Helper (Beta)
+version: 0.1 beta
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-07-11T07:16:32.000Z'
+size: 59.66KiB
+languages:
+  - English
+description: >-
+  Simplify UN job search with additional tools on aggregated UN job websites.
+  This Beta only supports UNJobNet and UNJobs websites.
+publisher_account: UN Job Hunter
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "UN Jobs Search Helper (Beta)",
+  "short_name": "UN Jobs",
+  "version": "0.1.0.0",
+  "version_name": "0.1 beta",
+  "description": "Simplify UN job search with additional tools on aggregated UN job websites. This Beta only supports UNJobNet and UNJobs websites.",
+  "permissions": ["declarativeContent", "storage"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16-gray.png",
+      "48": "icons/icon48-gray.png",
+      "128": "icons/icon128-gray.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.unjobnet.org/jobs*"],
+      "js": [
+        "src/unjobnet/PageObserver.js",
+        "src/unjobnet/JobAdsRepository.js",
+        "src/unjobnet/commonStylingFn.js",
+        "src/unjobnet/common.js",
+        "src/unjobnet/buttons.js",
+        "src/unjobnet/content.js"
+      ],
+      "css": ["styles-unjobnet.css"]
+    },
+    {
+      "matches": ["https://unjobs.org/*"],
+      "js": [
+        "src/unjobsorg/JobAdsRepository.js",
+        "src/unjobsorg/commonStylingFn.js",
+        "src/unjobsorg/common.js",
+        "src/unjobsorg/buttons.js",
+        "src/unjobsorg/content.js"
+      ],
+      "css": ["styles-unjobsorg.css"]
+    }
+  ]
+}

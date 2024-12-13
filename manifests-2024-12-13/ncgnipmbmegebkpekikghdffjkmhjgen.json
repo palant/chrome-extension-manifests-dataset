@@ -1,0 +1,59 @@
+---
+name: TikTok TV
+version: '1.2'
+category_slug: lifestyle/fun
+rating: 1
+rating_count: 1
+user_count: 20
+release_date: '2022-04-28T09:07:22.000Z'
+size: 23.54KiB
+languages:
+  - English
+description: Watch your feed while working/playing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TikTok TV",
+  "version": "1.2",
+  "description": "Watch your feed while working/playing",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["document_start.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.tiktok.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject_start.js"],
+      "matches": ["*://*.tiktok.com/*"]
+    }
+  ],
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": ["https://*/*"],
+  "permissions": ["storage"]
+}

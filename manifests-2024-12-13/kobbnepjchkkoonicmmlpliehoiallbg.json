@@ -1,0 +1,56 @@
+---
+name: 'BetterMeetings: save time, optimize meetings'
+version: '0.1'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2020-08-14T06:42:56.000Z'
+size: 147KiB
+languages:
+  - English
+description: The smart meeting assistant that saves you time and makes every meeting count
+publisher_account: BetterMeetings
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "BetterMeetings: save time, optimize meetings",
+  "description": "The smart meeting assistant that saves you time and makes every meeting count",
+  "version": "0.1",
+  "content_scripts": [
+  {
+    "matches": ["https://calendar.google.com/*"],
+    "run_at": "document_idle",
+    "js": ["g-calendar-enhancer.js", "main.js"]
+  },
+  { 
+    "matches": ["https://meet.google.com/*"],
+    "run_at": "document_idle",
+    "js": ["g-meet-enhancer.js", "data-processor.js", "main.js"]
+  }],
+  "externally_connectable": {
+    "matches": ["https://meet.google.com/*, https://calendar.google.com/*"]
+  },
+  "web_accessible_resources": [
+    "template/*"
+  ],
+  "browser_action": {
+   "default_icon": "icon24.png"
+ },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png" 
+  },
+ "background": {
+   "scripts": ["data-processor.js", "ga.js", "background.js"]
+ },
+  "sandbox": {
+    "pages": ["html/sandbox.html"]
+  },
+  "permissions": ["webNavigation", "storage", "unlimitedStorage"],
+  "content_security_policy": "script-src 'self' https://www.google-analytics.com https://www.googletagmanager.com https://google-analytics.com; object-src 'self'"
+}

@@ -1,0 +1,121 @@
+---
+name: DotmetricsScriptTest
+version: '3.9'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 68
+release_date: '2024-11-11T15:55:07.000Z'
+size: 352KiB
+languages:
+  - English (UK)
+description: Browser extension to test Dotmetrics script
+publisher: Dotmetrics
+publisher_address: |-
+  Aleja lipa 1b
+  Zagreb 10000
+  HR
+support_website: https://www.dotmetrics.net/contact.html
+privacy_policy: https://www.dotmetrics.net/documents/policy_eng.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DotmetricsScriptTest",
+  "version": "3.9",
+
+  "description": "Browser extension to test Dotmetrics script",
+
+  "background": {
+    "service_worker": "js/background-script.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/content-script.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "declarativeNetRequest",
+    "webRequest",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://*.dotmetrics.net/*",
+    "*://*.dotmetrics.rocks/*",
+    "*://*/*"
+  ],
+
+  "action": {
+    "default_icon": "images/icon.png",
+    "default_title": "Dotmetrics Script Test",
+    "default_popup": "DotmetricsPopup.html"
+  },
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "debug1-script-rule",
+        "enabled": false,
+        "path": "rules/debug1-script-rule.json"
+      },
+      {
+        "id": "door-script-rule",
+        "enabled": false,
+        "path": "rules/door-script-rule.json"
+      },
+      {
+        "id": "adex-script-rule",
+        "enabled": false,
+        "path": "rules/adex-script-rule.json"
+      },
+      {
+        "id": "debug2-script-rule",
+        "enabled": false,
+        "path": "rules/debug2-script-rule.json"
+      },
+      {
+        "id": "debug3-script-rule",
+        "enabled": false,
+        "path": "rules/debug3-script-rule.json"
+      },
+      {
+        "id": "production-script-rule",
+        "enabled": false,
+        "path": "rules/production-script-rule.json"
+      }
+    ]
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject-scripts/sendMessageToExtension.js",
+        "inject-scripts/sendMessageExtensionAvailable.js",
+        "inject-scripts/startRequestingTimeOnPageData.js",
+        "inject-scripts/injectAdex.js",
+        "inject-scripts/stressTestAjax.js",
+        "inject-scripts/injectAdexConfigReader.js",
+        "inject-scripts/injectAdexTools.js",
+        "inject-scripts/injectDotmetricsSettingsReader.js",
+        "inject-scripts/ediFunctions.js",
+        "rules/production-script-rule.json",
+        "rules/door-script-rule.json",
+        "rules/adex-script-rule.json",
+        "rules/debug1-script-rule.json",
+        "rules/debug2-script-rule.json",
+        "rules/debug3-script-rule.json"
+      ],
+      "matches": ["https://*/*"]
+    }
+  ]
+}

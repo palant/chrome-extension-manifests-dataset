@@ -1,0 +1,100 @@
+---
+name: Stargate-Game Mastery Toolkit
+version: '1.1'
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-07-17T12:14:06.000Z'
+size: 2.66MiB
+languages:
+  - čeština
+description: Dělá všechno co by hráč dělat neměl. Stargate Game easy peasy.
+publisher_account: nemcok.viktor
+extension_website: jaffa.cz
+privacy_policy: https://jaffa.cz/terms-of-use.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Stargate-Game Mastery Toolkit",
+  "version": "1.1",
+  "description": "Dělá všechno co by hráč dělat neměl. Stargate Game easy peasy.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.stargate-game.cz/*"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src https://chat.jaffa.cz;"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.stargate-game.cz/utok.php?page=2*"],
+      "js": ["dohoz/refresh_utok.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/"],
+      "js": ["firebaseapp.js", "firebasedatabase.js", "dalsi/login.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/vesmir.php?id_hrac=*"],
+      "js": ["firebaseapp.js", "firebasedatabase.js", "dalsi/player_detail.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/index.php"],
+      "js": ["firebaseapp.js", "firebasedatabase.js", "dalsi/login.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/vesmir.php?page=1&id_rasa=*"],
+      "js": ["dohoz/refresh_vesmir.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/jednotky.php?page=3&dohodit=*"],
+      "js": ["dohoz/dohoz_single.js"]
+    },
+    {
+      "matches": [
+        "https://www.stargate-game.cz/vesmir.php?page=1&id_rasa=*&sort=7"
+      ],
+      "js": ["dohoz/dohoz_automat_dohazovac.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/jednotky.php?page=3&kdo=*"],
+      "js": ["dohoz/dohoz_automat.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/jednotky.php?page=3&dohozeno"],
+      "js": ["dohoz/dohoz_relocate.js"]
+    },
+    {
+      "matches": [
+        "https://www.stargate-game.cz/jednotky.php?page=3&dohoditUkol=*"
+      ],
+      "js": ["dohoz/dohoz_ukol.js"]
+    },
+    {
+      "matches": [
+        "https://www.stargate-game.cz/mapa.php?page=2&token=*&id_sektor=*&id_planeta=*&t=*"
+      ],
+      "js": ["OP/op_buyer.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/obchod.php?page=3"],
+      "js": ["obchod/eb_buyer.js"]
+    },
+    {
+      "matches": ["https://www.stargate-game.cz/obchod.php?page=4"],
+      "js": ["obchod/hb_buyer.js"]
+    }
+  ],
+  "icons": {
+    "48": "icon.png"
+  }
+}

@@ -1,0 +1,82 @@
+---
+name: ChatNotes
+version: 0.1.7
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2023-06-08T06:13:11.000Z'
+size: 34.17KiB
+languages:
+  - English
+description: ChatNotes
+publisher: oio.studio ltd
+publisher_account: oio
+publisher_address: |-
+  1 Waterden Road
+  London E15 2HB
+  GB
+privacy_policy: https://wwwwww.oio.studio/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatNotes",
+  "description": "ChatNotes",
+  "version": "0.1.7",
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "ChatNotes",
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "js": ["scripts/axios.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://chat.openai.com/*"],
+      "css": ["styles/style-main.css"],
+      "js": [
+        "scripts/script-injector.js",
+        "scripts/script-db.js",
+        "scripts/script-main.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": ["storage", "tabs"],
+  "host_permissions": ["<all_urls>"],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+U",
+        "mac": "Command+U"
+      }
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "https://fonts.googleapis.com",
+        "https://fonts.gstatic.com",
+        "https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&family=Zen+Maru+Gothic:wght@700&display=swap",
+        "scripts/axios.js",
+        " https://us-central1-midweek-6e232.cloudfunctions.net/app/*",
+        "images/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

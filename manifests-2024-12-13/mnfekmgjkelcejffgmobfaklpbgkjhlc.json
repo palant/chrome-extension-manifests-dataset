@@ -1,0 +1,66 @@
+---
+name: Positions or Ban
+version: 0.1.0
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 53
+release_date: '2020-07-28T04:46:56.000Z'
+size: 1000KiB
+languages:
+  - English
+description: >-
+  Verify your Robinhood positions, gains, and losses and generate a verification
+  certificate to prove you truly belong on WSB.
+publisher_account: positionsorban
+extension_website: positionsorban.com
+support_website: https://www.positionsorban.com
+privacy_policy: https://www.positionsorban.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Positions or Ban",
+  "description": "Verify your Robinhood positions, gains, and losses and generate a verification certificate to prove you truly belong on WSB.",
+  "version": "0.1.0",
+
+  "browser_action": {
+    "default_popup": "index.html",
+    "default_title": "Positions or Ban",
+    "default_icon": "pob-icon-128.png"
+  },
+  "icons": {
+    "16": "pob-icon-16.png",
+    "48": "pob-icon-48.png",
+    "128": "pob-icon-128.png"
+  },
+  "permissions": [
+    "*://*.robinhood.com/*",
+    "*://*.positionsorban.com/*",
+    "*://lvh.me/*",
+    "identity",
+    "storage"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://lvh.me/*",
+      "*://*.positionsorban.com/*"
+    ]
+  },
+  "background": {
+    "scripts": ["app/background.js"]
+  },
+  "content_scripts": [{
+    "matches": ["*://robinhood.com/*"],
+    "js": ["app/injectedScript.js", "app/contentScript.js"],
+    "run_at": "document_idle"
+  }],
+  "oauth2": {
+    "client_id": "407770775717-c8mk5pu7e50ji7d96ki52j0l40q8kcdt.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  }
+}

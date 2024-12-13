@@ -1,0 +1,88 @@
+---
+name: Mul.Live Plus
+version: 3.1.1
+category_slug: lifestyle/entertainment
+rating: 4.857142857142857
+rating_count: 14
+user_count: 7000
+release_date: '2024-12-13T05:38:54.000Z'
+size: 28.8KiB
+languages:
+  - 한국어
+description: 현재 보고 있는 방송을 Mul.Live에서 함께 봅니다.
+publisher_account: argo
+extension_website: chz.app
+support_website: https://www.chz.app/
+privacy_policy: https://www.chz.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mul.Live Plus",
+  "short_name": "Mul.Live",
+  "version": "3.1.1",
+  "description": "현재 보고 있는 방송을 Mul.Live에서 함께 봅니다.",
+  "minimum_chrome_version": "119",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ext@mul.live"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "homepage_url": "https://mul.live/",
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "declarativeNetRequestWithHostAccess",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.naver.com/*",
+    "*://*.sooplive.co.kr/*",
+    "*://*.mul.live/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "chzzk.js"
+      ],
+      "matches": [
+        "*://chzzk.naver.com/*"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "soop.js"
+      ],
+      "matches": [
+        "*://play.sooplive.co.kr/*"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

@@ -1,0 +1,98 @@
+---
+name: Lyrics.com
+version: 1.0.1
+category_slug: lifestyle/entertainment
+rating: 4.2
+rating_count: 5
+user_count: 1000
+release_date: '2024-09-03T04:51:18.000Z'
+size: 556KiB
+languages:
+  - English
+description: Get instant explanation for any lyrics that hits you anywhere on the web!
+publisher: STANDS4 LTD
+publisher_account: STANDS4 LLC
+publisher_address: |-
+  51 HaShita Street
+  Kfar Neter 40593
+  IL
+extension_website: www.lyrics.com
+support_website: https://www.lyrics.com/contact.php
+privacy_policy: http://www.lyrics.com/privacy.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Lyrics.com",
+  "short_name": "Lyrics.com",
+  "version": "1.0.1",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "64": "images/icon64.png",
+    "128": "images/icon128.png"
+  },
+  "author": "STANDS4 LLC",
+  "homepage_url": "https://www.lyrics.com",
+  "action": {
+    "default_icon": "images/lyr-fav-48.png",
+    "default_popup": "popup.html",
+    "default_title": "__MSG_tooltip__"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "bs/background.js"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "**/*.js",
+      "vendors/*",
+      "popup.html"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": [
+        "vendors/jquery.min.js",
+        "vendors/jquery-ui-1.12.0.min.js",
+        "vendors/purify.min.js",
+        "vendors/ally.min.js",
+        "vendors/most.min.js",
+        "share/helpers.js",
+        "share/tools.js",
+        "share/markup.js",
+        "cs/contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://www.lyrics.com/*",
+        "https://www.lyrics.com/*"
+      ],
+      "js": ["cs/contentscript-lt.js"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      }
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

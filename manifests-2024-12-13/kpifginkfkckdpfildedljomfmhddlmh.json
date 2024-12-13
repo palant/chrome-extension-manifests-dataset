@@ -1,0 +1,100 @@
+---
+name: Aggregated Holdem Reports for GTO Wizard
+version: 1.0.1
+category_slug: lifestyle/games
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-12-03T12:18:42.000Z'
+size: 490KiB
+languages:
+  - English
+description: >-
+  The Aggregated Holdem Reports for GTO Wizard is a Chrome extension that
+  enhances your GTO Wizard experience by automating the…
+publisher: אבי אבוגני
+publisher_account: gtopoker_il
+publisher_address: |-
+  השפלה 5
+  ראש העין 4856510
+  IL
+support_website: https://www.holdem-reports.com
+privacy_policy: https://sites.google.com/view/privacy-policy-agg-reports-ce/%D7%91%D7%99%D7%AA
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Aggregated Holdem Reports for GTO Wizard",
+  "version": "1.0.1",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "webRequest",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://api.gtowizard.com/*",
+    "https://app.gtowizard.com/*",
+    "*://*.firebaseio.com/*",
+    "*://*.googleapis.com/*"
+  ],
+  "oauth2": {
+    "client_id": "800886729638-2hcue2og01f7qjjr1u1ivlab6rbog7dc.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://api.gtowizard.com"
+  },
+  "background": {
+    "service_worker": "dist/background.bundle.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "Holdem Reports",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://app.gtowizard.com/*"],
+      "js": ["dist/content.bundle.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "api.js",
+        "recaptcha.js",
+        "google-apis/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,132 @@
+---
+name: Cuponomia - Cupom e Cashback
+version: 4.18.0
+category_slug: lifestyle/shopping
+rating: 4.904987187068795
+rating_count: 5073
+user_count: 700000
+release_date: '2024-12-10T19:41:33.000Z'
+size: 9.84MiB
+languages:
+  - português (Brasil)
+description: >-
+  O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que
+  estiver comprando. Economia em apenas um clique!
+publisher_account: Cuponomia
+publisher_address: |-
+  Av. Sao Joao, 2405
+  2102
+  Sao Jose dos Campos, SP 12242000
+  Brazil
+extension_website: cuponomia.com.br
+support_website: https://www.cuponomia.com.br/perguntas-frequentes
+privacy_policy: https://www.cuponomia.com.br/privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cuponomia - Cupom e Cashback",
+  "description": "O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que estiver comprando. Economia em apenas um clique!",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://www.cuponomia.com.br",
+  "icons": {
+    "128": "assets/img/icons/main-icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/img/icons/main-icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/icon-events.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content-scripts/check-website.js",
+        "content-scripts/inject-store-scrapers.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "content-scripts/cuponomia.js"
+      ],
+      "matches": [
+        "*://*.cuponomia.com.br/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content-scripts/check-google-search.js"
+      ],
+      "matches": [
+        "http://www.google.com/*",
+        "https://www.google.com/*",
+        "https://www.google.com.br/*",
+        "http://www.google.com.br/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content-scripts/check-bing-search.js"
+      ],
+      "matches": [
+        "http://www.bing.com/*",
+        "https://www.bing.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.json",
+        "*.css",
+        "*.html",
+        "*.png",
+        "*.svg",
+        "*.js",
+        "*.woff",
+        "*.woff2",
+        "*.mp4"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version": "4.18.0"
+}

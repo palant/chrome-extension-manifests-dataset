@@ -1,0 +1,68 @@
+---
+name: Intraverbal
+version: 1.1.5
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 9
+release_date: '2024-11-12T15:35:44.000Z'
+size: 314KiB
+languages:
+  - English (United States)
+description: Transcribe assessment
+publisher: Intraverbal
+publisher_account: denis
+publisher_address: |-
+  1805 Ponce de Leon
+  1510
+  Coral Gables, FL 33134
+  US
+privacy_policy: https://intraverbal.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Intraverbal",
+  "description": "Transcribe assessment",
+  "version": "1.1.5",
+  "manifest_version": 3,
+  "minimum_chrome_version": "116",
+  "action": {
+    "default_icon": "icons/not-active.png"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost/*", "https://chat.intraverbal.ai/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://meet.google.com/*"],
+      "js": ["offscreen.js"],
+      "css": [
+        "css/style.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "permissions.html", "js/requestPermissions.js", "modules/*"],
+      "matches": ["https://meet.google.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting"
+  ]
+}

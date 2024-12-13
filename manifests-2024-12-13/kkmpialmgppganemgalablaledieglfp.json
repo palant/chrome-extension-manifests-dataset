@@ -1,0 +1,94 @@
+---
+name: Flatpilot AI
+version: 0.0.2
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-12-10T05:51:37.000Z'
+size: 763KiB
+languages:
+  - English
+description: Helping you find your perfect apartment.
+publisher: TinyVentures
+publisher_address: |-
+  Sepapaja 6
+  Tallinn, Harjumaa 15551
+  EE
+extension_website: flatpilot.de
+privacy_policy: https://flatpilot.de/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.0.2",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://www.immobilienscout24.de/*",
+    "https://www.kleinanzeigen.de/*"
+  ],
+  "oauth2": {
+    "client_id": "758821468658-fo36arh3k1tebehcjovrh9qi5rvfqm3v.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  },
+  "icons": {
+    "16": "images/logo-16.png",
+    "48": "images/logo-48.png",
+    "128": "images/logo-128.png"
+  },
+  "options_page": "html/options.html",
+  "action": {
+    "default_title": "Flatpilot V0",
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+        "matches": ["*://www.immobilienscout24.de/*"],
+        "js": ["js/immScrape.js"]
+    },
+    {
+        "matches": ["*://www.immobilienscout24.de/expose/*"],
+        "js": ["js/immCta.js"]
+    },
+    {
+        "matches": ["*://www.kleinanzeigen.de/*"],
+        "js": ["js/kleScrape.js", "js/kleCta.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/popup.js",
+        "js/supabaseClient.js",
+        "js/supalib.js",
+        "js/immScrape.js",
+        "images/logo-48.png",
+        "css/ctaStyle.css",
+        "fonts/BloggerSans-Medium.eot",
+        "fonts/BloggerSans-Medium.woff",
+        "fonts/BloggerSans-Medium.ttf",
+        "fonts/BloggerSans-Medium.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

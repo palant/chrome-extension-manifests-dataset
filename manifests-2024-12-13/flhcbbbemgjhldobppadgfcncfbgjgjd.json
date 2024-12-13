@@ -1,0 +1,92 @@
+---
+name: Paydirt Time Tracker
+version: 3.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 29
+release_date: '2024-03-10T10:00:44.000Z'
+size: 107KiB
+languages:
+  - English (United States)
+description: >-
+  Time tracker that automatically determines which client you're working for,
+  and makes sure you track your time for them.
+publisher: Paydirt Software LLC
+publisher_account: Paydirt Software
+publisher_address: |-
+  2108 N ST STE N
+  Sacramento, CA 95816
+  US
+extension_website: paydirtapp.com
+support_website: https://app.paydirtapp.com/help/guides
+privacy_policy: https://app.paydirtapp.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Paydirt Time Tracker",
+  "manifest_version": 3,
+  "version": "3.0.1",
+  "description": "Time tracker that automatically determines which client you're working for, and makes sure you track your time for them.",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "components/*",
+        "utils/*",
+        "https://js.pusher.com/*",
+        "utils/windowlistener.js"
+      ],
+      "matches": ["<all_urls>", "https://js.pusher.com/*"]
+    }
+  ],
+  "icons": {
+    "16": "assets/icons/paydirt16.png",
+    "32": "assets/icons/paydirt32.png",
+    "48": "assets/icons/paydirt48.png",
+    "128": "assets/icons/paydirt128.png"
+  },
+  "background": {
+    "service_worker": "components/app/service.js"
+  },
+  "options_page": "components/options/options.html",
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/paydirt16.png",
+      "32": "assets/icons/paydirt32.png",
+      "48": "assets/icons/paydirt48.png"
+    },
+    "default_title": "Paydirt Time Tracker",
+    "default_popup": "components/app/index.html"
+  },
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["integrations/webScrapper.js", "integrations/log-entry-modal.js"],
+      "type": "module"
+    },
+    {
+      "matches": ["*://*.paydirtapp.com/*"],
+      "js": ["integrations/paydirtapp.js"]
+    },
+    {
+      "matches": ["https://trello.com/*"],
+      "js": ["integrations/trello.js"]
+    },
+    {
+      "matches": ["https://redbooth.com/*"],
+      "js": ["integrations/redbooth.js"]
+    },
+    {
+      "matches": ["https://3.basecamp.com/*"],
+      "js": ["integrations/basecamp4.js"]
+    },
+    {
+      "matches": ["https://basecamp.com/*"],
+      "js": ["integrations/basecamp2.js"]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+---
+name: CS2 Case Opening Stats
+version: 1.4.7
+category_slug: lifestyle/fun
+rating: 4.04
+rating_count: 75
+user_count: 30000
+release_date: '2024-12-11T01:53:34.000Z'
+size: 778KiB
+languages:
+  - English
+description: A small extension to see how much money you have 'invested' in CS cases.
+publisher_account: paul.muenchhausen
+extension_website: lootspectrum.com
+privacy_policy: https://cs.patimue.de/data-privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CS2 Case Opening Stats",
+  "version": "1.4.7",
+  "description": "A small extension to see how much money you have 'invested' in CS cases.",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "64": "assets/icon64.png",
+    "128": "assets/icon128.png"
+  },
+  "permissions": ["storage", "unlimitedStorage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://steamcommunity.com/id/*/inventoryhistory/*",
+        "https://steamcommunity.com/profiles/*/inventoryhistory/*"
+      ],
+      "js": [
+        "content/config.js",
+        "content/utils.js",
+        "content/domManipulation.js",
+        "content/dataProcessing.js",
+        "content/chunkManagement.js",
+        "content/caseScript.js"
+      ],
+      "css": ["styles/caseAnalytics.css"]
+    },
+    {
+      "matches": [
+        "*://cs.patimue.de/*",
+        "*://*.lootspectrum.com/*"
+      ],
+      "js": ["content/syncData.js", "content/chunkManagement.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/inject.js",
+        "html/casebox.html",
+        "html/finishedBox.html",
+        "styles/caseAnalytics.css",
+        "styles/finished.css",
+        "popup/popup.css"
+      ],
+      "matches": ["https://steamcommunity.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "resources": ["popup/popup.css"]
+  }
+}

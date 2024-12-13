@@ -1,0 +1,75 @@
+---
+name: Consulta DANFE
+version: '1.2'
+category_slug: productivity/tools
+rating: 1
+rating_count: 1
+user_count: 1000
+release_date: '2023-09-07T04:43:12.000Z'
+size: 15.62KiB
+languages:
+  - português (Brasil)
+description: Extensao para consultas de DANFE, NFe
+publisher_account: Consulta Danfe
+extension_website: consultadanfe.com
+privacy_policy: https://consultadanfe.com/CDanfe/privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Consulta DANFE",
+  "version": "1.2",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module" 
+  },
+  "author": {
+    "email": "contato@consultadanfe.com"
+  },
+  "action": {
+    "default_icon": "icons/icone_48.png",
+    "default_title": "ConsultaDanfe, Danfe Online"
+  },
+  "description": "Extensao para consultas de DANFE, NFe",
+  "icons": {
+    "16": "icons/icone_16.png",
+    "32": "icons/icone_32.png",
+    "48": "icons/icone_48.png",
+    "128": "icons/icone_128.png"
+  },
+  "declarative_net_request": {
+    "rule_resources"      : [
+
+        { "enabled":  true, "id": "rules_set_Access_control" , "path": "rules_set_Access_control.json" },
+        { "enabled":  true, "id": "rules_remove_DISPOSITION" , "path": "rules_remove_DISPOSITION.json" }
+  
+
+    ]
+},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.nfe.fazenda.gov.br/*",
+        "https://www.cte.fazenda.gov.br/*",
+        "https://*.consultadanfe.com/*"
+      ],
+      "js": ["content.js"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "scripting",
+    "activeTab",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequestWithHostAccess",
+    "webRequest"
+
+  ],
+  "host_permissions": [
+    "https://*.nfe.fazenda.gov.br/*",
+    "https://*.cte.fazenda.gov.br/*",
+    "https://*.consultadanfe.com/*"
+  ]
+}

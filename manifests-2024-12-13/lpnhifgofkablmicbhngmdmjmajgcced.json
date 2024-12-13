@@ -1,0 +1,150 @@
+---
+name: AliSold卖家助手 - 免费图搜同款、查侵权
+version: 1.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 4000
+release_date: '2024-11-10T04:01:09.000Z'
+size: 375KiB
+languages:
+  - 中文 (简体)
+description: 专业的跨境图搜同款与侵权查询工具，永久免费。官方网站：AliSold.com
+publisher_account: Shopee虾皮数据
+extension_website: alisold.com
+support_website: https://www.yuque.com/geekbi-com/alisold
+privacy_policy: https://docs.qq.com/doc/DWnBiUmh4UGR5Y2xx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AliSold卖家助手 - 免费图搜同款、查侵权",
+  "version": "1.0.1",
+  "description": "专业的跨境图搜同款与侵权查询工具，永久免费。官方网站：AliSold.com",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "AliSold卖家助手",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "cookies",
+    "storage",
+    "activeTab",
+    "scripting",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback", 
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.temu.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "temuContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.shein.com/*",
+        "*://*.shein.com.hk/*",
+        "*://*.shein.com.vn/*",
+        "*://*.shein.co.uk/*",
+        "*://*.shein.in/*",
+        "*://*.shein.tw/*",
+        "*://*.shein.com.mx/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "sheinContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.temushuju.com/*",
+        "*://*.sheinshuju.com/*",
+        "*://*.alisold.com/*",
+        "*://*.geekbi.com/*",
+        "*://*.geekbi.cn/*",
+        "*://localhost/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": [
+        "apiContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "unionContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.1688.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "alibabaContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://m.shein.com/*",
+        "*://m.shein.com.hk/*",
+        "*://m.shein.com.vn/*",
+        "*://m.shein.co.uk/*",
+        "*://m.shein.in/*",
+        "*://m.shein.tw/*",
+        "*://m.shein.com.mx/*"
+      ],
+      "css": [
+        "sheinInjectCss.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://branddb.wipo.int/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "brandContentScript.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "apiInject.js",
+        "sheinInject.js",
+        "assets/img/logo.svg",
+        "popup.css",
+        "unionContentScript.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,96 @@
+---
+name: PlatePrepper
+version: '1.0'
+category_slug: lifestyle/household
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-12-12T10:49:03.000Z'
+size: 518KiB
+languages:
+  - English (United States)
+description: >-
+  Extract recipes, create meal plans, and generate smart grocery lists with
+  dietary preferences.
+publisher_account: LarroLabs
+publisher_address: |-
+  9975 SW Maplecrest Ct
+  Beaverton, OR 97008-5419
+  US
+privacy_policy: https://sites.google.com/view/plateprepper/home
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PlatePrepper",
+  "version": "1.0",
+  "description": "Extract recipes, create meal plans, and generate smart grocery lists with dietary preferences.",
+  
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  
+  "host_permissions": [
+    "<all_urls>",
+    "https://api.openai.com/*",
+    "https://browserbill.com/*"
+  ],
+  
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/background-icon-16.png",
+      "48": "icons/background-icon-48.png",
+      "128": "icons/background-icon-128.png"
+    }
+  },
+  
+  "icons": {
+    "16": "icons/background-icon-16.png",
+    "48": "icons/background-icon-48.png",
+    "128": "icons/background-icon-128.png"
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["content.css"],
+      "js": ["content.js"],
+      "run_at": "document_idle",
+      "world": "MAIN"
+    }
+  ],
+  
+  "background": {
+    "service_worker": "background.js"
+  },
+  
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content.css",
+        "popup.css",
+        "shared-styles.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Open Recipe Extractor"
+    }
+  }
+}

@@ -1,0 +1,67 @@
+---
+name: Historical U.S. Counties Auto-Checker
+version: '4.75'
+category_slug: productivity/tools
+rating: 5
+rating_count: 8
+user_count: 1000
+release_date: '2024-11-03T09:07:17.000Z'
+size: 5.97MiB
+languages:
+  - English
+description: >-
+  While searching Ancestry & FamilySearch, auto-checks county and place, notes
+  boundary changes, shows historical county maps
+publisher_account: randymajors.org Research Hub
+extension_website: randymajors.org
+support_website: https://www.randymajors.org/help
+privacy_policy: https://www.randymajors.org/terms-disclaimer-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Historical U.S. Counties Auto-Checker",
+  "short_name": "County Auto-Checker",
+  "version": "4.75",
+  "description": "While searching Ancestry & FamilySearch, auto-checks county and place, notes boundary changes, shows historical county maps",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.google-analytics.com/"],
+  "background": {
+    "service_worker": "background.min.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/16BlueGlobe.png",
+      "32": "images/32BlueGlobe.png",
+      "48": "images/48BlueGlobe.png",
+      "128": "images/128BlueGlobe.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.ancestry.com/*","https://*.ancestry.ca/*","https://*.ancestry.co.uk/*","https://*.ancestrylibrary.com/*", "https://*.familysearch.org/*"],
+      "all_frames": true,
+      "js": ["jquery-3.5.1.min.js","dexie204.min.js","content.min.js"],
+      "run_at": "document_idle",
+      "css": ["rmrhExtStyles.min.css"]
+    }
+  ],
+  "icons": {
+    "16": "images/16BlueGlobe.png",
+    "32": "images/32BlueGlobe.png",
+    "48": "images/48BlueGlobe.png",
+    "128": "images/128BlueGlobe.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["hcLookup.json", "pCentroids.json", "pCentroidsAll.json", "images/16BlueGlobe.png"],
+      "matches": ["https://*.ancestry.com/*", "https://*.familysearch.org/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

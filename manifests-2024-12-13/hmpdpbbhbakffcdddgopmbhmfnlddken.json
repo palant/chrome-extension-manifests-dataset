@@ -1,0 +1,87 @@
+---
+name: Publicate Chrome Extension (Legacy Version)
+version: 2.5.07
+category_slug: productivity/tools
+rating: 4.571428571428571
+rating_count: 7
+user_count: 4000
+release_date: '2024-08-01T15:52:33.000Z'
+size: 263KiB
+languages:
+  - English
+description: >-
+  Publicate - Create Beautiful Email Newsletters and Web Roundups in minutes,
+  from content you find online.
+publisher: Startup Seeds Ltd
+publisher_account: Caedmon Mullin
+publisher_address: |-
+  5 Clayton Court
+  Mold CH7 1TW
+  GB
+extension_website: publicate.it
+support_website: >-
+  https://help.publicate.it/en/articles/3512390-how-to-install-and-use-the-chrome-extension
+privacy_policy: https://publicate.it/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Publicate Chrome Extension (Legacy Version)",
+  "manifest_version": 3,
+  "version": "2.5.07",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApneicTUFTf3Z57rVQHdMzU55EgRyuvsKnjIQ4lnLJq7vZxS1d8vQJz2GAH7pAGUZ0ZoVfS/qzN45l54A1t075N+YzdJIWfdUTvSYNV/bhl2FBsx1p0M1iJsLzpDTtTjk4LdMFSsUOhzaZfxPoXCPyr0D7A6OKK76Gudhm/T775wAp/nYsFBOyxEJ/ItFj54aEoGYFPtaNNZlkIsQ7Ofal9BHq/nmyVr9NQRGQcuVbFZeHDbbQWec+itoLsSvqfFwld5mGratz9a00lSq2w3DpssN468USDJvztUBsRdh7YXHkkf813sN+LeyyOe6N/2BuL5rRejccsRwU40Ur4avIwIDAQAB",
+  "description": "Publicate - Create Beautiful Email Newsletters and Web Roundups in minutes, from content you find online.",
+  "homepage_url": "https://publicate.it",
+  "icons": {
+    "16": "icons/publicate_16.png",
+    "48": "icons/publicate_48.png",
+    "128": "icons/publicate_128.png"
+  },
+  "action": {
+    "default_icon": "icons/publicate_48.png",
+    "default_title": "Publicate"
+  },
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "externally_connectable": {
+    "matches": ["*://*/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["src/jquery-3.4.1.min.js", "src/extensionInjector_gmail.js"],
+      "css": ["css/gmail.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://outlook.live.com/*",
+        "*://outlook.office.com/*",
+        "*://outlook.office365.com/mail",
+        "*://outlook.office365.com/mail/*"
+      ],
+      "css": ["css/gmail.css"],
+      "js": ["src/extensionInjector_outlook.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["src/jquery-3.4.1.min.js", "src/extensionInjector_save.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/extension_gmail.js",
+        "dist/jquery-3.4.1.min.js",
+        "dist/extension_outlook.js"
+      ],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["*://*/*"]
+}

@@ -1,0 +1,105 @@
+---
+name: DraftCheck
+version: 2.8.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 68
+release_date: '2024-09-19T13:40:41.000Z'
+size: 1.87MiB
+languages:
+  - English (United States)
+description: >-
+  DraftCheck is the only extension for Google Docs developed to save you from
+  the monotony of contract review.
+publisher: Law Office of Jeffrey Neu, P.C.
+publisher_account: DraftCheck
+publisher_address: |-
+  318 Newman Springs Road
+  Red Bank, NJ 07701
+  US
+extension_website: draftcheck.io
+privacy_policy: https://www.draftcheck.io/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "DraftCheck",
+    "description": "DraftCheck is the only extension for Google Docs developed to save you from the monotony of contract review.",
+    "icons": {
+        "16": "img/icon-16.png",
+        "48": "img/icon-48.png"
+    },
+    "version": "2.8.1",
+    "manifest_version": 3,
+    "permissions": [],
+    "host_permissions": [],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {},
+    "content_scripts": [
+        {
+            "run_at": "document_start",
+            "matches": ["https://docs.google.com/document/*"],
+            "js": [
+                "content-script-init.js"
+            ],
+            "all_frames": false
+        },
+        {
+            "run_at": "document_idle",
+            "matches": ["https://docs.google.com/document/*"],
+            "js": [
+                "workers/ancillaries-analyzer.js",
+                "workers/provisions-analyzer.js",
+                "workers/cross-references-analyzer.js",
+                "workers/to-dos-analyzer.js",
+                "workers/duration-analyzer.js",
+                "workers/defined-terms-analyzer.js",
+                "workers/emails-analyzer.js",
+                "workers/ignores-analyzer.js",
+                "workers/web-links-analyzer.js",
+                "workers/not-defined-terms-analyzer.js",
+                "workers/unmatched-parenthesis-analyzer.js",
+                "workers/money-analyzer.js",
+                "workers/dates-analyzer.js",
+                "workers/time-of-day-analyzer.js",
+
+                "workers/google-doc-converter.js",
+                "workers/open-office-xml-converter.js",
+                "workers/open-office-xml-modifier.js",
+
+                "content-script.js"
+            ],
+            "all_frames": false
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "lib/jquery-3.6.0.min.js",
+                "lib/bootstrap.min.js",
+                "lib/popper.min.js",
+
+                "css/bootstrap-icons.css",
+                "css/bootstrap.min.css",
+                "css/styles.css",
+
+                "ui.js",
+                "ui.html",
+
+                "exclusions.js",
+                "html/exclusions.html",
+
+                "file-processing.js",
+                "html/file-processing.html",
+
+                "runtime-init.js",
+                "runtime.js"
+            ],
+            "matches": ["https://docs.google.com/*"]
+        }
+    ]
+}

@@ -1,0 +1,105 @@
+---
+name: AI翻訳
+version: 3.21.6
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-12-06T09:14:05.000Z'
+size: 949KiB
+languages:
+  - 日本語
+description: AIが個々のニーズを理解し、どんな言語でも翻訳出来る無料のChrome拡張機能。
+publisher: JotMe
+publisher_address: |-
+  7 Bingham Road
+  Heatherside
+  Rochester ME2 4JL
+  GB
+extension_website: jotme.io
+privacy_policy: https://www.jotme.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AI翻訳",
+  "description": "AIが個々のニーズを理解し、どんな言語でも翻訳出来る無料のChrome拡張機能。",
+  "version": "3.21.6",
+  "action": {
+    "default_title": "JotMe",
+    "default_icon": "icon128.png",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://app.jotme.io/*",
+        "https://jotme-web.vercel.app/*",
+        "https://jotme-web-git-develop-jot-me.vercel.app/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "overlay/react/index.js"
+      ],
+      "css": [
+        "overlay/react/index.css"
+      ],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://meet.google.com/"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "resources": [
+        "inject.js",
+        "overlay/react/index.js",
+        "overlay/react/index.css",
+        "overlay/jotme-logo.png",
+        "overlay/minimized-logo.png"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.jotme.io/*",
+        "https://jotme-web.vercel.app/*",
+        "https://jotme-web-git-develop-jot-me.vercel.app/*"
+      ],
+      "resources": [
+        "icon16.png"
+      ]
+    }
+  ]
+}

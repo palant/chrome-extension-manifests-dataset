@@ -1,0 +1,92 @@
+---
+name: TeamsCal to gCal
+version: 1.2.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-07-21T09:38:05.000Z'
+size: 4.22MiB
+languages:
+  - English
+description: >-
+  TeamsCal to gCal synchronizes your Microsoft Teams calendar events with a
+  dedicated Google Calendar.
+publisher: Tadorne
+publisher_address: |-
+  Pl. de la Bourse
+  Bruxelles 1000
+  BE
+support_website: https://teamcal-to-gcal.sleekplan.app/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TeamsCal to gCal",
+  "description": "TeamsCal to gCal synchronizes your Microsoft Teams calendar events with a dedicated Google Calendar.",
+  "version": "1.2.2",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAnA1sYIed9PJKtb0f9WVrY4RqqK4SedUfMN8TplHFyjfl6bL7asUtpUFCtArLW09QU7OlUjfq0ohgetnWqxDk+lgbhO8DTuRWlp5FwaBbr/kuABevbj/Eh3D3YKpcMTo56OzKG9sM0U2arr7JVABxG0DjFQgsrnDhAKfKWUawDNZN9tIIyyBMrOsrTdY6NrffOn2XDg7FbblvIpsBnlWcRaxczSOnQr3lJ1vKF0M1fEXbBlt+u85diZu7GN+zAAULLi5Dmfmuh9PSDLMQZ6e/3oi4HMC8Cq5VEqmyKrCII94c+PwXmS8y0R65YGX7M1GI7hmWAP+kWvIAaAzI33/NbwIDAQAB",
+  "oauth2": {
+    "client_id": "847088411501-44d0mlsree9vtku96ifg209t89bls1ch.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar"
+    ]
+  },
+  "action": {
+    "default_title": "This extension will allow you to synchronise your Teams meetings to your Google Calendar."
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://teams.microsoft.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "inject.js"
+      ]
+    },
+    {
+      "js": [
+        "content.js"
+      ],
+      "matches": [
+        "*://teams.microsoft.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "google_calendar.js"
+      ],
+      "matches": [
+        "*://teams.microsoft.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "identity",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected.js"
+      ],
+      "matches": [
+        "*://teams.microsoft.com/*"
+      ]
+    }
+  ]
+}

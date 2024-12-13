@@ -1,0 +1,81 @@
+---
+name: X Feed Muter
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2024-07-15T11:14:01.000Z'
+size: 146KiB
+languages:
+  - English
+description: Quickly mute users, keywords and phrases from your X feed.
+publisher_account: Cody Bontecou
+publisher_address: |-
+  76-6182 Lehua Road
+  Kailua-Kona, HI 96740
+  US
+extension_website: xfeedmuter.com
+privacy_policy: https://xfeedmuter.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "X Feed Muter",
+  "version": "1.0.2",
+  "description": "Quickly mute users, keywords and phrases from your X feed.",
+  "action": {
+    "default_icon": "./assets/icon-128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-128.png",
+    "48": "./assets/icon-128.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://*.twitter.com/*",
+    "https://*.x.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://mobile.twitter.com/*",
+        "https://x.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "https://twitter.com/*",
+        "https://mobile.twitter.com/*",
+        "https://x.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

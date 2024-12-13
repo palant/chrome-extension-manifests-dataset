@@ -1,0 +1,169 @@
+---
+name: 'FlyMSG: AI Writer & Autofill Text Expander'
+version: 3.5.14
+category_slug: productivity/tools
+rating: 4.802631578947368
+rating_count: 76
+user_count: 6000
+release_date: '2024-12-04T15:43:42.000Z'
+size: 2.21MiB
+languages:
+  - English
+description: AI Writer & Autofill Text Expander App. Write, Expand, & Engage Everywhere!
+publisher: Vengreso
+publisher_account: https://vengreso.com/
+publisher_address: |-
+  1547 Palos Verdes Mall
+  Suite 250
+  Walnut Creek, CA 94597
+  US
+extension_website: www.vengreso.com
+support_website: https://vengreso.com/flymsg/feedback
+privacy_policy: https://vengreso.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_EXTENSION_NAME__",
+  "short_name": "__MSG_EXTENSION_SHORTNAME__",
+  "version": "3.5.14",
+  "manifest_version": 3,
+  "description": "__MSG_EXTENSION_DESCRIPTION__",
+  "default_locale": "en",
+  "omnibox": {
+    "keyword": "__MSG_KEYWORD_OMNIBAR_TRIGGER__"
+  },
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "96": "images/icon-96.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "48": "images/icon-48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "__MSG_BROWSER_ACTION_TITLE__"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "images/tutorial/*",
+        "css/**/*",
+        "css/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "alarms",
+    "storage",
+    "notifications",
+    "clipboardRead",
+    "clipboardWrite",
+    "management",
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:4200/*",
+      "https://*.vengreso.com/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';",
+    "script-src": [
+      "'self'"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "match_about_blank": true,
+      "js": [
+        "lib/jquery-3.7.1.min.js",
+        "lib/moment-with-locales.min.js"
+      ],
+      "exclude_globs": [
+        "chrome://*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "expander.js",
+        "expanderV2.js"
+      ],
+      "match_about_blank": true,
+      "run_at": "document_start",
+      "all_frames": true,
+      "exclude_globs": [
+        "chrome://*",
+        "https://outlook.office.com/mail/*",
+        "https://outlook.office365.com/mail/*",
+        "https://outlook.live.com/*",
+        "https://outlook/*"
+      ]
+    },
+    {
+      "matches": [
+        "https://outlook.office.com/mail/*",
+        "https://outlook.office365.com/mail/*",
+        "https://outlook.live.com/*",
+        "https://outlook/*"
+      ],
+      "js": [
+        "expanderV2.js"
+      ],
+      "match_about_blank": true,
+      "all_frames": true,
+      "exclude_globs": [
+        "chrome://*"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/mail/*",
+        "https://www.linkedin.com/*",
+        "https://outlook.office.com/mail/*",
+        "https://outlook.office365.com/mail/*",
+        "https://outlook.live.com/*",
+        "https://outlook/*"
+      ],
+      "js": [
+        "plugin.js"
+      ],
+      "css": [
+        "/css/root.css",
+        "/css/themes/main-theme.css",
+        "/css/themes/dark-theme.css",
+        "/css/components/flyTutorial.css"
+      ],
+      "exclude_globs": [
+        "chrome://*"
+      ],
+      "all_frames": false
+    }
+  ]
+}

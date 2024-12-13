@@ -1,0 +1,95 @@
+---
+name: SummYT - Free YouTube Summary Generator for ChatGPT
+version: 0.0.2
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 33
+release_date: '2024-03-02T05:48:43.000Z'
+size: 127KiB
+languages:
+  - English (United States)
+description: Generate free YouTube Summaries with ChatGPT
+publisher_account: Mathiesen Solutions
+extension_website: youtubesummarized.com
+privacy_policy: https://app.youtubesummarized.com/docs/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SummYT - Free YouTube Summary Generator for ChatGPT",
+  "version": "0.0.2",
+  "description": "Generate free YouTube Summaries with ChatGPT",
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/",
+    "*://*.youtubesummarized.com/",
+    "*://*.openai.com/"
+  ],
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://youtube.com/*"
+      ],
+      "js": [
+        "scripts/youtube/common.js",
+        "scripts/youtube/content-script.js",
+        "scripts/youtube/create-summarize-button.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://chat.openai.com/*"
+      ],
+      "js": [
+        "scripts/openai/content-script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "images/icons/16x16.png",
+    "32": "images/icons/32x32.png",
+    "48": "images/icons/48x48.png",
+    "128": "images/icons/128x128.png",
+    "256": "images/icons/256x256.png",
+    "512": "images/icons/512x512.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/youtube/get-subtitles.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/*",
+        "https://youtube.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "styles/pico.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "images/outline-logo.svg"
+      ],
+      "matches": [
+        "https://www.youtube.com/*"
+      ]
+    }
+  ]
+}

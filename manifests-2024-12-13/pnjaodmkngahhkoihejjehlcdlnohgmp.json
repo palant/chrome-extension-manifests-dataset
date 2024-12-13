@@ -1,0 +1,125 @@
+---
+name: RSS Feed Reader
+version: 8.0.19
+category_slug: lifestyle/news
+rating: 4.3484634902734705
+rating_count: 7094
+user_count: 500000
+release_date: '2024-12-03T04:53:07.000Z'
+size: 4.32MiB
+languages:
+  - English
+description: Get a simple overview of your RSS and Atom feeds in the toolbar
+publisher: Really Simple i Stockholm AB
+publisher_account: Feeder
+publisher_address: |-
+  Ringvägen 158
+  Stockholm 116 31
+  SE
+extension_website: feeder.co
+support_website: https://feeder.co/support/
+privacy_policy: https://feeder.co/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "RSS Feed Reader",
+ "short_name": "feeder",
+ "version": "8.0.19",
+ "manifest_version": 3,
+  "default_locale": "en",
+
+ "description": "Get a simple overview of your RSS and Atom feeds in the toolbar",
+ "icons": {
+  "19": "extension-icons/icon-retina.png",
+  "48": "extension-icons/icon48x48.png",
+  "128": "extension-icons/icon128x128.png"
+ },
+
+ "action": {
+  "default_icon": "extension-icons/icon-retina.png",
+  "default_popup": "reader/index.html?in_extension_popup=true"
+ },
+
+ "content_scripts": [
+  {
+   "matches": ["http://*/*", "https://*/*"],
+   "js": ["content.js"]
+  },
+
+  {
+   "matches": ["http://*/*", "https://*/*"],
+   "all_frames": true,
+   "run_at": "document_end",
+   "js": ["content/page_plugin.js"]
+  },
+
+  {
+   "matches": [
+    "http://feeder.co/*",
+    "http://*.feeder.co/*",
+    "https://feeder.co/*",
+    "https://*.feeder.co/*",
+    "https://feederstaging.com/*",
+    "https://*.feederstaging.com/*",
+    "http://feederstaging.com/*",
+    "http://*.feederstaging.com/*",
+    "http://feederdev.com/*",
+    "http://*.feederdev.com/*"
+   ],
+   "run_at": "document_start",
+   "js": ["feeder_api.js"]
+  }
+ ],
+
+ "background": {
+   "service_worker": "mv3.js"
+ },
+
+ "web_accessible_resources": [
+    {
+      "resources": [
+        "extension-icons/icon48x48.png",
+        "extension-icons/bar-buttons-good_2x.png",
+        "extension-icons/icon-retina.png",
+        "extension-icons/subscribe-logo@2x.png"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ],
+
+ "options_page": "settings_redirect.html",
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+R",
+        "linux": "Ctrl+Shift+R",
+        "windows": "Ctrl+Shift+R",
+        "mac": "Alt+Shift+R"
+      }
+    }
+  },
+
+  "host_permissions": [
+    "http://*/*",
+  "https://*/*"
+  ],
+
+ "permissions": [
+  "tabs",
+  "chrome://favicon/",
+  "storage",
+    "scripting",
+  "notifications",
+    "declarativeNetRequest",
+  "unlimitedStorage",
+    "contextMenus",
+    "alarms",
+    "offscreen"
+ ]
+}

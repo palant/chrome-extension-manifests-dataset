@@ -1,0 +1,69 @@
+---
+name: Seiga Downloader
+version: 3.8.12
+category_slug: productivity/workflow
+rating: 4.3
+rating_count: 10
+user_count: 1000
+release_date: '2023-02-07T11:30:48.000Z'
+size: 18.51KiB
+languages:
+  - 日本語
+description: ニコニコ静画の作品ページに画像ダウンロード用のリンクを追加
+publisher_account: '0x4c'
+support_website: https://twitter.com/0x4c
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "version": "3.8.12",
+ "name": "Seiga Downloader",
+ "description": "ニコニコ静画の作品ページに画像ダウンロード用のリンクを追加",
+ "icons": {
+  "16":  "icons/icon16.png",
+  "48":  "icons/icon48.png",
+  "128": "icons/icon128.png"
+ },
+ "permissions": [
+  "contextMenus",
+  "downloads",
+  "storage",
+  "unlimitedStorage"
+ ],
+ "host_permissions": [
+  "*://lohas.nicoseiga.jp/",
+  "*://seiga.nicovideo.jp/",
+  "https://dcdn.cdn.nimg.jp/",
+  "https://deliver.cdn.nicomanga.jp/"
+ ],
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [
+  {
+   "css": [ "content_scripts/main.css" ],
+   "matches": [ "*://seiga.nicovideo.jp/*" ],
+   "run_at": "document_start"
+  }, {
+   "js":  [ "content_scripts/main.js" ],
+   "matches": [ "*://seiga.nicovideo.jp/*" ]
+  }, {
+   "js":  [ "content_scripts/seiga.js" ],
+   "matches": [ "*://seiga.nicovideo.jp/seiga/im*" ],
+   "run_at": "document_start"
+  }, {
+   "js":  [ "content_scripts/watch.js" ],
+   "matches": [ "*://seiga.nicovideo.jp/watch/mg*" ],
+   "run_at": "document_start"
+  }
+ ],
+ "options_page": "options/index.html",
+ "web_accessible_resources": [
+  {
+   "resources": [ "inject.js" ],
+   "matches": [ "*://seiga.nicovideo.jp/*" ]
+  }
+ ]
+}

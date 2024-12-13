@@ -1,0 +1,93 @@
+---
+name: QuickSearchPlus
+version: 1.1.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-11-15T13:56:22.000Z'
+size: 3.48MiB
+languages:
+  - English (UK)
+description: >-
+  My Search Results Extension extracts and renders Google search results in a
+  popup page.
+publisher_account: SaariyS-II Corporation
+extension_website: quicksearchplus.com
+privacy_policy: https://quicksearchplus.com/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "QuickSearchPlus",
+  "description": "My Search Results Extension extracts and renders Google search results in a popup page.",
+  "version": "1.1.6",
+  "oauth2": {
+    "client_id": "755964028322-7amtoisdumllmt7obkkn5gvfs41092rj.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "bookmarks",
+    "identity",
+    "<all_urls>",
+    "https://www.google.com/*",
+    "https://api.openai.com/*",
+    "https://serpapi.com/",
+    "clipboardWrite",
+    "https://api.stripe.com/",
+    "https://api.paystack.co/",
+    "downloads",
+    "https://quicksearchserver-8ee1999baeab.herokuapp.com/*",
+    "https://www.googleapis.com/"
+  ],
+  "host_permissions": [
+    "https://*.google.com/",
+    "https://quicksearchserver-8ee1999baeab.herokuapp.com/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "*://www.bing.com/*",
+        "http://localhost:3000/*"
+      ],
+      "run_at": "document_idle",
+      "js": ["content/script.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_security_policy": {
+    "content_security_policy": "script-src 'self' https://www.google-analytics.com/mp/collect; object-src unsafe-inline 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/popup/popup.js"],
+      "matches": ["<all_urls>"],
+      "js": ["/popup.js"]
+    }
+  ]
+}

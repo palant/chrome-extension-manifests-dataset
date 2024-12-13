@@ -1,0 +1,115 @@
+---
+name: 好录 -- 云录屏&屏幕录像大师
+version: 0.2.1
+category_slug: productivity/workflow
+rating: 4.2
+rating_count: 20
+user_count: 4000
+release_date: '2022-12-26T03:56:14.000Z'
+size: 3.85MiB
+languages:
+  - 中文 (简体)
+description: 一键快速录屏，录完立即生成分享链接，实现高效的异步沟通
+publisher_account: 录屏 屏幕录像
+extension_website: haolu.com
+privacy_policy: https://www.haolu.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_extension_name__",
+    "short_name": "__MSG_extension_short_name__",
+    "version": "0.2.1",
+    "version_name": "0.2.1",
+    "description": "__MSG_extension_description__",
+    "default_locale": "zh_CN",
+    "icons": {
+        "48": "./logo.png",
+        "128": "./logo.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "all_frames": true,
+            "js": ["vendors.bundle.js", "runtime.bundle.js", "frames.bundle.js"]
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content.bundle.js"]
+        }
+    ],
+    "background": {
+        "service_worker": "sw.js",
+        "type": "module"
+    },
+    "options_page": "options.html",
+    "action": {
+        "default_title": "__MSG_browser_action_title__",
+        "default_popup": "popup.html?mode=popup"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "logo.png",
+                "camera-video.html",
+                "get-access.html",
+                "upload.html",
+                "static/*",
+                "fonts/*",
+                "models/*",
+                "tflite/*",
+                "backgrounds/*",
+                "mp4_muxer.wasm",
+                "mp4_muxer.worker.js"
+            ],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "externally_connectable": {
+        "matches": ["*://haolu.com/*", "https://*.haolu.com/*"]
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+V",
+                "mac": "MacCtrl+Command+V"
+            }
+        },
+        "start_or_stop": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+S",
+                "mac": "MacCtrl+Command+S"
+            },
+            "description": "__MSG_shortcuts_start_or_stop__"
+        },
+        "pause_or_resume": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+R",
+                "mac": "MacCtrl+Command+R"
+            },
+            "description": "__MSG_shortcuts_pause_or_resume__"
+        }
+    },
+    "omnibox": { "keyword": "录屏" },
+    "permissions": [
+        "alarms",
+        "tabs",
+        "cookies",
+        "downloads",
+        "desktopCapture",
+        "tabCapture",
+        "notifications",
+        "activeTab",
+        "unlimitedStorage",
+        "contextMenus",
+        "storage",
+        "scripting"
+    ],
+    "host_permissions": ["*://*.haolu.com/*", "<all_urls>"],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; media-src 'self' http: https: data:;"
+    },
+    "offline_enabled": true
+}

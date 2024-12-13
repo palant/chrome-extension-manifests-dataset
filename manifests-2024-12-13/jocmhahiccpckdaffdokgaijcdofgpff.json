@@ -1,0 +1,73 @@
+---
+name: PDFAI.io  - Best AI PDF chrome extension
+version: 0.0.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 307
+release_date: '2024-01-02T06:59:48.000Z'
+size: 236KiB
+languages:
+  - English
+description: >-
+  Chat, summarize, & engage with PDFs effortlessly! AI-powered extension for
+  interactive document interaction.
+publisher: Micro lab
+publisher_account: haitham.mousaa
+publisher_address: |-
+  1 South way
+  64 Manley heights
+  London HA0 0JU
+  GB
+support_website: https://www.pdfai.io/chrome-extension
+privacy_policy: https://www.pdfai.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PDFAI.io  - Best AI PDF chrome extension",
+  "version": "0.0.1",
+  "description": "Chat, summarize, & engage with PDFs effortlessly! AI-powered extension for interactive document interaction.",
+  "permissions": ["storage", "activeTab", "webRequest", "scripting"],
+  "options_ui": {
+    "page": "src/pages/options/index.html"
+  },
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-128.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*.pdf",
+        "file://*/*.pdf",
+        "https://drive.google.com/file/d/*/view*",
+        "https://www.dropbox.com/home?preview=*.pdf*",
+        "https://www.dropbox.com/preview/*.pdf*",
+        "https://www.dropbox.com/scl/fi/*/*.pdf*"
+      ],
+      "js": ["src/pages/content/index.js"],
+      "css": ["contentStyle.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "externally_connectable": {
+    "matches": ["https://www.app.pdfai.io/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/svg/*.svg", "contentStyle.css", "icon-128.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

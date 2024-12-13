@@ -1,0 +1,124 @@
+---
+name: 'Capital One Shopping: Save Now'
+version: 0.1.1246
+category_slug: lifestyle/shopping
+rating: 4.7582733812949645
+rating_count: 15290
+user_count: 10000000
+release_date: '2024-12-10T12:41:23.000Z'
+size: 3.86MiB
+languages:
+  - English (United States)
+description: A simple and free way to help you save online
+publisher_account: Capital One Shopping
+extension_website: capitaloneshopping.com
+support_website: https://capitaloneshopping.com/help
+privacy_policy: https://capitaloneshopping.com/our-terms/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Capital One Shopping: Save Now",
+  "version": "0.1.1246",
+  "manifest_version": 3,
+  "description": "A simple and free way to help you save online",
+  "icons": {
+    "16": "assets/icons/shopping-icon16.png",
+    "48": "assets/icons/shopping-icon48.png",
+    "128": "assets/icons/shopping-icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "permissions": [
+    "alarms",
+    "tabs",
+    "contextMenus",
+    "storage",
+    "cookies",
+    "webRequest",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "chunks/*",
+        "css/*",
+        "global-less/*",
+        "notifications/*",
+        "static/**/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "bg.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "19": "assets/icons/browser/browseraction-off-19.png",
+      "38": "assets/icons/browser/browseraction-off-38.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "notifications/pageView.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.capitaloneshopping.com/*",
+        "*://*.ivf-stage.com/*"
+      ],
+      "js": [
+        "notifications/wikibuy.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.amazon.com/*",
+        "*://*.bestbuy.com/*",
+        "*://*.homedepot.com/*",
+        "*://*.zappos.com/*"
+      ],
+      "js": [
+        "notifications/priceComparison.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "notifications/pie.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://dealfinder.retailmenot.com/experience/app*"
+      ],
+      "all_frames": true,
+      "js": [
+        "notifications/retailMeNot.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

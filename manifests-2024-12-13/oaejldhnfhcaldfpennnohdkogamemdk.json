@@ -1,0 +1,70 @@
+---
+name: DSFulfill Aliexpress Product Importer
+version: '1.0'
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-12-05T06:09:43.000Z'
+size: 100KiB
+languages:
+  - English
+description: Import and sync products from AliExpress to your DSFulfill platform account.
+publisher_account: 通晓网络科技
+extension_website: dsfulfill.com
+privacy_policy: https://dsfulfill.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DSFulfill Aliexpress Product Importer",
+  "version": "1.0",
+  "description": "Import and sync products from AliExpress to your DSFulfill platform account.",
+  "default_locale": "en",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "tabs",
+    "declarativeNetRequest",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": [ "\u003Call_urls>" ],
+  "content_scripts": [
+    {
+      "matches": ["https://app.dsfulfill.com/*"],
+      "js": ["dsfulfill.js"]
+    },
+    {
+      "matches": [ "https://*.aliexpress.com/item/*", "https://*.aliexpress.us/item/*", "https://aliexpress.ru/item/*" ],
+      "js": ["aliexpress.js", "util.js", "storage.js", "button.js", "detailButton.js"],
+      "css": ["styles.css"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.aliexpress.us/w/*", "https://*.aliexpress.com/w/*"],
+      "js": ["aliexpress.js", "button.js", "storage.js", "util.js", "listButton.js"],
+      "css": ["styles.css"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["button.js"],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "dsfulfill.png",
+    "48": "dsfulfill.png",
+    "128": "dsfulfill.png"
+  }
+}

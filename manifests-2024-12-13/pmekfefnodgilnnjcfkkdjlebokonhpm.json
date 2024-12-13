@@ -1,0 +1,142 @@
+---
+name: 'Trend Micro Ad Blocker: Powerful Ad Blocker'
+version: 2.0.2.9
+category_slug: productivity/workflow
+rating: 3.7222222222222223
+rating_count: 18
+user_count: 30000
+release_date: '2024-06-11T07:25:48.000Z'
+size: 4.45MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - português (Brasil)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 한국어
+description: Stop seeing intrusive video, pop-up, interstitial, and banner ads on the web.
+publisher_account: consumer pcc
+support_website: >-
+  http://gr.trendmicro.com/GREntry/NonPayment?Target=AdBlockOneChrome&OS=&SP=&PID=CABO10&FunID=SupportHome&VID=&Locale=EN-US
+privacy_policy: https://www.trendmicro.com/en_us/about/legal/privacy-policy-product.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_extension_name__",
+    "version": "2.0.2.9",
+    "description": "__MSG_extension_description__",
+    "default_locale": "en",
+    "icons": {
+        "48": "./static/images/icon/icon-48.png",
+        "96": "./static/images/icon/icon-96.png",
+        "512": "./static/images/icon/icon-512.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "./static/images/icon/toolbar-icon-16.png",
+            "32": "./static/images/icon/toolbar-icon-32.png"
+        },
+        "default_popup": "./static/page/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "import-content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.twitch.tv/*",
+                "https://*.youtube.com/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "import-advContent.js"
+            ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "enabled": true,
+                "id": "ruleset_1",
+                "path": "rules/ruleset_1.json"
+            },
+            {
+                "enabled": true,
+                "id": "ruleset_2",
+                "path": "rules/ruleset_2.json"
+            },
+            {
+                "enabled": true,
+                "id": "ruleset_3",
+                "path": "rules/ruleset_3.json"
+            },
+            {
+                "enabled": true,
+                "id": "ruleset_4",
+                "path": "rules/ruleset_4.json"
+            }
+        ]
+    },
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "options_page": "./static/page/option.html",
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "*.html",
+                "*_locales/**/*.json",
+                "*static/adScript/*.json",
+                "static/adScript/*.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "use_dynamic_url": true
+        },
+        {
+            "resources": [
+                "chunks/*-*.js",
+                "content.js",
+                "advContent.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "https://*.twitch.tv/*",
+                "https://*.youtube.com/*"
+            ]
+        }
+    ],
+    "permissions": [
+        "activeTab",
+        "storage",
+        "unlimitedStorage",
+        "declarativeNetRequest",
+        "declarativeNetRequestFeedback",
+        "tabs",
+        "webNavigation",
+        "scripting"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ]
+}

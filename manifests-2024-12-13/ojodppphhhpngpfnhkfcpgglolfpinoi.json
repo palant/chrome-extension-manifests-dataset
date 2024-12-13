@@ -1,0 +1,78 @@
+---
+name: Jobbly
+version: 1.1.9
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 162
+release_date: '2024-11-17T07:14:46.000Z'
+size: 5.67MiB
+languages:
+  - English
+description: >-
+  Have you experienced the exhaustion and high-pressure nature of job hunting?
+  Do you often find it challenging to stay organized…
+publisher: Full-Stack-Artisan
+publisher_address: |-
+  Xinyi Rd
+  No. 33, Sec 2
+  Zhongzheng District, Taipei City 10057
+  TW
+extension_website: jobbly.io
+privacy_policy: https://jobbly.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Jobbly",
+  "name": "Jobbly",
+  "manifest_version": 3,
+  "version": "1.1.9",
+  "action": {
+    "default_icon": "v3_extension_logo.png"
+  },
+  "icons": {
+    "16": "v3_extension16_logo.png",
+    "48": "v3_extension48_logo.png",
+    "128": "v3_extension_logo.png"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["inject.js"],
+      "matches": ["https://*/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["contentScripts.js"],
+      "matches": ["https://*/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["appInject.js"],
+      "matches": ["https://*/*"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "v3_extension_logo.png", "injected.js"],
+      "matches": ["https://*/*"]
+    },
+    {
+      "resources": ["index.html", "v3_extension_logo.png", "appInjected.js"],
+      "matches": ["https://*/*"]
+    }    
+  ],
+  "externally_connectable": {
+    "matches": ["*://*/*"]
+  },
+  "permissions": ["storage", "tabs", "webRequest", "sidePanel"],
+  "host_permissions": ["https://*.jobbly.io/", "https://service.jobbly.io/"],
+  "side_panel": {
+    "default_path": "index.html"
+  }
+}

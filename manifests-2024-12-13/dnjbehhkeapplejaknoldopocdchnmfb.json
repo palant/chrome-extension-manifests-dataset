@@ -1,0 +1,121 @@
+---
+name: auteon Browser Plugin
+version: 1.2.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 557
+release_date: '2024-11-22T15:59:59.000Z'
+size: 906KiB
+languages:
+  - Deutsch
+description: >-
+  Vergiss STRG+C & STRG+V! Mit dem auteon Browser Plugin überträgst du
+  Teilenummern aus verschiedenen Katalogen mit nur einem Klick…
+publisher: auteon GmbH
+publisher_account: auteon
+publisher_address: |-
+  Nymphenburger Str. 115
+  München 80636
+  DE
+privacy_policy: https://www.auteon.de/legal/datenschutz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "auteon Browser Plugin",
+  "version": "1.2.3",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "auteon Browser Plugin",
+    "default_popup": "popup/index.html"
+  },
+  "commands": {
+    "tooltip": {
+      "description": "auteon tooltip",
+      "suggested_key": {
+        "default": "Alt+A"
+      }
+    }
+  },
+  "options_page": "options/index.html",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.auteon.com/*",
+        "*://localhost/*",
+        "*://127.0.0.1/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content-scripts/import-main.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "exclude_matches": [
+        "*://*.auteon.com/*",
+        "*://localhost/*",
+        "*://127.0.0.1/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-main.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "import-main.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "/changelog/index.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js"
+      ],
+      "matches": [
+        "*://*.auteon.com/*",
+        "*://localhost/*",
+        "*://127.0.0.1/*",
+        "*://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab"
+  ]
+}

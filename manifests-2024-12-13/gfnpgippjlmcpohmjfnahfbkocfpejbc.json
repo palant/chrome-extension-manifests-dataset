@@ -1,0 +1,102 @@
+---
+name: snow-go-jira
+version: 1.3.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 12
+release_date: '2023-03-05T05:21:07.000Z'
+size: 785KiB
+languages:
+  - English
+description: SNOW GO JIRA Chrome Plugin
+publisher: F. Hoffmann-La Roche Ltd, Group Legal
+publisher_account: service.enterprise.extensions
+publisher_address: |-
+  Grenzacherstrasse 124
+  Basel 4058
+  CH
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "snow-go-jira",
+    "version": "1.3.1",
+    "manifest_version": 3,
+    "description": "SNOW GO JIRA Chrome Plugin",
+    "icons": {
+        "16": "images/icon-16.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+    },
+    "default_locale": "en",
+    "background": {
+        "service_worker": "js/background.bundle.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "permissions": [
+        "activeTab",
+        "contextMenus",
+        "scripting",
+        "storage"
+    ],
+    "options_page": "options.html",
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "css": [
+                "css/contentscript-common.bundle.css"
+            ],
+            "js": [
+                "js/contentscript-common.bundle.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://code.roche.com/*"
+            ],
+            "js": [
+                "js/contentscript-gitlab.bundle.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://jira.roche.com/*",
+                "https://jira.intranet.roche.com/*"
+            ],
+            "css": [
+                "css/contentscript-jira.bundle.css"
+            ],
+            "js": [
+                "js/contentscript-jira.bundle.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://roche.service-now.com/*"
+            ],
+            "css": [
+                "css/contentscript-snow.bundle.css"
+            ],
+            "js": [
+                "js/contentscript-snow.bundle.js"
+            ],
+            "run_at": "document_idle",
+            "all_frames": true
+        }
+    ],
+    "omnibox": {
+        "keyword": "OMNIBOX-KEYWORD"
+    }
+}

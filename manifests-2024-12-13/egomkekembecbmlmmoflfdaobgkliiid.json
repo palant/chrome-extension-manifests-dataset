@@ -1,0 +1,102 @@
+---
+name: Algo Plus
+version: 1.0.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 11
+user_count: 136
+release_date: '2024-08-31T14:54:54.000Z'
+size: 2.91MiB
+languages:
+  - 한국어
+description: 백준 온라인 저지에서 실제 코딩테스트처럼 풀 수 있는 환경과 오답 노트 기능 등 학습에 유용한 기능을 제공합니다.
+publisher_account: algoplus.official
+privacy_policy: https://www.privacypolicies.com/live/0402da73-7c4d-4f22-876f-7d4c559bafdc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name": "Algo Plus",
+    "description": "백준 온라인 저지에서 실제 코딩테스트처럼 풀 수 있는 환경과 오답 노트 기능 등 학습에 유용한 기능을 제공합니다.",
+    "version": "1.0.6",
+
+    "icons": {
+        "16": "asset/icon16.png",
+        "32": "asset/icon32.png",
+        "48": "asset/icon48.png",
+        "128": "asset/icon128.png"
+    },
+
+    "options_ui": {
+        "page": "options.html"
+    },
+
+    "action": {
+        "default_icon": "asset/icon.png",
+        "default_popup": "popup.html"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["https://github.com/*"],
+            "js": ["oauth/util.js", "oauth/authorize.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://www.acmicpc.net/?",
+                "https://www.acmicpc.net/*"
+            ],
+            "js": [
+                "library/sha1.min.js",
+                "library/jszip.min.js",
+                "library/FileSaver.min.js",
+                "js/vendor.js",
+                "js/main.js",
+                "oauth/storage.js",
+                "oauth/authorize.js",
+                "oauth/util.js",
+                "oauth/oauth2.js"
+            ]
+        }
+    ],
+
+    "background": {
+        "service_worker": "js/background.js"
+    },
+
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess"
+    ],
+
+    "host_permissions": [
+        "https://www.acmicpc.net/",
+        "https://github.com/",
+        "https://solved.ac/api/v3/*",
+        "https://snctz97usk.execute-api.ap-northeast-2.amazonaws.com/api/jdoodle"
+    ],
+
+    "web_accessible_resources": [
+        {
+            "resources": ["asset/*.png"],
+            "extension_ids": ["*"],
+            "matches": ["*://*/*"]
+        }
+    ],
+
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    }
+}

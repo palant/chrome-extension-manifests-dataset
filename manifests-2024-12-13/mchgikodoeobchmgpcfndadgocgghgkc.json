@@ -1,0 +1,83 @@
+---
+name: Scholar Spots
+version: '0.7'
+category_slug: productivity/education
+rating: 5
+rating_count: 6
+user_count: 4000
+release_date: '2024-11-25T03:49:32.000Z'
+size: 3.08MiB
+languages:
+  - English
+description: >-
+  Enhances Google Scholar profile pages with additional publication data and
+  cool visualizations.
+publisher_account: nabor.mendonca
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Scholar Spots",
+  "version": "0.7",
+  "description": "Enhances Google Scholar profile pages with additional publication data and cool visualizations.",
+  "icons": {
+    "16": "img/icon-16.png",
+    "32": "img/icon-32.png",
+    "48": "img/icon-48.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://scholar.google.com/citations?*"],
+      "css": [
+        "libs/nouislider-15.8.1/nouislider.min.css",
+        "libs/bootstrap-5.3.3/bootstrap.min.css",
+        "html/style.css"
+      ],
+      "js": [
+        "libs/nouislider-15.8.1/nouislider.min.js",
+        "libs/chart-4.1.1/chart.umd.js",
+        "libs/chartjs-plugin-annotation-2.1.0/chartjs-plugin-annotation.min.js",
+        "libs/bootstrap-5.3.3/bootstrap.bundle.min.js",
+        "libs/compromise-12.3.0/compromise.min.js",
+        "libs/wordcloud2.js",
+        "scripts/scholar-backend.js",
+        "scripts/ui.js",
+        "scripts/wordcloud.js",
+        "scripts/visualizations.js",
+        "scripts/chartdata.js",
+        "scripts/chart.js",
+        "scripts/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*.png",
+        "data/*.json",
+        "html/*.html",
+        "libs/nouislider-15.8.1/nouislider.min.js",
+        "libs/nouislider-15.8.1/nouislider.min.css",
+        "scripts/popup.js"
+      ],
+      "matches": ["https://scholar.google.com/*"]
+    }
+  ],
+  "host_permissions": ["https://scholar.google.com/*"],
+  "permissions": ["storage", "webNavigation", "sidePanel"],
+  "action": {
+    "default_icon": "img/icon-16.png",
+    "default_title": "Spots",
+    "default_popup": "html/popup.html"
+  },
+  "side_panel": {
+    "default_path": "html/sidepanel.html",
+    "default_icon": "img/icon-16.png"
+  }
+}

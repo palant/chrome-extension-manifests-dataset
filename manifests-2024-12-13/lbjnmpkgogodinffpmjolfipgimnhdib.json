@@ -1,0 +1,105 @@
+---
+name: Google MeetでのAI翻訳、文字起こし、議事録作成
+version: 3.21.6
+category_slug: productivity/communication
+rating: 4.5
+rating_count: 2
+user_count: 355
+release_date: '2024-12-06T12:12:52.000Z'
+size: 949KiB
+languages:
+  - 日本語
+description: JotMeは、Google Meetの会議中にAI翻訳と文字起こしを行い、会議後に議事録を作成します。
+publisher: JotMe
+publisher_address: |-
+  7 Bingham Road
+  Heatherside
+  Rochester ME2 4JL
+  GB
+extension_website: jotme.io
+privacy_policy: https://www.jotme.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Google MeetでのAI翻訳、文字起こし、議事録作成",
+  "description": "JotMeは、Google Meetの会議中にAI翻訳と文字起こしを行い、会議後に議事録を作成します。",
+  "version": "3.21.6",
+  "action": {
+    "default_title": "JotMe",
+    "default_icon": "icon128.png",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*",
+        "https://app.jotme.io/*",
+        "https://jotme-web.vercel.app/*",
+        "https://jotme-web-git-develop-jot-me.vercel.app/*"
+      ],
+      "js": [
+        "content-script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "overlay/react/index.js"
+      ],
+      "css": [
+        "overlay/react/index.css"
+      ],
+      "run_at": "document_idle",
+      "exclude_matches": [
+        "https://meet.google.com/"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "resources": [
+        "inject.js",
+        "overlay/react/index.js",
+        "overlay/react/index.css",
+        "overlay/jotme-logo.png",
+        "overlay/minimized-logo.png"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.jotme.io/*",
+        "https://jotme-web.vercel.app/*",
+        "https://jotme-web-git-develop-jot-me.vercel.app/*"
+      ],
+      "resources": [
+        "icon16.png"
+      ]
+    }
+  ]
+}

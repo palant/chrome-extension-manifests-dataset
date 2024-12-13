@@ -1,0 +1,150 @@
+---
+name: Devolutions Workspace
+version: 2024.3.6.0 MV3
+category_slug: productivity/workflow
+rating: 3.75
+rating_count: 32
+user_count: 50000
+release_date: '2024-12-12T14:21:44.000Z'
+size: 10.34MiB
+languages:
+  - Deutsch
+  - English (United States)
+  - Français
+  - Nederlands
+  - Türkçe
+  - español
+  - italiano
+  - magyar
+  - polski
+  - svenska
+  - русский
+  - українська
+  - 中文 (繁體)
+description: >-
+  Form filler that obtains entries from Remote Desktop Manager, Devolutions
+  Server and Devolutions Hub
+publisher: Devolutions
+publisher_address: |-
+  1000 Rue Notre-Dame
+  Lavaltrie, QC J5T 1M1
+  CA
+extension_website: devolutions.net
+support_website: https://devolutions.net/support
+privacy_policy: https://devolutions.net/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Devolutions Workspace",
+  "short_name": "Workspace",
+  "default_locale": "en_US",
+  "description": "__MSG_DWLDescription__",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAru5UDnxOma2l02Bay+ES9CKgvmDxjjSrRqhwOUWYU7ukocxQZ1TIZtJt1r931c37FKmTQfdss2N2c5rZi2pCUgItVKl4pT3C5aixNhzPkA4kQzAR+EYP9lSpeTCn0ShtwA71FQYK1xxa4v3MbOWaWOQ3wDwymJf74Mmtz0BFWwLUXmFrXn8Nk/m5F+2EPCY0okLf/gZfLnQoZUUtWaaFTQJlkoVWDGlZhjcJLTJKOmnGkDvp6z1+OR1+LUDY/iNm/2JdwOKB9GatGR9WwUIvQcgEslXalvZPB7xxCO/FHLBMNYPUNG1UQIXahQ3yE3ZBlRMv6ybO5lwnUfEGOQuHAQIDAQAB",
+  "version": "2024.3.6.0",
+  "version_name": "2024.3.6.0 MV3",
+  "minimum_chrome_version": "110",
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_title": "Devolutions Workspace",
+    "default_icon": {
+      "16": "assets/workspace/ws-16px-c.png",
+      "32": "assets/workspace/ws-32px-c.png"
+    }
+  },
+  "icons": {
+    "16": "assets/workspace/ws-16px-c.png",
+    "32": "assets/workspace/ws-32px-c.png",
+    "128": "assets/workspace/ws-128px-c.png"
+  },
+  "background": {
+    "service_worker": "background/background.bundle.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "contextMenus",
+    "nativeMessaging",
+    "unlimitedStorage",
+    "cookies",
+    "scripting",
+    "offscreen",
+    "clipboardWrite",
+    "idle"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ],
+      "js": [
+        "content-script/autofill.js",
+        "content-script/autofiller.js",
+        "content-script/save-dialog-notification.js",
+        "content-script/credentials-container.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file://*/*"
+      ],
+      "js": [
+        "content-script/dwlpkm.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "webui/index.html",
+      "content-script/assets/*",
+      "content-script/dwlpkm.js"
+    ],
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
+  }
+  ],
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "commands": {
+    "AutoFill": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "__MSG_DWLAutofillCommandDescription__"
+    },
+    "Refresh": {
+      "suggested_key": {
+        "default": "Alt+L",
+        "mac": "Command+Shift+L"
+      },
+      "description": "Refresh"
+    },
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Z",
+        "mac": "Command+Shift+Z"
+      }
+    }
+  }
+}

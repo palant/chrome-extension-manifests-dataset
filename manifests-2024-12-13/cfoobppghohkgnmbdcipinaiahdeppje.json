@@ -1,0 +1,87 @@
+---
+name: CastLists by Casting Workbook
+version: 1.0.51
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 108
+release_date: '2024-10-25T18:52:51.000Z'
+size: 6.88MiB
+languages:
+  - English (United States)
+description: CastLists Chrome Extension
+publisher: Casting Workbook
+publisher_account: Casting Workbook Inc.
+publisher_address: |-
+  Leg in Boot Square
+  Vancouver, BC V5Z 4B3
+  CA
+extension_website: castingworkbook.com
+support_website: https://www.castingworkbook.com/helpform/cwb_help_form.asp
+privacy_policy: https://www.castingworkbook.com/privacy.asp
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "CastLists by Casting Workbook",
+  "short_name": "CastLists",
+  "description": "CastLists Chrome Extension",
+  "version": "1.0.51",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": "extension-logo.png",
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "extension-logo.png",
+    "48": "extension-logo.png",
+    "128": "extension-logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.imdb.com/name/*"],
+      "js": ["./static/js/content.js", "./frameInject.js"]
+    },
+    {
+      "matches": ["https://*.imdb.com/find*"],
+      "js": ["./static/js/newActor.js", "./frameInject.js"]
+    },
+    {
+      "matches": ["https://pro.imdb.com/list/ls*"],
+      "js": ["./static/js/importList.js", "./frameInject.js"]
+    },
+    {
+      "matches": ["https://pro.imdb.com/list/new*"],
+      "js": ["./static/js/importList.js", "./frameInject.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_page": "script-src 'self' 'unsafe-eval'; object-src 'self'"
+  },
+  "host_permissions": [
+    "https://*.imdb.com/name/*",
+    "https://*.imdb.com/find*",
+    "*://cwb-int-api.ngrok.io/*",
+    "*://*.thecwbint.com/*",
+    "*://castlists.thecwbint.com/*",
+    "*://*.castingworkbook.com/*",
+    "*://castlists.castingworkbook.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "button-logo.svg",
+        "favicon.svg",
+        "images/checkmark_circle.svg",
+        "index.html",
+        "success-icon-gray.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["storage", "activeTab", "tabs", "scripting"]
+}

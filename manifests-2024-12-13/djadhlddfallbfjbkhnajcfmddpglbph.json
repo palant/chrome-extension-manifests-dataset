@@ -1,0 +1,113 @@
+---
+name: UFE Chrome Extension
+version: 0.1.5.1
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-10-08T06:50:52.000Z'
+size: 1.02MiB
+languages:
+  - English
+description: Fix your inbox and bring sanity back to your email.
+publisher_account: steven.a.irby
+publisher_address: |-
+  645 Music Avenue
+  APT 101
+  Clovis, CA 93612
+  US
+extension_website: ufe.email
+support_website: https://ufe.email/contact
+privacy_policy: >-
+  https://app.termly.io/policy-viewer/policy.html?policyUUID=8e337ea9-f9a7-4495-972b-2dbb595e221a
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "UFE Chrome Extension ",
+  "version": "0.1.5.1",
+  "description": "Fix your inbox and bring sanity back to your email.",
+  "permissions": [
+    "storage",
+    "identity",
+    "alarms",
+    "tabs"
+  ],
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "987417961455-tud6kqihi201nskdnhrohk5n9jr4s2c7.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/gmail.modify",
+      "https://www.googleapis.com/auth/gmail.settings.basic",
+      "https://www.googleapis.com/auth/gmail.send",
+      "https://mail.google.com/",
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "34": "icon-34.png",
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://ufe.email/*"
+      ],
+      "js": [
+        "assets/js/gmailJsLoader.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://ufe.email/*"
+      ],
+      "js": [
+        "src/pages/contentInjected/index.js"
+      ],
+      "css": [
+        "assets/css/contentStyle1728349639222.chunk.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://ufe.email/*"
+      ],
+      "js": [
+        "src/pages/contentUI/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/js/*.js.map",
+        "assets/css/*.css",
+        "icon-128.png",
+        "icon-34.png",
+        "assets/img/*.gif",
+        "assets/img/*.png",
+        "assets/img/*.jpg"
+      ],
+      "matches": [
+        "https://mail.google.com/*",
+        "https://ufe.email/*"
+      ]
+    }
+  ]
+}

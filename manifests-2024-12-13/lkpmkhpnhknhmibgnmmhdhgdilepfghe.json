@@ -1,0 +1,73 @@
+---
+name: Prax wallet
+version: 14.3.0
+category_slug: productivity/tools
+rating: 3.1153846153846154
+rating_count: 26
+user_count: 20000
+release_date: '2024-12-11T10:02:08.000Z'
+size: 95.35MiB
+languages:
+  - English
+description: For use in interacting with the Penumbra blockchain
+publisher: Penumbra Labs
+publisher_address: |-
+  2261 Market St #319
+  San Francisco, CA 94114-1612
+  US
+privacy_policy: https://praxwallet.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Prax wallet",
+  "version": "14.3.0",
+  "description": "For use in interacting with the Penumbra blockchain",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvnucOJi878TGZYnTNTrvXd9krAcpSDR/EgHcQhvjNZrKfRRsKA9O0DnbyM492c3hiicYPevRPLPoKsLgVghGDYPr8eNO7ee165keD5XLxq0wpWu14gHEPdQSRNZPLeawLp4s/rUwtzMcxhVIUYYaa2xZri4Tqx9wpR7YR1mQTAL8UsdjyitrnzTM20ciKXq1pd82MU74YaZzrcQCOmcjJtjHFdMEAYme+LuZuEugAgef9RiE/8kLQ6T7W9feYfQOky1OPjBkflpRXRgW6cACdl+MeYhKJCOHijglFsPOXX6AvnoJSeAJYRXOMVJi0ejLKEcrLpaeHgh+1WXUvc5G4wIDAQAB",
+  "minimum_chrome_version": "119",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "favicon/icon16.png",
+    "32": "favicon/icon32.png",
+    "48": "favicon/icon48.png",
+    "128": "favicon/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://localhost/*"],
+      "js": ["injected-connection-port.js", "injected-request-listener.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://localhost/*"],
+      "js": ["injected-penumbra-global.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "options_ui": {
+    "page": "page.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["manifest.json", "favicon/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["storage", "unlimitedStorage", "offscreen"],
+  "host_permissions": ["<all_urls>"],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "content_security_policy": {
+    "extension_pages": "object-src 'self'; script-src 'self' 'wasm-unsafe-eval'"
+  }
+}

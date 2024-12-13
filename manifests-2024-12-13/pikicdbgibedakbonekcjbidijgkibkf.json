@@ -1,0 +1,173 @@
+---
+name: Dooly
+version: 4.0.21
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 2000
+release_date: '2024-11-25T10:07:48.000Z'
+size: 120KiB
+languages:
+  - English
+description: Quickly access Dooly from where you work.
+publisher: Dooly Research Ltd.
+publisher_account: Dooly
+publisher_address: |-
+  5187 Cliffridge Avenue
+  North Vancouver, BC V7R 3V2
+  CA
+extension_website: dooly.ai
+support_website: https://support.mediafly.com/
+privacy_policy: https://www.dooly.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dooly",
+  "description": "Quickly access Dooly from where you work.",
+  "version": "4.0.21",
+  "action": {
+    "default_title": "Dooly",
+    "default_icon": "icon32.png"
+  },
+  "background": {
+    "service_worker": "background-scripts/index.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["cleanslate.css", "content-scripts/*", "html/*", "css/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "declarativeNetRequest",
+    "scripting",
+    "storage",
+    "system.display"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "headers",
+        "enabled": true,
+        "path": "rules/headers.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "https://*.dooly.ai/*",
+    "https://*.dooly-staging.com/*",
+    "https://*.dooly-testing.com/*"
+  ],
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "commands": {
+    "doolybar": {
+      "suggested_key": {
+        "default": "Ctrl+J",
+        "mac": "Command+J"
+      },
+      "description": "Open \"Doolybar\" on the current page."
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.dooly.ai/doolybar*",
+        "https://*.dooly-staging.com/doolybar*",
+        "https://*.dooly-testing.com/doolybar*"
+      ],
+      "js": ["content-scripts/doolybar/doolyframe.js"],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.dooly.ai/*",
+        "https://*.dooly-staging.com/*",
+        "https://*.dooly-testing.com/*"
+      ],
+      "js": [
+        "content-scripts/dooly/index.js",
+        "content-scripts/doolybar/dooly.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://calendar.google.com/*"],
+      "js": ["content-scripts/google-calendar/index.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://outlook.live.com/calendar/*"],
+      "js": ["content-scripts/outlook-calendar/index.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://outlook.office.com/*"],
+      "js": ["content-scripts/outlook-calendar/index.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://outlook.office365.com/*"],
+      "js": ["content-scripts/outlook-calendar/index.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://drive.google.com/*"],
+      "js": ["content-scripts/google-drive/index.js"]
+    },
+    {
+      "matches": ["https://*.salesforce.com/*"],
+      "js": ["content-scripts/salesforce/index.js"]
+    },
+    {
+      "matches": ["https://*.lightning.force.com/*"],
+      "js": ["content-scripts/salesforce-lightning/index.js"]
+    },
+    {
+      "matches": ["https://*.outreach.io/*"],
+      "js": ["content-scripts/outreach/index.js"]
+    },
+    {
+      "matches": ["https://app.salesloft.com/*"],
+      "js": ["content-scripts/salesloft/index.js"]
+    },
+    {
+      "matches": ["https://*.getguru.com/*"],
+      "js": ["content-scripts/guru/script-injector.js"]
+    },
+    {
+      "matches": ["https://*.gong.io/*"],
+      "js": ["content-scripts/gong/index.js"]
+    },
+    {
+      "matches": ["https://*.linkedin.com/*"],
+      "js": ["content-scripts/linkedin/index.js"]
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["content-scripts/gmail/index.js"]
+    },
+    {
+      "matches": ["https://outlook.live.com/mail/*"],
+      "js": ["content-scripts/outlook-mail/index.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_globs": [
+        "https://*.dooly.ai/*",
+        "https://*.dooly-staging.com/*",
+        "https://*.dooly-testing.com/*"
+      ],
+      "js": ["content-scripts/doolybar/external.js"]
+    }
+  ]
+}

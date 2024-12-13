@@ -1,0 +1,115 @@
+---
+name: Syft
+version: 0.1.14.5
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 17
+release_date: '2024-04-10T05:35:43.000Z'
+size: 1.85MiB
+languages:
+  - English
+description: >-
+  Syft is a CV screener that puts you in control. Powered by OpenAI, it saves
+  you time, money, and effort by automagically finding…
+publisher_account: syft-ai
+extension_website: syft.cc
+support_website: https://www.syft.cc
+privacy_policy: https://www.syft.cc/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Syft",
+  "version": "0.1.14.5",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Syft login",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://hire.sandbox.lever.co/*",
+        "https://hire.lever.co/*",
+        "https://*.greenhouse.io/*",
+        "https://pdf-viewer.cdn.greenhouse.io/*",
+        "https://grnhse-dochouse-prod.s3.amazonaws.com/*"
+      ],
+      "include_globs": [
+        "*candidates*",
+        "*sdash*",
+        "*people*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content-scripts/import-main.js"
+      ],
+      "css": [
+        "content-scripts/main.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/icon128.png",
+        "assets/logo.png",
+        "assets/logo.svg",
+        "assets/logo_with_text.svg",
+        "assets/logo-with-white-dots.svg",
+        "assets/fonts/Poppins-Bold.ttf",
+        "assets/fonts/Poppins-Regular.ttf",
+        "assets/GREENHOUSE_ICON_GREEN.svg",
+        "assets/GREENHOUSE_ICON_WHITE.svg",
+        "assets/fonts/Poppins_1/*.*"
+      ],
+      "matches": [
+        "https://hire.sandbox.lever.co/*",
+        "https://hire.lever.co/*",
+        "https://*.greenhouse.io/*",
+        "https://pdf-viewer.cdn.greenhouse.io/*",
+        "https://grnhse-dochouse-prod.s3.amazonaws.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js"
+      ],
+      "matches": [
+        "https://hire.sandbox.lever.co/*",
+        "https://hire.lever.co/*",
+        "https://*.greenhouse.io/*",
+        "https://pdf-viewer.cdn.greenhouse.io/*",
+        "https://grnhse-dochouse-prod.s3.amazonaws.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "storage"
+  ],
+  "oauth2": {
+    "client_id": "830756078157-ub4f9eqlr3c4di8qcashvoifrde85t0l.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  }
+}

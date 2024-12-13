@@ -1,0 +1,77 @@
+---
+name: Clockk
+version: 3.0.10
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 830
+release_date: '2024-08-24T10:04:26.000Z'
+size: 5.85MiB
+languages:
+  - English
+description: >-
+  Gather productivity data for your Clockk automated timesheets with Clockk's
+  official web browser extension.
+publisher: Clockk.com Inc.
+publisher_address: |-
+  5954 Spring Garden Rd Suite 201
+  Halifax, NS B3H 1Y7
+  CA
+privacy_policy: https://clockk.com/our-privacy-promise
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Clockk",
+  "author": "Clockk.com Inc.",
+  "short_name": "Clockk",
+  "description": "Gather productivity data for your Clockk automated timesheets with Clockk's official web browser extension.",
+  "manifest_version": 3,
+  "version": "3.0.10",
+  "icons": {
+    "32": "icons/icon_32.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "main.js",
+    "scripts": ["main.js"],
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["injections/page-reporter.js"]
+    },
+    {
+      "matches": ["https://*.clockk.com/*"],
+      "js": ["injections/get-token.js"]
+    }
+  ],
+  "action": {
+    "default_title": "Clockk",
+    "default_popup": "./src/index.html",
+    "default_icon": {
+      "32": "icons/icon_32.png",
+      "128": "icons/icon_128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/*", "injections/page-reporter.js", "libs/*"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["injections/get-token.js"],
+      "matches": ["https://app.clockk.com/*"]
+    }
+  ],
+  "sandbox": {
+    "pages": ["index.html"]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self';"
+  },
+  "permissions": ["tabs", "storage", "activeTab", "scripting", "alarms"],
+  "host_permissions": ["https://*/*", "http://*/*"]
+}

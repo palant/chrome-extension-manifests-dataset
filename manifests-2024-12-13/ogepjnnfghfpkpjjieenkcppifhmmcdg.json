@@ -1,0 +1,198 @@
+---
+name: LoadHunter
+version: 0.5.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 22
+user_count: 876
+release_date: '2024-12-06T09:41:07.000Z'
+size: 689KiB
+languages:
+  - English
+description: Search loads with efficiency and speed you never had before.
+publisher: 5Q Logistics LLC
+publisher_address: |-
+  942 NE 27th Ave
+  Hallandale Beach, FL 33009-2949
+  US
+extension_website: loadhunter.org
+support_website: https://loadhunter.org/support.html
+privacy_policy: https://loadhunter.org/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LoadHunter",
+  "description": "Search loads with efficiency and speed you never had before.",
+  "version": "0.5.0",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "16": "icons/16.png",
+      "32": "icons/32.png",
+      "48": "icons/48.png"
+    },
+    "default_popup": "src/entries/popup/index.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "src/entries/content-script/rtspro/rtspro.js"
+      ],
+      "matches": [
+        "https://rtspro.com/credit/search*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "src/entries/content-script/panel/main.js"
+      ],
+      "matches": [
+        "http://localhost:3000/*",
+        "https://app.loadhunter.io/*",
+        "https://app.loadhunter.org/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://one.dat.com/*",
+        "https://truckersedge.dat.com/*",
+        "https://power-mobile.dat.com/*",
+        "https://main.truckstop.com/*",
+        "https://power.dat.com/*",
+        "https://carrier.superdispatch.com/*",
+        "https://app.centraldispatch.com/*",
+        "https://app.trucksmarter.com/*"
+      ],
+      "js": [
+        "content-scripts.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "32": "icons/32.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/**.*",
+        "images/**.*",
+        "script-injections/loadListener.js",
+        "script-injections/darkreader.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "src/entries/content-script/rtspro/rtspro.js"
+      ],
+      "matches": [
+        "https://rtspro.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "loadhunter-css/one-dat.css",
+        "loadhunter-css/reset.css",
+        "loadhunter-css/react.css"
+      ],
+      "matches": [
+        "https://one.dat.com/*",
+        "https://truckersedge.dat.com/*",
+        "https://power-mobile.dat.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "loadhunter-css/power-dat.css",
+        "loadhunter-css/reset.css",
+        "loadhunter-css/react.css",
+        "lib/leaflet.css"
+      ],
+      "matches": [
+        "https://power.dat.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "loadhunter-css/truckstop.css",
+        "loadhunter-css/reset.css",
+        "loadhunter-css/react.css"
+      ],
+      "matches": [
+        "https://main.truckstop.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "loadhunter-css/super-dispatch.css",
+        "loadhunter-css/reset.css",
+        "loadhunter-css/react.css",
+        "lib/leaflet.css"
+      ],
+      "matches": [
+        "https://carrier.superdispatch.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "loadhunter-css/central-dispatch.css",
+        "loadhunter-css/reset.css",
+        "loadhunter-css/react.css"
+      ],
+      "matches": [
+        "https://app.centraldispatch.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "lib/leaflet.css",
+        "loadhunter-css/central-dispatch.css",
+        "loadhunter-css/react.css",
+        "loadhunter-css/reset.css",
+        "loadhunter-css/truck-smarter.css"
+      ],
+      "matches": [
+        "https://app.trucksmarter.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "assets/content-scripts-k90e79ed.js",
+        "assets/apiRequest-BgX1Vmee.js",
+        "assets/content-scripts-CzASBp3b.css"
+      ],
+      "matches": [
+        "https://one.dat.com/*",
+        "https://truckersedge.dat.com/*",
+        "https://power-mobile.dat.com/*",
+        "https://main.truckstop.com/*",
+        "https://power.dat.com/*",
+        "https://carrier.superdispatch.com/*",
+        "https://app.centraldispatch.com/*",
+        "https://app.trucksmarter.com/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

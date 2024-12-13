@@ -1,0 +1,101 @@
+---
+name: Call Contact v2
+version: 0.3.3
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-11-21T11:34:31.000Z'
+size: 843KiB
+languages:
+  - Français
+description: Start SmartCC and integrate with CRM tools
+publisher: SFR Business
+publisher_address: |-
+  16 rue du Général Alain de Boissieu
+  PARIS 75015
+  FR
+privacy_policy: >-
+  https://www.sfrbusiness.fr/sfr-politique-de-protection-des-donnees-personnelles.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Call Contact v2",
+    "version": "0.3.3",
+    "description": "Start SmartCC and integrate with CRM tools",
+    "icons": {
+      "16": "/assets/icons/Logo_SFR_RVB_16.png",
+      "24": "/assets/icons/Logo_SFR_RVB_24.png",
+      "32": "/assets/icons/Logo_SFR_RVB_32.png",
+      "48": "/assets/icons/Logo_SFR_RVB_48.png",
+      "128": "/assets/icons/Logo_SFR_RVB_128.png"
+    },
+    "permissions": [
+      "sidePanel",
+      "activeTab",
+      "storage",
+      "contextMenus",
+      "cookies"
+    ],
+    "host_permissions": [
+      "*://*.gnp.les800/*"
+    ],
+    "action": {
+        "default_title": "Unified Agent Panel",
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "/assets/icons/Logo_SFR_RVB_16.png",
+            "24": "/assets/icons/Logo_SFR_RVB_24.png",
+            "32": "/assets/icons/Logo_SFR_RVB_32.png",
+            "48": "/assets/icons/Logo_SFR_RVB_48.png",
+            "128": "/assets/icons/Logo_SFR_RVB_128.png"
+          }  
+    },
+
+    "background": {
+      "service_worker": "background/background.js"
+    },
+
+    "side_panel": {
+      "browser_style": false,
+      "default_title": "Unified Agent Panel",
+      "default_path": "sidebar/sidebar.html"
+    },
+
+    "content_scripts": [
+        {
+        "matches": ["https://*/*", "http://*/*" ],
+        "css": ["crm/content.css"],
+        "js":  ["lib/browser-polyfill.js", "config.js", "crm/content.js", "tel.js"],
+        "all_frames": true
+      },    
+      {
+            "matches": ["https://*.zendesk.com/*"],
+          "css": ["crm/content.css", "crm/zendesk.css"],
+          "js":  ["lib/browser-polyfill.js", "config.js", "crm/content.js", "crm/zendesk.js"]
+        },
+        {
+          "matches": ["https://*.service-now.com/*"],
+          "css": ["crm/content.css", "crm/serviceNow.css"],
+          "js": ["lib/browser-polyfill.js", "config.js", "crm/content.js", "crm/serviceNow.js"],
+          "all_frames": true
+        },
+        {
+          "matches": ["https://*.salesforce.com/*", "https://*.lightning.force.com/*"],
+          "css": ["crm/content.css"],
+          "js":  ["lib/browser-polyfill.js", "config.js", "crm/content.js", "crm/salesforce.js"]
+        },
+        {
+            "matches": ["https://dynamics.microsoft.com/*"],
+        "css": ["crm/content.css"]
+        }
+    ],
+
+    "web_accessible_resources": [{ 
+      "resources": ["icons/phone.png"],
+      "matches": ["<all_urls>"]
+    }]
+}

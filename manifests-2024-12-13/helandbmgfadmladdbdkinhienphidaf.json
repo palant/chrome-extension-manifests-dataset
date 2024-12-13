@@ -1,0 +1,74 @@
+---
+name: PowerSchool Plus
+version: 2.1.0
+category_slug: productivity/education
+rating: 3
+rating_count: 1
+user_count: 280
+release_date: '2024-12-03T10:51:15.000Z'
+size: 199KiB
+languages:
+  - English
+description: Helpful grade information.
+publisher_account: Tiskua
+privacy_policy: https://powerschoolplus.netlify.app/ppce_privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "PowerSchool Plus",
+  "version": "2.1.0",
+  "manifest_version": 3,
+  "description": "Helpful grade information.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "identity",
+    "identity.email"
+  ],
+  "icons": {
+    "16": "assets/logo.png",
+    "32": "assets/logo.png",
+    "48": "assets/logo.png",
+    "128": "assets/logo.png"
+  },
+
+  "externally_connectable": {
+    "matches": ["https://*.powerschool.hermitagesd.net/*"]
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.powerschool.hermitagesd.net/guardian/home.html*"],
+      "js": ["content-scripts/contentScript.js"]
+    },
+    {
+      "matches": ["https://powerschool.hermitagesd.net/guardian/scores.html*"],
+      "js": ["content-scripts/classContentScript.js"]
+    },
+    {
+      "matches": ["https://*.powerschool.hermitagesd.net/*"],
+      "js": ["content-scripts/globalContentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "firebase-sdk/firebase-app.js",
+        "firebase-sdk/firebase-firestore.js",
+        "firebase-sdk/firebase-database.js",
+        "ps.css"
+      ],
+      "matches": ["https://*.powerschool.hermitagesd.net/*"]
+    }
+  ],
+  "action": {
+    "default_title": "PowerSchool Plus V2",
+    "default_popup": "popup/popup.html"
+  }
+}

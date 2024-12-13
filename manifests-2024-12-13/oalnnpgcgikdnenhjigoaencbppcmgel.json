@@ -1,0 +1,124 @@
+---
+name: LexiFlow
+version: 1.2.2
+category_slug: make_chrome_yours/accessibility
+rating: 2.7777777777777777
+rating_count: 9
+user_count: 100000
+release_date: '2024-12-11T14:33:31.000Z'
+size: 3.11MiB
+languages:
+  - English
+  - svenska
+description: >-
+  LexiFlow is a browser extension that offers a simple and user-friendly
+  literacy toolbar.
+publisher: Oribi Texthelp AB
+publisher_account: oribi-web-store-publishers
+publisher_address: |-
+  Lilla Varvsgatan 14
+  Malmö 211 15
+  SE
+extension_website: oribi.se
+support_website: https://www.oribi.se/support/lexiflow-support/
+privacy_policy: https://www.oribi.se/policy/gdpr
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "minimum_chrome_version": "109",
+  "name": "LexiFlow",
+  "description": "__MSG_appDesc__",
+  "version": "1.2.2",
+  "version_name": "1.2.2",
+  "default_locale": "en",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "icons": {
+    "16": "assets/icon-16.png",
+    "24": "assets/icon-24.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "64": "assets/icon-64.png",
+    "128": "assets/icon-128.png"
+  },
+  "action": {
+    "default_popup": "action-popup.html",
+    "default_icon": {
+      "16": "assets/icon-16.png",
+      "24": "assets/icon-24.png",
+      "32": "assets/icon-32.png",
+      "48": "assets/icon-48.png",
+      "64": "assets/icon-64.png",
+      "128": "assets/icon-128.png"
+    }
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "js": [
+        "custom-elements-polyfill.js",
+        "custom-elements/index.js",
+        "content-script.js"
+      ],
+      "css": [
+        "content-script.css"
+      ],
+      "exclude_matches": [
+        "https://dictionary.oribi.se/*"
+      ],
+      "exclude_globs": []
+    }
+  ],
+  "permissions": [
+    "storage",
+    "identity",
+    "scripting",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://idp.texthelp.com/*",
+    "https://lexiflow.texthelp.com/*",
+    "https://dictionary.oribi.se/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "google-docs-integration.js",
+        "wasm/nlp.js",
+        "wasm/nlp.wasm"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "views/*.html",
+        "assets/fonts/**/*.woff",
+        "assets/fonts/**/*.woff2"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "commands": {
+    "read-selection": {
+      "suggested_key": "Alt+Shift+P",
+      "description": "Read Aloud the selected text"
+    }
+  }
+}

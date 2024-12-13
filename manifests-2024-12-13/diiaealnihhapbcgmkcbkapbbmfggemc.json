@@ -1,0 +1,74 @@
+---
+name: GA4 Fixer
+version: 2.1.11
+category_slug: productivity/developer
+rating: 4.944444444444445
+rating_count: 18
+user_count: 6000
+release_date: '2024-11-24T01:34:25.000Z'
+size: 3.3MiB
+languages:
+  - English (United States)
+description: >-
+  Patch holes in GA4 for better reporting. Adds '% of Total' in reports, 'Click
+  to Copy' values, one-click report building and more.
+publisher: AlwaysRank, LLC
+publisher_account: Fixer Five
+publisher_address: |-
+  6801 E Center Ave
+  Denver, CO 80224-1503
+  US
+extension_website: ga4tools.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GA4 Fixer",
+  "version": "2.1.11",
+  "description": "Patch holes in GA4 for better reporting. Adds '% of Total' in reports, 'Click to Copy' values, one-click report building and more.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["activeTab", "storage", "scripting"],
+  "host_permissions": [
+    "https://*.google.com/*",
+    "https://*.google-analytics.com/*",    
+    "https://tagmanager.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/ga4fixer16.png",
+      "48": "images/ga4fixer48.png",
+      "128": "images/ga4fixer128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.analytics.google.com/*","https://tagmanager.google.com/*"],
+      "css": ["style.css"],
+      "js": ["content-script.js",
+       "copyValues.js",
+        "percentTotal.js",
+        "stickyHeader.js",
+        "smallUpdates/editInsightsLink.js",
+      "smallUpdates/tooltipOnDimensionsExplore.js",
+     "ga4-announcements.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_page": "options.html",
+  "icons": {
+    "16": "images/ga4fixer16.png",
+    "48": "images/ga4fixer48.png",
+    "128": "images/ga4fixer128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "images/add-to-tag.png" ],
+      "matches": [ "https://tagmanager.google.com/*" ]
+    }
+  ]
+}

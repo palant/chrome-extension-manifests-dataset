@@ -1,0 +1,87 @@
+---
+name: Cimple extension
+version: 0.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2022-11-09T06:41:09.000Z'
+size: 781KiB
+languages:
+  - English (United States)
+description: Easily import profiles from linkedin in to Cimple
+publisher: kenweego
+publisher_account: dev
+publisher_address: |-
+  128 Rue La Boétie
+  Paris 75008
+  FR
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Cimple extension",
+  "version": "0.0.1",
+  "description": "Easily import profiles from linkedin in to Cimple",
+  "homepage_url": "https://so.cimple.to",
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/favicon.png",
+      "48": "assets/icons/favicon.png",
+      "128": "assets/icons/favicon.png"
+    },
+    "default_title": "Settings",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icons/favicon.png",
+    "48": "assets/icons/favicon.png",
+    "128": "assets/icons/favicon.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.gmail.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content-scripts/import-main.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content-scripts/import-main.js"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*",
+    "file://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js"
+      ],
+      "matches": [
+        "https://*.gmail.com/*",
+        "https://*.linkedin.com/*",
+        "https://*/*",
+        "http://*/*",
+        "file://*/*"
+      ]
+    }
+  ]
+}

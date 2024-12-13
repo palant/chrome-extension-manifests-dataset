@@ -1,0 +1,115 @@
+---
+name: 宁盾Web连接器
+version: '1.4'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 9
+release_date: '2023-06-27T06:37:34.000Z'
+size: 291KiB
+languages:
+  - 中文 (简体)
+description: 宁盾Web连接器, 匹配登录页面, 代填用户名密码, SSO
+publisher_account: dev.ningdun
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "Shanghai Nington Tech Co.,Ltd.",
+  "name": "宁盾Web连接器",
+  "version": "1.4",
+  "description": "宁盾Web连接器, 匹配登录页面, 代填用户名密码, SSO",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/uc/main/release/html/index.html*",
+        "https://*/uc/main/release/html/index.html*",
+        "http://*/uc/main/debug/html/index.html*",
+        "https://*/uc/main/debug/html/index.html*",
+        "http://*/ids/uc/release/html/index.html*",
+        "https://*/ids/uc/release/html/index.html*",
+        "http://*/ids/uc/debug/html/index.html*",
+        "https://*/ids/uc/debug/html/index.html*"
+      ],
+      "js": [
+        "static/js/jquery.js",
+        "static/js/uchomepage.js"
+      ],
+      "run_at":"document_start"
+    },
+    {
+      "matches": [
+        "http://*/uc/api/main/user/app/signOn?*",
+        "https://*/uc/api/main/user/app/signOn?*",
+        "http://*/ids/api/uc/app/signOn?*",
+        "https://*/ids/api/uc/app/signOn?*"
+      ],
+      "js": [
+        "static/js/jquery.js",
+        "static/js/ucmiddlepage.js"
+      ],
+      "run_at":"document_end"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "static/js/jquery.js",
+        "static/js/urloginpage.js"
+      ],
+      "run_at":"document_end"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "static/css/content.css"
+      ],
+      "js": [
+        "static/js/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "declarativeContent"
+  ],
+  "host_permissions": [],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/images/app.png"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "/images/icon_16.png",
+      "32": "/images/icon_32.png",
+      "48": "/images/icon_48.png",
+      "128": "/images/icon_128.png"
+    },
+    "default_title": "宁盾Web连接器"
+  },
+  "icons": {
+    "16": "/images/icon_16.png",
+    "32": "/images/icon_32.png",
+    "48": "/images/icon_48.png",
+    "128": "/images/icon_128.png"
+  }
+}

@@ -1,0 +1,81 @@
+---
+name: Title Case Converter
+version: 4.0.1
+category_slug: productivity/tools
+rating: 4
+rating_count: 4
+user_count: 25
+release_date: '2024-11-01T10:08:55.000Z'
+size: 73.96KiB
+languages:
+  - English (United States)
+description: >-
+  Intelligent title case converter with USD money formatting and OCR
+  capabilities
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Title Case Converter",
+  "version": "4.0.1",
+  "description": "Intelligent title case converter with USD money formatting and OCR capabilities",
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "storage",
+    "scripting",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "commands": {
+    "convert-to-title": {
+      "suggested_key": {
+        "default": "Ctrl+G"
+      },
+      "description": "Convert selected text to title case (Default shortcut: Ctrl+G)"
+    },
+    "convert-to-usd": {
+      "suggested_key": {
+        "default": "Ctrl+E"
+      },
+      "description": "Convert selected number to USD format (Default shortcut: Ctrl+E)"
+    },
+    "perform-ocr": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+O"
+      },
+      "description": "Perform OCR on selected area (Default shortcut: Ctrl+Shift+O)"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "html2canvas.min.js",
+      "tesseract.min.js",
+      "content.js"
+    ],
+    "run_at": "document_end"
+  }],
+  "web_accessible_resources": [{
+    "resources": [
+      "worker.min.js",
+      "*.traineddata.gz",
+      "html2canvas.min.js",
+      "tesseract.min.js"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "icons": {
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "options_page": "options.html"
+}

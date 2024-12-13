@@ -1,0 +1,114 @@
+---
+name: MemoryPlugin - Long-Term Memory for AI Chats
+version: 1.8.4
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 145
+release_date: '2024-12-12T16:01:23.000Z'
+size: 559KiB
+languages:
+  - English
+description: >-
+  Stop repeating important details in every new AI chat with shared memory
+  across your chats on ChatGPT, Claude, Gemini, and more.
+publisher: Crestify Solutions Private Limited
+publisher_account: Crestify
+publisher_address: |-
+  19, Roshan Bungalow, Shirkay Layout
+  Raj Nagar
+  Nagpur, Maharashtra 440013
+  IN
+extension_website: memoryplugin.com
+privacy_policy: https://www.memoryplugin.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MemoryPlugin - Long-Term Memory for AI Chats",
+  "version": "1.8.4",
+  "description": "Stop repeating important details in every new AI chat with shared memory across your chats on ChatGPT, Claude, Gemini, and more.",
+  "permissions": [
+    "storage",
+    "cookies",
+    "scripting",
+    "http://*/*",
+    "https://*/*",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://*.memoryplugin.com/*",
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "public/16x16.png",
+    "32": "public/32x32.png",
+    "48": "public/48x48.png",
+    "128": "public/128x128.png"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+ZISww/q8CJBSDTihiU9FqzvdOpvd7H7fVeiuTADsLXtEcnxiGA12dANKRz9nFWf9QJNC/aZ/5eijPxc/b37tmRQ8/vBgSzGo8j99q2lWxSZ7E2qRGo3OuudDRl9aipwECTxfh7rt8f4qSVkMUEQZANdM+WLxAoDeQfOFpZwezdY1nf1wx7/4v/vYXLvL6F9cmo3KVNDW3RO8M4SLy/IaxmvyyzGItKpcESCesc0n/u76mcE2lZ4pYUdJ2oo+Y2w9HcixHwVD9caZHtuh/GjExTB8FVMiZ8OH5GtgiC25TCdfE/Jp9Rzhoo1890eDue1SP/SG/c3Gtfr+WDOAAdLYwIDAQAB",
+  "content_scripts": [
+    {
+      "exclude_matches": [
+        "https://www.memoryplugin.com/*"
+      ],
+      "matches": [
+        "https://www.anthropic.com/*",
+        "https://claude.ai/*",
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://gemini.google.com/*",
+        "https://www.typingmind.com/*"
+      ],
+      "js": [
+        "src/content.js"
+      ],
+      "css": [
+        "src/tailwind.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://www.memoryplugin.com/*",
+        "https://claude.ai/*",
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://gemini.google.com/*",
+        "https://www.typingmind.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "src/detect_supported_clients.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "public/index.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "public/hero-img.webp",
+        "public/128x128.png",
+        "src/content.js",
+        "src/chunks/*.js",
+        "chunks/*.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

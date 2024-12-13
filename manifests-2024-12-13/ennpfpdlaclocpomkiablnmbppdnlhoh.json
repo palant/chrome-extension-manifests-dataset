@@ -1,0 +1,138 @@
+---
+name: Rust Search Extension
+version: 2.0.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 20
+user_count: 4000
+release_date: '2024-10-16T07:32:00.000Z'
+size: 1.61MiB
+languages:
+  - English (United States)
+description: >-
+  A handy browser extension to search Rust docs and crates, etc in the address
+  bar instantly!
+publisher_account: huhu.io
+extension_website: huhu.io
+support_website: https://rust.extension.sh/privacy/
+privacy_policy: https://huhu.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "action": { },
+   "background": {
+      "service_worker": "service-worker.js",
+      "type": "module"
+   },
+   "content_scripts": [
+      {
+         "css": [
+            "script/docs-rs.css",
+            "script/details-toggle.css"
+         ],
+         "js": [
+            "content-script-bundle.js",
+            "script/lib.js",
+            "script/docs-rs.js",
+            "script/rust-src-navigate.js",
+            "script/semver.js"
+         ],
+         "matches": [
+            "*://docs.rs/*"
+         ],
+         "run_at": "document_start"
+      },
+      {
+         "css": [
+            "script/doc-rust-lang-org.css",
+            "script/details-toggle.css"
+         ],
+         "exclude_matches": [
+            "*://doc.rust-lang.org/nightly/nightly-rustc/*"
+         ],
+         "js": [
+            "content-script-bundle.js",
+            "script/lib.js",
+            "script/doc-rust-lang-org.js",
+            "script/rust-src-navigate.js"
+         ],
+         "matches": [
+            "*://doc.rust-lang.org/*"
+         ],
+         "run_at": "document_start"
+      },
+      {
+         "js": [
+            "content-script-bundle.js",
+            "script/rust-extension-sh.js"
+         ],
+         "matches": [
+            "*://rust.extension.sh/update"
+         ],
+         "run_at": "document_start"
+      },
+      {
+         "css": [
+            "script/macro-railroad.css"
+         ],
+         "js": [
+            "content-script-bundle.js",
+            "script/lib.js",
+            "script/macro-railroad.js",
+            "script/macro-railroad-wasm.js"
+         ],
+         "matches": [
+            "*://docs.rs/*",
+            "*://doc.rust-lang.org/*"
+         ],
+         "run_at": "document_start"
+      }
+   ],
+   "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self';"
+   },
+   "description": "A handy browser extension to search Rust docs and crates, etc in the address bar instantly!",
+   "host_permissions": [
+      "*://crates.io/api/v1/crates/*",
+      "https://rust.extension.sh/*"
+   ],
+   "icons": {
+      "128": "assets/rust.png",
+      "16": "assets/rust.png",
+      "48": "assets/rust.png"
+   },
+   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAxOX+QfzcFnxPwwmzXDhuU59XGCSMZq+FGo0vOx/ufg/Vw7HfKEPVb9TKzrGtqW38kafWkjxOxGhF7VyyX2ymi55W0xqf8BedePbvMtV6H1tY5bscJ0dLKGH/ZG4T4f645LgvOWOBgyv8s3NDWXzwOMS57ER1y+EtHjDsWD1M0nfe0VCCLW18QlAsNTHfLZk6lUeEeGXZrl6+jK+pZxwhQFmc8cJvOyw7uAq6IJ9lnGDvxFVjGUepA0lKbLuIZjN3p70mgVUIuBYzKE6R8HDk4oBbKAK0HyyKfnuAYbfwVYotHw4def+OW9uADSlZEDC10wwIpU9NoP3szh+vWSnk0QIDAQAB",
+   "manifest_version": 3,
+   "name": "Rust Search Extension",
+   "omnibox": {
+      "keyword": "rs"
+   },
+   "optional_host_permissions": [
+      "file:///*"
+   ],
+   "options_ui": {
+      "open_in_tab": true,
+      "page": "manage/index.html"
+   },
+   "permissions": [
+      "storage",
+      "unlimitedStorage"
+   ],
+   "version": "2.0.0",
+   "web_accessible_resources": [
+      {
+         "extension_ids": [ ],
+         "matches": [
+            "*://docs.rs/*",
+            "*://doc.rust-lang.org/*"
+         ],
+         "resources": [
+            "script/*.js",
+            "wasm/*.wasm",
+            "assets/*.svg"
+         ]
+      }
+   ]
+}

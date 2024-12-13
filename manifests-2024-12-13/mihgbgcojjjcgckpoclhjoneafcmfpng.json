@@ -1,0 +1,122 @@
+---
+name: JoyCode
+version: 2.9.2
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 2000
+release_date: '2024-12-12T05:53:30.000Z'
+size: 9.64MiB
+languages:
+  - English (United States)
+description: JoyCode Chrome Extension
+publisher: 领悦数字信息技术有限公司南京分公司
+publisher_account: BMW LingYue(CIH)
+publisher_address: |-
+  Yan Shan Lu
+  南京市, 江苏省 210000
+  CN
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JoyCode",
+  "version": "2.9.2",
+  "description": "JoyCode Chrome Extension",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "sidePanel", "contextMenus", "storage", "activeTab", "tabs", "alarms","clipboardRead", "clipboardWrite"
+  ],
+  "host_permissions": [
+    "https://atc.bmwgroup.net/jira/*",
+    "https://atc.bmw-brilliance.cn/jira/*",
+    "https://atc-github.azure.cloud.bmw/*",
+    "https://jira.cc.bmwgroup.net/*",
+    "<all_urls>"
+  ],
+  "side_panel": {
+    "default_path": "static/index.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.*"],
+      "matches": ["*://*/*", "file://*/*"]
+    },
+    {
+      "resources": ["js/inject.js"],
+      "matches": ["https://atc.bmw-brilliance.cn/*"],
+      "use_dynamic_url": true
+    },
+    {
+      "resources": ["others/codeReview/modal.html","others/codeReview/prompt.txt", "others/codeReview/joycode-icon.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "js/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["utils/jquery.min.js","utils/customFetch.js","js/content-script.js","js/monitor-script.js", "utils/generate_script.js"],
+      "css": ["css/stopBtn/index.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://atc.bmw-brilliance.cn/jira/browse/*", "https://atc.bmwgroup.net/jira/browse/*", "https://jira.cc.bmwgroup.net/*"],
+      "js": [
+        "js/marked.min.js",
+        "js/jira.js",
+        "js/init-elements.js",
+        "js/marked.min.js",
+        "js/AcEdit.js",
+        "js/TestCaseEdit.js"
+      ],
+      "css": ["css/jira.css"],
+      "type": "module",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://atc.bmw-brilliance.cn/jira/browse/*"],
+      "js": ["js/TestcaseInject.js"],
+      "type": "module",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://atc.bmwgroup.net/jira/browse/*", "https://jira.cc.bmwgroup.net/*"],
+      "js": ["js/TestcaseInjectGlobal.js"],
+      "type": "module",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://atc.bmw-brilliance.cn/bitbucket/*", "https://atc.bmw-brilliance.cn/bitbucket/*"],
+      "js": ["js/code-review.js"],
+      "css": ["css/code-review.css"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://apim.bba/*", "https://apim.ali.bba.cloud.bmw/*", "http://*/*", "https://*/*"],
+      "js": ["js/generate-test-script.js"],
+      "css": ["css/generate-test-script.css"],
+      "type": "module",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://github.com/*","https://atc-github.azure.cloud.bmw/*", "https://github-atc.bmwbrill.cn/*"],
+      "js": ["js/github-code-review.js"]
+    },
+    {
+      "matches": ["https://atc.bmw-brilliance.cn/confluence/*"],
+      "js": ["js/confluence-automation.js"],
+      "css": ["css/confluence-automation.css"],
+      "type": "module",
+      "run_at": "document_idle"
+    }
+  ]
+}

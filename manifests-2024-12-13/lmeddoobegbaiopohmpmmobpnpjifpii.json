@@ -1,0 +1,86 @@
+---
+name: Open in Firefox™ Browser
+version: 0.4.5
+category_slug: productivity/workflow
+rating: 3.4594594594594597
+rating_count: 148
+user_count: 50000
+release_date: '2024-06-16T07:11:00.000Z'
+size: 196KiB
+languages:
+  - English
+description: >-
+  Open current page, link, or all tabs in the Firefox browser with a left-click
+  or through right-click context menu.
+publisher_account: yokris.dev
+support_website: https://webextension.org/listing/open-in.html?from=firefox
+privacy_policy: https://add0n.com/policies/yokris.dev.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Open in Firefox™ Browser",
+  "description": "Open current page, link, or all tabs in the Firefox browser with a left-click or through right-click context menu.",
+  "version": "0.4.5",
+  "manifest_version": 3,
+  "storage": {
+    "managed_schema": "managed.json"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "nativeMessaging",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "optional_permissions": [
+    "tabs",
+    "downloads"
+  ],
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "icons": {
+    "16": "/data/icons/16.png",
+    "32": "/data/icons/32.png",
+    "48": "/data/icons/48.png",
+    "64": "/data/icons/64.png",
+    "128": "/data/icons/128.png",
+    "256": "/data/icons/256.png",
+    "512": "/data/icons/512.png"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["/data/inject/main.js"],
+    "run_at": "document_start",
+    "all_frames": true,
+    "match_about_blank": true,
+    "world": "MAIN"
+  }, {
+    "matches": ["<all_urls>"],
+    "js": ["/data/inject/isolated.js"],
+    "run_at": "document_start",
+    "all_frames": true,
+    "match_about_blank": true,
+    "world": "ISOLATED"
+  }],
+  "action": {},
+  "options_ui": {
+    "page": "/data/options/index.html",
+    "open_in_tab": true
+  },
+  "homepage_url": "https://webextension.org/listing/open-in.html?from=firefox",
+  "commands": {
+    "_execute_action": {}
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "/data/redirect/index.html"
+    ],
+    "matches": ["*://*/*"]
+  }]
+}

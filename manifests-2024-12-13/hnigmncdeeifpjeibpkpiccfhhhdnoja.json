@@ -1,0 +1,141 @@
+---
+name: 大白鹅-temu辅助系统2024.12.06
+version: 1.0.11
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 62
+release_date: '2024-12-09T05:48:07.000Z'
+size: 9.41MiB
+languages:
+  - English
+  - 中文 (简体)
+description: Temu利润计算系统，销售额、利润、货值、扣款、历史利润全览，链接上传，标签制作，抢发货台多功能辅助
+publisher_account: z18654366999
+privacy_policy: http://shop.littletools.studio/static/file/yinsi.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "大白鹅-temu辅助系统2024.12.06",
+ "description": "Temu利润计算系统，销售额、利润、货值、扣款、历史利润全览，链接上传，标签制作，抢发货台多功能辅助",
+ "version": "1.0.11",
+ "default_locale": "en",
+ "background": {
+  "service_worker": "background.js",
+  "type": "module"
+ },
+ "action": {},
+ "host_permissions": [
+  "*://*.kuajingmaihuo.com/",
+  "*://*.temu.com/",
+  "http://1.13.198.63:32028/v1/client/",
+  "*://*.iamwawa.cn/"
+ ],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "permissions": [
+  "activeTab",
+  "tabs",
+  "webRequest",
+  "declarativeNetRequest",
+  "declarativeNetRequestWithHostAccess",
+  "declarativeNetRequestFeedback",
+  "storage",
+  "notifications",
+  "scripting"
+ ],
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "id": "1",
+    "enabled": true,
+    "path": "rules_1.json"
+   },
+   {
+    "id": "3",
+    "enabled": true,
+    "path": "rules_2.json"
+   },
+   {
+    "id": "4",
+    "enabled": true,
+    "path": "rules_3.json"
+   },
+   {
+    "id": "5",
+    "enabled": true,
+    "path": "rules_4.json"
+   }
+  ]
+ },
+ "icons": {
+  "16": "assets/icon/128.png",
+  "48": "assets/icon/128.png",
+  "128": "assets/icon/128.png"
+ },
+ "content_scripts": [
+  {
+   "js": ["assets/library/jquery/jquery-3.4.1.min.js", "js/common.js"],
+   "matches": ["*://*.kuajingmaihuo.com/*", "*://*.temu.com/"],
+   "run_at": "document_end"
+  },
+  {
+   "js": [
+    "assets/library/jquery/jquery-3.4.1.min.js",
+    "js/expressDeliveryManufacturer.js",
+    "js/rewrite.js"
+   ],
+   "matches": ["https://seller.kuajingmaihuo.com/*"],
+   "run_at": "document_end"
+  },
+  {
+   "js": [
+    "assets/library/jquery/jquery-3.4.1.min.js",
+    "js/temuGoodsUpload.js"
+   ],
+   "matches": [
+    "https://www.temu.com/*",
+    "https://seller.kuajingmaihuo.com/main/order-manage*"
+   ],
+   "run_at": "document_end"
+  },
+  {
+   "js": ["js/goodsUpload.js", "js/elimination.js"],
+   "matches": ["https://www.temu.com/*"],
+   "run_at": "document_end"
+  },
+  {
+   "js": ["js/type.js"],
+   "matches": ["*://*.kuajingmaihuo.com/*"],
+   "run_at": "document_end"
+  },
+  {
+   "js": [
+    "assets/library/jquery/jquery-3.4.1.min.js",
+    "assets/library/fabric.min.js",
+    "assets/library/barcode-script.js",
+    "assets/library/JsBarcode.all.min.js",
+    "assets/library/jspdf.umd.min.js",
+    "js/type.js",
+    "js/threebtns.js"
+   ],
+   "matches": ["https://seller.kuajingmaihuo.com/main/order-manage"],
+   "run_at": "document_end"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "js/common.js",
+    "js/type.js",
+    "js/elimination.js",
+    "js/rewrite.js"
+   ],
+   "matches": ["*://*.kuajingmaihuo.com/*"]
+  }
+ ]
+}

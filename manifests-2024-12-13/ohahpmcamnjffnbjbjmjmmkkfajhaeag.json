@@ -1,0 +1,96 @@
+---
+name: WowApp SmartWeb
+version: 4.8.1
+category_slug: lifestyle/shopping
+rating: 4.708646616541353
+rating_count: 532
+user_count: 7000
+release_date: '2023-05-18T08:42:26.000Z'
+size: 174KiB
+languages:
+  - English (United States)
+description: >-
+  WowApp brings you 'Smart Web', an Extension that provides shortcuts to WowApp
+  ways to earn.
+publisher: YouWowMe Limited
+publisher_account: WowApp Official
+privacy_policy: https://www.wowapp.com/policies/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "WowApp SmartWeb",
+  "description": "WowApp brings you 'Smart Web', an Extension that provides shortcuts to WowApp ways to earn.",
+  "version": "4.8.1",
+
+  "icons": {
+    "16": "/data/img/icon-16.png",
+    "32": "/data/img/icon-32.png",
+    "64": "/data/img/icon-64.png"
+  },
+
+  "permissions": [
+    "tabs",
+    "storage",
+    "topSites",
+    "cookies",
+    "alarms",
+    "<all_urls>"
+  ],
+
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://*.wowapp.com/*"]
+  },
+
+  "browser_action": {
+    "default_icon": {
+      "16": "/data/img/icon-grey-16.png",
+      "32": "/data/img/icon-grey-32.png",
+      "64": "/data/img/icon-grey-64.png"
+    }
+  },
+
+  "options_ui": { "page": "/data/options.html" },
+
+  "content_scripts": [{
+    "js": ["/data/js/document-messages.js"],
+    "matches": ["<all_urls>"],
+    "run_at": "document_end",
+    "match_about_blank": false
+  }, {
+    "run_at":"document_end",
+    "js": ["/data/js/jquery.js", "/data/js/favorites.js", "/data/js/shop-selector.js"],
+    "css": ["/data/css/checkbox.css", "/data/css/modal.css"],
+    "matches": ["*://smartweb.wowapp.com/*", "*://prelive-smartweb.wowapp.com/*", "*://dev-smartweb.wowapp.com/*"]
+  }, {
+    "run_at": "document_start",
+    "js": ["/data/js/jquery.js", "/data/js/shop.js"],
+    "css": ["/data/css/shop.css"],
+    "matches": ["<all_urls>"],
+    "match_about_blank": false
+  }],
+
+  "background" : {
+    "scripts" : [
+      "/data/js/jquery.js",
+      "/data/js/background.js"
+    ]
+  },
+
+  "chrome_url_overrides": {
+    "newtab": "/data/redirect.html"
+  },
+
+  "web_accessible_resources": [
+    "data/css/*.*",
+    "data/img/*.*",
+    "data/js/jquery.js",
+    "data/js/favorites.js",
+    "data/js/shop-selector.js",
+    "data/js/shop.js",
+    "data/js/document-messages.js"
+  ]
+}

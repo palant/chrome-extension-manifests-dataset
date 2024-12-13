@@ -1,0 +1,78 @@
+---
+name: ジョブカン打刻をチャットワーク通知
+version: 1.2.3
+category_slug: productivity/workflow
+rating: 3.6666666666666665
+rating_count: 3
+user_count: 57
+release_date: '2023-12-18T06:26:01.000Z'
+size: 2.1MiB
+languages:
+  - 日本語
+description: |-
+  ジョブカンで打刻してチャットワークで連絡するという作業がジョブカンでの打刻だけで済むようになります。
+
+  #ジョブカン #チャットワーク #jobcan #chatwork
+publisher_account: Jun Fukagawa
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ジョブカン打刻をチャットワーク通知",
+  "manifest_version": 3,
+  "icons": {
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "action": {},
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ssl.jobcan.jp/employee/adit/modify",
+        "https://ssl.jobcan.jp/employee/adit/modify/",
+        "https://ssl.jobcan.jp/employee/adit/modify?*",
+        "https://ssl.jobcan.jp/employee/adit/modify/?*",
+        "https://ssl.jobcan.jp/employee/adit/modify#*",
+        "https://ssl.jobcan.jp/employee/adit/modify/#*"
+      ],
+      "js": [
+        "content/employee/adit/modify.js"
+      ],
+      "css": [
+        "content/employee/adit/modify.css"
+      ]
+    },
+    {
+      "matches": [
+        "https://ssl.jobcan.jp/employee",
+        "https://ssl.jobcan.jp/employee/",
+        "https://ssl.jobcan.jp/employee?*",
+        "https://ssl.jobcan.jp/employee/?*",
+        "https://ssl.jobcan.jp/employee#*",
+        "https://ssl.jobcan.jp/employee/#*"
+      ],
+      "js": [
+        "content/employee.js"
+      ],
+      "css": [
+        "content/employee.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://api.chatwork.com/*"
+  ],
+  "version": "1.2.3"
+}

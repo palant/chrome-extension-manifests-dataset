@@ -1,0 +1,107 @@
+---
+name: ELI, Smart AI Meeting NotePad
+version: '2.0'
+category_slug: productivity/communication
+rating: null
+rating_count: null
+user_count: 13
+release_date: '2024-12-12T05:53:26.000Z'
+size: 331KiB
+languages:
+  - English
+description: >-
+  AI-powered meeting Notepad with real-time transcription, translation,
+  summaries and notes
+publisher: GTPDev
+publisher_account: qkrrnjsqkr12
+publisher_address: |-
+  sadang7, Dongjak-daero 27ma-gil, Dongjak-gu
+  7, Dongjak-daero 27ma-gil, Dongjak-gu
+  Dongjak-gu, Seoul 07008
+  KR
+support_website: https://elimeet.ing/
+privacy_policy: https://eli-meet.vercel.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ELI, Smart AI Meeting NotePad",
+    "description": "AI-powered meeting Notepad with real-time transcription, translation, summaries and notes",
+    "version": "2.0",
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://eli-meet.vercel.app/*"
+            ],
+            "js": [
+                "supabase.js",
+                "auth-content-script.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://meet.google.com/*"
+            ],
+            "exclude_matches": [
+                "https://meet.google.com/landing*"
+            ],
+            "js": [
+                "meet-content2.js"
+            ],
+            "css": [
+                "eli.css"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://meet.google.com/*"
+            ],
+            "exclude_matches": [
+                "https://meet.google.com/landing*"
+            ],
+            "js": [
+                "supabase.js",
+                "marked.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "images/icon16.png",
+            "48": "images/icon48.png",
+            "128": "images/icon128.png"
+        }
+    },
+    "host_permissions": [
+        "https://eli-meet.vercel.app/*",
+        "https://mervtjqbkfrfacdjgurz.supabase.co/*",
+        "https://api.anthropic.com/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "google_meet_inline.js",
+                "images/icon48.png"
+            ],
+            "matches": [
+                "https://meet.google.com/*"
+            ]
+        }
+    ]
+}

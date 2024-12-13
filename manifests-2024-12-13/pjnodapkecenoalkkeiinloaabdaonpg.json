@@ -1,0 +1,83 @@
+---
+name: Adblock Plus - Free ad blocker
+version: 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 942
+release_date: '2023-12-21T06:50:22.000Z'
+size: 2.34MiB
+languages:
+  - English
+description: Block YouTube,Twitch,spotify, pop-ups & fight malware!
+publisher_account: Prime Extensions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Adblock Plus - Free ad blocker",
+  "description": "Block YouTube,Twitch,spotify, pop-ups & fight malware!",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "adblockerplus16.png",
+    "48": "adblockerplus48.png",
+    "128": "adblockerplus128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Adblock Plus - Free ad blocker",
+    "default_icon": "adblockerplus16.png"
+  },
+  "permissions": ["declarativeNetRequest", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["https://*.twitch.tv/*"],
+      "js": ["adRemove.js", "removeTwitchAds.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["contentScriptSpotify.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["Youtube.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["adRemove.js", "removeTwitchAds.js"],
+      "matches": ["https://*.twitch.tv/*"]
+    },
+    {
+      "resources": [
+        "contentScriptSpotify.js",
+        "adsSweetalertSpotify.js",
+        "adsAdsRemoveSpotify.js",
+        "adswsHooksSpotify.js"
+      ],
+      "matches": ["https://open.spotify.com/*"]
+    }
+  ]
+}

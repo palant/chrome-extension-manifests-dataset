@@ -1,0 +1,59 @@
+---
+name: Spelling Bean
+version: '1.0'
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2024-06-29T04:52:30.000Z'
+size: 52.12KiB
+languages:
+  - English
+description: Make the NYT Spelling Bee a little weirder and a little more fun
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Spelling Bean",
+  "description": "Make the NYT Spelling Bee a little weirder and a little more fun",
+  "version": "1.0",
+  "action": {
+    "default_popup": "pages/popup.html",
+    "default_icon": "public/bean.png"
+  },
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
+  "permissions": ["sidePanel", "storage"],
+  "icons": {
+    "16": "public/bean-16.png",
+    "32": "public/bean-32.png",
+    "48": "public/bean-48.png",
+    "128": "public/bean-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.nytimes.com/puzzles/*"],
+      "js": ["/scripts/sb-content.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["public/bean.png"],
+      "matches": ["https://www.nytimes.com/*"]
+    },
+    {
+      "resources": ["/scripts/on-page-load.js"],
+      "matches": ["https://www.nytimes.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://www.nytimes.com/*"]
+  },
+  "side_panel": {
+    "default_path": "pages/sidepanel.html"
+  }
+}

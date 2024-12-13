@@ -1,0 +1,65 @@
+---
+name: Spotify ADBlock
+version: 1.2.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 141
+release_date: '2024-01-19T11:23:28.000Z'
+size: 171KiB
+languages:
+  - English
+description: >-
+  Spotify ADBlock that blocks & removes audio ads from Spotify using Spotify
+  ADBlock technology
+publisher_account: Teleparty Extension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Spotify ADBlock",
+  "description": "Spotify ADBlock that blocks & removes audio ads from Spotify using Spotify ADBlock technology",
+  "version": "1.2.0",
+  "manifest_version": 3,
+  "icons": {
+    "16": "spotify16x16.png",
+    "48": "spotify48x48.png",
+    "128": "spotify128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Spotify ADBlock",
+    "default_icon": "spotify16x16.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": ["declarativeNetRequest"],
+  "content_scripts": [
+    {
+      "matches": ["https://*/*"],
+      "js": ["contentScript.js"]
+    },{
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["contentScriptSpotify.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+  "resources": ["contentScriptSpotify.js","adsSweetalertSpotify.js", "adsAdsRemoveSpotify.js","adswsHooksSpotify.js"],
+  "matches": ["https://open.spotify.com/*"]
+}
+
+]
+}

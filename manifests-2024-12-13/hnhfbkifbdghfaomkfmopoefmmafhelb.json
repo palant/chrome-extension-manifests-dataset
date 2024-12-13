@@ -1,0 +1,87 @@
+---
+name: Notissia
+version: 4.5.10
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 40
+release_date: '2024-11-05T15:55:01.000Z'
+size: 7.21MiB
+languages:
+  - English
+description: Add and share deals using Notissia
+publisher_account: Notissia Technologies Inc
+privacy_policy: https://www.notissia.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Notissia",
+  "version": "4.5.10",
+  "description": "Add and share deals using Notissia",
+  "icons": {
+    "48": "notissia-prod48.png",
+    "96": "notissia-prod96.png",
+    "128": "notissia-prod128.png"
+  },
+  "action": {
+    "default_icon": "notissia-prod128.png",
+    "default_title": "Notissia",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["*://mail.google.com/*"],
+    "js": ["js/inboxsdk.js", "js/gmail.js"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["*://mail.superhuman.com/*"],
+    "js": ["js/superhuman.js"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["*://outlook.live.com/*", "*://outlook.office.com/*", "*://outlook.office365.com/*", "*://outlook.com/*"],
+    "js": ["js/outlook.js"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+    "exclude_matches": ["*://zapier.com/*", "*://www.zapier.com/*", "*://linkedin.com/*", "*://www.linkedin.com/*"],
+    "js": ["./vendor/jquery.min.js", "./vendor/jquery.Jcrop.min.js", "content.js"],
+    "css": ["vendor/jquery.Jcrop.min.css", "css/jcrop.css"],
+    "all-frames": false,
+    "world": "ISOLATED"
+  }],
+  "web_accessible_resources": [{
+    "resources": ["/js/pageWorld.js"],
+    "matches": ["https://inbox.google.com/*", "*://mail.google.com/*"]
+  }, {
+    "resources": ["/js/captcher.js"],
+    "matches": ["*://outlook.live.com/*", "*://outlook.office.com/*", "*://outlook.office365.com/*", "*://outlook.com/*"]
+  }, {
+    "resources": ["/images/Jcrop.gif", "/images/pixel.png"],
+    "matches": ["<all_urls>"]
+  }],
+  "commands": {
+    "take-screenshot": {
+      "description": "Take Screenshot",
+      "suggested_key": { "default": "Alt+S" }
+    }
+  },
+  "permissions": [
+    "alarms",
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://mail.google.com/",
+    "https://mail-attachment.googleusercontent.com/",
+    "https://inbox.google.com/",
+    "https://*/*",
+    "<all_urls>"
+  ]
+}

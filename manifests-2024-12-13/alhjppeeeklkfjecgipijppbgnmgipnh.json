@@ -1,0 +1,73 @@
+---
+name: Currency Converter
+version: 2.1.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 4
+user_count: 55
+release_date: '2024-11-18T06:23:54.000Z'
+size: 263KiB
+languages:
+  - English
+description: >-
+  Currency Converter: Simplifies conversion, detects user's currency, supports
+  148 currencies, multilingual, light/dark theme.
+publisher_account: pawelczyk-adam
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Currency Converter",
+  "version": "2.1.0",
+  "description": "Currency Converter: Simplifies conversion, detects user's currency, supports 148 currencies, multilingual, light/dark theme.",
+  "manifest_version": 3,
+  "author": "Adam Pawelczyk",
+  "permissions": ["scripting", "storage"],
+  "host_permissions": ["http://*/*","https://*/*"],
+  "web_accessible_resources": [{ 
+    "resources": [
+      "test/test.html",
+      "languages/en.json",
+      "languages/de.json",
+      "languages/pl.json",
+      "languages/es.json",
+      "languages/it.json"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons":{
+    "128": "utilities/icon.png"
+  },
+  "action":{
+    "default_icon": "utilities/icon.png",
+    "default_popup": "index.html",
+    "default_title": "Currency Converter"
+  },
+  "background": {
+    "service_worker": "worker_wrapper.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content_script.js",
+        "globals/currencyCodeToCountryName.js",
+        "globals/countryNameToCurrencyCode.js",
+        "globals/currencyCodeToSymbol.js",
+        "globals/currencySymbolToCurrencyCode.js",
+        "globals/currencyCodeToCountryCode.js",
+        "globals/countryCodeToCurrencyCode.js",
+        "globals/timezones.js",
+        "globals/languages.js",
+        "shared.js"
+      ]
+    }
+  ]
+}

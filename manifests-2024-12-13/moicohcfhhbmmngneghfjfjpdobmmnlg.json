@@ -1,0 +1,130 @@
+---
+name: LiveTL - Translation Filter for Streams
+version: 9.0.4
+category_slug: lifestyle/social
+rating: 4.826573426573426
+rating_count: 715
+user_count: 30000
+release_date: '2024-10-08T05:44:35.000Z'
+size: 2.4MiB
+languages:
+  - English (United States)
+description: >-
+  Have you ever wanted live translations for HoloLive/Vtuber streams? Well, look
+  no further than LiveTL!
+
+
+  LiveTL (Live TransLate) is…
+publisher_account: Kento Nishi
+support_website: https://discord.gg/uJrV3tmthg
+privacy_policy: https://livetl.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "9.0.4",
+  "name": "LiveTL - Translation Filter for Streams",
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://www.youtube.com/*?*",
+    "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat/*",
+    "https://www.youtube.com/youtubei/v1/live_chat/get_live_chat_replay/*",
+    "https://www.twitch.tv/*"
+  ],
+  "icons": {
+    "128": "./img/128x128.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "./img/48x48.png",
+      "128": "./img/128x128.png"
+    }
+  },
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/embed/hyperchat_embed?*"
+      ],
+      "js": [
+        "submodules/chat/src/scripts/chat-mounter.js"
+      ],
+      "css": [
+        "submodules/chat/src/stylesheets/scrollbar.css",
+        "submodules/chat/src/stylesheets/page404.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/live_chat*",
+        "https://www.youtube.com/live_chat_replay*",
+        "https://studio.youtube.com/live_chat*",
+        "https://studio.youtube.com/live_chat_replay*"
+      ],
+      "js": [
+        "submodules/chat/src/scripts/chat-interceptor.js",
+        "submodules/chat/src/scripts/chat-injector.js",
+        "ts/content_scripts/injector.js",
+        "js/pages/translatormode.js"
+      ],
+      "css": [
+        "submodules/chat/src/stylesheets/titlebar.css"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/error*?*"
+      ],
+      "js": [
+        "ts/content_scripts/workaround-injector.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.twitch.tv/*"
+      ],
+      "js": [
+        "ts/content_scripts/twitch-injector.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "js/pages/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "allow-iframe",
+        "enabled": true,
+        "path": "allow-iframe.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.html",
+        "*.png",
+        "*.gif",
+        "*.mp4"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "incognito": "split"
+}

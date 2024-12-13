@@ -1,0 +1,96 @@
+---
+name: Naro
+version: 1.0.10
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 81
+release_date: '2024-12-10T21:38:59.000Z'
+size: 2.13MiB
+languages:
+  - English
+description: Naro - Assistant
+publisher_account: engineering
+publisher_address: |-
+  950 Steiner Street
+  Apt 3
+  San Francisco, CA 94117
+  US
+privacy_policy: https://www.narohq.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.0.10.0",
+  "version_name": "1.0.10",
+  "name": "Naro",
+  "description": "Naro - Assistant",
+  "action": {
+    "default_title": "Open Naro"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png"
+  },
+  "host_permissions": [
+    "https://naro-staging.vercel.app/*",
+    "https://app.narohq.com/*",
+    "https://lvh.me:8080/*",
+    "https://*/*"
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "src/app/options/options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/main.tsx-loader.js"
+      ],
+      "matches": [
+        "https://naro-staging.vercel.app/*",
+        "https://app.narohq.com/*",
+        "https://lvh.me:8080/*",
+        "https://mail.google.com/*",
+        "https://docs.google.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://lvh.me/*",
+      "*://naro-staging.vercel.app/*",
+      "*://app.narohq.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://app.narohq.com/*",
+        "https://docs.google.com/*",
+        "https://lvh.me:8080/*",
+        "https://mail.google.com/*",
+        "https://naro-staging.vercel.app/*"
+      ],
+      "resources": [
+        "assets/storage.js",
+        "assets/main.tsx.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}

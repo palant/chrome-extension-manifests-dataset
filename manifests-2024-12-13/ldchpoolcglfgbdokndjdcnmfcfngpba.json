@@ -1,0 +1,76 @@
+---
+name: Patchwork
+version: 0.6.3
+category_slug: lifestyle/social
+rating: 5
+rating_count: 6
+user_count: 46
+release_date: '2022-11-28T08:51:16.000Z'
+size: 188KiB
+languages:
+  - English (United States)
+description: DMs for the Internet.
+publisher: ModoSuite, Inc.
+publisher_account: Patchwork Developers
+publisher_address: |-
+  2305 Howard Ave
+  San Carlos, CA 94070-4512
+  US
+extension_website: joinpatchwork.com
+privacy_policy: https://www.joinpatchwork.com/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Patchwork",
+  "description": "DMs for the Internet.",
+  "version": "0.6.3",
+  "background": {
+    "service_worker": "build/background.js"
+  },
+  "icons": {
+    "16": "assets/icon.png",
+    "32": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Patchwork",
+    "default_icon": {
+      "16": "assets/icon.png",
+      "32": "assets/icon.png",
+      "48": "assets/icon.png",
+      "128": "assets/icon.png"
+    }
+  },
+  "commands": {
+    "share-selection": {
+      "suggested_key": "Ctrl+Shift+Period",
+      "description": "Share the current selection"
+    }
+  },
+  "permissions": ["storage", "notifications", "contextMenus"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "exclude_matches": [
+        "https://patchwork.ngrok.io/*",
+        "https://app.joinpatchwork.com/*"
+      ],
+      "css": ["build/patch.css"],
+      "js": ["build/script.js"]
+    }
+  ],
+  "manifest_version": 3,
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "patch.html"],
+      "matches": ["https://*/*", "http://localhost:3000/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["http://localhost:3000/*", "https://*.joinpatchwork.com/*"]
+  }
+}

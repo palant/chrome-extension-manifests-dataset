@@ -1,0 +1,68 @@
+---
+name: BYUI Professor Ratings
+version: 1.0.2
+category_slug: productivity/workflow
+rating: 4.25
+rating_count: 4
+user_count: 305
+release_date: '2024-02-19T05:33:07.000Z'
+size: 1.1MiB
+languages:
+  - English
+description: View RMP professor ratings on the BYUI registration page
+publisher_account: Alex Shnyrov
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "BYUI Professor Ratings",
+    "short_name": "BYUI RMP",
+    "version": "1.0.2",
+    "description": "View RMP professor ratings on the BYUI registration page",
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+    "host_permissions": [
+        "https://search-production.ratemyprofessors.com/*",
+        "https://www.ratemyprofessors.com/*"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://my.byui.edu/ICS*",
+                "https://student.byui.edu/ICS*"
+            ],
+            "js": [
+                "registration/index.js"
+            ],
+            "css": [
+                "registration/main.css"
+            ]
+        }
+    ],
+    "background": {
+        "service_worker": "data-processing/fetcher.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [ 
+                "registration/index.js",
+                "registration/byui_rmp.js",
+                "data-processing/professorData.js"
+            ],
+            "matches": [ 
+                "https://my.byui.edu/*",
+                "https://student.byui.edu/*"
+            ]
+
+        }
+    ],
+    "action": {
+        "default_icon": "img/icon128.png"
+    }
+}

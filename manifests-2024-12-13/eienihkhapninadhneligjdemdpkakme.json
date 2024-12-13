@@ -1,0 +1,97 @@
+---
+name: Zendesk QA
+version: 2.3.4
+category_slug: productivity/workflow
+rating: 4
+rating_count: 3
+user_count: 5000
+release_date: '2024-11-07T11:14:34.000Z'
+size: 825KiB
+languages:
+  - English (United States)
+description: Give feedback on your customer support conversations.
+publisher: Qualitista OÜ
+publisher_account: Zendesk QA
+publisher_address: |-
+  Vana-Lõuna 39
+  Office #11
+  Tallinn 10135
+  EE
+support_website: >-
+  https://support.zendesk.com/hc/en-us/articles/7043747869210-Setting-up-and-using-the-Zendesk-QA-browser-extension
+privacy_policy: https://www.zendesk.com/trust-center
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Zendesk QA",
+  "manifest_version": 3,
+  "description": "Give feedback on your customer support conversations.",
+  "action": {
+    "default_title": "Zendesk QA",
+    "default_icon": "icons/icon-disabled-128x128.png"
+  },
+  "permissions": [
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.klausapp.com/*",
+      "https://*.klausapp-staging.com/*",
+      "https://*.zendesk.com/*",
+      "https://*.zendesk-staging.com/*"
+    ]
+  },
+  "icons": {
+    "128": "icons/icon-128x128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "js/content/index.js"
+      ],
+      "css": [
+        "styles/content.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "iframe.html",
+        "js/iframe.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": "Ctrl+Shift+K"
+    }
+  },
+  "version": "2.3.4",
+  "customVariables": {
+    "appDomain": "kibbles.klausapp.com",
+    "sentry": "https://6e68963783a0add8b19abeb530a5006e@o4507427284123728.ingest.de.sentry.io/4508082762416208"
+  }
+}

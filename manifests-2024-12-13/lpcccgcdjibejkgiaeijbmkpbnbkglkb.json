@@ -1,0 +1,130 @@
+---
+name: Form History Control (II)
+version: 2.5.6.1
+category_slug: productivity/workflow
+rating: 3.789473684210526
+rating_count: 19
+user_count: 5000
+release_date: '2021-04-14T20:58:28.000Z'
+size: 539KiB
+languages:
+  - Deutsch
+  - English
+  - Nederlands
+  - Ελληνικά
+  - русский
+  - 한국어
+description: >-
+  Manage form history entries (search, view, edit, cleanup, export/import) and
+  easy formfiller.
+publisher_account: Stephan
+support_website: >-
+  https://stephanmahieu.github.io/fhc-home/Manual/KnownIssues/#reporting-new-issues
+privacy_policy: https://stephanmahieu.github.io/fhc-home/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "short_name": "FormHistCtrl",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "2.5.6.1",
+  "author": "Stephan Mahieu",
+  "default_locale": "en",
+
+  "optional_permissions": [
+    "downloads"
+  ],
+
+  "permissions": [
+    "contextMenus",
+    "activeTab",
+    "tabs",
+    "storage",
+    "alarms",
+    "clipboardWrite"
+  ],
+
+  "icons": {
+    "16": "theme/icons/fhc-16.png",
+    "32": "theme/icons/fhc-32.png",
+    "48": "theme/icons/fhc-48.png",
+    "64": "theme/icons/fhc-64.png",
+    "128": "theme/icons/fhc-128.png"
+  },
+  
+  "options_ui": {
+      "open_in_tab": true,
+      "page": "popup/options/options.html"
+  },
+
+  "background": {
+    "scripts": [
+      "common/browser-polyfill.min.js",
+      "common/DbConst.js",
+      "common/CleanupConst.js",
+      "common/WindowUtil.js",
+      "common/OptionsUtil.js",
+      "common/DateUtil.js",
+      "common/MiscUtil.js",
+      "background/receiveFormData.js",
+      "background/contextmenu.js",
+      "background/applicationIcon.js"
+    ]
+  },
+
+  "content_scripts": [
+    {
+      "js": [
+        "common/browser-polyfill.min.js",
+        "common/purify.js",
+        "content/collectFormData.js",
+        "content/showFormData.js",
+        "content/auto-complete.js",
+        "content/add-auto-complete.js"
+      ],
+      "css": [
+        "content/auto-complete.css"
+      ],
+      "matches": ["*://*/*", "file:///*"],
+      "run_at": "document_end",
+      "all_frames" : true
+    }
+  ],
+
+  "browser_action": {
+    "browser_style": false,
+    "default_icon": "theme/icons/fhc-128.png",
+    "default_title": "__MSG_extensionName__",
+    "default_popup": "popup/tableview/popup-small.html"
+  },
+
+  "commands": {
+    "open_fhc": {
+      "suggested_key": {
+        "default": "Alt+Shift+F"
+      },
+      "description": "Open the main FHC dialog"
+    },
+    "toggle_display_fields": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "Show/hide formfields on the current page"
+    },
+    "fill_recent": {
+      "suggested_key": {
+        "default": "Alt+Shift+R"
+      },
+      "description": "Fill fields with most recent used entries"
+    },
+    "fill_often": {
+      "suggested_key": {
+        "default": "Alt+Shift+O"
+      },
+      "description": "Fill fields with most often used entries"
+    }
+  }
+}

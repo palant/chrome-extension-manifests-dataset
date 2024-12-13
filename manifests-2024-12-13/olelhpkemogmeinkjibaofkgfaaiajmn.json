@@ -1,0 +1,103 @@
+---
+name: CofilmAI Chrome Extension
+version: 1.0.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 27
+release_date: '2024-12-04T03:50:43.000Z'
+size: 457KiB
+languages:
+  - English
+description: Cofilm - youtube summary AI tool.
+privacy_policy: >-
+  https://cdn.prod.website-files.com/6672a57c0754c88f3f60e688/66e45e90a03d0119fceb73ac_Cofilm%20AI%20Privacy%20Policy%20.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CofilmAI Chrome Extension",
+  "version": "1.0.2",
+  "description": "Cofilm - youtube summary AI tool.",
+  "permissions": [
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "http://localhost:4040/*",
+    "https://app.cofilm.ai/*",
+    "https://app.dev.cofilm.ai/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:4040/*",
+      "https://app.cofilm.ai/*",
+      "https://app.dev.cofilm.ai/*"
+    ]
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/popup/index.html"
+  },
+  "options_page": "src/options/index.html",
+  "content_scripts": [
+    {
+      "js": [
+        "inject-marker.ts-loader.js"
+      ],
+      "matches": [
+        "*://*.cofilm.ai/*",
+        "http://localhost:4040/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "main.tsx-loader.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*.youtube.com/*"
+      ],
+      "resources": [
+        "src/assets/logo.svg",
+        "src/assets/logo-white.svg",
+        "logo.svg",
+        "logo-white.svg",
+        "enums.js",
+        "main.tsx.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "*://*.cofilm.ai/*",
+        "http://localhost:4040/*"
+      ],
+      "resources": [
+        "src/content/inject-marker-code.js",
+        "inject-marker.ts.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "icons": {
+    "16": "public/logo.png",
+    "48": "public/logo.png",
+    "128": "public/logo.png"
+  }
+}

@@ -1,0 +1,124 @@
+---
+name: zzllrr Imager Geek
+version: 2024.5.26
+category_slug: productivity/workflow
+rating: 3.40990099009901
+rating_count: 505
+user_count: 20000
+release_date: '2024-08-07T07:31:36.000Z'
+size: 2.54MiB
+languages:
+  - English
+  - Français
+  - Tiếng Việt
+  - Türkçe
+  - español
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  An efficient image batch downloader that supports web page screenshots.
+  Quickly extract images from any webiste you want.
+publisher_account: extfind
+privacy_policy: https://sites.google.com/site/zzllrrimager/about
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_default_title__",
+  "default_locale": "en",
+  "version": "2024.5.26",
+  "description": "__MSG_description__",
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "options_page": "options/options.html",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/logo/logo_x48.png"
+  },
+  "icons": {
+    "16": "assets/logo/logo_x16.png",
+    "48": "assets/logo/logo_x48.png",
+    "128": "assets/logo/logo_x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "js": [
+        "content/content.js",
+        "content/content_screenshot.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/run_start.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content/scriptShell.js",
+        "content/grabber.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/scriptBus.js",
+        "content/start_scriptBus.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "./rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "downloads",
+    "downloads.shelf",
+    "downloads.open",
+    "contextMenus",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

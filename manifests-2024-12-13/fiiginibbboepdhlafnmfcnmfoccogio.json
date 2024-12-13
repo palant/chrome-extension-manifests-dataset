@@ -1,0 +1,77 @@
+---
+name: 社内ポータルAI for SharePoint
+version: 1.1.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-12-04T04:58:05.000Z'
+size: 789KiB
+languages:
+  - English
+  - 日本語
+description: SharePointに関する検索と質問に対する回答のためのAIです。
+publisher_account: Sateraito Office
+support_website: https://www.sateraito.jp/contact/index.html
+privacy_policy: https://www.sateraito.jp/privacy.html
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "version": "1.1.1",
+  "default_locale": "ja",
+  "homepage_url": "http://www.sateraito.jp/",
+  "name": "__MSG_EXT_NAME__",
+  "description": "__MSG_EXT_DESCRIPTION__",
+  "icons": {
+    "32": "/icons/32x32.png",
+    "48": "/icons/48x48.png",
+    "96": "/icons/96x96.png",
+    "128": "/icons/128x128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "page/side_panel.html",
+    "openPanelOnActionClick": true
+  },
+  "action": {
+    "default_title": "__MSG_EXT_CLICK_TO_OPEN_SIDE_PANEL__",
+    "default_icon": {
+        "32": "/icons/32x32.png",
+        "48": "/icons/48x48.png",
+        "96": "/icons/96x96.png",
+        "128": "/icons/128x128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://sateraito-aisharepoint.appspot.com/*",
+    "https://aisharepoint.sateraitoai.jp/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://sateraito-aisharepoint.appspot.com/api/siterag/*/chat/login",
+        "https://aisharepoint.sateraitoai.jp/api/siterag/*/chat/login"
+      ],
+      "js": [
+        "scripts/login_success.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://sateraito-aisharepoint.appspot.com/*",
+      "https://aisharepoint.sateraitoai.jp/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; script-src-elem 'self' https://*.firebaseio.com; object-src 'self'"
+  }
+}

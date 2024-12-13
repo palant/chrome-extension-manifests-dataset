@@ -1,0 +1,81 @@
+---
+name: IBM Auto-Mate
+version: 1.0.0
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-12-09T03:22:19.000Z'
+size: 222KiB
+languages:
+  - English (United States)
+description: Records user action and scans the page to generate test scripts
+publisher_account: ibm.ignite.ng
+privacy_policy: https://github.com/ssneha345/raahi/blob/main/PrivacyAndSecurity.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  
+   "background": {
+    "service_worker": "./src/backgrnd.js"
+ },
+   "action": {
+      "default_icon": "assets/icon-stop.png",
+      "default_popup": "./src/popup.html"
+   },
+   
+   "content_scripts": [
+    {
+      "matches": [ "<all_urls>"], 
+      "js": ["./src/locator/xpath-locator.js"],
+   "run_at": "document_end",   
+      "all_frames": true          
+    },
+    {
+       "matches": [ "<all_urls>"],  
+      "js": [ "./src/locator/tree-builder.js"],
+   "run_at": "document_end",   
+      "all_frames": true          
+    },
+    {
+       "matches": [ "<all_urls>"], 
+      "js": ["./src/locator/classifier.js"],
+   "run_at": "document_end",   
+      "all_frames": true         
+    },
+ {
+      "matches": [ "<all_urls>"], 
+      "js": [ "./src/locator/scanner.js"],
+   "run_at": "document_end",   
+      "all_frames": true           
+    },
+    {
+       "matches": [ "<all_urls>"],  
+      "js": [ "./src/content.js"],
+   "run_at": "document_end",  
+      "all_frames": true          
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+   "cross_origin_opener_policy": {
+      "value": "same-origin-allow-popups"
+   },
+   "description": "Records user action and scans the page to generate test scripts",
+   "manifest_version": 3,
+   "name": "IBM Auto-Mate",
+   "permissions": [ 
+  "tabs",
+  "activeTab",
+  "storage",
+  "downloads",
+    "clipboardWrite"  ],
+   "version": "1.0.0",
+    "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ]
+}

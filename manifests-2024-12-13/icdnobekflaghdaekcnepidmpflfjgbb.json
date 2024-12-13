@@ -1,0 +1,72 @@
+---
+name: Roll20 Extended
+version: 1.0.4
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 3
+user_count: 66
+release_date: '2024-06-07T08:32:33.000Z'
+size: 1.04MiB
+languages:
+  - English (United States)
+description: A basic extension to add some extra functionality to Roll20
+publisher_account: Mr.Bapple
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "manifest_version": 3,
+   "name": "Roll20 Extended",
+   "description": "A basic extension to add some extra functionality to Roll20",
+   "version": "1.0.4",
+   "icons": {
+      "128": "icons/icon.png"
+   },
+   "action": {
+      "default_icon": {
+         "32": "icons/icon.png"
+      },
+      "default_popup": "index.html",
+      "default_title": "Open Popup"
+   },
+   "commands": {},
+   "background": {
+      "service_worker": "content_scripts/js/background.js"
+   },
+   "web_accessible_resources": [
+      {
+         "resources": ["content_scripts/js/getWindow.js"],
+         "matches": ["https://app.roll20.net/*"]
+      }
+   ],
+   "permissions": ["storage"],
+   "content_scripts": [
+      {
+         "matches": ["https://app.roll20.net/*", "https://app.roll20.net/editor/character/*"],
+         "js": ["content_scripts/js/loadSiteData.js"]
+      },
+      {
+         "matches": ["https://app.roll20.net/*"],
+         "css": ["content_scripts/css/mainPage.css"],
+         "js": [
+            "content_scripts/js/jquery-3.7.1.min.js",
+            "content_scripts/js/defaults.js",
+            "content_scripts/js/configsLoader.js",
+            "content_scripts/js/mainPage.js"
+         ]
+      },
+      {
+         "matches": ["https://app.roll20.net/editor/character/*"],
+         "css": ["content_scripts/css/characterSheet.css"],
+         "js": [
+            "content_scripts/js/mathjs.js",
+            "content_scripts/js/jquery-3.7.1.min.js",
+            "content_scripts/js/defaults.js",
+            "content_scripts/js/configsLoader.js",
+            "content_scripts/js/characterSheet.js"
+         ],
+         "all_frames": true
+      }
+   ]
+}

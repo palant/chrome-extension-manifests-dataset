@@ -1,0 +1,105 @@
+---
+name: Kwala
+version: 3.0.8
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 41
+release_date: '2024-12-02T16:39:15.000Z'
+size: 315KiB
+languages:
+  - Français
+description: Ajoutez Kwala à votre navigateur Chrome
+publisher: Kwala
+publisher_address: |-
+  12 Rue Royale
+  Lyon 69001
+  FR
+extension_website: kwala.fr
+support_website: https://help-kwala.super.site/
+privacy_policy: https://www.kwala.fr/informations-complementaires/politique-confidentialite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kwala",
+  "version": "3.0.8",
+  "description": "Ajoutez Kwala à votre navigateur Chrome",
+  "action": {
+    "default_title": "Kwala",
+    "default_icon": {
+      "32": "assets/icon.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://app.kwala.fr/*"
+  ],
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "cookies",
+    "webRequest"
+  ],
+  "background": {
+    "service_worker": "background-loader.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.kwala.fr/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/content-script-loader.linkedin.js",
+        "scripts/content-script-loader.iframe.js"
+      ],
+      "matches": [
+        "https://www.linkedin.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "resources": [
+        "scripts/linkedin.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "https://www.linkedin.com/*"
+      ],
+      "resources": [
+        "index.html"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "scripts/iframe.js",
+        "scripts/constants.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}

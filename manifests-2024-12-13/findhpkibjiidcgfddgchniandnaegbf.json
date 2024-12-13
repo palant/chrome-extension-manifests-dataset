@@ -1,0 +1,165 @@
+---
+name: Qricambi Assistant
+version: 0.2.15
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 4000
+release_date: '2024-10-08T04:15:54.000Z'
+size: 51.96KiB
+languages:
+  - italiano
+description: >-
+  Questa estensione ti permetterà di aggiungere a Qricambi codici provienienti
+  da tutti i siti web che usi
+publisher: Q Genius SRL
+publisher_account: Qricambi
+publisher_address: |-
+  Via Alessandro Lamarmora, 11
+  Verona, VR 37137
+  IT
+extension_website: qricambi.com
+support_website: https://qricambi.com/contact/
+privacy_policy: https://qricambi.com/privacy-policy-qricambi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Qricambi Assistant",
+  "description": "Questa estensione ti permetterà di aggiungere a Qricambi codici provienienti da tutti i siti web che usi",
+  "version": "0.2.15",
+  "action": {
+    "default_icon": {
+      "16": "images/qicon16.png",
+      "128": "images/qicon128.png"
+    },
+    "default_title": "Qricambi Assistant"
+  },
+  "icons": {
+    "16": "images/qicon16.png",
+    "128": "images/qicon128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/qicon16.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline';"
+  },
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": false,
+    "__firefox__browser_style": true
+  },
+  "content_scripts": [{
+    "matches": [
+      "http://gcat.groupauto.it/*",
+      "https://gcat.groupauto.it/*"
+    ],
+    "css": [],
+    "js": [
+      "scripts/content-scripts/gcat.js"
+    ],
+    "run_at": "document_start",
+    "all_frames": true
+  },
+  {
+    "matches": [
+      "https://web.tecalliance.net/*",
+      "http://web.tecalliance.net/*"
+    ],
+    "css": [
+      "styles/contentscript.css"
+    ],
+    "js": [
+      "scripts/jquery.js",
+      "scripts/content-scripts/tecdoc.js"
+    ],
+    "run_at": "document_start",
+    "all_frames": true
+  },
+  {
+    "matches": [
+      "http://www.partslink24.com/*",
+      "https://www.partslink24.com/*"
+    ],
+    "css": [
+      "styles/contentscript.css"
+    ],
+    "js": [
+      "scripts/jquery.js",
+      "scripts/content-scripts/partslink24.js"
+    ],
+    "run_at": "document_idle",
+    "all_frames": false
+  },
+  {
+    "matches": [
+      "http://gcat.groupauto.it/*",
+      "https://gcat.groupauto.it/*"
+    ],
+    "css": [
+      "styles/contentscript.css"
+    ],
+    "js": [
+      "scripts/jquery.js",
+      "scripts/content-scripts/gcat.js"
+    ],
+    "run_at": "document_idle",
+    "all_frames": false
+  },
+  {
+    "matches": [
+      "https://app.qricambi.com/*"
+    ],
+    "js": [
+      "scripts/content-scripts/qaddTag.js"
+    ],
+    "run_at": "document_end",
+    "all_frames": true
+  }, {
+    "matches": [
+      "*://*.inforicambi.it/*"
+    ],
+    "js": [
+      "scripts/jquery.js",
+      "scripts/content-scripts/inforicambi.js"
+    ],
+    "run_at": "document_start",
+    "all_frames": true
+  }, {
+    "matches": [
+      "*://*.clipparts.it/*",
+      "*://*.clipparts.net/*"
+    ],
+    "js": [
+      "scripts/jquery.js",
+      "scripts/content-scripts/clipparts.js"
+    ],
+    "run_at": "document_start",
+    "all_frames": true
+  }
+],
+"permissions": [
+    "storage",
+    "contextMenus",
+    "tabs",
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

@@ -1,0 +1,74 @@
+---
+name: Desklog.ai Extension
+version: 1.0.2
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 57
+release_date: '2024-09-12T15:55:16.000Z'
+size: 95.24KiB
+languages:
+  - English (United States)
+description: Desklog.ai Extension
+publisher_account: Desklog AI
+publisher_address: |-
+  205 W Howard St
+  Live Oak, FL 32064
+  US
+support_website: https://desklog.ai/support/
+privacy_policy: https://desklog.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Desklog.ai Extension",
+  "version": "1.0.2",
+  "description": "Desklog.ai Extension",
+  "icons": {
+    "128": "img/desklog-ai-logo.png"
+  },
+  "action": {
+    "default_icon": "img/desklog-ai-logo.png",
+    "default_title": "Desklog.ai Extension",
+    "side_panel": true
+  },
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["content_script.js"],
+      "css": ["content_css.css"],
+      "matches": ["*://*/*"],
+      "exclude_matches": [
+        "https://stg.app.desklog.ai/*",
+        "https://app.desklog.ai/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": ["app_script.js"],
+      "matches": [
+        "https://stg.app.desklog.ai/*",
+        "https://app.desklog.ai/*",
+        "http://localhost:5173/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["img/*", "content_script_utils/*"],
+      "matches": ["*://*/*"]
+    }
+  ],
+  "permissions": ["storage", "sidePanel", "printerProvider"],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  }
+}

@@ -1,0 +1,112 @@
+---
+name: ScreenClip - Screenshot, Comment & Annotate
+version: 10000.1.1.0
+category_slug: productivity/tools
+rating: 3.666857798165138
+rating_count: 1744
+user_count: 80000
+release_date: '2024-11-20T11:09:25.000Z'
+size: 6.44MiB
+languages:
+  - English (United States)
+description: Take screenshots, add annotations & comments
+publisher: Vitzo LLC
+publisher_address: |-
+  1603 Capitol Ave Suite 413A #3131
+  Cheyenne, WY 82001-4562
+  US
+extension_website: screenclip.com
+privacy_policy: https://screenclip.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ScreenClip - Screenshot, Comment & Annotate",
+  "description": "Take screenshots, add annotations & comments",
+  "version": "10000.1.1.0",
+  "icons": {
+    "16": "badges/normal/Icon16.png",
+    "48": "badges/normal/Icon48.png",
+    "128": "badges/normal/Icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "badges/normal/Icon16.png",
+      "48": "badges/normal/Icon48.png",
+      "128": "badges/normal/Icon128.png"
+    },
+    "default_title": "ScreenClip",
+    "default_popup": "popup/dist/index.html"
+  },
+  "background": {
+    "service_worker": "sw/index.js",
+    "type": "module"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      }
+    },
+    "capture-area-command": {
+      "suggested_key": {
+        "default": "Alt+C",
+        "mac": "Alt+C"
+      },
+      "description": "Clipping Tool"
+    },
+    "capture-tab-command": {
+      "suggested_key": {
+        "default": "Alt+V",
+        "mac": "Alt+V"
+      },
+      "description": "Visible area"
+    },
+    "capture-page-command": {
+      "suggested_key": {
+        "default": "Alt+P",
+        "mac": "Alt+F"
+      },
+      "description": "Full page"
+    }
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.screenclip.com/*",
+      "https://screen.link/*",
+      "*://*.screenclip-website-test.firebaseapp.com/*",
+      "http://localhost:5000/*",
+      "http://localhost:5005/*",
+      "http://localhost:5006/*",
+      "https://screen-link-test.web.app/*",
+      "*://screenclip-website-test.firebaseapp.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["insides/permanent/outside.css"],
+      "js": ["insides/permanent/browser-polyfill.min.js", "insides/content/content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "insides/*",
+        "imgcopy.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "permissions": ["cookies", "storage", "activeTab", "tabs", "notifications", "clipboardWrite", "unlimitedStorage", "scripting"]
+}

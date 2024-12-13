@@ -1,0 +1,98 @@
+---
+name: Attest by Pluto
+version: '1.0'
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-12-12T07:55:01.000Z'
+size: 8.0MiB
+languages:
+  - English (United States)
+description: >-
+  Attest by Pluto unleashes the power of zero-knowledge cryptography, allowing
+  users to prove their Web2 data privately.
+publisher: Pluto Development Inc
+publisher_account: pluto development inc
+publisher_address: |-
+  2261 Market Street #4604
+  San Francisco, CA 94114
+  US
+extension_website: pluto.xyz
+support_website: https://docs.pluto.xyz
+privacy_policy: https://pluto.xyz/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Attest by Pluto",
+  "description": "Attest by Pluto unleashes the power of zero-knowledge cryptography, allowing users to prove their Web2 data privately.",
+  "version": "1.0",
+  "host_permissions": ["<all_urls>"],
+  "permissions": [
+    "storage",
+    "offscreen",
+    "cookies",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "sidePanel",
+    "webRequest"
+  ],
+  "action": {
+    "default_title": "Open Attest by Pluto Sidebar"
+  },
+  "background": {
+    "service_worker": "background/background-script.js",
+    "type": "module"
+  },
+  "side_panel": {
+    "default_path": "sidebar/index.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["parent-page/parent-page-content-script.js"],
+      "run-at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["parent-page/sdk-injector.js"],
+      "run-at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; worker-src 'self';  frame-ancestors 'none';",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src * 'unsafe-inline' 'unsafe-eval'; child-src *;"
+  },
+  "sandbox": {
+    "pages": ["offscreen/sandbox.html"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "offscreen/offscreen.html",
+        "offscreen/offscreen.js",
+        "offscreen/sandbox.html",
+        "offscreen/sandbox.js",
+        "parent-page/pluto-sdk.js",
+        "wasm/prover/pkg/client_wasm_bg.wasm",
+        "wasm/prover/pkg/client_wasm.js",
+        "wasm/prover/pkg/snippets/wasm-bindgen-rayon-3e04391371ad0a8e/src/workerHelpers.js",
+        "wasm/prover/pkg/snippets/wasm-bindgen-rayon-3e04391371ad0a8e/src/workerHelpers.worker.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "assets/pluto-logo-16.png",
+    "32": "assets/pluto-logo-32.png",
+    "48": "assets/pluto-logo-48.png",
+    "128": "assets/pluto-logo-128.png"
+  }
+}

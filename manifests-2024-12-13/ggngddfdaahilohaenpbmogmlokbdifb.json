@@ -1,0 +1,83 @@
+---
+name: Content filter
+version: 2.7.6
+category_slug: make_chrome_yours/accessibility
+rating: 3.8823529411764706
+rating_count: 17
+user_count: 8000
+release_date: '2024-03-21T13:31:53.000Z'
+size: 164KiB
+languages:
+  - English
+  - русский
+description: Blocks access to sites by lists and stop words.
+publisher_account: Lidrekon
+support_website: https://lidrekon.ru/block/
+privacy_policy: https://lidrekon.ru/block/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+"manifest_version": 3,
+"author": "Lidrekon",
+"name": "__MSG_title__",
+"description": "__MSG_manifest_desc__",
+"version": "2.7.6",
+"icons": {
+    "128": "images/icon-128.png",
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png"
+ },
+"permissions": [
+    "tabs",
+  "history",
+  "storage"
+  ],
+ "host_permissions":[
+    "<all_urls>"
+  ],
+"web_accessible_resources": [
+ {
+ "resources": ["html/block.html","html/options.html"],
+ "matches": [ "<all_urls>"]
+ }
+],
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
+"action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_popup": "html/actionPopup.html",
+    "default_title": "__MSG_title__"
+},
+"homepage_url": "https://lidrekon.ru/block/",
+"options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": true
+  },
+"content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+},
+"default_locale": "en",
+"content_scripts": [
+ {
+     "css": ["css/none.css"],
+     "js": ["js/content.js"],
+     "matches": ["<all_urls>"],
+     "run_at": "document_start"
+ },
+    {
+ "css": ["css/yes.css"],
+     "js": ["js/contentBlockPage.js"],
+     "matches": ["*://lidrekon.ru/*"],
+     "run_at": "document_end"
+ }
+]
+
+}

@@ -1,0 +1,219 @@
+---
+name: AIX Downloader(Picture/Video/Music)
+version: 9.0.52
+category_slug: productivity/workflow
+rating: 4.048387096774194
+rating_count: 124
+user_count: 200000
+release_date: '2024-06-26T14:14:41.000Z'
+size: 1.65MiB
+languages:
+  - English
+  - Français
+  - Tiếng Việt
+  - Türkçe
+  - español
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: Download online videos, music, mp3, images etc from websites.
+publisher_account: extfun
+privacy_policy: https://www.freeprivacypolicy.com/live/1a989ad9-eb14-4e79-994b-1739426407b8
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_default_title__",
+  "default_locale": "en",
+  "version": "9.0.52",
+  "description": "__MSG_description__",
+  "background": {
+    "service_worker": "./background.js"
+  },
+  "options_page": "options/options.html",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/logo/logo_x48.png"
+  },
+  "icons": {
+    "16": "assets/logo/logo_x16.png",
+    "48": "assets/logo/logo_x48.png",
+    "128": "assets/logo/logo_x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "content/content.css"
+      ],
+      "js": [
+        "content/content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content/run_start.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "content/scriptShell.js",
+        "content/grabber.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://item.taobao.com/*"
+      ],
+      "js": [
+        "assets/videoScripts/taobao.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://www.bilibili.com/video/*",
+        "*://*.bilibili.com/bangumi/play/ep*"
+      ],
+      "js": [
+        "assets/videoScripts/bilibili.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://www.facebook.com/*"
+      ],
+      "js": [
+        "assets/videoScripts/jQuery-3.2.1.min.js",
+        "assets/videoScripts/facebook.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://x.com/*"
+      ],
+      "js": [
+        "assets/videoScripts/jQuery-3.2.1.min.js",
+        "assets/videoScripts/tw.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.metacafe.com/watch/*"
+      ],
+      "js": [
+        "assets/videoScripts/metacafe.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://www.instagram.com/*"
+      ],
+      "js": [
+        "assets/videoScripts/jQuery-3.2.1.min.js",
+        "assets/videoScripts/instagram.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://vimeo.com/*"
+      ],
+      "js": [
+        "assets/videoScripts/jQuery-3.2.1.min.js",
+        "assets/videoScripts/vimeo.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.acfun.cn/*"
+      ],
+      "js": [
+        "assets/videoScripts/jQuery-3.2.1.min.js",
+        "assets/videoScripts/acfun.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/watch*"
+      ],
+      "js": [
+        "assets/videoScripts/youtube.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://baike.baidu.com/item/*"
+      ],
+      "js": [
+        "assets/videoScripts/baidubaike.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://tiktok.com/*", "https://www.tiktok.com/*"
+      ],
+      "js": [
+        "assets/videoScripts/tiktok.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/scriptBus.js",
+        "content/start_scriptBus.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "downloads",
+    "downloads.shelf",
+    "downloads.open",
+    "contextMenus",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "declarativeNetRequest",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ]
+}

@@ -1,0 +1,102 @@
+---
+name: RentScout - Turo Market Analyzer
+version: '1.7'
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 159
+release_date: '2024-12-12T10:10:07.000Z'
+size: 2.54MiB
+languages:
+  - English
+description: Find the most profitable cars for your Turo business with RentScout!
+publisher_account: RentScout
+extension_website: rentscout.io
+support_website: https://rentscout.io/contact-us/
+privacy_policy: https://rentscout.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvspXGCmqXWy3dNppppGMCuLlFkvzz1YHAinV5wABU0+JGKdaTxVlnM9gnYao0o1iaTzscgJXOJ7VRZn0+Nu4nO+aLp3TEVPMKuSU9evb6KfPjwejrGf2BsKuwe0jTO5V5HwNuoPGsMZE+NsiA5J4U8zWLKYbcbeh2WFY0qL1bOrTRw+T5SdHEFNyeNk0w0hS6N6oBNXxY46k6UNoYg89Z+wahpo9MSQcT0igmmMjcei/9WD7yCsM7PZKF45FlpwUl6GqucOrudiM3xMpYN6Ot+1UML6AOmBLuj2OowlKxAXa8SW4Ehr+E55JUC4SFbWyU2FL3uDyjwBwoSS2ZLzJsQIDAQAB",
+    "name": "RentScout - Turo Market Analyzer",
+    "version": "1.7",
+    "description": "Find the most profitable cars for your Turo business with RentScout!",
+    "permissions": [
+        "storage"
+    ],
+    "icons": {
+        "16": "dist/icons/icon16.png",
+        "32": "dist/icons/icon32.png",
+        "48": "dist/icons/icon48.png",
+        "128": "dist/icons/icon128.png"
+      },
+    "host_permissions": [
+        "https://app.rentscout.io/*",
+        "https://rentscout.io/*",
+        "https://turo.com/*",
+        "*://*.rentscout.io/"
+    ],
+    "background": {
+        "service_worker": "dist/serviceWorker.bundle.js"
+    },
+    "action": {
+        "default_popup": "dist/popup.html"
+    },
+    "externally_connectable": {
+        "matches": [
+            "https://rentscout.io/*"
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "dist/customFetch.bundle.js"
+            ],
+            "matches": [
+                "https://turo.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "dist/*"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://turo.com/*/search*",
+                "https://turo.com/*/*/search*",
+                "https://turo.com/search*"
+            ],
+            "js": [
+                "dist/content.bundle.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://turo.com/*"
+            ],
+            "js": [
+                "dist/carDetailsContent.bundle.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://turo.com/*/search*",
+                "https://turo.com/*/*/search*",
+                "https://turo.com/search*"
+            ],
+            "js": [
+                "dist/injectCustomFetch.bundle.js"
+            ],
+            "run_at": "document_start"
+        }
+    ]
+}

@@ -1,0 +1,87 @@
+---
+name: PDF Reader
+version: 0.4.3
+category_slug: productivity/workflow
+rating: 4.564102564102564
+rating_count: 78
+user_count: 60000
+release_date: '2024-12-11T11:28:24.000Z'
+size: 3.97MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - 中文 (简体)
+  - 日本語
+description: >-
+  A general-purpose Portable Document Format (PDF) viewer based on Mozilla's
+  PDF.js library
+publisher_account: emano.waldeck
+support_website: https://webextension.org/listing/pdf-reader.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "0.4.3",
+  "name": "PDF Reader",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+  "icons": {
+    "16": "/data/icons/16.png",
+    "32": "/data/icons/32.png",
+    "48": "/data/icons/48.png",
+    "64": "/data/icons/64.png",
+    "128": "/data/icons/128.png",
+    "256": "/data/icons/256.png",
+    "512": "/data/icons/512.png"
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "favicon"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "file_handlers": [{
+    "action": "/data/pdf.js/web/viewer.html?context=explorer",
+    "name": "Open with PDF Reader",
+    "accept": {
+      "application/pdf": [".pdf"]
+    },
+    "launch_type": "multiple-clients"
+  }],
+  "storage": {
+    "managed_schema": "schema.json"
+  },
+  "homepage_url": "https://webextension.org/listing/pdf-reader.html",
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "action": {},
+  "options_ui": {
+    "page": "/data/options/index.html"
+  },
+  "web_accessible_resources": [{
+    "resources": ["/data/pdf.js/web/viewer.html"],
+    "matches": ["*://*/*"]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["/data/watch.js"],
+    "run_at": "document_start",
+    "all_frames": true
+  }]
+}

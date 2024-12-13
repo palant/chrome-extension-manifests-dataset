@@ -1,0 +1,84 @@
+---
+name: Piazza Dark Mode
+version: 2.3.0
+category_slug: make_chrome_yours/functionality
+rating: 4.75
+rating_count: 4
+user_count: 150
+release_date: '2024-12-05T17:23:59.000Z'
+size: 41.48KiB
+languages:
+  - English
+description: Puts Piazza.com in dark mode to save your eyes
+publisher_account: sagedrake11
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Piazza Dark Mode",
+ "version": "2.3.0",
+ "description": "Puts Piazza.com in dark mode to save your eyes",
+ "manifest_version": 3,
+ "author": "Sage Drake",
+ "icons": {
+  "16": "images/logo-16.png",
+  "48": "images/logo-48.png",
+  "128": "images/logo-128.png"
+ },
+ "permissions": ["storage"],
+ "content_scripts": [
+  {
+   "js": ["content-scripts/common/initialize-styles.js"],
+   "matches": [
+    "https://piazza.com/class/*",
+    "https://piazza.com/account_settings*",
+    "https://piazza.com/*/resources",
+    "https://piazza.com/*/staff",
+    "https://piazza.com/*/info"
+   ],
+   "run_at": "document_start",
+   "all_frames": true,
+   "match_about_blank": true
+  },
+  {
+   "js": ["content-scripts/page-specific/settings-page.js"],
+   "matches": ["https://piazza.com/account_settings*"],
+   "run_at": "document_start"
+  },
+  {
+   "js": ["content-scripts/page-specific/resources-page.js"],
+   "matches": ["https://piazza.com/*/resources", "https://piazza.com/*/staff", "https://piazza.com/*/info"],
+   "run_at": "document_start"
+  },
+  {
+   "js": ["content-scripts/page-specific/q&a-page.js"],
+   "matches": ["https://piazza.com/class/*"],
+   "run_at": "document_start"
+  },
+  {
+   "js": ["content-scripts/common/change-mode.js"],
+   "matches": [
+    "https://piazza.com/class/*",
+    "https://piazza.com/account_settings*",
+    "https://piazza.com/*/resources",
+    "https://piazza.com/*/staff",
+    "https://piazza.com/*/info"
+   ],
+   "run_at": "document_idle"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "stylesheets/q&a.css",
+    "stylesheets/common-page-elements.css",
+    "stylesheets/settings.css",
+    "stylesheets/resources.css",
+    "images/sun.png",
+    "images/moon.png"
+   ],
+   "matches": ["https://piazza.com/*"]
+  }
+ ]
+}

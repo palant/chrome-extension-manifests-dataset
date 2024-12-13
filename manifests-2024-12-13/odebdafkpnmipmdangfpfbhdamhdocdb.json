@@ -1,0 +1,59 @@
+---
+name: Bluesky Media Downloader
+version: 1.10.0
+category_slug: productivity/tools
+rating: 3.56
+rating_count: 25
+user_count: 2000
+release_date: '2024-12-06T23:55:37.000Z'
+size: 9.86MiB
+languages:
+  - English (United States)
+description: Download high quality images and mp4 videos directly from bluesky
+publisher_account: dnibnzbckr
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Bluesky Media Downloader",
+    "version": "1.10.0",
+    "description": "Download high quality images and mp4 videos directly from bluesky",
+    "icons": {
+        "32": "icons/bluesky.png",
+        "48": "icons/bluesky.png",
+        "96": "icons/bluesky.png"
+    },
+    "permissions": ["offscreen", "downloads",  "storage"],
+    "action": {
+        "default_title": "Bluesky Media Downloader",
+        "default_popup": "html/popup.html" 
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://bsky.app/*"],
+            "js": [
+                "lib/ffmpeg/umd/ffmpeg.js",
+                "lib/ffmpeg/util.js",
+                "content.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "html/*",
+                "lib/*"
+            ],
+            "matches": ["https://bsky.app/*"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+        "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval' 'wasm-unsafe-eval'; child-src 'self';"
+    }
+}

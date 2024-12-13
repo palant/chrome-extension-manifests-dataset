@@ -1,0 +1,90 @@
+---
+name: Solution Numérique Télécom Click2Call
+version: '2.1'
+category_slug: productivity/communication
+rating: 5
+rating_count: 2
+user_count: 47
+release_date: '2024-05-18T07:50:24.000Z'
+size: 1.1MiB
+languages:
+  - Français
+description: >-
+  Searches for a phone numbers on web pages, allows to make calls with 1 click
+  for Solution Numérique Télécom phone system users.
+publisher_account: support
+support_website: >-
+  https://api.whatsapp.com/send/?phone=33782874565&text&type=phone_number&app_absent=0
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Solution Numérique Télécom Click2Call",
+    "description": "Searches for a phone numbers on web pages, allows to make calls with 1 click for Solution Numérique Télécom phone system users.",
+    "version": "2.1",
+    "manifest_version": 3,
+    "icons": {
+        "128": "img/favicon/favicon.png"
+    },
+    "permissions": [
+        "activeTab",
+        "commands",
+        "storage",
+        "contextMenus"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "action": {
+        "default_icon": "img/favicon/favicon.png",
+        "default_title": "Solution Numérique Télécom Click2Call",
+        "default_popup": "popup.html"
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+J",
+                "chromeos": "Ctrl+Shift+U",
+                "linux": "Ctrl+Shift+J",
+                "mac": "Command+Shift+Y",
+                "windows": "Ctrl+Shift+Y"
+            },
+            "description": "Opens the extension"
+        }
+    },
+    "background": {
+        "service_worker": "background.bundle.js"
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+                "vendors/mutation-summary.js",
+                "content.bundle.js"
+            ],
+            "exclude_matches": [
+                "*://webphone.sn-telecom.fr/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "img/*.png",
+                "img/*.jpg",
+                "img/*.svg"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'",
+        "sandbox": "sandbox allow-scripts; script-src 'self'"
+    }
+}

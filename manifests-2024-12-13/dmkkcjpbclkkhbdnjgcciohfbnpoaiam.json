@@ -1,0 +1,114 @@
+---
+name: Chessconnect
+version: 4.4.6
+category_slug: lifestyle/games
+rating: 4.733333333333333
+rating_count: 30
+user_count: 2000
+release_date: '2024-12-10T04:14:26.000Z'
+size: 1.43MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+  - 中文 (简体)
+description: >-
+  Connects smart chessboards of various brands to either chess.com or
+  lichess.org.
+publisher_account: chessconnect
+extension_website: chessconnect.de
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "4.4.6",
+  "default_locale": "en",
+  "constants": {
+    "isPhoenix": false
+  },
+  "icons": {
+    "128": "res/icon128up.png"
+  },
+  "action": {
+    "default_icon": "res/icon128up.png",
+    "default_popup": "scripts/options/optiondlg.html",
+    "default_title": "Chessconnect"
+  },
+  "content_scripts": [
+    {
+      "js": ["dist/chesscomcontent.js"],
+      "matches": ["https://www.chess.com/*"],
+      "world": "MAIN",
+      "run_at": "document_start"
+    },
+    {
+      "js": ["dist/lichesscontent.js"],
+      "matches": ["https://lichess.org/*", "https://chessconnect.de/lichess*"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["dist/chessmultimediacontent.js"],
+      "matches": ["https://play.chessmultimedia.com/*"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["dist/chessconnectcontent.js"],
+      "matches": ["https://chessconnect.de/config-*"],
+      "world": "MAIN",
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["dist/background.js"],
+      "matches": [
+        "https://www.chess.com/*",
+        "https://lichess.org/*",
+        "https://play.chessmultimedia.com/*",
+        "https://chessconnect.de/config-*",
+        "https://chessconnect.de/lichess*"
+      ],
+      "world": "ISOLATED",
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "dist/serviceworker.js"
+  },
+  "permissions": ["storage", "offscreen"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "res/beep.mp3",
+        "res/knock.mp3",
+        "res/pling.mp3",
+        "res/icon128up.png",
+        "res/icon128down.png",
+        "res/icon128upred.png",
+        "res/icon128downyellow.png",
+        "res/icon128upgreen.png",
+        "res/yesnodialog.html",
+        "res/optionsdialog.html",
+        "res/offscreen.html",
+        "res/debugboard.html",
+        "dist/offscreen.js"
+      ],
+      "matches": [
+        "https://www.chess.com/*",
+        "https://lichess.org/*",
+        "https://play.chessmultimedia.com/*",
+        "https://chessconnect.de/*"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "scripts/options/optiondlg.html",
+    "open_in_tab": true
+  }
+}

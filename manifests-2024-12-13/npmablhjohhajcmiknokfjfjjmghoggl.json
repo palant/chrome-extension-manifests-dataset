@@ -1,0 +1,84 @@
+---
+name: NC Support
+version: 1.6.18
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 379
+release_date: '2023-11-06T11:41:07.000Z'
+size: 3.25MiB
+languages:
+  - 日本語
+description: ネイティブキャンプ講師の非公開なプライベートメモを保存したり、自分だけの講師評価を記録します。レッスン履歴を分析します。
+publisher_account: civic
+extension_website: lets-english.hateblo.jp
+support_website: https://ncs-guide.engon.dev/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "NC Support",
+  "version": "1.6.18",
+  "description": "ネイティブキャンプ講師の非公開なプライベートメモを保存したり、自分だけの講師評価を記録します。レッスン履歴を分析します。",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["js/background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "declarativeContent",
+    "tabs",
+    "activeTab",
+    "storage",
+    "https://nativecamp.net/user/*",
+    "https://nativecamp.net/textbook/page-detail/*",
+    "https://nativecamp.net/lesson-reservation/*",
+    "https://nativecamp.net/waiting/*",
+    "https://nativecamp.net/class/*",
+    "https://nativecamp.net/mypage",
+    "https://ncs.engon.dev/*"
+  ],
+  "page_action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "NativeCamp Support",
+    "default_popup": "popup.html"
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "*://nativecamp.net/mypage",
+        "*://nativecamp.net/waiting",
+        "*://nativecamp.net/appointment",
+        "*://nativecamp.net/favorite",
+        "*://nativecamp.net/Favorite/index/*"
+      ],
+      "exclude_globs": ["*/waiting/detail/*"],
+      "run_at": "document_start",
+      "js": ["js/list.js"],
+      "css": ["assets/nc-support.css"]
+    },
+    {
+      "matches": ["https://nativecamp.net/waiting/detail/*", "https://nativecamp.net/lesson-message/detail/*"],
+      "run_at": "document_end",
+      "js": ["js/detail.js"],
+      "css": ["assets/nc-support.css"]
+    },
+    {
+      "matches": ["https://nativecamp.net/HtmlTextbook/*"],
+      "js": ["js/audioplayer.js"],
+      "css": ["assets/nc-support.css"],
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  }
+}

@@ -1,0 +1,82 @@
+---
+name: EO.workspace Integration
+version: 6.0.3
+category_slug: productivity/workflow
+rating: 4.666666666666667
+rating_count: 3
+user_count: 20000
+release_date: '2021-01-23T14:26:44.000Z'
+size: 44.75KiB
+languages:
+  - English (United States)
+description: >-
+  Integrates Chrome and Chromium-based browsers with the EO.workspace app
+  virtualization solution.
+publisher_account: Identity, Lda.
+privacy_policy: https://enterpriseopen.com/workspace/mobile-application-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version" : 2,
+
+    "name"        : "EO.workspace Integration",
+    "version"     : "6.0.3",
+    "description" : "Integrates Chrome and Chromium-based browsers with the EO.workspace app virtualization solution.",
+
+    "icons" : {
+        "16"  : "icons/eow-allow-16.png",
+        "32"  : "icons/eow-allow-32.png",
+        "48"  : "icons/eow-allow-48.png",
+        "64"  : "icons/eow-allow-64.png",
+        "128" : "icons/eow-allow-128.png"
+    },
+
+    "permissions" : [
+        "http://*/*",
+        "https://*/*",
+        "clipboardRead",
+        "clipboardWrite",
+        "storage"
+    ],
+
+    "background" : {
+        "persistent" : false,
+        "scripts" : [
+            "private/background/clipboardService.js",
+            "private/background/popupService.js",
+            "private/background/smartcardService.js",
+            "private/background/analytics.js"
+        ]
+    },
+
+    "page_action" : {
+        "default_popup" : "private/popup/popup.html",
+        "default_icon" : {
+            "19" : "private/popup/icons/eow-maybe-19.png",
+            "38" : "private/popup/icons/eow-maybe-38.png"
+        }
+    },
+
+    "content_scripts" : [{
+        "matches" : [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "js" : [
+            "private/content/init.js",
+            "private/content/clipboardBroker.js",
+            "private/content/smartcardBroker.js"
+        ],
+        "run_at"     : "document_start",
+        "all_frames" : true
+    }],
+
+    "web_accessible_resources" : [
+        "public/execCommand.js",
+        "public/smartcard.js"
+    ],
+
+    "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self'"
+}

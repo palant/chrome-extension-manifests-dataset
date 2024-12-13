@@ -1,0 +1,95 @@
+---
+name: Tailwind CSS Scanner
+version: 1.0.0
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 28
+release_date: '2024-11-13T09:29:58.000Z'
+size: 605KiB
+languages:
+  - English
+description: Scan -> Copy -> Export Tailwind
+publisher_account: tldralgos
+extension_website: tailwindscanner.com
+support_website: http://tailwindscanner.com/support
+privacy_policy: https://tailwindscanner.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Tailwind CSS Scanner",
+  "version": "1.0.0",
+  "description": "Scan -> Copy -> Export Tailwind",
+  "action": {},
+  "background": {
+    "service_worker": "js/service-worker.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "identity",
+    "identity.email",
+    "tabs",
+    "contextMenus",
+    "clipboardWrite"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./js/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://play.tailwindcss.com/*"
+      ],
+      "js": [
+        "./js/content.js"
+      ]
+    }
+  ],
+  "commands": {
+    "refresh_extension": {
+      "suggested_key": {
+        "default": "Ctrl+Space"
+      },
+      "description": "Refresh Extension"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://apis.google.com https://www.gstatic.com https://www.googleapis.com https://securetoken.googleapis.com https://identitytoolkit.googleapis.com https://firestore.googleapis.com;"
+  },
+  "oauth2": {
+    "client_id": "1003668231937-aeae5u92emv1jh9hvtg8upp01me85q5j.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "resources": [
+        "dist/js/index.js",
+        "dist/js/options.js",
+        "dist/js/service-worker.js",
+        "dist/js/tailwindcdn.js",
+        "js/tailwindcdn.js"
+      ]
+    }
+  ]
+}

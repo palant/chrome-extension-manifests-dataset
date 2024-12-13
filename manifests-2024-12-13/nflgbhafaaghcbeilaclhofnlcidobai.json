@@ -1,0 +1,109 @@
+---
+name: Bag of Mapping Extension
+version: '1.14'
+category_slug: lifestyle/games
+rating: 5
+rating_count: 3
+user_count: 37
+release_date: '2024-11-27T20:51:10.000Z'
+size: 986KiB
+languages:
+  - English (United States)
+description: >-
+  Import characters from D&D Beyond or Pathbuilder into Bag of Mapping VTT. Help
+  us improve accuracy by providing your feedback!
+publisher_account: Bag of Mapping
+publisher_address: |-
+  868 E 760 N
+  Lehi, UT 84043
+  US
+extension_website: bagofmapping.com
+privacy_policy: https://bagofmapping.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bag of Mapping Extension",
+  "description": "Import characters from D&D Beyond or Pathbuilder into Bag of Mapping VTT. Help us improve accuracy by providing your feedback!",
+  "version": "1.14",
+  "permissions": ["storage", "contextMenus", "tabs", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://dndbeyond.com/characters/*",
+        "https://www.dndbeyond.com/characters/*",
+        "https://dndbeyond.com/profile/*",
+        "https://www.dndbeyond.com/profile/*"
+      ],
+      "css": ["styles/content.dndbeyond.character.css"],
+      "js": [
+        "assets/helpers.js",
+        "content-scripts/content.dndbeyond.character.js"
+      ]
+    },
+    {
+      "matches": ["https://pathbuilder2e.com/*"],
+      "js": ["assets/helpers.js", "content-scripts/content.pathbuilder.js"]
+    },
+    {
+      "matches": [
+        "https://bagofmapping.com/startCampaign/",
+        "https://dev.bagofmapping.com/startCampaign/",
+        "http://localhost/startCampaign/"
+      ],
+      "js": [
+        "assets/helpers.js",
+        "content-scripts/content.bom.startCampaign.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://bagofmapping.com/startMapFromImage/",
+        "https://dev.bagofmapping.com/startMapFromImage/",
+        "http://192.168.7.166/startMapFromImage/",
+        "http://localhost/startMapFromImage/"
+      ],
+      "js": [
+        "assets/helpers.js",
+        "content-scripts/content.bom.startMapFromImage.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://bagofmapping.com/*",
+        "https://dev.bagofmapping.com/*",
+        "http://localhost/*"
+      ],
+      "exclude_matches": [
+        "https://bagofmapping.com/startCampaign/",
+        "https://dev.bagofmapping.com/startCampaign/",
+        "http://localhost/startCampaign/",
+        "https://bagofmapping.com/startMapFromImage/",
+        "https://dev.bagofmapping.com/startMapFromImage/",
+        "http://localhost/startMapFromImage/"
+      ],
+      "js": ["assets/helpers.js", "content-scripts/content.bom.js"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/favicon-16x16.png",
+      "32": "icons/favicon-32x32.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*", "img/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

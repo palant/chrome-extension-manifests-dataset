@@ -1,0 +1,101 @@
+---
+name: GeoGuessr Radio
+version: 0.7.0
+category_slug: lifestyle/fun
+rating: 4.882352941176471
+rating_count: 17
+user_count: 1000
+release_date: '2024-07-08T04:51:59.000Z'
+size: 211KiB
+languages:
+  - English
+description: >-
+  Go on a roadtrip in GeoGuessr and listen to local radio stations while
+  playing.
+publisher_account: Redfox
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GeoGuessr Radio",
+  "version": "0.7.0",
+  "description": "Go on a roadtrip in GeoGuessr and listen to local radio stations while playing.",
+  "permissions": [
+    "storage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://www.geoguessr.com/api/v3/*"
+  ],
+  "externally_connectable": {
+    "ids": [
+      "bgajilfchnbbdpgmdmcocjocagpgmpdn"
+    ],
+    "matches": [
+      "https://www.geoguessr.com/*"
+    ],
+    "accepts_tls_channel_id": false
+  },
+  "icons": {
+    "32": "public/icon32.png",
+    "48": "public/icon48.png",
+    "64": "public/icon64.png",
+    "128": "public/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "public/*",
+        "assets/*"
+      ],
+      "matches": [
+        "https://www.geoguessr.com/*"
+      ]
+    }
+  ],
+  "commands": {
+    "toggle-radio": {
+      "description": "Toggle the radio"
+    },
+    "next-station": {
+      "description": "Skip station"
+    },
+    "increase-volume": {
+      "suggested_key": {
+        "default": "Ctrl+Up"
+      },
+      "description": "Increase volume"
+    },
+    "decrease-volume": {
+      "suggested_key": {
+        "default": "Ctrl+Down"
+      },
+      "description": "Lower volume"
+    }
+  },
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup/index-LR5NHJGM.html",
+    "default_icon": "public/icon32.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.geoguessr.com/*"
+      ],
+      "js": [
+        "content/index.js"
+      ],
+      "css": [
+        "content/index.css",
+        "public/radiofont.css"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

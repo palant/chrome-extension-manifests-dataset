@@ -1,0 +1,94 @@
+---
+name: Slate Web Extension
+version: 4.0.1
+category_slug: productivity/workflow
+rating: 3.5
+rating_count: 6
+user_count: 554
+release_date: '2022-10-04T03:53:35.000Z'
+size: 2.66MiB
+languages:
+  - English
+description: Easily save any link to your Slate account.
+publisher_account: hello
+support_website: https://slate.host/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Slate Web Extension",
+  "description": "Easily save any link to your Slate account.",
+  "version": "4.0.1",
+  "homepage_url": "https://slate.host",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_icon": "icon128.png",
+    "default_title": "Slate Web Extension"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "all_frames": false,
+      "js": ["./content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "chrome_url_overrides": {
+    "newtab": "newTab.html"
+  },
+  "permissions": [
+    "tabs",
+    "cookies",
+    "commands",
+    "bookmarks",
+    "history",
+    "storage",
+    "unlimitedStorage",
+    "tabGroups"
+  ],
+  "host_permissions": [
+    "https://slate.host/",
+    "https://slate-dev.onrender.com/"
+  ],
+  "commands": {
+    "open-app": {
+      "suggested_key": {
+        "default": "Ctrl+Period",
+        "mac": "Command+J"
+      },
+      "description": "Open the slate extension"
+    },
+    "open-app-on-slates": {
+      "suggested_key": {
+        "default": "Alt+T",
+        "mac": "Alt+T"
+      },
+      "description": "Open the slate extension"
+    },
+    "direct-save": {
+      "suggested_key": {
+        "default": "Alt+S",
+        "mac": "Alt+S"
+      },
+      "description": "Direct save"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["index.html", "/fonts/*", "static/*", "/images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

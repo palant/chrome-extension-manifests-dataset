@@ -1,0 +1,146 @@
+---
+name: Act-On Anywhere
+version: '2.79'
+category_slug: productivity/workflow
+rating: 3.888888888888889
+rating_count: 9
+user_count: 808
+release_date: '2024-07-02T15:17:44.000Z'
+size: 700KiB
+languages:
+  - English (United States)
+description: Sales and Marketing Acceleration.
+publisher: Act-On Software, Inc.
+publisher_account: Act-On Software
+publisher_address: |-
+  121 SW Morrison St suite 1600
+  Portland, OR 97204-3117
+  US
+privacy_policy: https://www.act-on.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Act-On Anywhere",
+  "description": "Sales and Marketing Acceleration.",
+  "version": "2.79",
+  "icons": {
+    "16": "img/logo/ao-logo-color-16.png",
+    "32": "img/logo/ao-logo-color-32.png",
+    "48": "img/logo/ao-logo-color-48.png",
+    "128": "img/logo/ao-logo-color-128.png"
+  },
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "clipboardWrite",
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "offscreen",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sandbox.html",
+        "hbs/*",
+        "img/*",
+        "css/*",
+        "js/*",
+        "fonts/*.*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "js/offscreen/common.js",
+        "js/offscreen/socket.io.js",
+        "js/lib/jquery/jquery-3.7.1.min.js",
+        "js/lib/jquery/jquery.endless-scroll.js",
+        "js/lib/jquery/jquery.visible.js",
+        "js/offscreen/constants.js",
+        "js/contentscript/aolibrary/contentDialogUI.js",
+        "js/offscreen/utils.js",
+        "js/contentscript/aolibrary/contentscript.js"
+      ],
+      "css": [
+        "css/lib/google.font.css",
+        "css/lib/bootstrap.min.css",
+        "css/lib/font-awesome.min.css",
+        "css/aologo.css",
+        "css/act-on_style_folder.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "js/offscreen/constants.js",
+        "js/lib/lru.js",
+        "js/contentscript/timeline/timeline.js"
+      ],
+      "css": [
+        "css/main.css",
+        "css/lib/font-awesome.min.css",
+        "css/aologo.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "js/lib/jquery/jquery-3.7.1.min.js",
+        "js/lib/jquery/jquery.ba-bbq.min.js",
+        "js/lib/gmailr.js",
+        "js/contentscript/gmail/event_monitor.js",
+        "js/lib/yepnope.1.5.4-min.js",
+        "js/lib/bootstrap.js",
+        "js/lib/jquery/jquery.visible.js",
+        "js/lib/dialog.js",
+        "js/lib/css_inliner.js",
+        "js/contentscript/gmail/gmail_compose.js",
+        "js/contentscript/templateUtil.js"
+      ],
+      "css": [
+        "css/lib/dialog.css",
+        "css/lib/font-awesome.min.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "sandbox": {
+    "pages": [
+      "sandbox.html"
+    ]
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_icon": "img/logo/ao-logo-grey-19.png",
+    "default_title": "Act-On",
+    "default_popup": "popup.html"
+  }
+}

@@ -1,0 +1,65 @@
+---
+name: Better PWAs
+version: 1.0.0
+category_slug: make_chrome_yours/functionality
+rating: 5
+rating_count: 2
+user_count: 13
+release_date: '2024-11-12T04:36:58.000Z'
+size: 86.13KiB
+languages:
+  - English
+description: Improved installable web apps for selected sites.
+publisher_account: benfred
+support_website: https://github.com/benfredwells/betterPWAs/issues
+privacy_policy: https://github.com/benfredwells/betterPWAs/blob/main/PRIVACY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Better PWAs",
+  "version": "1.0.0",
+  "description": "Improved installable web apps for selected sites.",
+  "icons": {
+    "48": "images/icon48.png",
+    "512": "images/icon512.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "images/iconDisabled48.png"
+    },
+    "default_title": "Better PWA: No betterment available"
+  },
+  "permissions": ["declarativeNetRequest", "storage", "tabs", "scripting"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": ["https://github.com/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.smh.com.au/*"],
+      "js": ["manifests/www.smh.com.au.js", "injectManifest.js"]
+    },
+    {
+      "matches": ["https://app.slack.com/*"],
+      "js": ["manifests/app.slack.com.js", "injectManifest.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["manifests/icons/github-256-maskable.png"],
+      "matches": ["https://github.com/*"]
+    },
+    {
+      "resources": [
+        "manifests/icons/slack-512.png",
+        "manifests/icons/slack-144.png",
+        "manifests/icons/slack-512-maskable.png"
+      ],
+      "matches": ["https://app.slack.com/*"]
+    }
+  ]
+}

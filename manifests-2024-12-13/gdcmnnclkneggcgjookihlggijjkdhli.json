@@ -1,0 +1,82 @@
+---
+name: Sticky Notes Plus
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 3.6666666666666665
+rating_count: 3
+user_count: 237
+release_date: '2024-11-21T09:37:35.000Z'
+size: 379KiB
+languages:
+  - English (United States)
+description: Place and share sticky notes on webpages
+publisher_account: njmdevelopment
+extension_website: stickynoteplus.com
+privacy_policy: >-
+  https://docs.google.com/document/u/1/d/e/2PACX-1vT0N1Lp3NqEKyWPAJRJBa6VlW4wvSo_RlFcUXioXTvYfFbiDBkWXWjswcyQynra2zu3lmnjxvZeQIdy/pub
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sticky Notes Plus",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtWY7+7RlPX7XXT39uX7GGdPl7XTmYU3LseNL4XoaL0oFA05VjPVwoT8rmt7wN6y6YQOvdZtK/eQW+DHj+jGFqS1ffBOjP3WYHzfFTBLxGkUG92U6wHJEpQNeQFoWBt5tFDq0ncQHZGN763dMN6wXyGc7yIZOu+LjuimcbDKKNV1oQsf8zsfWsmGics95R+ymf9Q63q0FuPXw8AT5okiEge/wULws5MTlrlmwFu4BVmVQtOQKJ4QbHuT8EWaliBF2ImmEAl2KLc5Pe1klEmtldvlr2Yo6LSLXDPb6Z6qAvjP6N3jChcSJ4lcSoR5AGXmXlOMsWP0sFuU5LzY8j0hMLwIDAQAB",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "unlimitedStorage",
+    "contextMenus",
+    "identity"
+  ],
+  "action": {
+    "default_title": "Click me"
+  },
+  "version": "1.1.0",
+  "description": "Place and share sticky notes on webpages",
+  "commands": {
+    "open-full-notes": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Open the minimalistic text editor"
+    },
+    "toggle-notes-menu": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+H",
+        "mac": "Command+Shift+H"
+      },
+      "description": "Create a new note on the screen"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "css": ["html/styles.css"],
+      "matches": ["<all_urls>"],
+      "exclude_globs": ["*.pdf"],
+      "js": ["content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://stickynoteplus.com/share*"],
+      "js": ["share.js"]
+    }
+  ],
+  "icons": {
+    "128": "assets/logo-48x48.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.svg"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_ui": {
+    "open_in_tab": false,
+    "page": "html/options.html"
+  }
+}

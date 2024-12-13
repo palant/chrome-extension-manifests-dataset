@@ -1,0 +1,92 @@
+---
+name: footyscores extension
+version: 2.1.2
+category_slug: productivity/tools
+rating: 4.181818181818182
+rating_count: 11
+user_count: 1000
+release_date: '2024-05-16T15:19:33.000Z'
+size: 291KiB
+languages:
+  - English
+description: >-
+  Adjustable UI features including dark mode and companion app for footyscores
+  website.
+publisher_account: hamstring
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "footyscores extension",
+    "version": "2.1.2",
+    "description": "Adjustable UI features including dark mode and companion app for footyscores website.",
+    "options_page": "settings/settings.html",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "integration/sandbox.html"
+    },
+    "icons": {
+        "128": "assets/icon128.png"
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "webRequest",
+        "scripting",
+        "commands",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "https://supercoach.heraldsun.com.au/*"
+    ],
+    "commands": {
+        "trigger_action": {
+            "suggested_key": {
+                "default": "Ctrl+Q",
+                "mac": "Command+Q"
+            },
+            "description": "Trigger an action with a keystroke"
+        }
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://supercoach.heraldsun.com.au/*"
+            ],
+            "js": [
+                "bundle.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "bootstrap/css/bootstrap.min.css",
+                "bootstrap/js/bootstrap.bundle.min.js",
+                "css/dark-mode.css",
+                "css/experimental-mode.css",
+                "css/toolbar.css",
+                "assets/dark-mode.svg",
+                "assets/fslogo.svg",
+                "assets/settings.svg",
+                "assets/experimental.svg"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "sandbox": {
+        "pages": [
+            "integration/sandbox.html"
+        ]
+    },
+    "content_security_policy": {
+        "sandbox": "sandbox allow-scripts; script-src 'self' https://www.gstatic.com/ https://*.firebaseio.com https://www.googleapis.com"
+    }
+}

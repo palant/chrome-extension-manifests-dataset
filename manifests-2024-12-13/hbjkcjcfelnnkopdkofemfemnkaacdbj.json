@@ -1,0 +1,88 @@
+---
+name: BYT弹幕助手
+version: 1.0.1
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 47
+release_date: '2024-11-25T05:34:41.000Z'
+size: 96.29KiB
+languages:
+  - 中文 (简体)
+description: 为Youtube和Twitch提供弹幕功能，用户可提交Youtube视频和B站视频的绑定申请，平台审核通过后，其他用户观看该视频即可从B站加载弹幕
+publisher_account: bytdmofficial
+privacy_policy: https://www.bytdm.top/privacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "BYT弹幕助手",
+  "version": "1.0.1",
+  "manifest_version": 3,
+  "description": "为Youtube和Twitch提供弹幕功能，用户可提交Youtube视频和B站视频的绑定申请，平台审核通过后，其他用户观看该视频即可从B站加载弹幕",
+  "host_permissions": ["https://www.bilibili.com/", "https://api.bilibili.com/*"],
+  "permissions": ["storage",  "tabs"],
+  "icons": {
+    "48": "icons/icon48.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "48": "icons/icon48.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "protobuf/protobuf.js",
+        "content_script/app_logic.js",
+        "content_script/common.js",
+        "content_script/danmuku.js",
+        "content_script/slider.js",
+        "content_script/base_content.js",
+        "content_script/yt_content.js",
+        "content_script/tw_content.js",
+        "content_script/content.js"
+      ],
+      "css": ["css/content.css", "css/slider.css", "css/send_content.css"]
+    },
+    {
+      "matches": [
+        "https://www.twitch.tv/*"
+      ],
+      "js": [
+        "content_script/app_logic.js",
+        "content_script/common.js",
+        "content_script/danmuku.js",
+        "content_script/tw_content.js",
+        "content_script/content.js"
+      ],
+      "css": ["css/content.css"]
+    },
+    {
+      "matches": [
+        "https://user.bytdm.top/*"
+      ],
+      "js": [
+        "content_script/app_logic.js",
+        "content_script/common.js",
+        "content_script/user_bridge.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "resources": ["protobuf/dm.proto"]
+    }
+  ]
+}

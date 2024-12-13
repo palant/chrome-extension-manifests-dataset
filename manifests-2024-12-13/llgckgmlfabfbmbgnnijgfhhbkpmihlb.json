@@ -1,0 +1,70 @@
+---
+name: BookTrakr Button
+version: 1.0.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 83
+release_date: '2022-01-04T00:05:35.000Z'
+size: 26.5KiB
+languages:
+  - English (United States)
+description: >-
+  Fetch your Amazon or Kobo sales and upload them to BookTrakr automatically
+  with the click of a button.
+publisher_account: Jack Royal-Gordon
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "BookTrakr Button",
+  "version": "1.0.1",
+  
+  "description": "Fetch your Amazon or Kobo sales and upload them to BookTrakr automatically with the click of a button.",
+  "icons": {
+    "64": "Icon-64.png",
+    "128": "Icon-128.png"
+  },
+    
+  "browser_action": {
+    "default_icon": {
+      "16":  "images/button.png",
+      "32": "images/button-2x.png"
+    },
+    "default_title": "Fetch BookTrakr Sales"
+  },
+  
+  "background": {
+    "scripts": ["all/browser-polyfill.min.js", "all/message-handler.js", "all/promise-relay.js", "event/request-real.js", "event/user-tokens.js", "event/server-high-level.js", "event/tab-storage.js", "event/injections.js", "event/toolbar.js"],
+    "persistent": false
+  },
+  
+  "content_scripts": [
+    {
+      "matches": ["*://*.booktrakr.com/*", "*://*.amazon.com/*", "*://*.kobo.com/*", "*://localhost/*"],
+      "js": ["all/browser-polyfill.min.js", "all/message-handler.js", "all/promise-relay.js", "page/agnostic.js"]
+    }
+  ],
+  
+  "permissions": [
+    "*://*.booktrakr.com/*",
+  "*://localhost/*",
+    "*://*.amazon.com/*",
+    "*://kdp-export-dashboard.s3.amazonaws.com/*",
+    "*://kdp-export-pmr.s3.amazonaws.com/*",
+    "*://kdp-monthly-reports.s3.us-west-2.amazonaws.com/*",
+  "*://*.kobo.com/*",
+    "storage",
+    "webNavigation"
+  ],
+
+ "browser_specific_settings": {
+   "gecko": {
+     "id": "button@booktrakr.com",
+     "strict_min_version": "42.0",
+   "update_url": "https://www.booktrakr.com/uploads/downloads/firefox-updates.json"
+   }
+ }
+}

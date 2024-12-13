@@ -1,0 +1,77 @@
+---
+name: Rent 311
+version: '4.0'
+category_slug: productivity/tools
+rating: 5
+rating_count: 5
+user_count: 13
+release_date: '2024-06-01T11:06:47.000Z'
+size: 118KiB
+languages:
+  - English
+description: >-
+  Integrates with real state listing sites from Streeteasy.com, gives an
+  overview of 311 service requests for the properties you view.
+publisher_account: jared
+extension_website: rent311.com
+privacy_policy: https://www.termsfeed.com/live/87743fb9-e71e-48a0-ab40-ebae5f3f2bcc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rent 311",
+  "description": "Integrates with real state listing sites from Streeteasy.com, gives an overview of 311 service requests for the properties you view.",
+  "version": "4.0",
+  "action": {
+    "default_icon": "16x16.png",
+    "default_title": "Complaints are loaded automatically when you view a listing.",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "16x16.png",
+    "32": "32x32.png",
+    "48": "48x48.png",
+    "128": "128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.rent311.com/*"
+      ],
+      "js": [
+        "login.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.streeteasy.com/*"
+      ],
+      "js": [
+        "features.js"
+      ],
+      "css": [
+        "features.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "template.html",
+        "32x32.png",
+        "web_store.html"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

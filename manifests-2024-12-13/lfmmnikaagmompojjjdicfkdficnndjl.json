@@ -1,0 +1,59 @@
+---
+name: Realmadrid.pl - Blokowanie użytkowników
+version: 2.0.4
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-07-21T08:35:58.000Z'
+size: 68.38KiB
+languages:
+  - polski
+description: Aplikacja pozwala na blokowanie użytkowników na stronie Realmadryt.pl.
+publisher_account: Lorek Bartosz
+support_website: https://github.com/XaooB/block-user-chrome-extention
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Realmadrid.pl - Blokowanie użytkowników",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "version": "2.0.4",
+  "icons": {
+    "32": "resources/logo_32x32.png",
+    "64": "resources/logo_64x64.png",
+    "128": "resources/logo_128x128.png"
+  },
+  "description": "Aplikacja pozwala na blokowanie użytkowników na stronie Realmadryt.pl.",
+  "permissions": [
+    "tabs"
+  ],
+  "action": {
+    "default_icon": "resources/logo_128x128.png",
+    "default_popup": "popup.html",
+    "default_title": "Zablokuj użytkownika na realmadryt.pl"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.realmadryt.pl/news/*", "*://*.realmadryt.pl/cafe-bernabeu"],
+      "run_at": "document_start",
+      "js": [ "injected.js", "content.js"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "injected.js"
+    ],
+    "matches": ["*://*.realmadryt.pl/*"]
+  }],
+  "externally_connectable": {
+    "matches": ["*://*.realmadryt.pl/news/*", "*://*.realmadryt.pl/cafe-bernabeu"]
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

@@ -1,0 +1,133 @@
+---
+name: Shein选品助手 - 免费希音选品与数据分析
+version: 1.0.3
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 10000
+release_date: '2024-06-30T09:34:33.000Z'
+size: 657KiB
+languages:
+  - 中文 (简体)
+description: 永久免费的Shein选品数据与分析工具，数据更精准。官方网站：sheinshuju.com
+publisher_account: Shopee虾皮数据
+extension_website: sheinshuju.com
+support_website: https://www.sheinshuju.com
+privacy_policy: https://docs.qq.com/doc/DWnBiUmh4UGR5Y2xx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Shein选品助手 - 免费希音选品与数据分析",
+  "version": "1.0.3",
+  "description": "永久免费的Shein选品数据与分析工具，数据更精准。官方网站：sheinshuju.com",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Shein选品助手",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "contextMenus",
+    "cookies",
+    "storage",
+    "activeTab",
+    "tabs",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback", 
+    "declarativeNetRequestWithHostAccess",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.shein.com/*",
+        "*://*.shein.com.hk/*",
+        "*://*.shein.com.vn/*",
+        "*://*.shein.co.uk/*",
+        "*://*.shein.in/*",
+        "*://*.shein.tw/*",
+        "*://*.shein.com.mx/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "sheinContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.temu.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "temuContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.sheinshuju.com/*",
+        "*://*.geekbi.com/*",
+        "*://*.geekbi.cn/*",
+        "*://localhost/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "apiContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "unionContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.1688.com/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "alibabaContentScript.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "assets/img/logo.svg",
+        "sheinContentScript.css",
+        "popup.css",
+        "unionContentScript.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

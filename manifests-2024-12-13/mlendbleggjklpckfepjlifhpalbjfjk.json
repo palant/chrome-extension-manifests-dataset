@@ -1,0 +1,125 @@
+---
+name: NeuroPrice Repricer - Amazon repricing tool
+version: 1.135.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 705
+release_date: '2024-12-13T04:34:30.000Z'
+size: 1.37MiB
+languages:
+  - English
+description: Automated Amazon repricing tool that works directly on the Amazon page
+publisher: FBA Mastery
+publisher_address: |-
+  2232 Dell Range BLVD.
+  Suite 245
+  Cheyenne, WY 82009
+  US
+extension_website: neuroprice.io
+support_website: https://www.neuroprice.io/resources
+privacy_policy: https://www.fbamastery.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "NeuroPrice Repricer - Amazon repricing tool",
+  "version": "1.135.1",
+  "description": "Automated Amazon repricing tool that works directly on the Amazon page",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "Neuro Price Login",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.sellercentral.amazon.com/pricing/health/*",
+      "*://sellercentral.amazon.com/myinventory/inventory*",
+      "*://sellercentral.amazon.ca/myinventory/inventory*",
+      "*://sellercentral.amazon.ca/inventory/*viewId=PRICING*",
+      "*://sellercentral.amazon.com/inventory/*viewId=PRICING*",
+      "*://sellercentral.amazon.ca/inventory?*viewId=PRICING*",
+      "*://sellercentral.amazon.com/inventory?*viewId=PRICING*",
+      "*://sellercentral.amazon.com/inventory/view/PRICING*",
+      "*://sellercentral.amazon.com/inventory/preferences/FBA*",
+      "*://sellercentral.amazon.com/inventory/preferences/PRICING*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://sellercentral.amazon.com/myinventory/inventory*",
+        "*://sellercentral.amazon.ca/myinventory/inventory*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-main.js"
+      ],
+      "css": [
+        "styles/contentstyle.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://sellercentral.amazon.ca/inventory/*viewId=PRICING*",
+        "*://sellercentral.amazon.com/inventory/*viewId=PRICING*",
+        "*://sellercentral.amazon.ca/inventory?*viewId=PRICING*",
+        "*://sellercentral.amazon.com/inventory?*viewId=PRICING*",
+        "*://sellercentral.amazon.com/inventory/view/PRICING*",
+        "*://sellercentral.amazon.com/inventory/preferences/FBA*",
+        "*://sellercentral.amazon.com/inventory/preferences/PRICING*",
+        "*://*.sellercentral.amazon.com/pricing/health/*",
+        "*://sellercentral.amazon.com/pricing/health/*",
+        "*://sellercentral.amazon.com/pricing/health*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts_old/import-main.js"
+      ],
+      "css": [
+        "styles/contentstyle.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "https://www.amazon.com/*",
+    "https://www.amazonaws.com/*",
+    "https://*.neuroprice.io/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "chunks/*-*.js",
+        "content-scripts/main.js",
+        "content-scripts_old/main.js"
+      ],
+      "matches": [
+        "*://sellercentral.amazon.com/*",
+        "*://sellercentral.amazon.ca/*",
+        "*://*.sellercentral.amazon.com/*",
+        "https://www.amazon.com/*",
+        "https://www.amazonaws.com/*",
+        "https://*.neuroprice.io/*"
+      ]
+    }
+  ]
+}

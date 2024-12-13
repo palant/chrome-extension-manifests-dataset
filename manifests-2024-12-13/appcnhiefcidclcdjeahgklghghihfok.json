@@ -1,0 +1,107 @@
+---
+name: Google Meet Attendance List
+version: 5.0.1
+category_slug: productivity/education
+rating: 4.705316455696202
+rating_count: 1975
+user_count: 400000
+release_date: '2024-06-17T09:39:28.000Z'
+size: 1.91MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Türkçe
+  - español
+  - italiano
+  - português (Portugal)
+  - română
+  - русский
+  - українська
+description: Easiest way to save the attendance list for your meetings or lectures
+publisher_account: MeetList
+extension_website: meetlist.io
+privacy_policy: https://meetlist.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "5.0.1",
+  "author": "Alex M",
+  "name": "__MSG_name__",
+  "short_name": "__MSG_short_name__",
+  "description": "__MSG_description__",
+
+  "default_locale": "en",
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "options_page": "options.html",
+
+  "externally_connectable": {
+    "matches": [
+      "*://*.meetlist.io/*"
+    ]
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "icons/logo-16.png",
+      "24": "icons/logo-24.png",
+      "32": "icons/logo-32.png",
+      "48": "icons/logo-48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "__MSG_name__"
+  },
+
+  "content_scripts": [
+    {
+      "js": ["browser-polyfill.js", "content.js"],
+      "matches": ["*://meet.google.com/*-*-*"],
+      "run_at": "document_idle",
+      "all_frames": false
+    },
+    {
+      "js": ["sync.js"],
+      "matches": ["*://*.meetlist.io/*"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [{
+    "resources": [
+      "shims.js",
+      "icons/logo-24.png"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; script-src-elem 'self'"
+  },
+
+  "icons": {
+    "16": "icons/logo-16.png",
+    "32": "icons/logo-32.png",
+    "48": "icons/logo-48.png",
+    "64": "icons/logo-64.png",
+    "128": "icons/logo-128.png"
+  },
+
+  "permissions": [
+    "tabs",
+    "webRequest",
+    "storage",
+    "unlimitedStorage"
+  ],
+
+  "host_permissions": [
+    "*://*.meetlist.io/*",
+    "*://api.meetlist.io/*"
+  ]
+}

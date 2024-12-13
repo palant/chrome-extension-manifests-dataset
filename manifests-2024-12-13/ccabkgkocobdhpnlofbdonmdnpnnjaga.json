@@ -1,0 +1,108 @@
+---
+name: 'LinkedIn Automation Tool for Prospecting & Lead Generation: Leadseeder'
+version: 1.1.7
+category_slug: lifestyle/social
+rating: 4.967741935483871
+rating_count: 93
+user_count: 333
+release_date: '2024-11-16T13:50:39.000Z'
+size: 1.57MiB
+languages:
+  - English
+  - español
+description: >-
+  Best LinkedIn automation tool for bulk sending invitations and messages.
+  LinkedIn sales navigator and Recruiter support.
+publisher_account: Leadseeder
+extension_website: leadseeder.co
+support_website: https://intercom.help/leadseeder/en/
+privacy_policy: https://leadseeder.co/privacy-policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "LinkedIn Automation Tool for Prospecting & Lead Generation: Leadseeder",
+  "description": "Best LinkedIn automation tool for bulk sending invitations and messages. LinkedIn sales navigator and Recruiter support.",
+  "version": "1.1.7",
+  "author": "leadseeder.co",
+  "minimum_chrome_version": "93",
+  "action": {
+    "default_popup": "./Views/popup.html",
+    "default_icon": "./Assets/Images/icon.png"
+  },
+  "icons": {
+    "128": "./Assets/Images/icon.png",
+    "16": "./Assets/Images/icon.png",
+    "48": "./Assets/Images/icon.png",
+    "32": "./Assets/Images/icon.png",
+    "64": "./Assets/Images/icon.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "scripting",
+    "identity",
+    "identity.email"
+  ],
+  "background": {
+    "service_worker": "./Scripts/BackgroundScript/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "*://*.linkedin.com/*"],
+      "css": ["./Assets/CSS/style.css", "./Libs/jquery-ui.css"],
+      "all_frames": false,
+      "js": [
+        "./Libs/jquery-1.12.4.js",
+        "./Libs/jquery-ui.js",
+        "./Libs/toast.min.js",
+        "./Libs/alert.min.js",
+        "./Libs/moment.js",
+        "./Assets/JS/web.api.js",
+        "./Assets/JS/linkedin.api.js",
+        "./Assets/JS/notify.min.js",
+        "./Scripts/ContentScript/content_script.js"
+      ],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*.linkedin.com/*"],
+      "css": [],
+      "all_frames": false,
+      "js": [
+        "./Libs/jquery-1.12.4.js",
+        "./Libs/moment.js",
+        "./Libs/toast.min.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*.leadseeder.in/*"],
+      "js": ["./Scripts/ContentScript/extension_installed.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["myscript.js", "Views/popup.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "https://backend.leadseeder.co/*",
+    "https://app.leadseeder.co/*",
+    "http://localhost:3000/",
+    "http://linkedin.com/*",
+    "https://linkedin.com/*",
+    "http://*.linkedin.com/*",
+    "https://*.linkedin.com/*",
+    "http://www.linkedin.com/*",
+    "https://www.linkedin.com/*"
+  ]
+}

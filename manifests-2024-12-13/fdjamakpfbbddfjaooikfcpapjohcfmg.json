@@ -1,0 +1,201 @@
+---
+name: Dashlane — Password Manager
+version: 6.2450.0
+category_slug: make_chrome_yours/privacy
+rating: 4.69405628179535
+rating_count: 15529
+user_count: 2000000
+release_date: '2024-12-12T04:15:45.000Z'
+size: 14.49MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - português (Brasil)
+  - svenska
+  - 中文 (简体)
+  - 日本語
+  - 한국어
+description: >-
+  Dashlane makes the internet easier. Save all your passwords, fill forms fast,
+  and keep your data accessible and safe.
+publisher: Dashlane SAS
+publisher_account: Dashlane
+publisher_address: |-
+  21 Rue Pierre Picard
+  Paris 75018
+  FR
+extension_website: dashlane.com
+support_website: https://support.dashlane.com
+privacy_policy: https://www.dashlane.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_icon": {
+      "16": "icons/action/icon_loading.png",
+      "32": "icons/action/icon_loading@2x.png"
+    },
+    "default_popup": "popup/index.html",
+    "default_title": "Dashlane"
+  },
+  "background": {
+    "service_worker": "background-service-worker.js"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L"
+      }
+    }
+  },
+  "default_locale": "en",
+  "description": "__MSG_ExtensionShortDescription__",
+  "icons": {
+    "16": "icons/icon-dashlane-16px.png",
+    "48": "icons/icon-dashlane-48px.png",
+    "128": "icons/icon-dashlane-128px.png"
+  },
+  "manifest_version": 3,
+  "minimum_chrome_version": "114",
+  "name": "__MSG_ExtensionName__",
+  "storage": {
+    "managed_schema": "managed-storage-schema.json"
+  },
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "contextMenus",
+    "cookies",
+    "idle",
+    "privacy",
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webRequest",
+    "scripting",
+    "declarativeNetRequest",
+    "webRequestAuthProvider",
+    "alarms"
+  ],
+  "optional_permissions": [
+    "downloads"
+  ],
+  "version": "6.2450.0",
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://platform.twitter.com/widgets/*",
+        "*://www.facebook.com/plugins/*",
+        "*://plusone.google.com/_/+1/*",
+        "*://challenges.cloudflare.com/*"
+      ],
+      "exclude_globs": [
+        "*://www.google.*/*sourceid=chrome-instant*",
+        "*://www.google.*/blank.html*"
+      ],
+      "js": [
+        "content/contentScripts/kwift.CHROME.js",
+        "content/injected/vendors.js"
+      ],
+      "css": [
+        "content/webui/webui-frame.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "content/contentScripts/dashlane-saml-intercept-script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": false
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://platform.twitter.com/widgets/*",
+        "*://www.facebook.com/plugins/*",
+        "*://plusone.google.com/_/+1/*",
+        "*://challenges.cloudflare.com/*"
+      ],
+      "exclude_globs": [
+        "*://www.google.*/*sourceid=chrome-instant*",
+        "*://www.google.*/blank.html*"
+      ],
+      "js": [
+        "content/pageScripts/dashlane-webauthn-page-script.js",
+        "content/pageScripts/dashlane-shadow-dom-page-script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://platform.twitter.com/widgets/*",
+        "*://www.facebook.com/plugins/*",
+        "*://plusone.google.com/_/+1/*",
+        "*://challenges.cloudflare.com/*"
+      ],
+      "exclude_globs": [
+        "*://www.google.*/*sourceid=chrome-instant*",
+        "*://www.google.*/blank.html*"
+      ],
+      "js": [
+        "content/pageScripts/dashlane-webkit-animation-page-script.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "index.html",
+        "loading.html",
+        "content/injected/logo-autofill-known.svg",
+        "content/injected/logo-autofill-unknown.svg",
+        "content/injected/loader.png",
+        "content/webui/index.html",
+        "content/injected/vendors.js",
+        "content/pageScripts/dashlane-webauthn-page-script.js",
+        "content/pageScripts/dashlane-shadow-dom-page-script.js",
+        "content/pageScripts/dashlane-webkit-animation-page-script.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ]
+}

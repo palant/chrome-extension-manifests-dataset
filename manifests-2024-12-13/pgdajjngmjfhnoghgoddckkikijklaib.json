@@ -1,0 +1,78 @@
+---
+name: Ref Schedule Sync
+version: '1.01'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2021-12-05T11:24:16.000Z'
+size: 345KiB
+languages:
+  - English (United States)
+description: Add games from Arbiter or HorizonWebRef to your Google calendar
+publisher_account: matthew.rosenfeld22
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ref Schedule Sync",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqaXv3t1jWek67zLpVXIAUWPuCDmbt4KRWQJM8TSBKkvhsw9gmnmVWWzW6yieUQzMDLOJzIJZQgbgRUEvf8ozWG5Evqx+CVTtG5vWcYY5cgocq5sEbhJFiDLZQbeGt61lrjcWAnq4GlDXW9Qbd95EcMyHc80O/jzUjdWctVWTiLal4GVd1tRpKBKnE3jMD7rLGZ6hgkJjxWum2uV5a5U185bYIoLEr6OlGG3tPm0XUtoSpvNBexm6qOFRgATt6/XJlbaCremtKcO1kfoekvIcwjHDJtBfOznXvCSKRN+idQBPO9KaJzMJ/vJ2KT24G7X7W1mIpviMLP2ndMwxoibwCwIDAQAB",
+  "version": "1.01",
+  "description": "Add games from Arbiter or HorizonWebRef to your Google calendar",
+  "permissions": [
+    "storage",
+    "tabs",
+    "identity"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "options_page": "settings.html",
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "439216554338-hs93a8g50qp7l349dfufua7spniknf6n.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar"
+    ]
+  },
+  "content_security_policy": {
+    "sandbox ": "script-src 'self' https://calendar.google.com https://apis.google.com; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www1.arbitersports.com/Official/GameScheduleEdit.aspx",
+        "https://www.horizonwebref.com/?*pageID=1102*"
+      ],
+      "css": ["main.css"],
+      "js": [
+        "content_script.js",
+        "lib/jquery.min.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "main.js",
+        "ParsedGame.js",
+        "HWRGame.js",
+        "ARBGame.js",
+        "services/ipc.js",
+        "services/LocalStorageService.js",
+        "commonContent.js",
+        "horizonContent.js",
+        "arbiterContent.js"
+      ], "matches": [
+        "https://www1.arbitersports.com/*",
+        "https://www.horizonwebref.com/*"
+      ]
+    }
+  ],
+  
+  "manifest_version": 3
+}

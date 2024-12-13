@@ -1,0 +1,87 @@
+---
+name: GeroWallet
+version: 1.17.1
+category_slug: productivity/workflow
+rating: 4.673684210526316
+rating_count: 95
+user_count: 10000
+release_date: '2024-06-06T05:42:46.000Z'
+size: 4.22MiB
+languages:
+  - English (United States)
+description: A user friendly Cardano light wallet
+publisher_account: chrome-web-store
+extension_website: gerowallet.io
+support_website: https://gerowallet.io/#contact
+privacy_policy: https://www.gerowallet.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GeroWallet",
+  "short_name": "GeroWallet",
+  "version": "1.17.1",
+  "description": "A user friendly Cardano light wallet",
+  "icons": {
+    "16": "./assets/img/logo16.png",
+    "48": "./assets/img/logo48.png",
+    "128": "./assets/img/logo128.png"
+  },
+  "action": {
+    "default_popup": "index.html?#/popup",
+    "default_icon": {
+      "16": "./assets/img/logo16.png",
+      "48": "./assets/img/logo48.png",
+      "128": "./assets/img/logo128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "tabs",
+    "clipboardRead",
+    "storage",
+    "favicon"
+  ],
+  "host_permissions": [
+    "*://connect.trezor.io/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "inject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://connect.trezor.io/9/*"
+      ],
+      "js": [
+        "./assets/vendor/content-script.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*",
+ "http://*/*"
+      ],
+      "js": [
+        "contentPage.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self' 'wasm-unsafe-eval' ; font-src 'self' https://fonts.gstatic.com/; connect-src https://mobile.gerowallet.io/api/ https://api.handle.me/handles/ https://cdn.plyr.io/ https://api.cardanoshield.com/api/ https://backend.gerowallet.net/ https://preview.gerowallet.net/ https://backend.gerowallet.io/ https://preprod.gerowallet.net/ https://api.coingecko.com/ https://cardano-mainnet.blockfrost.io/ https://js.cexplorer.io/api-static/pool/ https://apollo.apps.gerowallet.io/api/ ; style-src * 'unsafe-inline' 'self'  blob: ; img-src 'self'  https: data: ipfs: http://backend.gerowallet.net/ipfs/ http://backend.gerowallet.io/ipfs; frame-src https://connect.trezor.io/; media-src https://cdn.plyr.io/ https://backend.gerowallet.net/ https://preview.gerowallet.net/ https://backend.gerowallet.io/ https://preprod.gerowallet.net/; script-src-elem 'self'"
+  }
+}

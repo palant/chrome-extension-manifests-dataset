@@ -1,0 +1,97 @@
+---
+name: База кроссов автозапчастей
+version: 2.0.9
+category_slug: productivity/tools
+rating: 4.59375
+rating_count: 32
+user_count: 2000
+release_date: '2022-07-18T07:49:59.000Z'
+size: 922KiB
+languages:
+  - русский
+description: >-
+  Расширение собирает кроссы с сайтов основных поставщиков автозапчастей и дает
+  доступ к базе кроссов https://fapi.iisis.ru/
+publisher_account: development.iisis
+extension_website: fapi.iisis.ru
+support_website: https://vk.com/bazakrossov
+privacy_policy: https://fapi.iisis.ru/privacy-policy-apca
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "База кроссов автозапчастей",
+  "short_name": "Apca",
+  "version": "2.0.9",
+  "manifest_version": 2,
+  "description": "Расширение собирает кроссы с сайтов основных поставщиков автозапчастей и дает доступ к базе кроссов https://fapi.iisis.ru/",
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "icons": {
+    "16": "src/images/icon16.png",
+    "24": "src/images/icon24.png",
+    "32": "src/images/icon32.png",
+    "64": "src/images/icon64.png",
+    "128": "src/images/icon128.png"
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "clipboardWrite",
+    "clipboardRead",
+    "<all_urls>"
+  ],
+
+  "browser_action" : {
+    "default_title" : "База кроссов автозапчастей",
+    "default_icon": {
+      "16": "src/images/icon16.png",
+      "24": "src/images/icon24.png",
+      "32": "src/images/icon32.png"
+    },
+    "default_popup" : "src/html/popup.html"
+  },
+
+  "background": {
+    "scripts": ["src/js/background.js"]
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://exist.ru/*pcode=*",
+        "*://www.exist.ru/*pcode=*",
+        "*://exist.ru/*pid=*",
+        "*://www.exist.ru/*pid=*",
+        "http://www.autopiter.ru/goods/*",
+        "*://berg.ru/search/*",
+        "http://www.mikado-parts.ru/OFFICE/*CODE=*",
+        "http://www.mikado-parts.ru/OFFICE/*code=*"
+      ],
+      "js": [ "src/js/content_scripts.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://www.orum.ru/orumarticlesearch/*",
+        "https://4mycar.ru/parts/*"
+      ],
+      "js": [ "src/js/jquery/html/content_scripts.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.emex.ru/*",
+        "http://etp.armtek.ru/*",
+        "https://www.autodoc.ru/*"
+      ],
+      "js": [ "src/js/jquery/json/content_scripts.js"],
+      "run_at": "document_end"
+    }
+
+  ],
+  "web_accessible_resources": [
+    "/src/*"
+  ]
+}

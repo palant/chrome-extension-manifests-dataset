@@ -1,0 +1,90 @@
+---
+name: AORForms Chrome Extension
+version: 1.1.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 6
+release_date: '2024-12-11T08:21:32.000Z'
+size: 381KiB
+languages:
+  - English (United States)
+description: AORForms Chrome Extension
+publisher: E Agent Center Inc
+publisher_account: AorForms
+publisher_address: |-
+  1755 the Exchange Suite 108
+  atlanta, GA 30339
+  US
+extension_website: aorforms.com
+support_website: www.aorforms.com
+privacy_policy: https://aorforms.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AORForms Chrome Extension",
+  "description": "AORForms Chrome Extension",
+  "version": "1.1.0",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "AORForms Chrome Extension",
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "assets/images/icon16.png",
+      "32": "assets/images/icon32.png",
+      "64": "assets/images/icon64.png",
+      "128": "assets/images/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "32": "assets/images/icon32.png",
+    "64": "assets/images/icon64.png",
+    "128": "assets/images/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/background/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "run_at" : "document_start",
+      "js": ["src/content/before.js"],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    },
+    {
+      "run_at" : "document_idle",
+      "css": [
+        "assets/css/custom-content.css"
+      ],
+      "js": ["src/content/after.js"],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "assets/*.*"
+    ],
+    "matches": [
+      "https://*/*"
+    ]
+  }],
+  "options_page": "src/pages/options/options.html"
+}

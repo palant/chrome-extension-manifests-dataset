@@ -1,0 +1,125 @@
+---
+name: Worksoft QaSCRIBE - Beta
+version: 4.0.17.1
+category_slug: productivity/developer
+rating: null
+rating_count: null
+user_count: 15
+release_date: '2023-12-01T05:15:59.000Z'
+size: 1.08MiB
+languages:
+  - English
+description: >-
+  QaSCRIBE is the test script "authoring" tool that can help you rapidly
+  automate your manual test cases
+publisher: Worksoft
+publisher_account: qascribe
+publisher_address: |-
+  Punjagutta Flyover
+  Punjagutta Officers Colony, Punjagutta
+  Hyderabad, Telangana 500016
+  IN
+extension_website: worksoft.com
+privacy_policy: https://www.worksoft.com/privacy-statement
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "description": "QaSCRIBE is the test script \"authoring\" tool that can help you rapidly automate your manual test cases",
+    "manifest_version": 3,
+    "name": "Worksoft QaSCRIBE - Beta",
+    "version": "4.0.17.1",
+    "homepage_url": "http://www.worksoft.com/",
+    "devtools_page": "devtools/devtools.html",
+    "icons":{   
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+       "128": "icons/icon128.png"
+    },
+    "permissions": [
+        "tabs",
+        "scripting",
+        "storage",
+        "webNavigation"
+    ],
+    "host_permissions":[
+        "*://*/*"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self';     object-src 'self'",
+        "shadowbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval';     object-src 'self'"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["common/browser-polyfill.js"
+                , "common/jquery-3.6.0.js",
+                "content/headless/inject-script.js"],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["content/headless/inject-eval.js"],
+            "match_about_blank": true,
+            "all_frames": true,
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["*://*.eureqatest.dev/*"
+                , "*://*.eureqatest.net/*"
+                , "*://*.eureqatest.com/*"
+                , "*://*.eureqatest.xyz/*"
+                , "*://*.eureqatest.org/*"
+                , "*://*.eureqa.dev/*"
+                , "*://*.worksoft.cloud/*"
+            ],
+            "js": [
+                "content/headless/inject-exentension-info.js",
+                "content/eureqa-connect.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "background":
+    {
+        "service_worker": "service-worker.js"
+    },
+    
+    "web_accessible_resources": [{
+        "matches": ["<all_urls>"],
+        "resources": [
+            "content/headless/extension-info.js"
+            ,"content/headless/inject-exentension-info.js"
+            ,"content/headless/global-eval.js"
+            ,"content/headless/inject-eval.js"
+            
+            ,"bootstrap.html"
+        
+            ,"page/prompt.js"
+            ,"page/runScript.js"
+
+            ,"icons/logo.png"
+            ,"icons/icon48.png"
+            ,"icons/targetInspector.png"
+            ,"icons/targetInspectorSelected.png"
+            ,"icons/downArrow.png"
+            ,"icons/upArrow.png"
+            ,"icons/add.png"
+            ,"icons/recording.png"
+            ,"icons/startRecording.png"
+            ,"icons/switch.png"
+            ,"icons/sprite.png"
+            ,"icons/x-icon.png"
+            
+            ,"styles/contextMenu.css"
+            ,"styles/dialogBox.css"
+            ,"styles/toolBox.css"
+        ]
+        
+    
+    }]
+}

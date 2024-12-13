@@ -1,0 +1,107 @@
+---
+name: SFR Call Contact - Bandeau Intégré
+version: 1.2.2
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 323
+release_date: '2021-01-05T11:11:46.000Z'
+size: 51.95KiB
+languages:
+  - Français
+description: >-
+  Le bandeau intégré permet un couplage simple et rapide de la solution de
+  centre d’appels Call Contact à votre CRM.
+publisher: SFR Business
+publisher_address: |-
+  16 rue du Général Alain de Boissieu
+  PARIS 75015
+  FR
+support_website: https://assistance.utilisateur-relationclient.sfrbusiness.fr/callcontact/
+privacy_policy: >-
+  https://www.sfrbusiness.fr/sfr-politique-de-protection-des-donnees-personnelles.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "SFR Call Contact - Bandeau Intégré",
+  "short_name": "SFR CC Bandeau",
+  "version": "1.2.2",
+  "default_locale": "fr",
+  "author": "SFR Business",
+  "description": "Le bandeau intégré permet un couplage simple et rapide de la solution de centre d’appels Call Contact à votre CRM.",
+  "homepage_url": "https://www.sfrbusiness.fr/relation-client/call-contact",
+  "icons": {
+    "48": "icons/sfr_48.png",
+    "128": "icons/sfr.png"
+  },
+
+  "permissions": [
+    "https://opencc.callcontact.les800.com/*",
+    "notifications",
+    "contextMenus"
+  ],
+  "background": {
+    "scripts": [
+      "common.js",
+      "config.js",
+      "lib/browser-polyfill.js",
+      "background/Badge.js",
+      "background/CallTimer.js",
+      "background/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icons/sfr.png",
+    "default_title": "SFR Bandeau Intégré",
+    "default_popup": "popup/popup.html"
+  },
+
+  "content_scripts":[
+    {
+      "matches": ["https://*.lightning.force.com/*"],
+      "css": ["content/content.css"],
+      "js": ["lib/browser-polyfill.js", "common.js", "content/content.js", "content/salesforce_content.js"]
+    }, {
+      "matches": ["https://*.zendesk.com/agent*"],
+      "css": ["content/content.css", "content/zendesk_content.css"],
+      "js": ["lib/browser-polyfill.js", "common.js", "config.js", "content/content.js", "content/zendesk_content.js"]
+    }, {
+      "matches": ["https://*.dynamics.com/*"],
+      "css": ["content/content.css", "content/ms_dynamics_content.css"],
+      "js": ["lib/browser-polyfill.js", "common.js", "content/content.js", "content/ms_dynamics_content.js"]
+    }, {
+      "matches": ["https://*.service-now.com/*"],
+      "css": ["content/content.css", "content/serviceNow_content.css"],
+      "js": ["lib/browser-polyfill.js", "common.js", "content/content.js", "content/serviceNow_content.js"]
+    }
+  ],
+
+  "minimum_chrome_version": "76",
+
+  "protocol_handlers": [
+    {
+      "protocol": "tel",
+      "name": "Call Contact",
+      "uriTemplate": "https://opencc.callcontact.les800.com/occ-crm-connector/cc/outbound?query=%s"
+    }
+  ],
+
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "windows": "Ctrl+Shift+X",
+        "linux":   "Ctrl+Shift+X",
+        "mac":     "MacCtrl+Shift+X",
+        "default": "Ctrl+Shift+X"
+      },
+      "description": "Ouverture Bandeau Intégré"
+    }
+  },
+
+  "web_accessible_resources": [
+    "icons/phone.png"
+  ]
+}

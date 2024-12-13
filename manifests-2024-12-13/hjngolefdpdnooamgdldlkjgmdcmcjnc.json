@@ -1,0 +1,224 @@
+---
+name: Equatio - Math made digital
+version: 61.0.0
+category_slug: productivity/education
+rating: 3.9174603174603173
+rating_count: 630
+user_count: 5000000
+release_date: '2024-12-12T10:23:44.000Z'
+size: 12.36MiB
+languages:
+  - English (UK)
+  - English (United States)
+  - Français
+  - Norsk
+  - dansk
+  - español
+  - italiano
+  - svenska
+description: >-
+  Easily create mathematical equations, formulas and quizzes. Intuitively type
+  or handwrite, with no tricky math code to learn.
+publisher: TEXTHELP LTD.
+publisher_account: Texthelp
+publisher_address: |-
+  1 Orchard Way
+  ANTRIM BT41 2RU
+  GB
+extension_website: equatio.texthelp.com
+support_website: https://support.texthelp.com/index.php?sid=858314&lang=en&action=show&cat=27
+privacy_policy: >-
+  https://docs.google.com/document/d/e/2PACX-1vSPJszt_TKmrdOFsF6EN0eIvVGSTqPvAFZzRr7rQ9w1t5DG78pI-qTljH4ul0l5i7vcHS9cEXmU6M_6/pub
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_appName__",
+    "short_name": "Equatio",
+    "default_locale": "en_US",
+    "version": "61.0.0",
+    "description": "__MSG_appDesc__",
+    "icons": {
+        "16": "content/assets/equatioicon16.png",
+        "32": "content/assets/equatioicon32.png",
+        "48": "content/assets/equatioicon48.png",
+        "128": "content/assets/equatioicon128.png"
+    },
+    "action": {
+        "default_title": "Equatio"
+    },
+    "storage": {
+        "managed_schema": "schema.json"
+    },
+    "background": {
+        "service_worker": "background-wrapper.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'",
+        "sandbox": "sandbox allow-scripts; script-src 'self' 'unsafe-eval'; worker-src blob:"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "content/docsMessagingApi.js",
+                "annotate-canvas.js"
+            ],
+            "matches": [
+                "https://docs.google.com/*"
+            ],
+            "extension_ids": []
+        },
+        {
+            "resources": [
+                "content/docsMessagingApi.js"
+            ],
+            "matches": [
+                "https://*.sharepoint.com/*",
+                "https://onedrive.live.com/*",
+                "https://*.officeapps.live.com/*"
+            ],
+            "extension_ids": []
+        },
+        {
+            "resources": [
+                "content/*",
+                "mathjaxFrame/*",
+                "mmlWorker/*",
+                "annotate-canvas.js",
+                "desmos/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ],
+            "extension_ids": []
+        }
+    ],
+    "sandbox": {
+        "pages": [
+            "mmlWorker/index.html",
+            "desmos/calculator.html",
+            "desmos/graph.html"
+        ]
+    },
+    "oauth2": {
+        "client_id": "1012020947112-ej46u2phchai2guaj81fk9lb7pp2mm3q.apps.googleusercontent.com",
+        "scopes": [
+            "email",
+            "profile"
+        ]
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "windows": "Alt+Shift+Q",
+                "mac": "Alt+Shift+Q",
+                "chromeos": "Alt+Shift+Q",
+                "linux": "Alt+Shift+Q"
+            }
+        }
+    },
+    "permissions": [
+        "activeTab",
+        "tabs",
+        "alarms",
+        "storage",
+        "identity",
+        "identity.email",
+        "gcm",
+        "scripting"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://docs.google.com/*"
+            ],
+            "js": [
+                "content/chromeBundle.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        },
+        {
+            "matches": [
+                "https://*.sharepoint.com/*",
+                "https://onedrive.live.com/*",
+                "https://*.officeapps.live.com/*"
+            ],
+            "js": [
+                "content/officeBundle.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://docs.google.com/forms/*",
+                "https://docs.google.com/*/forms/*",
+                "https://docs.google.com/*picker*"
+            ],
+            "js": [
+                "content/formBundle.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content/htmlEditorApiInjector.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://docs.google.com/*"
+            ],
+            "js": [
+                "content/docsCanvas.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "https://pdf.dev.texthelp.com/*",
+                "https://orbit.texthelp.com/*",
+                "https://orbitnote-us.staging.texthelp.com/*",
+                "https://orbitnote.staging.texthelp.com/*",
+                "https://*.coursera.org/*",
+                "https://*.dev-coursera.org/*"
+            ],
+            "js": [
+                "content/equatioApi.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": false
+        },
+        {
+            "matches": [
+                "https://equatio.texthelp.com/*",
+                "https://equatio.dev.texthelp.com/*"
+            ],
+            "js": [
+                "content/mathspaceBundle.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        }
+    ],
+    "incognito": "split",
+    "externally_connectable": {
+        "matches": [
+            "https://equatio.texthelp.com/*"
+        ]
+    },
+    "version_name": "61.0.0"
+}

@@ -1,0 +1,148 @@
+---
+name: Voiceline for Chrome
+version: 1.2.5
+category_slug: productivity/workflow
+rating: 5
+rating_count: 9
+user_count: 236
+release_date: '2023-09-06T10:05:57.000Z'
+size: 2.0MiB
+languages:
+  - English (United States)
+description: >-
+  Chrome Extension that allows you to create VoiceLines wherever you are and
+  drop them where you need them
+publisher: Voiceline
+publisher_account: VoiceLine
+publisher_address: |-
+  Klenzestraße 32
+  München 80469
+  DE
+support_website: >-
+  https://support.getvoiceline.com/Install-Chrome-extension-cdb64e5afe9c48a495f7c5094dce7574
+privacy_policy: https://www.getvoiceline.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Voiceline for Chrome",
+    "description": "Chrome Extension that allows you to create VoiceLines wherever you are and drop them where you need them",
+    "manifest_version": 3,
+    "version": "1.2.5",
+    "icons": {
+        "16": "Icon_16x16.png",
+        "32": "Icon_48x48.png",
+        "128": "Icon_128x128.png"
+    },
+    "action": {
+        "default_icon": "Icon_128x128.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "externally_connectable": {
+        "matches": [
+            "http://localhost:3000/*",
+            "https://*.getvoiceline.com/*"
+        ]
+    },
+
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.getvoiceline.com/*"
+            ],
+            "include_globs": [
+                "*getvoiceline.com/*"
+            ],
+            "js": [
+                "permission.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "all_frames": true,
+            "js": [
+                "viralload.js"
+            ],
+            "run_at": "document_idle",
+            "exclude_matches": [
+                "*://docs.google.com/*"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ]
+        },
+        {
+            "matches": [
+                "https://docs.google.com/*"
+            ],
+            "js": [
+                "googleDocs_vl.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "js": [
+                "emailButton.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "host_permissions": [
+        "https://*.getvoiceline.com/*",
+        "https://.getvoiceline.com/"
+    ],
+    "permissions": [
+        "storage",
+        "tabs",
+        "cookies",
+        "alarms"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/images/*.png",
+                "assets/images/*.svg",
+                "assets/css/*.css",
+                "assets/css/fonts/*/*",
+                "assets/fonts/*.*",
+                "assets/audio/*.*",
+                "assets/animations/*.*",
+                "css/*.css",
+                "permission.html",
+                "mic.js",
+                "workletProcessor.js",
+                "copy.html",
+                "*.png"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ]
+        },
+        {
+            "resources": [
+                "googleDocs_vl.js"
+            ],
+            "matches": [
+                "https://docs.google.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "emailButton.js"
+            ],
+            "matches": [
+                "https://mail.google.com/*"
+            ]
+        }
+    ]
+}

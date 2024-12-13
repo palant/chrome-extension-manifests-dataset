@@ -1,0 +1,231 @@
+---
+name: 'BuddyBeep: Your Everyday AI Personal Assistant'
+version: 1.8.37
+category_slug: productivity/education
+rating: 5
+rating_count: 4
+user_count: 169
+release_date: '2024-12-03T11:34:12.000Z'
+size: 11.91MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Tiếng Việt
+  - español
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+  - ไทย
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+description: >-
+  Elevates browsing with AI-powered summaries, video insights, curated prompts,
+  personalized queries, and direct AI chats
+publisher_account: ZenStudio
+publisher_address: |-
+  Tdp Ng/Viết Xuân
+  Đống Đa,
+  Vĩnh Yên, Vĩnh Phúc 10000
+  VN
+extension_website: buddybeep.com
+privacy_policy: https://www.buddybeep.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEApCt1ng0yJkefftGa3vC9Ase22Ii+h5M2Ap58ZEGwkI+9tpeTZzJQmJCdt8jW+Gu+11WO0n7iUKk8larF+Hk7B501EK2IX8enZpCot2bvwNOtRNOdpHfA1Wd6yvyG0sp/s2ddNCgw7PoQtG0rvc84CiNY+VteR+Yb2N27pw2xVuzBuxgTrxhElM92sHkqa392kIxI0YYMrkaamR6zlafqm8d9OHCsSP3uh9mF/rNgb1bF9n6/eC2M7BVtCcTPay94F53ds8uzXtZZD1LK4RstYVTCYxzBhrsi/PllTClep6Jw+TUoIUF+e/Ly2/6ijhLb3DnIswIzWi6S+xWZBtzscQIDAQAB",
+  "version": "1.8.37",
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "src/assets/logo-64.png",
+    "32": "src/assets/logo-64.png",
+    "48": "src/assets/logo-48.png",
+    "128": "src/assets/logo-128.png"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "action": {},
+  "host_permissions": [
+    "https://*.bing.com/",
+    "https://*.openai.com/",
+    "https://gemini.google.com/",
+    "https://*.buddybeep.com/",
+    "https://*.duckduckgo.com/",
+    "https://*.poe.com/",
+    "https://*.anthropic.com/",
+    "https://*.claude.ai/"
+  ],
+  "optional_host_permissions": [
+    "wss://*/*"
+  ],
+  "permissions": [
+    "identity",
+    "contextMenus",
+    "storage",
+    "unlimitedStorage",
+    "declarativeNetRequestWithHostAccess",
+    "sidePanel",
+    "scripting",
+    "activeTab"
+  ],
+  "oauth2": {
+    "client_id": "13736349601-9nol47qdus5r0ou75dmjjk11l8fqcub8.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/chatgpt-inpage-proxy.ts-loader-e4d49a67.js"
+      ],
+      "matches": [
+        "https://chat.openai.com/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/index.tsx-loader-9d8bc30f.js"
+      ],
+      "matches": [
+        "https://www.linkedin.com/*"
+      ]
+    },
+    {
+      "js": [
+        "assets/index.tsx-loader-2dcc8699.js"
+      ],
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "css": [
+        "assets/index-e9c2779c.css"
+      ]
+    }
+  ],
+  "commands": {
+    "open-app": {
+      "suggested_key": {
+        "default": "Alt+B",
+        "windows": "Alt+B",
+        "linux": "Alt+B",
+        "mac": "Command+B"
+      },
+      "description": "Open BuddyBeep app"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_bing",
+        "enabled": true,
+        "path": "src/rules/bing.json"
+      },
+      {
+        "id": "ruleset_ddg",
+        "enabled": true,
+        "path": "src/rules/ddg.json"
+      },
+      {
+        "id": "ruleset_qianwen",
+        "enabled": true,
+        "path": "src/rules/qianwen.json"
+      },
+      {
+        "id": "ruleset_baichuan",
+        "enabled": true,
+        "path": "src/rules/baichuan.json"
+      },
+      {
+        "id": "ruleset_pplx",
+        "enabled": true,
+        "path": "src/rules/pplx.json"
+      }
+    ]
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://buddybeep.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://chat.openai.com/*"
+      ],
+      "resources": [
+        "assets/logger-0253bf79.js",
+        "assets/proxy-fetch-6df9b8fc.js",
+        "assets/_commonjsHelpers-4763da5c.js",
+        "assets/chatgpt-inpage-proxy.ts-f8365e52.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "resources": [
+        "assets/client-c7735796.js",
+        "assets/store-089b9408.js",
+        "assets/index.esm-006f899f.js",
+        "assets/logo-90a29867.js",
+        "assets/_commonjsHelpers-4763da5c.js",
+        "assets/useTranslation-8fb9831f.js",
+        "assets/react-a1ee806c.js",
+        "assets/index.tsx-52258a23.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "resources": [
+        "assets/client-c7735796.js",
+        "assets/index-07177cd8.js",
+        "assets/_commonjsHelpers-4763da5c.js",
+        "assets/logger-0253bf79.js",
+        "assets/react-a1ee806c.js",
+        "assets/useSuccessPopup-daae6fb9.js",
+        "assets/logo-90a29867.js",
+        "assets/store-089b9408.js",
+        "assets/index.tsx-0981c812.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "assets/client-c7735796.js",
+        "assets/_commonjsHelpers-4763da5c.js",
+        "assets/turndown.browser.es-ce56771d.js",
+        "assets/logger-0253bf79.js",
+        "assets/useSuccessPopup-daae6fb9.js",
+        "assets/useTranslation-8fb9831f.js",
+        "assets/isTypedArray-f21120e6.js",
+        "assets/contentTest.tsx-65b2d4b4.js",
+        "assets/contentTest-58acb5e7.css"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}

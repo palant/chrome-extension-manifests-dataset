@@ -1,0 +1,111 @@
+---
+name: inDoors - Show Glassdoor ratings on job sites
+version: 8.0.18
+category_slug: productivity/tools
+rating: 4.03125
+rating_count: 32
+user_count: 1000
+release_date: '2024-12-05T13:17:15.000Z'
+size: 1.39MiB
+languages:
+  - English (United States)
+description: >-
+  Shows Glassdoor ratings for companies when searching on Linkedin, Indeed, and
+  Handshake.
+publisher_account: DisillusionedGatsby
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "inDoors - Show Glassdoor ratings on job sites",
+  "short_name": "inDoors",
+  "description": "Shows Glassdoor ratings for companies when searching on Linkedin, Indeed, and Handshake.",
+  "version": "8.0.18",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/css/*",
+        "node_modules/*"    
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+ ],
+ "background": {
+    "service_worker": "src/js/background.js"
+  },
+  "content_scripts": 
+    [
+        {
+          "matches":[ "https://*.linkedin.com/*",
+                      "https://*.indeed.com/*",
+                      "https://*.indeed.com.br/*",
+                      "https://*.indeed.fr/*",
+                      "https://*.indeed.co.in/*",
+                      "https://*.indeed.com.mx/*",
+                      "https://*.indeed.nl/*",
+                      "https://*.indeed.ch/*",
+                      "https://*.indeed.ae/*",
+                      "https://*.indeed.co.uk/*",
+                      "https://*.joinhandshake.com/*",
+                      "https://*.joinhandshake.co.uk/*"
+        ],
+            "css":["src/css/inDoors.css", 
+                  "src/css/loading.css",
+                  "node_modules/tippy.js/dist/tippy.css",
+                  "src/css/inDoors-tippy.css"],
+            "js":["node_modules/arrive/minified/arrive.min.js",
+                  "node_modules/dompurify/dist/purify.min.js",
+                  "node_modules/compromise/builds/compromise.min.js",
+                  "node_modules/@popperjs/core/dist/umd/popper.min.js",
+                  "node_modules/tippy.js/dist/tippy-bundle.umd.min.js",
+                  "node_modules/thenby/thenBy.min.js",
+                  "src/js/utils.js",
+                  "src/js/misdirected-names.js",
+                  "src/js/inDoors.js"],
+            "run_at": "document_end"
+        },
+        {
+          "matches":["https://*.linkedin.com/*"],
+          "css": ["src/css/linkedin.css"],
+          "js": ["src/js/linkedin.js"],
+          "run_at": "document_end"
+        },
+        {
+          "matches": ["https://*.indeed.com/*",
+                      "https://*.indeed.com.br/*",
+                      "https://*.indeed.fr/*",
+                      "https://*.indeed.co.in/*",
+                      "https://*.indeed.com.mx/*",
+                      "https://*.indeed.nl/*",
+                      "https://*.indeed.ch/*",
+                      "https://*.indeed.ae/*",
+                      "https://*.indeed.co.uk/*"],
+          "css": ["src/css/indeed.css"],
+          "js": ["src/js/indeed.js"],
+          "run_at": "document_end"
+        },
+        {
+          "matches": ["https://*.joinhandshake.com/*",
+                      "https://*.joinhandshake.co.uk/*"],
+          "js": ["src/js/handshake.js"],
+          "run_at": "document_end"
+        }
+    ],
+  "host_permissions": [
+    "https://glassdoor.calvinwu4.workers.dev/*"
+  ],
+  "icons": {
+    "16":"src/icon/icon16.png",
+    "48":"src/icon/icon48.png",
+    "128":"src/icon/icon128.png" 
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{bb24ff36-cf99-45a9-a504-995acf401701}"
+    }
+  },
+  "manifest_version": 3
+}

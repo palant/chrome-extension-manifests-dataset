@@ -1,0 +1,87 @@
+---
+name: Add to MyRegistry.com Button
+version: 2.0.15
+category_slug: lifestyle/shopping
+rating: 4.879417879417879
+rating_count: 481
+user_count: 100000
+release_date: '2024-08-09T03:44:51.000Z'
+size: 517KiB
+languages:
+  - English (United States)
+description: Add items from all your favorite stores to one universal gift list.
+publisher_account: googlechromestore
+extension_website: www.myregistry.com
+privacy_policy: https://www.myregistry.com/Info/Privacy.aspx
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Add to MyRegistry.com Button",
+  "description": "Add items from all your favorite stores to one universal gift list.",
+  "version": "2.0.15",
+  "author": "MyRegistry.com",
+  "background": {
+    "service_worker": "lib/config.js"
+  },
+  "content_scripts": [
+    {
+      "js": [ "data/scripts/tools.js", "data/scripts/content.js", "data/scripts/messaging.js", "lib/main.js", "data/lib/sizzle.min.js", "data/lib/AddToMrButton.widget.js" ],
+      "matches": [ "<all_urls>" ],
+      "exclude_matches": [ "*://myregistry.com/*", "*://*.myregistry.com/*", "*://*.mrtesting.com/*", "*://*.myregistrystaging.com/*", "*://*.mrnico.com/*" ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "data/scripts/tools.js", "data/scripts/content.myregistry.js", "data/scripts/messaging.js", "lib/main.js"],
+      "matches": [ "*://myregistry.com/*", "*://*.myregistry.com/*", "*://*.mrtesting.com/*", "*://*.myregistrystaging.com/*", "*://*.mrnico.com/*" ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [ "data/scripts/specific/www_amazon_co_uk.js" ],
+      "matches": [ "*://*.amazon.co.uk/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "data/scripts/specific/www_shopko_com.js" ],
+      "matches": [ "*://*.shopko.com/*" ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [ "data/scripts/specific/www_zappos_com.js" ],
+      "matches": [ "*://*.zappos.com/*" ],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_icon": "data/icons/icon-32.png",
+    "default_title": "Add to MyRegistry"
+  },
+  "icons": {
+    "32": "data/icons/icon-32.png",
+    "64": "data/icons/icon-64.png",
+    "128": "data/icons/icon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.myregistry.com/*",
+    "*://*.myregistrystaging.com/*",
+    "*://*.mrtesting.com/*",
+    "*://*.mrnico.com/*"
+  ],
+  "manifest_version": 3,
+  "web_accessible_resources": [
+    {
+      "matches": [ "<all_urls>" ],
+      "resources": [
+        "data/FloatingButton/*",
+        "data/fonts/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

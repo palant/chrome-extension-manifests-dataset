@@ -1,0 +1,120 @@
+---
+name: Slowed
+version: 0.9.1
+category_slug: productivity/workflow
+rating: 4.188679245283019
+rating_count: 53
+user_count: 2000
+release_date: '2024-02-18T13:35:36.000Z'
+size: 2.69MiB
+languages:
+  - English (United States)
+description: |-
+  Rediscover songs by slowing down YouTube videos.
+  Get nostalgic with lo-fi filters.
+  Sink on stunning visuals.
+
+  ✓ Slow control
+  ✓ 1…
+publisher_account: slowed.app
+extension_website: slowed.app
+support_website: https://www.slowed.app/help
+privacy_policy: https://www.slowed.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Slowed",
+  "version": "0.9.1",
+  "manifest_version": 3,
+  "description": "",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "identity.email",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://www.youtube.com/*",
+    "*://music.youtube.com/*"
+  ],
+  "commands": {
+    "low-pass-mode-toggle": {
+      "description": "Low pass mode toggle"
+    },
+    "lofi-tape-mode-toggle": {
+      "description": "Lofi tape mode toggle"
+    },
+    "speed-up": {
+      "description": "Speed up"
+    },
+    "slow-down": {
+      "description": "Slow down"
+    },
+    "slowed-toggle": {
+      "description": "Activate the extension"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.youtube.com/*",
+        "*://music.youtube.com/*"
+      ],
+      "js": [
+        "global.js",
+        "youtubeContent.js"
+      ],
+      "css": [
+        "youtubeContent.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://slowed.app/*",
+        "*://www.slowed.app/*"
+      ],
+      "js": [
+        "global.js",
+        "slowedContent.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_title": "Slowed",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "tapeHiss.mp3",
+        "datorroReverb.js",
+        "mp3Encoder.js"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.slowed.app/*"
+    ]
+  }
+}

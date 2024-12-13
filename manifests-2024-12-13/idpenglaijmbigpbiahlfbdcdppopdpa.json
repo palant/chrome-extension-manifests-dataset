@@ -1,0 +1,57 @@
+---
+name: Kindle Highlights Extractor
+version: '1.0'
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2024-11-26T14:22:01.000Z'
+size: 1.52MiB
+languages:
+  - English
+description: Extract Kindle Highlights to PDF
+publisher_account: UnDistraced.Developer
+privacy_policy: https://www.undistracted.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kindle Highlights Extractor",
+  "version": "1.0",
+  "description": "Extract Kindle Highlights to PDF",
+  "permissions": ["activeTab"],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_title": "Start Extracting Highlights",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://read.amazon.com/notebook",
+        "https://read.amazon.com/kp/notebook"
+      ],
+      "js": [
+        "scripts/pdfmake.min.js",
+        "scripts/vfs_fonts.js",
+        "scripts/content.js"
+      ],
+      "css": ["scripts/content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": ["https://read.amazon.com/kp/notebook"]
+}

@@ -1,0 +1,64 @@
+---
+name: Excel Checkout
+version: 0.1.1
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2023-07-24T04:43:09.000Z'
+size: 100KiB
+languages:
+  - English
+description: One-click away from saving checkout information on Google Sheets
+publisher_account: randomgamingguy39
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Excel Checkout",
+    "version": "0.1.1",
+    "description": "One-click away from saving checkout information on Google Sheets",
+    "permissions": ["storage", "tabs", "identity", "contextMenus"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_scripts": [
+      {
+        "matches": ["https://*.walmart.com/*", "https://*.target.com/*", "https://*.vitacost.com/*"],
+        "js": ["contentScript.js"]
+      },
+      {
+        "matches": ["https://*.walmart.com/*", "https://*.target.com/*", "https://*.vitacost.com/*"],
+        "css": ["assets/index.css"]
+      }
+    ],
+    "action": {
+        "default_icon": {
+            "16": "assets/ext-icon.png",
+            "24": "assets/ext-icon.png",
+            "32": "assets/ext-icon.png"
+        },
+        "default_title": "Excel Checkout",
+        "default_popup": "popup.html"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/loading.gif", "assets/*"],
+            "matches": ["https://*.walmart.com/*", "https://*.target.com/*", "https://*.vitacost.com/*", "<all_urls>"]
+        },
+        {
+            "resources": ["templates.js"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "oauth2": {
+        "client_id": "576595433287-1tjqd06j0ibmjr4somn4cntsakj3lo84.apps.googleusercontent.com",
+        "scopes": ["https://www.googleapis.com/auth/spreadsheets"]
+    },
+    "options_page": "config.html"
+}

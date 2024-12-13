@@ -1,0 +1,75 @@
+---
+name: view-current-source
+version: '1.7'
+category_slug: productivity/developer
+rating: 3.16
+rating_count: 25
+user_count: 2000
+release_date: '2024-08-18T08:35:23.000Z'
+size: 340KiB
+languages:
+  - English
+description: View the source code of a page at its current state.
+publisher_account: Thomas Greiner
+extension_website: greinr.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name":   "view-current-source",
+  "version":  "1.7",
+  "minimum_chrome_version": "111.0",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "view-current-source@greinr.com",
+      "strict_min_version": "112.0"
+    }
+  },
+  "description": "View the source code of a page at its current state.",
+  "icons": {
+    "16": "assets/logo16.png",
+    "128": "assets/logo128.png"
+  },
+  "background": {
+    "scripts": ["src/bootstrap/background/index.js"],
+    "service_worker": "src/bootstrap/background/index.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "src/ui-options/ui/index.htm"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "src/polyfills/shared/index.js",
+        "src/renderer/content/serializer-css.js",
+        "src/renderer/content/serializer-html.js",
+        "src/ui-viewer/content/index.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "commands": {
+    "view-current-source": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U"
+      },
+      "description": "Opens current source code viewer for active tab"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "scripting",
+    "storage",
+    "tabs"
+  ]
+}

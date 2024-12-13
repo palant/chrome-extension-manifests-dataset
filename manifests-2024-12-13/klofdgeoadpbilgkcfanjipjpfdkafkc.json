@@ -1,0 +1,78 @@
+---
+name: Facecam
+version: 0.0.4
+category_slug: lifestyle/entertainment
+rating: 5
+rating_count: 1
+user_count: 146
+release_date: '2024-12-04T11:52:02.000Z'
+size: 22.23MiB
+languages:
+  - English
+description: A virtual camera Chrome extension.
+publisher_account: Samadhi Labs
+privacy_policy: http://www.facecam.ai/extension/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Facecam",
+  "description": "A virtual camera Chrome extension.",
+  "version": "0.0.4",
+  "minimum_chrome_version": "88",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "build/background.js",
+    "type": "module"
+  },
+  "permissions": ["scripting",
+    "alarms",
+    "storage",
+    "activeTab",
+    "tabs", 
+  "declarativeNetRequest"],
+    "declarative_net_request": {
+      "rule_resources": [ {
+         "enabled": true,
+         "id": "ruleset",
+         "path": "rules.json"
+      } ]
+   },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_popup": "build/popup.html",
+    "default_icon": "logo.png"
+  },
+  "options_page": "build/options.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"], 
+      "js": ["build/contentScript.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/build/*"],
+      "matches": ["https://*/*", "*://*.facecam.ai/*", "*://localhost/*", "*://127.0.0.1/*"]
+    }
+  ],
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.facecam.ai/*", 
+      "*://localhost/*", 
+      "*://127.0.0.1/*"
+    ],
+    "accepts_tls_channel_id": false
+  }
+}

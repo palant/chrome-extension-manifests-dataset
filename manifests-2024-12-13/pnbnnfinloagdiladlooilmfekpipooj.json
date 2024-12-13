@@ -1,0 +1,66 @@
+---
+name: Stoc - 知識をストック
+version: 0.1.4
+category_slug: productivity/workflow
+rating: 5
+rating_count: 3
+user_count: 64
+release_date: '2019-02-06T05:17:25.000Z'
+size: 195KiB
+languages:
+  - 日本語
+description: GoogleChromeでお気に入りをストックする、Stoc公式の拡張機能です。
+publisher_account: stoc
+extension_website: stoc.link
+privacy_policy: https://goals.co.jp/index.php/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Stoc - 知識をストック",
+  "short_name": "Stoc",
+  "description": "GoogleChromeでお気に入りをストックする、Stoc公式の拡張機能です。",
+  "version": "0.1.4",
+  "icons": {
+    "16": "images/icon/icon-16.png",
+    "48": "images/icon/icon-48.png",
+    "128": "images/icon/icon-128.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon/icon-19.png",
+      "38": "images/icon/icon-38.png"
+    },
+    "default_title": "Stoc",
+    "default_popup": "html/popup.html"
+  },
+  "background": {
+    "scripts": [
+      "js/lib/jquery-3.3.1.js",
+      "js/background.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://stoc.link/users/oauth_google*"],
+      "js": ["js/oauth_inject.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://stoc.link/users/oauth_facebook*"],
+      "js": ["js/oauth_inject.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "web_accessible_resources" : [
+    "html/oauth.html"
+  ],
+  "content_security_policy": "script-src 'self' https://stoc.link https://apis.google.com; object-src 'self'"
+}

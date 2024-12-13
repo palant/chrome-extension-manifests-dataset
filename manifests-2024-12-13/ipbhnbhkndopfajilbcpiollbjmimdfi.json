@@ -1,0 +1,107 @@
+---
+name: Buy anything with OneClick
+version: 0.4.0
+category_slug: lifestyle/shopping
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2020-11-25T16:03:41.000Z'
+size: 516KiB
+languages:
+  - English (United States)
+description: Buy with OneClick from your favourite sites
+publisher_account: hey
+extension_website: buywithoneclick.com
+privacy_policy: https://www.buywithoneclick.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Buy anything with OneClick",
+  "version": "0.4.0",
+  "description": "Buy with OneClick from your favourite sites",
+  "content_security_policy": "script-src 'self'; object-src 'self'",
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "19": "images/icon.png",
+      "38": "images/icon@2x.png"
+    },
+    "default_title": "OneClick buy"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "http://*/",
+    "https://*/"
+  ],
+  "background": {
+    "persistent": false,
+    "scripts": [
+      "scripts/jquery-3.5.1.min.js",
+      "scripts/crypto-aes.js",
+      "scripts/utilities.js",
+      "background.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "scripts/jquery-3.5.1.min.js",
+        "scripts/crypto-aes.js",
+        "scripts/utilities.js",
+        "scripts/injector.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://paymentcc.nike.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "scripts/injector.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://checkout.us.shopifycs.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "scripts/injector.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "all_frames": false,
+      "js": [
+        "scripts/checkoutscript.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    "*.css",
+    "images/*",
+    "fonts/proxima-nova/334F3A_5_0.woff2",
+    "fonts/proxima-nova/334F3A_2_0.woff2",
+    "fonts/gotham-rounded/GothamRounded-Bold.woff2",
+    "fonts/gotham-rounded/GothamRounded-Light.woff2",
+    "fonts/gotham-rounded/GothamRounded-Medium.woff2"
+  ]
+}

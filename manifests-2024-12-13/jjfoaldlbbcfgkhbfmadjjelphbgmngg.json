@@ -1,0 +1,81 @@
+---
+name: Promptly AI
+version: 0.1.4
+category_slug: productivity/tools
+rating: 5
+rating_count: 27
+user_count: 338
+release_date: '2024-12-02T05:36:09.000Z'
+size: 37.36KiB
+languages:
+  - English
+description: Your personal prompt engineer!
+publisher_account: ananth.sankaralingam
+support_website: https://www.promptly.fyi/
+privacy_policy: https://promptly.fyi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Promptly AI",
+  "version": "0.1.4",
+  "description": "Your personal prompt engineer!",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "favicon-16x16.png",
+      "32": "favicon-32x32.png",
+      "48": "images/logo48.png",
+      "128": "images/promptly-logo-128.png"
+    }
+  },
+  "icons": {
+    "16": "favicon-16x16.png",
+    "32": "favicon-32x32.png",
+    "48": "images/logo48.png",
+    "128": "images/promptly-logo-128.png"
+  },
+  "permissions": [
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://0drcnp2u89.execute-api.us-east-1.amazonaws.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*"],
+      "js": ["scripts/gpt-content.js"]
+    },
+    {
+      "matches": ["https://claude.ai/*"],
+      "js": ["scripts/claude-content.js"]
+    },
+    {
+      "matches": ["https://www.perplexity.ai/*"],
+      "js": ["scripts/perplexity-content.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["favicon-32x32.png","promptly_logo_18.png"],
+      "matches": ["https://chat.openai.com/*", "https://chatgpt.com/*"]
+    },
+    {
+      "resources": ["promptly_logo_18.png"],
+      "matches": ["https://claude.ai/*"]
+    },
+    {
+      "resources": ["favicon-32x32.png"],
+      "matches": ["https://www.perplexity.ai/*"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://0drcnp2u89.execute-api.us-east-1.amazonaws.com;"
+  }
+}

@@ -1,0 +1,78 @@
+---
+name: Google Meet Virtual Assistant
+version: 1.4.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 12
+release_date: '2024-05-15T10:17:21.000Z'
+size: 254KiB
+languages:
+  - Français
+description: Streams the audio from your Google Meet to Illuin Voice Parser.
+publisher: Illuin Technology
+publisher_account: bruno.hays
+publisher_address: |-
+  65 Rue des 3 Fontanot
+  Nanterre 92000
+  FR
+privacy_policy: https://www.randstad.fr/donnees-personnelles
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Google Meet Virtual Assistant",
+  "version": "1.4.1",
+  "description": "Streams the audio from your Google Meet to Illuin Voice Parser.",
+  "manifest_version": 3,
+  "icons": {
+    "128": "128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "payload/inject.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://meet.google.com/*"
+      ],
+      "js": [
+        "js/socket.io.js",
+        "js/axios.min.js",
+        "js/illuin-voice-front.min.js",
+        "payload/capture.js",
+        "payload/contents/widget.js",
+        "payload/contents/login_banner.js"
+      ],
+      "css": [ "css/bootstrap.min.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "content_security_policy": {},
+  "web_accessible_resources": [
+    {
+      "resources": ["js/replaceable-media-stream.js", "payload/injectScript.js", "images/drag_dots.svg", "images/logo-illuin.svg", "images/move_to_dock_icon.svg", "images/record_icon.svg", "images/play_icon.svg", "images/stop_record_icon.svg", "images/bin.svg"],
+      "matches": ["https://meet.google.com/*"]
+    },
+    {
+      "resources": ["voice_payload/injectScript.js"],
+      "matches": ["http://localhost:4200/*"]
+    }
+]
+}

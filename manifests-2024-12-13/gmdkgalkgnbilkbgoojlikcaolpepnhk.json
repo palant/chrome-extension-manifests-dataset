@@ -1,0 +1,93 @@
+---
+name: BrowserHelper
+version: 0.0.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-04-11T10:29:05.000Z'
+size: 38.01KiB
+languages:
+  - English
+description: >-
+  Let's you auto smoothly scroll through a page by holding a single key and
+  dragging your mouse. Allows you to download Hi-Res files…
+publisher_account: DanBit.ru
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "BrowserHelper",
+  "version": "0.0.6",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "downloads",
+    "tabs",
+    "cookies",
+    "alarms",
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "host_permissions": [
+    "*://*/*",
+    "file://*/*"
+  ],
+  "offline_enabled": true,
+  "icons": {
+     "16": "icon16.png",
+     "32": "icon32.png",
+     "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "incognito": "spanning",
+  "minimum_chrome_version": "92",
+ "action": {
+  "default_popup": "popup.html"
+ },
+  "web_accessible_resources": [
+    {
+      "resources": [ "tap.opus", "pop.flac" ],
+      "matches": [ "*://*/*" ],
+      "use_dynamic_url": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "css": ["global.css"],
+      "js": ["global_script.js"]
+    },
+    {
+      "matches": ["*://twitter.com/*"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["twitter_web.js"],
+      "css" : ["twitter.css"]
+    },
+    {
+      "matches": ["*://mobile.twitter.com/*"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["twitter_mobile_script.js"]
+    },
+    {
+      "matches": ["*://*.pinterest.com/*"],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": ["pinter_unban.js"]
+    }
+  ]
+}

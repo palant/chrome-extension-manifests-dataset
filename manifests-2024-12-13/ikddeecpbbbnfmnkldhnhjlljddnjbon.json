@@ -1,0 +1,68 @@
+---
+name: UpSignOn
+version: 1.2.1
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 3000
+release_date: '2024-12-11T23:39:30.000Z'
+size: 382KiB
+languages:
+  - English
+  - Français
+description: >-
+  UpSignOn automatically fills forms with data saved in your UpSignOn desktop
+  app.
+publisher: UPSIGNON
+publisher_address: |-
+  121 RUE ACHILLE VIADIEU
+  TOULOUSE 31400
+  FR
+privacy_policy: https://app.upsignon.eu/privacy-policy/fr/2023-07-24.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.2.1",
+  "name": "UpSignOn",
+  "default_locale": "en",
+  "description": "__MSG_description__",
+  "icons": {
+    "128": "./logo-128.png"
+  },
+  "background": {
+    "service_worker": "statics/service_worker.js"
+  },
+  "action": {
+    "default_popup": "statics/popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "css": ["statics/contentScript/content-popup.css"],
+      "js": [
+        "dist/contentScript.js",
+        "statics/contentScript/scripting-methods.js"
+      ],
+      "matches": ["https://*/*", "http://*/*"],
+      "all_frames": true
+    }
+  ],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "permissions": ["storage", "tabs", "activeTab", "scripting", "webNavigation"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.map"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; connect-src ws://localhost:*"
+  },
+  "browser_specific_settings": {
+    "edge": {
+      "browser_action_next_to_addressbar": true
+    }
+  }
+}

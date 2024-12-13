@@ -1,0 +1,74 @@
+---
+name: Quantcast - Tag Inspector
+version: 2.0.22
+category_slug: productivity/developer
+rating: 4.818181818181818
+rating_count: 11
+user_count: 2000
+release_date: '2024-10-25T10:36:42.000Z'
+size: 379KiB
+languages:
+  - English
+description: >-
+  Validate your Measure and Consent tags, and see a summary of your site's
+  audience
+publisher: Quantcast
+publisher_account: Quantcast Tag Inspector Chrome Extension
+publisher_address: |-
+  795 Folsom St
+  San Francisco, CA 94107-1243
+  US
+extension_website: quantcast.com
+support_website: https://help.quantcast.com/hc/en-us/articles/360041276194-Inspect-Your-Tag
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Quantcast - Tag Inspector",
+  "description": "Validate your Measure and Consent tags, and see a summary of your site's audience",
+  "version": "2.0.22",
+  "icons": {
+    "128": "icon-unchecked.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "icon-unchecked.png",
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension-pages": "script-src 'self' https://cdn.segment.com/* https://www.googleadservices.com/ https://cdn.mxpnl.com/; object-src 'self'"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "webRequest",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "*://*.quantcast.com/",
+    "*://*.quantserve.com/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["uri.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+      "resources": ["consent-check.js"],
+      "matches": ["<all_urls>"]
+  }]
+}

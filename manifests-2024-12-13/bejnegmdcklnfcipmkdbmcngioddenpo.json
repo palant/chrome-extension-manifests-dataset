@@ -1,0 +1,556 @@
+---
+name: Tap to Sign
+version: Official 9.39
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 256
+release_date: '2024-08-12T10:23:27.000Z'
+size: 748KiB
+languages:
+  - English
+description: E-Sign software for car dealerships.
+publisher_account: Tap to Sign
+publisher_address: |-
+  11566 E Rembrandt Ave
+  Mesa, AZ 85212-4180
+  US
+extension_website: taptosign.com
+support_website: https://taptosign.com/
+privacy_policy: https://taptosign.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Tap to Sign",
+  "description": "E-Sign software for car dealerships.",
+  "version": "9.39",
+  "version_name": "Official 9.39",
+  "action": {
+    "default_icon": "icon.png"
+  },
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.taptosign.com/*",
+      "https://*.dealercenter.net/*",
+      "http://localhost/*",
+      "*://secure.servicearizona.com:*/*",
+      "*://servicearizona.com:*/*",
+      "https://idms.dealersocket.com/*",
+      "https://vpic.nhtsa.dot.gov/*",
+      "https://*.dealertrackdms.com/*",
+      "https://supreme.autodealerscloud.com/sales/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "js": ["globalConstants.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://app.dealercenter.net/*"],
+      "js": ["addButton.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://dmsapp.dealercenter.net/DocumentViewer/Index*"],
+      "js": ["dealerCenterPDFPrint.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://taptosign.com/thisisrandomwebsiteopeningforcontentscript"
+      ],
+      "js": ["taptosignAdnan.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://taptosign.com/taptosignlight*",
+        "https://secure.servicearizona.com/"
+      ],
+      "js": ["servicearizona/servicearizona.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/gwRegister/gateway/Utils?action=login&url=https://secure.servicearizona.com/secure/gateway/MyAccount!3F!action!3D!accessTab&msg="
+      ],
+      "js": ["servicearizona/servicearizona1.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/gwRegister/gateway/UserHome"
+      ],
+      "js": ["servicearizona/servicearizona2.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/secure/gateway/MyAccount?action=accessTab"
+      ],
+      "js": ["servicearizona/servicearizona3.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/az/mvd/dealer/webapp/dealer/start.do"
+      ],
+      "js": ["servicearizona/servicearizona4.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/az/mvd/dealer/trp/services"
+      ],
+      "js": ["servicearizona/servicearizona5.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/az/mvd/dealer/trp/issue?*"
+      ],
+      "js": ["servicearizona/servicearizona6.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://secure.servicearizona.com/az/mvd/dealer/trp/issue?*"
+      ],
+      "js": ["servicearizona/servicearizona8.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://idms.dealersocket.com/*"],
+      "js": ["dealersocket.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://app.dealercenter.net/deal/retail-deal/*"],
+      "js": ["TradeData.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dmsapp.dealercenter.net/"],
+      "js": ["AddProspect.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dmsapp.dealercenter.net/Inventory*"],
+      "js": ["DealerCenterInventory.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["file://*/*", "http://*/*", "https://*/*"],
+      "js": ["checkPdf.js","libraries/html2canvas.js","libraries/pdfLib.js","libraries/generatePdf.js"],
+      "css": ["custom.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.taptosign.com/*", "http://localhost/*"],
+      "js": ["initial.js", "boot.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.scsautoexpress.com/scs.dap.elt/ContractListPanel.aspx?*"
+      ],
+      "js": ["autoexpress.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://carpage.io/car?cid=*"],
+      "js": ["carpage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://idms.dealersocket.com/Account/*"],
+      "js": ["dealersocketaccount.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dm.automanager.com/Print/PrintForms*"],
+      "js": ["automanager/automanager.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dm.automanager.com/Sale/Edit?id=*"],
+      "js": ["automanager/automanager2.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fi.darwinautomotive.com/FIDashboard*"],
+      "js": ["darwinButton/darwinButtonUtils.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fi.darwinautomotive.com/FIDashboard*"],
+      "js": ["darwinButton/darwinButtonPacks.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fi.darwinautomotive.com/FIDashboard*"],
+      "js": ["darwinaddbutton.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fi.darwinautomotive.com/FIDashboard*"],
+      "js": ["darwinButton/darwinForms.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fi.darwinautomotive.com/FIDashboard*"],
+      "js": ["darwinButton/darwinDealButtonFlow.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://taptosign.com/darwinUpload"],
+      "js": ["darwinButton/darwinButtonUtils.js","darwinButton/darwinUploadToTaptosign.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.dealertrackdms.com/*"],
+      "js": ["helpers.js", "dealertrack.js"],
+      "css": ["custom.css"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.dealertrackdms.app.coxautoinc.com/*"],
+      "js": ["helpers.js", "dealertrack.js"],
+      "css": ["custom.css"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://taptosign.com/thisisfordealersocketrandom"],
+      "js": ["dealerSocket2.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://taptosign.com/dashboard.html"],
+      "js": ["talk_to_exe.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dealer.cudl.com/*"],
+      "js": ["taptosignCudl.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dm.automanager.com/Contact/New*"],
+      "js": ["automanagerBuyersList.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.carfax.com/VehicleHistory/p/Report.cfx?partner=DRT_0&vin=*"
+      ],
+      "js": ["testingNewFeature.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://supreme.autodealerscloud.com/sales/*"],
+      "js": ["sendBuyerInformation.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://actionauto.autodealerscloud.com/sales/deal/edit/*"],
+      "js": ["sendBuyerInformation.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://taptosign.com/taptosignlight*"],
+      "js": ["eventListener.js"]
+    },
+    {
+      "matches": [
+        "https://taptosign.com/taptosignlight.html?authtoken=*",
+        "http://localhost/*"
+      ],
+      "js": [
+      "autto/autto.js", 
+      "autto2.js", 
+      "dealfi/dealfiFetch.js", 
+      "gwcWarranty/fetch.js", 
+      "nvpwarranty/nvpFetch.js",
+      "gsfsgroup/gsfsgroupFetch.js",
+      "veritas/veritasFetch.js",
+      "trp/trpFetch.js",
+      "pcrs/pcrFetch.js",
+      "elite/eliteFetch.js",
+      "theftPatrol/theftPatrolFetch.js",
+      "aul/aulFetch.js",
+      "endr/endrFetch.js"
+    ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://portal.autto.com/dashboard"],
+      "js": ["autto/auttoDashboardAutomation.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://zoom.alphawarranty.com/contract/rate*"],
+      "js": ["alphaAutomation1.js", "alphaAutomationPDF.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://dealfi.apptraker.com/copilot/dealer/applications/new_app*"
+      ],
+      "js": ["dealfi/dealfiAutomation.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["gmail/gmailAutomation.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://portal.autto.com/api/v1/contracts/bulk_download?contract_batch*"
+      ],
+      "js": ["autto/automationClick.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www2.vauto.com/Va/Appraisal/List.aspx*"],
+      "js": ["vauto/vautoLookupAppraisal.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www2.vauto.com/Va/Appraisal/Default.aspx?*"],
+      "js": ["vauto/vautoNewAppraisal.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://provision.vauto.app.coxautoinc.com/Va/Appraisal/List.aspx*"],
+      "js": ["vauto/vautoLookupAppraisal.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://provision.vauto.app.coxautoinc.com/Va/Appraisal/Default.aspx?*"],
+      "js": ["vauto/vautoNewAppraisal.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://taptosign.com/vauttoupload*"],
+      "js": ["vauto/vautoUploadToTaptosign.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://taptosign.com/fetchlatestpacks"],
+      "js": ["vauto/vautoPacksFetch.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://connect.carfax.com/dir?*"],
+      "js": ["vauto/vAutoCarFax.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www2.vauto.com/Va/Appraisal/ExperianReport.ashx?vin=*"],
+      "js": ["experian/experianAddForm.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://provision.vauto.app.coxautoinc.com/Va/Appraisal/ExperianReport.ashx?vin=*"],
+      "js": ["experian/experianAddForm.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www2.vauto.com/Va/Appraisal/ExperianReport*"],
+      "js": ["vauto/vautoAutoCheck.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://provision.vauto.app.coxautoinc.com/Va/Appraisal/ExperianReport*"],
+      "js": ["vauto/vautoAutoCheck.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches":["https://dms.autosoftdms.com/Sales/*"],
+      "js": ["autoSoft/autoSoftBuyer.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches":["https://supreme.autodealerscloud.com/sales/deal/edit/*"],
+      "js": ["dealersCloud/dealersCloud.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches":["https://securedauto.autodealerscloud.com/sales/deal/edit/*"],
+      "js": ["dealersCloud/dealersCloud.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches":["https://actionauto.autodealerscloud.com/sales/deal/edit/*"],
+      "js": ["dealersCloud/dealersCloud.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dealer.cudl.com/*"],
+      "js": ["dealersCloud/cudlForm.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dealerportal.gwcwarranty.com/Rate/ShowPDF*"],
+      "js": ["gwcWarranty/showPdf.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dealerportal.gwcwarranty.com/Rate*"],
+      "js": ["gwcWarranty/gwcWarranty.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://dealerportal.gwcwarranty.com/*"],
+      "js": ["gwcWarranty/gwcDefaultPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.dealertrackdms.app.coxautoinc.com/*"],
+      "js": ["dealertrack/dealerTrackAutomation.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://portal.autto.com/*contract_uuid*"],
+      "js": ["autto/auttoUtils.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://portal.autto.com/*contract_uuid*"],
+      "js": ["autto/auttoMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://pcrsauto.com/Warranty.Web.Mvc/AddContract*"],
+      "js": ["nvpwarranty/firstPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://pcrsauto.com/Main/MainPage*"],
+      "js": ["nvpwarranty/mainPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://onramp.gsfsgroup.com/scs.dap/Quote/QuoteEntry*"],
+      "js": ["gsfsgroup/gsfsFiller.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://apps.gsfsgroup.com/mygsfs/landing*"],
+      "js": ["gsfsgroup/gsfsmainPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.cargurus.com/Cars*"],
+      "js": ["pandaAutoFamily/main.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://econtract.veritasglobalds.com/quickquote*"],
+      "js": ["veritas/veritasUtils.js","veritas/veritasMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://econtract.veritasglobalds.com/Purchase*"],
+      "js": ["veritas/veritasUtils.js","veritas/veritasFinal.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://edealertrp.aada.com/*"],
+      "js": ["trp/trpUtils.js","trp/trpMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://gsan.pcrsauto.com/pcmi.web.portal.core*"],
+      "js": ["pcrs/pcrsUtils.js","pcrs/pcrsMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://gsan.pcrsauto.com/Warranty.Web.Mvc/AddContract/Contract*"],
+      "js": ["pcrs/pcrsUtils.js","pcrs/pcrsFirstScreen.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.scsautoexpress.com/scs.dap.elt/main*"],
+      "js": ["elite/eliteMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.scsautoexpress.com/scs.dap.elt/Quote/QuoteEntry*"],
+      "js": ["elite/eliteFiller.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://app.theftpatrol.com/search/all/*"],
+      "js": ["theftPatrol/theftPatrolUtils.js","theftPatrol/theftPatrolSearchPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://app.theftpatrol.com/org/*/assets/item/*"],
+      "js": ["theftPatrol/theftPatrolUtils.js","theftPatrol/theftPatrolMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://fi.darwinautomotive.com/Pdf/DownloadPdfPackage/*", "https://fi.darwinautomotive.com/Pdf/PrintContract?id*"],
+      "js": ["darwinButton/darwinButtonUtils.js","darwinButton/darwinPdfAutomation.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://adl.aulcorp.com/*"],
+      "js": ["aul/aulUtils.js","aul/aulMain.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://endr.pcrsauto.com/pcmi.web.portal.core*"],
+      "js": ["endr/endrUtils.js","endr/endrFirstPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://endr.pcrsauto.com/Warranty.Web.Mvc/AddContract/Contract/QuickRater?token*"],
+      "js": ["endr/endrUtils.js","endr/endrMain.js"],
+      "run_at": "document_end"
+    }
+    
+  ],
+  "options_ui": {
+    "page": "toggleButton.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "cookies",
+    "scripting",
+    "storage",
+    "downloads",
+    "tabs",
+    "debugger"
+  ],
+  "host_permissions": ["*://*/*", "http://*/*", "https://*/*", "file://*/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["Placeholder.pdf", "auttoLogo.png", "checkmark.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

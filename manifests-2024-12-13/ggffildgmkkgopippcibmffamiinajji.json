@@ -1,0 +1,94 @@
+---
+name: BDNS Wallet
+version: 1.15.0
+category_slug: lifestyle/social
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-06-08T03:07:10.000Z'
+size: 9.45MiB
+languages:
+  - English (United States)
+description: Everything in the blockchain made easy
+publisher_account: BDNS.APP
+extension_website: bdns.app
+privacy_policy: https://www.privacypolicies.com/live/e898f996-ae0a-4c0c-bd1c-524fc0fcbbd5
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "https://bdns.app/#en",
+  "homepage_url": "https://bdns.app/#en",
+  "version": "1.15.0",
+  "name": "BDNS Wallet",
+  "short_name": "BDNS Wallet",
+  "permissions": [
+    "tabs",
+    "clipboardRead",
+    "clipboardWrite"
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Alt+Shift+E",
+        "mac": "Alt+Shift+E",
+        "chromeos": "Alt+Shift+E",
+        "linux": "Alt+Shift+E"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/contentscript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://connect.trezor.io/*/popup.html"
+      ],
+      "js": [
+        "vendor/trezor-content-script.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "Everything in the blockchain made easy",
+  "icons": {
+    "192": "assets/img/icons/bdns-192.png"
+  },
+  "manifest_version": 3,
+  "action": {
+    "default_icon": {
+      "192": "assets/img/icons/bdns-192.png"
+    },
+    "default_title": "BDNS Wallet",
+    "default_popup": "action.html"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "scripts/inject.js",
+        "scripts/*.js.map"
+      ],
+      "use_dynamic_url": false,
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "minimum_chrome_version": "95",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,74 @@
+---
+name: The Swarm
+version: 2.4.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 18
+user_count: 1000
+release_date: '2024-09-18T05:11:27.000Z'
+size: 458KiB
+languages:
+  - English
+description: Automatically fetch and import your connections.
+publisher: The Swarm
+publisher_address: |-
+  548 Market St PMB 83455
+  San Francisco, CA 94104
+  US
+support_website: http://help.theswarm.com/en/
+privacy_policy: https://www.theswarm.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "The Swarm",
+  "description": "Automatically fetch and import your connections.",
+  "version": "2.4.1",
+  "icons": {
+    "16": "images/theswarm-favicon-16.png",
+    "32": "images/theswarm-favicon-32.png",
+    "48": "images/theswarm-favicon-48.png",
+    "128": "images/theswarm-favicon-128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/blue/content.js"
+      ],
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "exclude_globs": [
+        "*://*.linkedin.com/login*",
+        "*://*.linkedin.com/home*"
+      ]
+    },
+    {
+      "js": [
+        "content-scripts/swarm/content.js"
+      ],
+      "matches": [
+        "*://app.theswarm.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "background/service_worker.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "notifications",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://app.theswarm.com/*",
+    "https://*.linkedin.com/*"
+  ]
+}

@@ -1,0 +1,88 @@
+---
+name: TourBox
+version: 2.1.6
+category_slug: lifestyle/travel
+rating: null
+rating_count: null
+user_count: 8
+release_date: '2024-12-12T10:52:31.000Z'
+size: 364KiB
+languages:
+  - русский
+description: Система автоматической подборки туров
+privacy_policy: https://tourbox.kz/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "background": {
+      "service_worker": "./background.js"
+   },
+   "permissions": [
+      "tabs",
+      "scripting",
+      "activeTab",
+      "storage"
+   ],
+   "host_permissions": [
+      "https://tourvisor.ru/*",
+      "https://tourbox.kz/*",
+      "http://localhost:3000/*",
+      "https://*.u-on.ru/*",
+      "https://b2b.fstravel.asia/*",
+      "https://agent.anextour.kz/*"
+   ],
+   "content_scripts": [
+      {
+         "matches": [
+            "https://*.tourvisor.ru/search_original.php*"
+         ],
+         "js": ["./scripts/crm/tourvisor.js"]
+      },
+      {
+         "matches": [
+            "https://tourbox.kz/*"
+         ],
+         "js": ["./scripts/session.js"]
+      },
+      {
+         "matches": [
+            "<all_urls>"
+         ],
+         "js": ["./scripts/local.js"]
+      },
+      {
+         "matches": [
+            "https://*.u-on.ru/*"
+         ],
+         "js": ["./scripts/crm/u-on.js"]
+      },
+      {
+         "matches": [
+            "https://b2b.fstravel.asia/*"
+         ],
+         "js": ["./scripts/crm/fstravel.js"]
+      },
+      {
+         "matches": [
+            "https://agent.anextour.kz/*"
+         ],
+         "js": ["./scripts/crm/anex.js"]
+      }
+   ],
+   "action": {
+      "default_popup": "./pages/login.html",
+      "default_icon": "./16.png"
+   },
+   "description": "Система автоматической подборки туров",
+   "icons": {
+      "16": "./16.png",
+      "48": "./48.png",
+      "128": "./128.png"
+   },
+   "manifest_version": 3,
+   "minimum_chrome_version": "125",
+   "name": "TourBox",
+   "version": "2.1.6"
+}

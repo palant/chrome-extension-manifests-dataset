@@ -1,0 +1,60 @@
+---
+name: PoolC Baekjoon Hub
+version: 1.0.6
+category_slug: productivity/workflow
+rating: 5
+rating_count: 2
+user_count: 30
+release_date: '2024-08-06T03:16:48.000Z'
+size: 5.62MiB
+languages:
+  - 한국어
+description: Yonsei Univ Programming Club PoolC integration with Baekjoon
+publisher_account: Choi Jinho
+privacy_policy: https://www.privacypolicies.com/live/3ae264c2-7b5d-405e-8abb-4855b03d4286
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PoolC Baekjoon Hub",
+  "version": "1.0.6",
+  "description": "Yonsei Univ Programming Club PoolC integration with Baekjoon",
+  "action": {
+    "default_icon": "assets/images/logo-poolc.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/images/logo-poolc.png",
+    "48": "assets/images/logo-poolc.png",
+    "128": "assets/images/logo-poolc.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": ["unlimitedStorage", "storage", "declarativeNetRequest", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["https://www.acmicpc.net/", "https://solved.ac/"],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["library/jquery-3.3.1.min.js", "popup.html", "popup.js", "login.html", "login.js"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.acmicpc.net/*"],
+      "js": ["scripts/background.js", "scripts/util.js", "scripts/baekjoon/variables.js", "scripts/baekjoon/parsing.js", "scripts/baekjoon/util.js", "scripts/baekjoon/baekjoon.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}

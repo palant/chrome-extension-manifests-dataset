@@ -1,0 +1,98 @@
+---
+name: Passport
+version: 6.2.9
+category_slug: productivity/education
+rating: 4.184210526315789
+rating_count: 38
+user_count: 100000
+release_date: '2022-08-29T19:29:57.000Z'
+size: 1.24MiB
+languages:
+  - English (United States)
+description: Track, Measure, and Reward Online Reading.
+publisher: Stackup
+publisher_account: StackUp LLC
+publisher_address: |-
+  8455 Highfield Parkway
+  Englewood, Colorado 80112
+  United States
+extension_website: stackup.net
+support_website: https://groups.google.com/d/forum/stackup-discussion
+privacy_policy: https://www.stackup.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "Passport",
+    "description": "Track, Measure, and Reward Online Reading.",
+    "version": "6.2.9",
+    "minimum_chrome_version": "73",
+    "icons": {
+        "16": "images/passport_logo.png",
+        "48": "images/passport_logo.png",
+        "128": "images/passport_logo.png"
+    },
+
+    "browser_action": {
+        "default_icon": "images/passport_logo.png",
+        "default_popup": "popup.html"
+    },
+
+    "background": {
+        "page": "background_page.html",
+        "persistent": true
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["lib/jquery.min.js", "js/page/fake-news.js", "lib/rangy-core.js", "lib/simmer.js", "lib/mark.es6.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["js/page/timetracking_cs.js", "lib/readability.js", "lib/textstatistics.js", "js/page/getreadabilitystats.js", "js/page/annotations.js"],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "http://*.mackinvia.com/Reader/Launch?*",
+                "https://*.mackinvia.com/Reader/Launch?*",
+                "http://*.mackinviatest.com/Reader/Launch?*",
+                "https://*.mackinviatest.com/Reader/Launch?*"
+            ],
+            "js": ["js/page/mackin.js"]
+        },
+        {
+            "matches": [
+                "https://*.gg4l.com/*"
+            ],
+            "js": ["js/page/passport.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "permissions": [
+        "tabs",
+        "storage",
+        "notifications",
+        "identity",
+        "identity.email",
+        "tts",
+        "cookies",
+        "http://*/*",
+        "https://*/*",
+        "alarms"
+    ],
+
+    "web_accessible_resources": [
+        "css/annotations.css",
+        "css/annotations-shadow.css",
+        "css/fake-news.css",
+        "fonts/*/*.*",
+        "images/passport_logo.png"
+    ]
+}

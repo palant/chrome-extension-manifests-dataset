@@ -1,0 +1,102 @@
+---
+name: Subkit
+version: 0.4.5.0
+category_slug: productivity/education
+rating: 5
+rating_count: 2
+user_count: 151
+release_date: '2024-12-13T04:33:57.000Z'
+size: 432KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 日本語
+description: Subtitle utilities for language learning.
+publisher_account: Slime Creative
+extension_website: subkit.net
+support_website: https://discord.com/invite/XjrKuaJrWm
+privacy_policy: https://subkit.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_name__",
+    "default_locale": "en",
+    "description": "__MSG_extension_description__",
+    "version": "0.4.5.0",
+    "manifest_version": 3,
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA0Udsy/wNRJE8ochShMqpgjLVq0deDrWjpzeCgG3sVRi+3Fa3ljiuAYpM+NB07/fk5kWufxHL1sRzWHXBA8Pcbh7QwLWVfJHtRM2VArEztrj9MZibTKAj5VesTDyIIrGFyv5jbY4ZwBrr/11KNDZGlUOXHwWYOZpkk4+BF80QAgiJFAIUUVuiPvaOLeGToxGh1Y1HtqbZFFMXT2/DSmpyfbC5a5sXXi2gQX5t2Y8AgwQ+usaphreeItgtGLSv7FfFMhi8ea3JRqWcFaFdQwEFD1MnquVQIkMvkR2jK+smIPQZidVfR661jL0FCxY6/w1bAtp1YzmAfxeXRx7WqXKfewIDAQAB",
+    "icons": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "permissions": ["activeTab", "storage", "tabs", "webNavigation"],
+    "host_permissions": ["<all_urls>"],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": [ "video-select.js" ],
+            "run_at": "document_idle",
+            "all_frames": true
+        },
+        {
+          "matches": ["<all_urls>"],
+          "js": ["page.js"],
+          "all_frames": true,
+          "run_at": "document_start"
+      },
+        {
+            "matches": ["https://*.subkit.net/login*", "http://127.0.0.1:4000/login*"],
+            "js": ["login.js"],
+            "run_at": "document_idle"          
+        },
+        {
+          "matches": ["https://*.subkit.net/payment_success*", "http://127.0.0.1:4000/payment_success*"],
+          "js": ["payment-success.js"],
+          "run_at": "document_idle"          
+      }
+    ],
+    "web_accessible_resources": [
+        {
+          "resources": [
+            "pages/netflix-page.js",
+            "pages/youtube-page.js",
+            "pages/tver-page.js",
+            "pages/bandai-channel-page.js",
+            "pages/amazon-prime-page.js",
+            "pages/hulu-page.js",
+            "pages/disney-plus-page.js",
+            "pages/apps-disney-plus-page.js",
+            "pages/unext-page.js",
+            "pages/emby-page.js",
+            "pages/bilibili-page.js",
+            "pages/nrk-tv-page.js"
+          ],
+          "matches": ["<all_urls>"]
+        },
+        {
+          "resources": [ "hint-man.gif" ],
+          "matches": ["<all_urls>"]
+        },
+        {
+          "resources": [ "DownArrow.svg" ],
+          "matches": ["<all_urls>"]
+        },
+        {
+          "resources": [ 
+                          "timing-adjustment.html", 
+                          "timing-adjustment.js" 
+                       ],
+          "matches": ["<all_urls>"]
+        }
+      ]
+}

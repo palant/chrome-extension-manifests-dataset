@@ -1,0 +1,106 @@
+---
+name: ManabiDojo - Learn Japanese with Crunchyroll
+version: 1.1.17.2
+category_slug: productivity/education
+rating: 4.944444444444445
+rating_count: 18
+user_count: 1000
+release_date: '2024-11-19T05:52:55.000Z'
+size: 460KiB
+languages:
+  - English
+description: Learn Japanese with anime using ManabiDojo!
+publisher_account: manabihime
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ManabiDojo - Learn Japanese with Crunchyroll",
+  "version": "1.1.17.2",
+  "description": "Learn Japanese with anime using ManabiDojo!",
+  "manifest_version": 3,
+  "content_scripts": [
+    {
+      "matches": [
+        "https://static.crunchyroll.com/vilos-v2/web/vilos/player.html"
+      ],
+      "js": [
+        "build/app.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://static.crunchyroll.com/vilos-v2/web/vilos/player.html"
+      ],
+      "js": [
+        "build/fetch_native_subs_url_injector.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.crunchyroll.com/*"
+      ],
+      "js": [
+        "build/menu_icon.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://jimaku.cc/*"
+      ],
+      "js": [
+        "build/jimaku.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "build/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.crunchyroll.com/*",
+    "https://*.vrv.co/*",
+    "https://*.crunchyrollcdn.com/*",
+    "https://eu-central-1.aws.data.mongodb-api.com/app/data-hosgs/endpoint/*",
+    "https://jisho.org/api/*",
+    "https://jimaku.cc/*"
+  ],
+  "action": {
+    "default_title": "Manabi"
+  },
+  "icons": {
+    "16": "build/assets/icon16.png",
+    "32": "build/assets/icon32.png",
+    "48": "build/assets/icon48.png",
+    "128": "build/assets/icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "build/assets/manabi_logo.png",
+        "build/assets/jisho_icon.png",
+        "build/assets/bmc_logo.svg",
+        "build/assets/jotoba_icon.svg",
+        "build/assets/guide_screen_1.png",
+        "build/assets/guide_screen_2.png",
+        "build/fetch_native_subs_url.js",
+        "build/assets/jimaku_icon.ico",
+        "build/v1config_meta.js"
+      ],
+      "matches": [
+        "https://*.crunchyroll.com/*"
+      ]
+    }
+  ]
+}

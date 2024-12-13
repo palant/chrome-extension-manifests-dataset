@@ -1,0 +1,61 @@
+---
+name: Hisnet Redirector
+version: '1.4'
+category_slug: productivity/tools
+rating: 5
+rating_count: 1
+user_count: 41
+release_date: '2024-09-01T10:34:47.000Z'
+size: 45.08KiB
+languages:
+  - English
+  - 한국어
+description: 히즈넷 로그인 시 홈화면으로 가지 않고, 마지막으로 방문했던 페이지로 돌아가도록 합니다.
+publisher_account: siwonkh
+support_website: https://github.com/siwonKH/hisnet-redirector/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Hisnet Redirector",
+  "description": "__MSG_description__",
+  "version": "1.4",
+  "default_locale": "ko",
+  "permissions": ["storage"],
+  "host_permissions": [
+    "https://hisnet.handong.edu/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://hisnet.handong.edu/"],
+      "js": ["content_home.js"]
+    },
+    {
+      "matches": ["https://hisnet.handong.edu/for_student/main.php"],
+      "js": ["content_student_main.js"]
+    },
+    {
+      "matches": ["https://hisnet.handong.edu/*"],
+      "exclude_matches": [
+        "https://hisnet.handong.edu/",
+        "https://hisnet.handong.edu/login*",
+        "https://hisnet.handong.edu/main.php",
+        "https://hisnet.handong.edu/for_student/main.php",
+        "https://hisnet.handong.edu/myboard/list.php"
+      ],
+      "js": ["content_other.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  }
+}

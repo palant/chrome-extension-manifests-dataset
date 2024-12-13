@@ -1,0 +1,121 @@
+---
+name: Earny - Up to 20% Cash Back
+version: 1.8.2
+category_slug: lifestyle/shopping
+rating: 3.432098765432099
+rating_count: 81
+user_count: 10000
+release_date: '2023-04-05T11:00:30.000Z'
+size: 4.65MiB
+languages:
+  - English
+description: 'Earny: Money Back Savings App'
+publisher: Earny Inc.
+publisher_address: |-
+  1610 Broadway
+  Santa Monica, CA 90404
+  US
+extension_website: earny.com
+support_website: http://support.earny.co
+privacy_policy: https://support.earny.co/hc/en-us/articles/218609757-Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Earny - Up to 20% Cash Back",
+    "short_name": "Earny",
+    "version": "1.8.2",
+    "description": "Earny: Money Back Savings App",
+    "icons": {
+        "16": "icons/logo-40.png",
+        "48": "icons/logo-80.png",
+        "128": "icons/logo-180.png"
+    },
+    "action": {
+        "default_popup": "popup/index.html",
+        "default_title": "Earny"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "content-script/processor.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "content-script/clipboard-monitor-processor.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": true,
+            "match_about_blank": true
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content-script/static/js/2.chunk.js",
+                "content-script/static/js/main.chunk.js",
+                "content-script/static/js/runtime-main.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "css": [
+                "content-script/static/css/main.chunk.css"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "content-script/static/js/main.chunk.js",
+                "content-script/static/js/runtime-main.js",
+                "content-script/static/css/2.chunk.css",
+                "content-script/static/css/main.chunk.css",
+                "content-script/extend-native-history-api.js",
+                "fonts/*.ttf"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "alarms",
+        "tabs",
+        "notifications",
+        "clipboardWrite",
+        "clipboardRead",
+        "cookies"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

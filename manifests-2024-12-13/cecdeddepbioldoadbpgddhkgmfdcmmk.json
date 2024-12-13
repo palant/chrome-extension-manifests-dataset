@@ -1,0 +1,130 @@
+---
+name: Dispatch Buddy
+version: 2.1.2
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 206
+release_date: '2024-07-31T07:10:29.000Z'
+size: 2.19MiB
+languages:
+  - English
+description: >-
+  Plugin that simplifies communication between carriers and brokers by allowing
+  carriers to send emails with one click from loadboard
+publisher_account: info@dispatchbuddy.com
+extension_website: dispatchbuddy.com
+privacy_policy: https://copy-svelte-5ucv9ciug-dispatch-buddy.vercel.app/policy
+---
+
+{
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "author": "clar1k",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://dispatchbuddy-mail-templater.vercel.app/sign-in",
+        "https://dispatchbuddy-mail-templater.vercel.app/add-new-email"
+      ],
+      "js": ["nextAccountChecker.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://js-mail-templater.vercel.app/extension/*",
+        "https://dispatchbuddy-mail-templater.vercel.app/extension/*"
+      ],
+      "js": ["authContent.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://localhost:5173/extension/*"],
+      "js": ["authContent.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://localhost:5173/*"],
+      "js": ["smtpContent.js"],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/content.css"],
+      "js": [
+          "scripts/jquery.min.js",
+          "onecontent.js",
+          "onemap.js",
+          "onerpm.js",
+          "onefilter.js"
+      ],
+      "matches": [
+        "https://one.dat.com/search-loads-ow",
+        "https://one.dat.com/search-trucks-ow",
+        "https://one.dat.com/private-loads",
+        "https://one.dat.com/",
+        "https://one.dat.com/callback",
+        "https://one.dat.com/dashboard"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/content.css"],
+      "js": ["scripts/jquery.min.js", "truckcontent.js"],
+      "matches": [
+        "https://truckersedge.dat.com/search-loads",
+        "https://truckersedge.dat.com/search-trucks",
+        "https://truckersedge.dat.com/private-loads"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/content.css"],
+      "js": [
+        "scripts/jquery.min.js",
+        "content.js",
+        "filter.js",
+        "map.js",
+        "rpm.js"
+      ],
+      "matches": [
+        "https://power.dat.com/search/loads",
+        "https://power.dat.com/postings/trucks"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["css/content.css"],
+      "js": ["scripts/jquery.min.js", "truckstop.js"],
+      "matches": [
+        "https://main.truckstop.com/app/**",
+        "https://app.truckstop.com/",
+        "https://main.truckstop.com/"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "description": "Plugin that simplifies communication between carriers and brokers by allowing carriers to send emails with one click from loadboard",
+  "host_permissions": [
+    "https://power.dat.com/search/loads",
+    "https://power.dat.com/postings/trucks"
+  ],
+  "icons": {
+    "128": "img/logo.png"
+  },
+  "manifest_version": 3,
+  "name": "Dispatch Buddy",
+  "permissions": ["storage"],
+  "short_name": "Dispatch Buddy send emails with one click from the power dat",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "2.1.2",
+  "web_accessible_resources": [
+    {
+      "matches": ["https://power.dat.com/*"],
+      "resources": ["scripts/*.js", "img/*.png", "popup.js"]
+    }
+  ]
+}

@@ -1,0 +1,77 @@
+---
+name: HaHa Wallet
+version: 1.0.8
+category_slug: productivity/workflow
+rating: 5
+rating_count: 5
+user_count: 183
+release_date: '2024-11-29T11:56:09.000Z'
+size: 7.09MiB
+languages:
+  - English
+description: >-
+  HaHa isn't just a regular wallet. We provide the tools that help you stay
+  informed and degen on the go.
+publisher: HaHa Technologies Inc.
+publisher_address: |-
+  1401 Lavaca St
+  Ste 41143
+  Austin, TX 78701
+  US
+extension_website: haha.me
+support_website: https://www.haha.me
+privacy_policy: https://www.haha.me/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "content_security_policy": {
+        "extension_pages": "frame-ancestors 'none'; script-src 'self' 'wasm-unsafe-eval'; object-src 'none'"
+    },
+    "name": "HaHa Wallet",
+    "description": "HaHa isn't just a regular wallet. We provide the tools that help you stay informed and degen on the go.",
+    "version": "1.0.8",
+    "manifest_version": 3,
+    "permissions": ["storage", "unlimitedStorage", "clipboardWrite", "activeTab", "notifications"],
+    "host_permissions": ["file://*/*", "http://*/*", "https://*/*"],
+    "action": {
+        "default_popup": "/popup.html",
+        "default_icon": {
+            "16": "images/icon-16.png",
+            "32": "images/icon-32.png",
+            "48": "images/icon-48.png",
+            "128": "images/icon-128.png"
+        }
+    },
+    "icons": {
+        "16": "images/icon-16.png",
+        "32": "images/icon-32.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": ["file://*/*", "http://*/*", "https://*/*"],
+            "js": ["./scripts/contentscript.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": ["file://*/*", "http://*/*", "https://*/*"],
+            "js": ["./scripts/inpage.js"],
+            "run_at": "document_start",
+            "all_frames": true,
+            "world": "MAIN"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["/home.html"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "background": {
+        "service_worker": "./scripts/background.js"
+    }
+}

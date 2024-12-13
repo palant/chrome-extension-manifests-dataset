@@ -1,0 +1,83 @@
+---
+name: 'X: Supercharged'
+version: 0.0.1
+category_slug: lifestyle/social
+rating: 5
+rating_count: 1
+user_count: 1
+release_date: '2024-11-21T07:05:30.000Z'
+size: 60.47KiB
+languages:
+  - English
+description: Supercharge your X experience
+privacy_policy: https://snieking.github.io/x-supercharged-docs/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "X: Supercharged",
+    "description": "Supercharge your X experience",
+    "version": "0.0.1",
+    "icons": {
+        "16": "logo/x-supercharged-logo-16.png",
+        "48": "logo/x-supercharged-logo-48.png",
+        "128": "logo/x-supercharged-logo-128.png"
+    },
+    "action": {
+        "default_title": "X: Supercharged",
+        "default_popup": "popup/popup.html"
+    },
+    "permissions": [
+        "contextMenus",
+        "storage",
+        "tabs",
+        "identity",
+        "clipboardWrite",
+        "scripting"
+    ],
+    "host_permissions": [
+        "https://x.com/*",
+        "https://twitter.com/*",
+        "https://www.googleapis.com/*",
+        "https://plausible.planevin.se/*"
+    ],
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://x.com/*", "https://twitter.com/*"],
+            "js": ["content-scripts/notifications.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": ["https://x.com/settings/muted_keywords", "https://twitter.com/settings/muted_keywords"],
+            "js": [
+                "content-scripts/debug.js",
+                "content-scripts/x-mute.js"
+            ],
+            "type": "module"
+        }
+    ],
+    "oauth2": {
+        "client_id": "784607287219-hg4ob9th2gg5nbe7ip4qs3l2ck55o6pg.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.email",
+            "https://www.googleapis.com/auth/userinfo.profile"
+        ]
+    },
+    "externally_connectable": {
+        "matches": ["chrome-extension://elfbfcodikebdmnnloeapafdgbjjhlnp/*"]
+    },
+    "web_accessible_resources": [{
+        "resources": ["config.js"],
+        "matches": ["<all_urls>"]
+    }, {
+        "resources": ["content-scripts/notifications.js"],
+        "matches": ["https://*.twitter.com/*", "https://*.x.com/*"]
+    }]
+}

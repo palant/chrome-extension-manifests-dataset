@@ -1,0 +1,118 @@
+---
+name: InEcom Livestream Extension
+version: 3.1.9
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 563
+release_date: '2024-11-25T04:50:52.000Z'
+size: 42.67KiB
+languages:
+  - English
+description: Phần mềm treo và tự động Shopee Live
+publisher_account: dxtrung188
+support_website: https://seller.inecom.club
+privacy_policy: https://seller.inecom.club/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "InEcom Livestream Extension",
+  "description": "Phần mềm treo và tự động Shopee Live",
+  "version": "3.1.9",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "webRequest",
+    "background",
+     "scripting",
+     "tabs"
+  ],"host_permissions": [
+    "*://banhang.shopee.vn/*",
+    "*://shopee.vn/*",
+      "*://*.shopee.vn/*",
+    "*://subaccount.shopee.com/*",
+    "*://*.inecom.club/*",
+    "*://*.injoy.asia/*"
+  ],
+  "externally_connectable": {
+    "matches": ["https://localhost:*/*", "https://seller.inecom.club/*",  "https://*.inecom.club/*"]
+  },
+  "background": {
+    "service_worker": "scripts/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/banhang.js"],
+      "matches": [
+        "https://banhang.shopee.vn/*"
+      ],
+      "run_at": "document_start"
+
+    },
+    {
+      "js": ["scripts/subaccount_shop.js"],
+      "matches": [
+        "https://subaccount.shopee.com/shops"
+      ],
+      "run_at": "document_start"
+
+    },
+    {
+      "js": ["scripts/creator_live.js"],
+      "matches": [
+        "https://creator.shopee.vn/*"
+      ],
+      "run_at": "document_start"
+
+    },
+    {
+      "js": [
+        "scripts/livestream/livestream-service.js"
+      ],
+      "matches": [
+        "https://live.shopee.vn/pc/setup",
+        "https://live.shopee.vn/pc/live/*",
+        "https://live.shopee.vn/pc/live*",
+        "https://live.shopee.vn/pc/preview/*",
+        "https://live.shopee.vn/pc/preview*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "scripts/livestream/livestream-share-service.js"
+      ],
+      "matches": [
+        "https://live.shopee.vn/share/*",
+        "https://live.shopee.vn/share*",
+        "https://live.shopee.vn/p/live-end*",
+        "https://live.shopee.vn/p/live-end/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "scripts/livestream/livestream-main-service.js"
+      ],
+      "matches": [
+        "https://live.shopee.vn/share/*",
+        "https://live.shopee.vn/share*"
+      ],
+      "run_at": "document_start",
+      "world" : "MAIN"
+    },
+    {
+      "js": [
+        "scripts/buyer.js"
+      ],
+      "matches": [
+        "https://shopee.vn/*"
+      ]
+    }
+  ]
+
+}

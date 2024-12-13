@@ -1,0 +1,67 @@
+---
+name: Creata Chain
+version: 1.7.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 53
+release_date: '2024-06-28T11:14:48.000Z'
+size: 2.99MiB
+languages:
+  - English
+description: The CreataChain Wallet is a safe place to keep your cryptocurrency.
+publisher_account: creatachain
+privacy_policy: https://creatachain.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Creata Chain",
+  "description": "The CreataChain Wallet is a safe place to keep your cryptocurrency.",
+  "version": "1.7.0",
+  "permissions": ["storage", "unlimitedStorage"],
+  "host_permissions": ["<all_urls>"],
+
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Creatachain"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts.js", "inject.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["content-scripts.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://creatachain.com/",
+      "https://*.creatachain.com/*",
+      "http://*.creatachain.com/*",
+      "https://creatachain.com/*"
+    ],
+    "ids": ["*"]
+  }
+}

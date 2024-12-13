@@ -1,0 +1,141 @@
+---
+name: FurAdder
+version: 1.3.3
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 7
+release_date: '2023-12-15T09:17:05.000Z'
+size: 166KiB
+languages:
+  - English
+description: Allows easy image extraction and uploading to furbooru.org
+publisher_account: CrystalSplitter
+support_website: https://github.com/CrystalSplitter/Furadder/issues
+privacy_policy: https://github.com/CrystalSplitter/Furadder/blob/main/PRIVACY_POLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_icon": "icons/furadder_icon_32.png",
+    "default_popup": "popup/furadder.html"
+  },
+  "author": "Jordan R AW",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "commands": {
+    "open-popup": {
+      "description": "Open FurAdder Pop-Up",
+      "suggested_key": {
+        "default": "Ctrl+Shift+F"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content_scripts/third_party/browser-polyfill.min.js",
+        "content_scripts/shared_utilities.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content_scripts/twitter_handler.js"
+      ],
+      "matches": [
+        "*://twitter.com/*",
+        "*://mobile.twitter.com/*"
+      ]
+    },
+    {
+      "js": [
+        "content_scripts/furbooru_handler.js"
+      ],
+      "matches": [
+        "*://furbooru.org/*"
+      ]
+    },
+    {
+      "js": [
+        "content_scripts/derpibooru_handler.js"
+      ],
+      "matches": [
+        "*://derpibooru.org/*"
+      ]
+    },
+    {
+      "js": [
+        "content_scripts/deviantart_handler.js"
+      ],
+      "matches": [
+        "*://www.deviantart.com/*"
+      ]
+    },
+    {
+      "js": [
+        "content_scripts/furaffinity_handler.js"
+      ],
+      "matches": [
+        "*://www.furaffinity.net/*"
+      ]
+    },
+    {
+      "js": [
+        "content_scripts/tumblr_handler.js"
+      ],
+      "matches": [
+        "*://*.tumblr.com/*"
+      ]
+    },
+    {
+      "exclude_matches": [
+        "*://twitter.com/*",
+        "*://mobile.twitter.com/*",
+        "*://derpibooru.org/*",
+        "*://furbooru.org/*",
+        "*://www.deviantart.com/*",
+        "*://www.furaffinity.net/*",
+        "*://*.tumblr.com/*"
+      ],
+      "js": [
+        "content_scripts/universal_handler.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "description": "Allows easy image extraction and uploading to furbooru.org",
+  "homepage_url": "https://github.com/CrystalSplitter/Furadder",
+  "icons": {
+    "32": "icons/furadder_icon_32.png",
+    "48": "icons/furadder_icon_48.png"
+  },
+  "manifest_version": 3,
+  "name": "FurAdder",
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "version": "1.3.3",
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "popup/third_party/*",
+        "popup/js_src/*"
+      ]
+    }
+  ]
+}

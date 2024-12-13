@@ -1,0 +1,87 @@
+---
+name: Memobot meeting assistant
+version: 1.2.0
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 51
+release_date: '2024-12-10T19:41:36.000Z'
+size: 2.97MiB
+languages:
+  - English
+  - Tiếng Việt
+  - 日本語
+description: >-
+  Memobot transcribes meetings in real-time. It also provides a summary and
+  subtitles for movies, lectures
+publisher_account: VAIS
+extension_website: memobot.io
+privacy_policy: >-
+  https://docs.google.com/document/d/16GsEQ2r1651ogkz_vtfv69TkqiLlfM8v_t2GDJIhytw/pub
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Memobot meeting assistant",
+  "version": "1.2.0",
+  "description": "Memobot transcribes meetings in real-time. It also provides a summary and subtitles for movies, lectures",
+  "permissions": ["tabs", "tabCapture", "activeTab", "storage", "offscreen"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "src/popup.html"
+  },
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css",
+        "assets/*",
+        "requestPermissions.html",
+        "requestPermissions.js",
+        "src/container.html",
+        "container.js",
+        "subtitle.js",
+        "summaryRealtime.js",
+        "https://www.google-analytics.com/analytics.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "matches": [
+        "*://docs.google.com/presentation/d/*",
+        "*://www.docs.google.com/presentation/d/*"
+      ]
+    },
+    {
+      "all_frames": false,
+      "js": ["content.js"],
+      "matches": ["*://*/*"],
+      "run_at": "document_end"
+    }
+  ]
+}

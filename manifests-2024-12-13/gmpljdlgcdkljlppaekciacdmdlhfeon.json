@@ -1,0 +1,95 @@
+---
+name: Docs Online Viewer
+version: 9.0.1
+category_slug: productivity/workflow
+rating: 4.285060975609756
+rating_count: 656
+user_count: 100000
+release_date: '2024-08-14T06:04:14.000Z'
+size: 203KiB
+languages:
+  - English
+  - తెలుగు
+description: >-
+  Open and view any online file in your browser. Supports almost all major file
+  and document formats. Fast, easy to use and free.
+publisher_account: Deekshith Allamaneni
+extension_website: dov.parishod.com
+support_website: http://dov.parishod.com/#getting-started
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
+  "version": "9.0.1",
+  "applications": {
+    "gecko": {
+      "id": "{bfb54675-2fd9-4e22-949d-c36333aff6b5}"
+    }
+  },
+  "minimum_chrome_version": "88.0",
+
+  "default_locale": "en",
+  "description": "__MSG_extDescription__",
+  "icons": {
+    "16":"images/brand/dov-brand-16.png",
+    "32":"images/brand/dov-brand-32.png",
+    "64":"images/brand/dov-brand-64.png",
+    "128":"images/brand/dov-brand-128.png",
+    "256":"images/brand/dov-brand-256.png",
+    "512":"images/brand/dov-brand-512.png"
+  },
+
+  "author": "Deekshith Allamaneni",
+  "homepage_url": "http://dov.parishod.com/",
+  "action": {
+    "default_icon": "images/brand/dov-brand-128.png",
+    "default_popup": "html/popup.html",
+    "default_title": "Docs Online Viewer"
+  },
+  "options_ui": {
+    "page": "html/options.html"
+  },
+  "options_page": "html/options.html",
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://*/*.pdf",
+                          "*://*.facebook.com/*",
+                          "*://www.messenger.com/*",
+                          "*://mail.google.com/*",
+                          "*://docs.google.com/*",
+                          "*://www.mediafire.com/*"],
+      "all_frames": true,
+      "js": ["js/core/config.js", "js/content/insert-link-icons.js", "js/libs/dov-utils.js"]
+    },
+    {
+      "matches": ["*://dov.parishod.com/*"],
+      "js": ["js/content/announce-dov-info.js"]
+    },
+    {
+      "matches": ["*://view.officeapps.live.com/op/*"],
+      "all_frames": true,
+      "js": ["js/content/ms-office-online-content.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "js/core/service_worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/beside-link-icon.svg", "data/user-preferences-default.json"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+  "*://*/*"
+  ]
+}

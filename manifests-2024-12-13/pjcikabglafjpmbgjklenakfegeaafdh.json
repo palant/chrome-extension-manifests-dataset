@@ -1,0 +1,98 @@
+---
+name: MyJysk Helper
+version: '1.23'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2021-10-15T07:01:08.000Z'
+size: 31.23KiB
+languages:
+  - English
+description: Set of helper functions for MyJysk
+publisher_account: den.leschenko
+privacy_policy: https://myjysk-helper.flycricket.io/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MyJysk Helper",
+  "version": "1.23",
+  "description": "Set of helper functions for MyJysk",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background-wrapper.js",
+    "type": "module"
+  },
+  "omnibox": {
+    "keyword": "mj"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "contextMenus"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://myjysk.thinktime.com/Support*"
+      ],
+      "js": [
+        "import-tickets.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "utils.js",
+        "ticketsList.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "*.*.js",
+        "tickets.js"
+      ],
+      "matches": [
+        "https://myjysk.thinktime.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "popup/index.html"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline';connect-src *;img-src data: 'self'"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "linux": "Ctrl+Shift+K",
+        "windows": "Alt+Shift+S",
+        "mac": "Alt+Shift+P"
+      }
+    }
+  }
+}

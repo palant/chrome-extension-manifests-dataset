@@ -1,0 +1,110 @@
+---
+name: Givebacks Genie
+version: 3.0.1
+category_slug: lifestyle/shopping
+rating: 5
+rating_count: 13
+user_count: 10000
+release_date: '2024-11-27T10:42:54.000Z'
+size: 2.07MiB
+languages:
+  - English
+description: Get automatic cashback for you and your favorite cause while you shop!
+publisher: Givebacks
+publisher_address: |-
+  3041 Farrior Rd
+  Raleigh, NC 27607-3724
+  US
+extension_website: givebacks.com
+support_website: https://support.givebacks.com/
+privacy_policy: https://www.givebacks.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.1",
+  "name": "Givebacks Genie",
+  "description": "Get automatic cashback for you and your favorite cause while you shop!",
+  "icons": {
+    "128": "img/icon.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "notifications",
+    "background",
+    "webRequest",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "action": {
+    "default_icon": "img/icon-disabled.png"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "browser-polyfill.min.js",
+        "content.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "browser-polyfill.min.js",
+        "checkout.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.givebacks.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "earnings.html",
+        "oauth.html",
+        "fonts/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "shoppay.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

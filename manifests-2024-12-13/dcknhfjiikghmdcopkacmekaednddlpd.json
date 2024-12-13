@@ -1,0 +1,81 @@
+---
+name: MerchSpark for Merch By Amazon
+version: 1.1.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 3
+release_date: '2024-11-17T12:08:17.000Z'
+size: 1.39MiB
+languages:
+  - English
+description: >-
+  A Chrome extension which supports your tasks on Merch By Amazon (Amazon Merch
+  on Demand)
+extension_website: merchspark.net
+support_website: https://merchspark.net/
+privacy_policy: https://merchspark.net/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "MerchSpark for Merch By Amazon",
+ "version": "1.1.1",
+ "description": "A Chrome extension which supports your tasks on Merch By Amazon (Amazon Merch on Demand)",
+ "permissions": [
+  "activeTab",
+  "storage",
+  "unlimitedStorage",
+  "notifications",
+  "alarms",
+  "offscreen",
+  "declarativeNetRequest",
+  "declarativeNetRequestFeedback"
+ ],
+ "host_permissions": ["*://*.amazon.com/*", "https://*.merchspark.net/*"],
+ "action": {
+  "default_popup": "popup.html"
+ },
+ "icons": {
+  "512": "assets/icon512.png"
+ },
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [
+  {
+   "all_frames": true,
+   "matches": ["*://merch.amazon.com/*"],
+   "js": ["navbar.js"],
+   "run_at": "document_start"
+  },
+  {
+   "css": ["app/index.css"],
+   "js": ["app/index.js"],
+   "matches": ["https://merch.amazon.com/resource/merchspark/*"],
+   "run_at": "document_end"
+  }
+ ],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "enabled": true,
+    "id": "ruleset",
+    "path": "assets/rule.json"
+   }
+  ]
+ },
+ "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAtjrVw9fG57itKBFJTFpVOomx5dYI5OL+MTk0ELF3kw8pnuhhKi6zRjuMwdK/NrBFHoL4KZmhLLIjeiERPIBtFUQ66VyUq+NkyLJjnOT4bbhIWtL2ZImEEYB31fSlylfi5AYJTgT4M72nMBCQW2gjD8fMXVIqPPZV0Kk/w9sCOhmsDop/vsoYjtyGL/oJCr3Ji5jVQ28m0lSw/I5WxNAro6fGszbM9VAKSDiQ2+sdlfMSgahDuAjZFAis5DB9LadIX1KMrraatnOTRBwHBJjesiYA9wlHs10XVIHDKJJgF2VZn4UhQm/bXN5uUZHqb4XzMG+DnPxQbYB53PsV7IMnaQIDAQAB",
+ "web_accessible_resources": [
+  {
+   "matches": ["https://merch.amazon.com/*"],
+   "resources": ["app/*", "assets/*"]
+  }
+ ]
+}

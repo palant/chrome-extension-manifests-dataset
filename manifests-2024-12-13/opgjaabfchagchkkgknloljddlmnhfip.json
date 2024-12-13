@@ -1,0 +1,65 @@
+---
+name: SaveAll Clipper
+version: 0.0.0.6
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 2
+release_date: '2021-03-28T00:02:18.000Z'
+size: 17.96KiB
+languages:
+  - English (UK)
+description: >-
+  An extension that allows you to clip things you want to learn and create
+  cards.
+publisher_account: robinsaveall
+support_website: https://saveall.ai/contact
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SaveAll Clipper",
+  "version": "0.0.0.6",
+  "description": "An extension that allows you to clip things you want to learn and create cards.",
+  "manifest_version": 2,
+  "icons": {"16":  "images/favicon-32x32.png",
+          "32":  "images/favicon-32x32.png",
+          "48":  "images/favicon-32x32.png",
+          "128":  "images/favicon-32x32.png"
+          },
+  "permissions": ["contextMenus", "storage",
+    "https://save-all-backend-production.herokuapp.com/*"
+  ],
+
+  "background" : {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.saveall.ai/*"],
+      "js": ["content_scripts/getJWT.js"],
+      "all_frames": true
+    },
+    {"matches": ["*://*/*"],
+      "js": ["content_scripts/highlighter_popup.js"],
+      "all_frames": true
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": false
+  },
+  "web_accessible_resources": ["images/favicon-32x32.png"],
+  "chrome_url_overrides" : {"newtab": "newtab/override.html"},
+  "browser_action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/favicon-32x32.png",
+      "32": "images/favicon-32x32.png",
+      "48": "images/favicon-32x32.png",
+      "128": "images/favicon-32x32.png"
+    }
+  }
+}

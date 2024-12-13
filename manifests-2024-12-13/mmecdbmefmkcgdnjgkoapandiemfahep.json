@@ -1,0 +1,81 @@
+---
+name: PredictionBook helper
+version: 1.2.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 22
+release_date: '2021-08-11T11:39:58.000Z'
+size: 10.97KiB
+languages:
+  - English (UK)
+description: Manages encrypted PredictionBook entries
+publisher_account: zlodag
+support_website: https://github.com/zlodag/predictionHelper
+privacy_policy: https://zlodag.github.io/predictionHelper/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "PredictionBook helper",
+  "description": "Manages encrypted PredictionBook entries",
+  "version": "1.2.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Go to PredictionBook"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://predictionbook.com/groups/*",
+        "*://predictionbook.com/users/*",
+        "*://predictionbook.com/predictions/*",
+        "*://predictionbook.com/prediction_groups/*"
+      ],
+      "js": [
+        "decryptListContentScript.js"
+      ],
+      "css": [
+        "decryptListStyle.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://predictionbook.com/prediction_groups/new",
+        "*://predictionbook.com/prediction_groups/*/edit"
+      ],
+      "js": [
+        "createOrEditPredictionContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://predictionbook.com/"
+      ],
+      "js": [
+        "removeFormOnHomepageContentScript.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "*://predictionbook.com/predictions/new"
+  ],
+  "permissions": [
+    "storage",
+    "declarativeNetRequest"
+  ],
+  "options_page": "options.html"
+}

@@ -1,0 +1,80 @@
+---
+name: Primary Source Scraper
+version: 0.7.7
+category_slug: lifestyle/news
+rating: 5
+rating_count: 2
+user_count: 21
+release_date: '2022-05-03T17:17:21.000Z'
+size: 95.66KiB
+languages:
+  - English (United States)
+description: >-
+  This extension looks for primary news sources in articles and highlights them
+  so they are easy to see
+publisher_account: sourcescraper
+extension_website: primarysourcescraper.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Primary Source Scraper",
+  "description": "This extension looks for primary news sources in articles and highlights them so they are easy to see",
+  "version": "0.7.7",
+  "browser_action": {
+    "default_icon": "icons/icon-128.png",
+    "default_popup": "html/popup.html"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{6254760d-b5eb-4ab7-a9a9-ca0b87b77541}",
+      "strict_min_version": "57.0"
+    }
+  },  
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "js/constants.js",
+        "js/ArticleData.js",
+        "js/UserSettings.js",
+        "js/utils.js",
+        "js/ArticleSelection.js",
+        "js/ArticleAnalysis.js",
+        "js/content.js"
+      ]
+    }
+  ],
+  "background": {
+    "scripts": [
+      "js/constants.js",
+      "js/utils.js",
+      "js/badge.js"
+    ]
+  },
+  "options_ui": {
+    "page":"html/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "https://primarysourcescraper.azurewebsites.net/api/*",
+    "activeTab",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    "settings/defaultIgnoredDomains.json",
+    "settings/embeds.json",
+    "settings/linkCategories.json",
+    "settings/newsSources.json"
+  ],
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "128": "icons/icon-128.png"
+  }
+}

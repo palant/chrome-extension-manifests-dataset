@@ -1,0 +1,93 @@
+---
+name: Kabeen
+version: 1.15.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 4
+user_count: 3000
+release_date: '2024-10-31T17:59:10.000Z'
+size: 660KiB
+languages:
+  - Français
+description: Give feedbacks of your daily apps to your IT team
+publisher: Kbine
+publisher_account: Kabeen
+publisher_address: |-
+  199 bureaux de la colline
+  Saint-Cloud 92213
+  FR
+extension_website: kabeen.io
+support_website: http://help.kabeen.io
+privacy_policy: https://www.kabeen.io/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Kabeen",
+  "description": "Give feedbacks of your daily apps to your IT team",
+  "version": "1.15.0",
+  "manifest_version": 3,
+  "author": "Kabeen",
+  "icons": {
+    "48": "assets/img.png"
+  },
+  "storage": {
+    "managed_schema": "managed_schema.json"
+  },
+  "background": {
+    "service_worker": "background/index.mjs"
+  },
+  "action": {
+    "browser_style": false,
+    "default_icon": {
+      "48": "assets/img.png"
+    },
+    "default_title": "Kabeen",
+    "default_popup": "popup/index.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "webRequest",
+    "scripting",
+    "downloads",
+    "nativeMessaging"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "contentScripts/index.global.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/icons/*.svg",
+        "assets/icons/*.png",
+        "assets/*.svg",
+        "assets/*.png",
+        "assets/*.css",
+        "contentScripts/*.css",
+        "managed_schema.json"
+      ],
+      "matches": [
+        "https://*.kabeen.io/*",
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

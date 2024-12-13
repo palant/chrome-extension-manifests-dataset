@@ -1,0 +1,50 @@
+---
+name: ChatGPT Bulk Delete
+version: '5.7'
+category_slug: productivity/workflow
+rating: 4.369230769230769
+rating_count: 130
+user_count: 10000
+release_date: '2024-11-19T08:01:24.000Z'
+size: 481KiB
+languages:
+  - English
+description: A Chrome extension to bulk delete ChatGPT conversations
+publisher_account: qcrao
+extension_website: chatgpt-bulk-delete.qcrao.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatGPT Bulk Delete",
+  "version": "5.7",
+  "description": "A Chrome extension to bulk delete ChatGPT conversations",
+  "icons": {
+    "48": "icon48.png"
+  },
+  "action": {
+    "default_icon": "icon48.png",
+    "default_popup": "popup.html",
+    "default_title": "Bulk Delete Conversations"
+  },
+  "permissions": ["scripting", "activeTab", "identity", "identity.email"],
+  "host_permissions": ["https://bulk-delete-chatgpt-worker.qcrao.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://chat.openai.com/*", "*://chatgpt.com/*"],
+      "js": [
+        "globals.js",
+        "utils.js",
+        "addCheckboxes.js",
+        "bulkDeleteConversations.js",
+        "bulkArchiveConversations.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+---
+name: GitHub NavEase
+version: 0.0.2
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-06-01T07:08:55.000Z'
+size: 215KiB
+languages:
+  - English
+description: >-
+  Simplify navigation to repositories you have access to but were not the
+  original creator.
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "GitHub NavEase",
+  "version": "0.0.2",
+  "description": "Simplify navigation to repositories you have access to but were not the original creator.",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "identity"
+  ],
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-32.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://github.com/*"
+      ],
+      "js": [
+        "src/pages/contentInjected/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://github.com/*"
+      ],
+      "js": [
+        "src/pages/contentUI/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "icon-128.png",
+        "icon-32.png",
+        "src/pages/popup/oauth.html"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "oauth2": {
+    "client_id": "Ov23liijpLeXtMmu35Gd",
+    "scopes": [
+      "repo",
+      "read:org",
+      "user"
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+---
+name: VuAgain Chrome extension
+version: 1.3.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 1
+release_date: '2024-12-11T23:39:34.000Z'
+size: 500KiB
+languages:
+  - English
+description: Manage information about web pages that I've already seen
+publisher: Degel Software Ltd.
+publisher_account: Degel Software
+publisher_address: |-
+  7 Ha'Iris St.
+  --
+  Beit Shemesh 9951218
+  IL
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "VuAgain Chrome extension",
+  "version": "1.3.0",
+  "description": "Manage information about web pages that I've already seen",
+  "permissions": [
+    "activeTab",
+    "identity",
+    "scripting",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "tooling/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.google.com/search*"],
+      "js": ["tooling/google_content.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["tooling/general_tab_content.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icon16-trans.png",
+    "48": "icon48-trans.png",
+    "128": "icon128-trans.png"
+  },
+  "oauth2": {
+    "client_id": "612107680215-hdcskisn6h69k1do4uupber53kduihmo.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/spreadsheets",
+      "https://www.googleapis.com/auth/drive",
+      "https://www.googleapis.com/auth/userinfo.profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/documents.readonly"
+    ]
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "*://deg.github.io/va_dashboard/*"]
+  }
+}

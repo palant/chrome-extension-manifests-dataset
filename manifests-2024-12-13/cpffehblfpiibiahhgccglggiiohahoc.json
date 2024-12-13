@@ -1,0 +1,58 @@
+---
+name: WFMU Radio to Last.fm
+version: '1'
+category_slug: lifestyle/fun
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2022-02-24T07:36:55.000Z'
+size: 198KiB
+languages:
+  - English (United States)
+description: Add WFMU Radio current songs playing and favorites to Last.fm account
+publisher_account: wfmu.plugin
+support_website: https://github.com/toskan/music_plugin/blob/master/user_support.md
+privacy_policy: https://github.com/toskan/music_plugin/wiki/Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "WFMU Radio to Last.fm",
+ "description": "Add WFMU Radio current songs playing and favorites to Last.fm account",
+ "version": "1",
+ "manifest_version": 3,
+ "background": {
+  "service_worker": "background.js"
+ },
+ "permissions": ["storage", "notifications"],
+ "action": {
+  "default_popup": "popup.html",
+  "default_icon": {
+   "16": "/images/radio_16px.png",
+   "32": "/images/radio_32px.png",
+   "48": "/images/radio_48px.png",
+   "128": "/images/radio_128px.png"
+  }
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://*.wfmu.org/playlists/shows/*"],
+   "js": ["scrobble.js", "MD5.js"]
+  },
+  {
+   "matches": [
+    "https://*.wfmu.org/listen-live/*",
+    "https://tunein.com/radio/WFMU-911-s28808/",
+    "https://*.radio.net/s/wfmu",
+    "https://onlineradiobox.com/us/wfmu/?cs=us.wfmu*",
+    "https://*.radiorethink.com/tuner/index.cfm?stationCode=wfmu*"
+   ],
+   "js": ["wfmuPlayRadioApi.js", "MD5.js"]
+  },
+  {
+   "matches": ["https://*.last.fm/api/auth?token*"],
+   "js": ["lastFmGetToken.js", "MD5.js"]
+  }
+ ]
+}

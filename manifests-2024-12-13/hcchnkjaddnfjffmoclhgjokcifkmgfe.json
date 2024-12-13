@@ -1,0 +1,117 @@
+---
+name: LEO Bizdev
+version: 2.1.32
+category_slug: productivity/tools
+rating: 5
+rating_count: 8
+user_count: 525
+release_date: '2024-12-02T16:39:13.000Z'
+size: 179KiB
+languages:
+  - English
+description: Your AI Assistant for More Sales, Less Prospecting ✨
+publisher: SAS
+publisher_account: SalesTech
+publisher_address: |-
+  120 Rue Jean Jaurès
+  Levallois-Perret 92300
+  FR
+extension_website: leobizdev.ai
+support_website: https://help.leobizdev.ai/
+privacy_policy: https://www.leobizdev.ai/terms-and-conditions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "LEO Bizdev",
+ "version": "2.1.32",
+ "author": "Céline Froidefond 🍁",
+ "permissions": ["storage", "cookies", "notifications"],
+ "description": "Your AI Assistant for More Sales, Less Prospecting ✨",
+ "icons": {
+  "16": "assets/avatar/leo-16.png",
+  "32": "assets/avatar/leo-32.png",
+  "48": "assets/avatar/leo-48.png",
+  "128": "assets/avatar/leo-128.png"
+ },
+ "host_permissions": ["https://www.linkedin.com/*", "https://app.leobizdev.ai/*", "https://localhost:3060/*"],
+ "content_scripts": [
+        {
+            "js": ["scripts/libs/jquery/jquery-3.7.1.min.js"],
+   "css": ["assets/css/style.css"],
+   "matches": ["https://www.linkedin.com/*"],
+            "run_at": "document_start",
+            "all_frames": false
+        },
+  {
+   "js": [
+    "scripts/libs/saas.js"
+   ],
+   "matches": ["https://app.leobizdev.ai/*", "https://localhost:3060/*"],
+   "run_at ": "document_end"
+  },
+  {
+   "js": [
+    "scripts/libs/refresh.js"
+   ],
+   "matches": ["https://app.leobizdev.ai/signin", "https://localhost:3060/signin",
+    "https://app.leobizdev.ai/buyers-persona?extension=true",
+    "https://localhost:3060/buyers-persona?extension=true"],
+   "run_at ": "document_end"
+  },
+  {
+   "js": [
+    "scripts/libs/disconnect.js"
+   ],
+   "matches": [
+    "https://www.linkedin.com/",
+    "https://www.linkedin.com/home*",
+    "https://www.linkedin.com/login*",
+    "https://www.linkedin.com/signup*",
+    "https://www.linkedin.com/uas*",
+    "https://www.linkedin.com/checkpoint*"
+   ],
+   "run_at ": "document_start"
+  },
+  {
+   "js": [
+    "scripts/libs/lib.js",
+    "scripts/libs/sticky.js",
+    "scripts/libs/waiting.js",
+    "scripts/libs/prospection.js",
+    "scripts/libs/copywriting.js",
+    "scripts/libs/like.js",
+    "scripts/container.js"
+   ],
+   "matches": ["https://www.linkedin.com/*"],
+   "run_at ": "document_end",
+   "exclude_matches": [
+    "https://www.linkedin.com/sales*",
+    "https://www.linkedin.com/authwall*",
+    "https://www.linkedin.com/learning*",
+    "https://www.linkedin.com/pulse*",
+    "https://www.linkedin.com/pub*",
+    "https://www.linkedin.com/checkpoint*",
+    "https://www.linkedin.com/safety*",
+    "https://www.linkedin.com/",
+    "https://www.linkedin.com/?trk*",
+    "https://www.linkedin.com/login*",
+    "https://www.linkedin.com/signup*",
+    "https://www.linkedin.com/uas*",
+    "https://www.linkedin.com/home*"
+   ]
+  }
+ ],
+ "background": {
+  "service_worker": "worker.js",
+  "type": "module"
+ },
+ "web_accessible_resources": [
+  {
+   "resources": ["assets/fonts/Cabin-Regular.ttf"],
+   "matches": ["https://www.linkedin.com/*"]
+  }
+ ]
+}

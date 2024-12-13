@@ -1,0 +1,95 @@
+---
+name: Raply.AI - ChatGPT Email Assistant AI
+version: 1.0.14
+category_slug: productivity/workflow
+rating: 4.878787878787879
+rating_count: 33
+user_count: 1000
+release_date: '2023-06-23T04:59:47.000Z'
+size: 175KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+description: >-
+  An AI-powered email assistant that streamlines and enhances your email
+  communication in multiple languages.
+publisher_account: Raply.AI
+extension_website: raply.ai
+privacy_policy: https://raply.ai/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_extName__",
+    "version": "1.0.14",
+    "description": "__MSG_extDescription__",
+    "permissions": ["storage", "identity"],
+    "action": {
+        "default_icon": "assets/icon128.png",
+        "default_popup": "login.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://mail.google.com/mail/*",
+                "*://inbox.google.com/*",
+                "*://outlook.live.com/*",
+                "*://outlook.office.com/*",
+                "*://outlook.office356.com/*",
+                "*://outlook.com/*"
+            ],
+            "css": [ "css/common.css", "gmail/gmail-styles.css", "gmail/material-icons.css" ],
+            "js": [
+                "libs/jquery.js",
+                "libs/gmail.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://mail.google.com/mail/*",
+                "*://inbox.google.com/*",
+                "*://outlook.live.com/*",
+                "*://outlook.office.com/*",
+                "*://outlook.office356.com/*",
+                "*://outlook.com/*"
+            ],
+            "js": [
+                "contentscript.js",
+                "gmail/compose.js",
+                "outlook/outlookCompose.js",
+                "outlook/reply.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "default_locale": "en",
+    "icons": {
+        "128": "assets/icon128.png"
+    },
+    "options_ui": {
+        "page": "settings.html",
+        "open_in_tab": true
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "externally_connectable": {
+        "matches": ["https://*.raply.ai/*", "http://localhost:3000/*"]
+    },
+    "web_accessible_resources": [
+        {
+          "resources": ["settings.html"],
+          "extension_ids": ["ofmanmcabclefldfoofnpbmddeadochi"]
+        },
+        {
+          "resources": ["/_locales/*/messages.json"],
+          "matches": ["<all_urls>"]
+        }
+    ]
+}

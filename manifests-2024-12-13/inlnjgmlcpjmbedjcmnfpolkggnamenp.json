@@ -1,0 +1,74 @@
+---
+name: TRAVIC-Sign
+version: 3.1.19.0
+category_slug: productivity/workflow
+rating: 3.3333333333333335
+rating_count: 3
+user_count: 40000
+release_date: '2024-05-31T06:24:23.000Z'
+size: 95.08KiB
+languages:
+  - Deutsch
+description: Browsererweiterung zur Signaturerstellung
+publisher_account: PPI AG
+publisher_address: |-
+  Heidestieg 10F
+  Norderstedt 22844
+  DE
+support_website: https://support.ppi.de/...?&Lang=en
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name":             "TRAVIC-Sign",
+    "description":      "Browsererweiterung zur Signaturerstellung",
+    "version":          "3.1.19.0",
+    "author":           "PPI AG, Hamburg, Germany",  
+  
+    "key":              "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAurtpXkDFnmgtpxtRDJUnifkU1H3sc2c61menoWo09Uc+STwBKFVPZ54QmMAPO5ko0OmJ5OUL4fQ1cmLXsgyeFaWuh36RAiiRN6QZNZYXcFdqlmNKb3QIeIoGHLURUDCUui+Xst2XkkGIMpWRTC33N5sR6LNjHFS65bM93baV0qcrESG7Xa0dQITqfQPrXkzan5cE0Ud+VN772vQpkn/t5SK7/j5916nLEuymJXfMqWllD2gBFUf5KpZl+Sfd3+1BIbQf9l7iKYLdmz8EAcVYKVaAy2Oh7f3822TjTMkYmQHziaGqV/5hkmLNH958ZfQxA1c294b4Ywcqk67fF/u8DwIDAQAB",
+  
+    "permissions":      ["nativeMessaging", "clipboardWrite", "storage"],
+  
+    "action": {
+        "default_icon": {
+            "19": "images/ppi19.png",
+            "38": "images/ppi38.png"
+        },
+        "default_title": "TRAVIC-Sign"
+    },
+          
+    "content_scripts": [
+        {
+            "matches": ["file://*/*","http://*/*","https://*/*"],
+            "js": ["jquery-3.7.1.min.js", "util.js", "OptionsService.js", "ApiConverter.js"],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+
+        {
+            "matches": ["file://*/*","http://*/*","https://*/*"],
+            "js": ["jquery-3.7.1.min.js", "util.js", "VersionInfoService.js", "GuiProtocolService.js", "MessageService.js", "ChunkedMessageService.js", "HtmlFragment.js", "gui.js", "MessageAnimation.js"],
+            "css": ["style.css"],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+  
+    "background": {
+        "service_worker":  "NativeMessageProxy.js"
+    },
+  
+    "options_ui": {
+        "page": "Options/options.html",
+        "open_in_tab": true
+    }, 
+  
+    "web_accessible_resources": [{
+        "resources": ["gui.html"],
+        "matches": ["file://*/*","http://*/*","https://*/*"],
+        "extension_ids": ["inlnjgmlcpjmbedjcmnfpolkggnamenp"]
+    }]
+}

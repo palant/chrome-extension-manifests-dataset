@@ -1,0 +1,155 @@
+---
+name: Punk
+version: '2.28'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 6
+release_date: '2024-12-09T19:38:52.000Z'
+size: 1.35MiB
+languages:
+  - English (United States)
+description: >-
+  Be your own workspace anarchist! A collection of scripts to adapt ZD, CDot,
+  SFDC, and Zuora screens.
+publisher_account: webdevrev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Punk",
+  "version": "2.28",
+  "description": "Be your own workspace anarchist! A collection of scripts to adapt ZD, CDot, SFDC, and Zuora screens.",
+
+  "icons": {
+    "128": "images/icon-128.png"
+  },
+
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+
+  "options_page": "options.html",
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+
+  "host_permissions": [
+    "https://gitlab.zendesk.com/*",
+    "https://customers.gitlab.com/*",
+    "https://customers.staging.gitlab.com/*"
+  ],
+
+  "action": {},
+  "background": {
+    "service_worker": "scripts/core/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "scripts/core/punkey.js",
+        "scripts/core/punk.js",
+        "scripts/global/global_textarea_warn.js",
+        "scripts/init/init_global.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://gitlab.zendesk.com/*"
+      ],
+      "js": [
+        "scripts/vendor/sweetalert2/sweetalert2.all.min.js",
+        "scripts/core/utils.js",
+        "scripts/core/punkey.js",
+        "scripts/core/punk.js",
+        "scripts/zendesk/zd_active_ticket_tab.js",
+        "scripts/zendesk/zd_autorefresh_view.js",
+        "scripts/zendesk/zd_comment_colors.js",
+        "scripts/zendesk/zd_duo.js",
+        "scripts/zendesk/zd_hi.js",
+        "scripts/zendesk/zd_hide_ir_sla_bot_bump.js",
+        "scripts/zendesk/zd_hide_pending_reminders.js",
+        "scripts/zendesk/zd_hide_signature.js",
+        "scripts/zendesk/zd_hide_unread_message.js",
+        "scripts/zendesk/zd_ooo.js",
+        "scripts/zendesk/zd_sla_colors.js",
+        "scripts/zendesk/zd_status_colors.js",
+        "scripts/zendesk/zd_squeeze_columns.js",
+        "scripts/zendesk/zd_table_shortcut.js",
+        "scripts/zendesk/zd_timezone_toggler.js",
+        "scripts/zendesk/zd_trim_org_note.js",
+        "scripts/zendesk/zd_warn_blank_lines.js",
+        "scripts/zendesk/zd_window_cleaner.js",
+        "scripts/init/init_zd.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://customers.gitlab.com/*",
+        "https://customers.staging.gitlab.com/*"
+      ],
+      "js": [
+        "scripts/vendor/sweetalert2/sweetalert2.all.min.js",
+        "scripts/core/utils.js",
+        "scripts/core/punkey.js",
+        "scripts/core/punk.js",
+        "scripts/cdot/cdot_info_copier.js",
+        "scripts/cdot/cdot_license_details.js",
+        "scripts/init/init_cdot.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.zuora.com/*"
+      ],
+      "js": [
+        "scripts/vendor/sweetalert2/sweetalert2.all.min.js",
+        "scripts/core/utils.js",
+        "scripts/core/punkey.js",
+        "scripts/core/punk.js",
+        "scripts/zuora/zuora_info_copier.js",
+        "scripts/init/init_zuora.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://gitlab.com/dashboard/*",
+        "https://gitlab.com/gitlab-org/gitlab/-/merge_requests/*"
+      ],
+      "js": [
+        "scripts/core/utils.js",
+        "scripts/core/punkey.js",
+        "scripts/core/punk.js",
+        "scripts/gitlab/gitlab_hide_mr_bot_comments.js",
+        "scripts/gitlab/gitlab_todo_list.js",
+        "scripts/init/init_gitlab.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://gitlab.zendesk.com/*",
+        "https://customers.gitlab.com/*",
+        "https://customers.staging.gitlab.com/*",
+        "https://gitlab.com/gitlab-com/support/support-ops/support-ops-project/-/issues/*"
+      ],
+      "js": [
+        "scripts/vendor/sweetalert2/sweetalert2.all.min.js",
+        "scripts/core/utils.js",
+        "scripts/core/punkey.js",
+        "scripts/core/punk.js",
+        "scripts/zendesk/zd_dup_ir_to_cdot.js",
+        "scripts/init/init_cdot_zd.js"
+      ]
+    }
+  ]
+}

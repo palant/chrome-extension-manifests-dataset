@@ -1,0 +1,87 @@
+---
+name: 'Minute: Meeting Notes and Actions'
+version: 1.1.0
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 35
+release_date: '2021-07-31T05:20:20.000Z'
+size: 206KiB
+languages:
+  - English
+description: Official Minute Chrome extension for Google Calendar
+publisher_account: vatsal
+extension_website: getminute.co
+privacy_policy: https://meetingstats.com/pages/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Minute: Meeting Notes and Actions",
+  "description": "Official Minute Chrome extension for Google Calendar",
+  "version": "1.1.0",
+  "manifest_version": 2,
+  "permissions": [
+    "https://calendar.google.com/*",
+    "https://meet.google.com/*",
+    "https://mail.google.com/mail/u/*"
+  ],
+  "icons": {
+    "16": "images/logo.png",
+    "48": "images/logo.png",
+    "128": "images/logo.png"
+  },
+  "browser_action": {
+    "default_icon": {
+      "16": "images/logo.png",
+      "48": "images/logo.png",
+      "128": "images/logo.png"
+    },
+    "default_popup": "reload.html",
+    "default_title": "Minute"
+  },
+  "background": {
+    "scripts": ["background.bundle.js"]
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "css": ["panel.css"],
+      "js": ["content_script_calendar.bundle.js"],
+      "matches": ["https://calendar.google.com/calendar/*"],
+      "run_at": "document_idle"
+    },
+    {
+      "all_frames": false,
+      "css": ["panel.css"],
+      "js": ["content_script_meet.bundle.js"],
+      "matches": ["https://meet.google.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "css": ["panel.css"],
+      "js": ["content_script_gmail.bundle.js"],
+      "matches": ["https://mail.google.com/mail/u/*"],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": false,
+      "css": ["panel.css"],
+      "exclude_matches": [
+        "https://calendar.google.com/calendar/*",
+        "https://meet.google.com/*",
+        "https://mail.google.com/mail/u/*"
+      ],
+      "js": ["content_script_others.bundle.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    "/images/logo.png",
+    "/images/logo_light.png",
+    "/images/logo.svg"
+  ]
+}

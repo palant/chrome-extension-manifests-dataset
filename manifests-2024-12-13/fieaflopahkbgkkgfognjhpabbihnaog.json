@@ -1,0 +1,96 @@
+---
+name: Looking Glass
+version: 0.0.0.2
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-12-10T23:00:01.000Z'
+size: 149KiB
+languages:
+  - English (United States)
+description: >-
+  Adapts foreign videos to your language level. Learn naturally by watching
+  content you love.
+publisher_account: Some Trees LLC
+privacy_policy: >-
+  https://github.com/some-trees/looking-glass-privacy/blob/main/PRIVACY_POLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Looking Glass",
+  "description": "Adapts foreign videos to your language level. Learn naturally by watching content you love.",
+  "version": "0.0.0.2",
+  "manifest_version": 3,
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": "icons/not-recording.png",
+    "default_title": "Click to start translating"
+  },
+  "background": {
+    "service_worker": "service-worker/service_worker.js"
+  },
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "sidePanel",
+    "tabs",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://*.supabase.co/*",
+    "https://accounts.google.com/*"
+  ],
+  "oauth2": {
+    "client_id": "43616403896-qpfhikj5i6cdfj1k5vq8tn0ov8n2vvj2.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "utils/changeListener.js",
+        "content-script/services/shared/movableElement.js",
+        "content-script/services/audio/captionBox.js",
+        "content-script/lib/mutation-summary.js",
+        "content-script/lib/smoothscroll.js",
+        "utils/errorHandler.js",
+        "utils/backendClient.js",
+        "service-worker/utils.js",
+        "content-script/services/subtitles/subtitleMutationSummary.js",
+        "content-script/services/dictionary/translationsDictionary.js",
+        "content-script/services/summary/summary.js",
+        "content-script/services/dialogue/dialogue.js",
+        "content-script/content_script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/supabase-js.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

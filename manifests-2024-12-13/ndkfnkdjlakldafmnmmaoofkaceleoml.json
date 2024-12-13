@@ -1,0 +1,91 @@
+---
+name: التحضير
+version: 1.2.1
+category_slug: productivity/workflow
+rating: 4.6
+rating_count: 10
+user_count: 2000
+release_date: '2024-09-06T19:39:42.000Z'
+size: 5.76MiB
+languages:
+  - ‫العربية
+description: التحضير الآلي لدروس منصة مدرستي وأسئلة النصفي والنهائي
+publisher_account: أسئلتي
+support_website: https://twitter.com/myasilaty
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "التحضير",
+    "description": "التحضير الآلي لدروس منصة مدرستي وأسئلة النصفي والنهائي",
+    "version": "1.2.1",
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "icons": {
+        "128": "./icon.png",
+        "64": "./icon.png",
+        "32": "./icon.png",
+        "16": "./icon.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://schools.madrasati.sa/SchoolManagment/Actions/Teacher/*"
+            ],
+            "js": [
+                "js/content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://schools.madrasati.sa/SchoolSchedule/Schedule/ManageLecture*"
+            ],
+            "js": [
+                "js/close-tab-handler.js"
+            ]
+        },
+        {
+            "all_frames": true,
+            "matches": [
+                "https://schools.madrasati.sa/Teacher/Lessons/LessonDetailsNew?Data=*"
+            ],
+            "js": [
+                "js/captcha-tracker.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "css/content.css",
+                "css/global.css",
+                "/images/logo.png",
+                "/images/success.png",
+                "/images/email_verification.png",
+                "/images/failed.png",
+                "/images/logout-icon.png",
+                "/fonts/*",
+                "db/*"
+            ],
+            "matches": [
+                "https://schools.madrasati.sa/*"
+            ]
+        },
+        {
+            "resources": [
+                "/app.html",
+                "/weekly-plan.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "tabs"
+    ]
+}

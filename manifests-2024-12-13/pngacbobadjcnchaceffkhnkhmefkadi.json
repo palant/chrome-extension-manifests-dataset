@@ -1,0 +1,95 @@
+---
+name: Download Home
+version: 1.0.1
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 32
+release_date: '2023-04-22T09:39:17.000Z'
+size: 771KiB
+languages:
+  - English (United States)
+description: >-
+  A new tab page that shows you your downloads, and allows you to save notes
+  about the files you download and save.
+publisher: vGenerator LLC
+publisher_address: |-
+  36 Monticello Ave
+  Piedmont, CA 94611-3950
+  US
+extension_website: vgenerator.com
+support_website: https://vgenerator.com/help/
+privacy_policy: https://vgenerator.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Download Home",
+  "short_name": "DLHome",
+  "description": "A new tab page that shows you your downloads, and allows you to save notes about the files you download and save.",
+  "version": "1.0.1",
+
+  "permissions": ["downloads", "storage"],
+
+  "optional_permissions": ["topSites", "favicon"],
+
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+
+  "action": {
+    "default_popup": "/popup/popup.html",
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    }
+  },
+
+  "background": {
+    "service_worker": "./background.bundle.js",
+    "type": "module"
+  },
+
+  "options_ui": {
+    "page": "./options/options.html",
+    "open_in_tab": true
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./content-scripts/download-notification.js"],
+      "css": ["./css/download-notification.css"]
+    }
+  ],
+
+  "chrome_url_overrides": {
+    "newtab": "./new-tab/new-tab.html"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["_favicon/*"],
+      "matches": ["<all_urls>"],
+      "extension_ids": ["*"]
+    },
+    {
+      "resources": [
+        "css/base.css",
+        "css/download-notification.css",
+        "images/close-gray.svg",
+        "images/icon-32.png",
+        "images/new-tab-header.avif",
+        "images/default-download.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

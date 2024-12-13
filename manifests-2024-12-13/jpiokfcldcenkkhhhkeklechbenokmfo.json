@@ -1,0 +1,140 @@
+---
+name: IDmelon Provisioning
+version: 1.2.1
+category_slug: make_chrome_yours/privacy
+rating: null
+rating_count: null
+user_count: 36
+release_date: '2024-10-26T06:51:27.000Z'
+size: 52.95KiB
+languages:
+  - English
+description: >-
+  IDmelon Provisioning empowers admins of an organization to streamline FIDO2
+  credential setup for employees.
+publisher: IDmelon Technologies Inc.
+publisher_address: |-
+  1281 Hornby St
+  Vancouver, BC V6Z 0G8
+  CA
+extension_website: idmelon.com
+support_website: https://idmelon.com/get-support
+privacy_policy: https://idmelon.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "IDmelon Provisioning",
+  "version": "1.2.1",
+  "description": "IDmelon Provisioning empowers admins of an organization to streamline FIDO2 credential setup for employees.",
+  "author": "https://idmelon.com",
+  "icons": {
+    "16": "static/icons/icon16.png",
+    "32": "static/icons/icon32.png",
+    "48": "static/icons/icon48.png",
+    "128": "static/icons/icon128.png"
+  },
+  "action": {
+    "default_title": "IDmelon Provisioning",
+    "default_popup": "ui/popup/popup.html",
+    "default_icon": {
+      "16": "static/icons/icon16.png",
+      "32": "static/icons/icon32.png"
+    }
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/idmelon-panel-script.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_start",
+      "matches": [
+        "https://panel.idmelon.com/*",
+        "https://panel.dev.idmelon.com/*"
+      ]
+    },
+    {
+      "js": [
+        "scripts/passkey-interceptor-injector-script.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_start",
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "scripting",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "https://login.microsoft.com/*",
+    "https://login.microsoftonline.com/*",
+    "https://mysignins.microsoft.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "<all_urls>"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "passkey-interceptor.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "utils/base64-converter.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "utils/hex-converter.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "utils/message-function.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "provisioning/webauthn-adapter.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": [
+        "provisioning/microsoft/lang-metadata.json"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,154 @@
+---
+name: 'Seekr: AI-powered New Tab with Bard & ChatGPT'
+version: 1.1.7
+category_slug: productivity/workflow
+rating: 4.375
+rating_count: 8
+user_count: 635
+release_date: '2023-12-18T11:07:41.000Z'
+size: 633KiB
+languages:
+  - English
+description: >-
+  Seekr is an AI-powered New Tab extension, equipped with powerful AI tools like
+  Bard, ChatGPT, & much more!
+publisher_account: ValueFoundry
+extension_website: getseekr.com
+support_website: >-
+  https://chrome.google.com/webstore/detail/lpbeeifjlnlcohkeidehidmkgaakkbap/support
+privacy_policy: https://browsebetter.io/privacy-policy.php
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "Seekr: AI-powered New Tab with Bard & ChatGPT",
+  "short_name": "Seekr: AI New Tab",
+  "description": "Seekr is an AI-powered New Tab extension, equipped with powerful AI tools like Bard, ChatGPT, & much more!",
+  "version": "1.1.7",
+  "homepage_url": "https://getseekr.com",
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://bard.google.com/*"],
+      "js": ["js/bard.js"],
+      "css": ["styles/bard.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+    ,
+    {
+      "matches": ["*://chat.openai.com/*"],
+      "js": ["js/chatgpt.js"],
+      "css": ["styles/chatgpt.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+    ,   
+    {
+      "matches": ["https://*/*"],
+      "exclude_matches": ["*://chat.openai.com/*", "*://bard.google.com/*"],
+      "js": ["js/backbutton.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+    ,       
+    {
+      "matches": ["*://chat.openai.com/*", "*://bard.google.com/*", "*://www.google.com/*", "*://www.bing.com/*"],
+      "js": ["js/a_func.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }    
+  ],
+  "permissions": [
+    "unlimitedStorage",
+    "declarativeNetRequest",
+    "storage",
+    "topSites",
+    "background",
+    "favicon"
+  ],
+  "optional_permissions": [
+    "scripting"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+      "id": "ruleset_1a",
+      "enabled": true,
+      "path": "rule1a.json"
+      },
+      {
+        "id": "ruleset_1b",
+        "enabled": true,
+        "path": "rule1b.json"
+        },
+      {
+        "id": "ruleset_2",
+        "enabled": true,
+        "path": "rule2.json"
+        },
+        {
+          "id": "ruleset_3",
+          "enabled": true,
+          "path": "rule3.json"
+        },
+        {
+          "id": "rule_optional",
+          "enabled": false,
+          "path": "rule_optional.json"
+        }      
+  ]
+  },
+  "icons": {
+    "16": "ico/32.png",
+    "32": "ico/32.png",
+    "48": "ico/64.png",
+    "128": "ico/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.html",
+        "*.css",
+        "*.png",
+        "*.svg",
+        "*.jpg",
+        "*.jpeg",
+        "*.webp",
+        "_favicon/*"
+      ],
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "extension_ids": ["*"]
+    }
+  ],
+
+  "offline_enabled": true,
+
+  "author": "Seekr: AI New Tab",
+
+  "background": {
+    "service_worker": "js/service.js"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "ico/32.png",
+      "32": "ico/32.png",
+      "48": "ico/64.png",
+      "128": "ico/128.png"
+    },
+    "default_title": "Seekr: AI New Tab"
+  },
+  "content_security_policy": {
+    "extension_pages": "font-src 'self'; script-src 'self'; object-src 'self'; worker-src 'self'",
+    "content_scripts": "font-src 'self'; script-src 'self'; object-src 'self'; worker-src 'self'"
+  }
+}

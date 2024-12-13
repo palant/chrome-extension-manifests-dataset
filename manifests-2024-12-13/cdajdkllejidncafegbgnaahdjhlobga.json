@@ -1,0 +1,76 @@
+---
+name: 100xjobs
+version: '1.2'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-11-21T10:05:38.000Z'
+size: 75.1KiB
+languages:
+  - English (UK)
+description: Scrapes job details from various job sites.
+publisher_account: 100xjobs
+privacy_policy: https://app.100xjobs.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "100xjobs",
+    "version": "1.2",
+    "description": "Scrapes job details from various job sites.",
+    "permissions": [
+        "scripting",
+        "storage",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "https://*.linkedin.com/*",
+        "https://*.indeed.com/*",
+        "https://*.glassdoor.co.in/*",
+        "https://*.naukri.com/*",
+        "https://app.100xjobs.com/*"
+    ],
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "32": "icon.png",
+            "48": "icon.png",
+            "128": "icon.png"
+        },
+        "default_title": "100xjobs"
+    },
+    "icons": {
+        "16": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.linkedin.com/*",
+                "https://*.indeed.com/*",
+                "https://*.glassdoor.co.in/*",
+                "https://*.naukri.com/*",
+                "https://app.100xjobs.com/*",
+                "http://localhost:5173/*"
+            ],
+            "js": ["content.js"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["dist/*", "index.html"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    }
+}

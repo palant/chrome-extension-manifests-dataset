@@ -1,0 +1,69 @@
+---
+name: Textune
+version: 2.2.2
+category_slug: make_chrome_yours/accessibility
+rating: 5
+rating_count: 4
+user_count: 10000
+release_date: '2024-12-12T07:07:40.000Z'
+size: 66.11KiB
+languages:
+  - English
+description: Make online reading easy and highlight your favorite search terms
+publisher: Onchain Ltd
+publisher_account: Focus Sounds
+publisher_address: |-
+  Hazerem 10 st.
+  Tel Aviv 6816850
+  IL
+extension_website: textune.us
+support_website: https://textune.us/contact-us
+privacy_policy: https://textune.us/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Textune",
+  "version": "2.2.2",
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["activeTab", "storage", "tabs", "scripting", "cookies", "management", "alarms", "webNavigation"],
+  "description": "Make online reading easy and highlight your favorite search terms",
+  "icons": {
+    "16": "images/icon_16x16.png",
+    "32": "images/icon_32x32.png",
+    "64": "images/icon_64x64.png",
+    "128": "images/icon_128x128.png"
+  },
+  "action": {
+    "default_icon": "images/icon.png"
+  },
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "matches": ["https://*.google.com/*", "https://groups.google.com/", "http://*/*", "https://*/*"],
+      "run_at": "document_idle",
+      "js": ["modules/textune/content/main.js", "modules/textune/content/readability.js"]
+    },
+    {
+      "js": [
+        "modules/ext1-linker/linker/levenshtein.js",
+        "modules/ext1-linker/linker/linker.js"
+      ],
+      "matches": [
+        "http://*/*", "https://*/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["modules/ext1-linker/linker/settings.json"],
+      "matches": ["*://*/*"]
+    }
+  ]
+}

@@ -1,0 +1,75 @@
+---
+name: WillMap
+version: 0.2.5
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 10
+release_date: '2024-12-01T11:33:59.000Z'
+size: 2.9MiB
+languages:
+  - English
+description: Represents housing data from willhaben.at search results and displays on a map
+publisher_account: mcsch
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "WillMap",
+  "version": "0.2.5",
+  "description": "Represents housing data from willhaben.at search results and displays on a map",
+  "icons": {
+    "16": "icons/map16.png",
+    "64": "icons/map64.png",
+    "128": "icons/map128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/map16.png",
+      "64": "icons/map64.png",
+      "128": "icons/map128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://www.willhaben.at/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://www.willhaben.at/*"],
+      "js": [
+        "leaflet.js",
+        "node_modules/leaflet.markercluster/dist/leaflet.markercluster.js",
+        "marker.js",
+        "willmap.js"
+      ],
+      "css": [
+        "leaflet.css",
+        "node_modules/leaflet.markercluster/dist/MarkerCluster.css",
+        "node_modules/leaflet.markercluster/dist/MarkerCluster.Default.css",
+        "custom.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["https://www.willhaben.at/*"],
+      "use_dynamic_url": true
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "willmap@proton.me"
+    }
+  }
+}

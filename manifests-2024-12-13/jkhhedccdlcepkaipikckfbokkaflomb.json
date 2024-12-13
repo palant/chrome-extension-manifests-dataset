@@ -1,0 +1,79 @@
+---
+name: OfficeCheck
+version: 1.0.2
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 43
+release_date: '2024-05-28T08:30:53.000Z'
+size: 1.08MiB
+languages:
+  - English
+description: Used to alert users when the specific fields in Amadeus are not correct
+publisher: Teleperformance
+publisher_account: IT-Tools-Development
+publisher_address: |-
+  Edificio Marconi, Av. Álvaro Pais 2
+  Lisbon 1600-873
+  PT
+privacy_policy: >-
+  https://www.teleperformance.com/media/pocnzkcq/tp-privacy-policy-external-english-3-0.pdf
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "OfficeCheck",
+    "description": "Used to alert users when the specific fields in Amadeus are not correct",
+    "version": "1.0.2",
+    "action": {
+        "default_icon": "images/icon-16x16.png",
+        "default_title": "OfficeCheck"
+    },
+    "background": {
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "side_panel": {
+        "default_path": "popup.html"
+    },
+    "permissions": [
+        "cookies",
+        "tabs",
+        "activeTab",
+        "sidePanel",
+        "identity"
+    ],
+    "content_scripts": [
+        {
+          "matches": ["https://tc235.resdesktop.altea.amadeus.com/*"],
+          "js": [
+            "js/webpageContext.js"
+          ],
+          "css": ["css/webpageContext.css"]
+        }
+    ],
+    "commands": {
+        "open_alert": {
+          "suggested_key": {
+            "default": "Ctrl+S",
+            "mac": "Ctrl+S"
+          },
+          "description": "Open the alert"
+        }
+    },
+    "icons": {
+        "16": "images/icon-16x16.png",
+        "48": "images/icon-48x48.png",
+        "128": "images/icon-128x128.png"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": ["images/background.png", "images/alert.png", "images/icon-16x16.png"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    "host_permissions": ["<all_urls>"]
+}

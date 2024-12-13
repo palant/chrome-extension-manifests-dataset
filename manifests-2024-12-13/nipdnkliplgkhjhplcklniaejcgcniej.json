@@ -1,0 +1,78 @@
+---
+name: Surfboard
+version: 1.0.7
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 22
+release_date: '2024-10-01T10:31:02.000Z'
+size: 3.26MiB
+languages:
+  - English
+description: >-
+  Simplify workflows by sharing links to Surfboard directly from your browser.
+  Or sync LinkedIn connections to quickly identify leads.
+extension_website: surfboard.team
+privacy_policy: https://www.surfboard.team/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Surfboard",
+  "description": "Simplify workflows by sharing links to Surfboard directly from your browser. Or sync LinkedIn connections to quickly identify leads.",
+  "version": "1.0.7",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "Surfboard",
+    "default_popup": "index.html"
+  },
+  "permissions": ["storage", "tabs"],
+  "background": {
+    "service_worker": "service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": ["https://www.linkedin.com/mynetwork/*"],
+      "js": ["contentScripts/connectionImport.js"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["contentScripts/surfboardLinkedInButton.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://www.surfboard.live/*",
+      "https://www.surfboard.team/*",
+      "https://app.surfboard.live/*",
+      "https://app.surfboard.team/*",
+      "https://www.linkedin.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentScripts/interceptPatch.js",
+        "contentScripts/contentStyles.css",
+        "assets/fonts/MuseoSans/MuseoSansCyrl-500.woff",
+        "assets/linkedInLogo.svg",
+        "assets/twoWayArrow.svg",
+        "assets/squareLogo.png",
+        "assets/close-icon.svg",
+        "assets/square_logo_orange.png",
+        "index.html"
+      ],
+      "matches": ["https://www.linkedin.com/*"]
+    }
+  ],
+  "icons": {
+    "16": "assets/favicon-16x16.png",
+    "32": "assets/favicon-32x32.png",
+    "48": "assets/favicon-48x48.png",
+    "128": "assets/favicon-128x128.png",
+    "144": "assets/favicon-144x144.png"
+  }
+}

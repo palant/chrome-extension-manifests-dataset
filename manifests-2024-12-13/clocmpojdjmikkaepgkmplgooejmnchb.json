@@ -1,0 +1,53 @@
+---
+name: DownQ
+version: 1.5.1
+category_slug: productivity/developer
+rating: 3.967741935483871
+rating_count: 31
+user_count: 7000
+release_date: '2024-12-04T03:13:56.000Z'
+size: 50.43KiB
+languages:
+  - English
+description: >-
+  Unofficial tool for downloading and downgrading games from the Oculus or Meta
+  store.
+publisher_account: Basti564
+privacy_policy: https://github.com/basti564/basti564/blob/master/PRIVACY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DownQ",
+  "description": "Unofficial tool for downloading and downgrading games from the Oculus or Meta store.",
+  "version": "1.5.1",
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "permissions": ["cookies", "declarativeNetRequestWithHostAccess"],
+  "host_permissions": ["*://*.oculus.com/*", "*://*.meta.com/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "background": {
+    "service_worker": "CookieMonster.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "js": ["lib/unzip.min.js", "lib/inflate.min.js", "DownQuest.js"],
+      "css": ["styles.css"],
+      "matches": ["*://*.meta.com/*"]
+    }
+  ]
+}

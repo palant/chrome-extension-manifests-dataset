@@ -1,0 +1,61 @@
+---
+name: TeachBooks Annotator
+version: 1.1.2
+category_slug: productivity/education
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2024-11-25T18:35:13.000Z'
+size: 231KiB
+languages:
+  - English
+description: >-
+  A tool for making annotations on websites, with the primary application for
+  use with online interactive textbooks. This extension…
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TeachBooks Annotator",
+  "version": "1.1.2",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "src/background/background.js"
+  },
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": "assets/icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "src/lib/jquery-3.6.0.min.js",  
+        "src/lib/annotator-full.min.js",
+        "src/content/contentScript.js"
+      ],
+      "css": [
+        "src/styles/global.css",
+        "src/lib/annotator.min.css"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "file://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/content/sidebar/*",
+        "assets/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+---
+name: Acefone Extension For Hubspot
+version: 0.1.4
+category_slug: lifestyle/social
+rating: 1
+rating_count: 1
+user_count: 23
+release_date: '2023-08-24T04:10:09.000Z'
+size: 667KiB
+languages:
+  - English
+description: >-
+  It is an integrated browser extension that offers the inbound and outbound
+  call services to HubSpot CRM users.
+publisher: The Real PBX Limited
+publisher_account: app.developer
+publisher_address: |-
+  3, Willow Close
+  Holborough Lakes
+  Snodland, Kent, England ME65FA
+  GB
+support_website: https://www.acefone.com/uk/support/
+privacy_policy: https://www.acefone.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Acefone Extension For Hubspot",
+  "description": "It is an integrated browser extension that offers the inbound and outbound call services to HubSpot CRM users.",
+  "version": "0.1.4",
+  "icons": {
+    "128": "images/favicon.png"
+  },
+  "action": {
+    "default_icon": "images/favicon.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*",
+        "*://*.hubspot.com/*",
+        "*://customer.servetel.in/*",
+        "https://www.google.com/*",
+        "https://*.acefone.co.uk/*"
+      ],
+      "js": [
+        "Supportedfiles/jquery.min.js",
+        "Supportedfiles/jquery-ui.js",
+        "findAndReplaceDOMText.js",
+        "content.js"
+      ],
+      "run_at": "document_end",
+      "exclude_matches": [
+        "file://*/*.pdf",
+        "*://*/*.pdf"
+      ]
+    }
+  ],
+  "permissions": [
+    "notifications",
+    "activeTab",
+    "storage"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "Supportedfiles/*", "dialpad.html", "index.html", "login.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

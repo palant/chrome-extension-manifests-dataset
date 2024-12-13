@@ -1,0 +1,72 @@
+---
+name: 爱看豆找书
+version: '0.5'
+category_slug: lifestyle/social
+rating: 4.260869565217392
+rating_count: 23
+user_count: 3000
+release_date: '2013-03-10T11:53:20.000Z'
+size: 290KiB
+languages:
+  - 中文 (简体)
+description: 用爱看豆搜索电子书资源
+publisher_account: okidogi
+extension_website: ikandou.com
+---
+
+{
+"update_url":"http://clients2.google.com/service/update2/crx",
+  "name": "爱看豆找书",
+  "version": "0.5",
+  "manifest_version": 2,
+  "description": "用爱看豆搜索电子书资源",
+  "icons": {
+      "16": "img/icon16.png",
+      "48": "img/icon48.png",
+      "128": "img/icon128.png"
+  },
+  "content_scripts": [
+    {
+        "matches": ["http://book.douban.com/subject/*/"],
+        "js": ["lib/jquery-1.8.3.min.js", "lib/ikandou.js", "subject.js"],
+        "css": ["ikandou.css"],
+        "run_at": "document_end"
+    },
+    {
+        "matches": ["http://book.douban.com/people/*/wish*",
+                    "http://book.douban.com/people/*/do*",
+                    "http://book.douban.com/people/*/collect*"
+                   ],
+        "js": ["lib/jquery-1.8.3.min.js", "lib/ikandou.js", "collection.js"],
+        "css": ["ikandou.css"],
+        "run_at": "document_end"
+    },
+    {
+        "matches": ["http://book.douban.com/subject_search*" ],
+        "js": ["lib/jquery-1.8.3.min.js", "lib/ikandou.js", "search_result.js"],
+        "css": ["ikandou.css"],
+        "run_at": "document_end"
+    },
+    {
+        "matches": ["http://book.douban.com/doulist/*" ],
+        "js": ["lib/jquery-1.8.3.min.js", "lib/ikandou.js", "doulist.js"],
+        "css": ["ikandou.css"],
+        "run_at": "document_end"
+    },
+    {
+        "matches": ["http://ikandou.com/book/upload" ],
+        "js": ["auto_dblink.js"],
+        "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "http://ikandou.com/api/*",
+    "contextMenus"
+  ],
+  "web_accessible_resources": [
+    "templates/book_page_widget.html"
+  ],
+  "background": {
+    "scripts": ["contextmenu.js"]
+  }
+}

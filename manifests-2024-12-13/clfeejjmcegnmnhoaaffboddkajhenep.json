@@ -1,0 +1,122 @@
+---
+name: 'Sentencify: Multilingual AI Writing & Paraphrasing Tool'
+version: 2.0.0
+category_slug: productivity/tools
+rating: 4.3
+rating_count: 10
+user_count: 1000
+release_date: '2024-12-06T10:12:01.000Z'
+size: 1.36MiB
+languages:
+  - 한국어
+description: Sentencify가 당신의 멋진 영감을 좋은 글로 이끌어드릴게요!
+publisher: 주식회사 북엔드
+publisher_account: bookend
+publisher_address: |-
+  대학로179번길 7-12
+  D3동 102호
+  유성구, 대전광역시 34138
+  KR
+extension_website: bookend.tech
+support_website: https://www.sentencify.ai
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sentencify: Multilingual AI Writing & Paraphrasing Tool",
+  "version": "2.0.0",
+  "description": "Sentencify가 당신의 멋진 영감을 좋은 글로 이끌어드릴게요!",
+  "host_permissions": [
+    "http://localhost:8081/*",
+    "https://api.sentencify.ai/*",
+    "https://api.aideer.app/*",
+    "http://localhost:3001/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "sidePanel",
+    "cookies"
+  ],
+  "options_page": "src/pages/options/index.html",
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": {
+      "128": "128X128.png"
+    }
+  },
+  "icons": {
+    "128": "128X128.png"
+  },
+  "commands": {
+    "run-aideer": {
+      "suggested_key": {
+        "default": "Ctrl+J",
+        "mac": "Command+J"
+      },
+      "description": "Run \"foo\" on the current page."
+    },
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Ctrl+J",
+        "mac": "Command+J",
+        "chromeos": "Ctrl+J",
+        "linux": "Ctrl+J"
+      }
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://docs.google.com/*",
+        "*://mail.google.com/*",
+        "*://*/*",
+        "<all_urls>"
+      ],
+      "js": [
+        "src/pages/content/index.js"
+      ],
+      "css": [
+        "assets/css/contentStyle17333825262.chunk.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://docs.google.com/*",
+        "*://mail.google.com/*",
+        "*://*/*",
+        "<all_urls>"
+      ],
+      "all_frames": false,
+      "run_at": "document_start",
+      "js": [
+        "utils/inject-script.js"
+      ]
+    }
+  ],
+  "devtools_page": "src/pages/devtools/index.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/png/*.png",
+        "assets/svg/*.svg",
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "128X128.png",
+        "utils/inject-script.js",
+        "utils/replace-script.js",
+        "utils/annotated-canvas.js"
+      ],
+      "matches": [
+        "*://*/*",
+        "<all_urls>"
+      ]
+    }
+  ]
+}

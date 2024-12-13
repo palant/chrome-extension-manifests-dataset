@@ -1,0 +1,118 @@
+---
+name: Tipli do prohlížeče
+version: 3.0.7
+category_slug: lifestyle/shopping
+rating: 4.716216216216216
+rating_count: 74
+user_count: 60000
+release_date: '2024-05-04T11:14:48.000Z'
+size: 208KiB
+languages:
+  - čeština
+description: >-
+  Tipli do prohlížeče vás vždy upozorní, když budete moci získat peníze zpět z
+  nákupu.
+publisher: Tipli s.r.o.
+publisher_account: Tipli
+publisher_address: |-
+  Na Poříčí 1067
+  Praha 1-Nové Město 110 00
+  CZ
+extension_website: www.tipli.cz
+support_website: https://www.tipli.cz/podminky
+privacy_policy: https://www.tipli.cz/souhlas-se-zpracovanim-osobnich-udaju
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.7",
+  "name": "Tipli do prohlížeče",
+  "description": "Tipli do prohlížeče vás vždy upozorní, když budete moci získat peníze zpět z nákupu.",
+  "homepage_url": "http://www.tipli.cz",
+  "icons": {
+    "128": "assets/icon128.png",
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png"
+  },
+  "author": "https://www.tipli.cz",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Tipli do prohlížeče"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "roboto.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "protect-content-boxes.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.google.cz/*",
+        "https://www.google.sk/*",
+        "https://www.google.pl/*",
+        "https://www.google.ro/*",
+        "https://search.seznam.cz/*",
+        "https://*.heureka.cz/*",
+        "https://www.zbozi.cz/*"
+      ],
+      "js": [
+        "serp.js"
+      ],
+      "css": [
+        "roboto.css",
+        "serp.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

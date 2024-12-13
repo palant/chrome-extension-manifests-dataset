@@ -1,0 +1,66 @@
+---
+name: ORIOKS tweaker
+version: '2.0'
+category_slug: make_chrome_yours/accessibility
+rating: 5
+rating_count: 4
+user_count: 60
+release_date: '2023-08-30T01:44:02.000Z'
+size: 1.04MiB
+languages:
+  - русский
+description: >-
+  Модификация для ОРИОКСа. Правильное отображение баллов, интеграция расписания
+  занятий и кастомизация!
+publisher_account: kanelen335
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ORIOKS tweaker",
+    "version": "2.0",
+    "description": "Модификация для ОРИОКСа. Правильное отображение баллов, интеграция расписания занятий и кастомизация!",
+    "icons": {
+        "128": "assets/logo.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["https://orioks.miet.ru/*"],
+            "exclude_matches": [
+                "https://orioks.miet.ru/moodle*",
+                "https://orioks.miet.ru/user/login",
+                "https://orioks.miet.ru/manuals/*",
+                "https://orioks.miet.ru/storage/*"
+            ],
+            "js": ["content.js"],
+            "css": ["styles/default.css"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://orioks.miet.ru/student/student*"],
+            "css": ["styles/fixScoreGrades.css"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://miet.ru/schedule*"],
+            "js": ["scheduleFetch.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "permissions": ["tabs", "scripting", "storage"],
+    "host_permissions": ["https://orioks.miet.ru/*"],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/*"],
+            "matches": ["https://orioks.miet.ru/*"]
+        }
+    ]
+}

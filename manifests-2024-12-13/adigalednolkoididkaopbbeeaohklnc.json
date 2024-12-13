@@ -1,0 +1,93 @@
+---
+name: AI Assistant
+version: 1.1.3.5
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 4
+release_date: '2023-09-01T15:44:10.000Z'
+size: 627KiB
+languages:
+  - English (United States)
+description: AI makes life easier
+publisher: DTonomy Inc.
+publisher_account: dev-ai
+publisher_address: |-
+  Cambridge
+  cambridge, MA 02138
+  US
+privacy_policy: https://www.dtonomy.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AI Assistant",
+  "description" : "AI makes life easier",
+  "version": "1.1.3.5",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAjOsjmyBOM/m0xe6fsabRkoDOrmidex8uw7QAwBs/naCcufhcR5ioGvItqLkF9Z5PHFEbTHAOzY1XSrC/9ltV5aSR5v0punpeXc+XT71m38vl5jX2O0da6X6lsYM/wvudyN+LTPEQI1g6UQquEPK4vB1fYUJZr/Gdk9MDYEd0tzsRSBAyQoCsPfqboRqQ21B5u/K6XPhP6JrJYq2ruh18q8Cdv7IEED+bt0B0XiL2Me/8Cx8AhrMNb0nDBiyZCKZckDFCYFRqjT60AG3d0DgXdG27hhtKXhV1JSgBJAaNyDD+RxAiR2kH6do/tYXHZLEVIKRJ7h09fvCGHpIECwbfHQIDAQAB",
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
+  "background": {
+    "service_worker":  "./static/js/background.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "270328180147-mhtr9cd3bgjovvf9nfio017drs4bqpq1.apps.googleusercontent.com",
+    "scopes": [
+       "openid", "email", "profile"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/content.js"],
+      "css": ["content.css"],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://www.google.com/robots.txt*"],
+      "js": ["oauth2/lib/oauth2_inject.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions":["scripting", "activeTab", "clipboardWrite","storage","identity"],
+  "host_permissions": [
+    "http://*/","https://*/",
+    "https://accounts.google.com/o/oauth2/token","https://apis.google.com/",
+    "*://*.google.com/*",
+    "<all_urls>"
+  ],
+
+  "optional_permissions": [
+    
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  
+  "web_accessible_resources": [{ 
+    "resources": ["popup.html","oauth2/oauth2.html","refresh.png","copy.png"],
+    "matches": ["<all_urls>"]
+  }],
+  "commands": {
+    "myCommand": {
+      "suggested_key": {
+        "default": "Ctrl+B",
+        "mac": "Command+B"
+      },
+      "description": "Start AI Assistant",
+      "global": false
+    }
+  }
+}

@@ -1,0 +1,209 @@
+---
+name: Swear Guard
+version: '1.012'
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 39
+release_date: '2024-09-21T05:29:03.000Z'
+size: 4.83MiB
+languages:
+  - English
+description: >-
+  Sometimes your browser needs a bar of soap. Say goodbye to profanity, adult
+  content, and bad vibes!
+publisher_account: M2K Developments
+extension_website: swearguard.com
+support_website: https://www.swearguard.com/support
+privacy_policy: https://www.m2kdevelopments.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Swear Guard",
+  "short_name": "Swear Guard",
+  "version": "1.012",
+  "description": "Sometimes your browser needs a bar of soap. Say goodbye to profanity, adult content, and bad vibes!",
+  "manifest_version": 3,
+  "minimum_chrome_version": "88",
+  "homepage_url": "https://swearguard.com",
+  "author": {
+    "email": "support@swearguard.com"
+  },
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "cookies",
+    "declarativeNetRequest",
+    "identity",
+    "gcm",
+    "notifications",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules_block.json"
+      },
+      {
+        "id": "ruleset_2",
+        "enabled": true,
+        "path": "rules_adult.json"
+      },
+      {
+        "id": "ruleset_3",
+        "enabled": true,
+        "path": "rules_allow.json"
+      }
+    ]
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "logo192.png",
+      "32": "logo192.png",
+      "48": "logo192.png",
+      "128": "logo192.png",
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "./lib/bootstrap.css",
+        "./css/popup.css",
+        "styles.css"
+      ],
+      "js": [
+        "./lib/words.en.js",
+        "./lib/words.fr.js",
+        "./lib/words.gr.js",
+        "./lib/words.sp.js",
+        "./lib/jquery.js",
+        "./lib/sweetalert.js",
+        "./function/popup.js",
+        "./content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.swearguard.com/extension/oauth*",
+        "https://www.swearguard.com/extension/oauth?"
+      ],
+      "js": [
+        "./content/oauth.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/",
+        "https://*.facebook.com/*",
+        "https://*.facebook.com/*/*"
+      ],
+      "js": [
+        "./content/facebook.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/profile.php*",
+        "https://*.facebook.com/*",
+        "https://*.facebook.com/friends/requests/*"
+      ],
+      "exclude_matches":[
+        "https://*.facebook.com/friends*"
+      ],
+      "js": [
+        "./lib/sweetalert.js",
+        "./function/facebook.api.call.js",
+        "./function/facebook.profile.id.js",
+        "./content/facebook.profile.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.facebook.com/friends*"
+      ],
+      "css": [
+        "./css/facebook.friends.css"
+      ],
+      "js": [
+        "./lib/sweetalert.js",
+        "./function/facebook.api.call.js",
+        "./function/facebook.profile.id.js",
+        "./content/facebook.friends.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.youtube.com/",
+        "https://*.youtube.com/*",
+        "https://*.youtube.com/*/*"
+      ],
+      "js": [
+        "./content/youtube.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*.youtube.com/watch*"
+      ],
+      "js": [
+        "./content/youtube.video.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.twitter.com/",
+        "https://*.twitter.com/*",
+        "https://*.twitter.com/*/*"
+      ],
+      "js": [
+        "./content/twitter.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "logo128.png",
+    "32": "logo128.png",
+    "48": "logo128.png",
+    "128": "logo192.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icons/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

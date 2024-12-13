@@ -1,0 +1,81 @@
+---
+name: Divinads
+version: Version 1.0.0
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 0
+release_date: '2024-05-06T05:37:13.000Z'
+size: 1.61MiB
+languages:
+  - español (Latinoamérica)
+description: Divinads - Herramienta de gestión de cuentas publicitarias
+publisher_account: Divinads
+privacy_policy: https://divinads.com/privacyPolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Divinads",
+  "homepage_url": "https://divinads.com",
+  "version_name": "Version 1.0.0",
+  "version": "1.0.0",
+  "description": "Divinads - Herramienta de gestión de cuentas publicitarias",
+  "background": {
+    "service_worker": "access/js/background.js"
+  },
+  "permissions": ["tabs", "storage", "declarativeNetRequest"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "cors",
+        "enabled": true,
+        "path": "cors.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "https://adsmanager.facebook.com/*"
+  ],
+  "action": {
+    "default_title": "Divinads",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "access/icon/16.png",
+      "48": "access/icon/48.png",
+      "128": "access/icon/128.png"
+    }
+  },
+  "icons": {
+    "16": "access/icon/16.png",
+    "48": "access/icon/48.png",
+    "128": "access/icon/128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["access/js/content-script.js"],
+      "css": ["access/css/content.css"],
+      "matches": [
+        "https://*.facebook.com/settings/*",
+        "https://*.facebook.com/ads/manager/*",
+        "https://*.facebook.com/adsmanager/*",
+        "https://*.facebook.com/billing_hub/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>"],
+      "resources": ["access/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["http://*/*", "https://*/*"]
+  }
+}

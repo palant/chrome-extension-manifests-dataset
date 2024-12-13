@@ -1,0 +1,91 @@
+---
+name: Deagent for Web3 AI Copilot
+version: 1.0.4
+category_slug: productivity/tools
+rating: null
+rating_count: null
+user_count: 34
+release_date: '2024-07-22T09:37:17.000Z'
+size: 700KiB
+languages:
+  - English
+description: >-
+  Deagent AI, your gateway to Web3. Primarily supporting Solana, with upcoming
+  support for Ethereum, BNB Chain, Optimism and more.
+extension_website: deagent.ai
+support_website: https://deagent.ai
+privacy_policy: https://demo.deagent.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Deagent for Web3 AI Copilot",
+  "description": "Deagent AI, your gateway to Web3. Primarily supporting Solana, with upcoming support for Ethereum, BNB Chain, Optimism and more.",
+  "version": "1.0.4",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": "assets/imgs/icon128x128.png",
+    "default_title": "Deagent AI"
+  },
+  "background": {
+    "service_worker": "./src/background/index.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "assets/imgs/icon16x16.png",
+    "48": "assets/imgs/icon48x48.png",
+    "128": "assets/imgs/icon128x128.png"
+  },
+  "options_page": "deAgentAiOptions.html",
+  "homepage_url": "https://deagent.ai",
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*", "https://x.com/*"],
+      "exclude_matches": [
+        "https://deagent.ai/*",
+        "https://demo.deagent.ai/*",
+        "https://ext.deagent.ai/*",
+        "http://localhost:3000/*"
+      ],
+      "js": ["src/content/index.js"],
+      "css": ["assets/css/index.css", "assets/css/content.css"],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/imgs/logo.png",
+        "assets/imgs/solana.png",
+        "assets/imgs/more.png",
+        "assets/imgs/BTC.svg",
+        "assets/imgs/error.svg",
+        "assets/imgs/new_logo.png",
+        "assets/imgs/agent-main.png",
+        "assets/imgs/wallet_mark.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "host_permissions": [
+    "https://x.com/",
+    "https://deagent.ai/",
+    "https://demo.deagent.ai/",
+    "https://ext.deagent.ai/",
+    "http://localhost:3000/"
+  ],
+  "permissions": ["contextMenus", "storage", "cookies"],
+  "omnibox": { "keyword": "Deagent AI" },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Opens DeAgentAiOptions.html"
+    }
+  }
+}

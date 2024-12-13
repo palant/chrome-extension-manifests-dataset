@@ -1,0 +1,88 @@
+---
+name: Imasse - Search to Fund Brighter Futures
+version: '1.38'
+category_slug: productivity/tools
+rating: 5
+rating_count: 2
+user_count: 119
+release_date: '2023-09-02T11:43:05.000Z'
+size: 46.19KiB
+languages:
+  - English
+description: Search the web and raise money for your school or others for free!
+publisher_account: imasse
+extension_website: imasse.com
+support_website: https://www.imasse.com/contact
+privacy_policy: https://www.imasse.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+  "name": "__MSG_ImasseName__",
+  "description": "__MSG_ImasseDesc__",
+  "version": "1.38",
+  "default_locale": "en",
+  "manifest_version": 3,
+  "homepage_url": "https://www.imasse.com",
+
+  "permissions": [
+    "topSites",
+    "storage",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Imasse",
+      "keyword": "imasse.com",
+      "search_url": "https://www.imasse.com/search?q={searchTerms}",
+      "favicon_url": "https://www.imasse.com/cdn/img/png/favicon-32x32.png",
+      "suggest_url": "https://api.imasse.com/autosuggest?q={searchTerms}",
+      "encoding": "UTF-8",
+      "is_default": true
+      }
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "action": {
+    "default_title": "__MSG_ImasseActionTitle__"
+  },
+  "icons": {
+    "16": "img/favicon-16x16.png",
+    "32": "img/favicon-32x32.png",
+    "48": "img/favicon-48x48.png",
+    "128": "img/favicon-128x128.png"
+  },
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://search.yahoo.com/yhs/search?hspart=domaindev&hsimp=yhs-domaindev_ddc_imasse&p=*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.imasse.com/welcome/register/success?school=*",
+        "https://www.imasse.com/welcome?school=*"
+      ],
+      "js": [
+        "saveSchool.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

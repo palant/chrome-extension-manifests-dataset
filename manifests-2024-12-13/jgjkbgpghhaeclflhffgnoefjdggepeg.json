@@ -1,0 +1,88 @@
+---
+name: WADaemon - Schedule bulk WhatsApp messages
+version: 3.0.0.1
+category_slug: productivity/communication
+rating: 5
+rating_count: 1
+user_count: 172
+release_date: '2024-11-20T04:40:51.000Z'
+size: 5.29MiB
+languages:
+  - English
+  - English (UK)
+  - English (United States)
+  - Français
+  - español
+  - italiano
+  - português (Brasil)
+  - português (Portugal)
+  - русский
+description: Schedule bulk WhatsApp messages
+publisher: Henckel Dev
+publisher_account: Vitor Henckel
+publisher_address: |-
+  Perto da Praia
+  Florianópolis, SC 88054-000
+  BR
+extension_website: henckel.com.br
+support_website: https://vitor.henckel.com.br
+privacy_policy: https://henckel.com.br/whatsolx.html
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "3.0.0.1",
+  "manifest_version": 3,
+  "name": "__MSG_appNameFull__",
+  "description": "__MSG_appDesc__",
+  "homepage_url": "https://vitor.henckel.com.br/",
+  "default_locale": "pt_BR",
+  "icons": {
+    "16": "img/WhatsBooster_16.png",
+    "32": "img/WhatsBooster_32.png",
+    "48": "img/WhatsBooster_48.png",
+    "64": "img/WhatsBooster_64.png",
+    "128": "img/WhatsBooster_128.png"
+  },
+  "background": {
+    "service_worker": "js/worker.js"
+  },
+  "action": {
+    "default_icon": "img/WhatsBooster_128.png",
+    "default_title": "__MSG_appDesc__"
+  },
+  "permissions": ["activeTab", "storage", "tabs", "unlimitedStorage"],
+  "host_permissions": [
+    "*://web.whatsapp.com/*",
+    "*://henckel.com.br/*",
+    "*://*.web.app/*",
+    "*://*.firebaseio.com/*",
+    "*://*.firebaseapp.com/*",
+    "https://extensionpay.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["js/configElements.js", "js/schedulerStart.js", "js/ExtPay.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/"],
+      "js": ["js/exportingTools.js"]
+    },
+    {
+      "matches": ["https://extensionpay.com/*"],
+      "js": ["js/ExtPay.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/*", "css/*", "vendor/*", "img/*", "fonts/*"],
+      "matches": ["https://web.whatsapp.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://henckel.com.br/*"]
+  }
+}

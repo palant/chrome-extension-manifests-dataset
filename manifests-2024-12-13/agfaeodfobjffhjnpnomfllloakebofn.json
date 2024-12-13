@@ -1,0 +1,85 @@
+---
+name: AVA Legal - PJUD
+version: 0.4.11
+category_slug: productivity/workflow
+rating: 5
+rating_count: 1
+user_count: 64
+release_date: '2024-12-11T23:38:41.000Z'
+size: 2.03MiB
+languages:
+  - español (Latinoamérica)
+description: >-
+  Aprovecha las mejoras que le da AVA Legal a la Oficina Judicial Virtual (OJV)
+  del Poder Judicial de Chile.
+publisher_account: AVA Legal Chile
+extension_website: avalegal.cl
+privacy_policy: https://avalegal.cl/politicadeprivacidad
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AVA Legal - PJUD",
+  "version": "0.4.11",
+  "description": "Aprovecha las mejoras que le da AVA Legal a la Oficina Judicial Virtual (OJV) del Poder Judicial de Chile.",
+  "action": {
+    "default_icon": "icons/icon128.png"
+  },
+  "permissions": ["tabs", "storage", "sidePanel"],
+  "host_permissions": [
+    "https://*.avalegal.cl/*",
+    "https://oficinajudicialvirtual.pjud.cl/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://oficinajudicialvirtual.pjud.cl/indexN.php*"
+      ],
+      "js": [
+        "libs/dayjs.min.js",
+        "libs/dayjs-locale-es.js",
+        "libs/dayjs-plugin-relativeTime.js",
+        "libs/jquery.min.js",
+        "scripts/content_iso.bundle.js"
+      ],
+      "css": ["styles-content.css"]
+    },
+    {
+      "matches": [
+        "https://oficinajudicialvirtual.pjud.cl/indexN.php*"
+      ],
+      "js": [
+        "libs/jquery.highlight.js",
+        "libs/dataTables.min.js",
+        "libs/dataTables.bootstrap.min.js",
+        "libs/dataTables.searchHighlight.min.js",
+        "scripts/content_main.bundle.js"
+      ],
+      "css": [
+        "libs/dataTables.bootstrap.min.css",
+        "libs/dataTables.searchHighlight.css"
+      ],
+      "world": "MAIN"
+    }
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.bundle.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' http://local.avalegal.cl:* https://*.avalegal.cl; frame-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "binnacle/binnacle.html" ],
+      "matches": [ "https://oficinajudicialvirtual.pjud.cl/*" ]
+    }
+  ]
+}

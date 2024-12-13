@@ -1,0 +1,73 @@
+---
+name: RevSend Chrome Extension
+version: 1.4.1
+category_slug: productivity/workflow
+rating: null
+rating_count: null
+user_count: 11
+release_date: '2024-07-03T06:55:09.000Z'
+size: 72.57KiB
+languages:
+  - English
+description: RevSend Extension
+publisher_account: Revsend, LLC
+extension_website: revsend.com
+privacy_policy: https://revsend.com/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RevSend Chrome Extension",
+  "short_name": "RS Chrome",
+  "description": "RevSend Extension",
+  "version": "1.4.1",
+  "action": {
+    "default_title": "RevSend Chrome"
+  },
+  "icons": {
+    "16": "rs-icon_16x16.png",
+    "48": "rs-icon_48x48.png",
+    "128": "rs-icon_128x128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": ["*://*.revsend.com/*", "http://localhost:3000/*"]
+  },
+  "permissions": [
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.amazon.com/*",
+    "https://*.amazon.ca/*",
+    "https://*.amazon.co.uk/*",
+    "https://*.force.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.ca/*",
+        "https://*.amazon.co.uk/*"
+      ],
+      "js": ["amazon.js"]
+    },
+    {
+      "matches": ["https://*.force.com/*"],
+      "js": ["salesforce.js"]
+    },
+    {
+      "js": ["content.js"],
+      "matches": ["https://*/*"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["iframe.html"],
+    "matches": ["<all_urls>"]
+  }]
+}

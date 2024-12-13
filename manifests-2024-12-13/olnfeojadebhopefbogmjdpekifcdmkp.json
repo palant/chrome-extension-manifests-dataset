@@ -1,0 +1,66 @@
+---
+name: DAT Extension
+version: '1.1'
+category_slug: productivity/tools
+rating: 5
+rating_count: 3
+user_count: 76
+release_date: '2024-07-30T10:44:35.000Z'
+size: 48.52KiB
+languages:
+  - English (United States)
+description: Skip tasks and copy response code easier. Automatically sort tasks by pay.
+privacy_policy: https://github.com/john-tettis/DAT_Extension/blob/master/Privacy_Policy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DAT Extension",
+  "version": "1.1",
+  "description": "Skip tasks and copy response code easier. Automatically sort tasks by pay.",
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "action": {
+    "default_popup": "./html/popup.html",
+    "default_icon": {
+      "128": "./Images/icon128.png"
+    }
+  },
+  "background": {
+  },
+  "content_scripts": [
+    {
+      "matches": [ "https://app.dataannotation.tech/*" ],
+      "js": [ "./scripts/darkMode.js" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "https://app.dataannotation.tech/*" ],
+      "js": [ "./scripts/stopWatchOverlay.js" ]
+    },
+    {
+      "matches": [ "https://app.dataannotation.tech/workers/tasks/*" ],
+      "js": [
+        "./scripts/skipCommand.js",
+        "./scripts/codeCopy.js"
+      ]
+    },
+    {
+      "matches": [ "https://app.dataannotation.tech/workers/projects" ],
+      "js": [
+        "./scripts/descendingFilter.js", 
+        "./scripts/colorCodeProjects.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [ "https://app.dataannotation.tech/*" ],
+      "resources": [ "styles/dark-mode.css" ]
+    }
+  ]
+}

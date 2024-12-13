@@ -1,0 +1,131 @@
+---
+name: 'Demodesk: Scheduling Automation Tool'
+version: 4.12.7
+category_slug: productivity/workflow
+rating: 5
+rating_count: 8
+user_count: 1000
+release_date: '2023-12-19T17:52:55.000Z'
+size: 5.58MiB
+languages:
+  - English
+description: 'The #1 Productivity Solution for Modern Revenue Teams'
+publisher: Demodesk GmbH
+publisher_account: Demodesk
+publisher_address: |-
+  Franz-Joseph-Str. 9
+  Munich 80801
+  DE
+extension_website: demodesk.com
+support_website: https://help.demodesk.com
+privacy_policy: https://demodesk.com/legal/privacy-policy
+---
+
+{
+  "manifest_version": 3,
+  "name": "Demodesk: Scheduling Automation Tool",
+  "description": "The #1 Productivity Solution for Modern Revenue Teams",
+  "permissions": [
+    "cookies",
+    "storage",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "short_name": "Demodesk.com",
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "version": "4.12.7",
+  "icons": {
+    "16": "icons/icon-16.png",
+    "32": "icons/icon-32.png",
+    "256": "icons/icon-256.png",
+    "512": "icons/icon-512.png"
+  },
+  "action": {},
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/umbrella-app.js"
+      ],
+      "css": [
+        "content-scripts/umbrella-app-parent-page.css"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content-scripts/google-calendar.js"
+      ],
+      "css": [
+        "content-scripts/google-calendar.css"
+      ],
+      "matches": [
+        "https://www.google.com/calendar/*",
+        "https://calendar.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": [
+        "content-scripts/gmail.css"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "content-scripts/demodesk.js"
+      ],
+      "css": [
+        "content-scripts/demodesk.css"
+      ],
+      "matches": [
+        "https://demodesk.com/manage/*",
+        "https://demodesk-staging.com/manage/*",
+        "https://*.demodesk-review.com/manage/*",
+        "https://*.teshub.demodesk-dev.com/manage/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.demodesk.com/*",
+      "http://demodesk.com/*",
+      "https://demodesk-staging.com/*",
+      "https://demodesk-rc.com/*",
+      "https://*.teshub.demodesk-dev.com/*",
+      "https://*.demodesk-review.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup/popup.html",
+        "images/content-scripts/google-calendar/demodesk-icon.svg",
+        "images/shared/assets/images/*",
+        "fonts/*",
+        "content-scripts/umbrella-app.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

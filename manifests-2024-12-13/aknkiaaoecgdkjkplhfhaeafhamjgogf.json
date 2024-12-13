@@ -1,0 +1,67 @@
+---
+name: 솔브커밋
+version: '3.13'
+category_slug: productivity/developer
+rating: 5
+rating_count: 1
+user_count: 0
+release_date: '2024-01-12T12:00:11.000Z'
+size: 122KiB
+languages:
+  - 한국어
+description: 코딩테스트 연습 해결문제를 자동 푸쉬해요. Run버튼에 단축키를 달아줄게요
+publisher_account: okanekudasai6
+privacy_policy: https://okane-on-cliff.tistory.com/238
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "솔브커밋",
+  "description": "코딩테스트 연습 해결문제를 자동 푸쉬해요. Run버튼에 단축키를 달아줄게요",
+  "version": "3.13",
+  "action": {
+    "default_popup": "hello.html"
+  },
+  "content_scripts": [
+    {
+      "include_globs": ["*code=*"],
+      "js": ["scripts/github_content.js"],
+      "matches": ["https://github.com/*"]
+    },
+    {
+      "js": ["scripts/util.js", "scripts/github_util.js"],
+      "css": ["css/git_process_css.css"],
+      "matches": ["https://leetcode.com/problems/*", "https://school.programmers.co.kr/learn/courses/30/lessons/*", "https://www.acmicpc.net/submit/*"]
+    },
+    {
+      "js": ["scripts/leetcode_content.js"],
+      "matches": ["https://leetcode.com/problems/*"]
+    },
+    {
+      "js": ["scripts/programmers_content.js", "scripts/hotkey_util.js"],
+      "matches": ["https://school.programmers.co.kr/learn/courses/30/lessons/*"]
+    },
+    {
+      "js": ["scripts/boj_content.js"],
+      "matches": ["https://www.acmicpc.net/submit/*"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "host_permissions": [
+    "https://school.programmers.co.kr/",
+    "https://github.com/",
+    "https://leetcode.com/"
+  ],
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
+  "background": { "service_worker": "background.js" }
+}
