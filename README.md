@@ -18,6 +18,10 @@ By default, `query.js` will list extensions from the current snapshot. `compare.
 
 It is always possible to use a different source directory. With `query.js`, the relevant parameter is `--directory`. With `compare.js`, the parameters are `--directory1` and `--directory2`.
 
+### Extension descriptions
+
+The directory `descriptions-2024-12-15` contains a one-time snapshot of extension descriptions in various languages. This is currently an experiment. It isn’t clear whether there will be more snapshot, and there are currently no convenience scripts to query this data.
+
 ### The queries
 
 The queries are JavaScript code that will be executed in a sandbox. The context will contain information on the current extension, allowing the script to make a decision. With `query.js` script, that context contains `id`, `metadata` and `manifest` variables. With `compare.js` script, there are five context variables: `id`, `metadata1`, `manifest1`, `metadata2`, `manifest2`. These represent the data of the current extension from the first and the second source directory respectively.
