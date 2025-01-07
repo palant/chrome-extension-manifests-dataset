@@ -20,7 +20,7 @@ It is always possible to use a different source directory. With `query.js`, the 
 
 ### Extension descriptions
 
-The directory `descriptions-2024-12-15` contains a one-time snapshot of extension descriptions in various languages. This is currently an experiment. It isn’t clear whether there will be more snapshot, and there are currently no convenience scripts to query this data.
+The directory `descriptions-2024-12-15` contains a one-time snapshot of extension descriptions in various languages. This is currently an experiment and it isn’t clear whether there will be more snapshots.
 
 ### The queries
 
@@ -29,6 +29,8 @@ The queries are JavaScript code that will be executed in a sandbox. The context 
 When `compare.js` script is run with the `-i` parameter, the queries may receive data of extensions only present in one of the source directories. In this case, either `metadata1` and `manifest1` will be `null` (extension not present in the first source directory) or `metadata2` and `manifest2` (extension not present in the second source directory).
 
 Only extensions will be listed where the query returns a true-ish value. In additional to the regular query, it is possible to pass a filtering query. The filtering query is executed in the same fashion, however failing the query has the effect that the extension is excluded from the total count in the statistic displayed.
+
+If the `-r` parameter is given, the `query.js` script will also attempt to load extension descriptions from the respective directory and expose them (if present) as `descriptions` context variable. Unlike the data files, this variable contains each language as a separate key rather than combining languages with identical descriptions in a single key.
 
 ### Output format
 
