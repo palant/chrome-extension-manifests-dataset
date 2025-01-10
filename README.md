@@ -7,7 +7,7 @@ This has been inspired by a [similar repository](https://github.com/mandatorypro
 ## Change history
 
 * 2023-06-01
-  * Changed scraping approach, increased number of manifest from 10k to >50k
+  * Changed scraping approach, increased number of manifests from 10k to >50k
 * 2023-11-29
   * Changed scraping approach, increased number of manifests to >100k
   * User counts beyond 10,000,000 are now possible
@@ -23,6 +23,7 @@ This has been inspired by a [similar repository](https://github.com/mandatorypro
   * Added `creation_date` field in ISO format
   * Added `publisher_hash` field (non-reversible HMAC hash of the publisher’s email address, can be used to identify extensions belonging to the same account)
   * Added `publisher_phone` field
+  * Added boolean `extension_website_verified` field
 
 ## Convenience scripts
 
