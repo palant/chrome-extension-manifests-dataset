@@ -1,0 +1,80 @@
+---
+name: TwSearch - X/Twitter Search Result Export
+version: 1.2.0
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 1
+user_count: 447
+size: 1.22MiB
+languages:
+  - English
+release_date: '2024-08-14T09:52:47.000Z'
+creation_date: '2023-07-12T06:34:07.000Z'
+description: >-
+  One click to export X/Twitter search result list to CSV. Save all tweet feeds
+  and user info.
+publisher_hash: 615740c55fa33f4fc6b92e392bf54bc3a6507717a98d2c991523865bc9fec591
+publisher_account: enthe lam
+extension_website: twsearchexport.extensionsfox.com
+extension_website_verified: true
+privacy_policy: https://twsearchexport.extensionsfox.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.2.0",
+  "homepage_url": "https://twsearchexport.extensionsfox.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.twitter.com/*",
+    "*://*.x.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.twitter.com/*",
+        "https://*.x.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

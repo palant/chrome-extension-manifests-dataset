@@ -1,0 +1,83 @@
+---
+name: Wiseops
+version: 1.6.1
+category_slug: productivity/developer
+featured: false
+rating: 5
+rating_count: 4
+user_count: 44
+size: 1.29MiB
+languages:
+  - English
+release_date: '2024-11-28T11:49:46.000Z'
+creation_date: '2024-01-17T10:11:49.000Z'
+description: Engineering Productivity
+publisher_hash: 0030889ffcf15c129ec84269f33a4d06cf42fbb7f48b68fd47aac4357175525e
+publisher: CloudKeeper (Singapore) Pte. Ltd.
+publisher_account: CloudKeeper
+extension_website: cloudkeeper.com
+extension_website_verified: true
+support_website: https://www.cloudkeeper.com/contact-us
+privacy_policy: https://www.cloudkeeper.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "1.6.1",
+  "manifest_version": 3,
+  "name": "Wiseops",
+  "description": "Engineering Productivity",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "assets/store_logo_32.png"
+  },
+  "permissions": ["tabs"],
+  "icons": {
+    "16": "assets/store_logo_16.png",
+    "32": "assets/store_logo_32.png",
+    "48": "assets/store_logo_48.png",
+    "128": "assets/store_logo_128.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "costwiseHook.js"
+      ],
+      "matches": [
+        "https://*.costwise.ai/*",
+        "https://staging.wiseops.ai/*",
+        "https://app.wiseops.ai/*"
+      ]
+    },{
+      "run_at": "document_end",
+      "matches": [
+        "https://*.aws.amazon.com/*"
+      ],
+      "js": [
+        "aws.js",
+        "costwiseHook.js"
+      ],
+      "permissions": ["https://staging.wiseops.ai/*","https://app.wiseops.ai/*"],
+      "css" : [],
+      "match_about_blank": true,
+      "all_frames": true
+    }
+  ],
+  "host_permissions": ["https://staging.wiseops.ai/*", "https://app.wiseops.ai/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.*"
+      ],
+      "matches": ["https://*.aws.amazon.com/*"]
+    }, {
+      "resources": [
+        "costwiseHook.js"
+      ],
+      "matches": ["http://*/*"]
+    }
+  ]
+}

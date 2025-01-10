@@ -1,0 +1,79 @@
+---
+name: Extension ComPrix
+version: 1.0.0
+category_slug: lifestyle/shopping
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 39.42KiB
+languages:
+  - English
+  - Français
+release_date: '2024-11-28T11:36:40.000Z'
+creation_date: '2024-11-28T11:36:40.000Z'
+description: >-
+  Cette extension remplit le panier dans Auchan, Carrefour et Franprix avec les
+  produits choisis par l'utilisateur dans ComPrix.
+publisher_hash: 1f79e8cdc661b88208526673de9f182f1e537f8e08edafc75065b0671b6fd2b8
+publisher_account: fabio.manca
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extension_name__",
+  "version": "1.0.0",
+  "description": "__MSG_extension_description__",
+  "default_locale": "fr",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "tabs",
+    "scripting",
+    "cookies",
+    "browsingData"
+  ],
+  "host_permissions": [
+    "*://*.auchan.fr/*",
+    "*://*.carrefour.fr/*",
+    "*://*.franprix.fr/*",
+    "*://prod.mcommerce.franprix.fr/*",
+    "https://comprix.eu.pythonanywhere.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.auchan.fr/*"],
+      "js": ["auchan/contentScript_auchan.js"]
+    },
+    {
+      "matches": ["*://*.carrefour.fr/*"],
+      "js": ["carrefour/content_carrefour.js"]
+    },
+    {
+      "matches": ["*://*.franprix.fr/*"],
+      "js": ["franprix/content_franprix.js", "franprix/inject_franprix.js"]
+    },
+    {
+      "matches": ["https://comprix.eu.pythonanywhere.com/*"],
+      "js": ["comparison_page_content_script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["franprix/content_franprix.js"],
+      "matches": ["*://*.franprix.fr/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  }
+}

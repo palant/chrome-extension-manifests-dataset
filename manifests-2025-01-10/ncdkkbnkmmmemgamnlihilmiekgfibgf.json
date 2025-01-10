@@ -1,0 +1,126 @@
+---
+name: Secioss AutoLogin V2
+version: 2.0.2
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: 5
+rating_count: 1
+user_count: 1000
+size: 282KiB
+languages:
+  - English
+  - 日本語
+release_date: '2024-11-21T08:05:05.000Z'
+creation_date: '2024-10-13T07:33:28.000Z'
+description: セシオス自動ログイン拡張機能。SSOサーバーに保存されている認証情報でサービスに自動ログインする。まずSSOサーバーにログインして下さい。
+publisher_hash: 79b1b7c5edaacc634be4c30290042e790fe77d126a6c7736c4ce644d61bd5657
+publisher: セシオス
+publisher_account: chrome-developer
+support_website: https://support.secioss.co.jp/hc/ja
+privacy_policy: https://www.secioss.co.jp/privacy-policy
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Secioss AutoLogin V2",
+    "version": "2.0.2",
+    "description": "__MSG_description__",
+    "default_locale": "ja",
+    "minimum_chrome_version": "92",
+
+    "icons": {
+        "16": "images/logo_16.png",
+        "48": "images/logo_48.png",
+        "128": "images/logo_128.png"
+    },
+
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_title": "Secioss AutoLogin",
+        "default_icon": {
+            "16": "images/logo_16.png",
+            "48": "images/logo_48.png",
+            "128": "images/logo_128.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "service_worker.js",
+
+        "scripts": [
+            "lib/constants.js",
+            "lib/aes.js",
+            "lib/slink_util.js",
+            "service_worker.js",
+            "background/autologin.js",
+            "background/recording.js"
+        ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "css": ["content/jquery-ui-1.12.1.embedded.css"],
+            "js": [
+                "lib/jquery-3.7.1.min.js", "lib/jquery-ui-1.12.1.min.js", "lib/bililiteRange.js", "lib/jquery.sendkeys.js",
+                "lib/slink_util.js", "lib/constants.js",
+                "content/autologin.js", "content/recording.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        }
+    ],
+
+    "externally_connectable" : {
+        "matches": ["*://*/*"]
+    },
+
+    "incognito" : "split",
+
+    "options_ui": {
+        "page": "options/options.html"
+    },
+
+    "web_accessible_resources": [
+        {
+          "resources": [
+            "lib/*",
+            "images/*"
+          ],
+          "matches": [
+            "*://*/*"
+          ]
+        }
+    ],
+
+    "content_security_policy": {
+       "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; style-src 'self' 'unsafe-inline';"
+    },
+
+    "permissions": [
+        "storage",
+        "cookies",
+        "tabs",
+        "activeTab",
+        "webRequest",
+        "webRequestAuthProvider",
+        "scripting"
+    ],
+
+    "host_permissions": [
+        "*://*/*"
+    ],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{0386de0c-41e6-4487-8b6b-483026de76af}",
+            "strict_min_version": "109.0"
+        },
+        "update_url": "https://www.secioss.co.jp/hubfs/secioss_download/Secioss_AutoLogin_V2.xpi"
+    }
+
+}
+

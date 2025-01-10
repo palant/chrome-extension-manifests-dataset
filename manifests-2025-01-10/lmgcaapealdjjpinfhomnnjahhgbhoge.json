@@ -1,0 +1,136 @@
+---
+name: Walrus Browser Extension
+version: 2.0.5
+category_slug: make_chrome_yours/privacy
+featured: false
+rating: null
+rating_count: null
+user_count: 196
+size: 6.0MiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - hrvatski
+  - italiano
+  - magyar
+  - polski
+  - português (Brasil)
+  - română
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - हिन्दी
+  - বাংলা
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+release_date: '2025-01-02T11:46:48.000Z'
+creation_date: '2023-05-20T05:13:51.000Z'
+description: >-
+  Easily add OTP by scanning QR codes, simplifying your two-factor
+  authentication process. Save passwords for auto sign-ins to apps.
+publisher_hash: 69a82976026f4ef28dfbc5160109a3f78572474de420fda1a4845938f5ec0d74
+publisher_account: Walrus  team
+privacy_policy: https://id.walrusid.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "__MSG_extName__",
+    "short_name": "__MSG_extShortName__",
+    "version": "2.0.5",
+    "default_locale": "en",
+    "description": "__MSG_extDesc__",
+    "icons": {
+        "128": "images/icon-logo.png"
+    },
+    "action": {
+        "default_icon": {
+            "128": "images/icon-logo.png"
+        },
+        "default_title": "__MSG_extShortName__",
+        "default_popup": "view/popup.html"
+    },
+    "options_ui": {
+        "page": "view/options.html",
+        "open_in_tab": false
+    },
+    "storage": {
+        "managed_schema": "schema.json"
+    },
+    "oauth2": {
+        "client_id": "292457304165-u8ve4j79gag5o231n5u2pdtdrbfdo1hh.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/drive.file"
+        ]
+    },
+    "background": {
+        "service_worker":"./dist/background.js"
+    },
+    "sandbox": {
+        "pages": [
+            "view/argon.html"
+        ]
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "identity",
+        "scripting",
+        "tabs"
+    ],
+    "optional_permissions": [
+        "clipboardWrite"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+      ],
+    "content_scripts": [
+        {
+          "js": [
+            "./dist/argon.js",
+            "./dist/content.js",
+            "./dist/import.js",
+            "./dist/options.js",
+            "./dist/permissions.js",
+            "./dist/popup.js"
+          ],
+          "matches": [
+            "https://workspace.walrusid.com/*"
+          ]
+        
+        }
+      ],
+    "offline_enabled": true,
+    "content_security_policy":{
+        "sandbox":"sandbox allow-scripts; script-src 'self' 'unsafe-eval'"
+    },
+   "web_accessible_resources": [{
+        "resources": ["dist/inject.js","chrome-extension://*/_locales/**/**","_locales/en/messages.json","Walrus Browser Plugin/en/messages.json"],
+        "matches": ["<all_urls>"],
+        "extension_ids": []
+    }]
+}

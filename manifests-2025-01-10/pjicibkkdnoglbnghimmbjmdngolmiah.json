@@ -1,0 +1,164 @@
+---
+name: University Questions Manager (UQM)
+version: 2.5.3
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 30
+size: 459KiB
+languages:
+  - italiano
+release_date: '2024-12-09T11:40:04.000Z'
+creation_date: '2024-10-10T05:37:04.000Z'
+description: 'Estensione Chrome per le Università supportate: Naviga, Impara, Contribuisci'
+publisher_hash: 741abe1eff558cf151d0f34464b6593162f0bf84ce83a9a5aa33a59ef5b152e1
+publisher_account: Emin Demiri
+extension_website: questions-finder.emindemiri.com
+extension_website_verified: false
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "University Questions Manager (UQM)",
+  "version": "2.5.3",
+  "description": "Estensione Chrome per le Università supportate: Naviga, Impara, Contribuisci",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAoc+7+V4gW8oVhS4aCeGIDltkW22fdxDeo08Cs7JpcXAQHhkwDdXMRuYDEyg2r34rr+uOT/1eZ+7xANCGIH18eSeHz/kjsqWKPI/1tidk2LtvjLNnwExL8QFaN475DTDlk3o4JWH2VxqEvA1YAZdBvO7AIljAl8/y11PgUShZr3WwEYsTPo4y3i5zGU1sCaJLaq6ImneZk+1GIWd0kQNlP5o8U8grT5Ku6vXXrj6ikReN32CvwgieayKgWJiGbCl0xvD2vBCZgLbQH1XIDJ508+md4iU7U3r/Me08Zygil3zibmxP7bi5GRBG2Qrl97DFeZNq4W7VNtyV9fJgeMgg8QIDAQAB",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "University Questions",
+    "default_popup": "home.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://lms-courses.mercatorum.multiversity.click",
+    "https://lms-courses.pegaso.multiversity.click",
+    "https://lms.pegaso.multiversity.click"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/efs-courses/*",
+        "*://lms-courses.pegaso.multiversity.click/efs-courses/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "scrapingNameTeaching.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/*/detail.php?*",
+        "*://lms-courses.pegaso.multiversity.click/*/detail.php?*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "scrapingTestResults.js"
+      ],
+      "css": [
+        "scrapingTestResults.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/*/analyze.php?*",
+        "*://lms-courses.pegaso.multiversity.click/*/analyze.php?*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "bulkUpload.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/*/test.php*",
+        "*://lms-courses.pegaso.multiversity.click/*/test.php*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "makeTest.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms.pegaso.multiversity.click/"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "scrapingCourseName.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/user_portal.php"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "logout.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/main/lp-video_student_view/lesson_student_view.php*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "automaticVideoViewer.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms.mercatorum.multiversity.click/videolezioni/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "automaticVideoViewer_template2.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/main/newscorm/lp_controller.php*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "automaticVideoCourseSelector.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://lms-courses.mercatorum.multiversity.click/main/test/exercice/list_test.php*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "startAutomationTest.js"
+      ]
+    }
+  ]
+}

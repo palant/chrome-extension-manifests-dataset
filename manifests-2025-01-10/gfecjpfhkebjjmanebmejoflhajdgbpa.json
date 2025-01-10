@@ -1,0 +1,85 @@
+---
+name: Brainly Homework Help
+version: 3.4.4
+category_slug: productivity/education
+featured: true
+rating: 2.9672131147540983
+rating_count: 61
+user_count: 60000
+size: 738KiB
+languages:
+  - English
+release_date: '2024-05-10T11:06:13.000Z'
+creation_date: '2023-05-16T07:45:13.000Z'
+description: >-
+  Find solutions for any school question with a Knowledge Base of over 250
+  million answers and explanations.
+publisher_hash: d735601d610a5aa96352953ebd6997e981772ebe9b1987da40577c28bae9e14b
+publisher: BRAINLY SP. z O.O.
+publisher_account: Brainly
+publisher_address: |-
+  Krowoderska 63B/6
+  Kraków 31-158
+  PL
+extension_website: brainly.com
+extension_website_verified: true
+privacy_policy: https://brainly.com/pages/privacy_policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Brainly Homework Help",
+  "version": "3.4.4",
+  "description": "Find solutions for any school question with a Knowledge Base of over 250 million answers and explanations.",
+  "icons": {
+    "128": "icon128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": ["https://*.google.com/search?*"],
+      "js": ["prefetch-script.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.google.com/search?*"],
+      "css": ["content-script.css"],
+      "js": ["content-script.js"]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["http://*/*", "https://*/*"],
+      "css": ["content-script-all.css", "global-styles.css"],
+      "js": ["content-script-all.js"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://*.brainly.com/*"],
+      "js": ["presence-script.js"]
+    },
+    {
+      "run_at": "document_start",
+      "matches": ["https://docs.google.com/document/*"],
+      "js": ["google-docs-proxy.js"],
+      "world": "MAIN"
+    }
+  ],
+  "host_permissions": ["https://chrome-extensions.brainly.com/"],
+  "permissions": ["storage", "contextMenus", "scripting", "activeTab"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.woff2",
+        "*.woff",
+        "content-script-selection.css",
+        "content-script-all.css"
+      ],
+      "matches": ["http://*/*", "https://*/*"]
+    }
+  ]
+}

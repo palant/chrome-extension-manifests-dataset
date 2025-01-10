@@ -1,0 +1,96 @@
+---
+name: NADA Car Value for iaai.com
+version: 0.7.8
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 12
+size: 114KiB
+languages:
+  - English (United States)
+release_date: '2024-06-20T05:54:52.000Z'
+creation_date: '2024-06-19T10:18:41.000Z'
+description: >-
+  Get iaai.com car's NADA value automatically instead of copy & paste to search
+  on jdpower.com
+publisher_hash: 9a7d2341f91e8bef487cbf30e2f449856b6f4f8c5bc7ce60b492cfdc11d25afb
+publisher_account: History+
+support_website: https://sites.google.com/view/kbb-car-value-tools/contact-us
+privacy_policy: https://sites.google.com/view/history-plus-extension/privacy-policy
+---
+
+{
+   "name": "NADA Car Value for iaai.com",
+   "short_name": "NADA Car Value for Auction",
+   "description": "Get iaai.com car's NADA value automatically instead of copy & paste to search on jdpower.com",
+   "version": "0.7.8",
+   "manifest_version": 3,
+   "author": "Tom Zenho",
+   "action": {
+       "default_icon": {
+         "128": "assets/icons/car$value_128.png",
+         "16": "assets/icons/car$value_16.png",
+         "32": "assets/icons/car$value_32.png",
+         "48": "assets/icons/car$value_48.png",
+         "64": "assets/icons/car$value_64.png"
+       },
+       "default_popup": "popup.html",
+       "default_title": "KBB for auction"
+    },
+    "icons": {
+      "128": "assets/icons/car$value_128.png",
+      "16": "assets/icons/car$value_16.png",
+      "32": "assets/icons/car$value_32.png",
+      "48": "assets/icons/car$value_48.png",
+      "64": "assets/icons/car$value_64.png"
+    },
+    "permissions": [ "storage", "webNavigation"],
+    "host_permissions": ["https://upa.syndication.kbb.com/*","*://*.kbb.com/*", "*://*.jdpower.com/*"],
+    "background": {
+        "service_worker": "assets/js/background.js"
+    },
+    "content_scripts": [ 
+      {
+        "css": [ "assets/css/bootstrap-small.css","assets/css/content.css" ],
+        "js": [ "assets/js/external/jquery-3.6.4.min.js", "config.js", "assets/data/cars-worst-car-to-avoid.js","assets/data/cars-blocked-by-insurance.js", "assets/js/utils.js"],
+        "matches": [ 
+          "*://*.iaai.com/*"
+        ],
+        "run_at": "document_start"
+      },
+      {
+        "js": [ "assets/js/iaai_car_detail.js" ],
+        "matches": [ "*://*.iaai.com/VehicleDetail/*" ],
+        "run_at": "document_end"
+      }
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+    },
+    "cross_origin_embedder_policy": {
+        "value": "require-corp"
+    },
+    "cross_origin_opener_policy": {
+        "value": "same-origin"
+    },
+    "incognito": "not_allowed",
+    "offline_enabled": false,
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "assets/icons/*",
+          "assets/css/*", 
+          "assets/data/*", 
+          "config.js",
+          "assets/js/*.js", 
+          "pages/*.html",
+          "https://upa.syndication.kbb.com/*"
+        ],
+        "matches": ["<all_urls>"],
+        "extension_ids": ["*"]
+      }
+    ],
+    "update_url": "https://clients2.google.com/service/update2/crx"
+ }
+ 

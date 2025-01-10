@@ -1,0 +1,87 @@
+---
+name: Builder.io
+version: 2.0.7
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 5
+user_count: 9000
+size: 958KiB
+languages:
+  - English
+release_date: '2024-12-20T04:13:02.000Z'
+creation_date: '2018-02-01T21:54:31.000Z'
+description: Builder.io chrome extension
+publisher_hash: 14f0c2230581b02c28befd3a2bec1636af04caf58a774376af466e7e5d050c9d
+publisher_account: Builder.io
+publisher_address: |-
+  585 29th St.
+  C
+  San Francisco, CA 94131
+  US
+publisher_phone: '+19165058708'
+extension_website: builder.io
+extension_website_verified: true
+privacy_policy: https://builder.io/docs/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Builder.io",
+  "version": "2.0.7",
+  "manifest_version": 3,
+  "description": "Builder.io chrome extension",
+  "homepage_url": "https://builder.io",
+  "icons": {
+    "16": "icons/builder-icon-small.png",
+    "48": "icons/builder-icon-medium.png",
+    "128": "icons/builder-icon-large.png"
+  },
+  "background": {
+    "service_worker": "src/bg/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": [
+        "src/inject/inject.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.builder.io/*",
+      "*://localhost:*/*"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "removeHeader",
+        "enabled": true,
+        "path": "removeHeader.json"
+      }
+    ]
+  }
+}

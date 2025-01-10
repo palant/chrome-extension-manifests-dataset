@@ -1,0 +1,104 @@
+---
+name: DiligenceVault - RFP Mgmt for Fund Managers
+version: '7.12'
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 40
+size: 5.95MiB
+languages:
+  - English
+release_date: '2023-11-22T12:01:00.000Z'
+creation_date: '2023-05-19T05:49:01.000Z'
+description: >-
+  Access your Q/A Center and Document Library to respond to prospect emails,
+  search content on the go or to complete web-based RFPs
+publisher_hash: ca377d816e5364a63acd3a206a2ddda41bde51ff51b2f4326d1e6578c322f3cb
+publisher: DiligenceVault
+publisher_account: https://www.diligencevault.com
+publisher_address: |-
+  16th Floor
+  1230 6th Ave
+  New York, NY 10020
+  US
+privacy_policy: https://diligencevault.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+   "manifest_version": 3,
+   "name": "DiligenceVault - RFP Mgmt for Fund Managers",
+   "description": "Access your Q/A Center and Document Library to respond to prospect emails, search content on the go or to complete web-based RFPs",
+   "version": "7.12",
+   "minimum_chrome_version": "92",
+   "icons": {
+      "16": "Assets/Images/Enabled/16.png",
+      "32": "Assets/Images/Enabled/32.png",
+      "48": "Assets/Images/Enabled/48.png",
+      "64": "Assets/Images/Enabled/64.png"
+   },
+   "permissions": [
+      "storage",
+      "contextMenus",
+      "unlimitedStorage",
+      "downloads"
+   ],
+   "action": {
+      "default_icon": {
+         "16": "Assets/Images/Enabled/16.png",
+         "32": "Assets/Images/Enabled/32.png",
+         "48": "Assets/Images/Enabled/48.png",
+         "64": "Assets/Images/Enabled/64.png"
+      }
+   },
+   "background": {
+      "service_worker": "Background Scripts/src/background.js",
+      "type": "module"
+   },
+   "content_scripts": [
+      {
+         "css": [
+            "UI/dist/ui/styles.css",
+            "UI/dist/ui/assets/material-icons/css/material-icons.css"
+         ],
+         "js": [
+            "Assets/Injectors/bootstrap.js",
+            "UI/dist/ui/runtime.js",
+            "UI/dist/ui/polyfills.js",
+            "UI/dist/ui/main.js"
+         ],
+         "matches": [
+            "<all_urls>"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "js": [
+            "Authorization Scripts/authorizationHandler.js"
+         ],
+         "matches": [
+            "https://dv-feature-angular.azurewebsites.net/*",
+            "https://test.diligencevault.com/*",
+            "https://demo.diligencevault.com/*",
+            "https://app.diligencevault.com/*"
+         ],
+         "run_at": "document_end"
+      }
+   ],
+   "host_permissions": [
+      "<all_urls>"
+   ],
+   "web_accessible_resources": [
+      {
+         "resources": [
+            "UI/dist/ui/assets/*",
+            "Assets/*"
+         ],
+         "matches": [
+            "<all_urls>"
+         ]
+      }
+   ]
+}

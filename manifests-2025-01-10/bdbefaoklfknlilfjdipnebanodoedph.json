@@ -1,0 +1,134 @@
+---
+name: Eleo AI Assistant
+version: '2.3'
+category_slug: productivity/tools
+featured: true
+rating: 5
+rating_count: 8
+user_count: 29
+size: 12.08MiB
+languages:
+  - English
+release_date: '2025-01-09T12:49:05.000Z'
+creation_date: '2023-11-29T13:40:19.000Z'
+description: Your 24/7 Assistant for a Smarter Life
+publisher_hash: f2bc687595f4c45caa2cec21cf8ba1a6add3ab3f4f5e008dd4ef190725cba22b
+publisher: ELEO PSA
+publisher_account: Eleo
+publisher_address: |-
+  Święty Marcin 29/8
+  Poznań 61-806
+  PL
+extension_website: eleo.ai
+extension_website_verified: true
+privacy_policy: https://eleo.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Eleo AI Assistant",
+  "description": "Your 24/7 Assistant for a Smarter Life",
+  "version": "2.3",
+  "manifest_version": 3,
+  "icons": {
+    "64": "logo64.png",
+    "256": "logo256.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Open the popup",
+    "default_icon": {
+      "64": "extension.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/css/contentPopup.css",
+        "static/js/*",
+        "static/media/*",
+        "i18n/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "clipboardWrite",
+    "clipboardRead"
+  ],
+  "host_permissions": [
+    "https://api.eleo.ai/*",
+    "http://localhost:8080/*",
+    "https://dev.api.eleo.ai/*",
+    "https://docs.google.com/",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.eleo.ai/*",
+        "http://localhost:3000/*",
+        "https://develop.app.eleo.ai/*"
+      ],
+      "js": [
+        "static/js/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "static/js/recorder.js"
+      ]
+    },
+    {
+      "js": [
+        "static/js/docsEnableHtml.js"
+      ],
+      "matches": [
+        "https://docs.google.com/document*"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "js": [
+        "static/js/contentPopupGoogleDocs.js"
+      ],
+      "matches": [
+        "https://docs.google.com/document*"
+      ]
+    },
+    {
+      "js": [
+        "static/js/contentPopupGoogleSlide.js"
+      ],
+      "matches": [
+        "https://docs.google.com/presentation*"
+      ]
+    },
+    {
+      "js": [
+        "static/js/contentPopup.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://docs.google.com/document*",
+        "https://docs.google.com/presentation*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  }
+}

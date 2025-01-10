@@ -1,0 +1,77 @@
+---
+name: CloudKeeper Tuner
+version: 2.3.3
+category_slug: productivity/developer
+featured: false
+rating: 5
+rating_count: 1
+user_count: 35
+size: 1.99MiB
+languages:
+  - English
+release_date: '2024-12-30T12:08:44.000Z'
+creation_date: '2024-08-28T08:54:50.000Z'
+description: Engineering Productivity
+publisher_hash: 0030889ffcf15c129ec84269f33a4d06cf42fbb7f48b68fd47aac4357175525e
+publisher: CloudKeeper (Singapore) Pte. Ltd.
+publisher_account: CloudKeeper
+extension_website: cloudkeeper.com
+extension_website_verified: true
+support_website: https://www.cloudkeeper.com/contact-us
+privacy_policy: https://www.cloudkeeper.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "2.3.3",
+  "manifest_version": 3,
+  "name": "CloudKeeper Tuner",
+  "description": "Engineering Productivity",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "assets/icon32.png"
+  },
+  "permissions": ["tabs", "storage", "activeTab", "scripting"],
+  "icons": {
+    "16": "assets/icon16.png",
+    "32": "assets/icon32.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["costwiseHook.js"],
+      "matches": [
+        "https://tuner.cloudkeeper.com/*",
+        "https://be.cloudonomic.com/*"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": ["https://*.aws.amazon.com/*"],
+      "js": [
+        "aws.js",
+        "costwiseHook.js"
+      ],
+      "permissions": ["https://tuner.cloudkeeper.com/*","https://be.cloudonomic.com/*"
+    ],
+      "css" : [],
+      "match_about_blank": true,
+      "all_frames": true
+    }
+  ],
+  "host_permissions": ["https://tuner.cloudkeeper.com/*","https://be.cloudonomic.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.*"],
+      "matches": ["https://*.aws.amazon.com/*"]
+    },
+    {
+      "resources": ["costwiseHook.js"],
+      "matches": ["http://*/*"]
+    }
+  ]
+}

@@ -1,0 +1,98 @@
+---
+name: Steam Market History Cataloger
+version: 1.2.2
+category_slug: productivity/workflow
+featured: false
+rating: 4.407407407407407
+rating_count: 27
+user_count: 2000
+size: 397KiB
+languages:
+  - English
+release_date: '2024-07-09T16:20:30.000Z'
+creation_date: '2020-02-29T11:28:58.000Z'
+description: >-
+  Indexes your Steam Market transactions to be viewable within the extension and
+  exportable to JSON and CSV.
+publisher_hash: 6a56c080f7009cb934b9d572c99ae0b0cedc102d30883605c45780fe8d7848f3
+publisher_account: Julia
+support_website: https://github.com/juliarose/Steam-Market-History-Cataloger/issues
+privacy_policy: https://github.com/juliarose/Steam-Market-History-Cataloger
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Steam Market History Cataloger",
+  "description": "Indexes your Steam Market transactions to be viewable within the extension and exportable to JSON and CSV.",
+  "version": "1.2.2",
+  "version_name": "1.2.2",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "views/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://steamcommunity.com/*"
+      ],
+      "exclude_matches": [
+        "https://steamcommunity.com/login/*"
+      ],
+      "js": [
+        "js/content/helpers/utils.js",
+        "js/content/steamcommunity.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://steamcommunity.com/market*"
+      ],
+      "js": [
+        "js/content/helpers/injectScript.js",
+        "js/content/steamcommunity.market.js"
+      ],
+      "css": [
+        "css/content/steamcommunity.market.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/content/injects/*.js",
+        "js/content/modules/*.js",
+        "js/app/money.js",
+        "js/app/currency.js",
+        "js/app/helpers/utils.js",
+        "js/lib/dom-parser.js"
+      ],
+      "matches": [
+        "https://steamcommunity.com/*",
+        "https://store.steampowered.com/*"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "background": {
+    "service_worker": "js/views/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://steamcommunity.com/*",
+    "https://store.steampowered.com/*"
+  ]
+}

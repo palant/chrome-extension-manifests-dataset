@@ -1,0 +1,89 @@
+---
+name: RevvRally Email Writer
+version: 1.3.9
+category_slug: productivity/communication
+featured: false
+rating: 5
+rating_count: 1
+user_count: 5
+size: 133KiB
+languages:
+  - English
+release_date: '2025-01-07T03:51:36.000Z'
+creation_date: '2024-12-17T10:38:11.000Z'
+description: Generate personalized sales emails from LinkedIn profiles
+publisher_hash: 7785cca1fc5cc951792dd3b1ca451b76c11d967877d936b7435f3f4ae465ac7f
+publisher_account: RevvRally
+publisher_address: |-
+  19 Tyler Rd
+  Lexington, MA 02420-2416
+  US
+publisher_phone: '+17817181184'
+extension_website: revvrally.com
+extension_website_verified: false
+support_website: https://www.revvrally.com/solutions/emailwriter/support
+privacy_policy: https://www.revvrally.com/solutions/emailwriter/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RevvRally Email Writer",
+  "version": "1.3.9",
+  "description": "Generate personalized sales emails from LinkedIn profiles",
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.linkedin.com/*",
+    "https://api.anthropic.com/*",
+    "https://emailwriter-api.vercel.app/*"
+  ],
+  "action": {
+    "default_title": "Toggle Email Generator",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.linkedin.com/in/*"],
+      "js": [
+        "utils/promptManager.js",
+        "utils/linkedinScraper.js",
+        "utils/claudeApi.js",
+        "components/DraggableWindow.js",
+        "components/EmailGenerator.js",
+        "content.js"
+      ],
+      "css": ["styles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "options_page": "options.html",
+  "web_accessible_resources": [{
+    "resources": [
+      "companies/*/*.json",
+      "companies/*/*.js",
+      "companies/*/*.css",
+      "utils/*",
+      "images/*"
+    ],
+    "matches": ["https://*.linkedin.com/*"]
+  }]
+}

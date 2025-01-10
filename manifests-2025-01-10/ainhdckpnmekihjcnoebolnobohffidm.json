@@ -1,0 +1,89 @@
+---
+name: SAE Extension
+version: 0.4.1
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 230
+size: 61.58KiB
+languages:
+  - 日本語
+release_date: '2024-12-18T06:36:57.000Z'
+creation_date: '2023-11-27T13:44:11.000Z'
+description: AE3(Academic Express 3)のおてつだいりゃ！
+publisher_hash: f90e300a5ccd01fcbc643d5f62740712795903c8eafb3ac99f85b97a64135c67
+publisher_account: Etwcq6072
+privacy_policy: https://etwcq.github.io/saee
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "SAE Extension",
+    "version": "0.4.1",
+    "manifest_version": 3,
+    "description": "AE3(Academic Express 3)のおてつだいりゃ！",
+    "icons": {
+        "16": "./resources/icon16.png",
+        "32": "./resources/icon32.png",
+        "48": "./resources/icon48.png",
+        "128": "./resources/icon128.png"
+    },
+    "permissions": [
+        "storage",
+        "notifications"
+    ],
+    "host_permissions": [
+        "*://raw.githubusercontent.com/*",
+        "*://script.google.com/*"
+    ],
+    "background": {
+        "service_worker": "chrome/background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*/as/lplayer/index.cfm*"
+            ],
+            "js": [
+                "chrome/loader.js",
+                "chrome/content.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/student/",
+                "https://*/student/?token=*"
+            ],
+            "js": [
+                "chrome/updatechecker.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*/as/lplayer/index.cfm*"
+            ],
+            "js": [
+                "chrome/onDocumentLoad.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "chrome/*",
+                "modules/*",
+                "api/*"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "chrome/popup/index.html"
+    }
+}

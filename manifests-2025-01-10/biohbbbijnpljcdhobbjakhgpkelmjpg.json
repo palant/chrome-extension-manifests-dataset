@@ -1,0 +1,145 @@
+---
+name: Vocus.io
+version: '2.03'
+category_slug: productivity/workflow
+featured: true
+rating: 3.324324324324324
+rating_count: 37
+user_count: 3000
+size: 1.36MiB
+languages:
+  - English (United States)
+release_date: '2024-09-19T08:12:56.000Z'
+creation_date: '2015-05-26T11:25:15.000Z'
+description: Make Gmail your competitive advantage.
+publisher_hash: 18336f3edc6263028b46bc45dda2636135363b2804696a6ed4f0fc27d1114d0d
+publisher: Vocus.io Inc
+publisher_account: Vocus.io
+publisher_address: |-
+  113 Cherry St PMB 43033
+  Seattle, WA 98104-2205
+  US
+publisher_phone: '+13479216733'
+extension_website: vocus.io
+extension_website_verified: true
+privacy_policy: http://vocus.io/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Vocus.io",
+  "description": "Make Gmail your competitive advantage.",
+  "version": "2.03",
+
+  "permissions": [
+    "notifications",
+    "webRequest",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "*://*.googleusercontent.com/proxy/*",
+    "*://mail.google.com/*",
+    "https://ajax.googleapis.com/",
+    "*://vocus.io/*",
+    "*://*.vocus.io/*"
+  ],
+
+  "action": {
+    "default_popup": "",
+    "default_icon": {
+      "16": "images/logo-icon-16.png",
+      "48": "images/logo-icon-48.png",
+      "128": "images/logo-icon-128.png"
+    },
+    "default_title": "Vocus.io"
+  },
+
+  "externally_connectable": {
+    "matches": ["https://mail.google.com/*", "*://vocus.io/*", "*://*.vocus.io/*"]
+  },
+
+  "content_scripts": [{
+      "matches": ["https://mail.google.com/*"],
+      "js" : [
+        "libs/jquery.min.js",
+        "libs/underscore.js",
+        "libs/sugar.js",
+        "libs/inboxsdk.js",
+        "core/constants.js",
+        "core/storage.js",
+        "core/pubsub.js",
+        "core/popup.js",
+        "core/observer.js",
+        "core/bootstrap.js",
+
+        "features/alert.js",
+        "features/completion.js",
+        "features/compose_panel.js",
+        "features/compose.js",
+        "features/dashboard.js",
+        "features/followup.js",
+        "features/meeting.js",
+        "features/poll.js",
+        "features/sendlater.js",
+        "features/snippets.js",
+        "features/snooze.js",
+        "features/toast.js",
+        "features/toolbar_panel.js",
+        "features/tracking.js",
+        "features/undo.js",
+        "features/drafts.js",
+        "features/checkmarks.js",
+
+        "core/features.js"
+      ]
+  },
+  {
+      "matches": ["*://vocus.io/*", "*://*.vocus.io/*"],
+      "js" : ["core/website.js"],
+      "all_frames": true
+  }],
+
+  "background": {
+    "service_worker": "core/background.js"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+      "libs/*.*",
+      "core/*.*",
+      "features/*.*",
+      "css/*.*",
+      "fonts/*.*",
+      "images/*.*",
+      "html/*.*"
+      ],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "libs/page_world.js"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ],
+
+  "icons": {
+    "16": "images/logo-icon-16.png",
+    "48": "images/logo-icon-48.png",
+    "128": "images/logo-icon-128.png"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

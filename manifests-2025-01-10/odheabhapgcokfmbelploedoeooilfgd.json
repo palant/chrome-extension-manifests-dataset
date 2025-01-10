@@ -1,0 +1,75 @@
+---
+name: Block Ads
+version: '2.0'
+category_slug: productivity/workflow
+featured: false
+rating: 3.857142857142857
+rating_count: 14
+user_count: 2000
+size: 23.86KiB
+languages:
+  - English
+release_date: '2021-02-07T13:04:50.000Z'
+creation_date: '2021-01-10T07:55:32.000Z'
+description: Blocks ads and restrict advertisers from tracking your browsing activity
+publisher_hash: 6f627bf747cb9a8783933e828179f6263610483c8de612aad824e90a1e1dc335
+publisher_account: Jagan Elavarasan
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Block Ads",
+  "version": "2.0",
+  "description": "Blocks ads and restrict advertisers from tracking your browsing activity",
+
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": true
+  },
+  "permissions": [
+    "<all_urls>",
+    "webRequest",
+    "webRequestBlocking"
+  ],
+  "browser_action": {
+    "default_icon": "icon128.png",
+    "default_popup": "popup.html",
+    "default_title": "Blocks ads while browsing web and watching videos on youtube, facebook, reddit, hotstar and more websites."
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.hotstar.com/*"],
+      "js": ["contentScript_hotstar.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["contentScript_fb.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["contentScript_linkedin.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["contentScript_youtube.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+        "js": ["contentScript_gads.js"],
+        "run_at": "document_start",
+        "exclude_matches": [
+            "https://www.hotstar.com/*",
+            "https://www.youtube.com/*",
+            "https://www.facebook.com/*",
+            "https://www.linkedin.com/*"
+        ]
+    }
+  ],
+  "icons": { "16": "icon16.png", "48": "icon48.png", "128": "icon128.png" },
+  "manifest_version": 2
+}

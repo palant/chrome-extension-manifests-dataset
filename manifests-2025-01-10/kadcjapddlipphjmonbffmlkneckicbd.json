@@ -1,0 +1,86 @@
+---
+name: BrowsEyes
+version: 0.4.4
+category_slug: make_chrome_yours/functionality
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 1.27MiB
+languages:
+  - English
+release_date: '2024-10-14T06:39:46.000Z'
+creation_date: '2024-01-18T06:52:23.000Z'
+description: Get a summary of your tab behavior and interaction
+publisher_hash: a0f0201330d9a1ce83988e9143dc633e4b3de079e6111aadd57122ee176d00c1
+publisher_account: Miezan
+support_website: https://github.com/Mimieam/TimeTab/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BrowsEyes",
+  "description": "Get a summary of your tab behavior and interaction",
+  "offline_enabled": true,
+  "icons": {
+    "16": "assets/icon-16x16.png",
+    "128": "assets/icon-128x128.png"
+  },
+  "keywords": [
+    "page",
+    "time",
+    "tracker",
+    "fun",
+    "utility",
+    "productivity",
+    "workflow",
+    "planning"
+  ],
+  "version": "0.4.4",
+  "_permissions_comment": "webNavigation is needed to capture page reloads",
+  "permissions": [
+    "storage",
+    "webNavigation"
+  ],
+  "action": {},
+  "background": {
+    "service_worker": "background.mjs",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "content.mjs"
+      ],
+      "run_at": "document_end",
+      "world": "ISOLATED"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "_comment": "careful, by using  * and **/* we are making all files available to both sw and content.js...",
+      "resources": [
+        "shared/*",
+        "content/*",
+        "assets/fonts/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{f9cc6cde-1668-453b-a746-75fb3fde4771}",
+      "strict_min_version": "42.0"
+    }
+  }
+}

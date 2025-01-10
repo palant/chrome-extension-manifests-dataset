@@ -1,0 +1,86 @@
+---
+name: ZAKREPITEL for Kwork exchange
+version: '3.3'
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 41
+size: 3.62MiB
+languages:
+  - English
+  - русский
+release_date: '2023-02-07T12:25:29.000Z'
+creation_date: '2022-01-07T13:22:32.000Z'
+description: Create color tags on users, hide balance, see kworks purchases in the catalog.
+publisher_hash: 5f51faab0a84d403a745efc53574ddfcf2440f97ae437db1fc24ac83d1a045c7
+publisher_account: zakrepitel.com
+extension_website: zakrepitel.com
+extension_website_verified: true
+support_website: https://zakrepitel.com/help.html
+privacy_policy: https://zakrepitel.com/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "default_locale": "en",
+
+    "name": "__MSG_extension_name__",
+    "description": "__MSG_extension_description__",
+    "version": "3.3",
+
+    "icons": {
+        "48": "images/icon-48.png",
+        "96": "images/icon-96.png",
+        "128": "images/icon-128.png",
+        "256": "images/icon-256.png",
+        "512": "images/icon-512.png"
+    },
+
+    "background": {
+        "scripts": [ "background.dart.js" ],
+        "persistent": false
+    },
+
+    "content_scripts": [{
+        "exclude_matches": [ "*://*/*.xml" ],
+        "js": [ "content_balance.dart.js"],
+        "matches": [ "https://kwork.ru/*", "https://kwork.com/*" ],
+        "run_at": "document_start"
+    },{
+        "js": [ "content.dart.js", "content_kworks.dart.js", "content_settings.dart.js" ],
+        "matches": [ "https://kwork.ru/*", "https://kwork.com/*" ]
+    },{
+        "js": [ "content_inbox.dart.js" ],
+        "matches": [ "https://kwork.ru/inbox/*", "https://kwork.com/inbox/*" ]
+    },{
+        "js": [ "content_user.dart.js" ],
+        "matches": [ "https://kwork.ru/user/*", "https://kwork.com/user/*" ]
+    },{
+        "js": [ "content_track.dart.js" ],
+        "matches": [ "https://kwork.ru/track?id=*", "https://kwork.com/track?id=*" ]
+    }
+],
+
+    "web_accessible_resources": [ "*" ],
+
+    "browser_action": {
+        "default_title": "__MSG_extension_title__",
+        "default_icon": {
+            "16": "images/toolbar-icon-16.png",
+            "19": "images/toolbar-icon-19.png",
+            "32": "images/toolbar-icon-32.png",
+            "38": "images/toolbar-icon-38.png"
+        }
+    },
+
+    "permissions": [ "*://*/*" ],
+
+    "externally_connectable": {
+        "matches": ["https://kwork.ru/*", "https://kwork.com/*"]
+    },
+
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'" 
+}

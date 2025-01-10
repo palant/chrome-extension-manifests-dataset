@@ -1,0 +1,80 @@
+---
+name: MyOwnExtension
+version: '1.8'
+category_slug: productivity/developer
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 491KiB
+languages:
+  - 中文 (简体)
+release_date: '2024-09-06T15:06:40.000Z'
+creation_date: '2021-02-08T08:25:01.000Z'
+description: >-
+  添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面,
+  删除一些url param追踪
+publisher_hash: f0790a541866da9a5184b0d0c3ec44075232f8ceb49469662ef133fb66757001
+publisher_account: Luoming Xu
+support_website: https://github.com/LuomingXu/chromeextension/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "MyOwnExtension",
+    "version": "1.8",
+    "description": "添加百度搜索的右键菜单, GitHub Readme TOC / Relative time -> ISO time, JD手机界面转化为pc页面, 删除一些url param追踪",
+    "permissions": [
+        "contextMenus",
+        "webNavigation",
+        "storage",
+        "webRequest",
+        "declarativeNetRequest"
+    ],
+    "background": {
+        "service_worker": "src/background.js"
+    },
+    "icons": {
+        "16": "imgs/icon.png",
+        "48": "imgs/icon.png",
+        "128": "imgs/icon.png"
+    },
+    "options_ui": {
+        "page": "options.html",
+        "open_in_tab": false
+    },
+    "content_scripts": [
+        {
+            "css": [
+                "style.css"
+            ],
+            "js": [
+                "src/toc.js",
+                "src/timeChange.js",
+                "src/msgListener.js"
+            ],
+            "matches": [
+                "*://*.github.com/*"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "js": [
+                "src/emarket_urlelement_remove.js"
+            ],
+            "matches": [
+                "*://*.jd.com/*",
+                "*://item.taobao.com/*",
+                "*://detail.tmall.com/*",
+                "*://*.bilibili.com/*",
+                "*://img30.360buyimg.com/*",
+                "*://*.wikipedia.org/*",
+                "*://*.sinaimg.cn/*",
+                "*://link.zhihu.com/*",
+                "*://*.tieba.baidu.com/*"
+            ]
+        }
+    ]
+}

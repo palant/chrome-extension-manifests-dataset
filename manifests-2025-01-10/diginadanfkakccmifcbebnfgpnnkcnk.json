@@ -1,0 +1,98 @@
+---
+name: Testernotes
+version: 2.0.1
+category_slug: productivity/developer
+featured: true
+rating: 5
+rating_count: 5
+user_count: 6
+size: 390KiB
+languages:
+  - English
+release_date: '2024-07-23T04:57:22.000Z'
+creation_date: '2023-04-16T07:55:20.000Z'
+description: Record sessions to generate end-to-end tests
+publisher_hash: b088ce6773b9aae495466766b2c5c948ab51a61f32674b0d0a8c87350c5e2ef6
+publisher: Bazuel
+publisher_account: NoTest
+publisher_address: |-
+  Via Pavullo Nel Frignano, 107
+  Roma, RM 00125
+  IT
+extension_website: notest.io
+extension_website_verified: true
+support_website: https://notest.io/contact
+privacy_policy: https://notest.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Testernotes",
+  "description": "Record sessions to generate end-to-end tests",
+  "version": "2.0.1",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "cookies",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "chrome/background.js"
+  },
+  "commands": {
+    "testernotes-toggle-recording": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Q"
+      },
+      "description": "Toggle session registration"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/assets/testernotes_icon_16.png",
+      "32": "/assets/testernotes_icon_32.png",
+      "64": "/assets/testernotes_icon_64.png",
+      "128": "/assets/testernotes_icon_128.png"
+    }
+  },
+  "icons": {
+    "16": "/assets/testernotes_icon_16.png",
+    "32": "/assets/testernotes_icon_32.png",
+    "64": "/assets/testernotes_icon_64.png",
+    "128": "/assets/testernotes_icon_128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "page/monitor.js",
+        "page/widget.js",
+        "page/widget.css",
+        "page/custom-element.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "content_scripts/embedder.js",
+        "content_scripts/background-page-channel.js",
+        "content_scripts/storage.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

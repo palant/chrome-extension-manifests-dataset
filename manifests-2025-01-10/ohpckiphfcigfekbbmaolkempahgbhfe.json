@@ -1,0 +1,94 @@
+---
+name: BingAI Anywhere - Use BingChat Anywhere
+version: 1.0.1
+category_slug: productivity/tools
+featured: true
+rating: 5
+rating_count: 1
+user_count: 1000
+size: 274KiB
+languages:
+  - English
+  - español
+release_date: '2023-12-16T06:40:24.000Z'
+creation_date: '2023-05-16T10:55:52.000Z'
+description: Effortlessly search BingAI/BingChat on any site
+publisher_hash: 33a6d87b8e8d2fa8655be99116b375eb3ee895bb9cc5457b7d88d55aff55da33
+publisher_account: Magic
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
+  "version": "1.0.1",
+  "action": {
+    "default_popup": "src/browser_action/browser_action.html",
+    "default_icon": "icons/128.png"
+  },
+  "description":"__MSG_extDescription__",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "webRequest", 
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "omnibox":{
+    "keyword" : "Bing"
+  },
+  "default_locale": "en",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.bing.com/*"
+      ],
+      "js": [
+        "js/contentScript.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "js/jquery.min.js",
+        "js/script.js"
+      ],
+      "css": [
+        "css/style.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/search_popup/popup.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": ["https://*.bing.com/*"]
+}

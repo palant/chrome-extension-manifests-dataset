@@ -1,0 +1,91 @@
+---
+name: PowerBI Extractor by Table Capture
+version: 1.0.29
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 4
+user_count: 724
+size: 710KiB
+languages:
+  - English
+  - español
+release_date: '2024-12-08T05:14:31.000Z'
+creation_date: '2023-10-04T05:34:57.000Z'
+description: Allows you to extract data from a PowerBI view to Excel (XLSX) or CSV.
+publisher_hash: 0baa2b1376fe8f722bad5ad8bdf47a7f15880f0eec5b98efd6f36368b350697f
+publisher_account: GeorgeMike.com
+publisher_address: |-
+  268 Union Street
+  2
+  Brooklyn, NY 11231
+  US
+publisher_phone: '+14066466639'
+extension_website: georgemike.com
+extension_website_verified: true
+support_website: https://georgemike.com/
+privacy_policy: https://www.georgemike.com/chrome/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "version": "1.0.29",
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extSName__",
+  "description": "__MSG_extDesc__",
+  "default_locale": "en",
+  "homepage_url": "https://georgemike.com",
+  "icons": {
+    "34": "img/icon-34.png",
+    "128": "img/icon-128.png"
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "options_page": "options.html",
+  "permissions": ["contextMenus", "downloads", "storage", "scripting"],
+  "content_scripts": [
+    {
+      "matches": ["https://app.powerbi.com/*", "https://app.powerbigov.us/*"],
+      "js": [
+        "js/DataWrapper.js",
+        "js/DisplayFormat.js",
+        "js/ExtractStatus.js",
+        "js/PBIExporter.js",
+        "js/InPageExporter.js",
+        "js/content.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["account.html"],
+      "matches": ["https://app.powerbi.com/*", "https://app.powerbigov.us/*"]
+    }
+  ],
+  "commands": {
+    "export-to-csv": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+J",
+        "windows": "Alt+Shift+J",
+        "mac": "Alt+Shift+J"
+      },
+      "description": "Export to CSV"
+    },
+    "export-to-excel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "windows": "Alt+Shift+L",
+        "mac": "Alt+Shift+L"
+      },
+      "description": "Export to Excel"
+    }
+  },
+  "action": {},
+  "host_permissions": ["*://app.powerbi.com/*", "*://app.powerbigov.us/*"]
+}

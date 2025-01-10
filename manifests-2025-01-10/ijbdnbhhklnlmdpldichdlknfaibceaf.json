@@ -1,0 +1,120 @@
+---
+name: ClassInTheBox
+version: 3.0.0
+category_slug: productivity/education
+featured: false
+rating: 5
+rating_count: 8
+user_count: 1000
+size: 10.68MiB
+languages:
+  - español
+release_date: '2024-12-05T11:00:33.000Z'
+creation_date: '2021-10-07T13:04:22.000Z'
+description: >-
+  A través de la extensión citbREC, puedes grabar una videoconferencia, un
+  videotutorial, una clase o parte de ella.
+publisher_hash: 9eca453f3acd05e4b030b2d3ab167324d8e24ffa94e2771a3254c98fd6c1c9bd
+publisher: Aotech Security
+publisher_account: therealclassinthebox
+publisher_address: |-
+  Av. de Sicilia
+  71
+  Parquelagos, Madrid 28420
+  ES
+privacy_policy: https://classinthebox.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ClassInTheBox",
+  "version": "3.0.0",
+  "description": "A través de la extensión citbREC, puedes grabar una videoconferencia, un videotutorial, una clase o parte de ella.",
+  "manifest_version": 3,
+  "minimum_chrome_version": "94.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAsiTbtsAQszcqFHIwUEJLC6vW9nYMajp2Cd4pqb2+HZUoZx1yCZwkJfrGFvEBQXmZCDSy/SNgjROdnDxrVtgYi/w8a7fBZBN77jt6QNpUQohHhkvSgCv+YPifbutyXbz6V4MBa4uLiOp0nUUVdrb6d6U1hxdthiuyW1C9+gDkB/Esxrr8vw94pmkvPjD0dWN7i89Zj1aEw9wk2lEseK+nSYE8xid3SnmWF1ijSmy8pT+eYLser6WJtcc7G7OIOd25lYgLnyFGYtlEupU40IgIBu9Gnbpbde+fagVmkST3pbofVEalWUIXttBNhQUeNX8/XjYwKUxbxmjJh+MdWXMBxwIDAQAB",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "oauth2": {
+    "client_id": "550302001460-0n04rinv35kaus6au65472c653rdd8ie.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file https://www.googleapis.com/auth/calendar"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "desktopCapture",
+    "storage",
+    "scripting",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://meet.google.com/*",
+    "https://zoom.us/*",
+    "https://*.zoom.us/*",
+    "https://meet.jit.si/*",
+    "https://teams.live.com/*",
+    "https://*/*",
+    "http://*/*"
+  ],
+  "action": {
+    "default_title": "CITB Rec",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "assets/favicon.png",
+      "48": "assets/favicon.png",
+      "64": "assets/favicon.png",
+      "128": "assets/favicon.png"
+    }
+  },
+  "icons": {
+    "16": "assets/favicon.png",
+    "48": "assets/favicon.png",
+    "128": "assets/favicon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "app/CITB/*",
+        "citbRecPopup/dist/citb-rec-popup/*",
+        "app/SOCKET/*",
+        "libraries/socket.io.js",
+        "app/recControl/*",
+        "app/permissionsPage/*",
+        "assets/*",
+        "app/extensionPage/*",
+        "app/TabPIP/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://editor.classinthebox.io/*"],
+      "js": ["app/EditVideoContentScript/inject.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["app/recControl/injectRecControl.js"],
+      "css": ["app/recControl/recControlStyles.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "ids": [
+      "pgloinlccpmhpgbnccfecikdjgdhneof",
+      "ijbdnbhhklnlmdpldichdlknfaibceaf"
+    ],
+    "matches": [
+      "https://classinthebox.io/*",
+      "http://localhost:4200/*",
+      "https://classinthebox.io/video/*",
+      "https://editor.classinthebox.io/*"
+    ],
+    "accepts_tls_channel_id": true
+  }
+}

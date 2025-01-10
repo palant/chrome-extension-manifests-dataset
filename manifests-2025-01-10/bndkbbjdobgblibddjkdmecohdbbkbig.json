@@ -1,0 +1,124 @@
+---
+name: Scrabulizer Importer
+version: 2.0.0
+category_slug: lifestyle/fun
+featured: false
+rating: 3.3793103448275863
+rating_count: 29
+user_count: 2000
+size: 47.88KiB
+languages:
+  - English
+release_date: '2024-07-16T21:32:53.000Z'
+creation_date: '2012-08-06T21:15:15.000Z'
+description: Imports Lexulous, Words With Friends and Wordscraper games into Scrabulizer.
+publisher_hash: a05937b7d1b94de314af449e771985a4537d7cec7159987645e13511d6d3cd7a
+publisher: Scrabulizer Ltd
+publisher_account: Scrabulizer
+publisher_address: |-
+  Oakgates, Tipper Lane, South Harting
+  Petersfield GU31 5LH
+  GB
+publisher_phone: '+447900993978'
+extension_website: www.scrabulizer.com
+extension_website_verified: true
+support_website: https://www.scrabulizer.com/static/faq
+privacy_policy: https://www.scrabulizer.com/static/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Scrabulizer Importer",
+  "version": "2.0.0",
+  "description": "Imports Lexulous, Words With Friends and Wordscraper games into Scrabulizer.",
+  "icons": {
+     "16": "images/s_tile_16px.png",
+     "48": "images/s_tile_48px.png",
+    "128": "images/s_tile_128px.png"
+  },
+  "permissions": [
+    "activeTab",
+    "declarativeContent",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://aws.rjs.in/*"
+  ],
+  "minimum_chrome_version": "127",
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://aws.rjs.in/fblexulous*?*action=viewboard*",
+        "https://aws.rjs.in/fblexulous*?*action=viewboard*",
+        "http://aws.rjs.in/wordscraper*?*action=viewboard*",
+        "https://aws.rjs.in/wordscraper*?*action=viewboard*"
+      ],
+      "all_frames": true,
+      "js": ["util.js", "content_util.js", "lexulous_and_wordscraper/util.js", "lexulous_and_wordscraper/content.js"]
+    },
+    {
+      "matches": [
+        "http://*.lexulous.com/email/playboard*",
+        "https://*.lexulous.com/email/playboard*",
+        "http://*.lexulous.com/v2/g/*",
+        "https://*.lexulous.com/v2/g/*"
+      ],
+      "all_frames": false,
+      "js": ["util.js", "content_util.js", "lexulous_and_wordscraper/util.js", "lexulous_and_wordscraper/content.js"]
+    },
+    {
+      "matches": [
+        "http://wwf-fb.zyngawithfriends.com/*",
+        "https://wwf-fb.zyngawithfriends.com/*",
+        "http://zdnzwf5-a.akamaihd.net/*",
+        "https://zdnzwf5-a.akamaihd.net/*",
+        "http://wwf.zynga.com/*",
+        "https://wwf.zynga.com/*"
+      ],
+      "all_frames": true,
+      "js": ["util.js", "content_util.js", "words_with_friends/content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "http://aws.rjs.in/*",
+        "https://aws.rjs.in/*",
+        "http://aws.rjs.in/*",
+        "https://aws.rjs.in/*",
+        "http://*.lexulous.com/*",
+        "https://*.lexulous.com/*"
+      ],
+      "resources": [
+        "lexulous_and_wordscraper/get_scripts/*.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://wwf-fb.zyngawithfriends.com/*",
+        "https://wwf-fb.zyngawithfriends.com/*",
+        "http://zdnzwf5-a.akamaihd.net/*",
+        "https://zdnzwf5-a.akamaihd.net/*",
+        "http://wwf.zynga.com/*",
+        "https://wwf.zynga.com/*"
+      ],
+      "resources": [
+        "words_with_friends/get_scripts/*.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "images/s_tile_grey_16px.png",
+      "19": "images/s_tile_grey_19px.png",
+      "32": "images/s_tile_grey_32px.png",
+      "38": "images/s_tile_grey_38px.png"
+    },
+    "default_title": "Scrabulizer Importer - Click to import a game"
+  }
+}

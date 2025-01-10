@@ -1,0 +1,85 @@
+---
+name: 即刻笔记
+version: 1.1.5
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 67
+size: 335KiB
+languages:
+  - 中文 (简体)
+release_date: '2024-07-02T03:36:23.000Z'
+creation_date: '2022-06-04T07:40:56.000Z'
+description: >-
+  一款简单，实用，强大的素材管理工具，专注为自媒体从业人员服务。可用于微博定时发布或转发，图片和视频采集，素材草稿箱管理等。更多内容请到即刻笔记官网查看详细使用教程。
+publisher_hash: 0c805b9438e56bfdea9b39f4ebfa604c0395ce7f221c82d7ff9543e096c58c16
+publisher_account: lianglianghao75
+privacy_policy: https://jikebiji.cn/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "即刻笔记",
+    "version": "1.1.5",
+    "description": "一款简单，实用，强大的素材管理工具，专注为自媒体从业人员服务。可用于微博定时发布或转发，图片和视频采集，素材草稿箱管理等。更多内容请到即刻笔记官网查看详细使用教程。",
+    "icons": {
+        "16": "images/icon16.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "19": "images/icon19.png",
+            "38": "images/icon38.png"
+        },
+        "default_title": "即刻笔记",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "css": [ "css/style.css", "js/layer/skin/layer.css" ],
+            "js": ["js/jquery.min.js", "js/layer/layer.js", "js/jike.js"],
+            "all_frames":true
+        },
+        {
+            "matches": ["*://*.weibo.com/*"],
+            "js": ["js/weibo.js"],
+            "all_frames":true
+        },
+        {
+            "matches": ["*://*.jikebiji.cn/*"],
+            "js": ["js/jikebiji.js"]
+        },
+        {
+            "matches": ["*://*.jikebiji.cn/*"],
+            "js": ["js/ext.js"],
+            "run_at":"document_start"
+        }
+    ],
+    "web_accessible_resources":[{
+        "resources": ["edit.html", "listedit.html", "media_display.html", "draft-media.html", "timeline.html", "collection.html", "images/icon19.png", "images/loading.gif"],
+        "matches": ["<all_urls>"],
+        "extension_ids": []
+    }],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+    "host_permissions": ["http://*/*", "https://*/*"],
+    "permissions": [
+        "tabs", 
+        "cookies",
+        "storage",
+        "declarativeNetRequest"
+    ]
+}

@@ -1,0 +1,72 @@
+---
+name: B站图床
+version: 2.2.4
+category_slug: lifestyle/art
+featured: false
+rating: 5
+rating_count: 1
+user_count: 1000
+size: 411KiB
+languages:
+  - 中文 (简体)
+release_date: '2023-12-13T20:59:34.000Z'
+creation_date: '2022-01-26T11:27:47.000Z'
+description: B站图床、转短链插件
+publisher_hash: 3bf359d2a844965d29dd131f4ece5bf441f7ba40163014f85eb85f4d1ced41ed
+publisher_account: 执笔看墨花开
+support_website: https://github.com/xlzy520/bilibili-img-uploader
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "B站图床",
+  "version": "2.2.4",
+  "description": "B站图床、转短链插件",
+  "homepage_url": "https://github.com/xlzy520/bilibili-img-uploader",
+  "action": {
+    "default_title": "哔哩哔哩图床",
+    "default_icon": "./assets/favicon.png"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/favicon@16.png",
+    "48": "./assets/favicon@48.png",
+    "64": "./assets/favicon@64.png",
+    "128": "./assets/favicon.png"
+  },
+  "permissions": [
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://*.bilibili.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.bilibili.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.bilibili.com/zhibi-image-upload"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ],
+      "css": [
+        "./dist/contentScripts/style.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

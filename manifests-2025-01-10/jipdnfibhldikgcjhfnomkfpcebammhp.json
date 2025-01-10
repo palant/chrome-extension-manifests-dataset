@@ -1,0 +1,88 @@
+---
+name: rikaikun
+version: 3.1.2
+category_slug: productivity/education
+featured: true
+rating: 4.659127625201939
+rating_count: 1857
+user_count: 200000
+size: 27.71MiB
+languages:
+  - English
+release_date: '2025-01-07T03:54:15.000Z'
+creation_date: '2010-01-06T00:50:40.000Z'
+description: >-
+  rikaikun shows the reading and English definition of Japanese words when you
+  hover over Japanese text in the browser.
+publisher_hash: 7c62ac96acd41a1c92c0eb23c2b293e80ea255460e58163a2cba644a5c08e5af
+publisher_account: Erek Speed
+support_website: https://github.com/melink14/rikaikun/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "rikaikun",
+  "version": "3.1.2",
+  "minimum_chrome_version": "109",
+  "description": "rikaikun shows the reading and English definition of Japanese words when you hover over Japanese text in the browser.",
+  "icons": {
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "offline_enabled": true,
+  "permissions": [
+    "clipboardWrite",
+    "storage",
+    "offscreen"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "//": "If only one icon available, setting default_icon to string is allowed.",
+    "default_icon": "images/ba.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "ftp://*/*",
+        "file:///*"
+      ],
+      "match_about_blank": true,
+      "js": [
+        "rikaicontent.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://docs.google.com/*"
+      ],
+      "js": [
+        "docs-annotate-canvas.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "css/popup.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

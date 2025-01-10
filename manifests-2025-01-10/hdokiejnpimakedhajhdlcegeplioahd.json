@@ -1,0 +1,154 @@
+---
+name: 'LastPass: Free Password Manager'
+version: 4.138.3
+category_slug: productivity/workflow
+featured: false
+rating: 4.28730085512543
+rating_count: 28183
+user_count: 9000000
+size: 27.88MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - português (Brasil)
+release_date: '2025-01-08T19:13:15.000Z'
+creation_date: '2009-11-27T20:06:18.000Z'
+description: >-
+  LastPass is an award-winning password manager for secure credential management
+  on any device.
+publisher_hash: 3fed4e10ce55fdae88e91ed9dc83ca3067fa3ffc72675354bb381563a3541859
+publisher: Lastpass US LP
+publisher_account: LastPass
+publisher_address: |-
+  125 High St
+  Suite 220
+  Boston, MA 02110-2737
+  US
+publisher_phone: '+13855764603'
+support_website: https://support.logmeininc.com/lastpass
+privacy_policy: https://www.lastpass.com/legal-center/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "LastPass: Free Password Manager",
+  "author": "LastPass",
+  "version": "4.138.3",
+  "description": "__MSG_appDesc__",
+  "omnibox": {
+    "keyword": "lp"
+  },
+  "permissions": [
+    "scripting",
+    "tabs",
+    "notifications",
+    "contextMenus",
+    "storage",
+    "unlimitedStorage",
+    "webNavigation",
+    "webRequest",
+    "webRequestAuthProvider",
+    "offscreen",
+    "alarms"
+  ],
+  "optional_permissions": [
+    "nativeMessaging",
+    "privacy",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "background-redux-new.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; frame-src 'self' https://lastpass.com https://lastpass.eu; connect-src 'self' https://lastpass.com https://login.microsoftonline.com https://graph.microsoft.com https://login.microsoftonline.us https://graph.microsoft.us https://*.oktapreview.com https://*.okta.com https://*.okta-emea.com https://*.pingone.com https://*.pingone.ca https://*.pingone.eu https://*.pingone.asia https://accounts.google.com https://www.googleapis.com https://openidconnect.googleapis.com https://content.googleapis.com https://*.onelogin.com https://accounts.lastpass.com wss://*.lastpass.com wss://*.lastpass.eu https://*.lastpass.com https://lastpass.eu https://browser-intake-datadoghq.com; img-src 'self' data: blob:; style-src 'self' 'unsafe-inline';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "https://cis.corp.com/spl/cis.jsp",
+        "https://lastpass.com/extension-toolbar-messages"
+      ],
+      "js": [
+        "web-client-content-script.js"
+      ],
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://lastpass.com/vault/*",
+        "https://lastpass.com/migrate/*"
+      ],
+      "js": [
+        "vault-sync-document-start.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.lastpass.com/create-account/success*"
+      ],
+      "js": [
+        "redirect-to-vault-script.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://lastpass.com/*",
+        "https://backoffice.lastpass.com/*"
+      ],
+      "js": [
+        "web-client-web-federated-login-document-start.js"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "preferences.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "48": "images/icon-48.png",
+    "64": "images/icon-64.png",
+    "96": "images/icon-96.png",
+    "128": "images/icon-128.png",
+    "256": "images/icon-256.png",
+    "512": "images/icon-512.png"
+  },
+  "action": {
+    "default_title": "LastPass",
+    "default_popup": "webclient-extension-toolbar.html",
+    "default_icon": {
+      "19": "images/iconset2/19x19_Gray.png",
+      "38": "images/iconset2/19x19_Gray_2x.png"
+    }
+  },
+  "manifest_version": 3,
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "webclient-infield.html",
+        "webclient-tab-prompt.html"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "default_locale": "en"
+}

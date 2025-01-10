@@ -1,0 +1,143 @@
+---
+name: ProspectDaddy Email Finder
+version: 1.6.0
+category_slug: productivity/workflow
+featured: false
+rating: 4
+rating_count: 7
+user_count: 328
+size: 1.34MiB
+languages:
+  - English (United States)
+release_date: '2024-12-18T08:50:04.000Z'
+creation_date: '2021-06-03T10:19:00.000Z'
+description: >-
+  Search prospects on LinkedIn, Find business emails on Gmail, & Download
+  email-ready prospect lists
+publisher_hash: a0c950692f9d07a5576a8b8eb014a7aa050dc260776e5fc367a440e0dc0b270c
+publisher_account: ProspectDaddy
+extension_website: prospectdaddy.com
+extension_website_verified: true
+privacy_policy: https://prospectdaddy.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.6.0",
+  "name": "ProspectDaddy Email Finder",
+  "description": "Search prospects on LinkedIn, Find business emails on Gmail, & Download email-ready prospect lists",
+  "homepage_url": "https://prospectdaddy.com",
+  "permissions": [
+    "storage",
+    "webRequest",
+    "tabs",
+    "system.display"
+  ],
+  "host_permissions":[
+   "*://mail.google.com/*",
+   "*://contacts.google.com/*",
+   "https://www.linkedin.com/*",
+   "https://api.smartreach.io/*"
+
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'",
+    "service_worker": "script-src 'self'; object-src 'self'"
+  },  
+  "background": {
+    "service_worker":  "build/background.js"
+  },
+  "content_scripts": [
+
+    {
+      "matches": [
+        "https://www.linkedin.com/sales/search/people?*",
+        "https://www.linkedin.com/sales/lead/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "build/merged_list_sales_nav_content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "build/inLoaders/init.js"
+
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "build/merged_content.js"
+      ]
+    }    
+    ,
+    {
+      "js": [
+        "build/gmLoaders/content.js"
+      ],
+      "matches": [
+        "*://*.mail.google.com/*"
+      ]
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "build/gmLoaders/editor.js"
+      ],
+      "matches": [
+        "*://*.mail.google.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+ "web_accessible_resources": [
+  {
+    "resources": [
+      "prospectdaddy.html",
+      "build/inLoaders/XMLHttpWatcher.js"
+    ],
+    "matches": ["<all_urls>"]
+  }
+  ],
+  "icons": {
+    "16": "icons/prospect-daddy-logo.png",  
+    "48": "icons/prospect-daddy-logo-1.png",
+    "128":"icons/prospect-daddy-logo-2.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/prospect-daddy-logo.png",  
+      "48": "icons/prospect-daddy-logo-1.png",
+      "128":"icons/prospect-daddy-logo-2.png"
+    },
+    "default_title": "ProspectDaddy"
+  },
+  "commands": {
+    "toggle-feature": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "MacCtrl+Shift+Y"
+      },
+      "description": "Send a 'toggle-feature' event to the extension"
+    },
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+L",
+        "mac": "MacCtrl+Shift+L"
+      }
+    }
+  },
+  "externally_connectable": {
+    "matches": ["https://app.smartreach.io/*","https://www.linkedin.com/*"]
+  }
+}

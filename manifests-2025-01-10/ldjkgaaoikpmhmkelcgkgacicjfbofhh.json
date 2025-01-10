@@ -1,0 +1,100 @@
+---
+name: Instapaper
+version: 3.1.2
+category_slug: productivity/workflow
+featured: true
+rating: 3.783938814531549
+rating_count: 523
+user_count: 200000
+size: 180KiB
+languages:
+  - English
+release_date: '2024-11-06T10:10:04.000Z'
+creation_date: '2013-09-17T18:27:09.000Z'
+description: Instapaper browser extension to save links for offline reading.
+publisher_hash: aa9c5f5c764d290a5ce7dc7057afd8eabdb0896aa1e361a2381650d8c5d88300
+publisher: Instant Paper, Inc.
+publisher_account: accounts
+publisher_address: |-
+  1750 Vallejo Street
+  San Francisco, CA 94123
+  US
+publisher_phone: '+12017244949'
+extension_website: www.instapaper.com
+extension_website_verified: true
+support_website: https://instapaper.zendesk.com
+privacy_policy: https://instapaper.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Instapaper",
+  "description": "Instapaper browser extension to save links for offline reading.",
+  "version": "3.1.2",
+
+  "options_page": "options.html",
+  "icons": {
+    "16": "img/insta_logo_tiny.png",
+    "48": "img/insta_logo_small.png",
+    "128": "img/insta_logo.png"
+  },
+  "commands": {
+    "ctrl-shift-s": {
+      "suggested_key": { "default": "Ctrl+Shift+S" },
+      "description": "Save article"
+    }
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+  "background": {
+    "service_worker": "js/readlater.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+        "16": "img/insta_logo_small.png",
+        "32":  "img/insta_logo_small@2x.png"
+    }
+  },
+  "content_scripts": [
+    {
+        "matches": ["http://*/*", "https://*/*"],
+        "exclude_matches": ["https://instapaper.com/read/*", "https://*.instapaper.com/read/*"],
+        "js": ["js/bookmarklet.js", "js/deflate-base64-min.js", "js/highlights-ugly.js", "js/premium.js", "js/tags.js"],
+        "css": ["css/instapaper.css", "css/ipicons.css", "css/highlights.css", "css/premium.css", "css/tags.css"],
+        "run_at": "document_start"
+    },
+    {
+        "matches": ["http://twitter.com/*", "https://twitter.com/*", "http://x.com/*", "https://x.com/*"],
+        "js": ["js/twitter.js"]
+    },
+    {
+        "matches": ["https://news.ycombinator.com/*"],
+        "js": ["js/hackernews.js"]
+    },
+    {
+        "matches": ["https://lobste.rs/*"],
+        "js": ["js/lobsters.js"]
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+        "*.png",
+        "*.svg"
+    ],
+    "matches": [
+        "http://*/*",
+        "https://*/*"
+    ]
+  }]
+}

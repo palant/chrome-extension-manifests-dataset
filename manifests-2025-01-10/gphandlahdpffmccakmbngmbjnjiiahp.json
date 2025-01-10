@@ -1,0 +1,125 @@
+---
+name: PDF Editor for Chrome:Edit, Fill, Sign, Print
+version: 0.5.5
+category_slug: productivity/workflow
+featured: false
+rating: 2.30875
+rating_count: 800
+user_count: 200000
+size: 1.96MiB
+languages:
+  - English
+release_date: '2024-12-11T06:56:03.000Z'
+creation_date: '2014-07-15T21:22:09.000Z'
+description: >-
+  Edit, e-sign, print or fax PDFs directly from search engine results and
+  webpages with the pdfFiller extension.
+publisher_hash: 07677bf18c451186b0d22acc00bad4135c9ad8f98564d668860507debc3c34ee
+publisher_account: PDFfiller, Inc.
+extension_website: pdffiller.com
+extension_website_verified: true
+support_website: https://www.pdffiller.com/en/support.htm
+privacy_policy: https://www.pdffiller.com/en/privacy_policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "PDF Editor for Chrome:Edit, Fill, Sign, Print",
+  "version": "0.5.5",
+  "author": "pdfFiller (support@pdffiller.com)",
+  "description": "Edit, e-sign, print or fax PDFs directly from search engine results and webpages with the pdfFiller extension.",
+  "icons": {
+    "16": "img/logo16.png",
+    "48": "img/logo48.png",
+    "128": "img/logo128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "ftp://*/*",
+        "file://*/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "css": [
+        "contentstyle.css",
+        "css/style.css"
+      ],
+      "js": [
+        "contentscript.js",
+        "libs/jquery.min.js",
+        "libs/base64.js",
+        "libs/moment.js",
+        "js/config.js",
+        "js/browser.js",
+        "js/inject.js",
+        "js/background.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "file_browser_handlers": [
+    {
+      "id": "open-as-pdf",
+      "default_title": "Open with PDF Viewer",
+      "file_filters": [
+        "filesystem:*.pdf"
+      ]
+    }
+  ],
+  "storage": {
+    "managed_schema": "preferences_schema.json"
+  },
+  "options_ui": {
+    "page": "options/options.html"
+  },
+  "options_page": "options/options.html",
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "webRequest",
+    "webNavigation",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "incognito": "split",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/web/viewer.html",
+        "http:/*",
+        "https:/*",
+        "ftp:/*",
+        "file:/*",
+        "chrome-extension:/*",
+        "blob:*",
+        "data:*",
+        "filesystem:/*",
+        "drive:*",
+        "img/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "img/logo16.png",
+      "48": "img/logo48.png",
+      "128": "img/logo128.png"
+    }
+  }
+}

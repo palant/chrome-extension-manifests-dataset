@@ -1,0 +1,109 @@
+---
+name: FDev Security
+version: 2.0.2
+category_slug: make_chrome_yours/privacy
+featured: true
+rating: 5
+rating_count: 8
+user_count: 147
+size: 505KiB
+languages:
+  - English
+release_date: '2024-06-14T05:52:00.000Z'
+creation_date: '2020-08-01T05:39:42.000Z'
+description: >-
+  You are protected absolutely with our awesome features: Realtime protection,
+  block seen and typing indicator, blur messenger!
+publisher_hash: b169365933ec846f5d7709d5a00fe160cb1de432ae961879bafe21e5d34e596a
+publisher_account: lenhatthanh20
+extension_website: lenhatthanh.com
+extension_website_verified: true
+support_website: https://lenhatthanh.com
+privacy_policy: https://lenhatthanh.com/coderdocs-security-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "FDev Security",
+    "version": "2.0.2",
+
+    "description": "You are protected absolutely with our awesome features: Realtime protection, block seen and typing indicator, blur messenger!",
+    "icons": {
+        "16": "./assets/img/icon.png",
+        "48": "./assets/img/icon.png",
+        "128": "./assets/img/icon.png"
+    },
+
+    "author": "lenhatthanh.com",
+
+    "action": {
+        "default_icon": {
+            "16": "./assets/img/icon.png",
+            "48": "./assets/img/icon.png",
+            "128": "./assets/img/icon.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "./scripts/background-loader.js"
+    },
+
+    "incognito": "split",
+
+    "permissions": [
+        "background",
+        "activeTab",
+        "declarativeNetRequestWithHostAccess",
+        "declarativeNetRequest",
+        "storage",
+        "tabs",
+        "scripting",
+        "webRequest"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.facebook.com/*",
+                "https://www.messenger.com/*",
+                "https://www.instagram.com/direct/*"
+            ],
+            "js": ["./scripts/blocking.content-script.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["https://www.messenger.com/*"],
+            "css": ["./assets/css/blur-messenger.css"],
+            "js": ["./scripts/blur-messenger.content-script.js"],
+            "run_at": "document_idle",
+            "all frames": true
+        },
+        {
+            "matches": ["*://*/*"],
+            "css": ["./assets/css/realtime-protection.css"],
+            "js": ["./scripts/realtime-protection.content-script.js"],
+            "run_at": "document_idle"
+        }
+    ],
+
+    "web_accessible_resources": [
+        {
+            "resources": ["scripts/blocking.page-script.js"],
+            "matches": [
+                "https://web.facebook.com/*",
+                "https://www.facebook.com/*",
+                "https://www.messenger.com/*"
+            ]
+        },
+        {
+            "resources": ["assets/img/icon.png"],
+            "matches": ["https://www.messenger.com/*"],
+            "use_dynamic_url": true
+        }
+    ]
+}

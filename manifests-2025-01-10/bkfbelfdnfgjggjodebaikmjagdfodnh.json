@@ -1,0 +1,100 @@
+---
+name: Playbook - Save and download images on the go
+version: '6.0'
+category_slug: lifestyle/art
+featured: false
+rating: 5
+rating_count: 19
+user_count: 4000
+size: 488KiB
+languages:
+  - English
+release_date: '2024-11-19T15:35:14.000Z'
+creation_date: '2024-04-26T12:17:03.000Z'
+description: Save your assets to Playbook
+publisher_hash: dffdead59a01d5da33b25fb76a61070521a3c63fa34ff2d26acd4e4fce347d9c
+publisher: Playbook Digital
+publisher_account: Playbook
+publisher_address: |-
+  341 Moultrie St
+  San Francisco, CA 94110
+  US
+extension_website: playbook.com
+extension_website_verified: true
+support_website: https://playbook.com
+privacy_policy: https://www.playbook.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Playbook - Save and download images on the go",
+  "description": "Save your assets to Playbook",
+  "version": "6.0",
+  "icons": {
+    "16": "src/icons/16x16.png",
+    "48": "src/icons/48x48.png",
+    "128": "src/icons/128x128.png"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "src/icons/alert.svg",
+        "src/icons/tick.svg",
+        "src/icons/32x32.png",
+        "src/client.js",
+        "src/Notification.tsx.js",
+        "src/saveAllImagesToPreview.ts.js",
+        "src/captureArea.ts.js",
+        "src/getSharedBoardSlugs.ts.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "host_permissions": [
+    "*://*.playbook.com/*"
+  ],
+  "action": {
+    "default_popup": "src/components/Popup/Popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "src/Notification.tsx-loader.js",
+        "src/saveAllImagesToPreview.ts-loader.js",
+        "src/captureArea.ts-loader.js",
+        "src/getSharedBoardSlugs.ts-loader.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "css": [
+        "src/Notification.css",
+        "src/captureArea.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "identity",
+    "contextMenus",
+    "activeTab",
+    "scripting",
+    "tabs",
+    "cookies",
+    "downloads"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api2.amplitude.com https://*.sentry.io https://be.playbook.com https://storage.googleapis.com blob: data:"
+  }
+}

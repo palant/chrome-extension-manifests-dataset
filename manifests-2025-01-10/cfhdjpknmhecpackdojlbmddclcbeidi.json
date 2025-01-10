@@ -1,0 +1,99 @@
+---
+name: Помощник по доставке AliExpress
+version: '1.2'
+category_slug: lifestyle/shopping
+featured: false
+rating: 5
+rating_count: 1
+user_count: 15
+size: 53.22KiB
+languages:
+  - English
+  - русский
+release_date: '2022-08-16T06:37:06.000Z'
+creation_date: '2022-08-16T06:37:06.000Z'
+description: Показывает ВСЕ доступные способы доставки и их стоимость на AliExpress.ru
+publisher_hash: d02c1401699227a46c7e7218844d689222fc944bab747c9acc3b0bd90247f6bc
+publisher_account: Trigger239
+support_website: https://github.com/Trigger239/aer_dmh
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "ru",
+  "version": "1.2",
+  "author": "Arseniy Virachev aka Trigger239",
+  "action": {
+    "default_title": "Click to configure",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.aliexpress.ru/item/*"],
+      "exclude_matches": ["*://m.aliexpress.ru/item/*"],
+      "run_at": "document_start",
+      "js": ["item_inject.js"],
+      "css": ["aer_dmh.css"]
+    },
+    {
+      "matches": ["*://*.aliexpress.ru/wholesale*"],
+      "exclude_matches": ["*://m.aliexpress.ru/wholesale*"],
+      "run_at": "document_start",
+      "js": ["wholesale_inject.js"],
+      "css": ["aer_dmh.css"]
+    },
+    {
+      "matches": ["*://shoppingcart.aliexpress.ru/orders.htm"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["order_iframe_inject.js"]
+    },
+    {
+      "matches": ["*://www.aliexpress.com/p/error/404.html"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "js": ["com_404_iframe_inject.js"]
+    },
+    {
+      "matches": ["*://login.aliexpress.ru/*"],
+      "all_frames": true,
+      "js": ["login_iframe_inject.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "item_page_script.js",
+        "wholesale_page_script.js",
+        "order_iframe_script.js",
+        "login_iframe_script.js",
+        "com_404_iframe_script.js",
+        "images/shipment-question.png",
+        "images/loading.svg"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  }
+}

@@ -1,0 +1,103 @@
+---
+name: Improve Crunchyroll
+version: 4.6.2
+category_slug: productivity/workflow
+featured: false
+rating: 4.677248677248677
+rating_count: 189
+user_count: 30000
+size: 83.61KiB
+languages:
+  - English
+  - Français
+  - español
+  - português (Brasil)
+release_date: '2025-01-09T18:32:50.000Z'
+creation_date: '2019-03-17T17:27:06.000Z'
+description: >-
+  Enhance Crunchyroll: theater mode, skip intros/outros, mark as watched/not
+  watched, fast forward/backward buttons, ...
+publisher_hash: 0c1c7f3685d09b9703bbf74b08984564c3679bb1ade749f193f52ca5c5be1baa
+publisher_account: Thomas Tavernier
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "4.6.2",
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "author": "Thomas Tavernier <thomas@tavernier.dev>",
+  "default_locale": "en",
+  "icons": {
+    "128": "assets/icon128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "action": {
+    "default_popup": "lib/popup/index.html"
+  },
+  "background": {
+    "service_worker": "lib/background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://static.crunchyroll.com/vilos-v2/web/vilos/player.html*"
+      ],
+      "js": [
+        "lib/shared/chromeStorage.js",
+        "lib/shared/renderer.js",
+        "lib/shared/shortcutUtils.js",
+        "lib/content_scripts/player/buttons/buttons.js",
+        "lib/content_scripts/player/events/events.js",
+        "lib/content_scripts/player/fast-forward-backward/fast-forward-backward.js",
+        "lib/content_scripts/player/playback/playback.js",
+        "lib/content_scripts/player/render/render.js",
+        "lib/content_scripts/player/settings/settings.js",
+        "lib/content_scripts/player/shortcuts/shortcuts.js",
+        "lib/content_scripts/player/skippers/skippers.js",
+        "lib/content_scripts/player/main.js"
+      ],
+      "css": [
+        "lib/content_scripts/player/buttons/buttons.css",
+        "lib/content_scripts/player/fast-forward-backward/fast-forward-backward.css",
+        "lib/content_scripts/player/playback/playback.css",
+        "lib/content_scripts/player/render/render.css",
+        "lib/content_scripts/player/settings/settings.css",
+        "lib/content_scripts/player/skippers/skippers.css",
+        "lib/content_scripts/player/main.css"
+      ],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://beta.crunchyroll.com/*",
+        "https://www.crunchyroll.com/*"
+      ],
+      "js": [
+        "lib/shared/chromeStorage.js",
+        "lib/shared/renderer.js",
+        "lib/content_scripts/website/api/api.js",
+        "lib/content_scripts/website/action-menu/action-menu.js",
+        "lib/content_scripts/website/pages/empty.js",
+        "lib/content_scripts/website/pages/utils.js",
+        "lib/content_scripts/website/pages/series/series.js",
+        "lib/content_scripts/website/pages/watch/watch.js",
+        "lib/content_scripts/website/main.js"
+      ],
+      "css": [
+        "lib/shared/theme-color.css",
+        "lib/content_scripts/website/action-menu/action-menu.css",
+        "lib/content_scripts/website/pages/series/series.css",
+        "lib/content_scripts/website/pages/watch/watch.css",
+        "lib/content_scripts/website/pages/utils.css",
+        "lib/content_scripts/website/main.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

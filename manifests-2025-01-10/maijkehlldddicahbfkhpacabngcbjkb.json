@@ -1,0 +1,92 @@
+---
+name: Fingerprint Spoofer
+version: 1.0.0
+category_slug: make_chrome_yours/functionality
+featured: false
+rating: null
+rating_count: null
+user_count: 32
+size: 13.22MiB
+languages:
+  - ไทย
+release_date: '2024-10-14T09:28:45.000Z'
+creation_date: '2024-10-08T20:12:37.000Z'
+description: Automatically solve reCaptcha using AI and Spoofer browser fingerprint.
+publisher_hash: 2d64b331c4855466febea8a1ba3867f913d63e8c5f64edf8e67401a264d9c88e
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Fingerprint Spoofer",
+    "version": "1.0.0",
+    "description": "Automatically solve reCaptcha using AI and Spoofer browser fingerprint.",
+    "icons": {
+        "16": "images/fingerprint-16.png",
+        "32": "images/fingerprint-32.png",
+        "48": "images/fingerprint-48.png",
+        "128": "images/fingerprint-128.png"
+    },
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "permissions": [
+        "storage",
+        "scripting",
+        "declarativeNetRequest",
+        "contentSettings"
+    ],
+    "host_permissions": [
+        "<all_urls>",
+        "*://*.google.com/recaptcha/*",
+        "*://*.recaptcha.net/recaptcha/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "dist/*",
+                "models/*",
+                "js/navigatorSpoofScript.js",
+                "js/canvasSpoofScript.js",
+                "js/recaptcha.js",
+                "js/recaptcha-visibility.js"
+            ],
+            "matches": ["<all_urls>"],
+            "use_dynamic_url": true
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "js/rules.json"
+            }
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.google.com/recaptcha/api2/*",
+                "*://*.google.com/recaptcha/enterprise/*",
+                "*://*.recaptcha.net/recaptcha/api2/*",
+                "*://*.recaptcha.net/recaptcha/enterprise/*"
+            ],
+            "js": ["js/recaptcha.js"],
+            "run_at": "document_end",
+            "all_frames": true,
+            "match_about_blank": false
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["js/recaptcha-visibility.js"],
+            "run_at": "document_end",
+            "all_frames": true,
+            "match_about_blank": false
+        }
+    ]
+}

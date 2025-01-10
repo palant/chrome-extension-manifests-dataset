@@ -1,0 +1,72 @@
+---
+name: Hasser Voice Quick Dial
+version: 0.0.03
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 8
+size: 45.08KiB
+languages:
+  - English (United States)
+release_date: '2023-11-16T18:17:09.000Z'
+creation_date: '2023-07-16T11:15:18.000Z'
+description: >-
+  This extensions allows Hasser Voice customers to quickly dial telephone
+  numbers on websites
+publisher_hash: c664dca796e9b05d8aca1b2b5c085eb7e3ce0ae4a1fc6157f9f7a2c1624608bd
+publisher: Hasser Enterprises LLC
+publisher_account: tim
+publisher_address: |-
+  3929 Airport Blvd Service Rd ste 3 308
+  Mobile, AL 36609
+  US
+extension_website: www.hasserllc.com
+extension_website_verified: true
+privacy_policy: https://www.hasserllc.com/index.php/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Hasser Voice Quick Dial",
+  "description": "This extensions allows Hasser Voice customers to quickly dial telephone numbers on websites",
+  "version": "0.0.03",
+  "manifest_version": 3,
+  "permissions": ["tabs", "activeTab", "storage"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [{
+    "resources": ["ipc-bridge-init.js", "icon.png"],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": ["https://voice.hasserllc.com/*"]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon-48.png",
+    "128": "icon-128.png",
+    "512": "icon-512.png",
+    "1024": "icon-1024.png"
+  },
+  "content_scripts": [
+    {
+      "css": ["styles.css"],
+      "js": ["intercept.js"],
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["https://voice.hasserllc.com/*", "https://mail.google.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["ipc-bridge.js"],
+      "matches": ["https://voice.hasserllc.com/*"],
+      "run_at": "document_start"
+    }
+  ]
+}

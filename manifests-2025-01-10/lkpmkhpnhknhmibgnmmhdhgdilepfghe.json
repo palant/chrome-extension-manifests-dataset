@@ -1,0 +1,77 @@
+---
+name: Prax wallet
+version: 15.0.0
+category_slug: productivity/tools
+featured: false
+rating: 3.185185185185185
+rating_count: 27
+user_count: 20000
+size: 95.37MiB
+languages:
+  - English
+release_date: '2024-12-26T21:01:50.000Z'
+creation_date: '2022-11-18T08:55:25.000Z'
+description: For use in interacting with the Penumbra blockchain
+publisher_hash: f35ef8e8cda98229294e5d680f1cf20076ff57f3f084a2b380a8f954a5345423
+publisher: Penumbra Labs
+publisher_address: |-
+  2261 Market St #319
+  San Francisco, CA 94114-1612
+  US
+publisher_phone: '+14452013293'
+privacy_policy: https://praxwallet.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Prax wallet",
+  "version": "15.0.0",
+  "description": "For use in interacting with the Penumbra blockchain",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvnucOJi878TGZYnTNTrvXd9krAcpSDR/EgHcQhvjNZrKfRRsKA9O0DnbyM492c3hiicYPevRPLPoKsLgVghGDYPr8eNO7ee165keD5XLxq0wpWu14gHEPdQSRNZPLeawLp4s/rUwtzMcxhVIUYYaa2xZri4Tqx9wpR7YR1mQTAL8UsdjyitrnzTM20ciKXq1pd82MU74YaZzrcQCOmcjJtjHFdMEAYme+LuZuEugAgef9RiE/8kLQ6T7W9feYfQOky1OPjBkflpRXRgW6cACdl+MeYhKJCOHijglFsPOXX6AvnoJSeAJYRXOMVJi0ejLKEcrLpaeHgh+1WXUvc5G4wIDAQAB",
+  "minimum_chrome_version": "119",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "favicon/icon16.png",
+    "32": "favicon/icon32.png",
+    "48": "favicon/icon48.png",
+    "128": "favicon/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*/*", "http://localhost/*"],
+      "js": ["injected-connection-port.js", "injected-request-listener.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://*/*", "http://localhost/*"],
+      "js": ["injected-penumbra-global.js"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "options_ui": {
+    "page": "page.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["manifest.json", "favicon/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["storage", "unlimitedStorage", "offscreen"],
+  "host_permissions": ["<all_urls>"],
+  "externally_connectable": {
+    "matches": ["<all_urls>"]
+  },
+  "content_security_policy": {
+    "extension_pages": "object-src 'self'; script-src 'self' 'wasm-unsafe-eval'"
+  }
+}

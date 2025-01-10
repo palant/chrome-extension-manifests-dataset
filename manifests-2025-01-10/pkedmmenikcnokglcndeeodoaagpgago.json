@@ -1,0 +1,106 @@
+---
+name: AssisTax 2S
+version: 2.1.4
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 14
+user_count: 7
+size: 418KiB
+languages:
+  - Français
+release_date: '2024-12-14T03:56:38.000Z'
+creation_date: '2024-04-14T04:51:56.000Z'
+description: Automatisez la Saisie des Taxes de Séjour
+publisher_hash: a3bf675d728dee49812fa016477feaed714db48b8d1d0e71b53a7de4f0a3e032
+publisher: Haïku Dev
+publisher_account: Haïku dev
+publisher_address: |-
+  60 Rue François 1er
+  Paris 75008
+  FR
+publisher_phone: '+33751361238'
+extension_website: assistax2s.com
+extension_website_verified: true
+privacy_policy: https://www.assistax2s.com/legal/confidentialite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "AssisTax 2S",
+    "version": "2.1.4",
+    "description": "Automatisez la Saisie des Taxes de Séjour",
+    "permissions": [
+      "webRequest",
+      "storage"
+    ],
+    "host_permissions": [
+      "https://www.assistax2s.com/",
+      "https://taxedesejour.ofeaweb.fr/"
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "content_scripts": [
+      {
+        "matches": [
+          "https://taxedesejour.ofeaweb.fr/*TeledeclarerEtPayer/TeledeclarerV2/",
+          "https://taxedesejour.ofeaweb.fr/*TeledeclarerEtPayer/TeledeclarerV2",
+          "https://*.taxesejour.fr/hebergeur/*/registre/*"
+        ],
+        "js": [
+          "atx2s/atx2s.js"
+        ],
+        "run_at": "document_end"
+      },
+      {
+        "matches": [
+          "https://taxedesejour.ofeaweb.fr/*TeledeclarerEtPayer/TeledeclarerV2/",
+          "https://taxedesejour.ofeaweb.fr/*TeledeclarerEtPayer/TeledeclarerV2",
+          "https://*.taxesejour.fr/hebergeur/*/registre/*"
+      ],
+        "js": ["atx2s/spinner.js"],
+        "run_at": "document_start"
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [
+          "atx2s/fonts/SpaceMono-Regular.ttf",
+          "atx2s/fonts/Roboto-Light.ttf",
+          "atx2s/fonts/Roboto-Black.ttf",
+          "icons/trash-can-regular.svg", 
+          "icons/booking_512x512.png", 
+          "icons/airbnb_512x512.png", 
+          "icons/icon128.png",
+          "icons/atx2slogoicon.svg", 
+          "atx2s/atx2s.html", 
+          "atx2s/atx2s.css",
+          "atx2s/spinner.html",
+          "atx2s/template-modal.html",
+          "atx2s/template-modal.css"
+        ],
+        "matches": [
+          "https://taxedesejour.ofeaweb.fr/*",
+          "https://*.taxesejour.fr/*"
+        ]
+      }
+    ],
+    "background": {
+      "service_worker": "atx2s/service-worker.js"
+    },
+    "options_ui": {
+      "page": "atx2s/options.html",
+      "open_in_tab": true
+    },
+    "action": {
+      "default_icon": "icons/icon48.png"
+    },
+    "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  }

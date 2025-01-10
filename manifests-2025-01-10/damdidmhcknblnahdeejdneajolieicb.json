@@ -1,0 +1,74 @@
+---
+name: nsyteful
+version: 0.2.2
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 20
+size: 14.99KiB
+languages:
+  - English
+release_date: '2019-10-11T21:49:11.000Z'
+creation_date: '2018-05-04T23:42:50.000Z'
+description: Automatic authentication of nest video feeds on nsyteful dashboards.
+publisher_hash: db87794689eb1dc6281c1d22868976b94c6933d1582e7afa6c357b14386e271f
+publisher_account: Justin.RoffMarsh
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "nsyteful",
+    "description": "Automatic authentication of nest video feeds on nsyteful dashboards.",
+    "version": "0.2.2",
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": "images/icon32.png"
+    },
+    "background": {
+        "scripts": [
+            "background_scripts/eventPage.js"
+        ],
+        "persistent": false
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.nsyteful.com/*",
+                "*://*.development-dashboard.ballistixmis.com/*"
+            ],
+            "js": [
+                "content_scripts/nsytefulFrame.js"
+            ],
+            "all_frames": false,
+            "run_at": "document_end",
+            "allowed_domains": [
+                "https://video.nest.com",
+                "https://www.video.nest.com"
+            ]
+        },
+        {
+            "matches": [
+                "*://video.nest.com/*"
+            ],
+            "js": [
+                "content_scripts/nestFrame.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_end",
+            "allowed_domains": [
+                "https://nsyteful.com",
+                "https://www.nsyteful.com",
+                "http://development-dashboard.ballistixmis.com",
+                "http://www.development-dashboard.ballistixmis.com"
+            ]
+        }
+    ]
+}

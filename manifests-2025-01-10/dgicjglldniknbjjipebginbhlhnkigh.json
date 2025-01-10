@@ -1,0 +1,116 @@
+---
+name: Fearn Marketplace Connection
+version: 0.1.33
+category_slug: lifestyle/shopping
+featured: false
+rating: 4
+rating_count: 4
+user_count: 103
+size: 285KiB
+languages:
+  - English
+release_date: '2024-12-19T21:40:34.000Z'
+creation_date: '2021-12-05T04:38:51.000Z'
+description: This extension allows Fearn to access and communicate with your marketplaces.
+publisher_hash: 4725757e15048338c9272f534293d259fd384d72c114fb4ea2b8740878e005c2
+publisher_account: support
+privacy_policy: https://stage.fearn.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Fearn Marketplace Connection",
+  "short_name": "Fearn",
+  "description": "This extension allows Fearn to access and communicate with your marketplaces.",
+  "homepage_url": "https://fearn.co",
+  "version": "0.1.33",
+  "version_name": "0.1.33",
+  "author": "Fearn",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "minimum_chrome_version": "88",
+  "incognito": "split",
+  "permissions": [
+    "tabs",
+    "cookies",
+    "webRequest",
+    "scripting",
+    "activeTab",
+    "storage"
+  ],
+  "host_permissions": [
+    "http://localhost:3000/*",
+    "https://localhost:3000/*",
+    "*://app.dev.fearn.co/*",
+    "*://app.stage.fearn.co/*",
+    "*://poshmark.com/*",
+    "*://www.etsy.com/*",
+    "*://mercari.com/*",
+    "*://www.mercari.com/*",
+    "*://www.ebay.com/*",
+    "*://bulksell.ebay.com/*",
+    "*://order.ebay.com/*",
+    "*://signin.ebay.com/*",
+    "*://app.fearn.co/*"
+  ],
+  "icons": { "128": "assets/img/128x128.png" },
+  "background": { "service_worker": "background.js" },
+  "externally_connectable": {
+    "matches": [
+      "http://localhost:3000/*",
+      "https://localhost:3000/*",
+      "https://app.dev.fearn.co/*",
+      "https://app.stage.fearn.co/*",
+      "https://app.fearn.co/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:3000/*",
+        "https://localhost:3000/*",
+        "https://app.dev.fearn.co/*",
+        "https://app.stage.fearn.co/*",
+        "https://app.fearn.co/*"
+      ],
+      "run_at": "document_start",
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["https://poshmark.com/*", "https://www.poshmark.com/*"],
+      "run_at": "document_start",
+      "js": ["poshmarkContent.js", "marketplaceContent.js"]
+    },
+    {
+      "matches": [
+        "https://ebay.com/*",
+        "https://order.ebay.com/*",
+        "https://www.order.ebay.com/*",
+        "https://www.ebay.com/*",
+        "https://bulksell.ebay.com/*",
+        "https://signin.ebay.com/*"
+      ],
+      "run_at": "document_start",
+      "js": ["ebayContent.js", "marketplaceContent.js"]
+    },
+    {
+      "matches": ["https://www.etsy.com/*", "https://etsy.com/*"],
+      "run_at": "document_start",
+      "js": ["etsyContent.js", "marketplaceContent.js"]
+    },
+    {
+      "matches": ["*://www.mercari.com/*", "*://mercari.com/*"],
+      "run_at": "document_start",
+      "js": ["mercariContent.js", "marketplaceContent.js"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "assets/img/Default_16x16.png",
+      "24": "assets/img/Default_24x24.png",
+      "32": "assets/img/Default_32x32.png"
+    },
+    "default_title": "Fearn"
+  }
+}

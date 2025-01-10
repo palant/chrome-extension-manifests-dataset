@@ -1,0 +1,73 @@
+---
+name: Search Rewards
+version: 1.0.7
+category_slug: lifestyle/entertainment
+featured: true
+rating: 4.4375
+rating_count: 16
+user_count: 2000
+size: 3.4MiB
+languages:
+  - English
+release_date: '2024-05-01T12:49:48.000Z'
+creation_date: '2024-03-04T04:58:40.000Z'
+description: >-
+  Get rewards for using your browser, participate in draws and win prizes with
+  Search Rewards extension.
+publisher_hash: d9b99ff6d59cfd36236aba01e35428712ef199ef4dbefceb48a5b8ce3aa4b234
+publisher_account: search-rewards.com
+extension_website: search-rewards.com
+extension_website_verified: true
+privacy_policy: https://search-rewards.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Search Rewards",
+  "description": "Get rewards for using your browser, participate in draws and win prizes with Search Rewards extension.",
+  "version": "1.0.7",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "icons": {
+    "300": "300.png",
+    "128": "128.png",
+    "32": "32.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "128": "128.png",
+      "32": "32.png"
+    }
+  },
+  "permissions": ["storage", "alarms"],
+  "host_permissions": ["https://clickreward.net/*", "https://search-rewards.com/*"],
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": ["js/content.js"],
+      "matches": [
+        "https://search-rewards.com/*",
+        "https://clickreward.net/*",
+        "https://www.bing.com/search*",
+        "https://search.yahoo.com/yhs/search*",
+        "https://*.search.yahoo.com/yhs/search*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "chrome_settings_overrides": {
+    "search_provider": {
+      "name": "Rewarded",
+      "keyword": "searchrewards",
+      "search_url": "https://search-rewards.com/search?q={searchTerms}",
+      "favicon_url": "https://search-rewards.com/favicon.ico",
+      "suggest_url": "https://search-rewards.com/complete/search?output=chrome&q={searchTerms}",
+      "encoding": "UTF-8",
+      "is_default": true
+    }
+  }
+}

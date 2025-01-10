@@ -1,0 +1,124 @@
+---
+name: RemotePC Scheduler
+version: 0.2.7
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 2000
+size: 238KiB
+languages:
+  - English
+release_date: '2021-09-22T06:45:57.000Z'
+creation_date: '2020-06-02T04:52:05.000Z'
+description: Schedule RemotePC Meetings directly from Calendars.
+publisher_hash: 972e7da7c06fd4e1b8a8affb221032d03bf01801211d8d701f38fb0fc3f89296
+publisher: IDrive Inc
+publisher_address: |-
+  26115 Mureau Road
+  Suite A
+  Calabasas, California 91302
+  United States
+support_website: https://www.remotepc.com/support.htm
+privacy_policy: https://www.idrive.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "RemotePC Scheduler",
+    "version": "0.2.7",
+    "manifest_version": 2,
+    "description": "Schedule RemotePC Meetings directly from Calendars.",
+    "icons": {
+        "16": "icons/icon16.png",
+        "48": "icons/icon48.png",
+        "128": "icons/icon128.png"
+    },
+    "default_locale": "en",
+    "background": {
+        "scripts": [
+            "js/jquery/jquery.min.js",
+            "src/API.js",
+            "src/bg/background.js"
+        ],
+        "persistent": true
+    },
+    "browser_action": {
+        "default_icon": "icons/icon19.png",
+        "default_title": "RemotePC Scheduler",
+        "default_popup": "src/browser_action/popup.html"
+    },
+    "permissions": [
+        "storage",
+        "https://meetapi.remotepc.com/api/*",
+        "https://meet.remotepc.com/",
+        "https://meeting.remotepc.com/"
+    ],
+    "content_scripts": [{
+            "matches": [
+                "https://calendar.google.com/calendar/*"
+            ],
+            "css": [
+                "src/inject/inject.css",
+                "css/remotepc_btn.css"
+            ],
+            "js": [
+                "js/moment.min.js",
+                "js/jquery/jquery.min.js",
+                "src/DateTimeHelper.js",
+                "src/MeetingScheduler.js",
+                "src/API.js",
+                "src/inject/GoogleEventConverter.js",
+                "src/inject/GoogleEventPopupConverter.js",
+                "src/inject/google_inject.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://outlook.live.com/calendar/*"
+            ],
+            "css": [
+                "src/inject/inject.css",
+                "css/remotepc_btn.css"
+            ],
+            "js": [
+                "js/moment.min.js",
+                "js/jquery/jquery.min.js",
+                "src/DateTimeHelper.js",
+                "src/MeetingScheduler.js",
+                "src/API.js",
+                "src/inject/GoogleEventConverter.js",
+                "src/inject/OutlookConverter.js",
+                "src/inject/OutlookCalloutConverter.js",
+                "src/inject/outlook_inject.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://calendar.yahoo.com/*"
+            ],
+            "css": [
+                "src/inject/inject.css",
+                "css/remotepc_btn.css"
+            ],
+            "js": [
+                "js/moment.min.js",
+                "js/jquery/jquery.min.js",
+                "src/DateTimeHelper.js",
+                "src/MeetingScheduler.js",
+                "src/API.js",
+                "src/inject/GoogleEventConverter.js",
+                "src/inject/YahooConverter.js",
+                "src/inject/YahooEventHoverConverter.js",
+                "src/inject/YahooSmallPopupConverter.js",
+                "src/inject/yahoo_inject.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "img/*",
+        "icons/*"
+    ],
+    "content_security_policy": "script-src 'self' https://www.google.com https://www.gstatic.com; object-src 'self'"
+}

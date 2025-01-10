@@ -1,0 +1,162 @@
+---
+name: Profitario - AliExpress Invoice & Reports
+version: 0.4.3.6
+category_slug: productivity/workflow
+featured: false
+rating: 3.789473684210526
+rating_count: 19
+user_count: 3000
+size: 198KiB
+languages:
+  - English
+release_date: '2023-07-26T12:01:56.000Z'
+creation_date: '2019-05-15T17:18:07.000Z'
+description: Create an AliExpress invoice and analyse your expenses with powerful reports.
+publisher_hash: 249de450dbfa932c382a21361d73e8fcfd2757f1b68685a07c108df0b37e79e1
+publisher: Saritra GmbH
+publisher_account: Profitario
+publisher_address: |-
+  Hildebrandgasse 23
+  Wien 1180
+  AT
+extension_website: profitario.com
+extension_website_verified: true
+support_website: https://www.profitario.com/help-center
+privacy_policy: https://www.profitario.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Profitario - AliExpress Invoice & Reports",
+  "short_name": "Profitario",
+  "version": "0.4.3.6",
+  "description": "Create an AliExpress invoice and analyse your expenses with powerful reports.",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://trade.aliexpress.com/orderList.htm*",
+        "https://trade.aliexpress.com/order_list.htm*",
+        "https://trade1.aliexpress.com/orderList.htm*",
+        "https://trade1.aliexpress.com/order_list.htm*"
+      ],
+      "js": [
+        "util/jquery.js",
+        "util/toastr.min.js",
+        "content/ali_v2/content_menu_bar.js",
+        "content/ali_v2/content_order_list_redirect.js"
+      ],
+      "css": [
+        "style.css",
+        "util/toastr.min.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://app.profitario.com/*",
+        "http://192.168.0.179:3001/*"
+      ],
+      "js": [
+        "util/jquery.js",
+        "content/contentIntegration.js"
+      ],
+      "css": [
+        "style.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://trade.aliexpress.com/order_detail.htm*",
+        "https://trade1.aliexpress.com/order_detail.htm*",
+        "http://192.168.0.179/Aliexpress/*"
+      ],
+      "js": [
+        "util/jquery.js",
+        "util/toastr.min.js",
+        "content/ali_v2/content_menu_bar.js",
+        "content/ali_v2/content_order_details.js"
+      ],
+      "css": [
+        "style.css",
+        "util/toastr.min.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.aliexpress.com/p/order/index.htm*",
+        "https://de.aliexpress.com/p/order/index.htm*"
+      ],
+      "js": [
+        "util/jquery.js",
+        "util/toastr.min.js",
+        "util/moment.min.js",
+        "content/ali_v2/content_menu_bar.js",
+        "content/ali_v2/content_order_list.js"
+      ],
+      "css": [
+        "style.css",
+        "util/toastr.min.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://www.aliexpress.com/p/order/detail.htm*",
+        "https://www.aliexpress.com/p/order/detail.htm*"
+      ],
+      "js": [
+        "util/jquery.js",
+        "util/toastr.min.js",
+        "content/ali_v2/content_menu_bar.js",
+        "content/ali_v2/content_order_details.js"
+      ],
+      "css": [
+        "style.css",
+        "util/toastr.min.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://track.aliexpress.com/logisticsdetail.htm*"
+      ],
+      "js": [
+        "util/jquery.js",
+        "util/toastr.min.js",
+        "content/ali_v2/content_tracking_details.js"
+      ],
+      "css": [
+        "style.css",
+        "util/toastr.min.css"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "256": "images/icon.png"
+  },
+  "browser_action": {
+    "default_icon": "images/icon.png",
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "persistent": true,
+    "scripts": [
+      "util/jquery.js",
+      "util/Scrapper.js",
+      "util/helpers/storageHelper.js",
+      "background/background.js"
+    ]
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "*://*.aliexpress.ru/*",
+    "*://*.aliexpress.com/*",
+    "tabs"
+  ]
+}

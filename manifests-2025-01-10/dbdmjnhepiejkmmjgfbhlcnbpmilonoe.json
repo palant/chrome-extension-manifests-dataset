@@ -1,0 +1,81 @@
+---
+name: Skinplace Trademanager
+version: 1.0.0
+category_slug: lifestyle/fun
+featured: false
+rating: 4.8046875
+rating_count: 128
+user_count: 1000
+size: 738KiB
+languages:
+  - English
+release_date: '2024-08-15T05:32:28.000Z'
+creation_date: '2021-03-06T03:59:40.000Z'
+description: Sell skins safely with SkinPlace.
+publisher_hash: b2417e45552c7680dd29fe2c61ba63b82aa0503882f0b526bc0354eafaae5321
+publisher_account: Skin Place Industries
+extension_website: skin.place
+extension_website_verified: true
+support_website: https://support.skin.place
+privacy_policy: https://skin.place/en/privacypolicy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "icons": {
+    "128": "assets/images/logo.png"
+  },
+  "name": "Skinplace Trademanager",
+  "version": "1.0.0",
+  "description": "Sell skins safely with SkinPlace.",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "notifications",
+    "background",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://steamcommunity.com/*",
+    "*://*.steampowered.com/*",
+    "http://*.steamstatic.com/*",
+    "*://steamrep.com/*",
+    "*://steamcdn-a.akamaihd.net/*",
+    "https://api.skin.place/*"
+  ],
+  "web_accessible_resources": [],
+  "externally_connectable": {
+    "matches": [
+      "*://api.skin.place/*",
+      "*://*.steampowered.com/*",
+      "*://steamcommunity.com/*"
+    ],
+    "accepts_tls_channel_id": true
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "onBeforeSendHeaders",
+        "enabled": true,
+        "path": "rules_1.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://steamcommunity.com/profiles/*/tradeoffers*",
+        "https://steamcommunity.com/id/*/tradeoffers*"
+      ],
+      "js": [
+        "offers.js"
+      ]
+    }
+  ]
+}

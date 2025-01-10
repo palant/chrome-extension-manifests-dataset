@@ -1,0 +1,112 @@
+---
+name: TabJam for ChatGPT
+version: 1.5.4
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 5
+user_count: 132
+size: 13.52MiB
+languages:
+  - English (United States)
+release_date: '2023-06-05T05:17:34.000Z'
+creation_date: '2023-02-08T04:41:14.000Z'
+description: >-
+  A free add-on for ChatGPT to help you add content from any website to your
+  ChatGPT conversations.
+publisher_hash: 4f71979de824f87ee749c1791372f6dcb407addd04f00094e712b721cde5713a
+publisher: Smartcuts
+publisher_account: chrome-store-publishers
+publisher_address: |-
+  169 Madison Ave
+  #2267
+  New York, NY 10016
+  US
+support_website: https://forms.gle/F3L2Jsws2vsDvF7Y6
+privacy_policy: https://trysmartcuts.com/privacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TabJam for ChatGPT",
+  "manifest_version": 3,
+  "version": "1.5.4",
+  "description": "A free add-on for ChatGPT to help you add content from any website to your ChatGPT conversations.",
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "optional_permissions": [
+    "scripting",
+    "tabs"
+  ],
+  "optional_host_permissions": ["*://*/*"],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png"
+    },
+    "default_title": "Click me"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "windows": "Ctrl+M",
+        "mac": "Command+J",
+        "chromeos": "Ctrl+M",
+        "linux": "Ctrl+M"
+      }
+    }
+  },
+  "background": {
+    "service_worker": "js/service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/",
+        "https://chat.openai.com/?*",
+        "https://chat.openai.com/?model=*",
+        "https://chat.openai.com/c/*",
+        "https://chat.openai.com/chat",
+        "https://chat.openai.com/chat?*",
+        "https://chat.openai.com/chat/*"
+      ],
+      "js": ["js/content-script-openai.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://tabjam.ai/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/html/modal_basic.html",
+        "/html/modal_permissions.html",
+        "/html/modal_prompt_shortener.html",
+        "/html/modal_tutorial.html",
+        "/icons/logo24.png",
+        "/icons/logo24@2x.png"
+      ],
+      "matches": [ "https://chat.openai.com/*" ]
+    },
+    {
+      "resources": [
+        "/html/modal_tutorial.html",
+        "/icons/logo24.png",
+        "/icons/logo24@2x.png"
+      ],
+      "matches": [ "https://tabjam.ai/*" ]
+    },
+    {
+      "resources": [
+        "/html/modal_select_content.html",
+        "/html/toast.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

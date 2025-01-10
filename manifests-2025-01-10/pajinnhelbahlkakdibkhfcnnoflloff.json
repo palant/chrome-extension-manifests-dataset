@@ -1,0 +1,99 @@
+---
+name: Browser Redirection Extension (Beta)
+version: '6.9'
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 3000
+size: 74.12KiB
+languages:
+  - English
+release_date: '2024-12-20T08:48:58.000Z'
+creation_date: '2020-08-24T07:43:28.000Z'
+description: This extension redirects Webpages.
+publisher_hash: d35bf994e83b8bfda6e9ad5cee24617734834bde863bdf37686e41e458d78c0b
+publisher: Citrix Systems India · R&D
+publisher_account: Citrix Systems Inc
+publisher_address: |-
+  Prestige Dynasty, Phase, 33/2, Ulsoor Rd,
+  Sivanchetti Gardens,
+  Bengaluru, Karnataka 560042
+  IN
+support_website: https://support.citrix.com/article/CTX230052
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Browser Redirection Extension (Beta)",
+  "description": "This extension redirects Webpages.",
+  "version": "6.9",
+  "icons": {
+    "16": "citrix_icon16.png",
+    "48": "citrix_icon48.png",
+    "128": "citrix_icon.png"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlZttZ8iFj1T8na+ZChG5eccrnmJb3JAvq0pXwrrkQPKu7fCd90xFzwpiupDvrF1Fe8u0SNpdvFhFuzeVwfvDMtuhTAU66kv8mbFNb0Pck5OZ5/TBWOL7WoSHP8pe6yhOSmR1361z2F+MVdzSYkwOkLpJTKW7xNAswN/iE1ufoeWINZgSy9BG2VTniS3UgbpdIZRO3VIzzFSQzuySDcySzkfsZCI8pC3M56wUCzeeIBxtsktvwPq0L4P7UyuQFkptkUN03Bu+5cyal1YCOSFZydyZvm39h5M1MrANwHJcS09UmZbQUHl9X50E42hVNYoUNKLQavIB0CJ1ACMgfjf0gwIDAQAB",
+   "action": {
+    "default_icon": "citrix_icon_inactive.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "http://*/*", "https://*/*" ],
+      "run_at": "document_start",
+      "js": [ "content-PageToServiceWorkerMessageProxy.js", "content-InjectedScriptConfigurator.js" ]
+    },
+    {
+      "matches": [ "*://*/*bcrFallback=bcrFallback*" ],
+      "run_at": "document_start",
+      "js": [ "content-VideoSuppressor.js" ]
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "run_at": "document_start",
+      "js": [ "VDIWebviewCS.js" ]
+    }
+  ],
+  "background": {
+    "service_worker": "background-ImportScripts.js"
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "activeTab",
+    "webNavigation",
+    "storage",
+    "tabs",
+    "nativeMessaging",
+    "webRequest",
+    "cookies",
+    "system.display"
+  ],
+
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*"
+  ],
+
+  "options_ui": {
+    "page": "options.html"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "bcr.html", "HdxVideoBootstrapper.js", "CitrixBcrApi.js", "CitrixVideoSuppressor.js", "HdxBcrGeometryNotifier.js" ],
+      "matches": [ "*://*/*" ]
+    },
+    {
+      "resources": [ "VDIWebView.js" ],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+
+  "externally_connectable": {
+    "matches": [ "<all_urls>" ]
+  }
+}

@@ -1,0 +1,153 @@
+---
+name: TweetWizard
+version: 1.1.8
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 5
+user_count: 8
+size: 473KiB
+languages:
+  - English
+release_date: '2024-10-30T05:04:02.000Z'
+creation_date: '2024-10-24T06:58:24.000Z'
+description: >-
+  Transform your tweets with AI-powered comments. Let TweetWizard craft the
+  perfect reply in a flash!
+publisher_hash: 17652312001ce171bd58d1fcebb9fbda582aa9be8e3f2cf60ee8b328082dd1fa
+publisher: SyncTank AI Technologies Inc
+publisher_account: SyncTank
+publisher_address: |-
+  307 W 38th St
+  New York, NY 10018-2913
+  US
+publisher_phone: '+16466308915'
+extension_website: www.synctankai.com
+extension_website_verified: false
+privacy_policy: https://synctankai.com/tweetwizard-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name"              : "TweetWizard" ,
+    "description"       : "Transform your tweets with AI-powered comments. Let TweetWizard craft the perfect reply in a flash!" ,
+    "version"           : "1.1.8" ,
+    "manifest_version"  : 3 , 
+    "author"            : "Synctankai" ,
+
+    "permissions" : 
+    [
+        "tabs",
+        "storage"
+    ],
+
+    "content_security_policy": 
+    {
+        "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://api.openai.com/ https://x.com/i/api/ https://twitter.com/i/api/ https://extensionpay.com/ https://goopss.onrender.com/"
+    },
+
+    "icons" : 
+    {
+        "16"    : "/assets/icons/16.png" ,
+        "32"    : "/assets/icons/32.png" ,
+        "128"   : "/assets/icons/128.png"
+    },
+
+    "background" : 
+    {
+        "scripts_for_popup_page" : 
+        [
+            "/js/popup_context/popup_context.js"
+        ],
+        "scripts_for_options_page" : 
+        [
+            "/js/background_context/popup_context.js"
+        ],
+        "SW_scripts" : 
+        [
+            "/js/background_context/extensionPay.js"
+        ],
+        
+        "service_worker": "/js/background_context/background_context.js"
+    },
+
+    "content_scripts" : 
+    [
+        {
+            "matches" : 
+            [
+                "https://x.com/*",
+                "http://x.com/*",
+                "https://twitter.com/*",
+                "http://twitter.com/*"
+            ],
+
+            "run_at" : "document_start",
+
+            "css" : 
+            [
+                "/css/status_header.css",
+                "/css/animations.css",
+                "/css/page_context/page.css"
+            ]
+        },
+        {
+            "matches" : 
+            [
+                "https://x.com/*",
+                "http://x.com/*",
+                "https://twitter.com/*",
+                "http://twitter.com/*"
+            ],
+
+            "run_at" : "document_idle",
+
+            "js" : 
+            [
+                "/js/page_context/page_context.js"
+            ]
+        },
+        {
+            "matches": 
+            [
+                "https://extensionpay.com/*"
+            ],
+            "js": 
+            [ 
+                "/js/background_context/extensionPay.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+
+    "web_accessible_resources":
+    [
+        {
+            "resources": 
+            [
+                "/css/*",
+                "/assets/*"
+            ],
+            "matches": 
+            [
+                "https://x.com/*",
+                "http://x.com/*",
+                "https://twitter.com/*",
+                "http://twitter.com/*"       
+            ]
+        }
+    ],
+
+    "action":
+    {
+        "default_icon" : 
+        {
+            "16": "/assets/icons/16.png",
+            "32": "/assets/icons/32.png",
+            "128": "/assets/icons/128.png"
+        },
+
+       "default_popup" : "/html/popup_context/popup.html"
+    }
+}

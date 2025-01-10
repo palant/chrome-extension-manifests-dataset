@@ -1,0 +1,115 @@
+---
+name: Nimble Prospector
+version: 24.10.10.0001
+category_slug: productivity/workflow
+featured: true
+rating: 4.495495495495495
+rating_count: 111
+user_count: 6000
+size: 1.16MiB
+languages:
+  - English (United States)
+release_date: '2024-10-22T11:31:43.000Z'
+creation_date: '2014-03-19T15:57:16.000Z'
+description: Lead Capture, Data Discovery, and CRM that works on every web page
+publisher_hash: 0dc89383f80f10f5714d3f01605c8ce85731071adb94100cecaf9f69066848ff
+publisher: Nimble, Inc.
+publisher_account: Nimble Inc.
+publisher_address: |-
+  3122 Santa Monica Boulevard
+  Santa Monica, CA 90404
+  US
+extension_website: nimble.com
+extension_website_verified: true
+support_website: >-
+  https://support.nimble.com/en/articles/502883-nimble-prospector-app-for-google-chrome
+privacy_policy: http://www.nimble.com/company/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Nimble Prospector",
+  "description": "Lead Capture, Data Discovery, and CRM that works on every web page",
+  "version": "24.10.10.0001",
+
+  "action": {
+    "default_icon": "assets/images/icon38.png"
+  },
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
+  "permissions": [
+    "scripting", "notifications", "tabs", "activeTab", "storage", "contextMenus", "alarms"
+  ],
+  "host_permissions": ["*://*.mail.google.com/*", "*://*.inbox.google.com/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": [
+      "pageParsers/base.js",
+      "pageParsers/muck_rack.js",
+      "pageParsers/angellist.js",
+      "pageParsers/crunchbase.js",
+      "pageParsers/employers_indeed.js",
+      "pageParsers/facebook.js",
+      "pageParsers/gmail.js",
+      "pageParsers/google_calendar.js",
+      "pageParsers/instagram.js",
+      "pageParsers/intercom.js",
+      "pageParsers/linkedin.js",
+      "pageParsers/microsoft_dynamics_crm.js",
+      "pageParsers/outlook.js",
+      "pageParsers/outlook_contacts.js",
+      "pageParsers/outlook_mail.js",
+      "pageParsers/salesforce.js",
+      "pageParsers/twitter.js",
+      "pageParsers/phoneburner.js"
+    ],
+    "run_at": "document_start"
+  }, {
+    "matches": ["<all_urls>"],
+    "css": ["assets/styles/widget.css"],
+    "js": ["libs/jquery.js", "config.js", "apiAdapters/chrome/adapterForeground.js", "foreground/common.js"],
+    "run_at": "document_end"
+  }, {
+    "matches": ["*://*.mail.google.com/*", "*://*.inbox.google.com/*"],
+    "css": ["assets/styles/widget.css"],
+    "js": ["libs/jquery.js", "libs/inboxsdk/inboxsdk.js", "libs/moment.min.js", "config.js", "apiAdapters/chrome/adapterForeground.js", "foreground/inbox.js"],
+    "run_at": "document_end"
+  }, {
+      "all_frames": true,
+      "matches": [
+        "*://addons.gsuite.google.com/*"
+      ],
+      "js": ["foreground/gmail-addon-agent.js"]
+    }, {
+      "all_frames": true,
+      "matches": [
+        "*://*.nimble.com/app/widget/*",
+        "*://*.devnimble.com/app/widget/*",
+        "*://*.dev.nimble.com/app/widget/*"
+      ],
+      "js": ["foreground/open-prospector.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["frame/frame.html", "frame/frame.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  }
+}

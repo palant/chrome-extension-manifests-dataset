@@ -1,0 +1,145 @@
+---
+name: Atcoder Companion
+version: 0.2.7
+category_slug: productivity/tools
+featured: true
+rating: 5
+rating_count: 7
+user_count: 598
+size: 133KiB
+languages:
+  - English
+release_date: '2024-12-30T08:11:33.000Z'
+creation_date: '2024-05-07T04:38:43.000Z'
+description: >-
+  Enhance your experience by providing some useful features designed to
+  streamline your workflow and boost your productivity.
+publisher_hash: 1dcc31e0a6bb2e42e5ed675d3707eb87bb0af4dd2bd4b14451b5e2d97db31090
+publisher_account: conlacda
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Atcoder Companion",
+    "description": "Enhance your experience by providing some useful features designed to streamline your workflow and boost your productivity.",
+    "version": "0.2.7",
+    "action": {
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "icons/icon-16.png",
+            "32": "icons/icon-32.png",
+            "48": "icons/icon-48.png",
+            "128": "icons/icon-128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/icon-16.png",
+        "32": "icons/icon-32.png",
+        "48": "icons/icon-48.png",
+        "128": "icons/icon-128.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "background": {
+        "service_worker": "scripts/background.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/shared/jquery_.js",
+                "scripts/shared/jszip.min.js",
+                "scripts/shared/utils.js",
+                "scripts/shared/testcase.js",
+                "scripts/shared/user_settings.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "js": [
+                "scripts/shared/testcase_mapping.js",
+                "scripts/testcase/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/tasks/*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/tasks/",
+                "*://atcoder.jp/contests/*/tasks/*/*"
+            ]
+        },
+        {
+            "js": [
+                "scripts/mark-solved-problem/const.js",
+                "scripts/mark-solved-problem/utils.js",
+                "scripts/mark-solved-problem/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/tasks",
+                "*://atcoder.jp/contests/*/tasks/"
+            ]
+        },
+        {
+            "js": [
+                "scripts/shared/testcase_mapping.js",
+                "scripts/submission-details/problem-info.js",
+                "scripts/submission-details/testcase-downloader.js",
+                "scripts/submission-details/dom.js",
+                "scripts/submission-details/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/submissions/*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/submissions/me*"
+            ]
+        },
+        {
+            "js": [
+                "scripts/custom-test/custom-test.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/custom_test?submissionId=*&testcase=*&problem=*"
+            ]
+        },
+        {
+            "js": [
+                "scripts/rating-estimator/color.js",
+                "scripts/rating-estimator/rating.js",
+                "scripts/rating-estimator/contest.js",
+                "scripts/rating-estimator/standing_table.js",
+                "scripts/rating-estimator/fixed_standing_table.js",
+                "scripts/rating-estimator/algo_predicted_standing_table.js",
+                "scripts/rating-estimator/heuristic_predicted_standing_table.js",
+                "scripts/rating-estimator/virtual_standing_table.js",
+                "scripts/rating-estimator/estimated_virtual_standing_table.js",
+                "scripts/rating-estimator/extended_standing_table.js",
+                "scripts/rating-estimator/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/standings*"
+            ],
+            "exclude_matches": [
+                "*://atcoder.jp/contests/*/standings*/json",
+                "*://atcoder.jp/contests/*/standings*/json",
+                "*://atcoder.jp/contests/*/standings*/json"
+            ],
+            "run_at": "document_idle",
+            "world": "MAIN"
+        }, 
+        {
+            "js": [
+                "scripts/tasks_print/main.js"
+            ],
+            "matches": [
+                "*://atcoder.jp/contests/*/tasks_print"
+            ]
+        }
+    ]
+}

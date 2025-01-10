@@ -1,0 +1,196 @@
+---
+name: Easy Quiz Poly
+version: 4.9.6
+category_slug: productivity/education
+featured: false
+rating: 4.7251908396946565
+rating_count: 131
+user_count: 20000
+size: 95.34KiB
+languages:
+  - Tiếng Việt
+release_date: '2025-01-07T21:29:29.000Z'
+creation_date: '2019-06-16T08:13:19.000Z'
+description: Tiện ích hỗ trợ sinh viên làm bài Quiz trường Cao đẳng FPT Polytechnic
+publisher_hash: 0a1a1ec1814279afb27301210bb4cc6fd23d304e7d8b8c323e92262fd0d70e84
+publisher_account: Truong Fi
+extension_website: quizpoly.xyz
+extension_website_verified: true
+support_website: https://www.facebook.com/quizpoly
+privacy_policy: https://page.quizpoly.xyz/privacy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "Easy Quiz Poly",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAo2Fh//Q4/KUkX0jv8bdwksZO2Dwag8xaLHK2DqOr4sjUqKFJbigTVpfdWrom546JNU0A3lMRYfFf8vvWRWBQMutUpiQaRUfNjIDWES1cwErdkeZ7s9LuMBxF4+oGlVtgPt8ON8NzD0ewS43s+FbDAP9UE6sZizYcq7saWEJyXUQIVCDyAcD3LlA+j4lzJUu6um0uJlRwuhzLfmHIK3+e9XZMJy+e51Y2dGbD1nn8wHGlidS8Z3phUyFdrczKTLVNRUW8YgKA2ORN28Hw8py1fYT05Ig6vFtg9Xsllt9p5khms23hZgJE7NJnzKSj1nKZAlXqGDlHV+B8p2mJ94WGdwIDAQAB",
+  "description": "Tiện ích hỗ trợ sinh viên làm bài Quiz trường Cao đẳng FPT Polytechnic",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.poly.edu.vn/*&sequence=*"],
+      "exclude_matches": [
+        "*://*.poly.edu.vn/*cmd=outQuestionSummary*",
+        "*://*.poly.edu.vn/*cmd=outUserResultsOverview*",
+        "*://*.poly.edu.vn/*cmd=showPasswordForm*",
+        "*://*.poly.edu.vn/*cmd=finishTest*",
+        "*://*.poly.edu.vn/*&cmd=post*",
+        "*://*.poly.edu.vn/*pmode=edit*",
+        "*://*.poly.edu.vn/*cmd=outUserPassDetails*",
+        "*://*.poly.edu.vn/*iltestpasswordprotectiongui*",
+        "https://cms.poly.edu.vn/*"
+      ],
+      "run_at": "document_end",
+      "js": ["injects/lms_script.js"]
+    },
+    {
+      "matches": [
+        "*://*.poly.edu.vn/*target=tst_*",
+        "*://*.poly.edu.vn/*cmdClass=ilobjtestgui*",
+        "*://*.poly.edu.vn/*cmd=infoScreen*",
+        "*://*.poly.edu.vn/*iltestevaluationgui*"
+      ],
+      "js": ["injects/lms_start.js"]
+    },
+    {
+      "matches": ["*://*.poly.edu.vn/*cmdClass=iltestevaluationgui*"],
+      "exclude_matches": ["*://*.poly.edu.vn/*cmd=outUserPassDetails*"],
+      "js": ["injects/lms_finish.js"]
+    },
+    {
+      "matches": ["*://*.poly.edu.vn/*baseClass=ilSAHSPresentationGUI*"],
+      "exclude_matches": ["*://*.poly.edu.vn/*cmd=infoScreen*"],
+      "run_at": "document_end",
+      "js": ["injects/lms_online.js"]
+    },
+    {
+      "matches": ["https://cms.poly.edu.vn/courses/course*/courseware/*"],
+      "run_at": "document_end",
+      "js": ["injects/cms_quiz.js"]
+    },
+    {
+      "matches": ["https://cms.poly.edu.vn/courses/course*/courseware/*"],
+      "run_at": "document_start",
+      "js": ["injects/cms_get_answer_inject.js"]
+    },
+    {
+      "matches": ["*://*.poly.edu.vn/*cmd=uploadFormGD*"],
+      "exclude_matches": ["*://lms-ptcd.poly.edu.vn/*cmd=uploadForm*", "*://lms9.poly.edu.vn/*cmd=uploadForm*"],
+      "js": ["injects/upload_script.js"]
+    },
+    {
+      "matches": ["*://*.poly.edu.vn/*cmdClass=ilexsubmissionfilegui*"],
+      "exclude_matches": ["*://*.poly.edu.vn/*cmd=uploadFormGD*", "*://lms-ptcd.poly.edu.vn/*", "*://lms9.poly.edu.vn/*"],
+      "js": ["injects/get_file.js"]
+    },
+    {
+      "matches": ["*://*.poly.edu.vn/*"],
+      "run_at": "document_start",
+      "js": ["injects/disable_translate.js"]
+    },
+    {
+      "matches": ["https://lms.languagehub.vn/learning/*", "https://lms.languagehub.vn/teacher/learning/*"],
+      "js": ["injects/alh_quiz.js"]
+    },
+    {
+      "matches": ["https://fpl.udemy.com/organization/home/"],
+      "run_at": "document_end",
+      "js": ["injects/udm_cookie.js"]
+    },
+    {
+      "matches": ["*://*.poly.edu.vn/*"],
+      "run_at": "document_end",
+      "js": ["injects/seb_noti.js"]
+    },
+    {
+      "matches": ["https://cms.poly.edu.vn/courses/course*/course/", "https://cms.poly.edu.vn/courses/course*/progress*"],
+      "js": ["injects/seb_cms.js"]
+    },
+    {
+      "matches": ["*://fpl1.poly.edu.vn/*", "*://fpl2.poly.edu.vn/*", "*://fpl3.poly.edu.vn/*", "*://fpl4.poly.edu.vn/*"],
+      "exclude_matches": ["*://fpl1.poly.edu.vn/noti.html", "*://fpl2.poly.edu.vn/noti.html", "*://fpl3.poly.edu.vn/noti.html", "*://fpl4.poly.edu.vn/noti.html"],
+      "js": ["injects/seb_lms.js"]
+    },
+    {
+      "matches": ["https://ap.poly.edu.vn/sinh-vien"],
+      "run_at": "document_end",
+      "js": ["injects/ap.js"]
+    },
+    {
+      "matches": ["https://gv.poly.edu.vn/admin", "https://courses.hcmus.edu.vn/*", "https://elearning.vlu.edu.vn/my/", "https://elearning.vlu.edu.vn/*edit.php*", "https://lms.uef.edu.vn/my/", "https://lms.uef.edu.vn/my/courses.php", "https://lms.uef.edu.vn/*edit.php*", "https://lms.ueh.edu.vn/my/", "https://lms.ueh.edu.vn/", "https://lms.ueh.edu.vn/*edit.php*", "https://online.vinschool.edu.vn/*", "https://elearning.ctu.edu.vn/my/", "https://elearning.ctu.edu.vn/", "https://lms.uel.edu.vn/", "https://lms.uel.edu.vn/my/", "https://apps.lms.hutech.edu.vn/*", "https://utexlms.hcmute.edu.vn/my/courses.php", "http://lms.hub.edu.vn/my/", "https://e-learning.hcmut.edu.vn/*", "https://courses.huflit.edu.vn/*", "https://fitdnu.net/*", "https://lms.dlu.edu.vn/*", "https://portal.uet.vnu.edu.vn/courses/*", "https://lmscantho.fpt.edu.vn/*"],
+      "exclude_matches": ["*://*/*login*"],
+      "js": ["injects/site_cookie.js"]
+    },
+    {
+      "matches": ["https://feid.fpt.edu.vn/Account/Login*", "https://cms.poly.edu.vn/admin/login*", "https://lms.vnedu.vn/default/login", "https://user.vnedu.vn/sso/*", "https://lms.hvnh.edu.vn/login/index.php", "https://lms.hcmussh.edu.vn/login/index.php", "https://lms.hcmussh.edu.vn/", "https://idp.vnu.edu.vn/auth/*", "https://lms.vnu.edu.vn/signin*", "https://courses.hcmus.edu.vn/login/index.php", "https://lms.ueh.edu.vn/login/index.php", "https://lms.uef.edu.vn/login/index.php", "https://lms.neu.edu.vn/login/index.php", "https://elearning.ctu.edu.vn/login/index.php*", "https://apps.lms.hutech.edu.vn/authn/login*", "https://elearning.tdtu.edu.vn/", "https://lcms.ntt.edu.vn/login/index.php", "https://lms.uel.edu.vn/login/index.php", "https://utexlms.hcmute.edu.vn/login/index.php", "http://lms.hub.edu.vn/login/index.php", "https://e-learning.hcmut.edu.vn/login/index.php", "https://courses.huflit.edu.vn/login/index.php", "https://fitdnu.net/", "https://lms.dlu.edu.vn/login/index.php", "https://elearning.duytan.edu.vn/Signin.aspx", "https://api.hcm.edu.vn/SignOn/globalssologin/*"],
+      "js": ["injects/site_data.js"]
+    },
+    {
+      "matches": ["*://*/*quiz/attempt.php*", "*://*/*quiz/review.php*"],
+      "js": ["injects/quiz_config.js"]
+    },
+    {
+      "matches": ["*://*/*quiz/review.php*"],
+      "js": ["injects/quiz_get.js"]
+    },
+    {
+      "matches": ["*://*/*quiz/attempt.php*"],
+      "js": ["injects/quiz_answer.js"]
+    },
+    {
+      "matches": ["https://*.lms.vnedu.vn/*"],
+      "js": ["injects/vnedu_answer.js"]
+    }
+  ],
+  "version": "4.9.6",
+  "author": "trfi",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": "assets/icon128.png",
+    "default_title": "Easy Quiz Poly"
+  },
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "https://*.quizpoly.xyz/*"]
+  },
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset1",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["injects/cms_get_answer.js"],
+      "matches": ["https://*.quizpoly.xyz/*", "https://cms.poly.edu.vn/*"],
+      "use_dynamic_url": false
+    }
+  ],
+  "host_permissions": [
+    "*://*.edu.vn/*",
+    "http://localhost/*",
+    "https://*.quizpoly.xyz/*",
+    "https://*.languagehub.vn/*",
+    "https://*.udemy.com/*",
+    "https://*.vnedu.vn/*"
+  ],
+  "permissions": [
+    "declarativeNetRequest",
+    "cookies",
+    "storage",
+    "tabs",
+    "notifications",
+    "system.display",
+    "scripting",
+    "offscreen"
+  ]
+}

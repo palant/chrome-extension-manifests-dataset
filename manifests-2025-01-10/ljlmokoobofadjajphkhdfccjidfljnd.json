@@ -1,0 +1,92 @@
+---
+name: HaloLink - Tools to improve query efficiency
+version: 0.0.2.1
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 421KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 中文 (繁體)
+release_date: '2024-12-01T06:35:30.000Z'
+creation_date: '2024-10-02T10:11:05.000Z'
+description: >-
+  Pop-up for accessing and managing bookmarks, downloads, browsing history, and
+  extensions.Boot mode: Alt/Command+Q
+publisher_hash: 05bbccf081a3f79c4a243730c73b5f164ddc155f92c3e157c166d9a42a402723
+publisher_account: ABIAO
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_extension_name__",
+    "description": "__MSG_extension_description__",
+    "version": "0.0.2.1",
+    "manifest_version": 3,
+    "default_locale": "en",
+    "icons": {
+        "16": "assets/icon_light.png",
+        "19": "assets/icon_light.png",
+        "38": "assets/icon_light.png",
+        "48": "assets/icon_light.png",
+        "128": "assets/icon_light.png"
+    },
+    "action": {
+        "default_title": "HaloLink",
+        "default_icon": "assets/icon_light.png"
+    },
+    "background": {
+        "service_worker": "src/serviceWorker/serviceWorker.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "js": ["src/contentScript/contentScript.js"],
+            "matches":  ["https://*/*", "http://*/*", "file://*/*", "<all_urls>"],
+            "run_at": "document_start",
+            "match_about_blank": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "_favicon/*",
+                "src/dialog/index.html",
+                "src/transfer/index.html"
+            ],
+            "matches":["https://*/*", "http://*/*", "file://*/*", "<all_urls>"],
+            "run_at": "document_start"
+        }
+    ],
+    "commands": {
+        "dialog-display": {
+            "suggested_key": {
+                "default": "Alt+Q",
+                "mac": "Command+Q"
+            },
+            "description": "__MSG_commands_dialog_display_description__"
+        }
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "commands",
+        "bookmarks",
+        "history",
+        "downloads",
+        "downloads.open",
+        "readingList",
+        "management",
+        "favicon",
+        "windows",
+        "sessions",
+        "storage"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ]
+}

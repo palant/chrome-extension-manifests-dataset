@@ -1,0 +1,92 @@
+---
+name: 'Webvizio: Website Feedback and Bug Tracking Tool'
+version: 1.1.1.2
+category_slug: productivity/developer
+featured: true
+rating: 5
+rating_count: 16
+user_count: 2000
+size: 510KiB
+languages:
+  - English
+release_date: '2025-01-06T09:54:50.000Z'
+creation_date: '2022-08-15T06:57:49.000Z'
+description: >-
+  Reduce time spent on content revisions and QA testing for live websites and
+  web apps with a visual collaboration tool.
+publisher_hash: 66ea6aa5663541ad96b7a065e9a413dcb42267fe8fe142e694120b448b2ec1f7
+publisher: Webvizio
+publisher_account: Alex
+publisher_address: |-
+  2652 Hidden Valley Rd suite 104
+  Pittsburgh, PA 15241-3915
+  US
+extension_website: webvizio.com
+extension_website_verified: true
+support_website: https://webvizio.com/help-center/
+privacy_policy: https://webvizio.com/documents/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "minimum_chrome_version": "96",
+  "name": "Webvizio: Website Feedback and Bug Tracking Tool",
+  "description": "Reduce time spent on content revisions and QA testing for live websites and web apps with a visual collaboration tool.",
+  "version": "1.1.1.2",
+  "manifest_version": 3,
+  "permissions": ["cookies", "declarativeNetRequestWithHostAccess", "webNavigation", "storage"],
+  "action": {
+    "default_icon": {
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "icon16c.png",
+    "32": "icon32c.png",
+    "48": "icon48c.png",
+    "128": "icon128c.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.webvizio.com/*"],
+      "js": [ "webvizio-connector.js" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [ "webvizio-app.js" ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": [ "webvizio.js" ],
+      "css": ["webvizio-inner.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.webvizio.com/*",
+      "https://*.webvizio.my/*"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "background": {"service_worker": "bg.js"}
+}

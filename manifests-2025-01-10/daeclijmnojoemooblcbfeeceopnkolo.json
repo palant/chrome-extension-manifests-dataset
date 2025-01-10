@@ -1,0 +1,114 @@
+---
+name: v2ex plus
+version: 2.1.2
+category_slug: productivity/workflow
+featured: false
+rating: 4.372549019607843
+rating_count: 102
+user_count: 8000
+size: 64.7KiB
+languages:
+  - 中文 (简体)
+release_date: '2024-05-18T14:15:44.000Z'
+creation_date: '2016-03-29T15:40:25.000Z'
+description: 优雅便捷的 V2EX 扩展
+publisher_hash: 3f255b4e83a6d6502cb076132f104e97e0f6b93abb9bf21631e94b0601f80d59
+publisher_account: sciooga
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "v2ex plus",
+  "version": "2.1.2",
+  "manifest_version": 3,
+  "description": "优雅便捷的 V2EX 扩展",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "alarms",
+    "notifications",
+    "storage",
+    "declarativeNetRequest",
+    "contextMenus"
+  ],
+  "host_permissions": [
+    "*://*.v2ex.com/*",
+    "*://*.imgur.com/*",
+    "*://*.sinaimg.cn/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.v2ex.com/*"
+      ],
+      "js": [
+        "./inject/base64decode.js",
+        "./inject/dbclickToTop.js",
+        "./inject/sov2ex.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.v2ex.com/",
+        "*://*.v2ex.com/?tab=*",
+        "*://*.v2ex.com/go/*",
+        "*://*.v2ex.com/my/*",
+        "*://*.v2ex.com/recent*",
+        "*://*.v2ex.com/changes*"
+      ],
+      "css": [
+        "./inject/topicList/index.css",
+        "./inject/userinfo/index.css"
+      ],
+      "js": [
+        "./inject/topicList/index.js",
+        "./inject/userinfo/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.v2ex.com/t/*"
+      ],
+      "css": [
+        "./inject/topicDetail/index.css",
+        "./inject/userinfo/index.css"
+      ],
+      "js": [
+        "./inject/topicDetail/index.js",
+        "./inject/userinfo/index.js",
+        "./spider/index.js"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "weibo",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "action": {
+    "default_icon": "icon/icon38.png"
+  },
+  "options_ui": {
+    "page": "pages/options/index.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "16": "icon/icon16.png",
+    "48": "icon/icon48.png",
+    "128": "icon/icon128.png"
+  },
+  "commands": {
+    "newV2EX": {
+      "description": "打开 V2EX"
+    },
+    "newMsg": {
+      "description": "查看 V2EX 消息"
+    }
+  }
+}

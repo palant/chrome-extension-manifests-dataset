@@ -1,0 +1,77 @@
+---
+name: signNow - Sign and Fill PDF & Word Documents
+version: '3.6'
+category_slug: productivity/workflow
+featured: false
+rating: 4.058365758754864
+rating_count: 257
+user_count: 20000
+size: 1.85MiB
+languages:
+  - English
+release_date: '2021-06-22T10:24:46.000Z'
+creation_date: '2011-07-14T21:23:33.000Z'
+description: >-
+  Sign PDF and Word documents from the web by clicking "Open in signNow" from
+  any document in your browser.
+publisher_hash: d21b588ee631cde619e3264ba4f17dddda5873ec3ca2a3ba365f84739138d073
+publisher_account: SignNow
+extension_website: signnow.com
+extension_website_verified: true
+support_website: https://university.signnow.com/
+privacy_policy: https://www.signnow.com/terms
+---
+
+{
+    "update_url":"http://clients2.google.com/service/update2/crx",
+    "name": "signNow - Sign and Fill PDF & Word Documents",
+    "version": "3.6",
+    "manifest_version": 2,
+    "description": "Sign PDF and Word documents from the web by clicking \"Open in signNow\" from any document in your browser.",
+    "permissions": [
+        "<all_urls>",
+        "contextMenus",
+        "storage",
+        "webNavigation",
+        "webRequest",
+        "webRequestBlocking"
+    ],
+    "icons": {
+        "16": "img/icon16.png",
+        "48": "img/icon48.png",
+        "128": "img/icon128.png"
+    },
+    "background": {
+        "page": "pdfHandler.html"
+    },
+    "browser_action": {
+        "default_title": "signNow",
+        "default_popup": "pageAction/popup.html"
+    },
+    "content_scripts": [{
+        "matches": ["*://mail.google.com/mail/*"],
+        "js": ["lib/jquery.min.js", "js/gmail.js"],
+        "run_at": "document_end"
+    },{
+        "matches": ["*://*.signnow.com/*", "*://signnow.com/*"],
+        "js": ["lib/jquery.min.js", "js/signnow.js"],
+        "run_at": "document_start"
+    }],
+    "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "incognito": "split",
+    "storage": {
+        "managed_schema": "preferences_schema.json"
+    },
+    "web_accessible_resources": [
+        "content/web/viewer.html",
+        "http:/*",
+        "https:/*",
+        "ftp:/*",
+        "file:/*",
+        "chrome-extension:/*",
+        "blob:*",
+        "data:*",
+        "filesystem:/*",
+        "drive:*"
+    ]
+}

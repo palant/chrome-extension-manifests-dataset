@@ -1,0 +1,98 @@
+---
+name: 1-Click Sales Leaderboard for Hubspot
+version: 0.1.5
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 28
+size: 203KiB
+languages:
+  - English
+release_date: '2023-11-06T18:32:38.000Z'
+creation_date: '2021-07-22T08:15:21.000Z'
+description: >-
+  Focus on winning sales deals with this 1-Click Sales Leaderboard that plants
+  trees for you!
+publisher_hash: ae0232c40bdbd7704a5dbb1b73e53c91670337d2c83983849c6dc74e99a006c1
+publisher: nokoala Solutions OÜ
+publisher_account: greenclicks
+publisher_address: |-
+  Ahtri 12
+  Tallinn, Harjumaa 15551
+  EE
+publisher_phone: '+4916091014761'
+extension_website: greenclicks.co
+extension_website_verified: true
+support_website: https://greenclicks.co/#form
+privacy_policy: https://greenclicks.co/legal
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "1-Click Sales Leaderboard for Hubspot",
+  "manifest_version": 3,
+  "version": "0.1.5",
+  "description": "Focus on winning sales deals with this 1-Click Sales Leaderboard that plants trees for you!",
+  "short_name": "greenclicks",
+  "permissions": ["tabs", "activeTab", "scripting"],
+  "host_permissions": ["https://app.hubspot.com/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {},
+  "icons": {
+    "16": "icons/greenclicks-circle16.png",
+    "32": "icons/greenclicks-circle32.png",
+    "64": "icons/greenclicks-circle64.png",
+    "128": "icons/greenclicks-circle128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://app.greenclicks.co/oauth*",
+        "https://localhost:3000/oauth*"
+      ],
+      "js": ["./static/js/oauth2_inject.js", "./static/js/content.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://app.hubspot.com/*"],
+      "exclude_matches": [
+        "https://app.hubspot.com/oauth*",
+        "https://app.hubspot.com/login*",
+        "https://app.hubspot.com/myaccounts*",
+        "https://app.hubspot.com/home*",
+        "https://app.hubspot.com/developer/*"
+      ],
+      "js": ["./static/js/hubspot_inject.js", "./static/js/content.js"],
+      "css": ["./static/css/hubspot.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "oauth2.html",
+        "static/js/oauth2_finish.js",
+        "static/js/oauth2_inject.js",
+        "static/js/content.js"
+      ],
+      "matches": ["https://app.greenclicks.co/*", "https://localhost:3000/*"],
+      "extension_ids": []
+    },
+    {
+      "resources": [
+        "index.html",
+        "static/css/*.css",
+        "static/js/*.js",
+        "static/media/*",
+        "static/media/logo.c9e8f133.svg"
+      ],
+      "matches": ["https://app.hubspot.com/*"],
+      "extension_ids": []
+    }
+  ]
+}

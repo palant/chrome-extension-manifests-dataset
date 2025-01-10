@@ -1,0 +1,89 @@
+---
+name: GeoguessRating
+version: 2.0.0
+category_slug: lifestyle/games
+featured: false
+rating: 5
+rating_count: 1
+user_count: 18
+size: 791KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Türkçe
+  - español
+  - italiano
+  - polski
+  - русский
+release_date: '2024-10-20T06:23:53.000Z'
+creation_date: '2024-08-10T06:21:03.000Z'
+description: >-
+  The best way to experience GeoGuessr. Track your games, visualize your stats,
+  and understand when to play and the modes to improve.
+publisher_hash: c79a0537f33f930275a2023f70e03a7a7fecc3b77676a9d6a35857daad827c05
+publisher_account: geoguessrating
+publisher_address: |-
+  60 Bd Saint-Michel
+  Paris 75006
+  FR
+publisher_phone: '+33756840341'
+support_website: https://www.geoguessrating.com/support
+privacy_policy: https://www.geoguessrating.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "GeoguessRating",
+    "description": "The best way to experience GeoGuessr. Track your games, visualize your stats, and understand when to play and the modes to improve.",
+    "version": "2.0.0",
+    "icons": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "permissions": [
+      "storage"
+    ],
+    "host_permissions": [
+      "https://www.geoguessr.com/*"
+    ],
+    "background": {
+      "service_worker": "service-workers/service-worker.js",
+      "type": "module"
+    },
+    "action": {
+      "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+      {
+        "matches": [ "https://www.geoguessr.com/*" ],
+        "js": [
+          "browser-polyfill.js",
+          "content_scripts/manager.js"
+        ]
+      },
+      {
+        "matches": [ 
+            "https://api.geoguessrating.com/payment/success-co*",
+            "https://api.geoguessrating.com/payment/cancel-co*",
+            "https://api.geoguessrating.com/user/link-customer*"
+        ],
+        "js": [
+          "browser-polyfill.js",
+          "content_scripts/geoguessrating-redirect.js"
+        ]
+      }
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "_locales/*/messages.json" ],
+        "matches": [ "https://www.geoguessr.com/*" ]
+      }
+    ],
+    "default_locale": "en"
+  }
+  

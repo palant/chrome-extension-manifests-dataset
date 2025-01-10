@@ -1,0 +1,72 @@
+---
+name: Poshlor | Poshmark Color Sorter
+version: '2.2'
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 4
+user_count: 5
+size: 7.45MiB
+languages:
+  - English
+release_date: '2024-08-06T05:47:32.000Z'
+creation_date: '2024-05-07T10:18:55.000Z'
+description: Allows for sorting of Poshmark Closet based on color.
+publisher_hash: 5ce315b1f0d3d85f8abb5b805af51f5c9715c42c5f75e2b31f3ffc7fbc30fa1a
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Poshlor | Poshmark Color Sorter",
+    "description": "Allows for sorting of Poshmark Closet based on color.",
+    "version": "2.2",
+    "icons": {
+        "16": "frontend/assets/images/poshlor/poshlor16.png",
+        "32": "frontend/assets/images/poshlor/poshlor32.png",
+        "48": "frontend/assets/images/poshlor/poshlor48.png",
+        "128": "frontend/assets/images/poshlor/poshlor128.png"
+    },
+    "permissions": ["activeTab", "scripting", "tabs", "sidePanel", "storage"],
+    "action": {
+        "default_title": "Sort your Poshmark Closet based on color"
+    },
+    "side_panel" : {
+        "default_path": "frontend/assets/templates/sidepanel.html"
+    },
+    "host_permissions": ["*://poshmark.com/closet/*"], 
+    "content_scripts": [ 
+        {
+            "matches": ["*://poshmark.com/closet/*"],
+            "css": ["frontend/assets/styles/loading-bar.css"],
+            "js": [
+                "frontend/src/scripts/vendor/loading-bar.js",
+                "frontend/src/scripts/common/helpers.js",
+                "frontend/src/scripts/utils/content/connection.js",
+                "frontend/src/scripts/utils/content/domUtils.js", 
+                "frontend/src/scripts/utils/content/itemCounter.js",
+                "frontend/src/scripts/utils/content/sortListBuilder.js",
+                "frontend/src/scripts/utils/content/itemSharer.js"
+                ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "frontend/assets/images/poshlor/poshlor-logo.png",
+                "frontend/assets/templates/modal.html",
+                "frontend/src/scripts/common/helpers.js",
+                "frontend/src/scripts/utils/content/connection.js", 
+                "frontend/src/scripts/utils/content/domUtils.js",
+                "frontend/src/scripts/utils/content/itemCounter.js",
+                "frontend/src/scripts/utils/content/sortListBuilder.js",
+                "frontend/src/scripts/utils/content/itemSharer.js"
+            ], 
+            "matches": [ "https://*/*" ]
+        }
+      ],
+    "background": {
+        "service_worker": "frontend/src/scripts/core/extension/serviceWorker.js"
+    }
+}

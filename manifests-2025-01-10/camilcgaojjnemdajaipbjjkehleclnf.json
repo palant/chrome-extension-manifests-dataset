@@ -1,0 +1,150 @@
+---
+name: Ptengine-Assistant
+version: 2.0.10
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 2
+user_count: 4000
+size: 494KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 日本語
+release_date: '2024-10-13T05:08:18.000Z'
+creation_date: '2022-03-23T08:32:04.000Z'
+description: Enhance the performance of Ptengine heatmaps and experience no-code editor.
+publisher_hash: 6d056368e1b108f8efdcad07d75027e90bcfbee02d746ec1e62e8d733288fc06
+publisher_account: ptengine-app
+privacy_policy: https://www.ptengine.jp/privacy-policy
+---
+
+{
+  "author": "@samrum/vite-plugin-web-extension",
+  "description": "__MSG_appDesc__",
+  "name": "Ptengine-Assistant",
+  "version": "2.0.10",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "32": "icons/Ptengine-plugin-32.png",
+      "48": "icons/Ptengine-plugin-48.png",
+      "128": "icons/Ptengine-plugin-128.png"
+    },
+    "default_popup": "src/entries/popup/index.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "src/entries/contentScript/primary/main.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://*/*pt-device=MOBILE*",
+        "https://*/*pt-device=MOBILE*"
+      ],
+      "js": [
+        "src/entries/contentScript/mobileUAContent.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "http://*/*pt-device=TABLET*",
+        "https://*/*pt-device=TABLET*"
+      ],
+      "js": [
+        "src/entries/contentScript/tabletUAContent.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://*/*pt_extensions=*"
+      ],
+      "js": [
+        "src/entries/contentScript/rewritePage.js"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/entries/contentScript/primary/main.ts",
+        "js/inject.js",
+        "js/inject-heatmap-helper.js",
+        "css/bootstrap.min.css",
+        "js/_sid.js",
+        "js/_auth.js",
+        "js/assistant_inject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    },
+    {
+      "resources": [
+        "assets/screenShotContent-86055bbd.js",
+        "assets/src/entries/contentScript/primary/main-c7160c53.js",
+        "src/entries/contentScript/preview/pageInject.js",
+        "src/entries/contentScript/preview/pageInjectScript.js",
+        "src/entries/contentScript/preview/sidePanel/sidePanel.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "/rule/rules.json"
+      }
+    ]
+  },
+  "icons": {
+    "32": "icons/Ptengine-plugin-32.png",
+    "48": "icons/Ptengine-plugin-48.png",
+    "128": "icons/Ptengine-plugin-128.png"
+  },
+  "options_ui": {
+    "page": "src/entries/options/index.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "tabs",
+    "debugger",
+    "scripting",
+    "storage",
+    "activeTab",
+    "sidePanel",
+    "webNavigation",
+    "cookies"
+  ]
+}

@@ -1,0 +1,89 @@
+---
+name: ASTROSafe
+version: 1.1.8
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: null
+rating_count: null
+user_count: 71
+size: 4.64MiB
+languages:
+  - English (UK)
+release_date: '2024-12-28T06:09:32.000Z'
+creation_date: '2023-04-17T11:10:27.000Z'
+description: Stay safe exploring the internet!
+publisher_hash: 30985142812198a475de271b1abeb338b569758c2072772bfed5c4936c4fcd06
+publisher_account: URSOR
+publisher_address: |-
+  20 Midhurst Way
+  London E5 8PS
+  GB
+publisher_phone: '+447818552349'
+extension_website: astrosafe.co
+extension_website_verified: true
+privacy_policy: https://www.astrosafe.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "ASTROSafe",
+  "version": "1.1.8",
+  "description": "Stay safe exploring the internet!",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "ASTRO"
+  },
+  "icons": {
+    "16": "logo192.png",
+    "48": "logo192.png",
+    "128": "logo192.png"
+  },
+  "permissions": ["tabs", "storage", "webNavigation", "cookies", "idle"],
+  "host_permissions": ["http://localhost:3000/*", "https://*.astrosafe.co/*"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/content.js"],
+      "css": ["overrides.css", "font.css"]
+    },
+    {
+      "matches": ["*://*.google.com/*"],
+      "css": ["googleHiding.css"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/pageHiding.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "./static/js/service_worker.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*.ttf", "font.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "ids": ["bgmnmkccofmfpgfbamfklejbjboddbep"],
+    "matches": ["https://*.astrosafe.co/*"],
+    "accepts_tls_channel_id": false,
+    "host_permissions": ["<all_urls>"]
+  },
+  "chrome_settings_overrides": {
+    "homepage": "https://browser.astrosafe.co/home",
+    "search_provider": {
+      "name": "name.astrosafesearch",
+      "keyword": "keyword.astrosafesearch",
+      "search_url": "https://www.astrosafe.co/safesearch/search?q={searchTerms}",
+      "image_url": "https://www.astrosafe.co/safesearch/search?q={searchTerms}&tab=images",
+      "encoding": "UTF-8",
+      "is_default": true
+    },
+    "startup_pages": ["https://browser.astrosafe.co/home"]
+  }
+}

@@ -1,0 +1,88 @@
+---
+name: True AdBlocker - free adblocker
+version: 1.6.1
+category_slug: productivity/workflow
+featured: true
+rating: 4.462962962962963
+rating_count: 54
+user_count: 10000
+size: 2.29MiB
+languages:
+  - English
+release_date: '2024-04-23T12:57:36.000Z'
+creation_date: '2023-08-16T04:57:32.000Z'
+description: Block Ads On Youtube, Twitch,spotify,hulu and popup
+publisher_hash: 4fc84a369258ebcdff26027c3b7c3a738935124c3b150039281c47fa2f461aab
+publisher_account: Underpin Extensions
+support_website: https://www.trueadblocker.net/contact-us
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "True AdBlocker - free adblocker",
+  "description": "Block Ads On Youtube, Twitch,spotify,hulu and popup",
+  "version": "1.6.1",
+  "manifest_version": 3,
+  "icons": {
+    "16": "TrueAdBlocker16x16.png",
+    "48": "TrueAdBlocker48x48.png",
+    "128": "TrueAdBlocker128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "TrueAdBlocker True AdBlocker - free adblocker",
+    "default_icon": "TrueAdBlocker16x16.png"
+  },
+  "permissions": ["declarativeNetRequest", "storage", "tabs"],
+
+  "host_permissions": ["<all_urls>"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["https://*.twitch.tv/*"],
+      "js": ["adRemove.js", "removeTwitchAds.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://open.spotify.com/*"],
+      "js": ["contentScriptSpotify.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["Youtube.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["adRemove.js", "removeTwitchAds.js"],
+      "matches": ["https://*.twitch.tv/*"]
+    },
+    {
+      "resources": [
+        "contentScriptSpotify.js",
+        "adsSweetalertSpotify.js",
+        "adsAdsRemoveSpotify.js",
+        "adswsHooksSpotify.js"
+      ],
+      "matches": ["https://open.spotify.com/*"]
+    }
+  ]
+}

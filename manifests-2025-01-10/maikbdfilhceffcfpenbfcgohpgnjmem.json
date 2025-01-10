@@ -1,0 +1,67 @@
+---
+name: Pidgin
+version: 0.1.1
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 1
+user_count: 20
+size: 459KiB
+languages:
+  - English
+release_date: '2023-05-28T09:42:04.000Z'
+creation_date: '2023-05-26T04:53:37.000Z'
+description: Automatically connect Twitter likes and bookmarks to Are.na channels
+publisher_hash: 1fa6998ea3d77ec90bc43d431ab8ed4e3cddd3e8aff9715fa7e4c916a28fbd13
+publisher_account: Yihui Hu
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Pidgin",
+  "version": "0.1.1",
+  "description": "Automatically connect Twitter likes and bookmarks to Are.na channels",
+  "icons": {
+    "16": "./icons/icon16.png",
+    "32": "./icons/icon32.png",
+    "48": "./icons/icon48.png",
+    "64": "./icons/icon64.png",
+    "128": "./icons/icon.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action":{
+    "default_icon":"./icons/icon.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://twitter.com/*"],
+      "run_at": "document_start",
+      "js": ["inject.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": ["styles.css"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["config.json", "frame.html", "styles.css"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["script.js"],
+      "matches": ["*://twitter.com/*"]
+    }
+  ],
+  "permissions": [
+    "identity",
+    "storage",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": ["https://dev.are.na/*", "https://api.are.na/*"]
+}

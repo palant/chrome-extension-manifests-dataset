@@ -1,0 +1,92 @@
+---
+name: MagicWave
+version: 0.1.45
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 14
+size: 544KiB
+languages:
+  - English (United States)
+release_date: '2024-12-04T03:14:23.000Z'
+creation_date: '2023-06-08T09:02:23.000Z'
+description: Protect you against tracking, surveillance, and censorship.
+publisher_hash: c37685b092205164df6dbeb2e2dd8bb545efed6e9b98e38631c14e31e4e5bc4c
+publisher_account: magicwave.dev
+privacy_policy: https://magicwave.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MagicWave",
+  "short_name": "MagicWave",
+  "version": "0.1.45",
+  "minimum_chrome_version": "88",
+  "description": "Protect you against tracking, surveillance, and censorship.",
+  "icons": {
+    "16": "icons/favicon.png",
+    "32": "icons/favicon.png",
+    "48": "icons/favicon.png",
+    "128": "icons/favicon.png"
+  },
+  "permissions": [
+    "proxy",
+    "tabs",
+    "activeTab",
+    "storage",
+    "idle",
+    "webNavigation",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "optional_permissions": [
+    "notifications"
+  ],
+  "offline_enabled": true,
+  "background": {
+    "service_worker": "background_wrapper.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://localhost:18080/*", "*://*.magicwave.io/*"],
+      "run_at": "document_end",
+      "js": [
+        "scripts/jquery/jquery-3.6.0.min.js",
+        "scripts/ethjs/bops.js",
+        "scripts/ethjs/ethjs-contract.min.js",
+        "scripts/ethjs/ethjs-provider-http.min.js",
+        "scripts/ethjs/ethjs.min.js",
+        "scripts/ethjs/sha3.min.js",
+        "scripts/ipfs/js-cid.min.js",
+        "scripts/contentScript.js",
+        "scripts/chart/d3.v4.js"
+      ],
+      "all_frames": false
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "MagicWave extension",
+    "default_icon": "icons/favicon.png"
+  },
+  "content_security_policy": {},
+  "host_permissions": [
+    "https://localhost:44356/*",
+    "http://localhost:8080/*",
+    "http://localhost:18080/*",
+    "http://localhost:28080/*",
+    "*://*/*"
+  ]
+}

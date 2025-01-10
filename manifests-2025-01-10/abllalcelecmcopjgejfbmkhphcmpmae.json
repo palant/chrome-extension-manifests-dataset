@@ -1,0 +1,76 @@
+---
+name: Kick.com & Twitch.tv VOD Downloader
+version: 0.0.13
+category_slug: productivity/tools
+featured: true
+rating: 5
+rating_count: 3
+user_count: 1000
+size: 76.24KiB
+languages:
+  - English
+release_date: '2024-11-14T10:20:05.000Z'
+creation_date: '2024-05-14T03:46:24.000Z'
+description: Download VOD & Clips From Kick.com and Twitch.tv
+publisher_hash: c145bd52ecfd844b40b0d78be18c097ff1e749c940c8b683e626c9f570781482
+publisher_account: adasq
+extension_website: kick-video.download
+extension_website_verified: true
+support_website: https://kick-video.download/twitch-vod-downloader
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extensionName__",
+  "version": "0.0.13",
+  "description": "__MSG_extensionDescription__",
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://gql.twitch.tv/gql",
+    "https://usher.ttvnw.net/*/*",
+    "https://video-weaver.atl01.hls.ttvnw.net/*/*",
+    "https://*.cloudfront.net/*"
+  ],
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "icon-34.png"
+  },
+  "icons": {
+    "128": "icon-128.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://kick-video.download/*"
+      ],
+      "js": [
+        "src/pages/contentInjected/index.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "icon-128.png",
+        "icon-34.png"
+      ],
+      "matches": [
+        "*://*/*",
+        "https://*.cloudfront.net/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+---
+name: Ticketmetric - Price Map Shader
+version: 1.0.5
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 70
+size: 169KiB
+languages:
+  - English (United States)
+release_date: '2024-09-17T13:55:09.000Z'
+creation_date: '2024-06-15T04:18:22.000Z'
+description: >-
+  Get instant insights into available seats and their prices, with color-coding
+  and ticket type filtering.
+publisher_hash: 67991adceb9ecfe5e34f97cd9eb43174fdeaca33eeec16f95c7c52adb3152486
+publisher_account: ticketmetric
+extension_website: ticketmetric.io
+extension_website_verified: true
+privacy_policy: https://ticketmetric.io/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Ticketmetric - Price Map Shader",
+    "default_icon": {
+      "128": "icon.png"
+    }
+  },
+  "background": {
+    "js": ["axios.min.js"],
+    "run_at": "document_start",
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "css": ["map_shader/root_colors.css", "elements/legend.css"],
+      "js": [
+        "jquery.min.js",
+        "jquery-ui.min.js",
+        "map_shader/initialize.js",
+        "map_shader/global_variables.js",
+        "map_shader/manageColors.js",
+        "map_shader/createLegend.js",
+        "map_shader/loader.js"
+      ],
+      "matches": [
+        "https://*.ticketmaster.com/*",
+        "https://*.ticketmaster.ca/*",
+        "https://*.livenation.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "description": "Get instant insights into available seats and their prices, with color-coding and ticket type filtering.",
+  "host_permissions": [
+    "*://*.ticketmaster.com/*",
+    "*://*.livenation.com/*",
+    "*://*.ticketmaster.com.*"
+  ],
+
+  "manifest_version": 3,
+  "name": "Ticketmetric - Price Map Shader",
+  "permissions": ["storage"],
+  "version": "1.0.5",
+  "web_accessible_resources": [
+    {
+      "matches": ["http://*/*", "https://*/*", "*://*/*"],
+      "resources": ["*", "images/*", "elements/*", "map_shader/*"]
+    }
+  ],
+  "icons": {
+    "128": "icon.png"
+  }
+}

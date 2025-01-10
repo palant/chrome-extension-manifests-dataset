@@ -1,0 +1,122 @@
+---
+name: 'Readeon: A Patreon Reading Extension'
+version: 1.0.14
+category_slug: make_chrome_yours/functionality
+featured: true
+rating: 4.75
+rating_count: 4
+user_count: 162
+size: 1.08MiB
+languages:
+  - English
+release_date: '2024-12-17T09:10:08.000Z'
+creation_date: '2024-10-14T13:44:12.000Z'
+description: Transform Your Patreon Reading Experience
+publisher_hash: 5e965a39abb012cb3ae88aed8ab30fe39122ca3271f775bb4394cdaee2015789
+publisher_account: democraticdeveloper
+extension_website: readeon.com
+extension_website_verified: true
+support_website: https://www.readeon.com/contact
+privacy_policy: https://www.readeon.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extensionName__",
+  "version": "1.0.14",
+  "description": "__MSG_extensionDescription__",
+  "permissions": [
+    "storage",
+    "webRequest",
+    "tabs",
+    "management",
+    "webNavigation",
+    "scripting",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://www.patreon.com/*",
+    "https://www.readeon.com/*"
+  ],
+  "background": {
+    "service_worker": "src/pages/background/index.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "src/pages/popup/index.html",
+    "default_icon": "ReadeonExtensionLogo-new.png"
+  },
+  "icons": {
+    "16": "ReadeonExtensionLogo-new.png",
+    "32": "ReadeonExtensionLogo-new.png",
+    "48": "ReadeonExtensionLogo-new.png",
+    "128": "ReadeonExtensionLogo-new.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://diplomatic-adelina-readeon-f63fb2a8.koyeb.app/ https://www.readeon.com/; object-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.patreon.com/*"
+      ],
+      "js": [
+        "src/pages/injector/index.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.patreon.com/*",
+        "https://www.readeon.com/*"
+      ],
+      "js": [
+        "src/pages/contentInjected/index.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://www.patreon.com/*"
+      ],
+      "js": [
+        "src/pages/contentDynamicConfig/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.patreon.com/*"
+      ],
+      "js": [
+        "src/pages/contentUI/index.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.patreon.com/*"
+      ],
+      "css": [
+        "assets/css/contentStyle1734404772039.chunk.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/js/*.js",
+        "assets/css/*.css",
+        "assets/fonts/*.ttf",
+        "icon-128.png",
+        "icon-34.png",
+        "src/pages/injectedScript/index.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,88 @@
+---
+name: 'TabWise : Save & Share Your Bookmarks'
+version: 2.0.42
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 4
+user_count: 41
+size: 918KiB
+languages:
+  - English
+release_date: '2023-06-20T02:03:04.000Z'
+creation_date: '2023-04-16T04:46:04.000Z'
+description: Save, Organize & Share Your Favorite Bookmarks
+publisher_hash: ff54fe5a284eb35d4a25dc27701f0ad8f520b5f102d807b53dd05d390589a84b
+publisher_account: ITLinks
+extension_website: tabwise.io
+extension_website_verified: true
+support_website: https://tabwise.io/contact-us
+privacy_policy: https://yoopitv.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TabWise : Save & Share Your Bookmarks",
+  "description": "Save, Organize & Share Your Favorite Bookmarks",
+  "version": "2.0.42",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "net_request",
+      "enabled": true,
+      "path": "rules.json"
+    }]
+  },
+  "host_permissions": [ "<all_urls>" ],
+  "action": {
+    "default_icon": "icons/logo.png",
+    "default_title": "Save to TabWise",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+U",
+        "mac": "Command+Shift+U"
+      }
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "64": "icons/icon64.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "*://*.tabwise.io/*" ],
+      "js": [ "js/app.js" ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "js": [ "js/updater.js" ],
+      "run_at": "document_idle",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "popup.html", "icons/logo.png" ],
+      "matches": [ "<all_urls>" ]
+    }
+  ]
+}

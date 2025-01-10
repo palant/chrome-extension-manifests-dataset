@@ -1,0 +1,61 @@
+---
+name: CurrentSong
+version: 0.5.1
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 569
+size: 66.77KiB
+languages:
+  - English
+release_date: '2021-04-05T09:50:41.000Z'
+creation_date: '2020-09-07T12:53:00.000Z'
+description: Implements a client to send the current active tab to a local server
+publisher_hash: c97dfc818b4b8ebe68c270948e1d5e6354a4623c5e49112b2a4725a606065a24
+publisher_account: Nerixyz
+support_website: https://github.com/Nerixyz/current-song-overlay/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "CurrentSong",
+  "version": "0.5.1",
+
+  "description": "Implements a client to send the current active tab to a local server",
+
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["content-scripts/trackVideoProgress.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["*://*.soundcloud.com/*"],
+      "js": ["content-scripts/soundcloud.js"]
+    },
+    {
+      "matches": ["*://*.neverthink.tv/*"],
+      "js": ["content-scripts/neverthink.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-scripts/mediaSessionProxy.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": ["content-scripts/mediaSessionProxy.inject.js"],
+  "permissions": ["tabs"],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "{02914143-ede8-492c-8ad4-8a3af03f75bb}",
+      "strict_min_version": "78.0"
+    }
+  }
+}

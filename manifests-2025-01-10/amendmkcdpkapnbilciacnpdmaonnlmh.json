@@ -1,0 +1,68 @@
+---
+name: RollShare
+version: '1.0'
+category_slug: lifestyle/fun
+featured: false
+rating: null
+rating_count: null
+user_count: 47
+size: 15.08KiB
+languages:
+  - English
+release_date: '2020-07-08T09:57:11.000Z'
+creation_date: '2020-07-07T07:24:53.000Z'
+description: Share your D&D dice rolls online
+publisher_hash: fc853c8e0ac432055364277128c19f84638e4508e7df2e06237b0d0ec06955ea
+publisher_account: Jonathan Berling
+publisher_address: |-
+  13308 Midland Rd
+  #1275
+  Poway, California 92064
+  United States of America
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "RollShare",
+    "version": "1.0",
+    "description": "Share your D&D dice rolls online",
+    "manifest_version": 2,
+    "icons": {
+        "128": "icon/RollShareIcon.png"
+    },
+    "permissions": [
+        "*://www.dndbeyond.com/profile/*/characters/*",
+        "*://app.roll20.net/editor/*"
+    ],
+    "background": {
+        "persistent": false,
+        "scripts": [
+            "src/background.js"
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://www.dndbeyond.com/profile/*/characters/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "src/ddb_roll_send.js"
+            ]
+        },
+        {
+            "matches": [
+                "*://app.roll20.net/editor/*"
+            ],
+            "run_at": "document_idle",
+            "js": [
+                "src/r20_roll_receive.js"
+            ]
+        }
+    ],
+    "browser_action": {
+        "default_popup": "src/popup.html",
+        "default_title": "RollShare"
+    }
+}

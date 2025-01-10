@@ -1,0 +1,93 @@
+---
+name: Vault Extension
+version: '1.26'
+category_slug: make_chrome_yours/privacy
+featured: false
+rating: 5
+rating_count: 2
+user_count: 125
+size: 613KiB
+languages:
+  - English (UK)
+release_date: '2024-03-18T09:32:27.000Z'
+creation_date: '2024-01-29T10:45:00.000Z'
+description: Browser Extension by Vault
+publisher_hash: 341e37c5a9f7c241650f6ccc2643f46a91c1635a492596bab514868b00bc81db
+publisher: Vault Data
+publisher_address: |-
+  16 Regent Pl
+  Birmingham B1 3NJ
+  GB
+privacy_policy: https://vaultdata.io/trust-center/privacy-statement-uk
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "Browser_Extension.002@Vault_Data.002",
+      "strict_min_version": "102.0"
+    },
+    "gecko_android": {
+      "strict_min_version": "113.0"
+    }
+  },
+  "name": "Vault Extension",
+  "description": "Browser Extension by Vault",
+  "version": "1.26",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "<all_urls>",
+    "https://identity.get-vault.com/*/*",
+    "https://b2capi.get-vault.com/*/*",
+    "https://identity.staging.get-vault.com/*/*",
+    "https://b2capi.staging.get-vault.com/*/*",
+    "https://identity.qa.get-vault.com/*/*",
+    "https://b2capi.qa.get-vault.com/*/*",
+    "https://identity.dev.get-vault.com/*/*",
+    "https://b2capi.dev.get-vault.com/*/*"
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/get_started16.png",
+      "32": "/images/get_started32.png",
+      "48": "/images/get_started48.png",
+      "128": "/images/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/get_started16.png",
+    "32": "/images/get_started32.png",
+    "48": "/images/get_started48.png",
+    "128": "/images/get_started128.png"
+  },
+  "options_page": "options.html",
+  "background": {
+    "type": "module",
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "<all_urls>"],
+      "exclude_matches": [
+        "https://identity.get-vault.com/Auth/*",
+        "https://identity.staging.get-vault.com/Auth/*",
+        "https://identity.qa.get-vault.com/Auth/*",
+        "https://identity.dev.get-vault.com/Auth/*"
+      ],
+      "js": ["js/injector.js"]
+    },
+    {
+      "matches": [
+        "https://identity.get-vault.com/Auth/*",
+        "https://identity.staging.get-vault.com/Auth/*",
+        "https://identity.qa.get-vault.com/Auth/*",
+        "https://identity.dev.get-vault.com/Auth/*"
+      ],
+      "js": ["js/identity.js"]
+    }
+  ]
+}

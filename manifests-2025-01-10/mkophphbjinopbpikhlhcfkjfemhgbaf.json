@@ -1,0 +1,77 @@
+---
+name: Dolphin Assistant
+version: '1.0'
+category_slug: productivity/tools
+featured: false
+rating: 4
+rating_count: 1
+user_count: 73
+size: 84.21KiB
+languages:
+  - English
+release_date: '2024-11-15T11:32:50.000Z'
+creation_date: '2024-11-01T12:12:10.000Z'
+description: A chatbot extension to do on-site search and answer user query.
+publisher_hash: 4ffb41995832a1eca1afc87d3bb80e668d294d8f81e5842ccad4df2bb235d9a7
+publisher_account: 1992benjamin
+extension_website: dolphinechoai.com
+extension_website_verified: false
+privacy_policy: https://dolphinechoai.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Dolphin Assistant",
+  "version": "1.0",
+  "description": "A chatbot extension to do on-site search and answer user query.",
+  "permissions": [
+    "storage",
+    "sidePanel",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "https://dolphinechoai.com/*",
+    "https://goingmerry-backend.com/*"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' https://dolphinechoai.com https://goingmerry-backend.com wss://goingmerry-backend.com"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    },
+    {
+      "matches": ["https://dolphinechoai.com/extension/signin"],
+      "js": ["signin-content-script.js"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://dolphinechoai.com/*"]
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "options_page": "options.html",
+  "side_panel": {
+    "default_path": "side_panel.html"
+  }
+}

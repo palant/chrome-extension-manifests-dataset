@@ -1,0 +1,305 @@
+---
+name: Wandrer Map Overlay
+version: 2.0.0.1
+category_slug: lifestyle/entertainment
+featured: false
+rating: 4.304347826086956
+rating_count: 23
+user_count: 5000
+size: 730KiB
+languages:
+  - English
+release_date: '2024-11-19T05:48:44.000Z'
+creation_date: '2020-12-24T07:34:51.000Z'
+description: >-
+  View your Wandrer map data in a variety of route planning tools, including
+  Strava, Komoot and RideWithGPS
+publisher_hash: 018dd7b3990b9764f83a4a791272d0819f363622c0a73b38553609948bec6be7
+publisher: Wandrer LLC
+publisher_account: Wandrer
+publisher_address: |-
+  650 Ponce De Leon Ave NE
+  Ste. 300 #2592
+  Atlanta, GA 30308-1804
+  US
+extension_website: wandrer.earth
+extension_website_verified: true
+privacy_policy: https://wandrer.earth/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Wandrer Map Overlay",
+  "version": "2.0.0.1",
+  "description": "View your Wandrer map data in a variety of route planning tools, including Strava, Komoot and RideWithGPS",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/wandrer-16x16.png",
+      "32": "images/wandrer-32x32.png",
+      "48": "images/wandrer-48x48.png",
+      "128": "images/wandrer-128x128.png"
+    },
+    "icons": {
+      "16": "images/wandrer-16x16.png",
+      "32": "images/wandrer-32x32.png",
+      "48": "images/wandrer-48x48.png",
+      "128": "images/wandrer-128x128.png"
+    },
+    "default_popup": "templates/popup.html",
+    "default_title": "Wandrer Map Overlay"
+  },
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+  "options_page": "templates/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.plotaroute.com/*"
+      ],
+      "css": [
+        "css/komoot.css",
+        "css/mapbox-gl.css"
+      ],
+      "js": [
+        "js/lib/mapbox-gl.js",
+        "js/lib/leaflet-mapbox-gl.js",
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/leaflet/plotaroute.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://dynamic.watch/plan*"
+      ],
+      "css": [
+        "css/komoot.css",
+        "css/mapbox-gl.css"
+      ],
+      "js": [
+        "js/lib/mapbox-gl.js",
+        "js/lib/leaflet-mapbox-gl.js",
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/leaflet/dynamicwatch.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://veloviewer.com/explorer",
+        "https://veloviewer.com/athlete/*/activities*"
+      ],
+      "css": [
+        "css/komoot.css",
+        "css/mapbox-gl.css"
+      ],
+      "js": [
+        "js/lib/mapbox-gl.js",
+        "js/lib/leaflet-mapbox-gl.js",
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/leaflet/veloviewer.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://bikerouter.de/*",
+        "https://brouter.de/brouter-web/*",
+        "https://brouter.m11n.de/*"
+      ],
+      "css": [
+        "css/komoot.css",
+        "css/mapbox-gl.css"
+      ],
+      "js": [
+        "js/lib/mapbox-gl.js",
+        "js/lib/leaflet-mapbox-gl.js",
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/leaflet/bikerouter.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+
+    {
+      "matches": [
+        "https://connect.garmin.com/*"
+      ],
+      "css": [
+        "css/komoot.css",
+        "css/garmin.css",
+        "css/mapbox-gl.css"
+      ],
+      "js": [
+        "js/lib/mapbox-gl.js",
+        "js/lib/leaflet-mapbox-gl.js",
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/leaflet/garmin.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+
+    {
+      "matches": [
+        "https://*.bikemap.net/*"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/mapbox/bikemap.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://*.komoot.com/*",
+        "https://*.komoot.de/*",
+        "https://*.komoot.fr/*",
+        "https://*.komoot.nl/*",
+        "https://*.komoot.es/*",
+        "https://*.komoot.it/*"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/mapbox/komoot.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://www.strava.com/routes/new*",
+        "https://www.strava.com/maps/*",
+        "https://www.strava.com/routes/*/edit*",
+        "https://www.strava.com/athlete/heatmaps"
+      ],
+      "js": [
+        "js/utils.js",
+        "js/utils/mapbox.js",
+        "js/providers/mapbox/strava.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+
+    {
+      "matches": [
+        "https://www.mapmyride.com/*",
+        "https://www.mapmyrun.com/*"
+      ],
+      "js": [
+        "js/lib/turf.js",
+        "js/lib/deckgl.v8.9.18.js",
+        "js/utils.js",
+        "js/utils/deck.js",
+        "js/providers/deck/mapmyride.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+
+    {
+      "matches": [
+        "https://ridewithgps.com/routes/new*",
+        "https://ridewithgps.com/routes/*/edit*"
+      ],
+      "js": [
+        "js/lib/turf.js",
+        "js/lib/deckgl.v8.9.18.js",
+        "js/utils.js",
+        "js/utils/ridewithgps.js",
+        "js/providers/ridewithgps.js"
+      ],
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+
+    {
+      "matches": [
+        "https://www.plotaroute.com/*",
+        "https://dynamic.watch/plan*",
+        "https://veloviewer.com/*",
+        "https://bikerouter.de/*",
+        "https://brouter.de/brouter-web/*",
+        "https://brouter.m11n.de/*",
+        "https://connect.garmin.com/*",
+        "https://*.bikemap.net/*",
+        "https://*.komoot.com/*",
+        "https://*.komoot.de/*",
+        "https://*.komoot.fr/*",
+        "https://*.komoot.nl/*",
+        "https://*.komoot.es/*",
+        "https://*.komoot.it/*",
+        "https://www.strava.com/routes/new*",
+        "https://www.strava.com/maps/*",
+        "https://www.strava.com/routes/*/edit*",
+        "https://www.strava.com/athlete/heatmaps",
+        "https://www.mapmyride.com/*",
+        "https://www.mapmyrun.com/*"
+      ],
+      "js": [
+        "js/storage.js"
+      ],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    },
+    {
+      "matches": [
+        "https://ridewithgps.com/routes/new*",
+        "https://ridewithgps.com/routes/*/edit*"
+      ],
+      "js": [
+        "js/ridewithgps-storage.js"
+      ],
+      "run_at": "document_idle",
+      "world": "ISOLATED"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/bike.png",
+        "images/foot.png",
+        "images/footbike.png"
+      ],
+      "matches": [
+        "https://www.plotaroute.com/*",
+        "https://dynamic.watch/*",
+        "https://veloviewer.com/*",
+        "https://bikerouter.de/*",
+        "https://brouter.de/*",
+        "https://brouter.m11n.de/*",
+        "https://connect.garmin.com/*",
+        "https://*.bikemap.net/*",
+        "https://*.komoot.com/*",
+        "https://*.komoot.de/*",
+        "https://*.komoot.fr/*",
+        "https://*.komoot.nl/*",
+        "https://*.komoot.es/*",
+        "https://*.komoot.it/*",
+        "https://www.strava.com/*",
+        "https://www.mapmyride.com/*",
+        "https://www.mapmyrun.com/*",
+        "https://ridewithgps.com/*"
+      ]
+    }
+  ],
+  "manifest_version": 3
+}

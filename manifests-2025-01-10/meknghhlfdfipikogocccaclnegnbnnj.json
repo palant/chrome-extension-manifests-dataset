@@ -1,0 +1,88 @@
+---
+name: La Meva Salut Plus
+version: 0.6.1
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 17
+size: 199KiB
+languages:
+  - English
+  - català
+  - español
+release_date: '2024-12-07T10:59:15.000Z'
+creation_date: '2024-04-02T05:23:41.000Z'
+description: Vitamins for La Meva Salut
+publisher_hash: 384a51b324f45936fca20f7fc5e02fbe0654c62ddd746e38db65733590e0c5fe
+publisher_account: Wombat Epic Landing Studio
+privacy_policy: >-
+  https://wombatepiclandingstudio.github.io/la-meva-salut-plus/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "La Meva Salut Plus",
+  "description": "Vitamins for La Meva Salut",
+  "version": "0.6.1",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "default_locale": "ca",
+  "permissions": ["storage"],
+  "content_scripts": [
+    {
+      "js": ["setup-start.js"],
+      "run_at": "document_start",
+      "matches": [
+        "https://ecap.ics.gencat.cat/eConsulta/Pacient/*",
+        "https://ecap.ics.gencat.cat/eConsulta/Error.aspx",
+        "https://lamevasalut.gencat.cat/group/cps/e-consulta?p*"
+      ]
+    },
+    {
+      "js": ["setup-end.js"],
+      "run_at": "document_end",
+      "matches": [
+        "https://ecap.ics.gencat.cat/eConsulta/Pacient/*",
+        "https://ecap.ics.gencat.cat/eConsulta/Error.aspx"
+      ]
+    },
+    {
+      "js": ["gatherer.js"],
+      "css": ["styles/main.css"],
+      "matches": ["https://lamevasalut.gencat.cat/*"]
+    },
+    {
+      "js": ["main.js"],
+      "css": ["styles/main.css"],
+      "matches": [
+        "https://ecap.ics.gencat.cat/eConsulta/Pacient/*",
+        "https://ecap.ics.gencat.cat/eConsulta/Error.aspx"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "La Meva Salut Plus",
+    "default_icon": {
+      "16": "/icons/16x.png",
+      "32": "/icons/32x.png",
+      "48": "/icons/48x.png",
+      "128": "/icons/128x.png"
+    }
+  },
+  "icons": {
+    "16": "/icons/16x.png",
+    "32": "/icons/32x.png",
+    "48": "/icons/48x.png",
+    "128": "/icons/128x.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["_locales/**/*.json"],
+      "matches": ["https://ecap.ics.gencat.cat/*"]
+    }
+  ]
+}

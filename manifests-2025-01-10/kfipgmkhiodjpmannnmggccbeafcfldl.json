@@ -1,0 +1,126 @@
+---
+name: Influenbase
+version: 1.1.9
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 103
+size: 1.5MiB
+languages:
+  - English (United States)
+release_date: '2025-01-10T10:17:57.000Z'
+creation_date: '2024-12-05T05:56:25.000Z'
+description: >-
+  The Influenbase extention supports one-click automated influencer search and
+  outreach, greatly improving connection efficiency.
+publisher_hash: cc59bf123138d5b55034f7a5f84b4c3791e6cc0d8f6d0d75d832e5abeb2b456e
+publisher: BrandPal Inc.
+publisher_account: jinping
+publisher_address: |-
+  1027 Wilshire Blvd Apt 436
+  Los Angeles, CA 90017-3145
+  US
+publisher_phone: '+16268665385'
+privacy_policy: https://bpres.brandpal.ai/h5/ibplugin_prvacy_policy_en_US.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Influenbase",
+  "description": "The Influenbase extention supports one-click automated influencer search and outreach, greatly improving connection efficiency.",
+  "version": "1.1.9",
+  "action": {
+    "default_title": "Influenbase",
+    "default_icon": "logo.png"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "chromeCore/scripts/serviceWorker/index.js"
+  },
+  "oauth2": {
+    "client_id": "130824608747-v3lcj6jjepdre1o8h061lkkdogomr7e3.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "tabs",
+    "identity",
+    "identity.email",
+    "windows",
+    "storage"
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "content_scripts": [
+    {
+      "js": ["chromeCore/scripts/utils/message.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "css": []
+    },
+    {
+      "js": [
+        "chromeCore/scripts/content/searchKol.js",
+        "chromeCore/scripts/content/bpModel.js",
+        "chromeCore/scripts/content/checkTTLogin.js",
+        "chromeCore/scripts/content/autoSendMessage.js",
+        "chromeCore/scripts/content/history.js"
+      ],
+      "matches": ["https://www.tiktok.com/*"],
+      "css": ["chromeCore/css/model.css"]
+    },
+    {
+      "js": ["chromeCore/scripts/content/tiktokTab.js"],
+      "matches": ["https://www.tiktok.com/messages*"]
+    },
+    {
+      "js": [
+        "chromeCore/scripts/lib/immutable.js",
+        "chromeCore/scripts/lib/reactProduction.js",
+        "chromeCore/scripts/lib/reactDomProduction.js",
+        "chromeCore/scripts/lib/Draft.js",
+        "chromeCore/scripts/content/autoWrokflow.js"
+      ],
+      "matches": ["https://www.tiktok.com/*"],
+      "world": "MAIN"
+    },
+    {
+      "js": [
+        "chromeCore/scripts/lib/popup.js",
+        "chromeCore/scripts/content/history.js"
+      ],
+      "matches": [
+        "http://192.168.3.107:5174/*",
+        "http://192.168.3.219:5174/*",
+        "http://192.168.3.25:5173/*",
+        "http://192.168.3.48:5173/*",
+        "http://192.168.3.48:5174/*",
+        "http://192.168.3.45:5174/*",
+        "http://192.168.62.104:5174/*",
+        "http://dev.brandpal.top/ibplugin/*",
+        "http://test.brandpal.top/ibplugin/*",
+        "https://test.brandpal.top/ibplugin/*",
+        "https://app.brandpal.ai/ibplugin/*",
+        "http://dev-ibplugin.brandpal.top/ibplugin/*",
+        "http://test-ibplugin.brandpal.top/ibplugin/*",
+        "https://test-ibplugin.brandpal.top/ibplugin/*",
+        "https://ibplugin.brandpal.ai/ibplugin/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

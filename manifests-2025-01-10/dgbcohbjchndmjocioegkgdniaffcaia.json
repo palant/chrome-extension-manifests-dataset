@@ -1,0 +1,100 @@
+---
+name: Lever Hire Extension
+version: 3.0.1
+category_slug: productivity/workflow
+featured: false
+rating: 2.8260869565217392
+rating_count: 23
+user_count: 10000
+size: 631KiB
+languages:
+  - English (United States)
+release_date: '2024-07-30T20:16:28.000Z'
+creation_date: '2013-07-02T22:21:41.000Z'
+description: Import data to Lever Hire
+publisher_hash: 2e93891c807869ff9d661e1f7f337be1af0babea3953764c2272644029b7e673
+publisher: Lever
+publisher_address: |-
+  1125 Mission Street
+  San Francisco, CA 94103
+  US
+extension_website: lever.co
+extension_website_verified: true
+support_website: https://help.lever.co/hc/en-us
+privacy_policy: https://www.lever.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Lever Hire Extension",
+  "version": "3.0.1",
+  "manifest_version": 3,
+  "minimum_chrome_version": "102",
+  "description": "Import data to Lever Hire",
+  "icons": {
+    "16": "icons/lever-chrome-icon-16.png",
+    "48": "icons/lever-chrome-icon-dark-48.png",
+    "128": "icons/lever-chrome-icon-dark-128.png"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "unlimitedStorage",
+    "webNavigation",
+    "declarativeNetRequest",
+    "scripting"
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "action": {
+    "default_title": "Lever Hire",
+    "default_icon": {
+      "19": "icons/lever-chrome-icon-dark-19.png",
+      "38": "icons/lever-chrome-icon-dark-38.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lever.co/*",
+        "https://hire.lever.co/*",
+        "https://hire.stage.lever.co/*",
+        "https://hire.eu.lever.co/*"
+      ],
+      "js": ["check_install.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["dragdrop.js", "wrapper.js"],
+      "css": ["wrapper.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["lib/inboxsdk/inboxsdk.min.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "loading.html",
+        "panel.html",
+        "panel.js",
+        "toast.html",
+        "toast.js",
+        "icons/*.png",
+        "fonts/*.woff"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

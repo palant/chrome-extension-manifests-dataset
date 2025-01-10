@@ -1,0 +1,74 @@
+---
+name: Chico State Schedule Helper
+version: 1.1.8
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 12
+user_count: 64
+size: 187KiB
+languages:
+  - English (United States)
+release_date: '2024-10-09T09:56:57.000Z'
+creation_date: '2023-12-31T08:58:12.000Z'
+description: >-
+  Extension that shows professor's rate my professor score next to their name on
+  portal with a click of a button!
+publisher_hash: db4ef0754440590e24f9a47d98de5d8caab8c1b774d8850d72f2d30fe9f83fd3
+publisher_account: numan and luke
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Chico State Schedule Helper",
+  "author": "Numan K, Luke H, Tony F",
+  "version": "1.1.8",
+  "host_permissions": [
+    "https://*.cmsweb.csuchico.edu/*",
+    "https://*.ratemyprofessors.com/*"
+  ],
+  "description": "Extension that shows professor's rate my professor score next to their name on portal with a click of a button!",
+  "icons": {
+    "16": "icons/icon_16.png",
+    "32": "icons/icon_32.png",
+    "48": "icons/icon_48.png",
+    "128": "icons/icon_128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["activeTab", "storage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.cmsweb.csuchico.edu/*",
+        "https://*.ratemyprofessors.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "scheduleBuilderScript.js",
+        "contentScript.js",
+        "teacherUtils.js",
+        "ratingUtils.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';",
+    "sandboxed_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["imgs/save.svg"],
+      "matches": [
+        "https://*.cmsweb.csuchico.edu/*",
+        "https://*.ratemyprofessors.com/*"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,119 @@
+---
+name: CacheVote
+version: 0.0.7
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 135
+size: 44.68KiB
+languages:
+  - Deutsch
+  - English
+  - italiano
+release_date: '2021-07-31T15:05:12.000Z'
+creation_date: '2020-12-31T04:25:19.000Z'
+description: >-
+  An extension for Geocaching.com which allows you to rate geocaches and shows
+  the ratings of other users. (Replacement for gcVote)
+publisher_hash: 9ce474fdbaf3b71a768ca2c9ae0efaabdada36b095cbe61939beb0517b42f61c
+publisher_account: fabian.schedler
+support_website: https://cachevote.org/faq
+privacy_policy: https://cachevote.org/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "CacheVote",
+    "version": "0.0.7",
+    "description": "__MSG_extDesc__",
+    "default_locale": "en",
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "64": "images/icon64.png",
+        "128": "images/icon128.png"
+    },
+    "author": "Fabian Schedler",
+    "content_security_policy": "script-src 'self'; object-src 'self'",
+    "browser_action": {
+        "default_popup": "src/popup/popup.html"
+    },
+    "homepage_url": "https://cachevote.org",
+    "content_scripts": [
+        {
+            "js": [
+                "src/helpers/globals.js",
+                "src/helpers/serverErrors.js",
+                "src/helpers/settings.js",
+                "src/content/cacheVoteSettings.js",
+                "src/content/main.js"
+            ],
+            "css": [
+                "styles/main.css"
+            ],
+            "matches": [
+                "https://www.geocaching.com/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "src/content/gcDetails.js"
+            ],
+            "matches": [
+                "https://www.geocaching.com/geocache/GC*",
+                "https://www.geocaching.com/seek/cache_details.aspx?*wp=GC*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "src/content/gcLog.js"
+            ],
+            "matches": [
+                "https://www.geocaching.com/play/geocache/gc*/log",
+                "https://www.geocaching.com/seek/log.aspx*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "src/content/gcSearchList.js"
+            ],
+            "matches": [
+                "https://www.geocaching.com/play/search?*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "src/content/ownedList.js"
+            ],
+            "matches": [
+                "https://www.geocaching.com/play/owner/published"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "scripts": [
+            "src/helpers/globals.js",
+            "src/helpers/serverErrors.js",
+            "src/background/templates.js",
+            "src/background/background.js"
+        ]
+    },
+    "web_accessible_resources": [
+        "images/icon32.png"
+    ],
+    "permissions": [
+        "cookies",
+        "storage",
+        "https://www.geocaching.com/*",
+        "https://api.cachevote.org/*"
+    ]
+}

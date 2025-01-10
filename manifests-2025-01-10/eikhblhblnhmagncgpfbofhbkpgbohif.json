@@ -1,0 +1,80 @@
+---
+name: YouTube Over Commercials
+version: '1.6'
+category_slug: lifestyle/entertainment
+featured: true
+rating: 5
+rating_count: 2
+user_count: 92
+size: 45.02KiB
+languages:
+  - English (United States)
+release_date: '2024-12-16T05:18:49.000Z'
+creation_date: '2024-03-20T12:15:56.000Z'
+description: >-
+  Automatically detects commercials on any streaming platform and plays YouTube,
+  Spotify, or other media over top of them.
+publisher_hash: ad3ca1f44fb386f0317a5b3aac27ad2cfd7076d387673427c86abb332a4e6e4a
+publisher_account: Ryan O
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "YouTube Over Commercials",
+  "description": "Automatically detects commercials on any streaming platform and plays YouTube, Spotify, or other media over top of them.",
+  "icons": {
+    "128": "icon128.png"
+  },
+  "version": "1.6",
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "tabCapture",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "commands": {
+    "execute_shortcut": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "MacCtrl+Shift+F"
+      },
+      "description": "Execute keyboard shortcut"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "128": "icon128.png",
+      "16": "icon16.png",
+      "32": "icon32.png",
+      "48": "icon48.png"
+    }
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [ "scripts/content.js" ],
+      "matches": [ "<all_urls>" ],
+      "exclude_matches": [ "https://www.youtube.com/*" ],
+      "exclude_globs": [ "https://www.youtube.com/*" ],
+      "css": [ "styles/style.css" ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "pixel-select-instructions.html" ],
+      "matches": [ "<all_urls>" ]
+    }
+  ]
+}

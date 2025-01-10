@@ -1,0 +1,110 @@
+---
+name: Kwala
+version: 3.0.8
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 47
+size: 315KiB
+languages:
+  - Français
+release_date: '2024-12-02T16:39:15.000Z'
+creation_date: '2023-03-17T03:43:11.000Z'
+description: Ajoutez Kwala à votre navigateur Chrome
+publisher_hash: 17f0128be7d01233de89423780e1fc779d595e8dfc9684b642d2a1aad04323e1
+publisher: Kwala
+publisher_address: |-
+  12 Rue Royale
+  Lyon 69001
+  FR
+publisher_phone: '+33677095610'
+extension_website: kwala.fr
+extension_website_verified: true
+support_website: https://help-kwala.super.site/
+privacy_policy: https://www.kwala.fr/informations-complementaires/politique-confidentialite
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Kwala",
+  "version": "3.0.8",
+  "description": "Ajoutez Kwala à votre navigateur Chrome",
+  "action": {
+    "default_title": "Kwala",
+    "default_icon": {
+      "32": "assets/icon.png"
+    }
+  },
+  "icons": {
+    "16": "assets/icon.png",
+    "48": "assets/icon.png",
+    "128": "assets/icon.png"
+  },
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://app.kwala.fr/*"
+  ],
+  "permissions": [
+    "tabs",
+    "scripting",
+    "storage",
+    "cookies",
+    "webRequest"
+  ],
+  "background": {
+    "service_worker": "background-loader.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.kwala.fr/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/content-script-loader.linkedin.js",
+        "scripts/content-script-loader.iframe.js"
+      ],
+      "matches": [
+        "https://www.linkedin.com/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://www.linkedin.com/*"
+      ],
+      "resources": [
+        "scripts/linkedin.js"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://*/*",
+        "https://www.linkedin.com/*"
+      ],
+      "resources": [
+        "index.html"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "scripts/iframe.js",
+        "scripts/constants.js"
+      ],
+      "use_dynamic_url": false
+    }
+  ]
+}

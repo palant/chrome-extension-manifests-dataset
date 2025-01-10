@@ -1,0 +1,126 @@
+---
+name: Mimic AI
+version: '3.0'
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 6
+size: 1.67MiB
+languages:
+  - English
+release_date: '2025-01-03T07:15:02.000Z'
+creation_date: '2024-12-05T09:11:08.000Z'
+description: >-
+  Mimic AI is a simple, social media tool that can predict and generate viral
+  content, and craft replies that mimic your writing style
+publisher_hash: 4f4d3a2b321f6a02bb63ae054ee67d9853a929162bc3dd49ad4f953c6656e903
+publisher_account: Marketype
+publisher_address: |-
+  8905 184 Street Northwest
+  103A
+  Edmonton, AB T5T 1T8
+  CA
+publisher_phone: '+18254619323'
+privacy_policy: https://www.marketype.ca/mimicaiprivacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mimic AI",
+  "version": "3.0",
+  "description": "Mimic AI is a simple, social media tool that can predict and generate viral content, and craft replies that mimic your writing style",
+  "icons": {
+    "16": "icon-16.png",
+    "32": "icon-32.png",
+    "48": "icon-48.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Mimic AI"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "\u003Call_urls\u003E"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "commands": {
+    "triggerContextMenuAction": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+F",
+        "mac": "Command+Shift+F"
+      },
+      "description": "Trigger Generate Reply Context Menu Action"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "tutorial.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    },
+    {
+      "resources": ["icon.png"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "Mimic AI - Replies Library.json",
+        "Mimic AI - Viral library.json"
+      ],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["ExtPay.js"],
+      "matches": ["<all_urls>"]
+  }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://extensionpay.com/*"
+      ],
+      "js": [
+        "ExtPay.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "http://*/",
+        "https://*/"
+      ],
+      "js": [
+        "ExtPay.js",
+        "content.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "css": ["content.css"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_start_mellowtel.js"], 
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ]
+}

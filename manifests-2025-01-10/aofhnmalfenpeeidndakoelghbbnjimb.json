@@ -1,0 +1,72 @@
+---
+name: Prowallet
+version: 1.0.0.6
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: 5
+rating_count: 1
+user_count: 3
+size: 536KiB
+languages:
+  - English (United States)
+release_date: '2022-09-26T07:24:10.000Z'
+creation_date: '2022-09-03T10:12:40.000Z'
+description: Safe and secure cardano wallet
+publisher_hash: 5130e1babf33fd154988b094c6713ad4b9fe1cd015733198901de4d1ee515ad9
+publisher_account: developers
+extension_website: prowallet.com
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Prowallet",
+  "version": "1.0.0.6",
+  "description": "Safe and secure cardano wallet",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {},
+  "permissions": [
+    "storage"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "cardano-connector-injector.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval';  object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "injected-bundle.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://*.prowallet.com/*"
+    ]
+  }
+}

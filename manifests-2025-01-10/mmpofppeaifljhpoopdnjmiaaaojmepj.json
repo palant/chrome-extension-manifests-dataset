@@ -1,0 +1,76 @@
+---
+name: CommentExp - Scrape Comments
+version: 2.2.0
+category_slug: productivity/workflow
+featured: false
+rating: 1
+rating_count: 2
+user_count: 422
+size: 1.23MiB
+languages:
+  - English
+release_date: '2024-10-21T07:59:18.000Z'
+creation_date: '2024-02-18T07:15:08.000Z'
+description: >-
+  Extract Facebook Post and Video Comments, Export Facebook post comment list to
+  CSV / Excel file.
+publisher_hash: 17ff6bbd1cbaf446f447711cacd60049e252c65c4f42e4bf0a06f897f9bc7eb0
+publisher_account: suan nepit
+privacy_policy: https://fbcomments.getgrowthup.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "2.2.0",
+  "homepage_url": "https://fbcomments.getgrowthup.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*.facebook.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.facebook.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

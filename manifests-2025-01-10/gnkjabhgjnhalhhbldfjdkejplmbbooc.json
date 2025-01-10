@@ -1,0 +1,86 @@
+---
+name: GhostWriter
+version: '1.1'
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 18
+size: 474KiB
+languages:
+  - Français
+release_date: '2024-10-18T11:01:20.000Z'
+creation_date: '2024-10-07T06:32:54.000Z'
+description: GhostWriter - Connaissez vos prospects avant de vendre.
+publisher_hash: 3251d754bf912b92f243ff80bffc50b1b4a6bb632c652ae2bb389aa91a801f1c
+publisher_account: romain
+publisher_address: |-
+  2 Chemin des Cuers
+  Dardilly 69570
+  FR
+publisher_phone: '+33603162566'
+extension_website: ghostwriter.lol
+extension_website_verified: false
+privacy_policy: https://www.ghostwriter.lol/politique-de-confidentialit%C3%A9
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GhostWriter",
+  "version": "1.1",
+  "description": "GhostWriter - Connaissez vos prospects avant de vendre.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "scripting",
+    "https://extension-ghostwriter-backend-0f400317d03a.herokuapp.com/*"
+  ],
+  "host_permissions": [
+    "https://api.openai.com/*",
+    "https://api.airtable.com/*",
+    "https://www.linkedin.com/*",
+    "https://extension-ghostwriter-backend-0f400317d03a.herokuapp.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/in/*",
+        "https://www.linkedin.com/feed/*",
+        "https://www.linkedin.com/posts/*",
+        "https://www.linkedin.com/messaging/thread/*"
+      ],
+      "js": ["content.js"],
+      "css": ["popup.css"],
+      "run_at": "document_end",
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "auth.html",
+        "popup.html"
+      ],
+      "matches": [
+        "https://www.linkedin.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,90 @@
+---
+name: Taaabs - Free zero-knowledge bookmarks
+version: 0.3.39
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 2
+user_count: 95
+size: 222KiB
+languages:
+  - English
+release_date: '2025-01-10T18:52:47.000Z'
+creation_date: '2024-08-06T07:54:48.000Z'
+description: >-
+  Unleash the joy of your web research. Save bookmarks to your personal library.
+  Assist browsing with AI.
+publisher_hash: e7e0dd0ad9a3385673145c7afb60f3a1d5f90555291fe1ba4bf672cf788b06df
+publisher_account: taaabs.com
+publisher_address: |-
+  Bolesława Śmiałego
+  31/5
+  Poznań 60-682
+  PL
+publisher_phone: '+48533565250'
+extension_website: taaabs.com
+extension_website_verified: true
+support_website: https://github.com/taaabs/taaabs/discussions
+privacy_policy: https://github.com/taaabs/taaabs/blob/master/packages/web-extension/PRIVACY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "Robert Piosik",
+  "name": "Taaabs - Free zero-knowledge bookmarks",
+  "short_name": "taaabs",
+  "description": "Unleash the joy of your web research. Save bookmarks to your personal library. Assist browsing with AI.",
+  "version": "0.3.39",
+  "homepage_url": "https://github.com/taaabs/taaabs",
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_title": "Taaabs",
+    "default_popup": "popup.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+S"
+      }
+    }
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "activeTab", "tabs", "webNavigation", "alarms"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://taaabs.com/*", "http://localhost/*"],
+      "js": [
+        "get-auth-data-content-script.js",
+        "get-favicon-content-script.js",
+        "get-cover-content-script.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "send-prompt-content-script.js",
+        "get-parsed-html-content-script.js",
+        "get-upsert-bookmark-params-content-script.js",
+        "get-window-dimensions-content-script.js",
+        "get-selected-text-content-script.js"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

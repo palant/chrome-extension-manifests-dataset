@@ -1,0 +1,147 @@
+---
+name: DealCloud
+version: 8.3.0.1
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 6
+user_count: 10000
+size: 422KiB
+languages:
+  - English (United States)
+release_date: '2024-10-21T12:12:33.000Z'
+creation_date: '2018-11-22T14:14:23.000Z'
+description: >-
+  Identify opportunities, capture notes, and update DealCloud from any webpage
+  in Google Chrome.
+publisher_hash: 85a905a4cd9f508a2b87fbbfc83ca96a294ccdb4df22c8d60c74d7d25b79e597
+publisher: Integration Appliance, Inc
+publisher_account: dealcloudapps
+publisher_address: |-
+  101 Hudson St
+  Suite 1201
+  Jersey City, NJ 07302
+  US
+extension_website: dealcloud.com
+extension_website_verified: true
+support_website: https://www.intapp.com/support/
+privacy_policy: https://www.intapp.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA4L4YfaOZadjm/bF3QXOeDawYvDQgjCsb7DqZSEJ/zHp5U2poe9vINIf/ef0JlS2O/obJ444FuruWbtsBmOA4pP1+g2QG5QJtTyOgj2g8VTDaYIIbwe8wfUo+8C0i1f10A3u3LXPfAoPRCB8ecvyeJ/YqR3mAWYm+e7rw5hGu+FV87JJlBY2YRu0U2A4cT/cazK5Z2I5iHct0N3wkZ0ZbuXxMMtbYxmtU/MW2GLpYGgUOemUlQPatDwdedWz5KLD8Tgf4xedavZd2vO7EQJz5qkrK2KTxJbce0U1k+RsuD+cT8R1FKVogWidsV77qUPiRlFVa9IfoS/yiQCkX4sJBSQIDAQAB",
+  "version": "8.3.0.1",
+  "name": "DealCloud",
+  "description": "Identify opportunities, capture notes, and update DealCloud from any webpage in Google Chrome.",
+  "homepage_url": "https://www.dealcloud.com",
+  "icons": {
+    "16": "assets/img/favicon_16.png",
+    "32": "assets/img/favicon_32.png",
+    "48": "assets/img/intapp_48.png",
+    "64": "assets/img/intapp_64.png",
+    "128": "assets/img/intapp_128.png",
+    "256": "assets/img/intapp_256.png"
+  },
+    "action": {
+      "default_title": "DealCloud",
+      "default_icon": {
+        "16": "assets/img/favicon_16.png",
+        "32": "assets/img/favicon_32.png"
+      },
+      "default_popup": "html/sidePanel.html"
+    },
+  "background": {
+    "service_worker":"background-sw.js"
+  },
+  "options_ui": {
+    "page": "html/options.html",
+    "open_in_tab": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "js/gmail_content_script.bundle.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://calendar.google.com/*"
+      ],
+      "js": [
+        "js/gcalendar_content_script.bundle.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "js": [
+        "js/linkedin_content_script.bundle.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://mail.google.com/*",
+      "https://*.dealcloud.com/*",
+      "https://*.dealclouduat.com/*",
+      "https://*.dealclouddev.com/*",
+      "https://*.dealcloud.eu/*",
+      "https://*.dealclouduat.eu/*",
+      "https://*.dealcloud.ae/*",
+      "https://*.dealclouduat.ae/*",
+      "https://*.dcodev.com/*",
+      "https://*.intapp.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ 
+         "js/gmail_injection_script.bundle.js",
+        "html/gmail_infopane_proxy.html",
+        "assets/img/favicon_32.png",
+        "assets/img/favicon_32_grey.png",
+        "environments.js"],
+        "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "webRequest",
+    "tabs",
+    "identity",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "https://*.dealcloud.com/*",
+    "https://*.dealclouduat.com/*",
+    "https://*.dealclouddev.com/*",
+    "https://*.dealcloud.eu/*",
+    "https://*.dealclouduat.eu/*",
+    "https://*.dealcloud.ae/*",
+    "https://*.dealclouduat.ae/*",
+    "https://*.dcodev.com/*",
+    "https://*.intapp.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages":"default-src 'self'; connect-src https://*.googleapis.com https://*.dealclouddev.com https://*.dealclouduat.com https://*.dcodev.com https://*.dealcloud.eu https://*.dealclouduat.eu https://*.dealcloud.com https://*.dealcloud.ae https://*.dealclouduat.ae https://*.intapp.com; frame-src 'self' https://*.dealclouddev.com https://*.dealclouduat.com https://*.dcodev.com https://*.dealcloud.eu https://*.dealclouduat.eu https://*.dealcloud.com https://*.dealcloud.ae https://*.dealclouduat.ae https://*.intapp.com; script-src 'self' ; style-src * 'unsafe-inline' 'self' blob:; img-src 'self' data:; font-src 'self';"
+  },
+  "oauth2": {
+    "client_id": "795406838655-dvhbiiccannhg06ku01it4ptiquugove.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/calendar.readonly"
+    ]
+  },
+  "storage": {
+    "managed_schema": "settings_schema.json"
+  }
+}

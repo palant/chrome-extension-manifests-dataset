@@ -1,0 +1,88 @@
+---
+name: ForgeCommander Integration
+version: '1.107'
+category_slug: lifestyle/fun
+featured: false
+rating: 4.2
+rating_count: 5
+user_count: 945
+size: 27.47KiB
+languages:
+  - English
+release_date: '2021-07-19T03:26:52.000Z'
+creation_date: '2018-09-28T14:32:45.000Z'
+description: >-
+  Connects your Forge of Empires session with your ForgeCommander session and
+  optionally records your statistic data to ForgeCommander
+publisher_hash: c983fa65f69533c2c4151f3fc83d2451906192c4e9fd7134049811cfe5e7dddc
+publisher_account: forgecommander.com
+extension_website: www.forgecommander.com
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+
+    "name": "ForgeCommander Integration",
+    "short_name": "ForgeCommander",
+    "description": "Connects your Forge of Empires session with your ForgeCommander session and optionally records your statistic data to ForgeCommander",
+    "author": "ForgeCommander.com",
+    "icons": {
+        "16": "icon16.png",
+        "24": "icon24.png",
+        "48": "icon48.png",
+        "64": "icon64.png",
+        "128": "icon128.png"
+    },
+    "homepage_url": "https://forgecommander.com",
+    "version": "1.107",
+    "permissions": [
+        "cookies",
+        "webRequest",
+        "webRequestBlocking",
+        "*://forgecommander.com/",
+        "*://*.forgeofempires.com/game/index*",
+        "*://*.forgeofempires.com/page/"
+    ],
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [ "*://*.forgeofempires.com/page/" ],
+            "js": [ "foe_page_inject.js" ],
+            "all_frames": true
+        },
+        {
+            "run_at": "document_start",
+            "matches": [ "*://forgecommander.com/", "*://forgecommander.com/index*" ],
+            "js": [ "fc_index_inject.js" ],
+            "all_frames": true
+        },
+        {
+            "run_at": "document_end",
+            "matches": [ "*://*.forgeofempires.com/game/index*" ],
+            "js": [ "foe_game_index_inject.js" ],
+            "all_frames": true
+        },
+        {
+            "run_at": "document_start",
+            "matches": [ "*://*.forgeofempires.com/*","*://forgeofempires.com/*" ],
+            "js": [ "foe_secure_cookies_inject.js" ],
+            "all_frames": true
+        }
+    ],
+    "background": {
+        "scripts": [ "background.js" ],
+        "persistent": true
+    },
+    "web_accessible_resources": [
+        "foe_page.js",
+        "foe_game_index.js",
+        "foe_secure_cookies.js",
+        "fc_index.js"
+    ],
+    "externally_connectable": {
+        "matches": [ "*://forgecommander.com/", "*://forgecommander.com/index*" ]
+    }
+}

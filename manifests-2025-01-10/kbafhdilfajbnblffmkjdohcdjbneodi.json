@@ -1,0 +1,103 @@
+---
+name: Whale - Product Importer
+version: '2.1'
+category_slug: lifestyle/shopping
+featured: false
+rating: 2.8
+rating_count: 5
+user_count: 2000
+size: 518KiB
+languages:
+  - English
+release_date: '2022-09-27T13:09:06.000Z'
+creation_date: '2018-09-29T08:59:40.000Z'
+description: >-
+  Import product from Aliexpress, Alibaba, Amazon to Shopify, BigCommerce,
+  WooCommerce
+publisher_hash: 59baac8b030ba60522fdb0d1ed6d240c8e598894bb8af3ed00295758a5e27cd4
+publisher_account: WeSales
+publisher_address: |-
+  777 Brockton Avenue
+  Abington, MA 2351
+  US
+support_website: https://m.me/100817494978562
+privacy_policy: https://wesales.io/pages/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Whale - Product Importer",
+    "description": "Import product from Aliexpress, Alibaba, Amazon to Shopify, BigCommerce, WooCommerce",
+    "version": "2.1",
+    "manifest_version": 3,
+    "author" : "@whale",
+    "icons": {
+        "16": "assets/images/icon/16.jpg",
+        "19": "assets/images/icon/19.jpg",
+        "38": "assets/images/icon/38.jpg",
+        "48": "assets/images/icon/48.jpg",
+        "128": "assets/images/icon/128.jpg"
+    },
+    "action": {
+        "default_icon": {              
+            "16": "assets/images/icon/16.jpg",
+            "19": "assets/images/icon/19.jpg",
+            "38": "assets/images/icon/38.jpg",
+            "48": "assets/images/icon/48.jpg",
+            "128": "assets/images/icon/128.jpg"
+        },
+        "default_title": "About us",  
+        "default_popup": "assets/html/popup.html"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "host_permissions": [
+      "<all_urls>"
+  ],
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "externally_connectable": {
+        "matches": [
+          "http://localhost/*",
+          "http://localhost:3002/*",
+          "http://localhost:8081/*",
+          "https://dsreviews.net/*"
+        ]
+    },
+    "content_scripts": [
+        {
+          "js": ["./aliexpress.js"],
+          "matches": [
+            "https://*.aliexpress.com/*"
+          ],
+          "run_at": "document_end"
+        },
+        {
+            "js": ["./dsreviews.js"],
+            "matches": [
+              "http://localhost:3002/*",
+              "http://localhost:8081/*",
+              "https://dsreviews.net/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": [
+                "./shopify.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+          "resources": [
+            "shopify_script_page.js"
+          ],
+          "matches": ["<all_urls>"]
+        }
+    ]
+}

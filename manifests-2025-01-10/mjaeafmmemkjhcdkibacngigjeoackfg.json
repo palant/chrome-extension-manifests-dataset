@@ -1,0 +1,100 @@
+---
+name: Rhymes.net
+version: 1.0.8
+category_slug: productivity/tools
+featured: false
+rating: 3
+rating_count: 4
+user_count: 483
+size: 634KiB
+languages:
+  - English
+release_date: '2024-12-25T05:34:07.000Z'
+creation_date: '2017-12-21T16:47:45.000Z'
+description: Get instant rhymes for any word or term that hits you anywhere on the web!
+publisher_hash: 80e7b02158f738401707dd1ace1d62235994960ffab585d89757e9b1dc460394
+publisher: STANDS4 LTD
+publisher_account: STANDS4 LLC
+publisher_address: |-
+  51 HaShita Street
+  Kfar Neter 40593
+  IL
+extension_website: rhymes.com
+extension_website_verified: true
+support_website: https://www.rhymes.com/contact.php
+privacy_policy: https://www.rhymes.com/privacy.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rhymes.net",
+  "short_name": "Rhymes.net",
+  "version": "1.0.8",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": { "16": "images/icon16.png",
+             "48": "images/icon48.png",
+             "64": "images/icon64.png",
+             "128": "images/icon128.png" },
+  "author": "STANDS4 LLC",
+  "homepage_url": "https://www.rhymes.net",
+  "offline_enabled": false,
+  "action": {
+    "default_icon": "images/rhy-fav-48.png",
+    "default_popup": "popup.html",
+    "default_title": "__MSG_tooltip__"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "bs/background.js"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "**/*.js",
+      "vendors/*",
+      "popup.html"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": [
+        "vendors/jquery.min.js",
+        "vendors/jquery-ui-1.12.0.min.js",
+        "vendors/purify.min.js",
+        "vendors/ally.js",
+        "share/helpers.js",
+        "share/tools.js",
+        "share/markup.js",
+        "cs/contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://www.rhymes.net/*",
+        "https://www.rhymes.net/*"
+      ],
+      "js": ["cs/contentscript-lt.js"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      }
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

@@ -1,0 +1,61 @@
+---
+name: Finlex Ex
+version: 0.0.5
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 3
+size: 100KiB
+languages:
+  - English
+release_date: '2019-10-24T14:19:25.000Z'
+creation_date: '2019-09-13T12:00:10.000Z'
+description: Tweaks to Finlex UI
+publisher_hash: c9517501837f22f6514339fecb1a0c594866f4ab743613cc092773378247b299
+publisher_account: dev@kelmu.org
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Finlex Ex",
+  "version": "0.0.5",
+  "manifest_version": 2,
+  "description": "Tweaks to Finlex UI",
+  "icons": {
+    "48": "icons/icon48.png",
+    "96": "icons/icon96.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "scripts": ["src/bg/background.js"]
+  },
+  "options_ui": {
+    "page": "src/options/index.html"
+  },
+  "permissions": ["*://*.finlex.fi/*", "storage"],
+  "content_scripts": [
+    {
+      "matches": ["*://*.finlex.fi/fi/oikeus/foki/tapaus/*"],
+      "js": ["src/inject/fokiRedirect.js"]
+    },
+    {
+      "matches": ["*://*.finlex.fi/fi/oikeus/*"],
+      "js": ["src/inject/case.js"]
+    },
+    {
+      "matches": [
+        "*://*.finlex.fi/fi/laki/ajantasa/*/*",
+        "*://*.finlex.fi/fi/laki/alkup/*/*"
+      ],
+      "js": ["3rdparty/jquery-3.4.1.js", "src/inject/statute.js"],
+      "css": ["src/inject/statute.css"]
+    },
+    {
+      "matches": ["*://data.finlex.fi/*"],
+      "run_at": "document_end",
+      "css": ["src/inject/sf.css"]
+    }
+  ]
+}

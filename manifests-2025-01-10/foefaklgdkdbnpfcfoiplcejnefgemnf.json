@@ -1,0 +1,110 @@
+---
+name: Eigofy
+version: 1.2.5
+category_slug: productivity/education
+featured: false
+rating: 5
+rating_count: 10
+user_count: 59
+size: 38.32MiB
+languages:
+  - 日本語
+release_date: '2024-11-12T08:49:48.000Z'
+creation_date: '2024-09-17T11:31:28.000Z'
+description: Eigofyは動画の字幕から瞬時に和訳を表示させる辞書ツールです。
+publisher_hash: aabbba534ac778ee69e9f0e710901997278f467f0a37c89c0b440c777da792c7
+publisher_account: join.eigofy
+publisher_address: |-
+  19 Sunnyfield Drive
+  Rolling Hills Estates, CA 90274-2504
+  US
+publisher_phone: '+14249995224'
+support_website: >-
+  https://docs.google.com/forms/d/e/1FAIpQLSdZvrDLhIjr_MEh9fjQeIvjJc5Ki5qscdgf-A2kohrAAztUhw/viewform
+privacy_policy: https://join-eigofy.web.app
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Eigofy",
+  "version": "1.2.5",
+  "description": " Eigofyは動画の字幕から瞬時に和訳を表示させる辞書ツールです。",
+  "host_permissions": [
+    "https://api.dictionaryapi.dev/",
+    "https://us-central1-eigofy-app.cloudfunctions.net/*"
+  ],
+  "permissions": ["storage", "offscreen", "tabs"],
+  "background": {
+    "service_worker": "background/dist/background_bundle.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.netflix.com/*"],
+      "js": [
+        "netflix/sub_generation/pull_subs.js"
+      ],
+      "css": [
+        "translation_popup_frontend/translation_popup_styles.css",
+        "translation_popup_frontend/hover_popup_styles.css",
+        "pages/welcome_page/welcome_styles.css",
+        "netflix/sub_generation/netflix.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "libraries/compromise-14.14.0/builds/compromise.js",
+        "translation_popup_backend/free_dictionary_api.js",
+        "translation_popup_backend/popup_data.js",
+        "translation_popup_backend/word_processing.js",
+        "translation_popup_backend/text_extraction.js",
+        "translation_popup_frontend/button_manager.js",
+        "translation_popup_frontend/translation_popup.js",
+        "translation_popup_frontend/hover_popup.js",
+        "translation_popup_backend/input_handler.js"
+      ],
+      "css": [
+        "translation_popup_frontend/hover_popup_styles.css",
+        "pages/welcome_page/welcome_styles.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "assets/*",
+        "translation_popup_frontend/translation_popup.html",
+        "pages/welcome_page/welcome.html",
+        "pages/authentication_page/authentication.html",
+        "translation_popup_frontend/translation_popup_styles.css"
+      ],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "images/*",
+        "assets/*",
+        "translation_popup_frontend/translation_popup.html",
+        "pages/welcome_page/welcome.html",
+        "pages/authentication_page/authentication.html",
+        "translation_popup_frontend/translation_popup_styles.css",
+        "netflix/sub_generation/netflix.css",
+        "netflix/sub_generation/injected_script.js"
+      ],
+      "matches": ["https://www.netflix.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "toolbar_popup/toolbar_popup.html",
+    "default_icon": "images/logos/eigofy_toolbar.png"
+  },
+  "icons": {"16": "images/logos/eigofy_mark16.png", "32": "images/logos/eigofy_mark32.png", "48": "images/logos/eigofy_toolbar.png", "128": "images/logos/eigofy_mark128.png"}
+}

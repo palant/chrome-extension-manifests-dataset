@@ -1,0 +1,144 @@
+---
+name: AI Translate - Gemini
+version: 0.6.2.2
+category_slug: productivity/tools
+featured: false
+rating: 3.6666666666666665
+rating_count: 6
+user_count: 2000
+size: 361KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - español
+  - hrvatski
+  - italiano
+  - latviešu
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - हिन्दी
+  - বাংলা
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+release_date: '2024-12-30T08:45:07.000Z'
+creation_date: '2024-09-14T11:22:59.000Z'
+description: An extension that translates pages in real time using AI.
+publisher_hash: 254c4a79e683a2199945abd73471c8408364d644f0c36510bb6647761f0ffe90
+publisher_account: 솜사탕
+privacy_policy: >-
+  https://storage.googleapis.com/aitranslate8000/privacy_policy_ai_translation.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extensionName__",
+  "description": "__MSG_extensionDescription__",
+  "version": "0.6.2.2",
+  "homepage_url": "https://somcandystory.blogspot.com/",
+  "minimum_chrome_version": "88.0",
+  "icons": {
+    "32": "/icons/icon-32.png",
+    "64": "/icons/icon-64.png",
+    "128": "/icons/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "contextMenus",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/icons/icon-32.png",
+        "/contentScript/css/*",
+        "/contentScript/html/*",
+        "/options/open-options.html",
+        "/chatbot/chatbot.js",
+        "/chatbot/chatbot.html",
+        "/chatbot/chatbot.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "options_ui": {
+    "page": "/options/options.html",
+    "open_in_tab": true,
+    "browser_style": false
+  },
+  "action": {
+    "default_icon": "/icons/icon-32.png",
+    "default_title": "__MSG_pageActionTitle__",
+    "default_popup": "/popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "all_frames": false,
+      "js": ["/contentScript/checkScriptIsInjected.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "js": [
+        "/lib/checkedLastError.js",
+        "/lib/languages.js",
+        "/lib/config.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true,
+      "js": [
+        "/lib/i18n.js",
+        "/contentScript/contentScript.js"
+      ]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["/chatbot/content.js"],
+      "css": ["/chatbot/chatbot.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

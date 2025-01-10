@@ -1,0 +1,77 @@
+---
+name: CS2 Case Opening Stats
+version: 1.6.4
+category_slug: lifestyle/fun
+featured: false
+rating: 4.052631578947368
+rating_count: 76
+user_count: 40000
+size: 781KiB
+languages:
+  - English
+release_date: '2025-01-09T23:40:27.000Z'
+creation_date: '2023-11-07T08:43:39.000Z'
+description: A small extension to see how much money you have 'invested' in CS cases.
+publisher_hash: a5ef81f6c55b16f10d2a470fed98c4c62d072a684d1d4103e898bff1cb3120db
+publisher_account: paul.muenchhausen
+extension_website: lootspectrum.com
+extension_website_verified: true
+privacy_policy: https://cs.patimue.de/data-privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CS2 Case Opening Stats",
+  "version": "1.6.4",
+  "description": "A small extension to see how much money you have 'invested' in CS cases.",
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "64": "assets/icon64.png",
+    "128": "assets/icon128.png"
+  },
+  "permissions": ["storage", "unlimitedStorage"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://steamcommunity.com/id/*/inventoryhistory/*",
+        "https://steamcommunity.com/profiles/*/inventoryhistory/*"
+      ],
+      "js": [
+        "content/config.js",
+        "content/utils.js",
+        "content/domManipulation.js",
+        "content/dataProcessing.js",
+        "content/chunkManagement.js",
+        "content/caseScript.js"
+      ],
+      "css": ["styles/caseAnalytics.css"]
+    },
+    {
+      "matches": ["*://cs.patimue.de/*", "*://*.lootspectrum.com/*"],
+      "js": ["content/syncData.js", "content/chunkManagement.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "content/inject.js",
+        "html/casebox.html",
+        "html/finishedBox.html",
+        "styles/caseAnalytics.css",
+        "styles/finished.css",
+        "popup/popup.css"
+      ],
+      "matches": ["https://steamcommunity.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "resources": ["popup/popup.css"]
+  }
+}

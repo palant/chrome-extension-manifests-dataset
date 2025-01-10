@@ -1,0 +1,81 @@
+---
+name: tldr
+version: 0.0.0.3
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 5.05MiB
+languages:
+  - English (United States)
+release_date: '2023-03-22T13:28:17.000Z'
+creation_date: '2023-02-04T08:11:45.000Z'
+description: A digital personal assistant - summarise your inbox!
+publisher_hash: 7e8e50d3ef5f85868f9eb3dc9d51c34f1692961f88344d00fc660533422d5393
+publisher_account: thetldrteam
+privacy_policy: https://www.freeprivacypolicy.com/live/02f06dad-a65d-4919-b7d1-7bc6e8a5c3d3
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "tldr",
+  "description": "A digital personal assistant - summarise your inbox!",
+  "version": "0.0.0.3",
+  "permissions": ["activeTab", "tabs", "identity", "storage", "https://*.everyprompt.com/", "https://*.everyprompt.com/*"],
+  "host_permissions": ["https://mail.google.com/*", "https://inbox.google.com/*", "https://gmail.googleapis.com/gmail/v1/*","https://www.googleapis.com/*", "https://accounts.google.com/*","https://www.everyprompt.com/api/v0/calls/*"],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAp8OkGCUr29ZDilCtrSdcC91eWk16Q9WWgUfBpba5TzkuYQJyXH4Nd2WWuPYjUn3sFomU7XGp+eC7OTXu15LiVv4gm7pdCaZYLuuZChJcWz5rIIeH1WKDr0ZE09PciGOPVZTtpVcc9E712hSywRbbiyUjnBCFzBDkyqshmFHwUkIC6PGh6qZHUVaSdphf9B9qIDebU1XWp62NIgtoaPSmLtEUld+UUsfBxKq/07959akr2t4abD6Il8lehjFhWTIkN0i+Y1xhmRHD/BhDjc2l5MUNqLki5vxL/PI8lCOIaXJJtJBNgLQPnYrXoG4M99E8AT4UTCpwAZBIg347L2ZA6wIDAQAB",
+
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "js": ["contentScript.js", "popup.js"],
+      "run_at":"document_start"
+    }
+  ],
+
+  "web_accessible_resources": [{
+    "matches": ["<all_urls>"],
+    "resources": ["api/generate.js","*.gif","*.GIF"]
+  }],
+
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "tldr",
+    "default_popup": "popup.html"
+  },
+
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+U",
+        "mac": "Command+U"
+      }
+    }
+  },
+  "oauth2": {
+    "client_id": "60571816328-k6v7t53ctpejmkf2louu4emvs46ir051.apps.googleusercontent.com",
+    "scopes": [
+        "https://www.googleapis.com/auth/gmail.readonly"
+    ]
+  }
+
+}

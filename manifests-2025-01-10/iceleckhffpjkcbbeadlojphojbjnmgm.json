@@ -1,0 +1,86 @@
+---
+name: Patent Plus
+version: 1.7.29
+category_slug: productivity/tools
+featured: true
+rating: 4.9375
+rating_count: 16
+user_count: 703
+size: 6.12MiB
+languages:
+  - English (UK)
+release_date: '2025-01-02T12:49:16.000Z'
+creation_date: '2023-02-21T04:51:58.000Z'
+description: Simplify patent reading on Google Patents - Patent Plus
+publisher_hash: e2da60d09d0d09c2958c14c5e92cffdd83d8ee15daf3562ad292b695a81e2906
+publisher_account: Dev
+extension_website: getpatentplus.com
+extension_website_verified: true
+support_website: https://getpatentplus.com/contact-us/
+privacy_policy: https://getpatentplus.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Patent Plus",
+    "description": "Simplify patent reading on Google Patents - Patent Plus",
+    "version": "1.7.29",
+    "background": {
+        "service_worker": "background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "activeTab",
+        "scripting"
+    ],
+    "icons": {
+        "16": "/images/logo.png",
+        "32": "/images/logo.png",
+        "48": "/images/logo.png",
+        "128": "/images/logo.png"
+    },
+    "web_accessible_resources": [
+        {
+          "resources": ["images/moon.svg","images/sun.svg","images/refresh.svg"],
+          "matches": ["<all_urls>"]
+        }
+      ],      
+    "content_scripts": [
+        {
+            "matches": [
+                "https://patents.google.com/*"
+            ],
+            "js": [
+                "content-script/enhance-google-patents.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://patents.google.com/patent/*"
+            ],
+            "js": [
+                "content-script/config.js",
+                "content-script/patentplusassitant.js",
+                "content-script/patent-prior-art.js"
+            ]
+        }
+    ],
+    "action": {
+        "default_popup": "popup/slate_popup.html",
+        "default_icon": {
+            "16": "/images/logo.png",
+            "32": "/images/logo.png",
+            "48": "/images/logo.png",
+            "128": "/images/logo.png"
+        }
+    },
+    "host_permissions": [
+        "https://patents.google.com/*",
+        "https://usecatalyst.tech/*",
+        "https://getpatentplus.com/*"
+    ]
+}

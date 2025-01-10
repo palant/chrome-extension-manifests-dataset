@@ -1,0 +1,138 @@
+---
+name: VidDown - Video Downloader Max
+version: 1.2.3
+category_slug: productivity/tools
+featured: false
+rating: 4.3125
+rating_count: 16
+user_count: 4000
+size: 326KiB
+languages:
+  - English
+  - 中文 (简体)
+release_date: '2024-10-31T07:03:58.000Z'
+creation_date: '2024-09-22T07:13:29.000Z'
+description: >-
+  Download any video from any website, support FB, INS, X, TikTok, Bilibili and
+  other video websites, free, safe and easy to use.
+publisher_hash: 996d570dfa78bd6ece80e3be7bda103554d42666a67d711620efa0deb3a45dc4
+privacy_policy: https://www.freeprivacypolicy.com/live/1a989ad9-eb14-4e79-994b-1739426407b8
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_default_title__",
+  "default_locale": "en",
+  "version": "1.2.3",
+  "manifest_version": 3,
+  "author": "SY",
+  "description": "__MSG_description__",
+  "icons": {
+    "16": "assets/logo/logo_x16.png",
+    "48": "assets/logo/logo_x48.png",
+    "128": "assets/logo/logo_x128.png"
+  },
+  "action": {
+    "default_title": "__MSG_default_title__",
+    "default_popup": "/popup/index.html"
+  },
+  "permissions": [
+    "tabs",
+    "downloads",
+    "storage",
+    "webRequest",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "optional_permissions": [
+    "clipboardRead"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "background": {
+    "service_worker": "/background/index.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "/contentScript/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "assets/content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.bilibili.com/video/*",
+        "*://*.bilibili.com/bangumi/play/ep*"
+      ],
+      "js": [
+        "assets/blilbli.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://x.com/*"
+      ],
+      "js": [
+        "assets/tw.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.facebook.com/*"
+      ],
+      "js": [
+        "assets/jq.js",
+        "assets/facebook.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://www.instagram.com/*"
+      ],
+      "js": [
+        "assets/jq.js",
+        "assets/ins.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentScript/style.css",
+        "assets/bus.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

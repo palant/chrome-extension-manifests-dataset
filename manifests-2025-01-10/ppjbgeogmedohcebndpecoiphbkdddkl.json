@@ -1,0 +1,92 @@
+---
+name: Yellow Notes for the Cloud
+version: 0.9.10
+category_slug: productivity/communication
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 4.23MiB
+languages:
+  - English (United States)
+release_date: '2024-09-12T00:13:09.000Z'
+creation_date: '2024-03-23T07:15:26.000Z'
+description: Yellow Stickynotes for The Web
+publisher_hash: 8556b7cace6d0a2b8afcbc5b3b649ef1f9e813e88640a255d2b485efbcea7673
+publisher: Browser Solutions
+publisher_account: lars.reinertsen
+publisher_address: |-
+  Inkognito Terrasse 5
+  Oslo 0256
+  NO
+privacy_policy: https://www.yellownotes.cloud/privacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Yellow Notes for the Cloud",
+    "author": "The BrowserSolutions Team",
+    "description": "__MSG_appDesc__",
+    "homepage_url": "https://www.yellownotes.cloud/",
+    "version": "0.9.10",
+    "icons": {
+        "32": "icons/yellownotecloud-32x32.png",
+        "48": "icons/yellownotecloud-48x48.png",
+        "96": "icons/yellownotecloud-96x96.png"
+    },
+    "options_ui": {
+        "page": "./pages/my_account.html"
+    },
+    "default_locale": "en_US",
+    "action": {
+        "default_popup": "./popup/popup.html",
+        "default_icon": "icons/yellownotecloud-200x200.png",
+        "theme_icons": [{
+                "light": "icons/yellownotecloud-48x48.png",
+                "dark": "icons/yellownotecloud-48x48.png",
+                "size": 32
+            }
+        ],
+        "default_title": "Yellow sticky notes for the Web"
+    },
+    "background": {
+        "service_worker": "./background/background.js"
+    },
+    "content_scripts": [{
+            "matches": ["<all_urls>"],
+            "js": ["./content_scripts/sliding_button.js"],
+            "run_at": "document_start"
+        }, {
+            "matches": ["*://www.yellownotes.cloud/*"],
+            "js": ["./content_scripts/local_GUI_intercept.js"],
+            "run_at": "document_start"
+        }, {
+            "matches": ["<all_urls>"],
+            "js": ["./pages/parameters.js","./content_scripts/test.js","./content_scripts/NotesHandler.js"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [{
+            "resources": ["./popup/*"],
+            "matches":["<all_urls>"],
+            "use_dynamic_url": true
+ }
+    ],
+    "host_permissions": ["*://www.yellownotes.cloud/*"],
+    "permissions": [
+        "activeTab",
+        "contextMenus",
+        "cookies",
+        "scripting",
+        "storage",
+        "tabs",
+  
+        "unlimitedStorage",
+        "webRequest"
+    ],
+    "optional_permissions": [
+        "clipboardWrite"
+       ]
+}

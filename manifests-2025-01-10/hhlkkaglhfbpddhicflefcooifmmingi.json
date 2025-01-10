@@ -1,0 +1,86 @@
+---
+name: MerchRex - Dashboard for Merch by Amazon
+version: 1.4.5
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 9
+user_count: 1000
+size: 991KiB
+languages:
+  - English (United States)
+release_date: '2024-12-01T19:50:01.000Z'
+creation_date: '2023-12-10T13:02:26.000Z'
+description: >-
+  A Modern & Fast Toolkit for Merch on Demand sellers for a Beautiful Dashboard,
+  Enhanced Product Management & Advanced Analysis.
+publisher_hash: 04a3af7e292485b7ecdc4ecbfac66868272b41f5938e86eff3d57aa690203ff3
+publisher: SMFZONE INC
+publisher_account: MerchRex
+publisher_address: |-
+  1394 COMMONWEALTH AVE, SUITE 1
+  BRONX, NY 10472
+  US
+extension_website: merchrex.com
+extension_website_verified: true
+support_website: https://merchrex.com/contact
+privacy_policy: https://merchrex.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "MerchRex - Dashboard for Merch by Amazon",
+  "version": "1.4.5",
+  "description": "A Modern & Fast Toolkit for Merch on Demand sellers for a Beautiful Dashboard, Enhanced Product Management & Advanced Analysis.",
+  "permissions": ["tabs", "storage", "unlimitedStorage", "notifications", "declarativeNetRequest"],
+  "host_permissions": ["https://merch.amazon.com/*", "https://amazon.com/*", "https://www.amazon.com/*", "https://www.amazon.co.uk/*", "https://www.amazon.de/*", "https://www.amazon.fr/*", "https://www.amazon.it/*", "https://www.amazon.es/*", "https://www.amazon.co.jp/*", "https://advertising.amazon.com/*", "https://advertising.amazon.co.uk/*", "https://advertising.amazon.de/*", "https://advertising.amazon.fr/*", "https://advertising.amazon.it/*", "https://advertising.amazon.es/*"],
+  "icons": {
+    "16": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "action": {},
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "https://www.amazon.com/dp/*", "https://www.amazon.com/*/dp/*" ],
+      "css": [ "styles/amazon-content-trademark.css" ],
+      "js": [ "scripts/content/amazon-product-details.js" ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "https://merch.amazon.com/designs/*" ],
+      "css": [ "styles/listing-helper.css", "styles/amazon-content-trademark.css" ],
+      "js": [ "scripts/plugins/jquery-3.7.1.min.js", "scripts/content/listing-helper.js", "scripts/content/merch-creator-trademark.js" ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [ "https://merch.amazon.com/*" ],
+      "js": [ "scripts/content/dashboard-pages.js" ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [ "https://merch.amazon.com/resource/merchrex*" ],
+      "css": [ "styles/dashboard-preloader.css" ],
+      "js": [ "dashboard/app.js" ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": ["/images/*", "/sounds/*"],
+    "matches": ["https://merch.amazon.com/*"]
+  }],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "scripts/rules/rules.json"
+      }
+    ]
+  }
+}

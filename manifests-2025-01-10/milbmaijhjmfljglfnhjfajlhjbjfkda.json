@@ -1,0 +1,76 @@
+---
+name: DNK Omni Cloud
+version: 1.0.5
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 1
+size: 1.17MiB
+languages:
+  - português (Brasil)
+release_date: '2022-10-12T07:56:46.000Z'
+creation_date: '2022-10-12T07:56:46.000Z'
+description: >-
+  Ligações a um clique de distância. Integração entre a plataforma Omnichannel
+  DNK e diversos sistemas CRM.
+publisher_hash: 75c3c8cee6b052cceec6bca2e03fa408adafe1e4d71a830704f5055a430e3fc7
+publisher_account: francisco.rosa
+extension_website: dnkinfotelecom.com.br
+extension_website_verified: true
+privacy_policy: https://www.dnkinfotelecom.com.br/politica-de-privacidade
+---
+
+{
+    "manifest_version": 3,
+    "name": "DNK Omni Cloud",
+    "description": "Ligações a um clique de distância. Integração entre a plataforma Omnichannel DNK e diversos sistemas CRM.",
+    "icons" : {
+        "128": "image/globo-red.png"
+    },
+    "version": "1.0.5",
+    "update_url": "https://clients2.google.com/service/update2/crx",
+    "homepage_url": "https://www.dnkinfotelecom.com.br",
+    "permissions": [ "storage","tabs","cookies","activeTab","contextMenus","scripting","alarms"],
+    "host_permissions":["*://*/*"],
+
+    "action": {
+        "browser_style": false,
+        "default_title": "DNK Omni Cloud",
+        "default_popup": "popup/nexus.html",
+        "default_icon": {
+            "128": "image/globo-red.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "bg/bg.js",
+        "type" : "module"
+    },
+
+    "content_scripts": [
+        {
+            "matches": [ "*://*.salesforce.com/*" , "*://*.force.com/*" , "*://*.lightning.force.com/*"],
+            "css": [ "popup/theme/padrao.css" ],
+            "js": [ "lib/util.js", "salesforce/nexus.js", "lib/nexus.config.js", "salesforce/start.js"],
+            "run_at": "document_end"
+        },{
+            "matches": [ "*://*/*"],
+            "js": [ "nexus/call.js"],
+            "run_at": "document_end"
+        }
+    ],
+
+    "options_ui": {
+        "page": "popup/nexus.html",
+        "browser_style": true
+    },
+
+    "web_accessible_resources": [{
+        "resources" : [ "lib/*",
+                        "popup/js/*",
+                        "image/*",
+                        "popup/libs/font-awesome/*"],
+        "use_dynamic_url": true
+    }]
+}

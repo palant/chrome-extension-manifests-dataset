@@ -1,0 +1,109 @@
+---
+name: YouBeHero
+version: '2.4'
+category_slug: lifestyle/shopping
+featured: false
+rating: 5
+rating_count: 4
+user_count: 991
+size: 1.18MiB
+languages:
+  - Ελληνικά
+release_date: '2023-03-01T09:42:41.000Z'
+creation_date: '2018-09-06T05:35:56.000Z'
+description: 'YouBeHero: Μια δωρεά με κάθε ηλεκτρονική αγορά.'
+publisher_hash: fca105a60907a11f7e016eaed9c591d99ae9457d9235baa540169a07451ea46f
+publisher_account: YouBeHero
+publisher_address: |-
+  Panepistimiou 34
+  Athens 10679
+  Greece
+extension_website: www.youbehero.com
+extension_website_verified: true
+support_website: https://www.youbehero.com/gr/faq
+privacy_policy: https://www.youbehero.com/gr/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "YouBeHero",
+    "version": "2.4",
+    "description": "YouBeHero: Μια δωρεά με κάθε ηλεκτρονική αγορά.",
+    "icons": {
+        "48": "icons/ybh-icon-48_white.png",
+        "128": "icons/ybh-icon-128_white.png"
+    },
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage",
+        "notifications",
+        "cookies",
+        "webNavigation"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "include_globs": [
+                "http://www.google.*/*",
+                "https://www.google.*/*",
+                "http://duckduckgo.*/*",
+                "https://duckduckgo.*/*"
+            ],
+            "js": [
+                "search_engines.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "modal.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "adblocker.js"
+            ],
+            "run_at": "document_start"
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "modals/*.html",
+                "styles/*.css",
+                "fonts/*.ttf",
+                "icons/*.png",
+                "icons/*.svg",
+                "images/*.png",
+                "adblocker/*.js",
+                "images/picture_adblockers.png",
+                "firebase/*.js"
+            ]
+        }
+    ]
+}

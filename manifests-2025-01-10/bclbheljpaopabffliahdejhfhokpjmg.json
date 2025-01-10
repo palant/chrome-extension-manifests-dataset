@@ -1,0 +1,80 @@
+---
+name: Cocktel
+version: '1.11'
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 42
+size: 242KiB
+languages:
+  - Français
+release_date: '2024-01-18T11:05:07.000Z'
+creation_date: '2019-02-12T00:05:01.000Z'
+description: >-
+  Permet de faire des appels depuis cocktel vers des numéros de téléphone
+  présents sur des pages web
+publisher_hash: 765d236dceb80c11940bc2e8a4020cc904b90e4373c9ab92317e3c31ba0aea07
+publisher_account: WBTS
+privacy_policy: http://cocktel.fr/Privacy%20Policy%20for%20Cocktel.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+    "manifest_version": 3,
+    "name": "Cocktel",
+    "version": "1.11",
+
+    "description": "Permet de faire des appels depuis cocktel vers des numéros de téléphone présents sur des pages web",
+
+    "icons": {
+        "16": "icons/icon16.png",
+        "32": "icons/icon32.png",
+        "128": "icons/icon128.png"
+    },
+  
+    "background": {
+        "service_worker":"background.js"
+    },
+
+    "action": {
+        "default_icon": {
+            "16": "icons/icon16.png",
+            "32": "icons/icon32.png"
+        },
+        "default_title":"Cocktel",
+        "default_popup":"popup.html"
+    },
+    
+    "commands": {
+        "toggle-feature": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Space"
+            },
+            "description": "Ouvre le panneau Cocktel"
+        }
+    },
+    
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "js": ["page.js","lib/cocktel.js","lib/user.js","lib/extension.js","lib/call.js","lib/annuaire.js","lib/contact.js","lib/sms.js"],
+            "css": ["cocktel.css","api.css"],
+            "all_frames":true
+        }
+    ],
+  
+    "options_page": "options.html",
+    
+    "web_accessible_resources": [
+        {
+            "resources":["api.css","lib/cocktel.js","lib/user.js","lib/extension.js","lib/call.js","lib/sms.js","images/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+    
+    "permissions": ["cookies","tabs","activeTab","storage","notifications","history"]
+
+}

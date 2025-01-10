@@ -1,0 +1,202 @@
+---
+name: Простые звонки
+version: 2.0.2
+category_slug: productivity/workflow
+featured: false
+rating: 4.125
+rating_count: 16
+user_count: 2000
+size: 1.32MiB
+languages:
+  - русский
+release_date: '2024-11-14T08:32:09.000Z'
+creation_date: '2013-12-05T03:37:13.000Z'
+description: Интеграция CRM и сервиса «Простые звонки»
+publisher_hash: e17748c901ca09ff30d22a291535a9d561fd337124b3e51b4943b1e31594dc45
+publisher_account: Vedisoft
+extension_website: prostiezvonki.ru
+extension_website_verified: true
+support_website: http://prostiezvonki.ru/support
+privacy_policy: https://prostiezvonki.ru/documents/privacy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Простые звонки",
+  "description": "Интеграция CRM и сервиса «Простые звонки»",
+  "version": "2.0.2",
+  "manifest_version": 3,
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkE1leBKtqBvjXOAALQLNhQuu1YfNtXHVzwyPvLBcf7SdlJcFq8UYGlFzDjT+1ZbEVq7eaRF8uo8tRW5Q41r5hMg9CheUIxP7EIfSzgMNviJ+BZjWbpA6RZPsrFugR8RN00XQnGBUEgsxY6WXD6WKYwIl2dXLzn+8b7DlYvhMxxdS/dN17e6xuF5PHZVkT6ZJQZ6pfCLqb1oTfsBIpaUZrWkkVfBXtBmWPwvc21tLy2a0mBhlsOPf471K4ejW/viA0AyCu0zEfzmvMBT5vkX01Ds0+NT/F5plbSlkXy6L5GWJybUwbD/Q1Fon7UEmKWHmnBHFqM5BJBUfQqJ7Fb8hoQIDAQAB",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "background",
+    "storage",
+    "scripting",
+    "clipboardWrite"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "optional_permissions": [
+    "notifications",
+    "identity"
+  ],
+  "action": {
+    "default_icon": "img/logo-action-normal.png",
+    "default_title": "Простые звонки",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.bitrix24.ru/*",
+        "*://*.bitrix24.com/*",
+        "*://*.bitrix24.ua/*",
+        "*://*.bitrix24.kz/*",
+        "*://*.bitrix24.by/*"
+      ],
+      "exclude_matches": [
+        "*://helpdesk.bitrix24.ru/*",
+        "*://helpdesk.bitrix24.com/*",
+        "*://helpdesk.bitrix24.ua/*",
+        "*://helpdesk.bitrix24.kz/*",
+        "*://helpdesk.bitrix24.by/*"
+      ],
+      "js": [
+        "contentscript-bitrix.js",
+        "contentscript-notification.js"
+      ],
+      "css": [
+        "css/contentscript-notification.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://online.moysklad.ru/*"
+      ],
+      "js": [
+        "contentscript-moysklad.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://yclients.com/clients/*",
+        "*://yclients.com/timetable/*"
+      ],
+      "css": [
+        "css/contentscript-yclients.css"
+      ],
+      "js": [
+        "contentscript-yclients.js",
+        "contentscript-notification.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://docs.google.com/spreadsheets/*"
+      ],
+      "css": [
+        "css/font-awesome.min.css",
+        "css/contentscript-notification.css"
+      ],
+      "js": [
+        "googlesheetsClickToCallHandler.js",
+        "contentscript-notification.js",
+        "contentscript-googletables.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://contacts.google.com/*"
+      ],
+      "css": [
+        "css/font-awesome.min.css"
+      ],
+      "js": [
+        "contentscript-googlecontacts.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "css/font-awesome.min.css",
+        "/css/call-link.css"
+      ],
+      "js": [
+        "contentscript-webhook.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "contentscript-textcopy.js"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "icons": {
+    "128": "img/logo-extension.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "fonts/FontAwesome.otf",
+        "fonts/fontawesome-webfont.eot",
+        "fonts/fontawesome-webfont.ttf",
+        "fonts/fontawesome-webfont.svg",
+        "fonts/fontawesome-webfont.woff",
+        "fonts/fontawesome-webfont.woff2",
+        "img/logo-action-normal.png",
+        "img/logo-action-gray.png",
+        "img/logo-action-red.png",
+        "img/logo-extension.png",
+        "img/call-income.png",
+        "img/call-outcome.png",
+        "img/call-miss.png",
+        "img/card.png",
+        "img/cross.png",
+        "img/cross-bold.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.bitrix24.ru/*",
+      "*://*.bitrix24.com/*",
+      "*://*.bitrix24.ua/*",
+      "*://*.bitrix24.kz/*",
+      "*://*.bitrix24.by/*"
+    ]
+  },
+  "oauth2": {
+    "client_id": "333224391243-329b7ot43t5mjrogotg9dap6tldj5np5.apps.googleusercontent.com",
+    "scopes": [
+    ]
+  },
+  "options_page": "options.html"
+}

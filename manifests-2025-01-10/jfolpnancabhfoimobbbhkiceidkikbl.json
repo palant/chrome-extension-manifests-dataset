@@ -1,0 +1,67 @@
+---
+name: MedPro Plugin
+version: '1.7'
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 2
+size: 267KiB
+languages:
+  - English
+release_date: '2025-01-10T09:42:05.000Z'
+creation_date: '2024-12-02T07:07:05.000Z'
+description: Capture the current browser tab and send it to MedPro with metadata.
+publisher_hash: 58c7f54c86446ecbb2bdbfe2e31dc5b32b4d158beb7633bda89beb444d11e8d2
+publisher: AVAYl GmbH
+publisher_account: alexander.goetz
+publisher_address: |-
+  Claudiusstrasse 6
+  Berlin 10557
+  DE
+publisher_phone: '+4369911267391'
+extension_website: www.avayl.tech
+extension_website_verified: true
+privacy_policy: https://www.avayl.tech/imprint
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "MedPro Plugin",
+    "version": "1.7",
+    "description": "Capture the current browser tab and send it to MedPro with metadata.",
+    "permissions": [
+        "activeTab",
+        "scripting",
+        "storage",
+        "tabs"
+    ],
+    "host_permissions": [
+      "<all_urls>",
+      "https://dev.avayl.tech/*",
+      "https://app.avayl.tech/*"
+    ],
+    "action": {
+      "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://dev.avayl.tech/*", "https://dev.avayl.tech/*", "http://app.avayl.tech/*", "https://app.avayl.tech/*"],
+            "js": ["tokenDetect.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["http://*/*", "https://*/*"],
+            "js": ["pdfDetect.js"],
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+    "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; connect-src *"
+    }
+  }

@@ -1,0 +1,59 @@
+---
+name: YouTube Blocker
+version: '4.1'
+category_slug: productivity/workflow
+featured: false
+rating: 4.333333333333333
+rating_count: 27
+user_count: 10000
+size: 238KiB
+languages:
+  - English
+release_date: '2024-05-27T17:34:41.000Z'
+creation_date: '2019-12-31T05:41:43.000Z'
+description: Block non educational YouTube videos
+publisher_hash: 2b89a933f49df7945ebfe3825e94a8daa66fbe259dd660e7506e352757e533fa
+publisher_account: 'Eric '
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "YouTube Blocker",
+  "version": "4.1",
+  "manifest_version": 3,
+  "description": "Block non educational YouTube videos",
+  "icons": {
+    "128": "resources/icon.png"
+  },
+  "background": {
+    "service_worker": "js/youtubeBlocker_service_worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "run_at": "document_idle",
+      "js": ["js/youtubeBlocker_ContentScript.js"]
+    }
+  ],
+  "action": {
+    "default_title": "YouTube Blocker",
+    "default_popup": "pages/popup.html"
+  },
+  "content_security_policy": {
+    "script-src":  "self https://ajax.googleapis.com https://www.googleapis.com",
+    "object-src": "self"
+  },
+  "options_page": "pages/options.html",
+  "permissions": [
+    "notifications",
+    "storage",
+    "background",
+    "tabs",
+    "webNavigation"
+   ],
+  "host_permissions": [
+    "*://*.youtube.com/*"
+  ]
+}

@@ -1,0 +1,94 @@
+---
+name: Notionpack Capture
+version: 0.1.6
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 35.85KiB
+languages:
+  - English
+release_date: '2024-01-12T05:30:44.000Z'
+creation_date: '2023-06-09T07:28:15.000Z'
+description: Capture anything and save to your notion database
+publisher_hash: 20442b47503c7e2bf69cf8beaaf430f1410e9f47470276c6c642c2cb177ccf8f
+publisher: Scalereal Technologies
+publisher_account: Scalereal Technologies Pvt Ltd
+publisher_address: |-
+  MONT VERT PRISTINE, B1 - 504, Aundh Rd,
+  behind St. Thomas Church
+  Pune, Maharashtra 411020
+  IN
+privacy_policy: https://notionpack.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Notionpack Capture",
+  "version": "0.1.6",
+  "description": "Capture anything and save to your notion database",
+  "action": {
+    "default_title": "Click to view extension",
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "./icons/icon16.png",
+      "32": "./icons/icon32.png",
+      "48": "./icons/icon48.png",
+      "128": "./icons/icon128.png"
+    }
+  },
+  "icons": {
+    "16": "./icons/icon16.png",
+    "32": "./icons/icon32.png",
+    "48": "./icons/icon48.png",
+    "128": "./icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "clipboardWrite",
+    "webRequest",
+    "webNavigation"
+  ],
+  "background": {
+    "service_worker": "./js/background.js",
+    "type": "module"
+  },
+  "host_permissions": [
+    "https://read.amazon.com/*",
+    "https://notionpack.com/*",
+    "https://twitter.com/*"
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.notionpack.com/*", "https://twitter.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://read.amazon.com/*"],
+      "css": ["./css/overlay-styles.css"],
+      "js": ["./js/kindle-scrapper.js"]
+    },
+    {
+      "matches": ["https://notionpack.com/capture/kindle-highlights*"],
+      "js": ["./js/extension-verification.js"]
+    },
+    {
+      "matches": ["*://twitter.com/*"],
+      "js": ["./js/save-to-notion.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.html", "*.css", "*.js", "*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

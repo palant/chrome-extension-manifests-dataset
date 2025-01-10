@@ -1,0 +1,333 @@
+---
+name: DSers -  AliExpress.com Product Importer
+version: 3.4.2
+category_slug: lifestyle/shopping
+featured: true
+rating: 4.985756179304566
+rating_count: 4774
+user_count: 400000
+size: 4.78MiB
+languages:
+  - English (United States)
+release_date: '2025-01-03T09:48:16.000Z'
+creation_date: '2018-07-28T10:31:26.000Z'
+description: Import and sync products from AliExpress to your DSers platform account.
+publisher_hash: 53635d4c64743ac3619d86d2c89e1700eed8d393df188cfa6a276355e1803ebe
+publisher: Nebulapart  Limited
+publisher_account: dsers_official
+extension_website: dsers.com
+extension_website_verified: true
+privacy_policy: https://www.dsers.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "DSers -  AliExpress.com Product Importer",
+  "description": "Import and sync products from AliExpress to your DSers platform account.",
+  "version": "3.4.2",
+  "manifest_version": 3,
+  "permissions": [
+    "declarativeNetRequestWithHostAccess",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequest",
+    "alarms",
+    "scripting",
+    "notifications",
+    "tabs",
+    "storage",
+    "unlimitedStorage",
+    "cookies",
+    "contextMenus",
+    "activeTab"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "index.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "/assets/icons/48x48.png"
+  },
+  "icons": {
+    "16": "assets/icons/16x16.png",
+    "48": "assets/icons/48x48.png",
+    "128": "assets/icons/128x128.png"
+  },
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "/options.html"
+  },
+  "options_page": "/options.html",
+  "declarative_net_request": {
+    "rule_resources": []
+  },
+  "externally_connectable": {
+    "matches": ["*://*.dsers.com/*", "*://localhost:*/*", "*://*.temu.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["screenshot.js"]
+    },
+    {
+      "matches": ["*://*.temu.com/*"],
+      "js": ["temu.js"]
+    },
+    {
+      "matches": ["*://*.dsers.com/*", "*://localhost/*"],
+      "js": ["dsers.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://www.aliexpress.com/p/trade/confirm.html*",
+        "https://www.aliexpress.us/p/trade/confirm.html*"
+      ],
+      "exclude_matches": [
+        "https://ds.aliexpress.com/*",
+        "https://inbusiness.aliexpress.com/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.us/w/*",
+        "https://*.aliexpress.us/ssr/*",
+        "https://*.aliexpress.com/ssr/*"
+      ],
+      "js": ["aeOrderConfirm.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/item/*",
+        "https://*.aliexpress.us/item/*",
+        "https://aliexpress.ru/item/*",
+        "https://*.aliexpress.com/i/*",
+        "https://*.aliexpress.us/i/*",
+        "https://*.aliexpress.com/store/product/*"
+      ],
+      "exclude_matches": [
+        "https://ds.aliexpress.com/*",
+        "https://inbusiness.aliexpress.com/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.us/w/*",
+        "https://*.aliexpress.us/ssr/*",
+        "https://*.aliexpress.com/ssr/*"
+      ],
+      "js": ["aeItem.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/item/*",
+        "https://*.aliexpress.us/item/*",
+        "https://aliexpress.ru/item/*"
+      ],
+      "exclude_matches": [
+        "https://ds.aliexpress.com/*",
+        "https://inbusiness.aliexpress.com/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.us/w/*",
+        "https://*.aliexpress.us/ssr/*",
+        "https://*.aliexpress.com/ssr/*"
+      ],
+      "js": ["aeCouponItem.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/af/*",
+        "https://*.aliexpress.us/af/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.us/w/*",
+        "https://*.aliexpress.com/wholesale*",
+        "https://*.aliexpress.us/wholesale*",
+        "https://*.aliexpress.com/category/*",
+        "https://*.aliexpress.us/category/*",
+        "https://*.aliexpress.com/premium*",
+        "https://*.aliexpress.us/premium*",
+        "https://*.aliexpress.com/wishlist/wish_list_product_list.htm*",
+        "https://*.aliexpress.com/*_reviews.html*",
+        "https://home.aliexpress.com/dropshipper/ds_center.htm*"
+      ],
+      "exclude_matches": [
+        "https://ds.aliexpress.com/*",
+        "https://inbusiness.aliexpress.com/*",
+        "https://*.aliexpress.us/ssr/*",
+        "https://*.aliexpress.com/ssr/*"
+      ],
+      "js": ["aeList.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["aeProductMiniModal.js"],
+      "matches": ["https://*.aliexpress.com/*", "https://*.aliexpress.us/*"],
+      "exclude_matches": [
+        "https://ds.aliexpress.com/*",
+        "https://inbusiness.aliexpress.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["aeWishlist.js"],
+      "matches": [
+        "https://*.aliexpress.com/p/wishlist/index.html*",
+        "https://*.aliexpress.us/p/wishlist/index.html*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": ["aeObligationList.js"],
+      "matches": [
+        "https://www.aliexpress.com/p/order/index.html*",
+        "https://www.aliexpress.com/p/order/detail.html*",
+        "https://*.aliexpress.us/p/order/index.html*",
+        "https://www.aliexpress.us/p/order/detail.html*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/*",
+        "https://*.aliexpress.us/*",
+        "https://*.aliexpress.com/p/calp-plus/index.html*",
+        "https://*.aliexpress.us/p/calp-plus/index.html*",
+        "https://*.aliexpress.com/*/pages/all-items.html*",
+        "https://*.aliexpress.us/*/pages/all-items.html*",
+        "https://*.aliexpress.us/item/*.html*",
+        "https://*.aliexpress.com/item/*.html*",
+        "https://*.aliexpress.com/store/*/pages/all-items.html*",
+        "https://*.aliexpress.us/store/*/pages/all-items.html*",
+        "https://*.aliexpress.com/gcp/*",
+        "https://*.aliexpress.com/p/order/index.html*"
+      ],
+      "exclude_matches": [
+        "https://ds.aliexpress.com/*",
+        "https://inbusiness.aliexpress.com/*",
+        "https://*.aliexpress.com/w/*",
+        "https://*.aliexpress.us/w/*",
+        "https://*.aliexpress.us/ssr/*",
+        "https://*.aliexpress.com/ssr/*"
+      ],
+      "js": ["aeProductList.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://ds.aliexpress.com/*"],
+      "js": ["AEDSCenter.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://ds.aliexpress.com/hot-search*"],
+      "js": ["AEDSCenterHotSearch.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://inbusiness.aliexpress.com/*"],
+      "js": ["AEInBusiness.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.aliexpress.com/p/wish-manage/index.html*",
+        "https://www.aliexpress.com/p/wish-manage/detail.html*",
+        "https://www.aliexpress.us/p/wish-manage/index.html*",
+        "https://www.aliexpress.us/p/wish-manage/detail.html*"
+      ],
+      "js": ["WishManage.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/*",
+        "https://*.aliexpress.us/*",
+        "https://*.1688.com/*",
+        "https://*.taobao.com/*",
+        "https://*.amazon.com/*",
+        "https://*.alibaba.com/*",
+        "https://*.shein.com/*",
+        "https://*.vvic.com/*",
+        "https://imall.com/*",
+        "https://*.wildberries.ru/*",
+        "https://*.ebay.com/*",
+        "https://*.tiktok.com/*",
+        "https://*.temu.com/*",
+        "https://*.gmarket.co.kr/*"
+      ],
+      "js": ["levitatedSphere.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/*",
+        "https://*.aliexpress.us/*",
+        "https://*.1688.com/*",
+        "https://*.taobao.com/*",
+        "https://*.amazon.com/*",
+        "https://*.alibaba.com/*",
+        "https://*.shein.com/*",
+        "https://*.vvic.com/*",
+        "https://imall.com/*",
+        "https://*.wildberries.ru/*",
+        "https://*.ebay.com/*",
+        "https://*.tiktok.com/*",
+        "https://*.temu.com/*",
+        "https://*.gmarket.co.kr/*"
+      ],
+      "js": ["imageSearchTag.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.aliexpress.com/store/*/pages/all-items.html*",
+        "https://*.aliexpress.us/store/*/pages/all-items.html*"
+      ],
+      "js": ["aeProductListStore.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dsersInject.js",
+        "aeWishlistInject.js",
+        "aeOrderConfirmInject.js",
+        "aeProductMiniModalInject.js",
+        "temuItemInject.js"
+      ],
+      "matches": [
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.us/*",
+        "*://*.aliexpress.ru/*",
+        "*://*.dropified.com/*",
+        "*://*.dsers.com/*",
+        "*://*.temu.com/*",
+        "*://localhost:*/*"
+      ]
+    },
+    {
+      "resources": [
+        "assets/images/close.png",
+        "assets/images/error.png",
+        "assets/images/success.png",
+        "assets/images/loading.png",
+        "assets/images/arring.png",
+        "assets/images/logo.png",
+        "options.html",
+        "options.js",
+        "levitatedSphereInject.js",
+        "assets/images/1688.svg",
+        "assets/images/ae.svg",
+        "assets/images/alibaba.svg",
+        "assets/images/amazon.svg",
+        "assets/images/naverShopping.svg",
+        "assets/images/shein.svg",
+        "assets/images/tamil.svg",
+        "assets/images/taobao.svg",
+        "assets/images/wildberries.svg",
+        "imageSearchTagInject.js",
+        "WishManageInject.js",
+        "AeCouponItemInject.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

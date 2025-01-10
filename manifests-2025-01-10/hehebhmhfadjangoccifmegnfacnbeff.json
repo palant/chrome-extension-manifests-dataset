@@ -1,0 +1,127 @@
+---
+name: Overloop AI
+version: 0.0.37
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 144
+size: 4.63MiB
+languages:
+  - English (United States)
+release_date: '2025-01-06T10:57:30.000Z'
+creation_date: '2024-06-05T06:16:15.000Z'
+description: Overloop AI Extension
+publisher_hash: 5b4df26271266d88d1587728bd90d6458df5c730e185f2d3a2162db8db0a490c
+publisher: OVERLOOP SRL
+publisher_account: Overloop
+publisher_address: |-
+  Rue des Pères Blancs 4
+  Etterbeek 1040
+  BE
+publisher_phone: '+32498636468'
+privacy_policy: https://overloop.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Overloop AI",
+  "short_name": "Overloop AI",
+  "version": "0.0.37",
+  "description": "Overloop AI Extension",
+  "homepage_url": "https://overloop.ai",
+  "icons": {
+    "16": "assets/img/overloop-ai-icon-16.png",
+    "48": "assets/img/overloop-ai-icon-48.png",
+    "128": "assets/img/overloop-ai-icon-128.png"
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "assets/img/overloop-ai-icon-16.png",
+      "48": "assets/img/overloop-ai-icon-48.png",
+      "128": "assets/img/overloop-ai-icon-128.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "storage",
+    "webNavigation",
+    "cookies",
+    "identity",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://localhost:3000/*",
+    "*://*.overloop.ai/*",
+    "*://*.linkedin.com/*",
+    "*://*.herokuapp.com/*"
+  ],
+  "background": {
+    "service_worker": "lib/background/service-worker.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/lib/client/dist/*",
+        "/lib/dist/*",
+        "/assets/*"
+      ],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.overloop.ai/*",
+      "*://*.linkedin.com/*",
+      "*://localhost/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; img-src 'self' * blob: data:; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "exclude_matches": [
+        "*://*.linkedin.com/sales/*"
+      ],
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "lib/dist/linkedin.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/sales/*"
+      ],
+      "run_at": "document_start",
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "js": [
+        "lib/dist/linkedin-sales.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.linkedin.com/*"
+      ],
+      "css": [
+        "assets/css/styles.css"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "lib/dist/linkedin-ui.js"
+      ]
+    }
+  ]
+}

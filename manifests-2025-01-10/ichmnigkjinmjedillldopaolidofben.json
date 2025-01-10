@@ -1,0 +1,109 @@
+---
+name: Findymail - Email Finder & Scraper
+version: 1.0.11
+category_slug: productivity/workflow
+featured: true
+rating: 4.644444444444445
+rating_count: 45
+user_count: 8000
+size: 383KiB
+languages:
+  - English
+release_date: '2024-11-12T09:58:52.000Z'
+creation_date: '2022-06-06T08:14:10.000Z'
+description: >-
+  Find anyone's email in seconds & export from your favorite prospecting
+  platforms
+publisher_hash: 08f4f0ca269ac84eca258bfec546582b84ff8fbec3189535fb3409eeb4343515
+publisher: Peanuts SaaS Studio
+publisher_account: valentin.wallyn.suprajr
+publisher_address: |-
+  3 Ruelle des Carmélites
+  Capinghem 59160
+  FR
+publisher_phone: '+33767346646'
+extension_website: findymail.com
+extension_website_verified: true
+support_website: https://help.findymail.com
+privacy_policy: https://www.findymail.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Findymail - Email Finder & Scraper",
+  "description": "Find anyone's email in seconds & export from your favorite prospecting platforms",
+  "version": "1.0.11",
+  "author": "Findymail",
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+
+  "action": {
+    "default_icon": "icons/icon32.png",
+    "default_title": "Findymail",
+    "default_popup": "popup.html"
+  },
+
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "content_scripts": [
+    {
+      "js": ["linkedin.js"],
+      "css": ["widget.css"],
+      "matches": ["https://*.linkedin.com/sales/*", "https://*.linkedin.com/recruiter/*", "https://*.linkedin.com/search/*", "https://www.linkedin.com/posts/*"]
+    },
+    {
+      "js": ["apollo.js"],
+      "css": ["widget.css"],
+      "matches": ["https://app.apollo.io/*"]
+    },
+    {
+      "matches" : ["https://*.linkedin.com/*"],
+      "js": ["linkedin_profile.js"],
+      "css": ["widget.css"],
+      "all_frames": true
+    },
+    {
+      "matches" : ["https://*.linkedin.com/sales/lead/*"],
+      "js": ["salesnav_profile.js"],
+      "all_frames": true
+    },
+    {
+      "matches" : ["https://www.crunchbase.com/person/*"],
+      "js": ["crunchbase.js"],
+      "all_frames": true
+    }
+  ],
+
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "permissions": ["storage", "tabs"],
+
+  "externally_connectable": {
+    "matches": ["https://app.findymail.com/*"]
+  },
+  "host_permissions": ["https://*.findymail.com/*", "http://localhost/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "components/*",
+        "images/*",
+        "icons/*",
+        "pages/*",
+        "salesnav_inject.js",
+        "apollo_inject.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,79 @@
+---
+name: Neztwork meeting assistant
+version: 1.1.5
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 4
+user_count: 6
+size: 2.36MiB
+languages:
+  - English
+  - Tiếng Việt
+  - 日本語
+release_date: '2024-11-22T11:38:32.000Z'
+creation_date: '2024-10-16T07:58:39.000Z'
+description: >-
+  Neztwork transcribes meetings in real-time. It also provides a summary and
+  subtitles for movies, lectures
+publisher_hash: 2c16c7543753649d20ecfb9939901ca213f41d844eb1ba9db3eca70361607d53
+support_website: https://neztwork.com/
+privacy_policy: >-
+  https://docs.google.com/document/d/e/2PACX-1vQCltVZH4PyuD6uw8c61fVZGIGlZ8H-sbhNLKmWr9asCd2ZuW_qIGBZrqFtTs8x3_OQS7Sno4Z5jPD-/pub
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Neztwork meeting assistant",
+  "version": "1.1.5",
+  "description": "Neztwork transcribes meetings in real-time. It also provides a summary and subtitles for movies, lectures",
+  "permissions": ["tabCapture", "storage", "offscreen"],
+  "host_permissions": ["*://*.neztwork.com/*"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "src/popup.html"
+  },
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css",
+        "assets/*",
+        "requestPermissions.html",
+        "requestPermissions.js",
+        "src/container.html",
+        "container.js",
+        "subtitle.js",
+        "summaryRealtime.js"
+      ],
+      "matches": ["*://*.neztwork.com/*"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.neztwork.com/*"],
+      "all_frames": false,
+      "js": ["contentNetzwork.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

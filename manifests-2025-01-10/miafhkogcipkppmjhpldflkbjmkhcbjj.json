@@ -1,0 +1,67 @@
+---
+name: Gesys
+version: 1.0.15
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: 1
+rating_count: 1
+user_count: 29
+size: 18.65MiB
+languages:
+  - русский
+release_date: '2024-09-16T10:20:18.000Z'
+creation_date: '2023-07-17T11:25:41.000Z'
+description: Управляй браузером при помощи жестов рук👋
+publisher_hash: 82345b625ecea9e2009fe68a6ff50eb262808c7b2c5f86dddca0823ca119c476
+publisher_account: a.letyagin1
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Gesys",
+    "short_name": "Gesys",
+    "version": "1.0.15",
+    "description": "Управляй браузером при помощи жестов рук👋",
+    "permissions": [
+        "tabs",
+        "activeTab",
+        "storage"
+    ],
+    "action": {
+      "default_popup": "./src/popup/popup.html"
+    },
+    "commands": {
+      "gesys": {
+        "suggested_key": "Ctrl+Shift+5",
+        "description": "do something else"
+      }
+    },
+    "background": {
+        "service_worker": "./src/service_worker.js"
+    },
+    "content_scripts": [
+        {
+          "matches": ["https://hd.kinopoisk.ru/*"],
+          "js": ["./src/main_scripts/kinopoisk/kinopoisk.js"],
+          "all_frames": false,
+          "run_at": "document_end"
+        }
+    ],
+    
+    "web_accessible_resources": [
+        {
+          "resources": ["keras_files/model.json", "./@mediapipe", "./hand_landmarker.task",
+            "./src/popup/popup.css", "./src/popup/popup.js",
+
+            "src/main_scripts/*"],
+          "matches": ["<all_urls>"],
+          "use_dynamic_url": true
+        }
+    ],
+    "content_security_policy": {
+      "extension_pages": "script-src 'self' 'wasm-unsafe-eval' http://localhost:* http://127.0.0.1:*; script-src-elem 'self' 'wasm-unsafe-eval' 'inline-speculation-rules' https://cdn.jsdelivr.net; object-src 'self'"
+      },
+    
+    "manifest_version": 3
+}

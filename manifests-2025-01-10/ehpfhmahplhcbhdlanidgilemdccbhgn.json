@@ -1,0 +1,69 @@
+---
+name: SAMextension
+version: '2.1'
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 6
+size: 106KiB
+languages:
+  - English (United States)
+release_date: '2024-08-24T06:02:47.000Z'
+creation_date: '2024-08-24T06:02:47.000Z'
+description: Adds tooltips to SAM.gov
+publisher_hash: c91e4523a4da65946d440fb76ea1c2bf47db0997c1676889d57a990cdea95fec
+publisher: StateSimplify LLC
+publisher_address: |-
+  33 N Central Ave
+  Medford, OR 97501
+  US
+publisher_phone: '+15413315398'
+support_website: https://www.statesimplify.com/contact
+privacy_policy: https://www.termsfeed.com/live/0a57c505-cade-4dbb-9fb5-17ce4957dcf8
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SAMextension",
+  "description": "Adds tooltips to SAM.gov",
+  "manifest_version": 3,
+  "version": "2.1",
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "permissions": ["storage", "activeTab"],
+  "icons": {
+    "16": "images/extension_icon.png",
+    "48": "images/extension_icon.png",
+    "128": "images/extension_icon.png"
+  },
+  "action": {
+    "default_icon": "images/extension_icon.png",
+    "default_title": "SAMextension",
+ "default_popup": "menu/login.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>", "file:///*", "*://*/*"],
+      "js": ["include/js/jquery-3.5.1.min.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": ["https://sam.gov/SAM/pages/secured/entity/*"],
+      "css": ["content/content.css"],
+      "js": ["content/content.js"],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": ["<all_urls>", "*://*/*"],
+      "resources": ["data/*.json"]
+    }
+  ],
+  "host_permissions": ["*://*/*"]
+}

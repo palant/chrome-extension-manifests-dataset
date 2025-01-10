@@ -1,0 +1,86 @@
+---
+name: Lumo
+version: 2.8.1
+category_slug: productivity/workflow
+featured: true
+rating: null
+rating_count: null
+user_count: 76
+size: 673KiB
+languages:
+  - English (United States)
+release_date: '2022-08-10T16:59:52.000Z'
+creation_date: '2020-05-08T22:20:56.000Z'
+description: Flight data at your fingertips to help you book smarter and avoid delays.
+publisher_hash: 6390079b9e358b57b1625af2b0fbba1865b3acbb8245493eb084a7ede9936cf9
+publisher: Resilient Ops, Inc.
+publisher_account: Lumo
+publisher_address: |-
+  50 Milk St fl 16
+  Boston, MA 02110-5003
+  US
+extension_website: thinklumo.com
+extension_website_verified: true
+support_website: https://www.thinklumo.com/help/
+privacy_policy: https://www.thinklumo.com/privacy
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Lumo",
+  "description": "Flight data at your fingertips to help you book smarter and avoid delays.",
+  "version": "2.8.1",
+  "homepage_url": "https://thinklumo.com/",
+
+  "icons": {
+    "128": "icons/lumo_logo_square_extension.png"
+  },
+
+  "action": {
+    "default_title": "Lumo - Smarter Flight Data",
+    "default_icon": "icons/lumo_chrome_disconnected.png",
+    "default_popup": "html/browser.html"
+  },
+
+  "host_permissions": [
+    "*://*.concursolutions.com/*",
+    "*://*.thinklumo.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://*.concursolutions.com/travelwizard/twAir*",
+                  "https://*.concursolutions.com/travelwizard/twHotel*"],
+      "js": ["js/concur_search.js"],
+      "css" : ["css/content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.concursolutions.com/TravelWizard/twShowTrip.asp*"],
+      "js": ["js/concur_trip.js"],
+      "css" : ["css/content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://dashboard.thinklumo.com/*"],
+      "js": ["js/thinklumo.js"],
+      "css" : ["css/thinklumo.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+      "service_worker": "background.js"
+  }
+}

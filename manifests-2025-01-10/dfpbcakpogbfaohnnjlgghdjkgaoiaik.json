@@ -1,0 +1,88 @@
+---
+name: Taplio X
+version: 2.6.5
+category_slug: lifestyle/social
+featured: true
+rating: 4.019607843137255
+rating_count: 51
+user_count: 30000
+size: 94.29KiB
+languages:
+  - English (United States)
+release_date: '2024-11-08T03:18:27.000Z'
+creation_date: '2022-01-27T10:29:41.000Z'
+description: >-
+  Supercharge your LinkedIn experience: find post inspirations, consult your
+  stats, get relevant info on people.
+publisher_hash: cfb91be2628b5085f6e7dde7619b32985e8b8e607adced40524cd21421c85bab
+publisher: lempire
+publisher_account: lemlist
+publisher_address: |-
+  8 Rue de Cléry
+  Paris 75002
+  FR
+extension_website: lempire.co
+extension_website_verified: true
+support_website: https://support.taplio.com/
+privacy_policy: https://taplio.com/our-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Taplio X",
+  "name": "Taplio X",
+  "description": "Supercharge your LinkedIn experience: find post inspirations, consult your stats, get relevant info on people.",
+  "version": "2.6.5",
+  "manifest_version": 3,
+  "icons": {
+    "16": "logo_16.png",
+    "48": "logo_48.png",
+    "128": "logo_128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "css": ["/css/root.css"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://*.taplio.com/*", "http://localhost:3003/*"],
+      "js": ["apibridge.js"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "webRequest",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": ["*://*.linkedin.com/", "*://app.taplio.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "logo_taplio_500.png",
+        "closeicon.png",
+        "logo_48.png",
+        "/front-end/*"
+      ],
+      "matches": ["*://*.linkedin.com/*", "*://linkedin.com/*"]
+    }
+  ]
+}

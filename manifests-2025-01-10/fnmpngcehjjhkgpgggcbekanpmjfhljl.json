@@ -1,0 +1,109 @@
+---
+name: なろうダウンローダーEx
+version: 0.9.7
+category_slug: lifestyle/entertainment
+featured: false
+rating: 5
+rating_count: 1
+user_count: 870
+size: 1.88MiB
+languages:
+  - 日本語
+release_date: '2024-09-22T10:50:39.000Z'
+creation_date: '2023-10-20T04:17:01.000Z'
+description: |-
+  「小説家になろう」（「小説を読もう！」）の小説をダウンロード、Kindleで読むことができます。
+   
+   
+  概要
+  ①「小説家になろう」の小説をダウンロードして、PCに保存できます。
+  ②Kindleで「小説家になろう」の小説を読むことができます。
+   
+  使い方…
+publisher_hash: 4fe003f4b27fcddab6e5750045daade18ae9263422196f994511b15e9625544d
+publisher: 個人
+publisher_account: narowdownloaderex
+support_website: https://qiita.com/Aniyan/items/f77c0af4a832c5e29d89
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "なろうダウンローダーEx",
+  "version": "0.9.7",
+  "action": {
+    "default_icon": {
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png",
+      "128": "assets/icon128.png"
+    },
+    "default_title": "なろうダウンローダーEx",
+    "default_popup": "popup/index.html"
+  },
+  "icons": {
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png",
+    "128": "assets/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ncode.syosetu.com/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content-scripts/import-main.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*.png"
+      ],
+      "matches": [
+        "https://ncode.syosetu.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "chunks/**.js",
+        "content-scripts/main.js"
+      ],
+      "matches": [
+        "https://ncode.syosetu.com/*",
+        "*://ncode.syosetu.com/*",
+        "*://pdfnovels.net/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://ncode.syosetu.com/*",
+    "*://pdfnovels.net/*"
+  ],
+  "permissions": [
+    "identity",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "declarative_net_request_rules.json"
+      }
+    ]
+  },
+  "oauth2": {
+    "client_id": "370412431305-oc6buot0umdmbdg252j80b7h75jcatsi.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  }
+}

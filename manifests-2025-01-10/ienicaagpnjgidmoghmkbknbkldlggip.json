@@ -1,0 +1,88 @@
+---
+name: E-Commerce Assistant
+version: 0.0.0.2
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 8
+size: 51.67KiB
+languages:
+  - English
+release_date: '2023-04-01T06:43:09.000Z'
+creation_date: '2023-03-21T06:33:57.000Z'
+description: Enhance you e-commerce shopping and selling experience.
+publisher_hash: d13af3b95b3f9c1e0547df944b8e91e85fd06d199627b01413fc702899f9136b
+publisher: KUYE
+publisher_account: akooye
+publisher_address: |-
+  3262  Sycamore Road
+  Bend, OR 97701
+  US
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "E-Commerce Assistant",
+  "description": "Enhance you e-commerce shopping and selling experience.",
+  "version": "0.0.0.2",
+  "icons": {
+    "48": "icon.png"
+  },
+  "action": {
+    "default_popup": "background.html",
+    "default_icon": "icon.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "webRequest",
+    "storage",
+    "tabs",
+    "clipboardWrite",
+    "clipboardRead",
+    "activeTab",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://amazon.com/",
+    "https://*.amazon.com/",
+    "https://*.media-amazon.com/",
+    "https://*.1688.com/"
+  ],
+  "optional_host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "js": ["scripts/common.js"],
+      "matches": [
+        "https://*.1688.com/*"
+      ],
+      "run_at": "document_start"
+    },{
+      "js": ["scripts/common.js", "scripts/image_tool.js"],
+      "matches": [
+        "https://*.amazon.com/*"
+      ],
+      "run_at": "document_idle"
+    }, {
+      "js": ["scripts/content.js"],
+      "matches": [
+        "https://www.amazon.com/gp/new-releases/*"
+      ],
+      "run_at": "document_idle"
+    }, {
+      "js": ["scripts/content_search.js"],
+      "matches": [
+        "https://www.amazon.com/s?*",
+        "https://www.amazon.com/s/*"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

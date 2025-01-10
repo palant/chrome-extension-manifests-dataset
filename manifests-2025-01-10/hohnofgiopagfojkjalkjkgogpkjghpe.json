@@ -1,0 +1,88 @@
+---
+name: SmartReach Task Manager
+version: 1.0.60
+category_slug: lifestyle/social
+featured: false
+rating: 5
+rating_count: 2
+user_count: 175
+size: 3.37MiB
+languages:
+  - English
+release_date: '2025-01-08T12:31:23.000Z'
+creation_date: '2023-04-05T05:48:59.000Z'
+description: Sales Engagement Software for Outreach teams
+publisher_hash: 51fdb76531b688b17601589272e5be2032ca8956ced36db1080a4678d6db3251
+publisher_account: SmartReach.io
+support_website: https://help.smartreach.io/docs
+privacy_policy: https://smartreach.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.0.60",
+  "name": "SmartReach Task Manager",
+  "description": "Sales Engagement Software for Outreach teams",
+  "homepage_url": "https://smartreach.io",
+  "permissions": [
+    "storage",
+    "cookies",
+    "proxy",
+    "webRequest",
+    "webRequestAuthProvider",
+    "tabs",
+    "system.display"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/",
+    "https://api.smartreach.io/*"
+  ],
+  "content_security_policy": {
+    "script-src": "self",
+    "object-src": "self"
+  },
+  "background": {
+    "service_worker": "build/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.linkedin.com/in/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "build/webLinkedin/linkedin-init.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.linkedin.com/sales/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "build/webLinkedin/sales-nav-init.js"
+      ]
+    }
+
+  ],
+  "web_accessible_resources": [{
+    "resources": ["smartreach.html"],
+    "matches": ["<all_urls>"]
+  }],
+  "icons": {
+    "16": "icons/SmartreachLogo-1.png",
+    "48": "icons/SmartreachLogo-2.png",
+    "128": "icons/SmartreachLogo-3.png"
+  },
+  "action": {
+    "default_icon": "icons/SmartreachLogo-1.png",
+    "default_title": "SmartReach"
+  },
+  "externally_connectable": {
+    "matches": ["https://app.smartreach.io/*"]
+  }
+}

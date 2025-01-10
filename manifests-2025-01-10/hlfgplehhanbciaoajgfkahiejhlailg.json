@@ -1,0 +1,70 @@
+---
+name: SNYK Export
+version: 1.0.2
+category_slug: productivity/workflow
+featured: true
+rating: null
+rating_count: null
+user_count: 39
+size: 26.6KiB
+languages:
+  - English
+release_date: '2023-09-12T19:49:49.000Z'
+creation_date: '2023-06-01T11:41:40.000Z'
+description: Changes on SNYK UI to export, copy and improve navigation of vulnerabilities
+publisher_hash: 2b783a88512552617c6109b3fff0c1f6d53cf905235867c4c4c127f9bd6363b8
+publisher_account: donxd
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SNYK Export",
+  "version": "1.0.2",
+  "manifest_version": 3,
+  "description" : "Changes on SNYK UI to export, copy and improve navigation of vulnerabilities",
+  "minimum_chrome_version" : "89",
+  "icons": {
+    "16": "images/snyk-icon-16.png",
+    "48": "images/snyk-icon-48.png",
+    "128": "images/snyk-icon-128.png"
+  },
+  "action": {
+    "default_title": "Open snyk",
+    "default_icon": {
+      "16": "images/snyk-icon-16.png",
+      "32": "images/snyk-icon-32.png",
+      "48": "images/snyk-icon-48.png",
+      "128": "images/snyk-icon-128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "/images/copy.png", "/images/download.png", "script-snyk-issues.js" ],
+      "matches": [ "https://app.snyk.io/*" ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["https://app.snyk.io/*"],
+      "js": ["script-snyk.js"]
+    },
+    {
+      "matches": ["https://app.snyk.io/*/project/*"],
+      "js": ["script-snyk-analysis.js"]
+    },
+    {
+      "matches": ["https://app.snyk.io/registry/*/project/*"],
+      "js": ["script-snyk-issues-wrapper.js"],
+      "all_frames": true
+    },
+    {
+      "matches": ["https://security.snyk.io/package/*"],
+      "js": ["script-snyk-dependency-detail.js"]
+    }
+  ],
+  "permissions": ["activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  }
+}

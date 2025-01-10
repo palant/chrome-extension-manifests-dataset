@@ -1,0 +1,102 @@
+---
+name: Lyrics.com
+version: 1.0.1
+category_slug: lifestyle/entertainment
+featured: false
+rating: 4
+rating_count: 4
+user_count: 1000
+size: 556KiB
+languages:
+  - English
+release_date: '2024-09-03T04:51:18.000Z'
+creation_date: '2020-01-04T16:38:38.000Z'
+description: Get instant explanation for any lyrics that hits you anywhere on the web!
+publisher_hash: 80e7b02158f738401707dd1ace1d62235994960ffab585d89757e9b1dc460394
+publisher: STANDS4 LTD
+publisher_account: STANDS4 LLC
+publisher_address: |-
+  51 HaShita Street
+  Kfar Neter 40593
+  IL
+extension_website: www.lyrics.com
+extension_website_verified: true
+support_website: https://www.lyrics.com/contact.php
+privacy_policy: http://www.lyrics.com/privacy.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Lyrics.com",
+  "short_name": "Lyrics.com",
+  "version": "1.0.1",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "64": "images/icon64.png",
+    "128": "images/icon128.png"
+  },
+  "author": "STANDS4 LLC",
+  "homepage_url": "https://www.lyrics.com",
+  "action": {
+    "default_icon": "images/lyr-fav-48.png",
+    "default_popup": "popup.html",
+    "default_title": "__MSG_tooltip__"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "bs/background.js"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "**/*.js",
+      "vendors/*",
+      "popup.html"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": [
+        "vendors/jquery.min.js",
+        "vendors/jquery-ui-1.12.0.min.js",
+        "vendors/purify.min.js",
+        "vendors/ally.min.js",
+        "vendors/most.min.js",
+        "share/helpers.js",
+        "share/tools.js",
+        "share/markup.js",
+        "cs/contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://www.lyrics.com/*",
+        "https://www.lyrics.com/*"
+      ],
+      "js": ["cs/contentscript-lt.js"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      }
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

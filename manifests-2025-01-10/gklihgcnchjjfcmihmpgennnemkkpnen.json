@@ -1,0 +1,102 @@
+---
+name: Diccionario RAE en bocadillo
+version: 2.3.2
+category_slug: productivity/tools
+featured: false
+rating: 4.666666666666667
+rating_count: 18
+user_count: 2000
+size: 370KiB
+languages:
+  - español
+release_date: '2024-12-15T05:36:38.000Z'
+creation_date: '2022-07-18T08:37:22.000Z'
+description: >-
+  Diccionario de la lengua española (DLE) en bocadillo, cuadro de búsqueda y
+  ventana emergente
+publisher_hash: b80f9f4958da32c33a8d7bc67fd6b2445880ca1136d0101e46c23d15e66ec483
+publisher_account: kalixto
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+ "options_ui": {
+    "open_in_tab": true,
+  "page": "configurar.html",
+  "browser_style": false
+ },
+
+ "background": {
+  "service_worker": "popup.js"
+    },
+
+  "content_scripts": [ {
+         "all_frames": true,
+         "js": [ "content.js", "contentlab.js" ],
+         "matches": [ "<all_urls>" ],
+         "exclude_matches": [ "*://dle.rae.es/*" ]
+      },{
+         "all_frames": true,
+         "css": [ "content.css", "contentlab.css" ],
+         "matches": [ "<all_urls>" ]
+      },{
+         "all_frames": true,
+         "css": [ "dlecontent-search.css", "dlecontent-amarillo.css" ],
+         "matches": [ "*://dle.rae.es/*", "*://dle.rae.es/srv/search*" ],
+         "exclude_matches": [ "*://dle.rae.es/", "*://dle.rae.es/?w=", "*://dle.rae.es/*m=form*", "*://dle.rae.es/*m=3*", "*://dle.rae.es/*m=random*", "*://dle.rae.es/*m=anagram*", "*://dle.rae.es/*/*" ],
+         "run_at":    "document_start"
+      }
+  ],
+  "icons": {
+      "128": "img/128dle-bocadillo.png",
+       "48": "img/dle48.png",
+       "32": "img/dle32.png",
+       "16": "img/dle16.png"
+  },
+  "action": {
+         "default_icon": {
+           "16": "img/dle16.png",
+           "32": "img/dle32.png",
+           "48": "img/dle48.png"
+         },
+         "default_popup": "buscapalabra.html"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [ "img/*.gif","img/*.jpg","img/*.png" ],
+      "matches": [ "*://*/*" ]
+    }, {
+      "resources": [ "*.css" ],
+      "matches": [ "*://*/*" ]
+    }
+  ],
+
+  "host_permissions": [
+  "*://*/*",
+  "https://dle.rae.es/*",
+  "https://test.test/*"
+  ],
+
+  "manifest_version": 3,
+  "name": "Diccionario RAE en bocadillo",
+  "description": "Diccionario de la lengua española (DLE) en bocadillo, cuadro de búsqueda y ventana emergente",
+
+  "commands": {
+     "_execute_action": {
+       "suggested_key": {"default": "Ctrl + Q", "mac": "Alt + Q"},
+       "description": "Abrir cuadro de búsqueda"
+     }
+   },
+
+  "permissions": [
+      "contextMenus",
+      "storage",
+      "webRequest",
+      "scripting"
+  ],
+
+  "version": "2.3.2"
+}

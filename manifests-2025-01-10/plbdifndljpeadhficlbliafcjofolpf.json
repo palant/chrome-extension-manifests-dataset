@@ -1,0 +1,96 @@
+---
+name: CommuteEasy
+version: 0.3.0
+category_slug: productivity/workflow
+featured: false
+rating: 3
+rating_count: 2
+user_count: 18
+size: 82.1KiB
+languages:
+  - English
+release_date: '2018-05-02T04:29:58.000Z'
+creation_date: '2018-04-27T23:57:31.000Z'
+description: Show commute times on StreetEasy & Craigslist listings and maps
+publisher_hash: 6746fb88034077f059add29fc8932da4038ba488a08774de44927ad4039a878e
+publisher_account: Noah Pryor
+publisher_address: |-
+  128 Amity St
+  G
+  Brooklyn, NY 11201
+  US
+privacy_policy: https://www.linkedout.link/privacy.txt
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.3.0",
+  "short_name": "__MSG_appShortName__",
+  "manifest_version": 2,
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icon-16.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "scripts": [
+      "scripts/background.js"
+    ]
+  },
+  "browser_action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "38": "images/icon-38.png"
+    },
+    "default_title": "__MSG_browserActionTitle__",
+    "default_popup": "pages/popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "https://maps.googleapis.com/**/*"
+  ],
+  "web_accessible_resources": [
+    "scripts/craigslistMapOverlay.js",
+    "scripts/streeteasyMapOverlay.js"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://streeteasy.com/for-rent/**/*",
+        "https://streeteasy.com/**/*"
+      ],
+      "js": [
+        "scripts/streeteasySearch.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.craigslist.org/*"
+      ],
+      "exclude_matches": [
+        "https://*.craigslist.org/search/*"
+      ],
+      "js": [
+        "scripts/craigslistListing.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://*.craigslist.org/search/*"
+      ],
+      "js": [
+        "scripts/craigslistSearch.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ]
+}

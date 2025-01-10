@@ -1,0 +1,94 @@
+---
+name: Screenleap
+version: 17.0.4
+category_slug: lifestyle/social
+featured: false
+rating: 3.5161290322580645
+rating_count: 31
+user_count: 10000
+size: 478KiB
+languages:
+  - English (United States)
+release_date: '2020-06-19T10:11:04.000Z'
+creation_date: '2012-11-12T23:03:19.000Z'
+description: All-in-one tool for sharing your screen and taking screenshots
+publisher_hash: d37b44699b44de3c5b1a6162b4de980143ebe2c0faeac0ac6d21f5bc6b1180ae
+publisher: Screenleap, Inc.
+publisher_address: |-
+  808 Bauer Dr
+  San Carlos, CA 94070
+  US
+publisher_phone: '+14159993618'
+extension_website: screenleap.com
+extension_website_verified: false
+support_website: https://www.screenleap.com/support
+privacy_policy: http://www.screenleap.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Screenleap",
+    "short_name": "Screenleap",
+    "version": "17.0.4",
+    "manifest_version": 2,
+    "description": "All-in-one tool for sharing your screen and taking screenshots",
+    "content_security_policy": "script-src 'self' https://www.screenleap.com https://d2e4kn0wu3avrd.cloudfront.net; object-src 'self'",
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "<all_urls>",
+        "storage"
+    ],
+    "background": { "page": "background.html" },
+    "sandbox": { "pages": ["templateCompiler.html"] },
+    "icons": {
+        "16": "screenleap_icon_16_16.png",
+        "48": "screenleap_icon_48_48.png",
+        "128": "screenleap_icon_128_128.png"
+    },
+    "browser_action": {
+        "default_icon": "screenleap_icon_19_19_off.png",
+        "default_title": "Screenleap",
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "exclude_matches": ["https://chrome.google.com/webstore/*"],
+            "css": ["extension.css"],
+            "js": ["dispatchcontentscript.js", "contentscript.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "exclude_matches": ["https://chrome.google.com/webstore/*"],
+            "all_frames": true,
+            "js": ["dispatchcontentscript.js", "iframecontentscript.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["https://www.google.com/calendar/*"],
+            "js": ["gcal.js"]
+        },
+        {
+            "matches": [
+                "https://mail.google.com/*",
+                "https://inbox.google.com/*"
+            ],
+            "js": ["inboxsdk.js", "gmail.js"]
+        },
+        {
+            "matches": ["https://*.slack.com/*"],
+            "js": ["slack.js"]
+        }
+    ],
+    "web_accessible_resources": [
+        "indicator.gif",
+        "screenleap_icon_16_16.png",
+        "screenleap_icon_19_19.png",
+        "share_browser_window.png",
+        "sprite.gif",
+        "share_icons.png"
+    ]
+}

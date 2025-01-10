@@ -1,0 +1,102 @@
+---
+name: Discord Exporter - Backup discord chat logs
+version: 1.1.0
+category_slug: productivity/workflow
+featured: true
+rating: 3.263157894736842
+rating_count: 19
+user_count: 2000
+size: 622KiB
+languages:
+  - English
+release_date: '2023-10-06T12:31:26.000Z'
+creation_date: '2022-09-03T12:43:25.000Z'
+description: >-
+  A useful tool to export Discord chat logs to Excel xlsx/csv and batch download
+  attachments with one click.
+publisher_hash: 099780961f5b7ac05471fab44ebdc9a2a0f1ad0c4c30687a989b29526e1dfdea
+publisher_account: EchoWebBot Studio
+privacy_policy: https://echobot.dev/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "homepage_url": "https://discordexporter.echobot.dev",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "permissions": [
+    "storage",
+    "identity",
+    "downloads"
+  ],
+  "host_permissions": [
+    "https://discord.com/*",
+    "*://*.echobot.dev/*"
+  ],
+  "oauth2": {
+    "client_id": "224039609085-gonm3f2kiqj5hil08q1k3bcks7c3kdq9.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "__MSG_extName__",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/16.png",
+      "48": "icons/48.png",
+      "128": "icons/128.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://discord.com/*"
+      ],
+      "js": [
+        "content-script-start.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "https://discord.com/*"
+      ],
+      "js": [
+        "libs/jquery-3.6.0.min.js",
+        "content-script.js"
+      ],
+      "css": [
+        "css/content-script.css"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "*://*.echobot.dev/auth/success/discordexporter*"
+      ],
+      "js": [
+        "auth.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "version": "1.1.0"
+}

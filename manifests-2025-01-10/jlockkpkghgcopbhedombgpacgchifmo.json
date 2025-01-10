@@ -1,0 +1,134 @@
+---
+name: Sapher Browser Extension
+version: 1.1.0.7
+category_slug: make_chrome_yours/privacy
+featured: false
+rating: 4.5
+rating_count: 8
+user_count: 87
+size: 2.41MiB
+languages:
+  - English (UK)
+  - English (United States)
+release_date: '2025-01-10T05:32:22.000Z'
+creation_date: '2024-05-02T10:38:24.000Z'
+description: >-
+  Sapher is your ultimate digital guardian protecting your identity and devices
+  on every website you visit.
+publisher_hash: 87fd217a689cf4f7ef2983c4540a6de46c066182a01c31160baa2791ec62f623
+publisher_account: Sapher PTE. LTD.
+support_website: https://www.sapher.com/contact/
+privacy_policy: https://www.sapher.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Sapher Browser Extension",
+  "version": "1.1.0.7",
+  "default_locale": "en_US",
+  "manifest_version": 3,
+  "description": "Sapher is your ultimate digital guardian protecting your identity and devices on every website you visit.",
+  "icons": {
+    "16" : "public/assets/images/sapher_logo_whitepurple_16.png",
+    "24" : "public/assets/images/sapher_logo_whitepurple_24.png",
+    "32" : "public/assets/images/sapher_logo_whitepurple_32.png",
+    "48" : "public/assets/images/sapher_logo_whitepurple_48.png"
+  },
+  "background": {
+    "service_worker": "service_worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "*://sapher-front.test/*"
+        ,"*://localhost/*"
+        , "*://test.sapher.com/*"
+        , "*://sapher.com/*"
+        , "*://www.sapher.com/*"
+        , "*://stage.sapher.tech/*"
+        , "*://test.sapher.tech/*"
+      ],
+      "css": [
+        "public/assets/css/application.css"
+      ],
+      "js": [
+        "inc/lodash.custom.js",
+        "inc/thumbmark.umd.js",
+        "inc/ipaddr.min.js",
+        "inc/webcomponents/custom-elements.min.js",
+        "inc/elastic-handlebars/handlebars.bundle.js",
+        "public/lottie-player-2.0.4.min.js",
+        "inc/frontle_bottomsheet.min.js",
+        "templates.js",
+        "inc/common.js",
+        "inc/sapher.client.js",
+        "inc/application.js",
+        "overlay.js"
+      ],
+      "run_at" : "document_start"
+    },
+    {
+      "matches": [
+        "*://sapher-front.test/wp-login*"
+        ,"*://localhost/wp-login*"
+        ,"*://test.sapher.com/wp-login*"
+        , "*://sapher.com/wp-login*"
+        , "*://www.sapher.com/wp-login*"
+        ,"*://test.sapher.tech/wp-login*"
+        ,"*://stage.sapher.tech/wp-login*"
+      ],
+      "css": ["misc.css"],
+      "js": [
+        "inc/common.js",
+        "inc/sapher.client.js",
+        "inc/application.js",
+        "login.js"
+      ],
+      "run_at" : "document_start"
+    },
+    {
+      "matches": [
+        "*://sapher-front.test/oauth/success*"
+        ,"*://localhost/oauth/success*"
+        , "*://test.sapher.com/oauth/success*"
+        , "*://sapher.com/oauth/success*"
+        , "*://www.sapher.com/oauth/success*"
+        , "*://test.sapher.tech/oauth/success*"
+        , "*://stage.sapher.tech/oauth/success*"
+      ],
+      "css": [],
+      "js": [
+        "inc/common.js",
+        "inc/sapher.client.js",
+        "inc/application.js",
+        "pages/authSuccess.js",
+        "inc/thumbmark.umd.js"
+      ],
+      "run_at" : "document_start"
+    }
+
+  ],
+  "action": {
+    "default_title": "Sapher",
+    "default_popup": "popup/popup.html",
+    "default_icon" : {
+      "16" : "public/assets/images/sapher_logo_whitepurple_16.png",
+      "24" : "public/assets/images/sapher_logo_whitepurple_24.png",
+      "32" : "public/assets/images/sapher_logo_whitepurple_32.png"
+    }
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "public/assets/css/fonts/ticons.woff2", "public/assets/css/fonts/bootstrap-icons.woff","public/assets/css/fonts/bootstrap-icons.woff2",
+      "assets/images/spinner.gif", "popup/popup.js", "popup/popup.view.js", "popup/popup.html",  "pages/untrusted.html", "pages/reminder.html","pages/authSuccess.html",
+      "public/assets/images/sapher-spinner.json", "public/assets/images/close.png", "public/assets/images/sapher_logo_only_white.svg", "public/assets/images/icon-overlay-spinner.json", "public/assets/images/icon-overlay-spinner.gif",
+      "_locales/en_GB/messages.json", "_locales/en_US/messages.json"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+
+  "permissions": ["storage", "tabs", "history", "alarms", "webNavigation", "webRequest"],
+  "host_permissions": ["*://*/"]
+}

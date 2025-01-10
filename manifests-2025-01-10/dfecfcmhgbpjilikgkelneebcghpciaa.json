@@ -1,0 +1,89 @@
+---
+name: Tab Helper
+version: '1.5'
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 3
+user_count: 47
+size: 395KiB
+languages:
+  - English (United States)
+release_date: '2023-12-09T02:33:06.000Z'
+creation_date: '2023-03-21T11:48:40.000Z'
+description: Helper Extension for Tabroom
+publisher_hash: 867aa91c05ecbe181351db30b0993585dcfacf574035a45a3aaa64d364146ade
+publisher_account: Poke535
+privacy_policy: https://poke535.dev/extensions/tabroomhelper/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Tab Helper",
+    "description": "Helper Extension for Tabroom",
+    "version": "1.5",
+    "host_permissions": [
+      "*://speechanddebate.org/*"
+    ],
+    "permissions": [
+        "storage",
+        "cookies"
+    ],
+    "icons": {
+        "16": "icons/TH-16.png",
+        "48": "icons/TH-48.png",
+        "128": "icons/TH-128.png"
+    },
+    "action": {
+      "default_popup": "popup/popup.html"
+    },
+    "content_scripts": [
+        {
+          "js": ["scripts/judge.js"],
+          "matches": [
+            "*://www.tabroom.com/index/paradigm.mhtml",
+            "*://www.tabroom.com/index/paradigm.mhtml?judge_person_id=*",  
+            "*://www.tabroom.com/index/tourn/postings/judge.mhtml?judge_id=*"
+          ]
+        },
+        {
+          "js": ["scripts/record.js"],
+          "matches": [
+            "*://www.tabroom.com/index/results/team_results.mhtml?id1=*&id2=*",
+            "*://www.tabroom.com/index/results/team_results.mhtml?id1=*"
+          ]
+        },
+        {
+          "js": ["scripts/results.js"],
+          "matches": [
+            "https://www.tabroom.com/user/student/history.mhtml?tourn_id=*&student_id=*"
+          ]
+        },{
+          "js": ["scripts/speech_record_inserter.js"],
+          "matches": [
+            "*://www.tabroom.com/index/tourn/fields.mhtml?tourn_id=*&event_id=*"
+          ]
+        },
+        {
+          "js": ["scripts/speech_record.js"],
+          "run_at": "document_start",
+          "matches": [
+            "https://www.tabroom.com/index/results/team_results.mhtml?name=*&school=*"
+          ]
+        }
+      ],
+    "background": {
+      "service_worker": "background/nsda.js"
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [ "/templates/*" ],
+            "matches": [
+                "<all_urls>"
+              ]
+        }
+    ]
+    
+  }

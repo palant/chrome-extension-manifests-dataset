@@ -1,0 +1,100 @@
+---
+name: Extra GitHub PR Info
+version: 1.8.3
+category_slug: productivity/developer
+featured: false
+rating: null
+rating_count: null
+user_count: 201
+size: 38.37KiB
+languages:
+  - English (United States)
+release_date: '2021-09-30T01:56:01.000Z'
+creation_date: '2019-08-02T19:30:53.000Z'
+description: Edits to the GitHub UI to make it more informative
+publisher_hash: fefe0177fc85c4e2cb1fde1b3cd17d7e61cb0b7ad165059ec7d1c7c6506682ca
+publisher: Meta Platforms, Inc.
+publisher_account: Meta
+publisher_address: |-
+  1 Hacker Way
+  Menlo Park, CA 94025
+  US
+support_website: https://github.com/driazati/github-extension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Extra GitHub PR Info",
+  "short_name": "Extra GitHub PR Info",
+  "description": "Edits to the GitHub UI to make it more informative",
+  "version": "1.8.3",
+  "author": "pytorch",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "chrome_style": true
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://github.com/*/pulls*",
+        "*://github.com/pulls*"
+      ],
+      "js": [
+        "lib.js",
+        "show_build_status.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://github.com/*"
+      ],
+      "js": [
+        "disable_pjax.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://github.com/*/*/pull/*",
+        "*://github.com/*/*",
+        "*://github.com/*/*/commits/*"
+      ],
+      "js": [
+        "lib.js",
+        "unminimize_comments.js",
+        "sort_signals.js",
+        "remove_timeline_events.js",
+        "expand_signals_box.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://github.com/*/*/pull/*/files"
+      ],
+      "js": [
+        "lib.js",
+        "reorder_code_reviews.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "scripts": [
+      "remove_cors.js"
+    ],
+    "persistent": true
+  },
+  "permissions": [
+    "storage",
+    "https://github.com/*"
+  ]
+}

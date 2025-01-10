@@ -1,0 +1,136 @@
+---
+name: Rikaitan Popup Dictionary
+version: 24.12.18.1
+category_slug: productivity/education
+featured: false
+rating: 5
+rating_count: 3
+user_count: 645
+size: 10.58MiB
+languages:
+  - English (United States)
+release_date: '2024-12-29T01:38:49.000Z'
+creation_date: '2023-12-18T04:54:00.000Z'
+description: Popup dictionary for language learning by AJATT
+publisher_hash: 2c44300dfdbe0f3eb591da5dbd533ed1e8d55106e9ccb63b7e122af92d6f3308
+publisher_account: Ajatt Tools
+privacy_policy: https://github.com/Ajatt-Tools/rikaitan/blob/main/docs/privacy-policy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Rikaitan Popup Dictionary",
+    "version": "24.12.18.1",
+    "description": "Popup dictionary for language learning by AJATT",
+    "author": {
+        "email": "tatsu@autistici.org"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "19": "images/icon19.png",
+        "32": "images/icon32.png",
+        "38": "images/icon38.png",
+        "48": "images/icon48.png",
+        "64": "images/icon64.png",
+        "128": "images/icon128.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "images/icon16.png",
+            "19": "images/icon19.png",
+            "32": "images/icon32.png",
+            "38": "images/icon38.png",
+            "48": "images/icon48.png",
+            "64": "images/icon64.png",
+            "128": "images/icon128.png"
+        },
+        "default_title": "Rikaitan",
+        "default_popup": "action-popup.html"
+    },
+    "background": {
+        "service_worker": "sw.js",
+        "type": "module"
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_idle",
+            "matches": [
+                "http://*/*",
+                "https://*/*",
+                "file://*/*"
+            ],
+            "match_about_blank": true,
+            "all_frames": true,
+            "js": [
+                "js/app/content-script-wrapper.js"
+            ]
+        }
+    ],
+    "minimum_chrome_version": "102.0.0.0",
+    "options_ui": {
+        "page": "settings.html",
+        "open_in_tab": true
+    },
+    "sandbox": {
+        "pages": [
+            "template-renderer.html"
+        ]
+    },
+    "permissions": [
+        "storage",
+        "clipboardWrite",
+        "unlimitedStorage",
+        "declarativeNetRequest",
+        "scripting",
+        "offscreen",
+        "contextMenus"
+    ],
+    "optional_permissions": [
+        "clipboardRead",
+        "nativeMessaging"
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "commands": {
+        "toggleTextScanning": {
+            "suggested_key": {
+                "default": "Alt+Delete"
+            },
+            "description": "Toggle text scanning on/off"
+        },
+        "openInfoPage": {
+            "description": "Open the info page"
+        },
+        "openSettingsPage": {
+            "description": "Open the settings page"
+        },
+        "openSearchPage": {
+            "suggested_key": {
+                "default": "Alt+Insert"
+            },
+            "description": "Open the search page"
+        },
+        "openPopupWindow": {
+            "description": "Open the popup window"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "popup.html",
+                "template-renderer.html",
+                "js/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; img-src blob: 'self'; style-src 'self' 'unsafe-inline'; media-src *; connect-src *",
+        "sandbox": "sandbox allow-scripts; default-src 'self'; script-src 'self' 'unsafe-eval'; style-src 'unsafe-inline'"
+    }
+}

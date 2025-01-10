@@ -1,0 +1,133 @@
+---
+name: Mavryk Wallet
+version: 0.2.12
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 4
+user_count: 78
+size: 11.49MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - Türkçe
+  - русский
+  - українська
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+release_date: '2024-11-26T15:36:14.000Z'
+creation_date: '2024-04-26T05:30:49.000Z'
+description: 🔐💰Web extension ecosystem wallet for the Mavryk Blockchain.
+publisher_hash: 934393eea45b8a1c9bf85b4c5e8c7f7930f2e4eb35bac3ecf6ff2a853a59e7b7
+publisher_account: Mavryk Core Team
+extension_website: mavryk.org
+extension_website_verified: true
+support_website: https://mavryk.org/community
+privacy_policy: >-
+  https://docs.google.com/document/d/1Kl6Vo1WpEy8XjwzwbuGvyyDfDwwTc_x7q0WyfLfzJcs
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "0.2.12",
+  "name": "Mavryk Wallet",
+  "short_name": "Mavryk Wallet",
+  "icons": {
+    "16": "misc/icon-16.png",
+    "19": "misc/icon-19.png",
+    "38": "misc/icon-38.png",
+    "128": "misc/icon-128.png"
+  },
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "homepage_url": "https://github.com/mavryk-network/mavryk-wallet",
+  "author": "https://mavryk.org/wallet",
+  "minimum_chrome_version": "103",
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost/*",
+        "http://127.0.0.1/*",
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/contentScript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "scripts/replaceAds.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "scripts/keepBackgroundWorkerAlive.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "resources": [
+        "scripts/*.chunk.js",
+        "scripts/*.embed.js",
+        "fullpage.html",
+        "misc/ad-banners/*",
+        "iframes/persona-ad.html"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "http://localhost:8732/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "action": {
+    "default_title": "Mavryk Wallet",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "misc/icon-16.png",
+      "19": "misc/icon-19.png",
+      "38": "misc/icon-38.png",
+      "128": "misc/icon-128.png"
+    },
+    "chrome_style": false
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "background/index.js"
+  }
+}

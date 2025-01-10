@@ -1,0 +1,81 @@
+---
+name: Twizzy
+version: 0.7.6
+category_slug: make_chrome_yours/functionality
+featured: true
+rating: 5
+rating_count: 1
+user_count: 12
+size: 194KiB
+languages:
+  - English
+release_date: '2025-01-03T03:34:57.000Z'
+creation_date: '2021-01-18T13:03:15.000Z'
+description: Twizzy Browser Extension for Twitch!
+publisher_hash: e0d96937e58915c5d7168ccbfd09fcccfd070a0161fe531fe2a815cfe41fc7bb
+publisher_account: twizzy.extension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Twizzy",
+  "version": "0.7.6",
+  "description": "Twizzy Browser Extension for Twitch!",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./public/assets/icons/16x16.png",
+    "24": "./public/assets/icons/24x24.png",
+    "32": "./public/assets/icons/32x32.png",
+    "48": "./public/assets/icons/48x48.png",
+    "64": "./public/assets/icons/64x64.png",
+    "128": "./public/assets/icons/128x128.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "background",
+    "unlimitedStorage"
+  ],
+  "action": {
+    "default_popup": "./public/popup.html",
+    "default_icon": {
+      "16": "./public/assets/icons/16x16.png",
+      "24": "./public/assets/icons/24x24.png",
+      "32": "./public/assets/icons/32x32.png",
+      "48": "./public/assets/icons/48x48.png",
+      "64": "./public/assets/icons/64x64.png",
+      "128": "./public/assets/icons/128x128.png"
+    }
+  },
+  "background": {
+    "type": "module",
+    "service_worker": "build/background.twz.min.js"
+  },
+  "host_permissions": [
+    "https://twitch.tv/",
+    "https://www.twitch.tv/",
+    "https://id.twitch.tv/"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://twitch.tv/*", "*://www.twitch.tv/*"],
+      "js": ["build/content.twz.min.js"],
+      "css": ["build/content.twz.min.css"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "build/plugins.twz.min.js"
+    ],
+    "matches": [
+      "*://twitch.tv/*",
+      "*://www.twitch.tv/*"
+    ]
+  }],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,105 @@
+---
+name: Crestify
+version: 1.1.3
+category_slug: productivity/workflow
+featured: false
+rating: 4
+rating_count: 5
+user_count: 25
+size: 465KiB
+languages:
+  - English
+release_date: '2022-02-18T05:59:59.000Z'
+creation_date: '2015-02-22T14:56:17.000Z'
+description: Easy 1-click bookmarking with Crestify
+publisher_hash: e6b4ad368d1b07da0fe4110524496732ec9e49a506e424f853205144d740a377
+publisher: Crestify Solutions Private Limited
+publisher_account: Crestify
+publisher_address: |-
+  19, Roshan Bungalow, Shirkay Layout
+  Raj Nagar
+  Nagpur, Maharashtra 440013
+  IN
+publisher_phone: '+918928833033'
+extension_website: crestify.com
+extension_website_verified: true
+privacy_policy: https://www.crestify.com/tos
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Crestify",
+  "description": "Easy 1-click bookmarking with Crestify",
+  "manifest_version": 2,
+  "homepage_url": "https://crestify.com",
+  "version": "1.1.3",
+  "background": {
+    "page": "background.html"
+  },
+  "page_action": {
+    "default_icon": "icon1.png",
+    "default_title": "Click to bookmark"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true,
+    "chrome_style": true,
+    "open_in_tab": true
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self';",
+  "permissions": [
+    "tabs",
+    "http://*/*",
+    "https://*/*",
+    "<all_urls>",
+    "storage",
+    "contextMenus"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost:5000/*/*",
+        "https://crestify.tunnelto.dev/*/*",
+        "https://www.crestify.com/*/*"
+      ],
+      "js": [
+        "libs/browser-polyfill.min.js",
+        "js/login_content_script.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "http://localhost:5000/*/*",
+        "https://crestify.tunnelto.dev/*/*",
+        "https://www.crestify.com/*/*"
+      ],
+      "js": [
+        "libs/browser-polyfill.min.js",
+        "libs/jquery.min.js",
+        "libs/md5.js",
+        "libs/page-metadata-parser.bundle.js",
+        "libs/htmlclean.js",
+        "js/rel_abs.min.js",
+        "js/content_script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "addon@crestify.com",
+      "strict_min_version": "57.0"
+    }
+  },
+  "icons": {
+    "16": "/icons/16.png",
+    "48": "/icons/48.png",
+    "128": "/icons/128.png"
+  }
+}

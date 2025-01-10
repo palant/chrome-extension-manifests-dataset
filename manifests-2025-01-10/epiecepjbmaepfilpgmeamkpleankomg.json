@@ -1,0 +1,78 @@
+---
+name: T-akıbet
+version: 1.7.7
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 3
+user_count: 1000
+size: 2.82MiB
+languages:
+  - Türkçe
+release_date: '2024-03-19T08:31:52.000Z'
+creation_date: '2023-11-15T10:35:26.000Z'
+description: Avukatlar için UYAP asistanı.
+publisher_hash: 227b084007b5736d629f6bb0d7808aea69be86d649170c5badd8eae3c8b2456f
+publisher_account: t-akıbet
+publisher_address: |-
+  1308/3. Sokak No:8
+  Gebze, Kocaeli 41400
+  TR
+publisher_phone: '+905078824819'
+privacy_policy: https://t-akibet.com/gizlilik-politikasi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "1.7.7",
+  "name": "T-akıbet",
+  "description": "Avukatlar için UYAP asistanı.",
+  "background": { "service_worker": "background.js" },
+  "permissions": ["storage", "unlimitedStorage", "notifications", "alarms"],
+  "externally_connectable": {
+    "matches": ["https://t-akibet.com/*"]
+  },
+  "action": {
+    "default_icon": "public/icon.png",
+    "default_popup": "public/popup.html"
+  },
+  "icons": {
+    "16": "public/terazi16.png",
+    "64": "public/terazi64.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://avukat.uyap.gov.tr/*",
+        "*://vatandas.uyap.gov.tr/*",
+        "*://kurum.uyap.gov.tr/*",
+        "*://arabulucu.uyap.gov.tr/*"
+      ],
+      "js": ["enforcement_page_script.js", "vendor.js", "public/pdf.worker.js"]
+    }
+  ],
+  "host_permissions": [
+    "https://*.t-akibet.com/*",
+    "*://*.uyap.gov.tr/*",
+    "*://gonderitakip.ptt.gov.tr/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; frame-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "public/pdf-viewer/frame.html",
+        "public/tiff-viewer/frame.html",
+        "public/viewer.html",
+        "injection.js",
+        "public/dosyaSorgula.js",
+        "public/tarafBilgileriGoster.js",
+        "enforcement_page_script.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

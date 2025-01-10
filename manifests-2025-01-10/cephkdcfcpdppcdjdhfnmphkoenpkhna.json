@@ -1,0 +1,68 @@
+---
+name: 豆瓣书籍Notion同步助手
+version: '1.1'
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 32
+size: 1.93MiB
+languages:
+  - 中文 (简体)
+release_date: '2024-11-12T10:14:02.000Z'
+creation_date: '2024-11-06T08:50:56.000Z'
+description: 将豆瓣书籍信息同步到Notion数据库
+publisher_hash: 10632152da13994544dc1b60d0852573b5c9178f817b0475bb74a8aaac76c1db
+privacy_policy: https://mileson.notion.site/Notion-133e107ce54f8000b6e8d2cab084b6b0?pvs=73
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "豆瓣书籍Notion同步助手",
+  "version": "1.1",
+  "description": "将豆瓣书籍信息同步到Notion数据库",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://api.notion.com/*",
+    "https://book.douban.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://book.douban.com/subject/*"],
+      "js": ["content.js"]
+    }
+  ],
+  "options_page": "options.html",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/jquery.min.js",
+        "lib/select2.min.js",
+        "lib/select2.min.css",
+        "init.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

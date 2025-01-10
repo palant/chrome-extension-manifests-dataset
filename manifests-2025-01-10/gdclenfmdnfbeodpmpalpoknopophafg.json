@@ -1,0 +1,93 @@
+---
+name: ProABD Hands Free Dispatch
+version: 2.0.1
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 312
+size: 116KiB
+languages:
+  - English (United States)
+release_date: '2024-10-08T16:53:46.000Z'
+creation_date: '2019-09-13T15:46:38.000Z'
+description: Dispatch to Central Dispatch straight from ProABD.
+publisher_hash: c059fe523ffab766a5e98a33f53f5b5935163c2740bc37edf2ff4bbba1b6b0fd
+publisher_account: ProABD
+support_website: https://secure.proabd.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "ProABD Hands Free Dispatch",
+    "version": "2.0.1",
+    "author": "Superflo Systems",
+    "description": "Dispatch to Central Dispatch straight from ProABD.",
+    "permissions": [
+        "activeTab",
+        "storage",
+        "cookies",
+        "declarativeContent",
+        "scripting"
+    ],
+    "host_permissions": [
+        "*://*.proabd.com/*",
+        "*://site.centraldispatch.com/protected/cargo/my-vehicles*",
+        "*://site.centraldispatch.com/protected/dispatch/broker*",
+        "*://site.centraldispatch.com/protected/dispatch/view*",
+        "*://app.centraldispatch.com/dispatch/shipper/create*"
+    ],
+    "background": {
+        "service_worker": "js/background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": ["*://*.proabd.com/abd_order_detail.php*"],
+            "js": ["js/lib/Scraper.js"]
+        },
+        {
+            "run_at": "document_end",
+            "matches": ["*://site.centraldispatch.com/protected/cargo/my-vehicles*"],
+            "js": ["js/central_js_inject_my_vehicles.js"],
+            "css": ["css/central_css_inject.css"]
+        },
+        {
+            "run_at": "document_idle",
+            "matches": ["*://app.centraldispatch.com/dispatch/shipper/create*"],
+            "js": ["js/central_js_inject_assign_dispatch.js"],
+            "css": ["css/central_css_inject.css"]
+        },
+        {
+            "run_at": "document_end",
+            "matches": ["*://app.centraldispatch.com/dispatch/*/shipper"],
+            "js": ["js/central_js_inject_view_dispatch.js"],
+            "css": ["css/central_css_inject.css"]
+        }
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Order Exporter",
+        "default_icon": {
+            "16": "images/abd_logo16.png",
+            "32": "images/abd_logo32.png",
+            "48": "images/abd_logo48.png",
+            "128": "images/abd_logo128.png"
+        }
+    },
+    "icons": {
+        "16": "images/abd_logo16.png",
+        "32": "images/abd_logo32.png",
+        "48": "images/abd_logo48.png",
+        "128": "images/abd_logo128.png"
+    },
+    "externally_connectable": {
+        "matches": [        
+            "*://*.proabd.com/abd_order_detail.php*",
+            "*://site.centraldispatch.com/protected/cargo/my-vehicles*",
+            "*://site.centraldispatch.com/protected/dispatch/broker*",
+            "*://site.centraldispatch.com/protected/dispatch/view*"
+        ]
+    }
+}

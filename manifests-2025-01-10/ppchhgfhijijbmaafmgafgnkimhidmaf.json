@@ -1,0 +1,109 @@
+---
+name: Junify
+version: 2.26.1
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 3000
+size: 3.41MiB
+languages:
+  - English
+  - 日本語
+release_date: '2024-12-28T01:31:11.000Z'
+creation_date: '2016-11-12T10:07:07.000Z'
+description: >-
+  This browser extension helps you log into web applications and improve your
+  information security at work.
+publisher_hash: 38bb9d2ec8babafede6a25f0a98a591e220cc391da55e5a19869a738efe2c129
+publisher: Engineering
+publisher_account: Junify
+publisher_address: |-
+  470 Ramona St
+  Palo Alto, CA 94301-1707
+  US
+privacy_policy: https://www.junify.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "Junify",
+  "description": "__MSG_appDesc__",
+  "version": "2.26.1",
+  "author": "Junify Corporation",
+  "permissions": [
+    "alarms",
+    "tabs",
+    "cookies",
+    "storage",
+    "webRequest",
+    "webNavigation",
+    "downloads",
+    "nativeMessaging",
+    "scripting"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "128": "./assets/images/icon.png"
+  },
+  "action": {
+    "default_icon": "/assets/images/icon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "https://fonts.googleapis.com/css?family=Open+Sans/",
+        "assets/*",
+        "html/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "./js/content_script.js"
+      ],
+      "css": [
+        "./assets/stylesheets/injected/junify_external_websites.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "include_globs": [
+        "*extLogin=true*"
+      ],
+      "js": [
+        "./js/popup.js"
+      ],
+      "css": [
+        "./assets/stylesheets/injected/override_login_form.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "./js/background.js",
+    "type": "module"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.junify.com/*",
+      "https://*.junify.jp/*"
+    ]
+  }
+}

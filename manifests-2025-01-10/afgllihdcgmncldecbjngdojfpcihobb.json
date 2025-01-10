@@ -1,0 +1,59 @@
+---
+name: CryptoExchange Translator
+version: '1.7'
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: null
+rating_count: null
+user_count: 6
+size: 25.17KiB
+languages:
+  - English
+release_date: '2022-10-17T05:31:05.000Z'
+creation_date: '2022-08-24T07:43:36.000Z'
+description: >-
+  Crypto exchange translator, help user translate into Krean and Japenese from
+  English.
+publisher_hash: 240c77ca4e82f30537d3365bcf4380ffcb6791b2545a24544661516fd8a97e73
+publisher_account: james.a.eisenberg
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version" : 3,
+    "name" : "CryptoExchange Translator",
+    "description": "Crypto exchange translator, help user translate into Krean and Japenese from English.",
+    "version": "1.7",
+    "icons": { 
+        "128":"logo128.png"
+    },
+    "content_scripts" : [{
+        "matches" : ["<all_urls>"],
+        "js" : [ "inject.js" ],
+        "run_at" : "document_start"
+    },{
+        "matches" : ["<all_urls>"],
+        "js" : [ "inject_early.js" ],
+        "run_at" : "document_start"
+    }],
+    "background" : {
+        "service_worker" : "background.js"
+    },
+    "web_accessible_resources" : [{
+        "resources" : [ "inject.js","dialog.js","inject_early.js","XHRHook.js"],
+        "matches" : ["https://*.huobi.com/*","https://www.binance.com/*", "https://www.okx.com/*"]
+    }],
+    "declarative_net_request" : {
+        "rule_resources" : [ { "id":"request_1", "enabled" :true , "path" : "zhb_kroean.json"}]
+    },
+    "externally_connectable":{
+        "matches" : ["https://*.huobi.com/*","https://www.binance.com/*","https://www.okx.com/*"]
+    },
+    "action" : {
+         "default_popup" : "dialog.html"
+    },
+    "permissions" : [ "storage",  "tabs" , "declarativeNetRequest"],
+    "host_permissions" :  ["https://*.huobi.com/*","https://www.binance.com/*", "https://www.okx.com/*"]
+    
+}

@@ -1,0 +1,76 @@
+---
+name: TwScraper - X/Twitter Follower Scraper
+version: 1.2.0
+category_slug: productivity/workflow
+featured: true
+rating: 3
+rating_count: 5
+user_count: 1000
+size: 1.22MiB
+languages:
+  - English
+release_date: '2024-05-19T06:43:00.000Z'
+creation_date: '2023-07-11T09:32:04.000Z'
+description: One click to export X/Twitter followers and following list to CSV.
+publisher_hash: e0e5fedf981f8f4ad95bf6a4deec7aa4c43a5a374128b22fe376f31de0b5f55a
+publisher_account: mini shark
+privacy_policy: https://twfollowexport.extensionsfox.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDescription__",
+  "default_locale": "en",
+  "version": "1.2.0",
+  "homepage_url": "https://twfollowexport.extensionsfox.com/",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "storage",
+    "webRequest",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.twitter.com/*",
+    "*://*.x.com/*"
+  ],
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.twitter.com/*",
+        "https://*.x.com/*"
+      ],
+      "js": [
+        "./dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "assets/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

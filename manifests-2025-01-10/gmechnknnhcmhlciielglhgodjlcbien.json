@@ -1,0 +1,121 @@
+---
+name: SessionBox One - Multi-Login Anti-Detect Tool
+version: 4.7.4
+category_slug: productivity/workflow
+featured: true
+rating: 3.857142857142857
+rating_count: 14
+user_count: 4000
+size: 1.66MiB
+languages:
+  - English
+  - magyar
+release_date: '2024-12-18T13:28:01.000Z'
+creation_date: '2022-11-11T06:15:03.000Z'
+description: >-
+  Elevate multitasking: Unleash SessionBox One's power for managing multiple
+  accounts across all sites.
+publisher_hash: 1524e846a9ecd5a5b358b6392c910cc4be4a64f550698fa5bdb15242880f0f20
+publisher: Box Labs Kft
+publisher_account: Box Labs
+publisher_address: |-
+  Nádasdy utca 15. A. ép. 2. emelet 218. ajtó
+  Budapest 1097
+  HU
+publisher_phone: '+36205022128'
+extension_website: sessionbox.io
+extension_website_verified: true
+support_website: https://sessionbox.io/help
+privacy_policy: https://sessionbox.io/docs/(doc:privacy)
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_APP_NAME__",
+  "short_name": "__MSG_APP_SHORT_NAME__",
+  "description": "__MSG_APP_DESCRIPTION__",
+  "version": "4.7.4",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "16": "images/icon-16.png",
+    "36": "images/icon-36.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "19": "images/icon-19.png",
+      "36": "images/icon-36.png"
+    },
+    "default_title": "__MSG_BROWSER_ACTION_TITLE__"
+  },
+  "permissions": [
+    "tabs",
+    "webNavigation",
+    "storage",
+    "declarativeNetRequest",
+    "webRequest",
+    "contextMenus",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "scripts/render.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "scripts/before-load.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "assets/inject.css"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/communication.html",
+        "pages/frame.html",
+        "pages/render.html",
+        "pages/redirect.html",
+        "styles/render.css",
+        "scripts/relay-worker.js",
+        "scripts/unregister-sw.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "use_dynamic_url": false
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src ws: http: localhost:54789; script-src 'self'; style-src data: 'unsafe-inline' https://fonts.googleapis.com http://localhost:54789; img-src * data:; font-src data: https://fonts.gstatic.com http://localhost:54789; worker-src 'self';"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://open.sessionbox.dev/*"
+    ]
+  }
+}

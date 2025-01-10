@@ -1,0 +1,108 @@
+---
+name: Cap.Guru
+version: 0.0.4
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 401
+size: 98.66KiB
+languages:
+  - English
+  - русский
+release_date: '2024-09-24T07:18:04.000Z'
+creation_date: '2024-09-24T07:18:04.000Z'
+description: 'Решение капчи: TikTok/reCaptcha/hCaptcha/Other'
+publisher_hash: 24130243307136732825407607cf40d0629f34948bd3be479bb23ccf5f6b1ac0
+publisher: Cap guru ltd
+publisher_account: ker79958
+publisher_address: |-
+  Egnate Ninoshvili St
+  8
+  T'bilisi 0102
+  GE
+support_website: https://cap.guru/en/feedbackus/
+privacy_policy: https://cap.guru/en/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_chrome_extension_name__",
+ "default_locale": "ru",
+    "version": "0.0.4",
+    "description": "__MSG_chrome_extension_description__",
+    "manifest_version": 3,
+ 
+    "author": "lutic123",
+    "action":{
+        "default_popup": "popup.html",
+        "default_title": "Cap.Guru captcha solved"
+    },
+ "icons": {
+        "48": "./web/img/logo.png"
+    },
+    "content_scripts": [
+  {
+          "matches": ["<all_urls>"],
+    "run_at": "document_start",
+     "js": ["./web/js/all/libcap.js"],
+           "all_frames": true,
+     "match_about_blank": false
+        },
+  {
+            "matches": ["*://*.google.com/recaptcha/*", "*://*.recaptcha.net/recaptcha/*", "*://recaptcha.net/recaptcha/*"],
+            "js": ["./web/js/recap.js"],
+
+            "all_frames": true,
+            "run_at": "document_start",
+   "match_about_blank": false
+        },
+  {
+            "matches": ["*://tiktok.com/*", "*://*.tiktok.com/*"],
+            "js": ["./web/js/tiktok.js"],
+            "all_frames": false,
+            "run_at": "document_start",
+   "match_about_blank": true
+        },
+  {
+            "matches": ["*://*.hcaptcha.com/captcha/*"],
+            "js": ["./web/js/hcap.js"],
+            "all_frames": true,
+            "run_at": "document_start",
+   "match_about_blank": false
+        },
+  {
+            "matches": ["*://*/showcaptcha*", "*://smartcaptcha.yandexcloud.net.com/*", "*://smartcaptcha.cloud.yandex.ru/*", "*://captcha-api.yandex.ru/*"],
+            "js": ["./web/js/ya.js"],
+            "all_frames": true,
+            "run_at": "document_start",
+   "match_about_blank": false
+        },
+  {
+            "matches": ["*://*.google.com/recaptcha/*", "*://*.recaptcha.net/recaptcha/*", "*://recaptcha.net/recaptcha/*"],
+            "js": ["./web/js/recap.js"],
+            "all_frames": true,
+            "run_at": "document_start",
+   "match_about_blank": false
+        }
+    ],    
+   
+    "permissions": [ "storage",  "background","declarativeNetRequest"],
+ "background": {
+        "service_worker": "./web/js/all/bg.js",
+   "type": "module"
+    },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

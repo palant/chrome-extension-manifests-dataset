@@ -1,0 +1,127 @@
+---
+name: Hide Promoted and Applied Jobs, Companies, and Feed on LinkedIn
+version: 2.2.1
+category_slug: lifestyle/social
+featured: true
+rating: 4.375
+rating_count: 8
+user_count: 329
+size: 520KiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - español
+  - italiano
+  - português (Brasil)
+  - русский
+  - हिन्दी
+  - 中文 (简体)
+release_date: '2025-01-06T11:33:59.000Z'
+creation_date: '2024-10-22T08:46:11.000Z'
+description: >-
+  Focus on what matters: Hide companies, promoted, applied jobs, and "We won’t
+  show you this job again" on LinkedIn + AI summaries
+publisher_hash: e5a417765c9ceb5fb6aa1dd59bb3285c3f17e90528bce8cacbaeef4a546af300
+publisher_account: HideJobs
+extension_website: hidejobs.com
+extension_website_verified: true
+privacy_policy: https://hidejobs.com/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_extensionNameLang__",
+  "description": "__MSG_extensionDescriptionLang__",
+  "default_locale": "en",
+  "version": "2.2.1",
+  "icons": {
+    "128": "icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "notifications",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://hidejobs.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.linkedin.com/*"
+      ],
+      "js": [
+        "get-page-language.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/feed/*"
+      ],
+      "js": [
+        "content/content-feed.js",
+        "content/content-news.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/jobs/*",
+        "*://www.linkedin.com/collections/*"
+      ],
+      "js": [
+        "content/content-dismissed.js",
+        "content/content-promoted.js",
+        "content/content-applied.js",
+        "content/content-viewed.js",
+        "content/content-AI-summarizer.js",
+        "content/content-hide-company.js",
+        "content/text-based-hiding.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/messaging/*"
+      ],
+      "js": [
+        "content/content-messaging-sidebar.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/*"
+      ],
+      "js": [
+        "content/content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://hidejobs.com/*"
+      ],
+      "js": [
+        "content/content-login.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "HideJobs",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "48": "icon.png"
+    }
+  }
+}

@@ -1,0 +1,119 @@
+---
+name: AllAi
+version: 0.0.9.0
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 8
+user_count: 908
+size: 575KiB
+languages:
+  - English
+release_date: '2024-12-06T12:30:27.000Z'
+creation_date: '2023-12-04T12:08:33.000Z'
+description: AllAi, boosting productivity at OSF for Multicloud projects.
+publisher_hash: 8eeb99ad1d4451708a35ee0b7eb538a7db2533ae550fe089404d237af71950c6
+publisher: OSF Digital
+publisher_account: osf-digital
+publisher_address: |-
+  5600 Bd des Galeries suite 605
+  Québec, QC G2K 2H6
+  CA
+publisher_phone: '+14189146420'
+support_website: https://www.allai.digital
+privacy_policy: https://osf.digital/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "AllAi",
+  "description": "AllAi, boosting productivity at OSF for Multicloud projects.",
+  "version": "0.0.9.0",
+  "permissions": ["contextMenus", "identity", "sidePanel", "storage"],
+  "side_panel": { "default_path": "foundations/sidepanel/index.html" },
+  "options_page": "foundations/options/page/index.html",
+  "background": { "service_worker": "foundations/background/index.js", "type": "module" },
+  "action": { "default_icon": { "32": "images/allai-icon-small.20240805.png" }, "default_title": "Open AllAi" },
+  "icons": { "128": "images/allai-icon-store.20240805.png" },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["*://login.microsoftonline.com/*", "*://*.auth0.com/*"],
+      "js": ["foundations/vendor.js", "foundations/all-pages/index.js"],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["https://*.dx.commercecloud.salesforce.com/on/demandware.store/*"],
+      "js": ["extensions/commerce-cloud/commerce-cloud.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.lightning.force.com/*"],
+      "js": ["extensions/dataCloud/dataCloudScrapersHandler.js"],
+      "css": []
+    },
+    {
+      "matches": ["https://content-builder.s1.marketingcloudapps.com/*"],
+      "js": ["extensions/sfmc/contentBuilder/contentBuilderScraping.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://mc.s1.marketingcloudapps.com/AutomationStudioFuel3/*"],
+      "js": ["extensions/sfmc/mce/automation/main.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.evergage.com/*"],
+      "js": ["extensions/sfmc/mcp/catalogAndProfile/catalogAndProfile.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.evergage.com/*"],
+      "js": ["extensions/sfmc/mcp/generalSetup/generalSetup.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["extensions/sfmc/mcp/plugin/sdkPlugin.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://querystudio.herokuapp.com/"],
+      "js": ["extensions/sfmc/queryStudio/queryStudioScraping/queryStudioScraping.js"],
+      "css": [],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    { "matches": ["<all_urls>"], "resources": ["images/allai-icon-store.20240805.png"] },
+    {
+      "matches": ["https://content-builder.s1.marketingcloudapps.com/*"],
+      "resources": ["extensions/sfmc/contentBuilder/contentBuilderEditorInjector.js"]
+    },
+    {
+      "matches": ["https://mc.s1.marketingcloudapps.com/*"],
+      "resources": ["extensions/sfmc/mce/automation/activityEditorHook.js"]
+    },
+    { "matches": ["<all_urls>"], "resources": ["extensions/sfmc/mcp/plugin/personalizationMonacoEditorHook.js"] },
+    {
+      "matches": ["https://querystudio.herokuapp.com/*"],
+      "resources": ["extensions/sfmc/queryStudio/queryStudioScraping/queryStudioEditorInjector.js"]
+    }
+  ]
+}

@@ -1,0 +1,112 @@
+---
+name: Map Overlays
+version: 4.2.0
+category_slug: productivity/workflow
+featured: true
+rating: 4.56140350877193
+rating_count: 57
+user_count: 3000
+size: 281KiB
+languages:
+  - English
+release_date: '2024-12-02T05:02:58.000Z'
+creation_date: '2014-06-29T14:41:02.000Z'
+description: Change satellite images in mapping websites.
+publisher_hash: c3f4bc10d1399b97c6479eb28557e3f4cc3ab1528ace33ec68903da7231c90bb
+publisher_account: Ciprian Coman
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Map Overlays",
+ "short_name": "Map Overlays",
+ "version": "4.2.0",
+ "manifest_version": 3,
+
+ "description": "Change satellite images in mapping websites.",
+ "icons": {
+  "16": "images/logo_16.png",
+  "128": "images/logo_128.png"
+ },
+
+ "action": {
+  "default_title": "Overlays",
+  "default_icon": {
+   "19": "images/logo_19.png",
+   "38": "images/logo_38.png"
+  },
+  "default_popup": "popup.html"
+ },
+
+ "options_page": "options.html",
+
+ "background": {
+  "service_worker": "worker_main.js"
+ },
+ "content_scripts": [{
+  "matches": ["*://*.google.com/maps/d*", "*://*.waze.com/*editor*"],
+  "js": ["libs/jquery-3.6.1.min.js", "libs/proj4.js", "libs/ol.js", "scripts/conversions.js", "scripts/global.js", "scripts/overlay.js"]
+ }],
+ "web_accessible_resources": [{
+  "matches": ["<all_urls>"],
+  "resources": ["scripts/page.js"]
+ }],
+
+ "permissions": [
+  "tabs",
+  "storage",
+  "declarativeNetRequest"
+ ],
+
+ "host_permissions": [
+  "*://*.google.com/maps/d*",
+  "*://*.waze.com/*editor*",
+  "https://*.tiles.virtualearth.net/tiles*",
+  "https://services.arcgisonline.com/ArcGIS/rest/services*",
+  "https://*.tile.openstreetmap.org/*",
+  "*://*.communitymaptiles.nokia.com/tilehub*",
+  "https://*.aerial.maps.ls.hereapi.com/maptile*",
+  "https://*.apple-mapkit.com/*",
+  "https://cache.map2web.eu/toursprung/wmts/toursprung/webmercator*",
+  "https://geoportal.ancpi.ro/*",
+  "https://mapy.geoportal.gov.pl/*",
+  "https://mapserver.mapy.cz/*",
+  "*://maptiles4.finncdn.no/tileService*"
+ ],
+
+ "declarative_net_request": {
+  "rule_resources": [{
+   "id": "ruleset_1",
+   "enabled": true,
+   "path": "rules_request_headers.json"
+  }]
+ },
+
+ "commands": {
+  "toggle-last-layer": {
+   "suggested_key": {
+    "default": "Alt+L"
+   },
+   "description": "Toggle last layer"
+  },
+  "opacity-0": {
+   "suggested_key": {
+    "default": "Alt+Comma"
+   },
+   "description": "Set opacity to 0"
+  },
+  "opacity-100": {
+   "suggested_key": {
+    "default": "Alt+Period"
+   },
+   "description": "Set opacity to 1"
+  },
+  "opacity-50": {
+   "suggested_key": {
+    "default": "Alt+M"
+   },
+   "description": "Set opacity to 0.5"
+  }
+ }
+}

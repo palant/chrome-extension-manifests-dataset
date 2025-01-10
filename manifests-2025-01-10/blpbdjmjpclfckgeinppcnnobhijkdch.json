@@ -1,0 +1,95 @@
+---
+name: Hiyr
+version: 0.0.1
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 18
+size: 5.24MiB
+languages:
+  - English
+release_date: '2024-12-11T11:58:59.000Z'
+creation_date: '2024-12-10T09:24:47.000Z'
+description: Supercharge your job search
+publisher_hash: 916aa7bca726cb4a5c9acd74477a57aa59ada88300e2ae84874381fec3a9875e
+publisher_account: Hiyr AI
+extension_website: hiyr.io
+extension_website_verified: false
+support_website: https://www.hiyr.io/
+privacy_policy: https://www.hiyr.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Hiyr",
+  "description": "Supercharge your job search",
+  "version": "0.0.1",
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icon128filled.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab",
+    "background",
+    "fileSystemProvider",
+    "webRequest"
+  ],
+  "host_permissions": ["https://www.hiyr.io/*", "https://hiyr-website.vercel.app/*", "*://jobs.lever.co/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.lever.co/*",
+        "https://www.hiyr.io/*",
+        "https://hiyr-website.vercel.app/*",
+        "http://localhost:3000/*"
+      ],
+      "js": ["contentScript/contentScript.js"],
+      "type": "module",
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.hiyr.io/*",
+        "https://hiyr-website.vercel.app/*",
+        "http://localhost:3000/*"
+      ],
+      "js": ["updateTokenContentScript.js"],
+      "type": "module",
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module",
+    "matches": ["<all_urls>"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "frameAppScript/iframeApp.html",
+        "frameAppScript/frameAppScript.js",
+        "fillPage/fillpage.html",
+        "fillPage/js/*",
+        "fillPage/css/*",
+        "images/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "file_system_provider_capabilities": {
+    "configurable": true,
+    "watchable": false,
+    "multiple_mounts": true,
+    "source": "data"
+  }
+}

@@ -1,0 +1,94 @@
+---
+name: Stream Security
+version: 1.0.10
+category_slug: productivity/developer
+featured: false
+rating: 5
+rating_count: 3
+user_count: 11
+size: 11.36MiB
+languages:
+  - English
+release_date: '2024-06-13T10:17:06.000Z'
+creation_date: '2023-03-28T09:06:27.000Z'
+description: Enrich your favorite cloud ops tools with Contextual Cloud Posture
+publisher_hash: eebe7bba79b55bf19106c7ec9a41503da6e183bb9307a418bc36603cf2b17b5b
+publisher: Lightlytics Ltd.
+publisher_account: Lightlytics
+publisher_address: |-
+  Tuval St 40
+  Ramat Gan 5252247
+  IL
+extension_website: stream.security
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Stream Security",
+  "description": "Enrich your favorite cloud ops tools with Contextual Cloud Posture",
+  "version": "1.0.10",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "host_permissions": [
+    "https://*.lightops.io/*",
+    "https://*.streamsec.io/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.aws.amazon.com/*",
+        "https://*.datadoghq.com/*",
+        "https://*.cloudhealthtech.com/*",
+        "https://*.snyk.io/*",
+        "https://*.brinqa.net/*",
+        "https://*.newrelic.com/*",
+        "https://*.hunters.ai/*",
+        "https://*.crowdstrike.com/*",
+        "https://*.sev.co/*",
+        "https://*.wiz.io/*",
+        "https://*.gem.security/*",
+ "https://*.service-now.com/*"
+      ],
+      "js": ["./main_cs.js"],
+      "css": ["./main_cs.css"],
+      "match_about_blank": true,
+      "match_origin_as_fallback": true,
+      "all_frames": true
+    },
+    {
+      "matches": ["https://*.aws.amazon.com/*"],
+      "js": ["./aws_cs.js"]
+    },
+    {
+      "matches": [
+        "https://*.lightops.io/*",
+        "https://*.streamsec.io/*"
+      ],
+      "js": ["./lightlytics_cs.js"]
+    }
+  ],
+  "permissions": ["storage", "declarativeNetRequest", "contextMenus"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "icons": {
+    "16": "logo16.png",
+    "48": "logo48.png",
+    "128": "logo128.png",
+    "512": "logo512.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  }
+}

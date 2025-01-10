@@ -1,0 +1,105 @@
+---
+name: GamerPay extension
+version: 1.0.11
+category_slug: productivity/tools
+featured: false
+rating: 4.083333333333333
+rating_count: 12
+user_count: 9000
+size: 186KiB
+languages:
+  - English
+release_date: '2024-10-29T08:30:22.000Z'
+creation_date: '2024-05-28T07:47:25.000Z'
+description: GamerPay integration with Steam
+publisher_hash: c7cb3184d3a32be32b1fe7d439f33fed923202cc59106ad2e3a27cf949803b5c
+publisher: GamerPay ApS
+publisher_account: gamerpay-extension
+publisher_address: |-
+  Otto Busses Vej 5, st th
+  København SV 2450
+  DK
+publisher_phone: '+4553835753'
+support_website: https://help.gamerpay.gg/
+privacy_policy: https://gamerpay.gg/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GamerPay extension",
+  "short_name": "GamerPay",
+  "version": "1.0.11",
+  "description": "GamerPay integration with Steam",
+  "icons": {
+    "16": "icons/gp-16x16.png",
+    "48": "icons/gp-48x48.png",
+    "96": "icons/gp-96x96.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.steamcommunity.com/tradeoffer/*"
+      ],
+      "js": [
+        "src/lib/page_scripts/trade_offer.js"
+      ],
+      "css": [
+        "src/global.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.steamcommunity.com/id/*/inventory*",
+        "*://*.steamcommunity.com/profiles/*/inventory*"
+      ],
+      "js": [
+        "src/lib/page_scripts/inventory.js"
+      ],
+      "css": [
+        "src/global.css"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.steamcommunity.com/tradeoffer/new/*",
+    "*://*.steamcommunity.com/id/*/inventory*",
+    "*://*.steamcommunity.com/profiles/*/inventory*",
+    "*://*.gamerpay.gg/*",
+    "*://*.localhost:3000/*",
+    "*://*.steamcommunity.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.steamcommunity.com/*",
+      "*://*.gamerpay.gg/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/model_frame.html",
+        "src/model_frame.js"
+      ],
+      "matches": [
+        "https://steamcommunity.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "src/version.txt"
+      ],
+      "matches": [
+        "https://gamerpay.gg/*"
+      ]
+    }
+  ]
+}

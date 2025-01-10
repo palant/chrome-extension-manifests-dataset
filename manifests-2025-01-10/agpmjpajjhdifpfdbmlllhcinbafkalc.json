@@ -1,0 +1,96 @@
+---
+name: Equility Extension
+version: 1.200.11
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 24
+size: 633KiB
+languages:
+  - English
+release_date: '2024-12-16T11:45:43.000Z'
+creation_date: '2024-12-16T11:45:43.000Z'
+description: Equility extension
+publisher_hash: 92c07568f3a467e775d53995dc7ab1fa0b6dddf5bc8de94447c2ae4b35398539
+publisher_account: hello
+publisher_address: |-
+  4914 Cedar Ave
+  Philadelphia, PA 19143
+  US
+extension_website: www.equilityhq.com
+extension_website_verified: false
+privacy_policy: https://www.equilityhq.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Equility Extension",
+  "description": "Equility extension",
+  "version": "1.200.11",
+  "manifest_version": 3,
+  "icons": {
+    "16": "./icons/favicon-32x32.png",
+    "48": "./icons/favicon-100x100.png",
+    "128": "./icons/favicon-180x180.png"
+  },
+  "action": {
+    "default_popup": "./index.html"
+  },
+  "background": {
+    "service_worker": "./static/js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.qbo.intuit.com/*"
+      ],
+      "js": [
+        "./static/js/content.js"
+      ],
+      "css": [
+        "./content/content.css"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.equilityhq.com/*",
+        "https://*.equility-web.fly.dev/*",
+        "http://*.localhost:3001/*"
+      ],
+      "js": [
+        "./static/js/content.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["https://*.qbo.intuit.com/*"]
+    },
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]  
+    }
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "activeTab",
+    "webNavigation",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://*.qbo.intuit.com/*",
+    "https://*.equility-web.fly.dev/*",
+    "https://*.equilityhq.com/*",
+    "http://*.localhost:3001/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' http://localhost;object-src 'self';"
+  }
+}

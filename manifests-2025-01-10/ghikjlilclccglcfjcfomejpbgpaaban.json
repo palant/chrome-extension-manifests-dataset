@@ -1,0 +1,115 @@
+---
+name: Surf
+version: 0.4.54
+category_slug: lifestyle/fun
+featured: false
+rating: 4.251450676982592
+rating_count: 1034
+user_count: 10000
+size: 1.33MiB
+languages:
+  - English
+release_date: '2025-01-02T07:12:01.000Z'
+creation_date: '2021-09-05T08:37:46.000Z'
+description: Surf rewards you for your everyday browsing.
+publisher_hash: 75828522648890c457131bfbf0426b8017efb997cfeb5f7069ae305664e7f0d9
+publisher: Datacy Inc.
+publisher_account: Datacy, Inc.
+publisher_address: |-
+  1721 3rd Ave N Suite 201
+  Birmingham, AL 35203-2082
+  US
+publisher_phone: '+14086474412'
+extension_website: joinsurf.com
+extension_website_verified: true
+privacy_policy: http://joinsurf.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "version": "0.4.54",
+  "name": "Surf",
+  "description": "Surf rewards you for your everyday browsing.",
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "http://*/",
+    "https://*/",
+    "storage",
+    "webNavigation",
+    "alarms"
+  ],
+  "oauth2": {
+    "client_id": "616868683921-bpok9c7arg30t4srldtu4n1trobchint.apps.googleusercontent.com",
+    "scopes": [
+      "profile",
+      "email",
+      "openid"
+    ]
+  },
+  "icons": {
+    "192": "logo192.png",
+    "512": "logo512.png"
+  },
+  "browser_action": {
+    "default_icon": "logo192.png",
+    "default_popup": "index.html",
+    "default_title": "Surf"
+  },
+  "background": {
+    "scripts": [
+      "./background.js"
+    ],
+    "persistent": true
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "./web-app-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "http://localhost:3000/*",
+        "https://app.joinsurf-staging.com/*",
+        "https://app.joinsurf.com/*"
+      ]
+    },
+    {
+      "js": [
+        "./marketing-site-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://surf-ae5ea3.webflow.io/*",
+        "https://joinsurf.com/*",
+        "https://www.joinsurf.com/*"
+      ]
+    },
+    {
+      "js": [
+        "./giveaways-site-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "http://localhost.test:3000/*",
+        "http://dashboard.localhost.test:3000/*",
+        "https://giveaways.joinsurf-staging.com/*",
+        "https://dashboard.giveaways.joinsurf-staging.com/*",
+        "https://giveaways.joinsurf.com/*",
+        "https://dashboard.giveaways.joinsurf.com/*"
+      ]
+    },
+    {
+      "js": [
+        "./alerts-bus.js"
+      ],
+      "run_at": "document_start",
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ]
+    }
+  ]
+}

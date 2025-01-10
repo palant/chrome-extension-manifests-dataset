@@ -1,0 +1,152 @@
+---
+name: trellus
+version: 1.5.4.9
+category_slug: productivity/workflow
+featured: false
+rating: 4.967213114754099
+rating_count: 61
+user_count: 2000
+size: 1.01MiB
+languages:
+  - English
+release_date: '2025-01-10T12:42:11.000Z'
+creation_date: '2022-06-14T05:08:38.000Z'
+description: >-
+  Trellus is an AI copilot for cold calls/emails that works on top of Salesloft,
+  Outreach, Hubspot, Apollo
+publisher_hash: 0020c32a34e8c6b9c4fd30f6350e54ad49dad06febc1d70ea73b08b4bfe7576f
+publisher: Outpost Labs Inc. (dba Trellus)
+publisher_account: Trellus
+publisher_address: |-
+  169 Madison Ave #2457
+  New York, NY 10016
+  US
+extension_website: www.trellus.ai
+extension_website_verified: true
+support_website: https://www.trellus.ai
+privacy_policy: https://www.trellus.ai/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "trellus",
+    "version": "1.5.4.9",
+    "description": "Trellus is an AI copilot for cold calls/emails that works on top of Salesloft, Outreach, Hubspot, Apollo",
+    "homepage_url": "https://trellus.ai",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "src/ext/background.js",
+        "type": "module"
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "system.display",
+        "declarativeNetRequestWithHostAccess"
+    ],
+    "host_permissions": [
+        "*://app.salesloft.com/*",
+        "*://orum.com/*",
+        "*://web.outreach.io/*",
+        "*://ringcentral.github.io/ringcentral-embeddable/*",
+        "*://app.hubspot.com/*",
+        "*://app.apollo.io/*",
+        "*://www.phoneburner.com/dialer/dial/begin*",
+        "*://salesfinity.co/*",
+        "*://*.connectandsell.com/*",
+        "*://dialpad.com/*",
+        "*://*.kixie.com/*",
+        "*://*.salesforce.com/*",
+        "*://*.force.com/*"
+    ],
+    "optional_permissions": [
+      "scripting",
+      "cookies"
+    ],
+    "optional_host_permissions": ["https://*/*", "http://*/*"],
+    "content_scripts": [
+        {
+          "matches": [
+            "*://app.trellus.ai/pages/*"
+          ],
+          "js": [
+            "src/ext/app-content-wrapper.js"
+          ]
+        },
+        {
+            "matches": [
+                "*://app.salesloft.com/*",
+                "*://web.outreach.io/*",
+                "*://orum.com/*",
+                "*://ringcentral.github.io/ringcentral-embeddable/*",
+                "*://app.hubspot.com/calling/*",
+                "*://app.apollo.io/*",
+                "*://www.phoneburner.com/dialer/dial/begin*",
+                "*://salesfinity.co/*",
+                "*://*.connectandsell.com/*",
+                "*://dialpad.com/*",
+                "*://*.kixie.com/*",
+                "*://*.salesforce.com/*",
+                "*://*.force.com/*"
+            ],
+            "js": [
+               "src/ext/dialer-content-wrapper.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "enabled": true,
+                "id": "ruleset",
+                "path": "ruleset.json"
+            }
+        ]
+    },
+    "action": {
+        "default_icon": {
+            "16": "images/16.png",
+            "32": "images/32.png",
+            "48": "images/48.png",
+            "128": "images/128.png"
+        }
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+              "*.png",
+              "*.js",
+              "*.css",
+              "*.html",
+              "*.svg",
+              "*.mp3"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "externally_connectable": {
+        "matches": [
+          "*://app.trellus.ai/*"
+        ]
+      },
+    "icons": {
+        "16": "images/16.png",
+        "32": "images/32.png",
+        "48": "images/48.png",
+        "128": "images/128.png"
+    },
+    "commands": {
+    "toggle-auto-dialer": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space",
+        "mac": "Command+Shift+Space"
+      },
+      "description": "Toggle autodialer on the current page via ctrl shift space."
+    }
+  }
+}

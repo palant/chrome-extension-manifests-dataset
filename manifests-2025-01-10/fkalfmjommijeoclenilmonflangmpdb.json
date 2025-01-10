@@ -1,0 +1,125 @@
+---
+name: HPlus
+version: '2.0'
+category_slug: make_chrome_yours/functionality
+featured: false
+rating: 4.8
+rating_count: 5
+user_count: 27
+size: 2.12MiB
+languages:
+  - עברית
+release_date: '2024-12-14T21:19:31.000Z'
+creation_date: '2020-08-12T05:53:39.000Z'
+description: מוסיף עוד הרבה פיצ'רים ל-HPortal.
+publisher_hash: c676a4fede07561a8004f8eb940e32c6a854d452d0ae1324f7d09e5395597147
+publisher_account: peleghportal
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "HPlus",
+  "version": "2.0",
+  "description": "מוסיף עוד הרבה פיצ'רים ל-HPortal.",
+  "short_name": "HP+",
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+ 
+  "icons": { 
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "justarandomname@lolitem.lolending",
+      "strict_min_version": "109.0"
+    }
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "images/icon16.png",
+      "24": "images/icon24.png",
+      "32": "images/icon32.png"
+    }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*",
+        "options/*",
+        "savedOwls/*",
+        "owleryPages/"
+      ],
+      "matches": ["*://hportal.co.il/*"]
+    }
+  ],
+
+  "content_scripts": [
+    {
+      "css": ["styles.css"],
+      "js": ["jquery.min.js", "script.js"],
+      "matches": ["*://hportal.co.il/*"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?showtopic=*", "*://hportal.co.il/index.php?act=ST&f=*&t=*"],
+      "js": ["/pagesJS/topics.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Post&CODE=*&*=*", "*://hportal.co.il/index.php?"],
+      "js": ["/pagesJS/comment-writing.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php*showuser=*"],
+      "js": ["/pagesJS/user-profile.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=store&CODE=donate_money&username=*"],
+      "js": ["/pagesJS/donate.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01*",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1*"],
+      "css": ["owlery.css"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=01",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=01&VID=in*",
+                  "*://hportal.co.il/index.php?act=Msg&CODE=1&VID=in*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=01&VID=in*",
+                  "*://hportal.co.il/index.php?&act=Msg&CODE=1&VID=in*"],
+      "js": ["/pagesJS/owlery.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?*CODE=04*",
+                  "*://hportal.co.il/index.php?*CODE=4*"],
+      "js": ["savedOwls/savedReply.js"]
+    },
+    {
+      "matches": ["*://hportal.co.il/index.php?act=Msg&CODE=03&VID=in&MSID=*"],
+      "js": ["/pagesJS/in-owl.js"]
+    }
+  ]
+}

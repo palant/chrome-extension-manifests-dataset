@@ -1,0 +1,91 @@
+---
+name: SafeGaze - Blur Haram Images, Block Ads, Block Haram website, Safe Search
+version: 2.2.0
+category_slug: productivity/workflow
+featured: false
+rating: 4.615384615384615
+rating_count: 26
+user_count: 969
+size: 20.05MiB
+languages:
+  - English (United States)
+release_date: '2025-01-03T05:18:47.000Z'
+creation_date: '2023-05-14T08:05:54.000Z'
+description: >-
+  SafeGaze detects and masks potentially haram & sensitive contents in your
+  browser.
+publisher_hash: af695edfaf1ab7b0b0d4b98684290b12ed65bfe317da21b4d6ccf92d4b3334fe
+publisher_account: sabu.prof
+extension_website: kahf.ai
+extension_website_verified: true
+support_website: https://safegaze.com/support
+privacy_policy: https://kahf.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "SafeGaze - Blur Haram Images, Block Ads, Block Haram website, Safe Search",
+ "version": "2.2.0",
+ "description": "SafeGaze detects and masks potentially haram & sensitive contents in your browser.",
+ "background": {
+  "service_worker": "src/background/index.js",
+  "type": "module"
+ },
+ "action": {
+  "default_popup": "settings/popup.html",
+  "default_icon": {
+   "16": "logo/sg-logo-only.png",
+   "32": "logo/sg-logo-only.png",
+   "48": "logo/sg-logo-only.png",
+   "128": "logo/sg-logo-only.png"
+  }
+ },
+ "icons": {
+  "16": "logo/sg-logo-only.png",
+  "32": "logo/sg-logo-only.png",
+  "48": "logo/sg-logo-only.png",
+  "128": "logo/sg-logo-only.png"
+ },
+ "permissions": [
+  "tabs",
+  "activeTab",
+  "offscreen",
+  "storage",
+  "settingsPrivate",
+  "webNavigation",
+  "tabs",
+  "declarativeNetRequest"
+ ],
+
+ "declarative_net_request": {
+  "rule_resources": [
+   {
+    "id": "youtube_safe_search_ruleset",
+    "enabled": true,
+    "path": "netRequestRules/youtube.json"
+   },
+   {
+    "id": "google_safe_search_ruleset",
+    "enabled": true,
+    "path": "netRequestRules/google.json"
+   },
+   {
+    "id": "ad_hosts",
+    "enabled": true,
+    "path": "netRequestRules/ad_hosts.json"
+   }
+  ]
+ },
+ "content_scripts": [
+  {
+   "matches": ["<all_urls>"],
+   "js": ["src/content/index2.js"],
+   "css": ["src/content/content-styles.css"],
+
+   "run_at": "document_start",
+   "all_frames": true
+  }
+ ]
+}

@@ -1,0 +1,81 @@
+---
+name: Inbox2Notion
+version: 1.0.59
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 9
+user_count: 644
+size: 3.88MiB
+languages:
+  - English
+release_date: '2025-01-07T07:09:36.000Z'
+creation_date: '2023-07-28T04:01:30.000Z'
+description: The power of Notion in your Inbox 🚀
+publisher_hash: 852533575b6bb79ba9cfc57e210e5919fdeb37d8dc1db0ee0350b9bf2a8ab2f6
+publisher: Activelabs
+publisher_account: Inbox2Notion
+publisher_address: |-
+  529-329 Howe St
+  Vancouver, BC V6C 3N2
+  CA
+extension_website: inbox2notion.com
+extension_website_verified: true
+support_website: https://help.inbox2notion.com
+privacy_policy: https://inbox2notion.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Inbox2Notion",
+  "description": "The power of Notion in your Inbox 🚀",
+
+  "version": "1.0.59",
+
+  "icons": {
+    "128": "images/i2n-logo-bg-white.png"
+  },
+  "action": {
+    "default_popup": "pages/app/index.html#action_popup",
+    "default_icon": "images/i2n-logo-bg-white.png",
+    "default_title": "Open Inbox2Notion"
+  },
+  "permissions": ["scripting", "storage", "activeTab", "tabs"],
+  "host_permissions": ["https://mail.google.com/", "https://inbox.google.com/", "https://api.notion.com/", "https://*.notion.so/*"],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "js": ["js/content_main.js"],
+      "css": ["css/content_main.css", "css/notification.css", "css/labels.css", "css/pipeline.css", "css/tabulator.min.css", "css/fonts.css"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://auth.inbox2notion.com/*"],
+      "js": ["js/supabase-oauth-process.js"]
+    },
+    {
+      "matches": ["https://inbox2notion.com/install*"],
+      "js": ["js/content_greeting.js"]
+    },
+    {
+      "matches": ["https://inbox2notion.com/upgrade-success*"],
+      "js": ["js/content_upgrade.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["js/content-modules/*", "images/*", "html/*", "webfonts/*", "*"],
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"]
+    },
+    {
+      "resources": ["pageWorld.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ]
+}

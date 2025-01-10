@@ -1,0 +1,96 @@
+---
+name: SameTix | Find Cheap Event Tickets
+version: 0.6.5
+category_slug: lifestyle/entertainment
+featured: true
+rating: 4.714285714285714
+rating_count: 28
+user_count: 1000
+size: 467KiB
+languages:
+  - English (United States)
+release_date: '2024-11-11T08:15:22.000Z'
+creation_date: '2023-06-19T09:48:12.000Z'
+description: Find cheaper tickets for concerts, sports events, comedy, theater and more.
+publisher_hash: c60b2925ce6c138b587c5c75de8d79134bc805ccd7192668a2779136d2fff715
+publisher_account: SameTix
+extension_website: sametix.com
+extension_website_verified: true
+privacy_policy: https://sametix.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SameTix | Find Cheap Event Tickets",
+  "version": "0.6.5",
+  "manifest_version": 3,
+  "description": "Find cheaper tickets for concerts, sports events, comedy, theater and more.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "src/bg/background.js"
+  },
+  "action": {
+    "default_icon": "icons/icon48.png",
+    "default_title": "SameTix - There’s a better price for this show!"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://*.ticketmaster.com/*",
+    "*://*.ticketmaster.ca/*",
+    "*://*.livenation.com/*",
+    "*://*.livenation.ca/*",
+    "*://*.stubhub.com/*",
+    "*://*.tickpick.com/*",
+    "*://*.sametix.com/*",
+    "*://*.vividseats.com/*",
+    "*://*.seatgeek.com/*",
+    "*://*.gametime.co/*",
+    "*://*.amplitude.com/*"
+  ],
+  "web_accessible_resources": [{
+    "resources": ["/src/inject/xhr.js",
+                  "/src/inject/css/sametix.css",
+                  "/src/inject/img/*.svg",
+                  "/src/inject/js/awesome.min.js",
+                  "/icons/*.png"],
+    "matches":   ["*://*.ticketmaster.com/*",
+                  "*://*.ticketmaster.ca/*",
+                  "*://*.livenation.com/*",
+                  "*://*.livenation.ca/*",
+                  "*://*.stubhub.com/*",
+                  "*://*.tickpick.com/*",
+                  "*://*.vividseats.com/*",
+                  "*://*.seatgeek.com/*",
+                  "*://*.gametime.co/*",
+                  "*://*.tickpick.com/*"]
+  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.livenation.com/*",
+        "*://*.livenation.ca/*",
+        "*://*.ticketmaster.com/*",
+        "*://*.ticketmaster.ca/*",
+        "https://*.stubhub.com/*",
+        "https://*.tickpick.com/*",
+        "*://*.vividseats.com/*",
+        "*://*.seatgeek.com/*",
+        "*://*.gametime.co/*",
+        "https://sametix.com/sametix-install-successful/"
+      ],
+      "js": [
+        "src/inject/inject.js"
+      ],
+      "run_at":    "document_start"
+    }
+  ]
+}
+

@@ -1,0 +1,88 @@
+---
+name: Spector.js
+version: 0.9.32
+category_slug: productivity/developer
+featured: true
+rating: 4.644444444444445
+rating_count: 45
+user_count: 30000
+size: 370KiB
+languages:
+  - English
+release_date: '2024-10-15T06:43:03.000Z'
+creation_date: '2017-05-03T09:14:36.000Z'
+description: Explore and Troubleshoot your WebGL scenes easily.
+publisher_hash: 601724bdd18e27b5f64d11e106dc32c10a91be2084b9b360f367847122fdff68
+publisher_account: babylon.js
+support_website: https://github.com/BabylonJS/Spector.js
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "minimum_chrome_version": "100",
+  "name" : "Spector.js",
+  "version" : "0.9.32",
+  "homepage_url": "http://spector.babylonjs.com/",
+  "description" : "Explore and Troubleshoot your WebGL scenes easily.",
+  "author": "@SpectorJS",
+  "host_permissions": [
+    "http://*/*", "https://*/*"
+  ],
+  "permissions": ["storage", "unlimitedStorage", "activeTab"],
+  "action" :
+  {
+    "default_icon" : {
+      "19": "spectorjs-19.png",
+      "38": "spectorjs-38.png"
+    },
+    "default_title" : "Debug with Spector"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts" : [
+    {
+      "matches" : [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["contentScriptProxy.js"],
+      "run_at" : "document_start",
+      "all_frames" : true,
+      "world": "ISOLATED"
+    },
+    {
+      "matches" : [
+        "file://*/*",
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js" : ["spector.bundle.func.js", "contentScript.js"],
+      "run_at" : "document_start",
+      "all_frames" : true,
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "spector.bundle.js",
+        "popup.js",
+        "result.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "icons" : {
+    "48" : "spectorjs-48.png",
+    "128" : "spectorjs-128128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+   }
+}

@@ -1,0 +1,113 @@
+---
+name: Vimium HNTP Tab Page
+version: '1.1'
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 12
+size: 480KiB
+languages:
+  - English (United States)
+release_date: '2023-03-16T06:25:06.000Z'
+creation_date: '2023-03-16T06:25:06.000Z'
+description: >-
+  Let vimium can run on the HNTP (new tab) page well. so you can use the
+  keyboard all the time.
+publisher_hash: 7ad47da52f61f20c2ec0b76080e4e432543845a8bcf4b45b6ee6a1e28247b5f0
+publisher_account: wishrivers
+support_website: https://github.com/wishrivers/VimiumTabpage
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Vimium HNTP Tab Page",
+  "short_name": "VimiumTabpage",
+  "version": "1.1",
+  "description": "Let vimium can run on the HNTP (new tab) page well. so you can use the keyboard all the time.",
+   "icons": {
+      "128": "vimium/icons/icon128.png",
+      "16": "vimium/icons/icon16.png",
+      "48": "vimium/icons/icon48.png"
+   },
+  "minimum_chrome_version": "88.0",
+   "chrome_url_overrides": {
+      "newtab": "HumbleNewTabPage/pre.html"
+   },
+  "background": {
+    "service_worker": "vimium/lib/utils.js"
+  },
+  "options_ui": {
+    "page": "vimium/pages/options.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "tabs",
+    "bookmarks",
+    "history",
+    "clipboardRead",
+    "clipboardWrite",
+    "storage",
+    "sessions",
+    "notifications",
+    "webNavigation",
+    "chrome://favicon/", 
+    "topSites", 
+    "management", 
+    "fontSettings",
+    "<all_urls>"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+             "vimium/lib/utils.js",
+             "vimium/lib/keyboard_utils.js",
+             "vimium/lib/dom_utils.js",
+             "vimium/lib/rect.js",
+             "vimium/lib/handler_stack.js",
+             "vimium/lib/settings.js",
+             "vimium/lib/find_mode_history.js",
+             "vimium/content_scripts/mode.js",
+             "vimium/content_scripts/ui_component.js",
+             "vimium/content_scripts/link_hints.js",
+             "vimium/content_scripts/vomnibar.js",
+             "vimium/content_scripts/scroller.js",
+             "vimium/content_scripts/marks.js",
+             "vimium/content_scripts/mode_insert.js",
+             "vimium/content_scripts/mode_find.js",
+             "vimium/content_scripts/mode_key_handler.js",
+             "vimium/content_scripts/mode_visual.js",
+             "vimium/content_scripts/hud.js",
+             "vimium/content_scripts/mode_normal.js",
+             "vimium/content_scripts/vimium_frontend.js"
+            ],
+      "css": ["vimium/content_scripts/vimium.css"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["file:///", "file:///*/"],
+      "css": ["vimium/content_scripts/file_urls.css"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "browser_action": {
+    "default_icon": "vimium/icons/browser_action_disabled.png",
+    "default_popup": "vimium/pages/popup.html"
+  },
+  "web_accessible_resources": [{
+    "matches": ["<all_urls>"],
+    "resources": [
+        "vimium/pages/vomnibar.html",
+        "vimium/content_scripts/vimium.css",
+        "vimium/pages/hud.html",
+        "vimium/pages/help_dialog.html",
+        "vimium/pages/completion_engines.html"
+      ]
+  }]
+}

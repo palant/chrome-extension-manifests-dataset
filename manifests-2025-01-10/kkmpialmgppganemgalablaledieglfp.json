@@ -1,0 +1,100 @@
+---
+name: Flatpilot AI
+version: 0.0.3
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 8
+size: 767KiB
+languages:
+  - English
+release_date: '2025-01-10T09:51:17.000Z'
+creation_date: '2024-11-25T18:45:57.000Z'
+description: Helping you find your perfect apartment.
+publisher_hash: fbff2669a927c167b0e72c081552db6265fa3fa38a5aa3f8f0a2c60e349381e3
+publisher: TinyVentures
+publisher_address: |-
+  Sepapaja 6
+  Tallinn, Harjumaa 15551
+  EE
+publisher_phone: '+41783111420'
+extension_website: flatpilot.de
+extension_website_verified: false
+privacy_policy: https://flatpilot.de/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDescription__",
+  "version": "0.0.3",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "unlimitedStorage",
+    "storage",
+    "identity",
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://www.immobilienscout24.de/*",
+    "https://www.kleinanzeigen.de/*"
+  ],
+  "oauth2": {
+    "client_id": "758821468658-qavr35i69u9j9q1ut1gc99ehq0jbis0a.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile"
+    ]
+  },
+  "icons": {
+    "16": "images/logo-16.png",
+    "48": "images/logo-48.png",
+    "128": "images/logo-128.png"
+  },
+  "options_page": "html/options.html",
+  "action": {
+    "default_title": "Flatpilot",
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+        "matches": ["*://www.immobilienscout24.de/*"],
+        "js": ["js/immScrape.js"]
+    },
+    {
+        "matches": ["*://www.immobilienscout24.de/expose/*"],
+        "js": ["js/immCta.js"]
+    },
+    {
+        "matches": ["*://www.kleinanzeigen.de/*"],
+        "js": ["js/kleScrape.js", "js/kleCta.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/popup.js",
+        "js/supabaseClient.js",
+        "js/supalib.js",
+        "js/immScrape.js",
+        "images/logo-48.png",
+        "css/ctaStyle.css",
+        "fonts/BloggerSans-Medium.eot",
+        "fonts/BloggerSans-Medium.woff",
+        "fonts/BloggerSans-Medium.ttf",
+        "fonts/BloggerSans-Medium.svg"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

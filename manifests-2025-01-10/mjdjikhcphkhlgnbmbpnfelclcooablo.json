@@ -1,0 +1,64 @@
+---
+name: BabbelSky
+version: 1.0.1
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 1
+size: 27.97KiB
+languages:
+  - English (United States)
+release_date: '2024-12-17T06:47:58.000Z'
+creation_date: '2024-12-17T06:47:58.000Z'
+description: >-
+  Enhances the translation feature on Bluesky posts using custom translation
+  services.
+publisher_hash: 3cc72c198b883a360a88668ffdbeda3c80a07593d755ce1fb3c6829497e2a1f8
+publisher_account: william.grunow93
+privacy_policy: https://github.com/EntropicEffect/BabbelSky/blob/main/PRIVACY_POLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BabbelSky",
+  "version": "1.0.1",
+  "description": "Enhances the translation feature on Bluesky posts using custom translation services.",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://bsky.app/profile/*/post/*",
+    "https://api.openai.com/*",
+    "https://translation.googleapis.com/*"
+  ],
+  "background": {
+    "scripts": ["background.js"],
+    "type": "module",
+    "service_worker": "background.js"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; connect-src 'self' https://api.openai.com https://translation.googleapis.com;"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://bsky.app/*"],
+      "js": ["detector.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "babbelsky@translation.com",
+      "strict_min_version": "58.0"
+    }
+  }
+}

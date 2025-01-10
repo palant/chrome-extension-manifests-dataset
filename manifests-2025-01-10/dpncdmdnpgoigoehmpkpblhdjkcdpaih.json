@@ -1,0 +1,195 @@
+---
+name: Reach from SalesStream.ai
+version: 1.500.122
+category_slug: productivity/tools
+featured: false
+rating: 4.7272727272727275
+rating_count: 11
+user_count: 200
+size: 3.52MiB
+languages:
+  - English (United States)
+release_date: '2024-12-24T17:37:00.000Z'
+creation_date: '2024-03-05T19:18:55.000Z'
+description: Super-simple free forever Email & SMS campaign builder
+publisher_hash: 6881cc279f63778dc6c587e178b18f813cf95cb29a24c56c335b19cb8931215c
+publisher_account: SalesStream.ai
+publisher_address: |-
+  5250 Woodman Ave
+  Los Angeles, CA 91401-5828
+  US
+publisher_phone: '+18188171124'
+extension_website: salesstream.ai
+extension_website_verified: true
+privacy_policy: https://salesstream.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Reach from SalesStream.ai",
+  "description": "Super-simple free forever Email & SMS campaign builder",
+  "version": "1.500.122",
+  "host_permissions": [
+    "https://portal.azure.com/*",
+    "https://login.microsoftonline.com/*",
+    "https://login.live.com/*",
+    "https://console.cloud.google.com/*",
+    "https://accounts.google.com/*",
+    "https://admin.google.com/*",
+    "https://docs.google.com/spreadsheets/d/*",
+    "https://excel.officeapps.live.com/*",
+    "https://euc-excel.officeapps.live.com/*",
+    "https://*.bullhornstaffing.com/core/search/Candidate*",
+    "https://*.bullhornstaffing.com/core/search/ClientContact*",
+    "https://*.bullhornstaffing.com/core/search/Lead*",
+    "https://*/rest-services/*/search/Candidate*",
+    "https://*/rest-services/*/search/ClientContact*",
+    "https://*/rest-services/*/search/Lead*",
+    "https://app.bullhornstaffing.com/",
+    "https://app.hubspot.com/",
+    "https://app.salesstream.ai/api",
+    "https://dev-app.salesstream.ai/api",
+    "https://qa-app.salesstream.ai/api"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "background": {
+    "service_worker": "serviceWorker/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["contentScripts/injectStartScripts.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["contentScripts/bhUtils.js", "contentScripts/content.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/bhUtils.js", "contentScripts/bhIframe.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": ["https://*.bullhornstaffing.com/*"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "contentScripts/bhUtils.js",
+        "contentScripts/getCandidatesContentScript.js"
+      ],
+      "css": ["contentScripts/content.css"],
+      "matches": ["https://*.bullhornstaffing.com/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/getContactsContentScript.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/getGoogleSheetsContactsContentScript.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": ["https://docs.google.com/spreadsheets/d/*"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/getExcelSheetsContactsContentScript.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": [
+        "https://excel.officeapps.live.com/*",
+        "https://euc-excel.officeapps.live.com/*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/automateO365KeyGen.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": [
+        "https://portal.azure.com/*",
+        "https://login.microsoftonline.com/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/automateHubspotAPI.js"],
+      "css": ["contentScripts/content.css"],
+      "exclude_matches": [
+        "https://portal.azure.com/*",
+        "https://login.microsoftonline.com/*"
+      ],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    },
+    {
+      "js": ["contentScripts/automateGsuiteKeyGen.js"],
+      "css": ["contentScripts/content.css"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_end"
+    }
+  ],
+  "action": {
+    "default_title": "SalesStream.ai Reach",
+    "default_icon": {
+      "16": "icons/minimal_logo_purple.png",
+      "32": "icons/minimal_logo_purple.png",
+      "48": "icons/minimal_logo_purple.png",
+      "128": "icons/minimal_logo_purple.png"
+    },
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["activeTab", "storage", "tabs", "scripting", "webRequest"],
+  "icons": {
+    "16": "icons/minimal_logo_purple.png",
+    "32": "icons/minimal_logo_purple.png",
+    "48": "icons/minimal_logo_purple.png",
+    "128": "icons/minimal_logo_purple.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["serviceWorker/constants.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["environment.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["setWindowVariables.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["fonts/AlbertSans/AlbertSans-VariableFont_wght.ttf"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["fonts/AlbertSans/static/AlbertSans-ExtraBold.ttf"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["pages/welcome/index.html"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://devsite.salesstream.ai/*",
+      "https://salesstream.ai/*",
+      "https://dev-web.salesstream.ai/*",
+      "https://web.salesstream.ai/*",
+      "https://qa-web.salesstream.ai/*"
+    ]
+  }
+}

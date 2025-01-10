@@ -1,0 +1,142 @@
+---
+name: UWLinker
+version: 1.0.2
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 1
+user_count: 8
+size: 27.24KiB
+languages:
+  - English
+release_date: '2022-12-08T10:16:24.000Z'
+creation_date: '2022-10-25T08:27:25.000Z'
+description: >-
+  Chrome extension that adds tooltips linking various University of Waterloo
+  sites and third-party sites together.
+publisher_hash: 43fbdc58016b6b5ba86e29d8223e4b9fdf992b5d261e4a8fb0aa3716073d8998
+publisher_account: Rick Liu
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "UWLinker",
+  "description": "Chrome extension that adds tooltips linking various University of Waterloo sites and third-party sites together.",
+  "version": "1.0.2",
+  "icons": {
+    "16": "assets/uwl-icon-16.png",
+    "32": "assets/uwl-icon-32.png",
+    "48": "assets/uwl-icon-48.png",
+    "128": "assets/uwl-icon-128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "background": {
+    "service_worker": "shared/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.uwaterloo.ca/*",
+        "*://*.uwflow.com/*",
+        "*://*.reddit.com/r/uwaterloo/*"
+      ],
+      "js": [
+        "shared/shared.js",
+        "shared/tooltip.js",
+        "courseTooltip/tooltip.js",
+        "courseTooltip/moduleInfo.js"
+      ],
+      "css": [
+        "shared/shared.css",
+        "shared/tooltip.css",
+        "courseTooltip/tooltip.css",
+        "courseTooltip/moduleInfo.css"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.uwaterloo.ca/*",
+        "*://*.uwflow.com/*",
+        "*://*.reddit.com/r/uwaterloo/*"
+      ],
+      "exclude_matches": [
+        "*://*.ucalendar.uwaterloo.ca/*"
+      ],
+      "js": [
+        "shared/shared.js",
+        "shared/tooltip.js",
+        "courseTooltip/tooltip.js",
+        "courseTooltip/moduleUwaterlooUcalendar.js"
+      ],
+      "css": ["courseTooltip/moduleUwaterlooUcalendar.css"]
+    },
+    {
+      "matches": [
+        "*://*.uwaterloo.ca/*",
+        "*://*.uwflow.com/*",
+        "*://*.reddit.com/r/uwaterloo/*"
+      ],
+      "exclude_matches": [
+        "*://*.outline.uwaterloo.ca/*"
+      ],
+      "js": [
+        "shared/shared.js",
+        "shared/tooltip.js",
+        "courseTooltip/tooltip.js",
+        "courseTooltip/moduleUwaterlooOutline.js"
+      ],
+      "css": ["courseTooltip/moduleUwaterlooOutline.css"]
+    },
+    {
+      "matches": [
+        "*://*.uwaterloo.ca/*",
+        "*://*.reddit.com/r/uwaterloo/*"
+      ],
+      "js": [
+        "shared/shared.js",
+        "shared/tooltip.js",
+        "courseTooltip/tooltip.js",
+        "courseTooltip/moduleUwflow.js"
+      ],
+      "css": ["courseTooltip/moduleUwflow.css"]
+    },
+    {
+      "matches": [
+        "*://*.uwaterloo.ca/*",
+        "*://*.uwflow.com/*"
+      ],
+      "js": [
+        "shared/shared.js",
+        "shared/tooltip.js",
+        "courseTooltip/tooltip.js",
+        "courseTooltip/moduleReddit.js"
+      ],
+      "css": ["courseTooltip/moduleReddit.css"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16": "assets/uwl-icon-16.png",
+      "32": "assets/uwl-icon-32.png",
+      "48": "assets/uwl-icon-48.png",
+      "128": "assets/uwl-icon-128.png"
+    }
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*.uwaterloo.ca/*",
+        "*://*.uwflow.com/*",
+        "*://*.reddit.com/*"
+      ],
+      "resources": [
+        "assets/*"
+      ]
+    }
+  ]
+}

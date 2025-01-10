@@ -1,0 +1,119 @@
+---
+name: JRVS ChatGPT
+version: 3.0.25
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 4
+size: 1.92MiB
+languages:
+  - English (United States)
+release_date: '2024-11-18T04:50:41.000Z'
+creation_date: '2023-11-14T12:07:21.000Z'
+description: ChatGPT Messages
+publisher_hash: 61c0a655db8a3e2864c7f20a727ee1574d3f771a52af935df2eefa21125ab079
+publisher_account: jarvis.at.lemon
+extension_website: jrvs.in
+extension_website_verified: true
+support_website: https://jrvs.in/exhibits/exhibits/show/jrvs-chatgpt
+privacy_policy: https://jrvs.in/software/JRVSChatGPT/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JRVS ChatGPT",
+  "version": "3.0.25",
+  "description": "ChatGPT Messages",
+  "permissions": [
+    "webRequest",
+    "storage",
+    "activeTab",
+    "scripting",
+    "clipboardRead"
+  ],
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.chatgpt.com/*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "css": [
+        "content.css"
+      ]
+    },{
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "intermediary.js"
+      ]
+    }, {
+      "world": "MAIN",
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "web-javascript.js"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals;",
+    "script-src": "'self' 'wasm-unsafe-eval' 'unsafe-inline' 'unsafe-eval' *;",
+    "child-src": "'self';"
+  },
+  "sandbox": {
+    "pages": [
+      "sandbox.html"
+    ],
+    "worlds": ["main"]
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "host_permissions": [
+    "*://*.chatgpt.com/*"
+  ],
+  "commands": {
+    "new-conversation": {
+      "suggested_key": {
+        "default": "Alt+Shift+N",
+        "mac": "Alt+Shift+N"
+      },
+      "description": "New Conversation"
+    }
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon16.png",
+      "48": "icon48.png",
+      "128": "icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "sandbox.html",
+        "*.wav",
+        "speaking.png"
+      ],
+      "matches": [
+        "*://*.chatgpt.com/*"
+      ]
+    }
+  ]
+}

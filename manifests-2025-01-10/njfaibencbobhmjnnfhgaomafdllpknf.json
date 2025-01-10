@@ -1,0 +1,269 @@
+---
+name: Penny Posting
+version: 4.0.8
+category_slug: productivity/workflow
+featured: false
+rating: 3.5789473684210527
+rating_count: 19
+user_count: 2000
+size: 467KiB
+languages:
+  - English (United States)
+release_date: '2023-04-13T11:55:50.000Z'
+creation_date: '2014-06-15T10:14:29.000Z'
+description: Ad Posting Automation
+publisher_hash: 2c8fe2422552ec14284acbf35c34a8ff16e0fd55d42a033fc12e7f0f7d8268dc
+publisher_account: Gordon Chen
+extension_website: yougotlistings.com
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+    "name": "Penny Posting",
+    "version": "4.0.8",
+    "description": "Ad Posting Automation",
+    "icons": {
+        "16": "pages/img/face_16.png",
+        "32": "pages/img/face_32.png",
+        "48": "pages/img/face_48.png",
+        "128": "pages/img/face_128.png"
+    },
+    "background": {
+      "service_worker": "lib/background.js"
+    },
+   "content_security_policy": {
+      "script-src": "self chrome://extensions-frame/pages/background.html;",
+      "object-src": "self"
+    },
+   "content_scripts": [
+      {
+         "matches": ["https://post.craigslist.org/*"],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/cl_options.js",
+               "js/post.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["http://app.yougotlistings.com/ads/template/*",
+                     "https://app.yougotlistings.com/ads/template/*",
+                     "http://app.ygl.com/ads/template/*",
+                     "https://app.ygl.com/ads/template/*"
+         ],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/ygltemplate.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://www.zillow.com/rental-manager/properties", "https://www.zillow.com/rental-manager/properties?postingPath=*",
+               "https://www.zillow.com/rental-manager/properties/", 
+               "https://www.zillow.com/rental-manager/", "http://www.zillow.com/rental-manager/"],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/zillowproperties.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": [
+            "https://www.zillow.com/rental-manager/properties/*/listing",
+            "https://www.zillow.com/rental-manager/properties/*/listing?*",
+            "https://www.zillow.com/rental-manager/properties/*/create-listing"
+         ],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/zillowproperty.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      { 
+         "matches": [
+            "https://www.apartments.com/add-property/*"
+         ],
+         "all_frames": true,
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js"
+         ],
+         "run_at": "document_end"
+      },
+      { 
+         "matches": [
+            "https://www.apartments.com/mkt/client/landlord/*/addproperty*", "https://www.apartments.com/mkt/client/landlord/addproperty*"
+         ],
+         "all_frames": true,
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/apartmentsproperty.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      { 
+         "matches": [
+            "https://www.apartments.com/customers/listing/edit?ListingKey=*", "https://www.apartments.com/customers/listing/edit/?ListingKey=*"
+         ],
+         "all_frames": true,
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      { 
+         "matches": [
+            "https://www.apartments.com/mkt/client/landlord/*/managelisting?listingKey=*",
+            "https://www.apartments.com/mkt/client/landlord/managelisting?listingKey=*"
+         ],
+         "all_frames": true,
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/apartmentsproperty_edit.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://www.apartments.com/customers/my-properties/find", "https://www.apartments.com/customers/my-properties/find*"],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/apartmentsproperties.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://www.renthop.com/r/listings/post", "https://www.renthop.com/r/listings/edit/*"],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/renthop.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://www.facebook.com/marketplace/*"],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "js/facebook.js",
+               "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://streeteasy.com/listing_tools/rental/new", "https://streeteasy.com/manage/listings",
+            "https://streeteasy.com/manage/listings*", "https://streeteasy.com/listing_tools/rental/*/edit"],
+         "js": [
+            "lib/jquery/jquery.js",
+            "lib/penny.js",
+            "lib/xmlrpc.js",
+            "lib/options.js",
+            "js/streeteasy.js",
+            "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["https://streeteasy.com/listing_tools/rental/*/edit"],
+         "js": [
+            "lib/jquery/jquery.js",
+            "lib/penny.js",
+            "lib/xmlrpc.js",
+            "lib/options.js",
+            "js/streeteasy_edit.js",
+            "lib/start.js"
+         ],
+         "run_at": "document_end"
+      },
+      {
+         "matches": ["http://app.yougotlistings.com/notfound",
+                     "https://app.yougotlistings.com/notfound",
+                     "http://app.yougotlistings.com/error/notFound",
+                     "https://app.yougotlistings.com/error/notFound",
+                     "http://app.ygl.com/error/notFound"
+         ],
+         "js": [
+               "lib/jquery/jquery.js",
+               "lib/penny.js",
+               "lib/xmlrpc.js",
+               "lib/options.js",
+               "lib/reset.js"
+         ],
+         "run_at": "document_end"
+      }
+   ],
+   "action": {
+      "default_icon": "pages/img/face_32.png",
+      "popup": "pages/popup.html"
+   },
+   "web_accessible_resources": [
+      {
+         "resources": ["lib/zillowproperty_pagescript.js"],
+         "matches": [ "https://www.zillow.com/*" ]
+      }
+    ],
+   "permissions": [
+      "storage"
+   ],
+   "host_permissions": [
+      "http://*.yougotlistings.com/*",
+      "https://*.yougotlistings.com/*", 
+      "http://*.craigslist.org/*",
+      "https://*.craigslist.org/*",
+      "https://www.zillow.com/*",
+      "https://apartments.com/*",
+      "http://beta.yougotlistings.com/*",
+      "https://beta.yougotlistings.com/*",
+      "http://app.penny/*",
+      "http://s3.amazonaws.com/*",
+      "https://s3.amazonaws.com/*",
+      "http://*.s3.amazonaws.com/*",
+      "https://*.s3.amazonaws.com/*",
+      "http://*.ygl.com/*",
+      "https://*.ygl.com/*",
+      "http://localhost/*",
+      "https://localhost/*"
+    ]
+}

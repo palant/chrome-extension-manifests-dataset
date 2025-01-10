@@ -1,0 +1,108 @@
+---
+name: Rapid Power User Extension
+version: 0.5.1
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 30
+size: 24.37KiB
+languages:
+  - English (United States)
+release_date: '2024-12-24T19:41:16.000Z'
+creation_date: '2024-06-30T18:26:31.000Z'
+description: >-
+  Fully replace iD with Rapid for all your OSM editing needs. Includes automatic
+  rewrites from osm.org and Strava support
+publisher_hash: abecca73eaf3f6f6ff45bbfdb405eefc42b8bfb4823cc3804576d758ae1fc2d2
+publisher_account: Emerson Veenstra
+support_website: https://github.com/emersonveenstra/rapid-power-user-extension/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Rapid Power User Extension",
+ "description": "Fully replace iD with Rapid for all your OSM editing needs. Includes automatic rewrites from osm.org and Strava support",
+ "version": "0.5.1",
+ "minimum_chrome_version": "88",
+ "action": {
+  "default_icon": {
+   "48": "icons/rapid-48.png"
+  },
+  "default_title": "Start Mapping!"
+ },
+ "icons": {
+  "48": "icons/rapid-48.png"
+ },
+ "options_ui": {
+  "page": "options/options.html",
+  "open_in_tab": true
+ },
+ "permissions": [
+  "cookies",
+  "declarativeNetRequest",
+  "storage"
+ ],
+ "host_permissions": [
+  "*://*.strava.com/*",
+  "*://*.openstreetmap.org/*",
+  "*://*.rapideditor.org/*"
+ ],
+ "background": {
+  "service_worker": "sw.js",
+  "type": "module"
+ },
+ "content_scripts": [
+  {
+   "matches": [
+    "https://rapideditor.org/edit*",
+    "https://rapideditor.org/rapid*",
+    "https://rapideditor.org/canary*"
+   ],
+   "js": [
+    "scripts/add-imagery-script.js"
+   ],
+   "run_at": "document_start",
+   "all_frames": true
+  },
+  {
+   "matches": [
+    "https://www.strava.com/maps/global-heatmap*"
+   ],
+   "js": [
+    "scripts/refresh-cookies.js"
+   ],
+   "run_at": "document_idle"
+  },
+  {
+   "matches": [
+    "https://www.strava.com/login*",
+    "https://www.strava.com/logout*"
+   ],
+   "js": [
+    "scripts/logout-strava.js"
+   ],
+   "run_at": "document_idle"
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "scripts/display-strava-imagery.js"
+   ],
+   "matches": [
+    "https://rapideditor.org/*"
+   ]
+  }
+ ],
+ "declarative_net_request": {
+  "rule_resources": [{
+   "id": "osm_org_rewrites",
+   "enabled": true,
+   "path": "static_rules.json"
+  }]
+ },
+ "homepage_url": "https://github.com/emersonveenstra/rapid-power-user-extension"
+  }

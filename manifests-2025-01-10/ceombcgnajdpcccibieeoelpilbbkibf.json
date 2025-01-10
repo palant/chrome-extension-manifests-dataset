@@ -1,0 +1,96 @@
+---
+name: 多平台同款搜索
+version: 1.4.0 商品搜索版
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 18
+size: 62.34KiB
+languages:
+  - 中文 (简体)
+release_date: '2025-01-05T04:58:10.000Z'
+creation_date: '2024-12-20T06:45:56.000Z'
+description: 在SHEIN、TEMU和亚马逊上搜索同款商品
+publisher_hash: 2095338859765c598bf37b9a58181be515226a66d45c8ff6ccd16f5848da8c83
+publisher_account: wangsk
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "多平台同款搜索",
+  "description": "在SHEIN、TEMU和亚马逊上搜索同款商品",
+  "version": "1.4.0",
+  "author": "your@email.com",
+  "version_name": "1.4.0 商品搜索版",
+  "homepage_url": "https://your-website.com",
+  "minimum_chrome_version": "88",
+  "offline_enabled": false,
+  "short_name": "同款搜索",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "32": "assets/icons/icon32.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/icons/icon16.png",
+      "32": "assets/icons/icon32.png",
+      "48": "assets/icons/icon48.png",
+      "128": "assets/icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "storage",
+    "downloads",
+    "notifications",
+    "alarms",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.sheinshuju.com/*",
+    "https://*.temushuju.com/*",
+    "https://*.amazon.com/*",
+    "https://*.kwcdn.com/*"
+  ],
+  "optional_permissions": [
+    "cookies"
+  ],
+  "optional_host_permissions": [
+    "https://*.shein.com/*",
+    "https://m.shein.com/*",
+    "https://*.temu.com/*",
+    "https://*.amazon.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://*.temu.com/*"],
+      "js": ["content/clear-data.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.temu.com/*.html*"],
+      "js": ["content/product-page.js"],
+      "css": ["content/product-page.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module",
+    "imports": [
+      {
+        "path": "background/config/update-config.js",
+        "export": "UPDATE_CONFIG"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["changelog.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+} 

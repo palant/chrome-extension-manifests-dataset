@@ -1,0 +1,114 @@
+---
+name: 'Rovo: Search, Chat, and more'
+version: 0.24.0
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 9
+user_count: 10000
+size: 5.0MiB
+languages:
+  - English
+release_date: '2024-12-19T04:01:14.000Z'
+creation_date: '2024-06-06T06:55:21.000Z'
+description: >-
+  Take Rovo anywhere you work. Easily access Search, Chat, and Agents, and look
+  up definitions outside your Atlassian products.
+publisher_hash: 4d0ad72ca475b66012610b6ad79d1c14872a6ce4a7dcba6e40c267d9624dce5b
+publisher: Atlassian Pty Ltd
+publisher_account: eng-rovo-extension
+publisher_address: |-
+  Level 6/341 George St
+  Sydney, NSW 2000
+  AU
+publisher_phone: '+18433528610'
+privacy_policy: https://www.atlassian.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Rovo: Search, Chat, and more",
+  "description": "Take Rovo anywhere you work. Easily access Search, Chat, and Agents, and look up definitions outside your Atlassian products.",
+  "version": "0.24.0",
+  "action": {
+    "default_icon": "/icons/rovo-16-action.png",
+    "default_title": "Click to open side panel"
+  },
+  "chrome_url_overrides": {
+    "newtab": "new_tab_page.html"
+  },
+  "omnibox": {
+    "keyword": "r"
+  },
+  "icons": {
+    "16": "/icons/rovo-16.png",
+    "32": "/icons/rovo-32.png",
+    "48": "/icons/rovo-48.png",
+    "128": "/icons/rovo-128.png"
+  },
+  "background": {
+    "service_worker": "service-worker.js"
+  },
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "commands": {
+    "open-sidepanel": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Y",
+        "mac": "Command+Shift+Y"
+      },
+      "description": "Open Rovo SidePanel"
+    }
+  },
+  "options_page": "options.html",
+  "host_permissions": ["https://rovo-extension-web.atlassian.com/"],
+  "web_accessible_resources": [
+    {
+      "resources": ["_favicon/*"],
+      "matches": ["<all_urls>"],
+      "extension_ids": [
+        "npbjhobkibekbklkghlhfhieggcggpdb",
+        "deejhllflojhohbeechaicbcofamcbkp",
+        "dmjofbngkpnmmiccjhikngiodkbofnpc"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["rovo_page_context.js"]
+    },
+    {
+      "js": ["enable-annotated-canvas.js"],
+      "matches": ["https://docs.google.com/*"],
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "js": ["gdoc-content-script.js"],
+      "matches": ["https://docs.google.com/*"],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "activeTab",
+    "bookmarks",
+    "contextMenus",
+    "favicon",
+    "offscreen",
+    "scripting",
+    "sidePanel",
+    "storage",
+    "tabs",
+    "topSites",
+    "webNavigation",
+    "commands"
+  ],
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlJJ2i4i0FcSv1QbBKNyIN/+CUzJUMT8JIGCve7n0Bm5bwElzzjYgyV6qJlFbEwPT1k1e6qUizAxcCOmF63GPDmkNvSv8adoLb4+fozCPhwKGkgGhVSOPZGKeOPkiRXTlS6GHMsbJkvkiTxMaJYkhNGEAYYdf1cFyvwCUJl+Xz/5P+tdqzQaVkn05nDspzRDaYpHnMfgDuL8cU4+U1VYhV9ZZ8CRi7HMvoVr+20onjigJbcONqGV2Ve4XxOdJK6LffJSVySJNffSAVOwf3vukmc0Y3z6PSxx2U0k11Mt5eY+AgmGFY92d4HOJJ5/V6RP89v0xEGfjB2QSZRXfAcDvtQIDAQAB",
+  "externally_connectable": {
+    "matches": ["https://rovo-extension-web.atlassian.com/extension/*", "https://rovo-extension-web.atlassian.com/extension/*"]
+  }
+}

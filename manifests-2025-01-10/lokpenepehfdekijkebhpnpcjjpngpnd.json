@@ -1,0 +1,74 @@
+---
+name: YouTube Ad Auto-skipper
+version: 2.2.0
+category_slug: productivity/workflow
+featured: false
+rating: 3.873684210526316
+rating_count: 380
+user_count: 80000
+size: 111KiB
+languages:
+  - English
+release_date: '2024-11-11T07:36:51.000Z'
+creation_date: '2017-06-04T17:12:53.000Z'
+description: >-
+  YouTube Ad Skipper is an extension that auto skips ads after YouTube provides
+  a skip ad button. It does not block an ad.
+publisher_hash: 36896825fb41068c75c7267348f1a353209a8e01575a44346d96aedb688a7b65
+publisher: Shreya Dahal
+publisher_account: shreyadahal
+publisher_address: |-
+  18 Erskine Ave #3205
+  Toronto, ON M4P 0C9
+  CA
+support_website: https://github.com/squgeim/yt-ad-autoskipper/issues
+privacy_policy: https://ad-auto-skipper.web.app/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "YouTube Ad Auto-skipper",
+  "short_name": "ad skipper",
+  "description": "YouTube Ad Skipper is an extension that auto skips ads after YouTube provides a skip ad button. It does not block an ad.",
+  "manifest_version": 3,
+  "version": "2.2.0",
+  "author": "Shreya Dahal",
+  "homepage_url": "https://github.com/squgeim/yt-ad-autoskipper",
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["./youtube.js"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["./youtube_override.js"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "http://localhost:5002/*",
+        "https://ad-auto-skipper.web.app/*"
+      ],
+      "js": ["./adskipper.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Configure Ad Auto Skipper"
+  },
+  "options_page": "pages/settings.html",
+  "permissions": ["storage"],
+  "icons": {
+    "128": "logo.png"
+  },
+  "externally_connectable": {
+    "matches": ["http://localhost:5002/*", "https://ad-auto-skipper.web.app/*"]
+  }
+}

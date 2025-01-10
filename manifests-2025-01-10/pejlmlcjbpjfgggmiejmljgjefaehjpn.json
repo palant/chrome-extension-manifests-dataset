@@ -1,0 +1,101 @@
+---
+name: ToDoBot - Task Management App for Slack
+version: 0.0.15
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 964
+size: 2.46MiB
+languages:
+  - English
+release_date: '2023-07-12T07:56:17.000Z'
+creation_date: '2020-04-09T08:02:58.000Z'
+description: >-
+  This extension will allow you to view and manage all your Slack ToDos right in
+  Chrome
+publisher_hash: db6b9bd00f177cbf63ab3b5002f5652c18a064c41ef9e779276f3ca8587d1615
+publisher: OneBar Inc
+publisher_account: OneBar Inc.
+publisher_address: |-
+  8 The Green ste r
+  Dover, DE 19901-3618
+  US
+support_website: https://thetodobot.com/support
+privacy_policy: https://www.thetodobot.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ToDoBot - Task Management App for Slack",
+  "description": "This extension will allow you to view and manage all your Slack ToDos right in Chrome",
+  "version": "0.0.15",
+  "icons": {
+    "16": "active.png",
+    "32": "active.png",
+    "48": "active.png",
+    "128": "active.png"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "cookies",
+    "scripting",
+    "notifications"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "https://api.thetodobot.com/"
+  ],
+  "background": {
+    "service_worker": "background/index.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "patches.js"
+      ],
+      "run_at": "document_start",
+      "exclude_matches": [
+        "http://localhost:4200/tests"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "/assets/vendor.js",
+        "/assets/todobot.js",
+        "init.js"
+      ],
+      "exclude_matches": [
+        "http://localhost:4200/tests"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/assets/todobot.css",
+        "/assets/vendor.css",
+        "/images/*",
+        "active.png",
+        "inactive.png"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "Open ToDoBot",
+    "default_icon": "inactive.png"
+  }
+}

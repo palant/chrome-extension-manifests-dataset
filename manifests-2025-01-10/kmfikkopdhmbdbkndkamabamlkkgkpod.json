@@ -1,0 +1,132 @@
+---
+name: YouTube Popout Player
+version: 5.0.0
+category_slug: lifestyle/fun
+featured: true
+rating: 3.568421052631579
+rating_count: 95
+user_count: 50000
+size: 194KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 한국어
+release_date: '2024-10-16T04:42:32.000Z'
+creation_date: '2017-06-14T04:16:59.000Z'
+description: >-
+  Provides simple ways to open any YouTube video or playlist in a configurable
+  popout window
+publisher_hash: 184598ee82edf1eb3e6706abd1f64019fd8edf6cbd56749cbc8115fea3bd4098
+publisher_account: Ryan Thaut
+support_website: https://github.com/rthaut/YouTubePopoutPlayer/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_ExtensionName__",
+  "description": "__MSG_ExtensionDescription__",
+  "version": "5.0.0",
+  "short_name": "__MSG_ExtensionShortName__",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "author": "Ryan Thaut",
+  "homepage_url": "https://rthaut.github.io/YouTubePopoutPlayer/",
+  "icons": {
+    "16": "images/icon-16.png",
+    "19": "images/icon-19.png",
+    "24": "images/icon-24.png",
+    "32": "images/icon-32.png",
+    "38": "images/icon-38.png",
+    "48": "images/icon-48.png",
+    "64": "images/icon-64.png",
+    "96": "images/icon-96.png",
+    "128": "images/icon-128.png"
+  },
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "19": "images/icon-19.png",
+      "24": "images/icon-24.png",
+      "32": "images/icon-32.png",
+      "38": "images/icon-38.png",
+      "48": "images/icon-48.png",
+      "64": "images/icon-64.png",
+      "96": "images/icon-96.png",
+      "128": "images/icon-128.png"
+    },
+    "default_title": "__MSG_BrowserActionTitle__"
+  },
+  "commands": {
+    "open-popout-auto-close-command": {
+      "suggested_key": {
+        "default": "Ctrl+Up"
+      },
+      "description": "__MSG_OpenPopoutCommandDescription__"
+    },
+    "open-popout-force-close-command": {
+      "description": "__MSG_OpenPopoutForceCloseCommandDescription__"
+    },
+    "open-popout-no-close-command": {
+      "description": "__MSG_OpenPopoutNoCloseCommandDescription__"
+    },
+    "rotate-video-left": {
+      "suggested_key": {
+        "default": "Alt+Shift+A"
+      },
+      "description": "__MSG_RotateVideoLeftCommandDescription__"
+    },
+    "rotate-video-right": {
+      "suggested_key": {
+        "default": "Alt+Shift+D"
+      },
+      "description": "__MSG_RotateVideoRightCommandDescription__"
+    }
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "css": [
+        "styles/content.css"
+      ],
+      "js": [
+        "scripts/content.js"
+      ],
+      "matches": [
+        "*://*.youtube.com/*",
+        "*://*.youtube-nocookie.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "options_ui": {
+    "page": "pages/options.html?vendor=chrome",
+    "open_in_tab": false
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "rules",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://*.youtube-nocookie.com/*"
+  ],
+  "permissions": [
+    "contextMenus",
+    "declarativeNetRequest",
+    "notifications",
+    "storage"
+  ],
+  "optional_permissions": [
+    "tabs"
+  ],
+  "minimum_chrome_version": "90"
+}

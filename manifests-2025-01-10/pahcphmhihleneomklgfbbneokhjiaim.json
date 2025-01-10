@@ -1,0 +1,92 @@
+---
+name: Mul.Live Plus
+version: 3.1.4
+category_slug: lifestyle/entertainment
+featured: false
+rating: 4.875
+rating_count: 16
+user_count: 9000
+size: 28.87KiB
+languages:
+  - 한국어
+release_date: '2024-12-31T16:16:27.000Z'
+creation_date: '2024-01-30T07:01:56.000Z'
+description: 현재 보고 있는 방송을 Mul.Live에서 함께 봅니다.
+publisher_hash: 0643efd19632d04950a49ea9d2f434da941865bbfd85ceee3adb48ea73802b72
+publisher_account: argo
+extension_website: chz.app
+extension_website_verified: true
+support_website: https://www.chz.app/
+privacy_policy: https://www.chz.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Mul.Live Plus",
+  "short_name": "Mul.Live",
+  "version": "3.1.4",
+  "description": "현재 보고 있는 방송을 Mul.Live에서 함께 봅니다.",
+  "minimum_chrome_version": "119",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "ext@mul.live"
+    }
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "homepage_url": "https://mul.live/",
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "declarativeNetRequestWithHostAccess",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.naver.com/*",
+    "*://*.sooplive.co.kr/*",
+    "*://*.mul.live/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "chzzk.js"
+      ],
+      "matches": [
+        "*://chzzk.naver.com/*"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "soop.js"
+      ],
+      "matches": [
+        "*://play.sooplive.co.kr/*"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

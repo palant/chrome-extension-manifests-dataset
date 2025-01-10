@@ -1,0 +1,75 @@
+---
+name: OpenSea Sniper - a cart & rarity tool by X2Y2
+version: '0.6'
+category_slug: productivity/developer
+featured: true
+rating: 5
+rating_count: 40
+user_count: 1000
+size: 492KiB
+languages:
+  - English (United States)
+release_date: '2022-03-29T07:18:34.000Z'
+creation_date: '2022-03-10T12:08:24.000Z'
+description: >-
+  A shopping cart experience to buy NFTs in one transaction, saving up to 40% of
+  your gas.
+publisher_hash: a50ecabe7f1945014259d7def9b0094f2c97f2774df78ee779ddd949673ca41a
+publisher_account: X2Y2
+support_website: https://x2y2.io
+privacy_policy: https://x2y2.io/page/terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "OpenSea Sniper - a cart & rarity tool by X2Y2",
+  "description": "A shopping cart experience to buy NFTs in one transaction, saving up to 40% of your gas.",
+  "version": "0.6",
+
+  "externally_connectable": {
+    "matches": ["*://*.x2y2.io/*", "*://x2y2.io/*", "http://localhost:3000/*"]
+  },
+
+  "action": {
+    "default_icon": {
+      "16": "/images/icon-16.png",
+      "32": "/images/icon-32.png",
+      "48": "/images/icon-48.png",
+      "128": "/images/icon-128.png"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.opensea.io/*", "*://opensea.io/*"],
+      "run_at": "document_idle",
+      "js": ["js/main.js"]
+    },
+    {
+      "matches": [
+        "*://*.x2y2.io/*",
+        "*://x2y2.io/*",
+        "http://localhost:3000/*"
+      ],
+      "run_at": "document_start",
+      "js": ["js/x2y2.js"]
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["js/x2y2_script.js"],
+      "matches": ["*://*.x2y2.io/*", "*://x2y2.io/*", "http://localhost:3000/*"]
+    }
+  ],
+
+  "background": {
+    "service_worker": "js/background.js"
+  },
+
+  "permissions": ["background", "storage", "webNavigation", "tabs"]
+}

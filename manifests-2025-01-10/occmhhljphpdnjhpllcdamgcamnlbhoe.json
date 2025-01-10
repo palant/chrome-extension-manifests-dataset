@@ -1,0 +1,123 @@
+---
+name: Ringover Cadence
+version: 2.6.9
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 243
+size: 1.61MiB
+languages:
+  - English
+release_date: '2025-01-08T06:25:48.000Z'
+creation_date: '2022-08-22T10:09:40.000Z'
+description: Extension to extract lead data and import lead to Salesforce and Cadence tool.
+publisher_hash: db01164b7f3f2438d9baac03198263dae4c303d6d4c53aad6f4426fbabead75f
+publisher_account: RingOver
+support_website: https://www.ringover.com/privacy
+privacy_policy: https://www.ringover.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ringover Cadence",
+  "description": "Extension to extract lead data and import lead to Salesforce and Cadence tool.",
+  "version": "2.6.9",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["hubspot-list.js"],
+      "run_at": "document_end",
+      "matches": ["https://*.hubspot.com/*objectLists/*"],
+      "media": [],
+      "css": ["hubspot_contact_list_app.css"]
+    },
+    {
+      "js": ["hubspot-single.js"],
+      "run_at": "document_end",
+      "matches": ["https://*.hubspot.com/*"],
+      "media": [],
+      "css": ["hubspot_contact_app.css"]
+    },
+    {
+      "js": ["bullhorn_content.js"],
+      "run_at": "document_idle",
+      "matches": ["https://app.bullhornstaffing.com/*"],
+      "media": [],
+      "css": ["bullhorn_content.css"]
+    },
+    {
+      "js": ["assets/ValidateCookieContentScript.js-loader-4f394012.js"],
+      "run_at": "document_idle",
+      "matches": [
+        "https://cadence.ringover.com/*",
+        "https://*.ringover-crm.xyz/*",
+        "http://localhost:4200/*"
+      ],
+      "media": []
+    }
+  ],
+  "host_permissions": [
+    "https://www.linkedin.com/*",
+    "https://dev-vm.ringover-crm.xyz/*",
+    "https://cs-vm.ringover-crm.xyz/*",
+    "https://cadence.ringover.com/*",
+    "https://*/image/invisibleImage/*",
+    "https://*/link/getRedirectUrl?url=*",
+    "https://*.hubspot.com/*",
+    "https://app.bullhornstaffing.com/*",
+    "http://localhost:4200/*"
+  ],
+  "permissions": [
+    "tabs",
+    "cookies",
+    "storage",
+    "webRequest",
+    "declarativeNetRequest",
+    "activeTab"
+  ],
+  "icons": {
+    "16": "logo64_new.png",
+    "48": "logo64_new.png",
+    "128": "logo64_new.png"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": ["https://*.hubspot.com/*"],
+      "resources": [
+        "assets/index-2ee40d1b.js",
+        "assets/_base-5cdb511e.js",
+        "assets/ContactContentScript.jsx-589cc4d5.js",
+        "assets/ContactListContentScript.jsx-28b834a2.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": ["https://app.bullhornstaffing.com/*"],
+      "resources": [
+        "assets/index-2ee40d1b.js",
+        "assets/_base-5cdb511e.js",
+        "assets/SavedListContentScript.jsx-1cc2d9fc.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "http://localhost:4200/*",
+        "https://*.ringover-crm.xyz/*",
+        "https://cadence.ringover.com/*"
+      ],
+      "resources": ["assets/ValidateCookieContentScript.js-e900642f.js"],
+      "use_dynamic_url": true
+    }
+  ]
+}

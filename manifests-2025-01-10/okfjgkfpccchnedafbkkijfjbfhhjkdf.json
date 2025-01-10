@@ -1,0 +1,114 @@
+---
+name: IDA3
+version: '24.7'
+category_slug: productivity/developer
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 1007KiB
+languages:
+  - English
+release_date: '2024-08-28T09:11:56.000Z'
+creation_date: '2024-08-12T03:50:43.000Z'
+description: IBM Deployment Accelerator for Business Automation Workflow
+publisher_hash: 6669b143ddbf0c48739bf5d265e42ccb56fc185dd3e5728d3db13381c1b07204
+publisher_account: IBM SDC
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "IDA3",
+  "description": "IBM Deployment Accelerator for Business Automation Workflow",
+  "version": "24.7",
+  "action": {
+    "default_icon": "images/ida.png",
+    "default_title": "IDA",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "images/ida.png"
+  },
+  "background": {
+    "service_worker": "worker.js"
+  },
+  "content_scripts": [
+    {
+      "css": [
+        "css/cover.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start",
+      "match_about_blank": true,
+      "all_frames": true
+    },
+    {
+      "css": [
+        "css/checkstyle/custom.css"
+      ],
+      "matches": [
+        "*://*/WebPD/*",
+        "*://*/bas/WebPD/*"
+      ],
+      "js": [
+        "js/libs/jquery.min.js",
+        "js/contentscripts/webpd_tabs.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "js/contentscripts/record_trigger.js"
+      ],
+      "matches": [
+        "*://*/ida/*",
+        "*://*/ida"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.png",
+        "images/*.gif",
+        "js/*",
+        "css/*.css",
+        "css/*/*.css",
+        "fonts/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "webNavigation",
+    "storage",
+    "webRequest",
+    "debugger",
+    "declarativeNetRequest"
+  ],
+  "optional_permissions": [
+    "notifications"
+  ],
+  "host_permissions": [
+    "http://*/*",
+    "https://*/*",
+    "*://*/WebPD/*",
+    "*://*/bas/WebPD/*"
+  ],
+  "content_security_policy": {},
+  "declarative_net_request" : {
+    "rule_resources" : [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rules/remove_csp.json"
+    }]
+  }
+}

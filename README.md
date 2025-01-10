@@ -2,9 +2,27 @@
 
 This repository contains >100k [`manifest.json`](https://developer.chrome.com/extensions/manifest) files for extensions hosted in the [Chrome Web Store](https://chromewebstore.google.com/). These were collected via scraping Chrome Web Store. Some metadata has been added as front matter to the manifests in order to provide context, e.g. extension name and publisher, rating and user count.
 
-Note that the scraping approach changed with the 2023-06-01 and 2023-11-29 snapshots. With the 2023-06-01 snapshot, the number of manifests increased from 10k to >50k, and with the  2023-11-29 snapshot to >100k. The latter also changed metadata in various ways, e.g.: user counts beyond 10,000,000 are possible, release dates are in ISO format, `slug` field is gone and category is only indicated by the `category_slug` field without the human-readable `category` field.
-
 This has been inspired by a [similar repository](https://github.com/mandatoryprogrammer/chrome-extension-manifests-dataset/) created by [@IAmMandatory](https://infosec.exchange/@mandatory). Captures for a bunch of points in time have been created but I cannot promise that any updates will happen in future. It's meant to be useful for analysis of the Chrome extension ecosystem, such as what permissions are requested, common Content Security Policies, etc.
+
+## Change history
+
+* 2023-06-01
+  * Changed scraping approach, increased number of manifest from 10k to >50k
+* 2023-11-29
+  * Changed scraping approach, increased number of manifests to >100k
+  * User counts beyond 10,000,000 are now possible
+  * `release_date` field is in ISO format now
+  * `slug` field has been removed, it can be deduced from `name` field
+  * `category` field has been removed, `category_slug` field can be used instead
+* 2024-09-28
+  * Changed scraping approach, increased number of manifests to >120k
+* 2024-12-13
+  * Descriptions in various languages have been scraped (experimental), these are stored in a separate directory
+* 2025-01-10
+  * Added boolean `featured` field
+  * Added `creation_date` field in ISO format
+  * Added `publisher_hash` field (non-reversible HMAC hash of the publisher’s email address, can be used to identify extensions belonging to the same account)
+  * Added `publisher_phone` field
 
 ## Convenience scripts
 
@@ -17,10 +35,6 @@ The “current” snapshot directory is determined by the contents of the `curre
 By default, `query.js` will list extensions from the current snapshot. `compare.js` will use that directory as its second source directory, with the first source directory by default being the snapshot preceding the current snapshot.
 
 It is always possible to use a different source directory. With `query.js`, the relevant parameter is `--directory`. With `compare.js`, the parameters are `--directory1` and `--directory2`.
-
-### Extension descriptions
-
-The directory `descriptions-2024-12-15` contains a one-time snapshot of extension descriptions in various languages. This is currently an experiment and it isn’t clear whether there will be more snapshots.
 
 ### The queries
 

@@ -1,0 +1,100 @@
+---
+name: Favourites.io Search Twitter Likes/Bookmarks
+version: 1.3.2
+category_slug: productivity/tools
+featured: false
+rating: 3.4
+rating_count: 5
+user_count: 1000
+size: 105KiB
+languages:
+  - English
+release_date: '2024-11-10T15:35:02.000Z'
+creation_date: '2022-07-19T13:15:06.000Z'
+description: >-
+  Searching and organizing your Twitter Likes and Bookmarks is a pain.
+  Favourites.io makes it so much easier!
+publisher_hash: 4d58c518fee70e94ec199cacb6bb654a492c0623eb60a4e3fd7b845d89553a47
+publisher_account: Favourites.io
+publisher_phone: '+353878234816'
+extension_website: favourites.io
+extension_website_verified: true
+support_website: https://favourites.io
+privacy_policy: https://www.favourites.io/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Favourites.io Search Twitter Likes/Bookmarks",
+  "description": "Searching and organizing your Twitter Likes and Bookmarks is a pain. Favourites.io makes it so much easier!",
+  "manifest_version": 3,
+  "version": "1.3.2",
+  "icons": {
+    "16": "./public/images/icon16.png",
+    "24": "./public/images/icon24.png",
+    "32": "./public/images/icon32.png",
+    "48": "./public/images/icon48.png",
+    "128": "./public/images/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "cookies",
+    "tabs",
+    "storage",
+    "scripting",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "https://x.com/*",
+    "https://api.x.com/*",
+    "https://www.favourites.io/*",
+    "https://test.favourites.io/*"
+  ],
+  "background": {
+    "service_worker": "./public/background.js"
+  },
+  "action": {
+    "default_popup": "./src/popup.html",
+    "default_icon": {
+      "16": "./public/images/icon16.png",
+      "24": "./public/images/icon24.png",
+      "32": "./public/images/icon32.png"
+    },
+    "default_title": "Favouritesio Bookmark"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://x.com/",
+        "https://x.com/*",
+        "https://www.favourites.io/*",
+        "https://test.favourites.io/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "./public/content_v2.js",
+        "/public/site/global.js",
+        "/public/plugin/jquery/jquery-3.5.1.min.js"
+      ],
+      "css": ["./public/content.css", "./public/style/injected.scss"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/public/plugin/jquery/jquery-3.5.1.min.js",
+        "/public/grabber/grab_favourites_userID.js",
+        "/public/grabber/grab_global_context.js",
+        "/public/grabber/grab_likes_count.js",
+        "/public/grabber/grab_tweet_context.js",
+        "/public/grab_favourites_bookmarks.js",
+        "/public/grab_favourites_likes.js",
+        "/public/images/favourites-logo-white.png",
+        "/public/templates/popup.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

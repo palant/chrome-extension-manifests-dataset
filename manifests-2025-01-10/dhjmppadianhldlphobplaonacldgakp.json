@@ -1,0 +1,115 @@
+---
+name: Genius.AI
+version: '1.10'
+category_slug: lifestyle/social
+featured: false
+rating: 5
+rating_count: 11
+user_count: 507
+size: 124KiB
+languages:
+  - English
+release_date: '2024-11-09T23:50:29.000Z'
+creation_date: '2024-07-13T04:49:11.000Z'
+description: >-
+  The Genius.AI extension allows you to bring the power of the AI in the DMs of
+  your favorite social media platform.
+publisher_hash: 6c2a46d00b493f35ae350b061c44f0dc62ba45c69b8de5a2e1b32e64f39023c3
+publisher: VSL.AI LLC.
+publisher_account: Genius.AI
+publisher_address: |-
+  2209 Crestview Place
+  Laguna Beach, CA 92651
+  US
+publisher_phone: '+34603146874'
+extension_website: genius.ai
+extension_website_verified: true
+support_website: https://help.genius.ai
+privacy_policy: https://genius.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Genius.AI",
+  "description": "The Genius.AI extension allows you to bring the power of the AI in the DMs of your favorite social media platform.",
+  "version": "1.10",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://www.facebook.com/*",
+    "https://www.messenger.com/*",
+    "https://promptmaker.genius.ai/*",
+    "https://app.genius.ai/*",
+    "https://login.genius.ai/*",
+    "https://web.whatsapp.com/*",
+    "https://www.linkedin.com/*",
+    "https://www.google.com/*",
+    "https://www.instagram.com/*"
+    
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["genius-ai-logo.png"],
+      "matches": ["https://*.facebook.com/*", "https://*.messenger.com/*","https://web.whatsapp.com/*","https://www.linkedin.com/*","https://www.instagram.com/*","https://*.google.com/*"]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/get_started16.png",
+      "32": "/images/get_started32.png",
+      "48": "/images/get_started48.png",
+      "128": "/images/get_started128.png"
+    }
+  },
+  "icons": {
+    "16": "/images/get_started16.png",
+    "32": "/images/get_started32.png",
+    "48": "/images/get_started48.png",
+    "128": "/images/get_started128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["content.js"],
+      "css": ["styles.css"]
+    },
+    {
+      "matches": ["*://www.instagram.com/*"],
+      "js": ["InstagramContent.js"],
+      "css": ["InstagramStyles.css"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/*","https://linkedin.com/*"],
+      "exclude_matches": ["https://www.linkedin.com/messaging/*","https://linkedin.com/messaging/*"],
+
+      "js": ["LinkedInContent.js"],
+      "css": ["LinkedinStyles.css"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/messaging/*","https://linkedin.com/messaging/*"],
+      "js": ["LinkedInMessaging.js"],
+      "css": ["LinkedinStyles.css"]
+    },
+    {
+      "matches": ["https://app.genius.ai/*"],
+      "js": ["grabLogin.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["https://web.whatsapp.com/*"],
+      "js": ["whatsAppContent.js"],
+      "css": ["whatsAppStyles.css"]
+    }
+  ],
+  "options_page": "options.html"
+}
+

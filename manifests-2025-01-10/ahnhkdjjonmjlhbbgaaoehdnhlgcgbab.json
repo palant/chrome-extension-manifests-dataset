@@ -1,0 +1,124 @@
+---
+name: SearchAtlas SEO by LinkGraph
+version: '2.63'
+category_slug: productivity/tools
+featured: true
+rating: 4.75
+rating_count: 16
+user_count: 5000
+size: 15.76MiB
+languages:
+  - English (United States)
+release_date: '2024-10-26T04:04:52.000Z'
+creation_date: '2020-03-25T09:34:43.000Z'
+description: >-
+  Leverage the power of SearchAtlas SEO data and insights on any page of your
+  website.
+publisher_hash: e267f0e218ea361d29df46ba888d94693760da7c18b1d33d2458679e8624308a
+publisher: The SearchAtlas Group
+publisher_account: LinkGraph SEO
+publisher_address: |-
+  244 5th Avenue, Suite D158 New York, NY 10001
+  New york, NY 10001
+  US
+extension_website: linkgraph.io
+extension_website_verified: true
+support_website: https://linkgraph.io
+privacy_policy: https://linkgraph.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "SearchAtlas SEO by LinkGraph",
+  "description" : "Leverage the power of SearchAtlas SEO data and insights on any page of your website.",
+  "version": "2.63",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "background": {
+    "service_worker": "/static/js/background.js"
+  },
+  "icons": {
+    "16": "icon128.png",
+    "32": "icon128.png",
+    "128": "icon128.png"
+  },
+  "content_scripts" : [
+    {
+      "matches": [ "<all_urls>" ],
+      "js": ["/static/js/contentForAllPages.js"],
+      "run_at": "document_end" 
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "css":["/css/contentGscRoot.css"],
+      "js": ["/static/js/contentGsc.js"],
+      "exclude_matches":["*://*/wp-login.php*", "*://*/wp-admin/*"],
+      "run_at": "document_end" 
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "css":["/css/contentOverviewRoot.css"],
+      "js": ["/static/js/contentOverview.js"],
+      "exclude_matches":[
+        "https://dashboard.linkgraph.io/", 
+        "https://dashboard.linkgraph.com/*",
+        "*://*/wp-login.php*", 
+        "*://*/wp-admin/*", 
+        "*://*/*.google.com/*", 
+        "*://*.google.com/*", 
+        "https://www.google.com/*", 
+        "https://www.google.com/search*tbm=vid*", 
+        "https://www.google.com/search*tbm=isch*",
+        "https://www.google.com/search*tbm=shop*",
+        "https://www.google.com/search*tbs=lrf*", 
+        "https://www.google.com/search*tbm=lcl*", 
+        "https://docs.google.com/*",
+        "*://*/wp-admin/*&action=edit",
+        "*://*/*/wp-admin/*&action=edit", 
+        "https://www.figma.com/file/*/*", 
+        "https://gitlab.com/*"
+      ],
+      "run_at": "document_end" 
+    },
+    {
+      "exclude_matches":["https://www.google.com/search*tbm=vid*", "https://www.google.com/search*tbm=isch*", "https://www.google.com/search*tbm=shop*", "https://www.google.com/search*tbs=lrf*", "https://www.google.com/search*tbm=lcl*"],
+      "matches": [ "*://*/*" ],
+      "include_globs": ["*://*.google.*/search*"],
+      "css":["/static/css/contentKeyword.css"],
+      "js": ["/static/js/contentKeyword.js"],
+      "run_at": "document_end" 
+    },
+    {
+      "matches": ["https://docs.google.com/document/d/*/edit*", "*://*/wp-admin/*&action=edit", "*://*/*/wp-admin/*&action=edit", "https://www.figma.com/file/*/*"],
+      "js": ["/static/js/contentCa.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources":[{
+    "resources": [
+      "/static/media/*",
+      "/static/css/*",
+      "/css/*",
+      "/js/docsCanvas.js",
+      "/js/script.js",
+      "https://dashboard.linkgraph.com/"
+    ],
+    "matches": ["<all_urls>" ]
+  }],
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs",
+    "notifications",
+    "cookies",
+    "scripting"
+  ],
+  "host_permissions": [
+    "https://dashboard.linkgraph.com/"
+  ]
+}

@@ -1,0 +1,89 @@
+---
+name: IMDb Ratings for Netflix™
+version: 4.1.3
+category_slug: lifestyle/fun
+featured: false
+rating: 3.285412262156448
+rating_count: 473
+user_count: 10000
+size: 347KiB
+languages:
+  - English
+release_date: '2024-10-17T06:53:36.000Z'
+creation_date: '2017-09-19T22:07:28.000Z'
+description: >-
+  Seamlessly integrates IMDb Ratings into Netflix. Never waste time on bad
+  movies or TV shows ever again!
+publisher_hash: d9fc81c4816ed345a796b2552d0250484d5345bad56af335b0f77c6430e38351
+publisher: CodeCollective
+publisher_account: Code Collective
+publisher_address: |-
+  Via Colacurcio Vicolo II, 10-16
+  Santo Stefano del Sole 83050
+  Italy
+privacy_policy: https://collective.ga/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "__MSG_extName__",
+  "short_name": "__MSG_extShortName__",
+  "description": "__MSG_extDescription__",
+  "version": "4.1.3",
+  "host_permissions": [
+    "*://*.netflix.com/*"
+  ],
+  "permissions": [
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "background": {
+    "service_worker": "background.iife.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "app_icon_128.png"
+  },
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.netflix.com/*"
+      ],
+      "js": [
+        "content/index.iife.js"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "js/context.js",
+        "assets/blank.gif",
+        "intro.html",
+        "options.html"
+      ],
+      "matches": [
+        "*://www.netflix.com/*"
+      ]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "csp_rules",
+        "enabled": true,
+        "path": "cspRules.json"
+      }
+    ]
+  }
+}

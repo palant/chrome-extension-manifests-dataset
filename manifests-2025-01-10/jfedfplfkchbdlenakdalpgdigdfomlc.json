@@ -1,0 +1,100 @@
+---
+name: Text to Spreadsheet
+version: 1.3.1
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 6
+size: 125KiB
+languages:
+  - English
+release_date: '2025-01-10T11:33:14.000Z'
+creation_date: '2024-12-12T07:34:19.000Z'
+description: >-
+  Effortlessly copy selected text from web pages and applications straight into
+  Google Sheets.
+publisher_hash: 179a210cf1a94670071cae26a3052a026103dc0c16872fc77adcf100e5a2c512
+publisher_account: Productuary
+extension_website: productuary.com
+extension_website_verified: false
+privacy_policy: https://productuary.com/text-to-spreadsheet/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Text to Spreadsheet",
+  "version": "1.3.1",
+  "description": "Effortlessly copy selected text from web pages and applications straight into Google Sheets.",
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "https://api.rollbar.com/"
+  ],
+  "oauth2": {
+    "client_id": "149352282381-feh0n3m17ikufmmu6c01iop3gu668fve.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/drive.file"
+    ]
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAssuxTKKEjPqNLXI47kpxTeqjGmK8X0smrPMRbs5TUI6a0lzmEjzaZPr4kqmj/hvfLzzQO1nGQGGqRAfClobOGpKimvZvok+hmupHfQqKF76xcCZ68FTOdJvqeDnA3WZDjUgiwShyv2BpQ0/D3yO+aPv/V+NO4Z4VGKNZaaAGfC5E6KrY6hZ9K2H6o72daAhjSNAjRuUyUmnXmj5dh/3Qq+z6gKKuA/oVY0J/iqz0rZBbaCiNa42J75y1byLarH3VP9GxtwExERkIHDOHiHzpDoj7ZLjVxdClJyz2pSkxXU2RbntTMIqxXcXhGWhxLihmEJh4kl0+9bM+vthgMgil3wIDAQAB",
+  "action": {
+    "default_popup": "popups/config.html",
+    "default_icon": {
+      "192": "logo192.png",
+      "512": "logo512.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "commands": {
+    "add-to-spreadsheet": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+S",
+        "mac": "MacCtrl+Shift+S"
+      },
+      "description": "Add selected text to spreadsheet"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://productuary.com/text-to-spreadsheet/picker/v1.html"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "all_frames": true
+    }
+  ],
+  "content_security_policy": {
+    "sandbox": "sandbox allow-modals allow-scripts; script-src 'self' https://apis.google.com/"
+  },
+  "sandbox": {
+    "pages": [
+      "https://productuary.com/text-to-spreadsheet/picker/v1.html"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "picker.js"
+      ],
+      "matches": [
+        "https://productuary.com/*"
+      ]
+    }
+  ]
+}

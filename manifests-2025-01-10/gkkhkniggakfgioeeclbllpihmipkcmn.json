@@ -1,0 +1,73 @@
+---
+name: 'SeaMeet: Take ChatGPT Meeting Note Real-Time'
+version: '0.14'
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 7
+user_count: 6000
+size: 8.18MiB
+languages:
+  - English
+  - 中文 (繁體)
+release_date: '2025-01-07T06:32:46.000Z'
+creation_date: '2023-08-18T12:21:45.000Z'
+description: 'SeaMeet: Transcription, notes, follow-ups, coherence, valuable insights.'
+publisher_hash: 0ea3d1dd26b9c663cd30754bec209e0503d74c10f312912824fa86d7cddbc0b8
+publisher: Seasalt AI, Inc
+publisher_account: chrome-ext-seasaltai
+publisher_address: |-
+  2439 152nd Ave NE
+  Redmond, WA 98052-5573
+  US
+extension_website: meet.seasalt.ai
+extension_website_verified: true
+support_website: https://seasalt.ai/
+privacy_policy: https://seasalt.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_appName__",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "manifest_version": 3,
+  "version": "0.14",
+  "permissions": ["tabs", "activeTab"],
+  "icons": {
+    "128": "meet.png"
+  },
+  "action": {
+    "default_title": "Click to show an alert"
+  },
+  "background": {
+    "service_worker": "service-worker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://meet.google.com/*"],
+      "run_at": "document_idle",
+      "js": ["meetScript.js"]
+    },
+    {
+      "matches": ["*://meet.seasalt.ai/*"],
+      "exclude_matches": ["*://meet.seasalt.ai/ext/*"],
+      "run_at": "document_idle",
+      "js": ["seaMeetScript.js"]
+    },
+    {
+      "matches": ["*://meet.seasalt.ai/ext/*"],
+      "run_at": "document_idle",
+      "js": ["seaMeetExtScript.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

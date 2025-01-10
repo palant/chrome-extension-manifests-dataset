@@ -1,0 +1,89 @@
+---
+name: Foundation Zero Wingman
+version: 0.0.3
+category_slug: productivity/developer
+featured: false
+rating: null
+rating_count: null
+user_count: 4
+size: 152KiB
+languages:
+  - English (United States)
+release_date: '2024-07-24T10:33:31.000Z'
+creation_date: '2024-07-19T13:42:01.000Z'
+description: Interact with Foundation Zero in the AWS Console!
+publisher_hash: cd733314b349fce0204f0ebdf93ad062ca3eee737c552f7231e87d6d800fa9e1
+publisher_account: https://cloudandthings.io
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Foundation Zero Wingman",
+  "version": "0.0.3",
+  "description": "Interact with Foundation Zero in the AWS Console!",
+  "action": {
+    "default_icon": "./assets/icon-512.png"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "activeTab",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.console.aws.amazon.com/*",
+        "https://health.aws.amazon.com/*",
+        "https://lightsail.aws.amazon.com/*",
+        "https://*.console.amazonaws-us-gov.com/*",
+        "https://phd.amazonaws-us-gov.com/*",
+        "https://*.console.amazonaws.cn/*",
+        "https://health.amazonaws.cn/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/attach_target.js",
+        "js/attach_target.js"
+      ],
+      "matches": [
+        "https://*.console.aws.amazon.com/*",
+        "https://health.aws.amazon.com/*",
+        "https://lightsail.aws.amazon.com/*",
+        "https://*.console.amazonaws-us-gov.com/*",
+        "https://phd.amazonaws-us-gov.com/*",
+        "https://*.console.amazonaws.cn/*",
+        "https://health.amazonaws.cn/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "side_panel": {
+    "default_path": "dist/sidepanel/index.html"
+  }
+}

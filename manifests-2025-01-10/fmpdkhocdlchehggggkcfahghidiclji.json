@@ -1,0 +1,82 @@
+---
+name: GMeet - Realtime Transcripts
+version: 1.0.0
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: null
+rating_count: null
+user_count: 29
+size: 555KiB
+languages:
+  - English (United States)
+release_date: '2023-11-14T12:55:06.000Z'
+creation_date: '2023-11-14T12:55:06.000Z'
+description: >-
+  This extension demonstrates how to access Google Meet's WebRTC data channel
+  for captions and create a live transcript using it.
+publisher_hash: d6e5bdbbcb4280acbbbf181ce1493443be5a373d6412bf0d9f848aa47c2c4a99
+publisher_account: Manu
+support_website: http://www.manu.ws
+privacy_policy: >-
+  https://docs.google.com/document/d/1hPdHYANZLXPuV4atjknj5BRxWerh_SARMmGrR_Ehy9g/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "GMeet - Realtime Transcripts",
+  "version": "1.0.0",
+  "description": "This extension demonstrates how to access Google Meet's WebRTC data channel for captions and create a live transcript using it.",
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+   "icons": {
+        "16" : "icon.png",
+        "48" : "icon.png",
+        "128" : "icon.png"
+  },
+  "content_scripts": [
+    {
+        "matches": [
+            "*://meet.google.com/*-*-*"
+        ],
+        "js": [
+            "./static/js/content.js"
+        ]
+    },
+    {
+      "matches": [
+          "*://meet.google.com/*-*-*"
+      ],
+      "js": [
+          "./static/js/rtcinjector.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [ 
+          "activeTab",
+          "storage",
+          "unlimitedStorage"
+  ],
+  "host_permissions": [
+    "*://meet.google.com/*-*-*"
+  ],
+  "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+  },
+  "web_accessible_resources": [
+    {
+        "resources": [
+            "/static/js/googlemeet.js"
+        ],
+        "matches": [
+            "*://*/*"
+        ]
+    }
+  ]
+}

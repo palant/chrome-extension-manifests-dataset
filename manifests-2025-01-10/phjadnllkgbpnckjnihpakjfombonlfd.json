@@ -1,0 +1,75 @@
+---
+name: Symbee Universal Plugin
+version: 2.0.0
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 2000
+size: 209KiB
+languages:
+  - English (United States)
+release_date: '2022-09-01T04:49:50.000Z'
+creation_date: '2019-11-11T04:25:35.000Z'
+description: This extension supports Symbee Connect functionality
+publisher_hash: 9c73c474af74dd250293748191b5554f6d0f76d32aca072d9f89254037fbcd80
+publisher_account: symbeeconnectstore
+support_website: https://www.symbee.co/support
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Symbee Universal Plugin",
+    "short_name": "SymbeePlugin",
+    "description": "This extension supports Symbee Connect functionality",
+    "version": "2.0.0",
+    "homepage_url": "https://www.symbee.co",
+    "icons": { 
+        "16":  "symbee-extension-icon-16.png",
+        "32":  "symbee-extension-icon-32.png",
+        "48":  "symbee-extension-icon-48.png",
+        "128": "symbee-extension-icon-128.png"
+    },
+    "background": {
+        "service_worker": "scripts/worker.js",
+        "type": "module"
+    },    
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "exclude_matches": ["https://*.awsapps.com/connect/*", "https://*.my.connect.aws/*"],
+        "all_frames": true,
+        "js": [
+            "scripts/content/GlobalIdentifiers.js",
+            "scripts/content/SCUExtContentLogger.js",            
+            "scripts/content/PauseResumeContent.js",
+            "scripts/content/Click2DialContent.js",
+            "scripts/content.js"
+        ]
+    }],
+    "permissions": [
+        "tabs", 
+        "storage"
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "action": {
+        "default_icon": { 
+            "16":  "symbee-extension-icon-16.png",
+            "32":  "symbee-extension-icon-32.png",
+            "48":  "symbee-extension-icon-48.png",
+            "128": "symbee-extension-icon-128.png"
+        },
+        "default_title": "Symbee Universal Plugin",
+        "default_popup": "pages/extension_popup.html"
+    },
+    "web_accessible_resources": [ 
+        {
+            "resources": ["css/click2dial.css", "images/click2dial-icon.png"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}
+

@@ -1,0 +1,90 @@
+---
+name: OAKI AI-Apply Agent
+version: 0.0.1
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 2
+size: 5.16MiB
+languages:
+  - English
+release_date: '2025-01-06T07:16:26.000Z'
+creation_date: '2025-01-06T07:16:26.000Z'
+description: >-
+  AI-powered job application assistant that helps automate and streamline your
+  job search process
+publisher_hash: 92a5b8a5ebdb1798d9a3cf99f72ef014b43c47bdb4f43b721a29b628c36a211a
+publisher: OAKI Inc.
+publisher_account: OAKI
+publisher_address: |-
+  651 North Broad Street
+  Middletown, DE 19709
+  US
+publisher_phone: '+16475159261'
+extension_website: oaki.io
+extension_website_verified: false
+support_website: https://www.oaki.io/
+privacy_policy: https://www.oaki.io/legal/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "OAKI AI-Apply Agent",
+  "description": "AI-powered job application assistant that helps automate and streamline your job search process",
+  "version": "0.0.1",
+  "manifest_version": 3,
+  "action": {
+    "default_title": "OAKI Assistant",
+    "default_icon": "favicon.png",
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background/background.js",
+    "type": "module"
+  },
+  "host_permissions": [
+    "*://*.greenhouse.io/*",
+    "*://*.workable.com/*",
+    "*://*.ashbyhq.com/*",
+    "*://*.smartrecruiters.com/*",
+    "*://*.lever.co/*",
+    "https://*.firebaseapp.com/*",
+    "https://*.googleapis.com/*",
+    "https://*.oaki.io/*",
+    "https://firebasestorage.googleapis.com/*"
+  ],
+  "permissions": [
+    "storage",
+    "tabs",
+    "alarms",
+    "scripting"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src 'self' https://*.firebaseio.com https://*.googleapis.com https://*.oaki.io https://firebasestorage.googleapis.com"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.greenhouse.io/*",
+        "*://*.lever.co/*",
+        "*://*.workable.com/*",
+        "*://*.ashbyhq.com/*",
+        "*://*.smartrecruiters.com/*"
+      ],
+      "js": [
+        "content/utils.js",
+        "content/applicationManager.js",
+        "content/lv.js",
+        "content/gh.js",
+        "content/wk.js",
+        "content/ah.js",
+        "content/sr.js",
+        "content/contentScript.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+  ]
+}

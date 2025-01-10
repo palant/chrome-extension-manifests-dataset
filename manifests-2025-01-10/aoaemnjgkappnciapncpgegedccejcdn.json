@@ -1,0 +1,141 @@
+---
+name: Ptengine Kit
+version: 1.0.0
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 11
+size: 485KiB
+languages:
+  - English
+  - 中文 (简体)
+  - 日本語
+release_date: '2025-01-01T05:22:23.000Z'
+creation_date: '2024-12-30T09:28:03.000Z'
+description: Ptengine Kit
+publisher_hash: dc823bd6cdf962ccce07c0d56c04c5137290258022e4dcd190ba166173417409
+publisher_account: Ptengine
+extension_website: ptengine.jp
+extension_website_verified: false
+privacy_policy: https://www.ptengine.jp/privacy-policy
+---
+
+{
+  "author": "ptengine",
+  "description": "Ptengine Kit",
+  "name": "Ptengine Kit",
+  "version": "1.0.0",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "32": "icons/Ptengine-plugin-32.png",
+      "48": "icons/Ptengine-plugin-48.png",
+      "128": "icons/Ptengine-plugin-128.png"
+    },
+    "default_popup": "src/entries/popup/index.html"
+  },
+  "background": {
+    "service_worker": "serviceWorker.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "src/entries/contentScript/primary/main.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "http://*/*pt-device=MOBILE*",
+        "https://*/*pt-device=MOBILE*"
+      ],
+      "js": [
+        "src/entries/contentScript/mobileUAContent.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "http://*/*pt-device=TABLET*",
+        "https://*/*pt-device=TABLET*"
+      ],
+      "js": [
+        "src/entries/contentScript/tabletUAContent.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/entries/contentScript/primary/main.ts",
+        "js/inject.js",
+        "js/inject-heatmap-helper.js",
+        "css/bootstrap.min.css",
+        "js/_sid.js",
+        "js/_auth.js",
+        "js/assistant_inject.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "extension_ids": []
+    },
+    {
+      "resources": [
+        "assets/screenShotContent-86055bbd.js",
+        "assets/src/entries/contentScript/primary/main-17d20bcd.js",
+        "src/entries/contentScript/preview/pageInject.js",
+        "src/entries/contentScript/preview/pageInjectScript.js",
+        "src/entries/contentScript/preview/sidePanel/sidePanel.html"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "/rule/rules.json"
+      }
+    ]
+  },
+  "icons": {
+    "32": "icons/Ptengine-plugin-32.png",
+    "48": "icons/Ptengine-plugin-48.png",
+    "128": "icons/Ptengine-plugin-128.png"
+  },
+  "options_ui": {
+    "page": "src/entries/options/index.html",
+    "open_in_tab": true
+  },
+  "permissions": [
+    "declarativeNetRequest",
+    "tabs",
+    "debugger",
+    "scripting",
+    "storage",
+    "activeTab",
+    "sidePanel",
+    "webNavigation",
+    "cookies"
+  ]
+}

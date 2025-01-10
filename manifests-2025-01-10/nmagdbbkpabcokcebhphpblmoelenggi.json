@@ -1,0 +1,93 @@
+---
+name: ChatBro洽宝
+version: '1.3'
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 360KiB
+languages:
+  - 中文 (简体)
+release_date: '2024-03-06T10:11:23.000Z'
+creation_date: '2023-05-31T07:23:09.000Z'
+description: 洽宝，你的人工智能助手, 与搜索引擎完美配合，提供更专业的回答
+publisher_hash: b6a4722f67278ca5f825530a2991bf58d593eebe80d13113c1f680389c8a1e2a
+publisher: 企业
+publisher_account: nanbing
+publisher_address: |-
+  成都市锦江区东大街芷泉段229号1栋2单元6层605号
+  成都市, 四川省 610000
+  CN
+extension_website: chatbro.cn
+extension_website_verified: true
+support_website: https://www.chatbro.cn/extension
+privacy_policy: https://www.chatbro.cn/legal
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ChatBro洽宝",
+  "description": "洽宝，你的人工智能助手, 与搜索引擎完美配合，提供更专业的回答",
+  "default_locale": "zh_CN",
+  "version": "1.3",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon32.png"
+  },
+  "action": {
+    "default_popup": "popup/popup.html"
+  },
+  "permissions": ["storage", "webNavigation", "webRequest", "notifications"],
+  "host_permissions": [
+    "https://api-us.chatbro.cn/*",
+    "https://www.baidu.com/*",
+    "https://www.google.com/*",
+    "https://*.bing.com/*"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "options_page": "options/options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.google.com/search*",
+        "https://www.baidu.com/*",
+        "https://*.bing.com/search*"
+      ],
+      "js": [
+        "scripts/vendors/jquery-3.7.0.min.js",
+        "scripts/vendors/highlight.min.js",
+        "scripts/vendors/markdown-it.min.js",
+        "scripts/mock.js",
+        "scripts/markdown.js",
+        "scripts/sse.js",
+        "scripts/content.js"
+      ],
+      "css": ["styles/iconfont.css", "styles/main.css"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.jpeg",
+        "images/*.png",
+        "styles/*.css",
+        "styles/*.ttf",
+        "styles/*.woff",
+        "styles/*.woff2",
+        "options/*.*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self' "
+  }
+}

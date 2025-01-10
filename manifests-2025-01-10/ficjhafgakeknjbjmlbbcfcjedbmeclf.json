@@ -1,0 +1,71 @@
+---
+name: Backlog Ease
+version: 0.5.0
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 66
+size: 175KiB
+languages:
+  - 日本語
+release_date: '2024-12-17T17:41:16.000Z'
+creation_date: '2023-07-26T14:14:24.000Z'
+description: Backlog と他のツールを連携し、作業を効率化するツールです。
+publisher_hash: 25bd159f5859ca77d668a554288430c38fe4541f0e756d198f5d6202c1352e51
+publisher_account: punkshiraishi
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Backlog Ease",
+  "version": "0.5.0",
+  "description": "Backlog と他のツールを連携し、作業を効率化するツールです。",
+  "action": {
+    "default_icon": "./assets/icon-128.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://github.com/*",
+        "https://*.backlog.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src https://*.backlog.com https://api.github.com https://slack.com/ "
+  }
+}

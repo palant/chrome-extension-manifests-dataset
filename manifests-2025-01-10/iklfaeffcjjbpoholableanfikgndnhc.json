@@ -1,0 +1,152 @@
+---
+name: SquarespaceWebsites Tools PRO
+version: 2.0.2
+category_slug: productivity/developer
+featured: false
+rating: 4.631578947368421
+rating_count: 19
+user_count: 8000
+size: 372KiB
+languages:
+  - English
+release_date: '2025-01-10T20:52:10.000Z'
+creation_date: '2017-05-06T16:03:59.000Z'
+description: This extension provides Import/Export between SS sites and some useful stuff
+publisher_hash: e5d00c0fc4a614318a53c966b7024c55cec45937eb5a560f734d17d2f555760f
+publisher: squarespacewebsites
+publisher_account: Taylor Miles
+publisher_address: |-
+  413 N 4th St
+  Bellevue, ID 83313
+  US
+extension_website: squarewebsites.org
+extension_website_verified: true
+support_website: >-
+  https://join.slack.com/t/squarewebsites/shared_invite/zt-1g24gqlgy-5GhVXknjGXe_gGijC8ARDQ
+privacy_policy: https://squarespacewebsites.com/privacy-policy-extensions
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "SquarespaceWebsites Tools PRO",
+    "author": "michael@squarespacewebsites.com",
+    "description": "This extension provides Import/Export between SS sites and some useful stuff",
+    "version": "2.0.2",
+    "background": {
+        "service_worker": "background.js"
+    },
+    "action": {
+        "default_icon": "images/sqs-tools.png",
+        "default_popup": "popup.html",
+        "default_title": "SquarespaceWebsites Tools PRO"
+    },
+    "icons": {
+        "16": "images/sqs-tools.png",
+        "48": "images/sqs-tools.png",
+        "128": "images/sqs-tools.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.squarespace.com/*"
+            ],
+            "all_frames": true,
+            "css": [
+                "sqs-tools.min.css"
+            ],
+            "exclude_matches": [
+                "https://developers.squarespace.com/*",
+                "https://support.squarespace.com/*",
+                "https://account.squarespace.com/*"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://account.squarespace.com/*"
+            ],
+            "js": [
+                "/assets/account/account-tools.js",
+                "sqs-tools.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "*://*.squarespace.com/*"
+            ],
+            "exclude_matches": [
+                "https://developers.squarespace.com/*",
+                "https://support.squarespace.com/*",
+                "https://account.squarespace.com/*"
+            ],
+            "js": [
+                "sqs-tools.js",
+                "/assets/captcha-solve/captcha-solve.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "all_frames": true,
+            "matches": [
+                "https://www.squarewebsites.org/account/frame",
+                "https://squarewebsites.org/account/frame"
+            ],
+            "js": [
+                "/assets/account/extension-tools.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "commands": {
+        "getSiteInfo": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+I"
+            },
+            "description": "Get Site Info (platform, description, meta)"
+        },
+        "escapeSSSite": {
+            "suggested_key": {
+                "default": "Ctrl+E"
+            },
+            "description": "Redirect to Admin panel"
+        }
+    },
+    "permissions": [
+        "activeTab",
+        "storage",
+        "cookies",
+        "system.display",
+        "scripting"
+    ],
+   "optional_permissions": [
+        "notifications"
+    ],
+    "host_permissions": [
+        "https://*.squarewebsites.org/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*",
+                "sqs-tools-inject-obf.js",
+                "assets/*"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'",
+        "sandbox": "sandbox allow-scripts; script-src 'self' 'https://apis.google.com/' 'https://www.gstatic.com/' 'https://*.firebaseio.com' 'https://www.googleapis.com' 'https://ajax.googleapis.com'; object-src 'self'"
+    },
+    "externally_connectable": {
+        "matches": [
+            "https://*.squarespace.com/*",
+            "https://*.squarewebsites.org/*"
+        ]
+    }
+}

@@ -1,0 +1,111 @@
+---
+name: ChatGPT vs Bard
+version: '1.0'
+category_slug: productivity/workflow
+featured: true
+rating: 4.5
+rating_count: 2
+user_count: 278
+size: 197KiB
+languages:
+  - English (United States)
+release_date: '2023-03-29T11:32:08.000Z'
+creation_date: '2023-03-29T11:32:08.000Z'
+description: Put ChatGPT vs Bard side by side for comparison.
+publisher_hash: 63020663dd450d1260305b7bed6941fb190ddb831350caa082debf37b07fbc1c
+publisher_account: hilcj0001
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "ChatGPT vs Bard",
+    "description": "Put ChatGPT vs Bard side by side for comparison.",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+        "default_icon": "ui/icon.png"
+    },
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "options_page": "ui/options.html",
+    "minimum_chrome_version": "96",
+    "host_permissions": [
+        "*://*.google.com/",
+        "*://*.openai.com/",
+        "*://*.bing.com/"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "ui/side-by-side.html",
+                "ui/icon.png"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_scripts": [
+        {
+            "js": [
+                "scripts/sync-inputs-utils.js",
+                "scripts/sync-inputs-google.js"
+            ],
+            "matches": [
+                "*://www.google.com/",
+                "*://www.google.com/search*"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "js": [
+                "scripts/sync-inputs-utils.js",
+                "scripts/sync-inputs-bard.js"
+            ],
+            "matches": [
+                "*://bard.google.com/"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "js": [
+                "scripts/sync-inputs-utils.js",
+                "scripts/sync-inputs-openai.js"
+            ],
+            "matches": [
+                "*://*.openai.com/*"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        },
+        {
+            "js": [
+                "scripts/sync-inputs-utils.js",
+                "scripts/sync-inputs-bing.js"
+            ],
+            "matches": [
+                "*://*.bing.com/*"
+            ],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+    "permissions": [
+        "declarativeNetRequest",
+        "storage",
+        "system.display"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "allow-frame-embed",
+                "enabled": true,
+                "path": "rules/allow-frame-embed.json"
+            }
+        ]
+    }
+}

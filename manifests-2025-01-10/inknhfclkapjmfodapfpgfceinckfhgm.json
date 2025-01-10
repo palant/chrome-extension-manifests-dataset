@@ -1,0 +1,55 @@
+---
+name: Movie Tracker List
+version: '4.7'
+category_slug: lifestyle/entertainment
+featured: true
+rating: 5
+rating_count: 2
+user_count: 58
+size: 817KiB
+languages:
+  - English (United States)
+release_date: '2024-12-04T08:20:38.000Z'
+creation_date: '2023-09-29T11:25:16.000Z'
+description: Receive alerts when movies on your watchlist become available online to watch.
+publisher_hash: 4403156384f9585a15e97f60bd194f9b922c58765f196724d582dfaff650da0a
+publisher_account: Tibi
+privacy_policy: https://www.freeprivacypolicy.com/live/e5af4819-e670-4d06-900c-4871c0fba710
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Movie Tracker List",
+  "version": "4.7",
+  "description": "Receive alerts when movies on your watchlist become available online to watch.",
+  "host_permissions": [
+    "https://*.imdb.com/*",
+    "https://www.omdbapi.com/*",
+    "https://torrentio.strem.fun/*",
+    "https://api.themoviedb.org/*",
+    "http://51.38.179.70:5000/*"
+  ],
+  "permissions": ["identity", "storage", "notifications", "activeTab"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.imdb.com/title/tt*/*"],
+      "js": ["addfromIMDB.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

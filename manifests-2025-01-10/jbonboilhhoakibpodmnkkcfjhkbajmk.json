@@ -1,0 +1,75 @@
+---
+name: Audio Only for YouTube™
+version: 0.1.9
+category_slug: lifestyle/fun
+featured: false
+rating: 3.5405405405405403
+rating_count: 37
+user_count: 3000
+size: 40.45KiB
+languages:
+  - English
+release_date: '2024-06-19T11:14:08.000Z'
+creation_date: '2018-11-20T14:05:07.000Z'
+description: Listen to audio (no video) in YouTube and all embedded videos.
+publisher_hash: 3a21b9d0937dd6a4a7c6af96b96586e935ec0fb967aa547f30fcac2a2bd83924
+publisher_account: Sevina
+support_website: https://mybrowseraddon.com/audio-only-for-youtube.html
+privacy_policy: https://mybrowseraddon.com/privacy-policy/developer/sevina.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "version": "0.1.9",
+  "manifest_version": 3,
+  "name": "Audio Only for YouTube™",
+  "host_permissions": ["*://*.youtube.com/*", "*://*.googlevideo.com/*"],
+  "homepage_url": "https://mybrowseraddon.com/audio-only-for-youtube.html",
+  "description": "Listen to audio (no video) in YouTube and all embedded videos.",
+  "permissions": [
+    "storage", 
+    "webRequest", 
+    "declarativeNetRequest"
+  ],
+  "commands": {
+    "_execute_action": {}
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [{
+    "matches": ["*://*.youtube.com/*"],
+    "resources": ["data/content_script/page_context/inject.js"]
+  }],
+  "action": {
+    "default_title": "Audio Only for YouTube™",
+    "default_icon": {
+      "16": "data/icons/16.png",
+      "32": "data/icons/32.png",
+      "48": "data/icons/48.png",
+      "64": "data/icons/64.png"
+    }
+  },
+  "content_scripts": [
+    {
+    "all_frames": false,
+    "run_at": "document_start",
+    "matches": ["*://*.youtube.com/*"],
+    "js": ["data/content_script/inject.js"]
+  },
+  {
+    "all_frames": true,
+    "run_at": "document_end",
+    "matches": ["*://*.youtube.com/embed*"],
+    "js": ["data/content_script/inject.js"]
+  }
+],
+  "icons": {
+    "16": "data/icons/16.png",
+    "32": "data/icons/32.png",
+    "48": "data/icons/48.png",
+    "64": "data/icons/64.png",
+    "128": "data/icons/128.png"
+  }
+}

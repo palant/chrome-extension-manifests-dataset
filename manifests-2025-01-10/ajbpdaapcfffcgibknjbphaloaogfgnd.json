@@ -1,0 +1,91 @@
+---
+name: Memobot meeting assistant
+version: 1.2.3
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 9
+user_count: 68
+size: 3.06MiB
+languages:
+  - English
+  - Tiếng Việt
+  - 日本語
+release_date: '2024-12-27T08:12:20.000Z'
+creation_date: '2024-09-28T06:41:54.000Z'
+description: >-
+  Memobot transcribes meetings in real-time. It also provides a summary and
+  subtitles for movies, lectures
+publisher_hash: cad3904cd084d010e21a6f2e88ee7342f1843d02364ad8692e19a432b7713da8
+publisher_account: VAIS
+extension_website: memobot.io
+extension_website_verified: true
+privacy_policy: >-
+  https://docs.google.com/document/d/16GsEQ2r1651ogkz_vtfv69TkqiLlfM8v_t2GDJIhytw/pub
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Memobot meeting assistant",
+  "version": "1.2.3",
+  "description": "Memobot transcribes meetings in real-time. It also provides a summary and subtitles for movies, lectures",
+  "permissions": ["tabs", "tabCapture", "activeTab", "storage", "offscreen"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "src/popup.html"
+  },
+  "default_locale": "en",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.js",
+        "*.css",
+        "assets/*",
+        "requestPermissions.html",
+        "requestPermissions.js",
+        "src/container.html",
+        "container.js",
+        "subtitle.js",
+        "summaryRealtime.js",
+        "https://www.google-analytics.com/analytics.js"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["content.js"],
+      "run_at": "document_end",
+      "matches": [
+        "*://docs.google.com/presentation/d/*",
+        "*://www.docs.google.com/presentation/d/*"
+      ]
+    },
+    {
+      "all_frames": false,
+      "js": ["content.js"],
+      "matches": ["*://*/*"],
+      "run_at": "document_end"
+    }
+  ]
+}

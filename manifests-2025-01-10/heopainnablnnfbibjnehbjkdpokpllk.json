@@ -1,0 +1,72 @@
+---
+name: Daily Quotes for Gmail Signatures
+version: '1.2'
+category_slug: productivity/communication
+featured: false
+rating: 5
+rating_count: 1
+user_count: 5
+size: 446KiB
+languages:
+  - English
+release_date: '2024-12-12T10:52:26.000Z'
+creation_date: '2024-11-06T09:26:30.000Z'
+description: Automatically add daily inspiring quotes to your email signature for free.
+publisher_hash: 1797e5dc8647812cd656dd9567cb0697d067eb66fac6f9c3a70da2c3e7629dd8
+publisher: Be Happiful, LLC
+publisher_account: Be Happiful
+publisher_address: |-
+  401 Ryland St Suite 200-A
+  Reno, NV 89502-1643
+  US
+publisher_phone: '+15635379802'
+privacy_policy: https://www.behappiful.com/privacypolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Daily Quotes for Gmail Signatures",
+  "short_name": "Be Happiful",
+  "version": "1.2",
+  "description": "Automatically add daily inspiring quotes to your email signature for free.",
+  "icons": {
+    "32": "images/Behappiful-32x32.png",
+    "48": "images/Behappiful-48x48.png",
+    "96": "images/Behappiful-96x96.png",
+    "128": "images/Behappiful-128x128.png"
+  },
+  "action": {
+    "default_title": "Daily Quotes for Gmail Signatures",
+    "default_popup": "popUp.html",
+    "default_icon": {
+      "32": "images/Behappiful-32x32.png",
+      "48": "images/Behappiful-48x48.png",
+      "96": "images/Behappiful-96x96.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "permissions": ["scripting","storage", "tabs"],
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*"],
+      "js": ["src/extensionInjector.js", "src/extension.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/gmailJsLoader.js",
+        "dist/extension.js",
+        "dist/gmailJsLoader.js.map",
+        "dist/extension.js.map"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": ["https://mail.google.com/*"]
+}

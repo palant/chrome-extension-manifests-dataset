@@ -1,0 +1,68 @@
+---
+name: BidPacer
+version: '0.2'
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 1.3MiB
+languages:
+  - English
+release_date: '2024-08-29T05:42:05.000Z'
+creation_date: '2024-08-24T06:07:49.000Z'
+description: >-
+  Generate AI proposals and apply jobs in popular freelance platforms i.e.
+  Upwork, Freelancer and Guru
+publisher_hash: d5c1db050220f6cd141bae8751d44f69fdd0099ab78d3bb38b885a7bdea85bc8
+publisher_account: BidPacer
+extension_website: bidpacer.ai
+extension_website_verified: false
+privacy_policy: https://www.bidpacer.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BidPacer",
+  "description": "Generate AI proposals and apply jobs in popular freelance platforms i.e. Upwork, Freelancer and Guru",
+  "version": "0.2",
+  "permissions": [],
+  "content_scripts": [
+    {
+      "matches": ["*://*.upwork.com/nx/proposals/job/*"],
+      "js": ["class-watcher.class.js", "upwork.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.freelancer.com/projects/*", "*://*.freelancer.ca/projects/*", "*://*.freelancer.co.uk/projects/*"],
+      "js": ["class-watcher.class.js", "freelancer.js"],
+      "css": ["content.css"],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+    "matches": ["http://localhost:3000/*", "http://localhost:3001/*", "https://www.bidpacer.ai/*"]
+  },
+  "icons": {
+    "16": "assets/favicon.png",
+    "48": "assets/favicon.png",
+    "128": "assets/favicon.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "BidPacer",
+    "default_icon": "assets/favicon.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*"],
+      "matches": [ "*://*.upwork.com/*" ]
+    }
+ ]
+}

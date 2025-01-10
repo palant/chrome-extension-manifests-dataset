@@ -1,0 +1,73 @@
+---
+name: 政大開評器 - 政大的開箱評價利器!
+version: 1.0.1
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 121
+size: 1.75MiB
+languages:
+  - 中文 (繁體)
+release_date: '2024-08-20T11:49:41.000Z'
+creation_date: '2024-08-17T09:31:45.000Z'
+description: 一鍵獲取政大課程的最新網路評價與官方課程資訊。
+publisher_hash: 2c479f4e16f57083dd0a808962c34595ec331cb4dfae92810d9e4e01d531fb99
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "政大開評器 - 政大的開箱評價利器!",
+  "version": "1.0.1",
+  "description": "一鍵獲取政大課程的最新網路評價與官方課程資訊。",
+  "permissions": ["sidePanel", "activeTab", "storage", "tabs"],
+  "host_permissions": ["https://newdoc.nccu.edu.tw/*"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "action": {
+    "default_icon": "logo.png",
+    "default_title": "Click to open panel"
+  },
+  "side_panel": {
+    "default_path": "index.html"
+  },
+  "commands": {
+    "open_side_panel": {
+      "suggested_key": {
+        "default": "Ctrl+Q",
+        "mac": "Command+Q"
+      },
+      "description": "Open the side panel"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://qrysub.nccu.edu.tw/*"],
+      "js": ["nccuSearchPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://newdoc.nccu.edu.tw/*"],
+      "js": ["nccuCoursePage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.dcard.tw/search/*"],
+      "js": ["dcardSearchPage.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.dcard.tw/f/*"],
+      "js": ["dcardPostPage.js"],
+      "run_at": "document_end"
+    }
+  ]
+}

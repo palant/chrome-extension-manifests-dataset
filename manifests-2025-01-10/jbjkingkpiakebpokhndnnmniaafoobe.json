@@ -1,0 +1,115 @@
+---
+name: SharpSports
+version: 1.4.5
+category_slug: lifestyle/entertainment
+featured: false
+rating: 5
+rating_count: 2
+user_count: 8000
+size: 109KiB
+languages:
+  - English (United States)
+release_date: '2025-01-08T22:53:42.000Z'
+creation_date: '2023-05-04T09:47:01.000Z'
+description: >-
+  Link your sportsbook account with any sports media / tool provider in the
+  SharpSports network.
+publisher_hash: 492e9076a262f094f4a8decdb3464ef6253cda7e869e46beb86d7cbd13eb1fbc
+publisher: SharpSports
+publisher_address: |-
+  111 Town Square Place
+  1203
+  Jersey City, NJ 07310
+  US
+extension_website: sharpsports.io
+extension_website_verified: true
+privacy_policy: https://www.sharpsports.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SharpSports",
+  "description": "Link your sportsbook account with any sports media / tool provider in the SharpSports network.",
+  "version": "1.4.5",
+  "icons": {
+    "16": "icon_16.png",
+    "32": "icon_32.png",
+    "48": "icon_48.png",
+    "128": "icon_128.png"
+  },
+  "action": {
+    "default_icon": "icon_128.png"
+  },
+  "background": {
+    "service_worker": "background/main.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content_scripts/main.js"]
+    },
+    {
+      "matches": ["https://*.sportsbook.fanduel.com/*"],
+      "js": ["content_scripts/FanduelAPI.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.draftkings.com/lobby*"],
+      "js": ["content_scripts/DraftKingsAPI.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.sportsbook.fanduel.com/*"],
+      "js": ["content_scripts/FanduelCookies.js"]
+    },
+    {
+      "matches": ["https://*.betmgm.com/*"],
+      "js": ["content_scripts/BetMgmAPI.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://app.prizepicks.com/*"],
+      "js": ["content_scripts/PrizePicksAPI.js"]    
+    },{
+      "matches": ["https://app.hardrock.bet/"],
+      "js": ["content_scripts/HardRockAPI.js"]
+    },{
+      "matches": ["https://*.betrivers.com/*","https://*.betrivers.ca/*"],
+      "js": ["content_scripts/BetRiversAPI.js"]
+    },{
+      "matches": ["https://underdogfantasy.com/*"],
+      "js": ["content_scripts/UnderdogAPI.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/lib/pusher.js","/lib/datadog.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "https://app.hardrock.bet/*",
+    "https://*.fanduel.com/*",
+    "https://*.draftkings.com/*",
+    "https://api.sharpsports.io/*",
+    "https://http-intake.logs.datadoghq.com/api/*",
+    "https://app.prizepicks.com/*",
+    "*://*.prizepicks.com/",
+    "https://*.betrivers.com/*",
+    "https://*.betrivers.ca/*",
+    "https://underdogfantasy.com/*",
+    "https://*.betmgm.com/*"
+  ],
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest",
+    "activeTab",
+    "scripting"
+  ]
+}

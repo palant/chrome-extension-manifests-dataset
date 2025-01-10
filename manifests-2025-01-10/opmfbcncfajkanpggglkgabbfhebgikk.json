@@ -1,0 +1,80 @@
+---
+name: Wum.bo
+version: 1.4.3
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 103
+size: 42.77MiB
+languages:
+  - English
+release_date: '2022-09-16T17:19:22.000Z'
+creation_date: '2021-09-28T16:47:22.000Z'
+description: Wum.bo, Empowered Socials
+publisher_hash: 82180a5cce74203ebd0ca7d9bc3ba13552bb77802431a8791ae3f9aa14dc3890
+publisher: Wum.bo Inc.
+publisher_account: noah
+publisher_address: |-
+  1720 N. LaSalle Dr
+  Apt #1
+  Chicago, IL 60614
+  US
+extension_website: wum.bo
+extension_website_verified: true
+privacy_policy: https://wumbo-docs.s3.us-east-2.amazonaws.com/Wum.bo+Privacy+Policy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Wum.bo",
+  "description": "Wum.bo, Empowered Socials",
+  "version": "1.4.3",
+  "action": {
+    "default_title": "Wum.bo",
+    "default_icon": {
+      "16": "assets/img/icon16.png",
+      "32": "assets/img/icon32.png",
+      "48": "assets/img/icon48.png",
+      "128": "assets/img/icon128.png",
+      "512": "assets/img/icon512.png"
+    }
+  },
+  "icons": {
+    "16": "assets/img/icon16.png",
+    "32": "assets/img/icon32.png",
+    "48": "assets/img/icon48.png",
+    "128": "assets/img/icon128.png",
+    "512": "assets/img/icon512.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://twitter.com/*"],
+      "js": ["content_script.js"],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "matches": ["https://app.wum.bo/claim*", "http://localhost:3000/claim*"],
+      "js": ["oauth.js"],
+      "run_at": "document_start",
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["wallet_proxy.js"],
+      "matches": ["https://twitter.com/*"]
+    }
+  ],
+  "host_permissions": [
+    "https://app.wum.bo/claim*",
+    "http://localhost:3000/claim*",
+    "https://twitter.com/*"
+  ]
+}

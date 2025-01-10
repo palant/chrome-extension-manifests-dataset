@@ -1,0 +1,93 @@
+---
+name: Desig Wallet
+version: 0.3.2
+category_slug: productivity/workflow
+featured: false
+rating: 4.896860095389507
+rating_count: 5032
+user_count: 6000
+size: 7.58MiB
+languages:
+  - English
+release_date: '2024-04-17T11:36:14.000Z'
+creation_date: '2023-02-21T12:29:18.000Z'
+description: The Blockchain-Agnostic Multisig Solution.
+publisher_hash: b39b0d00052537fcba0caab487e2a778fce3fc8cba5b93d9fa41c86512175137
+publisher_account: Desig Labs
+extension_website: desig.io
+extension_website_verified: true
+privacy_policy: https://desig.io/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Desig Wallet",
+  "description": "The Blockchain-Agnostic Multisig Solution.",
+  "version": "0.3.2",
+  "author": "hi@desig.io",
+  "homepage_url": "https://desig.io/",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Desig Wallet"
+  },
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": ["storage", "tabs"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "static/js/contentscript.sol.js",
+        "static/js/contentscript.evm.js",
+        "static/js/contentscript.bsc.js",
+        "static/js/contentscript.sui.js",
+        "static/js/contentscript.aptos.js",
+        "static/js/contentscript.cosmos.js"
+      ],
+      "matches": ["http://localhost/*", "https://*/*"],
+      "exclude_globs": ["*.gov.*", "https://github.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["static/js/contentscript.uid.js"],
+      "matches": [
+        "http://localhost/*",
+        "https://app.desig.io/*",
+        "https://app.desig.dev/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/js/injectedscript.sol.js",
+        "static/js/injectedscript.evm.js",
+        "static/js/injectedscript.bsc.js",
+        "static/js/injectedscript.sui.js",
+        "static/js/injectedscript.aptos.js",
+        "static/js/injectedscript.cosmos.js"
+      ],
+      "matches": ["http://localhost/*", "https://*/*"]
+    },
+    {
+      "resources": ["static/js/injectedscript.uid.js"],
+      "matches": [
+        "http://localhost/*",
+        "https://app.desig.io/*",
+        "https://app.desig.dev/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "static/js/background.js"
+  }
+}

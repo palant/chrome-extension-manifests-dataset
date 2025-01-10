@@ -1,0 +1,144 @@
+---
+name: SuperEZ
+version: 0.2.0
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 49.26KiB
+languages:
+  - English (UK)
+release_date: '2024-12-15T11:37:53.000Z'
+creation_date: '2024-12-13T14:00:29.000Z'
+description: Better online HKU experience with SuperEZ
+publisher_hash: 9a44f4c61fca8cc81e1c304ff498c4c3781e8e5ae919ad98ebf8f5be81d583b7
+publisher: EZ-HKU
+publisher_account: adlsdztony
+support_website: https://github.com/EZ-HKU/SuperEZ
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SuperEZ",
+  "version": "0.2.0",
+  "description": "Better online HKU experience with SuperEZ",
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://lib.hku.hk/hkulauth*", 
+        "https://moodle.hku.hk/*",
+        "https://adfs.connect.hku.hk/*",
+        "https://hkuportal.hku.hk/*",
+        "https://sis-eportal.hku.hk/*",
+        "https://booking.lib.hku.hk/*"
+      ],
+      "js": [
+        "scripts/lib/ezReact.js",
+        "scripts/lib/elements.js",
+        "scripts/lib/utils.js",
+        "scripts/fasthku/jsx/popup.js",
+        "scripts/moodle/jsx/popup.js",
+        "scripts/moodle/js/courseType.js",
+        "scripts/setting/jsx/Setting.js",
+        "scripts/help/jsx/Help.js",
+        "scripts/navigator/utils.js",
+        "scripts/navigator/Navigator.js"
+      ],
+      "css": [
+        "styles/navigator.css",
+        "styles/fasthku.css",
+        "styles/moodle.css"
+      ],
+      "run_at": "document_start"
+    },
+
+
+
+    {
+      "matches": [
+        "https://lib.hku.hk/hkulauth*", 
+        "https://hkuportal.hku.hk/cas/login*",
+        "https://moodle.hku.hk/*",
+        "https://adfs.connect.hku.hk/*",
+        "https://hkuportal.hku.hk/login.html",
+        "https://hkuportal.hku.hk/cas/aad*"
+      ],
+      "js": [
+        "scripts/fasthku/js/functions.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://lib.hku.hk/hkulauth*", 
+        "https://moodle.hku.hk/",
+        "https://moodle.hku.hk/login/index.php",
+        "https://adfs.connect.hku.hk/adfs/ls*",  
+        "https://hkuportal.hku.hk/cas/aad*",
+        "https://hkuportal.hku.hk/cas/login*",
+        "https://hkuportal.hku.hk/login.html"
+      ],
+      "js": [
+        "scripts/fasthku/js/login.js"
+      ]
+    },
+
+
+    {
+      "js": [
+        "scripts/moodle/js/courseType.js"
+      ],
+      "css": [
+        "./styles/styles.css"
+      ],
+      "matches": [
+        "https://moodle.hku.hk/",
+        "https://moodle.hku.hk/course/view.php?id=*",
+        "https://moodle.hku.hk/my/courses.php",
+        "https://moodle.hku.hk/mod/*/view.php?id=*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "scripts/moodle/js/content.js"
+      ],
+      "matches": [
+        "https://moodle.hku.hk/",
+        "https://moodle.hku.hk/course/view.php?id=*",
+        "https://moodle.hku.hk/my/courses.php",
+        "https://moodle.hku.hk/mod/*/view.php?id=*"
+      ],
+      "type": "module"
+    }
+  ],
+  "permissions":  [
+    "storage",
+    "tabs",
+    "activeTab",
+    "cookies"
+  ],
+  "host_permissions": [
+    "https://hkuportal.hku.hk/*",
+    "https://moodle.hku.hk/*",
+    "https://booking.lib.hku.hk/*"
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "omnibox": {
+    "keyword": "e"
+  },
+  "web_accessible_resources": [{
+    "resources": ["images/setting.svg"],
+    "matches": ["<all_urls>"]
+  }]
+}

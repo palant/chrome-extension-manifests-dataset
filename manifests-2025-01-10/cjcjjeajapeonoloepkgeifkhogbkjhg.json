@@ -1,0 +1,64 @@
+---
+name: Storm
+version: '4.9'
+category_slug: lifestyle/fun
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 1.1MiB
+languages:
+  - English
+release_date: '2023-06-06T20:07:44.000Z'
+creation_date: '2023-05-30T08:01:54.000Z'
+description: Storm enables hotkeys for military gameplay on NationStates.
+publisher_hash: b08156214bf54a82d118993eef2b3f787f1117949014a0648b1994c0d435b199
+publisher_account: bion
+support_website: https://github.com/bion33/Storm/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Storm",
+  "short_name": "Storm",
+  "version": "4.9",
+  "author": "Krypton Nova",
+  "description": "Storm enables hotkeys for military gameplay on NationStates.",
+  "permissions": [
+    "storage", 
+    "notifications"
+  ],
+  "action": {
+    "browser_style": false,
+    "default_icon": "/ext-resources/icon.png",
+    "default_popup": "/popup.html",
+    "default_title": "Storm"
+  },
+  "background": {
+    "service_worker": "/scripts/background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["/scripts/content.js"],
+      "matches": ["*://www.nationstates.net/*"],
+      "run_at": "document_start"
+    }, {
+      "matches": [
+        "*://www.nationstates.net/page=ajax2/a=reports/view=world/filter=move+member+endo",
+        "*://www.nationstates.net/template-overall=none/page=reports",
+        "*://www.nationstates.net/page=ajax2/a=reports/view=region*"],
+      "run_at": "document_start",
+      "css": ["/ext-resources/no-template.css"]
+    }, {
+      "matches": ["*://www.nationstates.net/template-overall=none/page=reports"],
+      "run_at": "document_start",
+      "css": ["/ext-resources/no-template-reports.css"]
+    }, {
+      "matches": ["*://www.nationstates.net/page=ajax2/a=reports/view=world/filter=change"],
+      "run_at": "document_start",
+      "css": ["/ext-resources/no-template-world-changes.css"]
+    }
+  ]
+}

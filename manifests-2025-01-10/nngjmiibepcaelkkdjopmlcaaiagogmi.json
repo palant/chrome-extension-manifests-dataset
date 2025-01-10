@@ -1,0 +1,113 @@
+---
+name: Shodo - 日本語校正クラウド
+version: 2.4.0
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 2000
+size: 221KiB
+languages:
+  - 日本語
+release_date: '2024-08-07T08:00:20.000Z'
+creation_date: '2021-08-31T10:17:20.000Z'
+description: ShodoはSNSやメールで使える日本語の校正、チェックツールです。
+publisher_hash: d6dd07baacec313b465389bc9b5f0d08751c86af8cf881b025f3adca32d4798f
+publisher: 株式会社ゼンプロダクツ
+publisher_address: |-
+  根岸台6丁目9番24号
+  サンシャイニー朝霞403
+  朝霞市, 埼玉県 351-0005
+  日本
+extension_website: shodo.ink
+extension_website_verified: true
+support_website: https://shodo.ink/contact/
+privacy_policy: https://shodo.ink/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Shodo - 日本語校正クラウド",
+  "description": "ShodoはSNSやメールで使える日本語の校正、チェックツールです。",
+  "homepage_url": "https://shodo.ink/",
+  "version": "2.4.0",
+  "default_locale": "ja",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "commands"
+  ],
+  "host_permissions": [
+    "<all_urls>",
+    "*://*/*"
+  ],
+  "icons": {
+    "16": "icons/16.png",
+    "48": "icons/48.png",
+    "128": "icons/128.png"
+  },
+  "background": {
+    "service_worker": "/js/background.js"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "19": "icons/19.png",
+      "38": "icons/38.png"
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "browser_style": true
+  },
+  "commands": {
+    "open-shodo": {
+      "suggested_key": {
+        "default": "Alt+Shift+S"
+      },
+      "description": "Shodoを開いて校正する"
+    }
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "/img/brand.png"
+    ],
+    "matches": [
+      "https://mail.google.com/*",
+      "https://x.com/*",
+      "https://*.facebook.com/*"
+    ]
+  }],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://shodo.ink/extension/auth/*"
+      ],
+      "js": ["js/authentication.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://*.facebook.com/*"],
+      "js": ["js/facebook.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://x.com/*"],
+      "js": ["js/twitter.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://mail.google.com/*"],
+      "js": ["js/gmail.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/content.js"],
+      "run_at": "document_end",
+      "match_about_blank": false
+    }
+  ]
+}

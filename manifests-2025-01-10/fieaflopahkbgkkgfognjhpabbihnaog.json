@@ -1,0 +1,99 @@
+---
+name: Looking Glass
+version: 0.0.0.3
+category_slug: productivity/education
+featured: false
+rating: null
+rating_count: null
+user_count: 6
+size: 150KiB
+languages:
+  - English (United States)
+release_date: '2025-01-06T10:10:07.000Z'
+creation_date: '2024-11-30T04:45:36.000Z'
+description: >-
+  Adapts foreign videos to your language level. Learn naturally by watching
+  content you love.
+publisher_hash: 7c1313b555db30d7a18c79c2452d459248e08ade534b81b90a89fb36c33edf57
+publisher_account: Some Trees LLC
+privacy_policy: >-
+  https://github.com/some-trees/looking-glass-privacy/blob/main/PRIVACY_POLICY.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Looking Glass",
+  "description": "Adapts foreign videos to your language level. Learn naturally by watching content you love.",
+  "version": "0.0.0.3",
+  "manifest_version": 3,
+  "minimum_chrome_version": "116",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": "icons/not-recording.png",
+    "default_title": "Click to start translating"
+  },
+  "background": {
+    "service_worker": "service-worker/service_worker.js"
+  },
+  "permissions": [
+    "tabCapture",
+    "offscreen",
+    "sidePanel",
+    "tabs",
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://*.supabase.co/*",
+    "https://accounts.google.com/*"
+  ],
+  "oauth2": {
+    "client_id": "43616403896-qpfhikj5i6cdfj1k5vq8tn0ov8n2vvj2.apps.googleusercontent.com",
+    "scopes": [
+      "openid",
+      "email",
+      "profile",
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "utils/changeListener.js",
+        "content-script/services/shared/movableElement.js",
+        "content-script/services/audio/captionBox.js",
+        "content-script/lib/mutation-summary.js",
+        "content-script/lib/smoothscroll.js",
+        "utils/errorHandler.js",
+        "utils/backendClient.js",
+        "service-worker/utils.js",
+        "content-script/services/subtitles/subtitleMutationSummary.js",
+        "content-script/services/dictionary/translationsDictionary.js",
+        "content-script/services/summary/summary.js",
+        "content-script/services/dialogue/dialogue.js",
+        "content-script/content_script.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["lib/supabase-js.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

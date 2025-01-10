@@ -1,0 +1,76 @@
+---
+name: TRACE
+version: '1.1'
+category_slug: productivity/developer
+featured: false
+rating: null
+rating_count: null
+user_count: 19
+size: 2.63MiB
+languages:
+  - English
+release_date: '2021-04-30T06:31:05.000Z'
+creation_date: '2021-04-27T04:28:35.000Z'
+description: Trace your digital dootprint
+publisher_hash: fa87127a2ef7643b3633140803f08555cc04eeeba2d576c281bcf066ce050953
+publisher_account: TRACE Digital
+support_website: https://github.com/TRACE-Digital/TRACE-ext
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TRACE",
+  "description": "Trace your digital dootprint",
+  "version": "1.1",
+  "manifest_version": 2,
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "browser_action": {
+    "default_icon": {
+      "32": "icon.png"
+    },
+    "default_popup": "index.html",
+    "default_title": "Open the popup"
+  },
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "permissions": [
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "*://*/*"
+  ],
+  "background": {
+    "scripts": [
+      "./static/js/background_script.js"
+    ]
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "matches": [
+        "*://localhost/*",
+        "*://tracedigital.tk/*"
+      ],
+      "js": [
+        "./static/js/window_hook.js"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "*://*/*"
+      ],
+      "js": [
+        "./static/js/content_script.js"
+      ]
+    }
+  ],
+  "content_security_policy": "script-src 'self' 'unsafe-eval' 'sha256-kpZUgEvS5XB0K+Om63C0dQCfRLDN/YNGkrFAxb6gpb0='; object-src 'self';"
+}

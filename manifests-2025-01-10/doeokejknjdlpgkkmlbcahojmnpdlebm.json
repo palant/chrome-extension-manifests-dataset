@@ -1,0 +1,84 @@
+---
+name: Relume Chrome Extension for Webflow
+version: '62'
+category_slug: productivity/developer
+featured: true
+rating: 5
+rating_count: 37
+user_count: 20000
+size: 2.28MiB
+languages:
+  - English (United States)
+release_date: '2024-11-02T11:00:17.000Z'
+creation_date: '2022-11-21T13:02:45.000Z'
+description: Boost your productivity in Webflow with the Relume Chrome Extension.
+publisher_hash: 2542a74996b58e0f14ca4cec7b3ba495d5970b2b8d532ba9be4a4faa357fb5ea
+publisher: Relume Tech Pty Ltd
+publisher_account: relume-chrome-developers
+publisher_address: |-
+  245 New Line Rd
+  Dural, NSW 2158
+  AU
+support_website: >-
+  https://relumelibrary.slack.com/join/shared_invite/zt-1889u3uhd-Tgj5wFEUKLFRGolfVBlHpw#/shared-invite/email
+privacy_policy: https://library.relume.io/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Relume Chrome Extension for Webflow",
+  "description": "Boost your productivity in Webflow with the Relume Chrome Extension.",
+  "version": "62",
+  "icons": {
+    "16": "logo.png",
+    "32": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "action": {
+    "default_icon": "logo.png"
+  },
+  "optional_host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://webflow.com/*/*",
+        "*://*.design.webflow.com/",
+        "*://*.design.webflow.com/*"
+      ],
+      "world": "ISOLATED",
+      "js": ["webflow_content.js"]
+    },
+    {
+      "matches": [
+        "*://webflow.com/*/*",
+        "*://*.design.webflow.com/",
+        "*://*.design.webflow.com/*"
+      ],
+      "world": "MAIN",
+      "js": ["webflow_content_window.js"]
+    },
+    {
+      "matches": ["*://library.relume.io/*", "*://www.relume.io/*"],
+      "world": "ISOLATED",
+      "js": ["relume_content.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.png"],
+      "matches": ["https://*/*"]
+    },
+    {
+      "resources": ["webflow_content_window.js"],
+      "matches": ["https://*/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "clipboardRead", "clipboardWrite"]
+}

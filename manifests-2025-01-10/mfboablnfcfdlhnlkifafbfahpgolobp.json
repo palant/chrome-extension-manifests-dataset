@@ -1,0 +1,131 @@
+---
+name: Circuit
+version: '1.0'
+category_slug: productivity/developer
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 232KiB
+languages:
+  - English
+release_date: '2024-12-20T04:16:45.000Z'
+creation_date: '2024-12-20T04:16:45.000Z'
+description: Intercepts and monitors API requests using Manifest V3
+publisher_hash: 8cfac29286ba8fdfc5c209f9a1dc2de902bc94366e70d076fc51a56a914e4b11
+publisher: BeatFantasy Technologies Private Limited
+publisher_account: Circuit
+publisher_address: |-
+  Unit 601, ECO Centre Block-EM, Sector V, Bidhan Nagar CK Market
+  Saltlake
+  North 24 Parganas, West Bengal 700091
+  IN
+publisher_phone: '+919840857208'
+support_website: https://www.circuit.sh/privacy-policy
+privacy_policy: http://circuit.sh/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Circuit",
+    "version": "1.0",
+    "description": "Intercepts and monitors API requests using Manifest V3",
+    "permissions": [
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess",
+        "scripting",
+        "activeTab",
+        "storage",
+        "identity",
+        "tabs",
+        "webRequest",
+        "webNavigation",
+        "windows"
+    ],
+    "host_permissions": [
+        "<all_urls>",
+        "https://*.auth0.com/*",
+        "https://*.supabase.co/*"
+    ],
+    "oauth2": {
+        "client_id": "sE1isEWV6vnywMrvXLyO672vrM3eo1RO",
+        "scopes": [
+            "openid",
+            "profile",
+            "email"
+        ]
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "config.js",
+                "supabase-client.js",
+                "auth.js",
+                "content.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "*://localhost/*",
+                "*://*.circuit.sh/*"
+            ],
+            "js": [
+                "extensionId.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": false
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "config.js",
+                "supabase-client.js",
+                "auth.js"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "ruleset_1",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    },
+    "action": {
+        "default_popup": "popup.html",
+        "default_icon": {
+            "16": "icons/logo.png",
+            "48": "icons/logo.png",
+            "128": "icons/logo.png"
+        }
+    },
+    "icons": {
+        "16": "icons/logo.png",
+        "48": "icons/logo.png",
+        "128": "icons/logo.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' http://localhost:* https://*.supabase.co https://*.auth0.com https://circuit-webapp-backend-ggcjf7emdtd2dfdw.northcentralus-01.azurewebsites.net/save-request"
+    },
+    "externally_connectable": {
+        "matches": [
+            "*://localhost/*",
+            "*://*.circuit.sh/*"
+        ]
+    }
+}

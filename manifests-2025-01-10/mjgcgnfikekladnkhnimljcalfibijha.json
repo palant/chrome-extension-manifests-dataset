@@ -1,0 +1,117 @@
+---
+name: DocHub - Sign PDF from Gmail
+version: 2.2.0
+category_slug: productivity/workflow
+featured: true
+rating: 4.417197452229299
+rating_count: 314
+user_count: 400000
+size: 61.35KiB
+languages:
+  - English
+release_date: '2024-07-18T06:15:19.000Z'
+creation_date: '2017-12-15T20:26:49.000Z'
+description: Sign and edit PDF documents
+publisher_hash: 293162dbac234a48d2aeecabd0dc66c24d105ff2bd963c735f3870aacec0d9c6
+publisher: DocHub LLC
+publisher_account: DocHub
+publisher_address: |-
+  17 Station Street
+  Ste. 3
+  Brookline, MA 02445
+  US
+publisher_phone: '+12033395298'
+extension_website: dochub.com
+extension_website_verified: true
+support_website: http://support.dochub.com/
+privacy_policy: https://dochub.com/site/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "DocHub - Sign PDF from Gmail",
+  "version": "2.2.0",
+  "description": "Sign and edit PDF documents",
+  "icons": {
+    "16": "images/icon-16.png",
+    "32": "images/icon-32.png",
+    "128": "images/icon-128.png",
+    "256": "images/icon-256.png"
+  },
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "16": "images/icon-16.png",
+      "24": "images/icon-24.png",
+      "32": "images/icon-32.png"
+    },
+    "default_title": "DocHub",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/mail/*"],
+      "js": [
+        "js/vendor.js",
+        "js/continually-wait-until-exists.js",
+        "js/cs-gmail.js"
+      ],
+      "css": [
+        "styles/gmail.css"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*/*.pdf"],
+      "js": [
+        "js/vendor.js",
+        "js/continually-wait-until-exists.js",
+        "js/cs-pdf-viewer.js"
+      ],
+      "css": ["styles/pdf-viewer.css"],
+      "all_frames": true,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://dochub.com/*",
+        "https://production.dochub.com/*",
+        "https://staging.dochub.com/*",
+        "https://testing.dochub.com/*",
+        "https://localhost:9292/*",
+        "https://localhost:4200/*"
+      ],
+      "js": [
+        "js/continually-wait-until-exists.js",
+        "js/cs-dochub-website.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ "blank.html", "js/dh-launcher.js", "/images/*" ],
+      "matches": [ "<all_urls>","file://*/*"]
+    }
+  ],
+  "host_permissions": ["<all_urls>"],
+  "externally_connectable": {
+    "matches": [
+      "https://localhost:9292/*",
+      "https://localhost:4200/*",
+      "https://dochub.com/*",
+      "https://production.dochub.com/*",
+      "https://staging.dochub.com/*",
+      "https://testing.dochub.com/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src  'self'; object-src 'self'; frame-src 'self' https://dochub.com https://staging.dochub.com https://testing.dochub.com https://*.google.com https://localhost:9292/ https://localhost:4200/"
+  }
+}

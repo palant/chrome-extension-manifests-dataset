@@ -1,0 +1,121 @@
+---
+name: Kioku
+version: 0.2.0
+category_slug: productivity/education
+featured: false
+rating: null
+rating_count: null
+user_count: 15
+size: 14.85MiB
+languages:
+  - English
+release_date: '2022-01-11T11:43:17.000Z'
+creation_date: '2022-01-11T11:43:17.000Z'
+description: Learn Japanese by browsing the web and watching Netflix!
+publisher_hash: fe7e7b4eb5ed5d966315a2d99f6dbe3006b9172ca21aaf1f6ce52063632ff3d7
+publisher_account: Kioku
+privacy_policy: https://kioku-dev.github.io/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Kioku",
+    "description": "Learn Japanese by browsing the web and watching Netflix!",
+    "version": "0.2.0",
+    "icons": {
+        "16": "data/images/icon16.png",
+        "32": "data/images/icon32.png",
+        "48": "data/images/icon48.png",
+        "64": "data/images/icon64.png",
+        "128": "data/images/icon128.png"
+    },
+    "browser_action": {
+        "default_icon": {
+            "16": "data/images/icon16.png",
+            "32": "data/images/icon32.png",
+            "48": "data/images/icon48.png",
+            "64": "data/images/icon64.png",
+            "128": "data/images/icon128.png"
+        },
+        "default_title": "Kioku",
+        "default_popup": "html/action-popup.html"
+    },
+    "background": {
+        "scripts": [
+            "lib/browser-polyfill.js",
+            "lib/kuromoji.js",
+            "lib/japanese-util.js",
+            "js/wordstatusdb.js",
+            "js/background.js"
+        ],
+        "persistent": true
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.netflix.com/*"
+            ],
+            "js": [
+                "lib/browser-polyfill.js",
+                "lib/japanese-util.js",
+                "js/util.js",
+                "js/wordmgr.js",
+                "js/submgr.js",
+                "js/subbar.js",
+                "js/subsidebar.js",
+                "js/msgbox.js",
+                "js/videomgr.js",
+                "js/netflix-content.js"
+            ],
+            "css": [
+                "css/wordmgr.css",
+                "css/subbar.css",
+                "css/subsidebar.css",
+                "css/msgbox.css",
+                "css/netflix.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "exclude_matches": [
+                "https://www.netflix.com/*"
+            ],
+            "js": [
+                "lib/browser-polyfill.js",
+                "lib/japanese-util.js",
+                "js/util.js",
+                "js/wordmgr.js",
+                "js/content.js"
+            ],
+            "css": [
+                "css/wordmgr.css"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        "js/netflix-page.js"
+    ],
+    "options_ui": {
+        "page": "html/settings.html",
+        "open_in_tab": true
+    },
+    "commands": {
+        "tokenize-selection": {
+            "suggested_key": {
+                "default": "Alt+X"
+            },
+            "description": "Analyze Selected Text"
+        }
+    },
+    "permissions": [
+        "storage",
+        "contextMenus",
+        "downloads",
+        "<all_urls>"
+    ]
+}

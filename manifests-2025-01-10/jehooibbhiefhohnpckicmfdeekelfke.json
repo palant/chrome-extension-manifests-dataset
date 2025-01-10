@@ -1,0 +1,85 @@
+---
+name: EasyBroker Assistant
+version: 3.9.10
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 526
+size: 115KiB
+languages:
+  - español (Latinoamérica)
+release_date: '2025-01-09T01:55:36.000Z'
+creation_date: '2024-10-03T18:44:44.000Z'
+description: Synchronize leads from other platforms to your EasyBroker account
+publisher_hash: 59c8d16848e0c8453bdc0d3f46579f35c1e691bb51a459595e1a912d7b7f64bc
+publisher: EASYBROKER LLC
+publisher_account: EasyBroker
+publisher_address: |-
+  8345 NW 66th St
+  Miami, FL 33166
+  US
+publisher_phone: '+525551763987'
+extension_website: easybroker.com
+extension_website_verified: true
+support_website: ayuda.easybroker.com
+privacy_policy: https://www.easybroker.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "EasyBroker Assistant",
+  "description": "Synchronize leads from other platforms to your EasyBroker account",
+  "version": "3.9.10",
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": "images/icon.png"
+  },
+  "permissions": [
+    "alarms",
+    "cookies",
+    "storage",
+    "notifications",
+    "webRequest",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "https://www.inmuebles24.com/*",
+    "https://*.inmuebles24.com/",
+    "https://www.easybroker.com/*",
+    "https://api.easybroker.com/*"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://www.eb.local:3000/*", "https://www.stagingeb.com/*", "https://www.easybroker.com/*"],
+      "js": ["easyBrokerContent.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "http_to_https_redirect",
+        "enabled": true,
+        "path": "rules/http_to_https_redirect.json"
+      },
+      {
+        "id": "inmuebles24_headers",
+        "enabled": true,
+        "path": "rules/inmuebles24_headers.json"
+      }
+    ]
+  },
+  "minimum_chrome_version": "92"
+}

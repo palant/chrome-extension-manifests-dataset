@@ -1,0 +1,72 @@
+---
+name: Zoho Mail Tracker
+version: '4.3'
+category_slug: productivity/workflow
+featured: false
+rating: 3.8035714285714284
+rating_count: 56
+user_count: 2000
+size: 2.06MiB
+languages:
+  - English
+release_date: '2021-12-04T17:13:46.000Z'
+creation_date: '2017-04-13T09:55:07.000Z'
+description: This extensions helps you track the emails you send using Zoho Mail.
+publisher_hash: b495beac9f68ee572bd81ec725e50b4ce4e6f4c5564d6de36bc3a18a56930576
+publisher_account: Crazy Ripples
+extension_website: zohomailtracker.com
+extension_website_verified: true
+support_website: https://zohomailtracker.com/
+privacy_policy: https://zohomailtracker.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 2,
+    "name": "Zoho Mail Tracker",
+    "short_name": "ZMT",
+    "description": "This extensions helps you track the emails you send using Zoho Mail.",
+    "version": "4.3",
+    "icons": {
+        "16": "images/logo16.png",
+        "32": "images/logo32.png",
+        "48": "images/logo48.png",
+        "64": "images/logo64.png",
+        "128": "images/logo128.png"
+    },
+    "options_page": "index.html",
+    "homepage_url": "https://zohomailtracker.com",
+    "web_accessible_resources": [
+        "images/tracker_inserted.png",
+        "images/tracker_failed.png",
+        "images/logo64.png"
+    ],
+    "permissions": [
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "*://zohomailtracker.com/api/v2/img/*",
+        "*://zohomailtracker.com/api/v3/img/*",
+        "*://zohomailtracker.com/api/v4/img/*",
+        "*://zohomailtracker.com/*",
+        "<all_urls>",
+        "notifications"
+    ],
+    "content_scripts": [{
+        "matches": ["<all_urls>"],
+        "js": ["js/environment.js", "js/sentry.js", "js/jquery-3.3.1.min.js", "js/helpers.js", "js/tracker.js"],
+        "css": ["css/tracker.css"],
+        "run_at": "document_end",
+        "all_frames": true
+    }, {
+        "matches": ["https://zohomailtracker.com/zoho-redirect*"],
+        "js": ["js/environment.js", "js/helpers.js", "js/login-helper.js"],
+        "run_at": "document_end"
+    }],
+    "background": {
+        "scripts": ["js/environment.js", "js/sentry.js", "js/helpers.js", "js/socket.io.js", "js/background.js"],
+        "persistent": true
+    },
+    "browser_action": {}
+}

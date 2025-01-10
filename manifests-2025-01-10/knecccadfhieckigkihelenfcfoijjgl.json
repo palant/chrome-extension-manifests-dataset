@@ -1,0 +1,101 @@
+---
+name: Spendentopf
+version: 2.6.0
+category_slug: lifestyle/shopping
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 203KiB
+languages:
+  - Deutsch
+  - English
+release_date: '2024-09-05T08:32:59.000Z'
+creation_date: '2019-01-23T16:03:08.000Z'
+description: >-
+  Mit dem „Spendentopf“ sammelst und spendest Du Cashback durch Deine Einkäufe
+  und sparst zugleich mit Gutscheinen und Deals.
+publisher_hash: db9f9eb12f6c7e8dabc4c236e9431de92142f325657b7c64547cbebaa90dbd2a
+publisher: wonderunited GmbH
+publisher_account: wonderunited
+publisher_address: |-
+  Hirsekamp 4a
+  Sottrum 27367
+  DE
+extension_website: happybenefits.de
+extension_website_verified: true
+privacy_policy: https://wondercashback.de/datenschutz
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "author": "wonderunited UG",
+    "name": "Spendentopf",
+    "version": "2.6.0",
+    "manifest_version": 3,
+    "description": "Mit dem „Spendentopf“ sammelst und spendest Du Cashback durch Deine Einkäufe und sparst zugleich mit Gutscheinen und Deals.",
+    "icons": {
+        "16": "src/img/WC_Bildmarke_16.png",
+        "48": "src/img/WC_Bildmarke_48.png",
+        "128": "src/img/WC_Bildmarke_128.png"
+    },
+    "default_locale": "de",
+    "background": {
+        "service_worker": "src/classes/background.js",
+        "type": "module"
+    },
+    "action": {
+        "default_icon": "src/img/WC_Bildmarke_19.png",         
+        "default_title": "Keine Cashbackmöglichkeit, Gutscheine oder Deals für diese Seite verfügbar."
+    },
+    "permissions": [
+        "tabs",
+        "storage",
+        "alarms"
+    ],
+    "optional_host_permissions": [
+        "*://*/*"
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "/src/img/WC_Bildmarke_Cashback_Active.png",
+                "/src/img/WC_Bildmarke_Cashback_NotActive.png",
+                "/src/main.css"
+            ],
+            "matches": [
+                "*://*/*"
+            ]
+        }
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "src/classes/lib/jquery/jquery.js",
+                "src/classes/connect.js"
+            ],
+            "run_at": "document_start",
+            "all_frames": true
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+            ],
+            "js": [
+                "src/classes/lib/jquery/jquery.js",
+                "src/classes/widget.js",
+                "src/classes/content.js"
+            ],
+            "run_at": "document_end",
+            "all_frames": false
+        }
+    ]
+}

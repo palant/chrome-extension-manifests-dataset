@@ -1,0 +1,89 @@
+---
+name: SHOWROOM すこすこツール＋
+version: 6.1.4
+category_slug: lifestyle/social
+featured: false
+rating: 4.025
+rating_count: 40
+user_count: 20000
+size: 678KiB
+languages:
+  - 日本語
+release_date: '2023-09-25T06:30:58.000Z'
+creation_date: '2019-04-21T00:47:43.000Z'
+description: ライブ配信アプリSHOWROOMのブラウザ版機能を拡張するツールです｡
+publisher_hash: 2b94d3c55375f1ca258cd5cf3b6f9715ec3cf023e8412ccb4c0ea5df9db5a3fe
+publisher_account: すこマスター
+privacy_policy: https://suko-studio.com/chrome-extension
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SHOWROOM すこすこツール＋",
+  "short_name": "すこぷら",
+  "description": "ライブ配信アプリSHOWROOMのブラウザ版機能を拡張するツールです｡",
+  "version": "6.1.4",
+  "permissions": [
+    "notifications",
+    "tabs",
+    "background",
+    "declarativeNetRequest",
+    "storage"
+  ],
+  "host_permissions": ["https://www.showroom-live.com/*"],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "all_block",
+        "enabled": true,
+        "path": "rule/all_block.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["*"],
+      "matches": ["https://www.showroom-live.com/*"]
+    }
+  ],
+  "icons": {
+    "16": "img/icon.png",
+    "48": "img/icon.png",
+    "128": "img/icon.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["https://www.showroom-live.com/r/*"],
+      "run_at": "document_start",
+      "css": ["css/jquery-ui.css", "css/live_room.css"]
+    },
+    {
+      "matches": ["https://www.showroom-live.com/r/*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": [
+        "js/jquery-3.6.1.min.js",
+        "js/jquery-ui.min.js",
+        "js/live_room_A.js"
+      ]
+    },
+    {
+      "matches": ["https://www.showroom-live.com/onlive"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "js": ["js/jquery-3.6.1.min.js", "js/jquery-ui.min.js", "js/onlive_A.js"]
+    },
+    {
+      "matches": ["https://www.showroom-live.com/onlive"],
+      "run_at": "document_start",
+      "css": ["css/jquery-ui.css", "css/onlive.css"]
+    }
+  ]
+}

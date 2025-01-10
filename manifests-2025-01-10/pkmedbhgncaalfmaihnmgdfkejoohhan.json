@@ -1,0 +1,64 @@
+---
+name: FigDiff
+version: 1.0.5
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 21
+size: 87.36KiB
+languages:
+  - 한국어
+release_date: '2024-11-18T20:54:15.000Z'
+creation_date: '2024-08-10T04:43:02.000Z'
+description: Compare your Figma design with real DOM
+publisher_hash: 7df959cec72494938b77047ce6527cdf8c9b8fc9ae2d3884a3f1603941f3b594
+publisher_account: figdiff
+privacy_policy: https://yummy-saw-ada.notion.site/a4a1ee43c0584bb8a12df0fb23ee124b
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "FigDiff",
+  "version": "1.0.5",
+  "description": "Compare your Figma design with real DOM",
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": ["activeTab", "identity", "storage", "tabs", "scripting"],
+  "host_permissions": ["https://*/*", "http://*/*"],
+  "icons": {
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["renderDifferences.js"]
+    },
+    {
+      "matches": ["https://figdiff.com/*"],
+      "js": ["checkUserId.js"]
+    },
+    {
+      "matches": ["http://localhost:5173/*"],
+      "js": ["checkUserId.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["takeScreenShot.js"]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "oauth2": {
+    "client_id": "o2aFpMNwOUWkP6eT9h0s6l",
+    "scopes": ["file_read"]
+  }
+}

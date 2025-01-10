@@ -1,0 +1,163 @@
+---
+name: Anstrex Dropship
+version: 1.0.96
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 2
+user_count: 485
+size: 6.74MiB
+languages:
+  - English
+release_date: '2023-11-27T09:49:13.000Z'
+creation_date: '2020-10-21T18:42:33.000Z'
+description: >-
+  Automate your dropshipping store administration including inventory management
+  and order fulfillment.
+publisher_hash: 3c5e78711ab181ed34d702795b9154f878c39a427b72133e1bf08a3e2e29dbd7
+publisher: LLC
+publisher_account: Anstrex
+publisher_address: |-
+  19214 Clay Rd
+  Suite R PMB 97183
+  Katy, TX 77449
+  US
+extension_website: anstrex.com
+extension_website_verified: true
+support_website: https://kb.anstrex.com
+privacy_policy: https://www.anstrex.com/policies/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "version": "1.0.96",
+    "key": "MHwwDQYJKoZIhvcNAQEBBQADawAwaAJhAK5G/oww73FBdvIVSF6MXPDf2h+YCa2SA2ovaZl8iAbbwoYOHeo4fWggrfPjMIzys2MEgvr2F60wEAQdHCkeewX5bqQW2+MWnJX/c+Rp70TNVrJ9DYJiinJIQoauqr8zdwIDAQAB",
+    "name": "Anstrex Dropship",
+    "description": "Automate your dropshipping store administration including inventory management and order fulfillment.",
+    "default_locale": "en",
+    "permissions": [
+        "storage",
+        "scripting",
+        "webRequest",
+        "declarativeNetRequest"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "rules_json",
+            "enabled": true,
+            "path": "request_rules.json"
+        }]
+    },
+    "host_permissions": [
+        "https://*.aliexpress.com/*",
+        "https://*.aliexpress.us/*",
+        "https://*.dhgate.com/*",
+        "https://*.banggood.com/*",
+        "https://*.1688.com/*",
+        "https://*.costco.com/*",
+        "https://*.sellpoint.net/*",
+        "https://*.syndigo.com/*",
+        "https://*.ebay.com/*",
+        "https://*.ebaydesc.com/*",
+        "https://*.etsy.com/*",
+        "https://*.gearbest.com/*",
+        "https://*.gearbest.net/*",
+        "https://*.target.com/*",
+        "https://*.walmart.com/*",
+        "https://*.wayfair.com/*",
+        "https://*.anstrex.com/*",
+        "https://*.fastforex.io/*"
+    ],
+    "action": {
+        "default_title": "Dropship",
+        "default_popup": "index.html",
+        "default_icon": {
+            "16": "icons/anstrex_icon_16.png",
+            "48": "icons/anstrex_icon_48.png",
+            "128": "icons/anstrex_icon_128.png"
+        }
+    },
+    "icons": {
+        "16": "icons/anstrex_icon_16.png",
+        "48": "icons/anstrex_icon_48.png",
+        "128": "icons/anstrex_icon_128.png"
+    },
+    "background": {
+        "service_worker": "background.js"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self';"
+    },
+    "web_accessible_resources": [{
+            "resources": ["js/parse.js", "js/inject_script.js"],
+            "matches": [
+                "https://*.aliexpress.com/*",
+                "https://*.aliexpress.us/*",
+                "https://*.anstrex.com/*",
+                "https://*.dhgate.com/*",
+                "https://*.banggood.com/*",
+                "https://*.1688.com/*",
+                "https://*.costco.com/*",
+                "https://*.ebay.com/*",
+                "https://*.etsy.com/*",
+                "https://*.gearbest.net/*",
+                "https://*.gearbest.com/*",
+                "https://*.target.com/*",
+                "https://*.walmart.com/*",
+                "https://*.wayfair.com/*"
+            ]
+        },
+        {
+            "resources": ["js/ali_order_auto.js"],
+            "matches": ["https://*.aliexpress.com/*", "https://*.aliexpress.us/*"]
+        }
+    ],
+    "content_scripts": [{
+            "matches": ["https://*.aliexpress.com/*", "https://*.aliexpress.us/*"],
+            "run_at": "document_end",
+            "js": ["js/show_modal.js", "js/aliexpress_ordering.js"]
+        },
+        {
+            "matches": ["https://*.banggood.com/*"],
+            "run_at": "document_end",
+            "js": ["js/show_modal.js", "js/banggood_ordering.js"]
+        },
+        {
+            "matches": [
+                "https://*.dhgate.com/*",
+                "https://payment.dhpay.com/gateway/desktopcashier.do*",
+                "https://payment.dhgate.com/payment/service/orderPaySuccess.do*"
+            ],
+            "run_at": "document_end",
+            "js": ["js/show_modal.js", "js/dhgate_ordering.js"]
+        },
+        {
+            "matches": ["https://*.dhgate.com/product/*"],
+            "run_at": "document_end",
+            "js": ["js/price_parse.js"]
+        },
+        {
+            "matches": ["https://dropship.anstrex.com/*"],
+            "js": ["js/auth.js", "js/global_connect.js"]
+        },
+        {
+            "matches": ["https://dropship.anstrex.com/orders/*"],
+            "js": ["js/check_shop_login.js"]
+        },
+        {
+            "matches": ["https://dropship.anstrex.com/orders/tracking"],
+            "run_at": "document_end",
+            "js": ["js/tracking.js"]
+        },
+        {
+            "matches": ["https://dropship.anstrex.com/order"],
+            "js": ["/js/check_sup_login.js"]
+        },
+        {
+            "matches": ["https://dropship.anstrex.com/items/*"],
+            "js": ["js/sync_inventory.js"]
+        }
+    ]
+}

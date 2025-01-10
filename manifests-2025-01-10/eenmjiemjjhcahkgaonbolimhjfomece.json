@@ -1,0 +1,132 @@
+---
+name: AI帮我读
+version: 0.9.5
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 9
+size: 944KiB
+languages:
+  - 中文 (简体)
+release_date: '2024-04-23T05:45:24.000Z'
+creation_date: '2024-04-13T10:21:23.000Z'
+description: AI协助阅读文章，快速提炼要点，提高阅读效率
+publisher_hash: 42db12efaba78db0d96f4e85403ba69daf5ba603c64dd033d9cec3b5f658be90
+publisher_account: chuffedrich
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "AI帮我读",
+  "description": "AI协助阅读文章，快速提炼要点，提高阅读效率",
+  "version": "0.9.5",
+  "manifest_version": 3,
+  "icons": {
+    "16": "img/logo-16.png",
+    "32": "img/logo-34.png",
+    "48": "img/logo-48.png",
+    "128": "img/logo-128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": "img/logo-48.png"
+  },
+  "options_page": "options.html",
+  "devtools_page": "devtools.html",
+  "background": {
+    "service_worker": "service-worker-loader.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "assets/index.js-loader-156e5dc1.js"
+      ],
+      "matches": [
+        "https://kimi.moonshot.cn/chat/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "assets/save-token.js-loader-dca25d79.js"
+      ],
+      "matches": [
+        "https://kimi.moonshot.cn/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "assets/summary.js-loader-e0f2230e.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://kimi.moonshot.cn/*",
+        "https://kimi.moonshot.cn/chat/*",
+        "https://www.baidu.com/*",
+        "https://www.google.com/*"
+      ],
+      "css": [
+        "src/contentScript/summary.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "web_accessible_resources": [
+    {
+      "matches": [],
+      "resources": [
+        "img/logo-16.png",
+        "img/logo-34.png",
+        "img/logo-48.png",
+        "img/logo-128.png",
+        "src/contentScript/summary.css"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "src/contentScript/summary.css",
+        "summary.html",
+        "summary2.html",
+        "summary-markmap.html"
+      ],
+      "use_dynamic_url": false
+    },
+    {
+      "matches": [
+        "https://kimi.moonshot.cn/*"
+      ],
+      "resources": [
+        "assets/chunk-457425ed.js",
+        "assets/chunk-96e7ac26.js"
+      ],
+      "use_dynamic_url": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "resources": [
+        "assets/chunk-dd94b31a.js"
+      ],
+      "use_dynamic_url": true
+    }
+  ],
+  "permissions": [
+    "sidePanel",
+    "storage",
+    "activeTab"
+  ]
+}

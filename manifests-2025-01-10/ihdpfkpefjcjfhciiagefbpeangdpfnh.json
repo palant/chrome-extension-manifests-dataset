@@ -1,0 +1,103 @@
+---
+name: Costlocker Tracking Button
+version: 2022.8.24
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 66
+size: 86.94KiB
+languages:
+  - English
+release_date: '2024-04-12T11:53:57.000Z'
+creation_date: '2018-07-24T10:46:50.000Z'
+description: Track time from any web tool (Trello, JIRA, Google Calendar etc.)
+publisher_hash: 252243fd2abbb9adf7a6a4bd3063abb9b9b73906b938be25e2b96a9fb0eae3b0
+publisher: Costlocker s.r.o.
+publisher_account: Costlocker
+publisher_address: |-
+  Bořivojova 878/35
+  Prague 3 13000
+  CZ
+support_website: https://help.costlocker.com
+privacy_policy: https://costlocker.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Costlocker Tracking Button",
+  "description": "Track time from any web tool (Trello, JIRA, Google Calendar etc.)",
+  "version": "2022.8.24",
+  "manifest_version": 2,
+  "browser_action": {
+    "default_popup": "src/popup.html",
+    "default_icon": {
+      "16": "assets/icons/inactive-16x16.png",
+      "32": "assets/icons/inactive-32x32.png",
+      "48": "assets/icons/inactive-48x48.png",
+      "128": "assets/icons/inactive-128x128.png"
+    }
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "open_in_tab": false
+  },
+  "background": {
+    "scripts": [
+      "src/api.js"
+    ]
+  },
+  "commands": {
+    "_execute_browser_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+T",
+        "mac": "MacCtrl+Shift+T"
+      },
+      "description": "Opens hello.html"
+    }
+  },
+  "icons": {
+    "16": "assets/icons/inactive-16x16.png",
+    "32": "assets/icons/inactive-32x32.png",
+    "48": "assets/icons/inactive-48x48.png",
+    "128": "assets/icons/inactive-128x128.png"
+  },
+  "incognito": "split",
+  "permissions": [
+    "activeTab",
+    "storage",
+    "cookies",
+    "https://extensions.app.costlocker.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://trello.com/*"
+      ],
+      "js": [
+        "providers/trello.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://calendar.google.com/*"
+      ],
+      "js": [
+        "providers/google-calendar.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "*://*.atlassian.com/*",
+        "*://*.atlassian.net/*"
+      ],
+      "js": [
+        "providers/jira.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ]
+}

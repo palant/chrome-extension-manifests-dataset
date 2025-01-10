@@ -1,0 +1,114 @@
+---
+name: 超级助理
+version: 2.0.4
+category_slug: productivity/tools
+featured: false
+rating: 3.8461538461538463
+rating_count: 26
+user_count: 3000
+size: 8.55MiB
+languages:
+  - 中文 (简体)
+release_date: '2024-09-03T10:15:54.000Z'
+creation_date: '2023-12-02T07:06:56.000Z'
+description: 基于文心一言的超级助理，提供伴随式大模型服务，可解析复杂问题、执行快捷指令、辅助知识应用，无所不知、无所不能、无所不在
+publisher_hash: 81791d9a28ea1224f4efc91a3f5d410e281b3e834a977c4b7cbc4a8f53b1e9dc
+publisher_account: SuperAgent
+privacy_policy: https://superhelper.bce.baidu.com/workflow/web/plugin/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "超级助理",
+    "description": "基于文心一言的超级助理，提供伴随式大模型服务，可解析复杂问题、执行快捷指令、辅助知识应用，无所不知、无所不能、无所不在",
+    "version": "2.0.4",
+    "icons": {
+        "16": "icon.png",
+        "32": "icon.png",
+        "48": "icon.png",
+        "128": "icon.png"
+    },
+    "action": {
+        "default_icon": {
+            "16": "16.png",
+            "32": "32.png",
+            "48": "48.png",
+            "128": "128.png"
+        },
+        "default_popup": "popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "all_frames": true,
+            "js": [
+                "js/enter.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "background": {
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "web_accessible_resources": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "resources": [
+                "js/content_script.js",
+                "js/newtab.js",
+                "redirect.html"
+            ]
+        }
+    ],
+    "options_ui": {
+        "open_in_tab": true,
+        "page": "setting.html"
+    },
+    "sandbox": {
+        "pages": [
+            "test.html"
+        ]
+    },
+    "permissions": [
+        "storage",
+        "tabs",
+        "clipboardRead",
+        "clipboardWrite",
+        "activeTab"
+    ],
+    "host_permissions": [
+        "https://*.baidu.com/",
+        "https://*.baidu-int.com/",
+        "http://*.baidu.com/",
+        "http://*.baidu-int.com/",
+        "<all_urls>"
+    ],
+    "commands": {
+        "sidebar": {
+            "suggested_key": {
+                "default": "Ctrl+I",
+                "mac": "Command+I",
+                "linux": "Ctrl+I"
+            },
+            "description": "sidebar"
+        },
+        "capture": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Z",
+                "mac": "Command+Shift+Z",
+                "linux": "Ctrl+Shift+Z"
+            },
+            "description": "网页截图"
+        }
+    },
+    "content_security_policy": {
+        "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' https://developer.baidu-int.com; child-src 'self';"
+    }
+}

@@ -1,0 +1,75 @@
+---
+name: 검색도감 확장프로그램
+version: 0.7.9.0
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 5
+user_count: 467
+size: 52.61MiB
+languages:
+  - 한국어
+release_date: '2025-01-08T07:03:31.000Z'
+creation_date: '2024-10-02T09:51:44.000Z'
+description: 검색도감 확장 프로그램
+publisher_hash: 29dac4a73d7b5d0d91b9fe42485450b6ea4541c3bec7785dfb900178eeb5c843
+publisher_account: dpp.ai0720
+privacy_policy: https://tidal-smartphone-731.notion.site/bd01f11399c142778c5ddbebf8e41fa0
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "검색도감 확장프로그램",
+  "icons": {
+    "16": "icon/icon-16x16.png",
+    "48": "icon/icon-32x32.png",
+    "64": "icon/icon-64x64.png",
+    "128": "icon/icon-128x128.png"
+  },
+  "version": "0.7.9.0",
+  "description": "검색도감 확장 프로그램",
+  "permissions": ["cookies"],
+  "host_permissions": ["<all_urls>"],
+
+  "content_scripts": [
+    {
+      "matches": ["https://search.shopping.naver.com/*", "https://www.seobook.kr/*"],
+      "css": ["/src/styles/style.css"],
+      "js": ["dist/chart.js", "dist/content_script.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://smartstore.naver.com/*", "https://brand.naver.com/*", "https://www.seobook.kr/*"],
+      "css": ["/src/styles/style.css"],
+      "js": ["dist/smartstore_script.js"]
+    },
+    {
+      "matches": ["https://shopping.naver.com/*", "https://www.seobook.kr/*"],
+      "css": ["/src/styles/shopping_style.css"],
+      "js": ["dist/shopping_script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/chart.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["src/styles/seobook.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+
+  "action": {
+    "default_popup": "popup.html"
+  },
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

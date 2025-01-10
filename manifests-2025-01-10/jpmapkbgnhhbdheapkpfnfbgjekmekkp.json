@@ -1,0 +1,78 @@
+---
+name: ProductShark von Xidras.io
+version: '1.1'
+category_slug: lifestyle/shopping
+featured: false
+rating: 5
+rating_count: 2
+user_count: 46
+size: 146KiB
+languages:
+  - Deutsch
+  - English
+release_date: '2022-04-30T04:44:48.000Z'
+creation_date: '2022-02-09T07:29:22.000Z'
+description: Das ultimative Recherche Tool für Produkte & Produktlieferanten
+publisher_hash: 316b3e524e701d00ee270eac349ac55ab061ad2d43776fa1c042acfb4b9328bc
+publisher_account: Xidras GmbH
+support_website: https://www.xidras.io/contact/
+privacy_policy: https://www.xidras.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_name__",
+  "description": "__MSG_description__",
+  "author": {
+    "name": "Xidras GmbH",
+    "email": "imprint@xidras.com",
+    "website": "https://xidras.io"
+  },
+  "version": "1.1",
+  "manifest_version": 3,
+  "default_locale": "de",
+
+  "homepage_url": "https://productshark.xidras.io/",
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "permissions": [
+    "contextMenus",
+    "notifications",
+    "tabs"
+  ],
+
+  "background": {
+    "service_worker": "./src/background.js"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*",
+        "file:///*"
+      ],
+      "js": ["./src/contentscripts/contentscript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://productshark.xidras.io/*",
+        "*://*.xidras.io/*"
+      ],
+      "js": ["./src/contentscripts/auth-pixel.js"],
+      "run_at": "document_idle"
+    }
+  ],
+
+  "icons": {
+    "16": "./public/icon.png",
+    "32": "./public/icon.png",
+    "48": "./public/icon.png",
+    "128": "./public/icon.png"
+  }
+}

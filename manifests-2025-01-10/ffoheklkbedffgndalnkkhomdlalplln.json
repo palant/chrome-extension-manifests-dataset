@@ -1,0 +1,69 @@
+---
+name: NFT Insights
+version: 1.0.001
+category_slug: productivity/developer
+featured: false
+rating: 5
+rating_count: 2
+user_count: 6
+size: 2.12MiB
+languages:
+  - English
+release_date: '2023-02-07T13:03:00.000Z'
+creation_date: '2023-02-07T13:03:00.000Z'
+description: >-
+  "NFT Insights" is designed to help users monitor and detect any potential MEV,
+  wash trading, and phishing activity across Ethereum…
+publisher_hash: 5d7cce8f34ceb42604885aedc0e48d449e2974b4ce0542c9826254c1ffe4ba0a
+publisher_account: NFT MEV
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "NFT Insights",
+  "version": "1.0.001",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "src/routes/background/background.js",
+    "type": "module"
+  },
+  "action": { "default_popup": "src/routes/popup/popup.html" },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/modules/shared.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "host_permissions": [
+    "https://etherscan.io/*",
+    "https://opensea.io/*",
+    "https://rarible.com/*",
+    "https://x2y2.io/*",
+    "https://looksrare.org/*"
+  ],
+  "content_scripts": [
+    {
+      "run_at": "document_start",
+      "js": ["src/routes/content/content.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "run_at": "document_end",
+      "js": ["src/routes/parser/rarible.js"],
+      "matches": ["https://rarible.com/*"]
+    },
+    {
+      "run_at": "document_end",
+      "js": ["src/routes/parser/opensea.js"],
+      "matches": ["https://opensea.io/*"]
+    }
+  ],
+  "icons": {
+    "16": "src/assets/icon.png",
+    "32": "src/assets/icon.png",
+    "48": "src/assets/icon.png",
+    "128": "src/assets/icon.png"
+  },
+  "permissions": ["activeTab", "storage", "activeTab"]
+}

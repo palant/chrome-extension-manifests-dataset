@@ -1,0 +1,78 @@
+---
+name: HLClock
+version: 1.5.3
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 17
+size: 54.62KiB
+languages:
+  - English (United States)
+release_date: '2024-05-15T21:11:42.000Z'
+creation_date: '2023-03-20T04:35:48.000Z'
+description: Integrate Zendesk, Clockify and Hurricane Labs APIs for easier time tracking.
+publisher_hash: 1eba2a644a1cdc901e8005062bf5a74b304bf8a57c1c8e38427e1582132fc35e
+publisher: Hurricane Labs
+publisher_address: |-
+  4511 Rockside Rd Ste 100
+  Independence, OH 44131-2154
+  US
+publisher_phone: '+12165266298'
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "HLClock",
+  "description": "Integrate Zendesk, Clockify and Hurricane Labs APIs for easier time tracking.",
+  "version": "1.5.3",
+  "icons": {
+    "128": "icons/hlclock_logo_128.png",
+    "48": "icons/hlclock_logo_48.png",
+    "16": "icons/hlclock_logo_16.png"
+  },
+  "background": {
+    "service_worker": "background.mjs",
+    "type": "module"
+  },
+  "permissions": [
+    "notifications",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://hurricanelabs.zendesk.com/*",
+    "https://portal.hurricanelabs.com/*",
+    "https://hurricanelabs-sandbox.app.opsgenie.com/*",
+    "https://hurricanelabs.app.opsgenie.com/*"
+  ],
+  "action": {
+    "default_popup": "ui/popup.html",
+    "default_title": "HLClock Options"
+  },
+  "content_scripts": [
+    {
+      "js": ["content_zendesk.js"],
+      "matches": [
+        "https://hurricanelabs.zendesk.com/*"
+      ]
+    },
+    {
+      "js": ["content_hlportal.js"],
+      "matches": [
+        "https://portal.hurricanelabs.com/*"
+      ]
+    },
+    {
+      "js": ["content_opsgenie.js"],
+      "matches": [
+        "https://hurricanelabs-sandbox.app.opsgenie.com/alert/list",
+        "https://hurricanelabs-sandbox.app.opsgenie.com/alert/detail/*",
+        "https://hurricanelabs.app.opsgenie.com/alert/list",
+        "https://hurricanelabs.app.opsgenie.com/alert/detail/*"
+      ]
+    }
+  ]
+}

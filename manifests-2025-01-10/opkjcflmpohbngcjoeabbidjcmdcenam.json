@@ -1,0 +1,96 @@
+---
+name: BrandPal Copilot
+version: 0.7.2
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 93
+size: 4.19MiB
+languages:
+  - English (United States)
+release_date: '2024-12-11T03:57:05.000Z'
+creation_date: '2024-08-05T04:46:06.000Z'
+description: >-
+  BrandPal Copilot simplifies finding and managing TikTok influencers to boost
+  your brand's success.
+publisher_hash: cc59bf123138d5b55034f7a5f84b4c3791e6cc0d8f6d0d75d832e5abeb2b456e
+publisher: BrandPal Inc.
+publisher_account: jinping
+publisher_address: |-
+  1027 Wilshire Blvd Apt 436
+  Los Angeles, CA 90017-3145
+  US
+publisher_phone: '+16268665385'
+privacy_policy: https://bpres.brandpal.ai/h5/bp_copilot_prvacy_policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BrandPal Copilot",
+  "description": "BrandPal Copilot simplifies finding and managing TikTok influencers to boost your brand's success.",
+  "version": "0.7.2",
+  "action": { "default_title": "BrandPal Copilot", "default_icon": "logo.png" },
+  "icons": { "16": "logo.png", "48": "logo.png", "128": "logo.png" },
+  "background": { "service_worker": "scripts/service-worker.js" },
+  "oauth2": {
+    "client_id": "130824608747-1dae1k6ulm8hq4euu19ivh04cedamcpb.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email",
+      "https://www.googleapis.com/auth/userinfo.profile"
+    ]
+  },
+  "permissions": [
+    "sidePanel",
+    "activeTab",
+    "tabs",
+    "identity",
+    "identity.email",
+    "windows"
+  ],
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "side_panel": { "default_path": "index.html" },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/tiktokTab.js",
+        "scripts/guide.js",
+        "scripts/autoSearchWorkflow.js",
+        "scripts/warningPopup.js",
+        "scripts/tiktokKolDetail.js"
+      ],
+      "matches": ["https://www.tiktok.com/*"],
+      "css": ["css/tiktokTab.css", "css/guide.css", "css/warningPopup.css"]
+    },
+    {
+      "js": [
+        "scripts/lib/immutable.js",
+        "scripts/lib/reactProduction.js",
+        "scripts/lib/reactDomProduction.js",
+        "scripts/lib/Draft.js",
+        "scripts/autoSendMessage.js"
+      ],
+      "matches": ["https://www.tiktok.com/*"],
+      "world": "MAIN"
+    },
+    {
+      "js": ["scripts/popup.js"],
+      "matches": [
+        "http://192.168.3.25:9527/*",
+        "http://192.168.3.48:5173/*",
+        "http://192.168.3.48:9527/*",
+        "http://dev.brandpal.top/copilot/*",
+        "https://test.brandpal.top/copilot/*",
+        "https://app.brandpal.ai/copilot/*",
+        "http://dev-copilot.brandpal.top/copilot/*",
+        "https://test-copilot.brandpal.top/copilot/*",
+        "https://copilot.brandpal.ai/copilot/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+}

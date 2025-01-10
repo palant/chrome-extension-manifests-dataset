@@ -1,0 +1,112 @@
+---
+name: CClarity
+version: 0.1.25
+category_slug: lifestyle/social
+featured: false
+rating: null
+rating_count: null
+user_count: 25
+size: 729KiB
+languages:
+  - English (UK)
+release_date: '2025-01-10T04:10:48.000Z'
+creation_date: '2024-08-06T07:51:19.000Z'
+description: >-
+  Get actionable target audience data from your LinkedIn engagement. Visit
+  Cclarity.io to learn more.
+publisher_hash: 065cc09c769a1e0ab193d3055daec8dba20e4cf52d49adeea02503a6f1d958fd
+publisher: CClarity Pte Ltd
+publisher_account: CClarity
+publisher_phone: '+6591554072'
+extension_website: cclarity.io
+extension_website_verified: true
+privacy_policy: https://www.cclarity.io/privacy-policy
+---
+
+{
+  "name": "CClarity",
+  "description": "Get actionable target audience data from your LinkedIn engagement. Visit Cclarity.io to learn more.",
+  "version": "0.1.25",
+  "manifest_version": 3,
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "action": {
+    "default_popup": "plugin.html",
+    "default_icon": {
+      "16": "icon.png",
+      "48": "icon.png",
+      "128": "icon.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' ; object-src 'self'; style-src 'self' 'unsafe-inline' ;connect-src https://get.cclarity.io https://api.cclarity.io https://searchingfor.cclarity.io https://apistaging.cclarity.io http://localhost:8080 https://www.linkedin.com https://cclarity-media.s3.ap-southeast-1.amazonaws.com https://www.google-analytics.com https://api.june.so"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["js/host_preload_script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "js": ["js/vendor.js", "js/host_script.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "externally_connectable": {
+    "ids": ["*"],
+    "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"],
+    "accepts_tls_channel_id": false
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*.js", "assets/*.css"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"]
+    },
+    {
+      "resources": ["js/main_script.js"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"]
+    },
+    {
+      "resources": ["*.json"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"]
+    },
+    {
+      "resources": ["assets/*.png"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"]
+    },
+    {
+      "resources": ["assets/*.svg"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"]
+    },
+    {
+      "resources": ["assets/icon/*.svg"],
+      "matches": ["*://*.linkedin.com/*", "*://*.localhost/*", "*://*.cclarity.io/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "assets/background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "unlimitedStorage",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://*.cclarity.io/*",
+    "*://localhost/*",
+    "*://cclarity-media.s3.ap-southeast-1.amazonaws.com/*",
+    "*://api.june.so/*",
+    "https://searchingfor.cclarity.io/*",
+    "https://get.cclarity.io/*"
+  ],
+  "homepage_url": "https://get.cclarity.io"
+}

@@ -1,0 +1,89 @@
+---
+name: SupaReply
+version: '1.0'
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 3
+user_count: 9
+size: 121KiB
+languages:
+  - English (United States)
+release_date: '2024-12-04T10:23:42.000Z'
+creation_date: '2024-11-28T06:48:32.000Z'
+description: AI-powered assistant for Twitter and LinkedIn
+publisher_hash: 5eb6ec883d4f78ac8e9d6900369aa49c22536494c0a7742450c9f68339437674
+publisher_account: SupaReply
+extension_website: supareply.com
+extension_website_verified: false
+support_website: supareply.com
+privacy_policy: https://supareply.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SupaReply",
+  "version": "1.0",
+  "description": "AI-powered assistant for Twitter and LinkedIn",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.twitter.com/*",
+    "https://*.x.com/*",
+    "https://*.linkedin.com/*",
+    "https://gapdrpbojmzmkivdgdsr.supabase.co/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.twitter.com/*",
+        "https://*.x.com/*"
+      ],
+      "js": [
+        "config.js",
+        "content.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "config.js",
+        "linkedin/content.js"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "lib/supabase-client.js",
+        "lib/supabase-js.js",
+        "lib/supabase.js",
+        "config.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  }
+}

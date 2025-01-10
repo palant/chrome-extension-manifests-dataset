@@ -1,0 +1,68 @@
+---
+name: Yodeck Web Player Extension
+version: 0.0.0.6
+category_slug: productivity/workflow
+featured: false
+rating: 3.8
+rating_count: 5
+user_count: 20000
+size: 60.47KiB
+languages:
+  - English
+release_date: '2023-11-28T10:02:38.000Z'
+creation_date: '2021-10-21T13:00:08.000Z'
+description: Unlocks all features of Yodeck Web Player
+publisher_hash: 3dc745a1ace4579ad4c2c8dc2422d76b9dab709036f6f3882909c8d9f7a0720e
+publisher: Flipnode LLC
+publisher_account: https://www.yodeck.com
+publisher_address: |-
+  315 Montgomery Street, 9th Floor
+  San Francisco, CA 94104
+  United States
+support_website: https://help.yodeck.com/
+privacy_policy: https://www.yodeck.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Yodeck Web Player Extension",
+  "description": "Unlocks all features of Yodeck Web Player",
+  "version": "0.0.0.6",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Yodeck Extension Helper",
+    "default_popup": "./popup/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.yodeck.com/*"],
+      "all_frames": false,
+      "run_at": "document_start",
+      "js": ["contentScript.js"]
+    },
+    { "matches": ["<all_urls>"], "all_frames": true, "js": ["noNewTab.js"] }
+  ],
+  "permissions": ["tabs", "declarativeNetRequest", "scripting", "webNavigation", "cookies"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "icons": { "128": "128.png" },
+  "offline_enabled": true
+}

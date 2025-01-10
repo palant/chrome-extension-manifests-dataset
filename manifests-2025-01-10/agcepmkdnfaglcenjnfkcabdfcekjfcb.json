@@ -1,0 +1,80 @@
+---
+name: Text to Speech (TTS) Read Aloud Voice Reader by Audeus
+version: 1.0.18
+category_slug: productivity/education
+featured: false
+rating: 3.6666666666666665
+rating_count: 6
+user_count: 191
+size: 8.24MiB
+languages:
+  - English
+release_date: '2024-11-27T02:51:31.000Z'
+creation_date: '2024-10-04T05:08:47.000Z'
+description: >-
+  Read aloud using text-to-speech (TTS) to convert webpages, PDF, emails, & text
+  to audio. Text-to-speech extension with AI voices
+publisher_hash: abaf0dbc3835ccabe8fbbb41fa5ce44a498fbfe6e93ee330f80e78665bc40432
+publisher_account: chrome-extension-admin
+extension_website: audeus.com
+extension_website_verified: true
+support_website: https://www.audeus.com/contact
+privacy_policy: https://www.audeus.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Text to Speech (TTS) Read Aloud Voice Reader by Audeus",
+  "description": "Read aloud using text-to-speech (TTS) to convert webpages, PDF, emails, & text to audio. Text-to-speech extension with AI voices",
+  "version": "1.0.18",
+  "action": {
+    "default_icon": {
+      "16": "favicons/16x16.png",
+      "32": "favicons/32x32.png",
+      "48": "favicons/48x48.png",
+      "128": "favicons/128x128.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "favicons/16x16.png",
+    "32": "favicons/32x32.png",
+    "48": "favicons/48x48.png",
+    "128": "favicons/128x128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["js/vendor.js", "js/content_script.js"]
+    },
+    {
+      "matches": ["*://docs.google.com/document/*"],
+      "run_at": "document_start",
+      "js": ["js/gdoc_enable_canvas_annotation.js"],
+      "world": "MAIN"
+    }
+  ],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["fonts/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["audio/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "minimum_chrome_version": "88",
+  "permissions": ["storage", "cookies", "activeTab", "contextMenus", "offscreen", "scripting"],
+  "host_permissions": ["https://www.audeus.com/*"]
+}

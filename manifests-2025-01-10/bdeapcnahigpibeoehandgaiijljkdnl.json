@@ -1,0 +1,116 @@
+---
+name: Ringover VoIP Phone for Odoo
+version: 1.3.4
+category_slug: productivity/communication
+featured: false
+rating: null
+rating_count: null
+user_count: 37
+size: 4.14MiB
+languages:
+  - English (United States)
+release_date: '2025-01-09T14:16:42.000Z'
+creation_date: '2024-09-25T05:52:49.000Z'
+description: >-
+  Integrate Ringover's dialer into Odoo for calling, contact management, and
+  support ticket creation directly in the same interface.
+publisher_hash: db01164b7f3f2438d9baac03198263dae4c303d6d4c53aad6f4426fbabead75f
+publisher_account: RingOver
+extension_website: ringover.com
+extension_website_verified: true
+support_website: support.ringover.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ringover VoIP Phone for Odoo",
+  "version": "1.3.4",
+  "description": "Integrate Ringover's dialer into Odoo for calling, contact management, and support ticket creation directly in the same interface.",
+  "icons": {
+    "128": "icons/logo-128.png",
+    "16": "icons/logo-16.png",
+    "32": "icons/logo-32.png",
+    "64": "icons/logo-64.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "http://localhost:8069/*",
+        "https://*.odoo.com/*"
+      ],
+      "js": [
+        "content_scripts/vendors/libphonenumber.min.js",
+        "content_scripts/vendors/ringover-sdk.js",
+        "content_scripts/content.js"
+      ],
+      "css": [
+        "content_scripts/content.css"
+      ]
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.odoo.com/odoo/*"
+      ],
+      "js": [
+        "content_scripts/session.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://app.ringover.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content_scripts/ringover_export.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://app.ringover.com/*",
+        "https://auth.ringover.com/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "content_scripts/auth_check.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "missing_cookies_alert/missing_cookies_alert.html"
+      ],
+      "matches": [
+        "https://*.odoo.com/*"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": [
+    "http://localhost:8069/*",
+    "https://*.odoo.com/*",
+    "https://app.ringover.com/*",
+    "https://auth.ringover.com/*"
+  ],
+  "permissions": [
+    "tabs",
+    "contentSettings",
+    "scripting"
+  ],
+  "action": {
+    "default_title": "Ringover VOIP Phone for Odoo",
+    "default_icon": "icons/logo-64.png",
+    "default_popup": "/options/popup.html"
+  }
+}

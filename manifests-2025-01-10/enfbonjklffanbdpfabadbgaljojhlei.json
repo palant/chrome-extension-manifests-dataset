@@ -1,0 +1,98 @@
+---
+name: BingAI Sidebar for Chrome
+version: 1.0.7
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 2
+user_count: 203
+size: 684KiB
+languages:
+  - 中文 (简体)
+release_date: '2024-05-22T06:57:09.000Z'
+creation_date: '2024-05-15T07:57:31.000Z'
+description: Microsoft Copilot sidebar ported from Edge to Chrome
+publisher_hash: f694678fb586d66cad599fa393053847084d7b334c37eee85fc9fb33074c2594
+publisher_account: Harry-zklcdc
+extension_website: b1ng.chat
+extension_website_verified: false
+privacy_policy: https://github.com/Harry-zklcdc/bingai-sidebar-chrome?tab=readme-ov-file
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BingAI Sidebar for Chrome",
+  "description": "Microsoft Copilot sidebar ported from Edge to Chrome",
+  "version": "1.0.7",
+  "icons": {
+    "16": "icon.png",
+    "32": "icon.png",
+    "48": "icon.png",
+    "128": "icon.png"
+  },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_title": "点击打开 BingAI 侧边栏"
+  },
+  "side_panel": {
+    "default_path": "sidepanel/index.html"
+  },
+  "host_permissions": ["file://*/*", "*://*/*"],
+  "permissions": ["sidePanel", "declarativeNetRequest", "activeTab", "notifications", "storage", "cookies", "contextMenus"],
+  "content_scripts": [
+    {
+      "js": ["shell/inject.js"],
+      "matches": ["https://*/edgesvc/shell*"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "js": ["sidepanel/libs.js"],
+      "matches": ["https://*/edgesvc/chat*", "https://*/edgesvc/compose*"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "js": ["sidepanel/global.js"],
+      "matches": ["https://*/edgesvc/chat*", "https://*/edgesvc/compose*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "js": ["hack/chat.js"],
+      "matches": ["https://*/edgesvc/chat*"],
+      "exclude_matches": ["https://edgeservices.bing.com/*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "js": ["hack/compose.js"],
+      "matches": ["https://*/edgesvc/compose*"],
+      "exclude_matches": ["https://edgeservices.bing.com/*"],
+      "run_at": "document_end",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "js": ["content-script.js"],
+      "matches": ["file://*/*", "*://*/*"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Command+Shift+K"
+      }
+    }
+  }
+}

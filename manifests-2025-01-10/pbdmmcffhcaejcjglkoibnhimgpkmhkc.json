@@ -1,0 +1,67 @@
+---
+name: GeoGuessr Autosplitter
+version: 1.0.3
+category_slug: lifestyle/games
+featured: false
+rating: null
+rating_count: null
+user_count: 33
+size: 47.69KiB
+languages:
+  - English (United States)
+release_date: '2024-12-02T10:10:33.000Z'
+creation_date: '2024-08-28T09:02:07.000Z'
+description: >-
+  Browser extension which connects to a local LiveSplit Server using WebSockets
+  to perform automatic actions
+publisher_hash: a138a1f55eeee76d83cc296bec813cf21a34aed099c5b7a996dc2e2fb73230d7
+publisher_account: remigranotier
+support_website: https://github.com/remigranotier/gg-autosplitter/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "GeoGuessr Autosplitter",
+    "version": "1.0.3",
+    "description": "Browser extension which connects to a local LiveSplit Server using WebSockets to perform automatic actions",
+    "icons": {
+        "48": "icons/logo-48.png"
+    },
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; connect-src 'self' ws://localhost:*/"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://*.geoguessr.com/*"
+            ],
+            "js": [
+                "polyfill/browser-polyfill.js",
+                "split.js"
+            ]
+        }
+    ],
+    "background": {
+        "scripts": [
+            "polyfill/browser-polyfill.js",
+            "background.js"
+        ],
+        "service_worker": "worker-wrapper.js"
+    },
+    "action": {
+        "default_icon": "icons/logo-48.png",
+        "default_title": "Geoguessr Autosplitter",
+        "default_popup": "settings_menu/settings.html"
+    },
+    "permissions": [
+        "storage",
+        "tabs"
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{ecc392bf-0d54-4b22-bea7-63e81f0ad7c2}"
+        }
+    }
+}

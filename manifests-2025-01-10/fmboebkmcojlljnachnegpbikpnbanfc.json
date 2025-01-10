@@ -1,0 +1,90 @@
+---
+name: Knoll
+version: 0.0.2
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 263KiB
+languages:
+  - English (United States)
+release_date: '2024-12-17T07:47:40.000Z'
+creation_date: '2024-11-29T09:27:37.000Z'
+description: >-
+  Build and create custom knowledge repositories that you can easily incorporate
+  into LLMs.
+publisher_hash: e92247b4876d3e883fb0f29a5c11ef9da27357329b0c1312e9ef31daed6527b9
+extension_website: knollapp.com
+extension_website_verified: false
+privacy_policy: >-
+  https://docs.google.com/document/d/1ZbBc2XZwGbr-cFD8FVIHNiWL75P7w7ulBVeGvYqIdaU/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Knoll",
+  "version": "0.0.2",
+  "description": "Build and create custom knowledge repositories that you can easily incorporate into LLMs.",
+  "action": {
+    "default_icon": "./assets/logo.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/logo.png",
+    "48": "./assets/logo.png",
+    "128": "./assets/logo.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://knollapp.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://chatgpt.com/*",
+        "*://knollapp.com/*",
+        "*://api.knollapp.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js",
+        "dist/contentScripts/config.js",
+        "dist/contentScripts/libs/jquery.min.js",
+        "dist/contentScripts/libs/client.js",
+        "dist/contentScripts/libs/timeme.min.js",
+        "dist/contentScripts/libs/utils.js",
+        "dist/contentScripts/events.js",
+        "dist/contentScripts/logic.js",
+        "dist/contentScripts/launcher.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/injected.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

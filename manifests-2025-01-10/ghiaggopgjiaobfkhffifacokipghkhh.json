@@ -1,0 +1,83 @@
+---
+name: 'Periodix - #1 AI-SDR Software'
+version: 0.2.23
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 12
+user_count: 489
+size: 56.02KiB
+languages:
+  - English (United States)
+release_date: '2024-10-30T04:50:57.000Z'
+creation_date: '2023-12-20T12:22:12.000Z'
+description: Find prospects and book calls on autopilot with Periodix
+publisher_hash: 21f2f229c3a9940cd4137de292e3ae88ba003db7d926437fb5d981860a6dd97f
+publisher_account: periodix.product
+privacy_policy: https://periodix.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Periodix - #1 AI-SDR Software",
+  "version": "0.2.23",
+  "description": "Find prospects and book calls on autopilot with Periodix",
+  "icons": {
+    "16": "img/icons/16x16.png",
+    "32": "img/icons/32x32.png",
+    "48": "img/icons/48x48.png",
+    "128": "img/icons/128x128.png"
+  },
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "webRequest",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://www.linkedin.com/*",
+    "*://my.periodix.net/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://www.linkedin.com/sales/search/*",
+        "*://www.linkedin.com/sales/lead/*",
+        "*://*.linkedin.com/search/results/people*",
+        "*://*.linkedin.com/search/results/PEOPLE*",
+        "*://*.linkedin.com/in/*"
+      ],
+      "js": [
+        "lib/jquery.min.js",
+        "lib/dayjs.min.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://www.linkedin.com/sales/search/*",
+        "*://www.linkedin.com/sales/lead/*",
+        "*://*.linkedin.com/search/results/people*",
+        "*://*.linkedin.com/search/results/PEOPLE*",
+        "*://*.linkedin.com/in/*"
+      ],
+      "css": [
+        "css/overlay.css"
+      ],
+      "js": [
+        "dist/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

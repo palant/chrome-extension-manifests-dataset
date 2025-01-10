@@ -1,0 +1,83 @@
+---
+name: Medami Pro
+version: '1.6'
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 26
+size: 57.29KiB
+languages:
+  - Français
+release_date: '2024-12-11T07:16:41.000Z'
+creation_date: '2024-11-22T04:57:32.000Z'
+description: >-
+  Extension Medami pour les professionnels de santé qui s'intègre dans leur
+  logiciel de cabinet préféré
+publisher_hash: e1d48152be52f606990ae7189b76b748ee08e781d4b644291900aeaf89771b45
+publisher: MEDAMI
+publisher_account: Medami
+publisher_address: |-
+  8 PLACE ROGER SALENGRO
+  TOULOUSE 31000
+  FR
+publisher_phone: '+33663665233'
+extension_website: medami.fr
+extension_website_verified: false
+privacy_policy: https://www.medami.fr/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Medami Pro",
+  "description": "Extension Medami pour les professionnels de santé qui s'intègre dans leur logiciel de cabinet préféré",
+  "version": "1.6",
+  "action": {
+    "default_popup": "popup/index.html",
+    "default_icon": {
+      "16": "assets/medami16.png",
+      "24": "assets/medami24.png",
+      "32": "assets/medami32.png"
+    }
+  },
+  "icons": {
+    "16": "assets/medami16.png",
+    "48": "assets/medami48.png",
+    "128": "assets/medami128.png"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/jquery.js", "scripts/weda/patientView.js"],
+      "css": ["style.css"],
+      "matches": [
+        "*://*.weda.fr/*PatientViewForm.aspx*",
+        "file:///*PatientViewForm.aspx1731523454290/index.html"
+      ]
+    },
+    {
+      "js": ["scripts/weda/formView.js"],
+      "matches": [
+        "*://*.weda.fr/*ConsultationForm.aspx*",
+        "file:///*ConsultationForm.aspx1731523397034/index.html"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "scripts/background.js"
+  },
+  "permissions": [
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.v2.medami.fr/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["scripts/weda/paste.js"],
+      "matches": ["file:///*", "*://*.weda.fr/*"]
+    }
+  ]
+}

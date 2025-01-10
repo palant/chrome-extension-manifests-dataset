@@ -1,0 +1,125 @@
+---
+name: YTranscript2AI
+version: '1.3'
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 51
+size: 37.67KiB
+languages:
+  - English
+  - 日本語
+release_date: '2024-12-30T05:48:03.000Z'
+creation_date: '2024-12-16T12:40:35.000Z'
+description: >-
+  「YouTube字幕+プロンプト」をコピーし、AIで実行するChrome拡張機能です。ポップアップ画面のボタンを押すと、任意のAIが別タブで開きます。その後、クリップボードにコピーされたYouTubeの自動字幕とプロンプトが実行されます。
+publisher_hash: 79e3afcd7e0495f24902fc1a4da0dc0fda526d4e56908a5ea186b8c049864c03
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "commands": {
+    "copy-transcript": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+4",
+        "mac": "Command+Shift+4"
+      },
+      "description": "Copy transcript to clipboard"
+    },
+    "summarize": {
+      "suggested_key": {
+        "default": "Alt+1",
+        "mac": "Alt+1"
+      },
+      "description": "Summarize transcript"
+    },
+    "translate": {
+      "suggested_key": {
+        "default": "Alt+2",
+        "mac": "Alt+2"
+      },
+      "description": "Translate transcript"
+    },
+    "format": {
+      "suggested_key": {
+        "default": "Alt+3",
+        "mac": "Alt+3"
+      },
+      "description": "Format transcript"
+    }
+  },
+  "name": "__MSG_extName__",
+  "version": "1.3",
+  "description": "__MSG_extDescription__",
+  "default_locale": "ja",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "scripting",
+    "storage",
+    "clipboardWrite",
+    "clipboardRead",
+    "tabs",
+    "commands"
+  ],
+  "host_permissions": [
+    "*://*.youtube.com/*",
+    "*://youtube.com/*",
+    "https://claude.ai/*",
+    "https://chatgpt.com/*",
+    "https://aistudio.google.com/*"
+  ],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.youtube.com/*"],
+      "js": ["js/content-script-youtube.js"],
+      "type": "module"
+    },
+    {
+      "matches": [
+        "https://claude.ai/*",
+        "https://claude.ai/chat/*",
+        "https://claude.ai/new"
+      ],
+      "js": ["js/content-script-claude.js"],
+      "type": "module",
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://aistudio.google.com/app/prompts/new_chat",
+        "https://aistudio.google.com/app/prompts/*"
+      ],
+      "js": ["js/content-script-gemini.js"],
+      "type": "module",
+      "run_at": "document_end",
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/*",
+        "https://chat.openai.com/*"
+      ],
+      "js": ["js/content-script-chatgpt.js"],
+      "type": "module",
+      "run_at": "document_end",
+      "world": "MAIN"
+    }
+  ]
+}

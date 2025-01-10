@@ -1,0 +1,62 @@
+---
+name: K&H Chrome extension
+version: 2.1.0
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 2
+user_count: 4000
+size: 11.74KiB
+languages:
+  - magyar
+release_date: '2022-12-06T12:32:49.000Z'
+creation_date: '2020-09-17T11:17:18.000Z'
+description: >-
+  K&H e-bank belépés és tranzakció aláírás bővítmény / K&H e-bank login and
+  transaction signing extension
+publisher_hash: 8e6ff1e407b6c39c13924efa3ecba0d22a4a354a30cdea2d98c797d130419f34
+publisher_account: K&H Bank Zrt.
+privacy_policy: https://www.kh.hu/adatvedelem
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "K&H Chrome extension",
+  "version": "2.1.0",
+  "description": "K&H e-bank belépés és tranzakció aláírás bővítmény / K&H e-bank login and transaction signing extension",
+  "icons": { "96": "kh_96.png", "128": "kh_128.png" },
+  "author": "K&H Bank Zrt.",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "externally_connectable": {
+   "matches": [
+    "*://*.kh.hu/*",
+      "*://*.khb.hu/*"
+    ]
+  },
+  "content_scripts": [ {
+    "matches": [
+      "https://*.khb.hu/*",
+      "https://*.kh.hu/*"
+    ],
+    "js": ["connector.js","content.js","core-min.js","enc-utf16-min.js","enc-base64-min.js"],
+    "run_at": "document_start"
+  } ],
+  "content_security_policy": {
+   "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://www.kh.hu/ebank/telepitesi-utmutato",
+  "incognito": "split",
+  "minimum_chrome_version": "88",
+  "optional_permissions": [],
+  "permissions": [
+    "nativeMessaging"
+ ],
+  "host_permissions": [
+    "https://*.khb.hu/*",
+    "https://*.kh.hu/*"
+  ]
+}

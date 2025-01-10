@@ -1,0 +1,117 @@
+---
+name: Beagle Sequence Record
+version: 1.0.1
+category_slug: productivity/developer
+featured: true
+rating: 4.5
+rating_count: 6
+user_count: 179
+size: 571KiB
+languages:
+  - English
+release_date: '2024-12-25T07:42:12.000Z'
+creation_date: '2021-02-17T10:13:49.000Z'
+description: >-
+  The Beagle Security Sequence Recorder extension records sequences that our
+  scanner can replay when testing your website
+publisher_hash: a1e8134dd04cc735a1ad0860b4c4c279be6b04bae4c7fd54b54d288ab5dcee6d
+publisher_account: Beagle Security
+extension_website: beaglesecurity.com
+extension_website_verified: true
+support_website: >-
+  https://help.beaglesecurity.com/article/29/login-recorder-record-the-login-sequence-of-your-application
+privacy_policy: https://beaglesecurity.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Beagle Sequence Record",
+  "version": "1.0.1",
+  "description": "The Beagle Security Sequence Recorder extension records sequences that our scanner can replay when testing your website",
+  "action": {
+    "default_title": "Beagle Sequence Recorder",
+    "default_icon": {
+      "16": "beagle/images/branding/branding_16.png"
+    }
+  },
+  "icons": {
+    "16": "beagle/images/branding/branding_16.png",
+    "48": "beagle/images/branding/branding_48.png",
+    "128": "beagle/images/branding/branding_128.png"
+  },
+  "permissions": [
+    "windows",
+    "tabs",
+    "activeTab",
+    "webNavigation",
+    "storage",
+    "unlimitedStorage",
+    "debugger"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'",
+    "style-src": [
+      "'self'",
+      "https://cdn.jsdelivr.net"
+    ],
+    "web_accessible_resources": [
+      "page/prompt.js",
+      "page/runScript.js",
+      {
+        "resources": [
+          "panel/*"
+        ],
+        "matches": [
+          "<all_urls>"
+        ]
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "common/browser-polyfill.js",
+        "content/prompt-injecter.js",
+        "content/runScript-injecter.js"
+      ],
+      "match_about_blank": true,
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content/bowser.js",
+        "content/atoms.js",
+        "content/utils.js",
+        "content/selenium-commandhandlers.js",
+        "content/selenium-browserbot.js",
+        "common/escape.js",
+        "content/selenium-api.js",
+        "content/locatorBuilders.js",
+        "content/recorder.js",
+        "content/recorder-handlers.js",
+        "content/command-receiver.js",
+        "content/targetSelecter.js",
+        "content/sizzle.js",
+        "content/kar.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "match_about_blank": true,
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ]
+}

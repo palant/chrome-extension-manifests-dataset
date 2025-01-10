@@ -1,0 +1,91 @@
+---
+name: JetBrains Toolbox Extension
+version: 2.6.0.36497
+category_slug: productivity/developer
+featured: true
+rating: 3.857142857142857
+rating_count: 119
+user_count: 90000
+size: 256KiB
+languages:
+  - English
+release_date: '2025-01-02T11:14:30.000Z'
+creation_date: '2016-03-30T08:14:24.000Z'
+description: >-
+  Clone and open projects from GitHub, GitLab, Gitee, and Bitbucket in JetBrains
+  IDEs right from your browser
+publisher_hash: a6717aa3150782a5036d6dcafef39954f180c40245015d0997d4451fe3e7b8eb
+publisher: JetBrains s.r.o
+publisher_account: JetBrains
+publisher_address: |-
+  Na Hřebenech II 1718/8
+  Praha 140 00
+  CZ
+publisher_phone: '+420601527473'
+extension_website: jetbrains.com
+extension_website_verified: true
+support_website: https://youtrack.jetbrains.com/issues/TBX
+privacy_policy: https://www.jetbrains.com/legal/docs/privacy/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "JetBrains Toolbox Extension",
+  "short_name": "Toolbox",
+  "description": "Clone and open projects from GitHub, GitLab, Gitee, and Bitbucket in JetBrains IDEs right from your browser",
+  "version": "2.6.0.36497",
+  "icons": {
+    "128": "icons/icon-128.png"
+  },
+  "action": {
+    "default_icon": "icons/icon-disabled-128.png",
+    "default_title": "JetBrains Toolbox Extension",
+    "default_popup": "popups/disabled.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["github.js"]
+    },
+    {
+      "world": "MAIN",
+      "matches": ["https://github.com/*"],
+      "css": ["providers/github/assets/styles.css"]
+    },
+    {
+      "matches": ["https://gitee.com/*"],
+      "js": ["gitee.js"]
+    },
+    {
+      "world": "MAIN",
+      "matches": ["https://gitee.com/*"],
+      "js": ["providers/gitee/assets/scripts.js"],
+      "css": ["providers/gitee/assets/styles.css"]
+    },
+    {
+      "matches": ["https://gitlab.com/*"],
+      "js": ["gitlab.js"]
+    },
+    {
+      "matches": ["https://bitbucket.org/*"],
+      "js": ["bitbucket.js"]
+    }
+  ],
+  "options_ui": {
+    "page": "pages/options.html",
+    "open_in_tab": true
+  },
+  "permissions": ["activeTab", "contextMenus", "storage", "scripting"],
+  "host_permissions": [
+    "https://github.com/*",
+    "https://gitlab.com/*",
+    "https://bitbucket.org/*",
+    "https://gitee.com/*"
+  ],
+  "optional_host_permissions": ["http://*/*", "https://*/*"]
+}

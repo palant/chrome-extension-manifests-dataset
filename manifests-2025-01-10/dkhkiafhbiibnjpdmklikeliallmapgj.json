@@ -1,0 +1,103 @@
+---
+name: TheGuarantors - Chrome Extension
+version: 1.4.1
+category_slug: productivity/tools
+featured: true
+rating: 3.5
+rating_count: 8
+user_count: 4000
+size: 212KiB
+languages:
+  - English (United States)
+release_date: '2023-01-17T14:08:00.000Z'
+creation_date: '2016-11-23T21:18:04.000Z'
+description: Mark buildings covered by TheGuarantors on StreetEasy
+publisher_hash: dd1724519ac7fca326db6851179b3af29ff0627316e17a27d12aed328ea315fa
+publisher: TheGuarantors
+publisher_address: |-
+  1 World Trade Center
+  New York, NY 10007
+  US
+extension_website: theguarantors.com
+extension_website_verified: true
+privacy_policy: https://theguarantors.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TheGuarantors - Chrome Extension",
+  "description": "Mark buildings covered by TheGuarantors on StreetEasy",
+  "version": "1.4.1",
+  "icons": {
+    "128": "assets/img/logo.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://theguarantors.com/api/v1/buildings/*"
+  ],
+  "background": {
+    "service_worker": "dist/background.js"
+  },
+  "action": {
+    "default_title": "TheGuarantors Actions",
+    "default_popup": "popup.html"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "assets/img/*",
+      "assets/fonts/Gilroy-Regular.ttf",
+      "assets/fonts/Gilroy-Bold.ttf"
+    ],
+    "matches": ["<all_urls>"],
+    "extension_ids": []
+  }],
+  "content_scripts": [
+    {
+      "css": ["assets/css/buildings.css"],
+      "js": [
+        "node_modules/jquery/dist/jquery.min.js",
+        "dist/building.js"
+      ],
+      "matches": [
+        "*://streeteasy.com/building/*",
+        "*://streeteasy.com/new_jersey/building/*",
+        "*://streeteasy.com/hamptons/building/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "css": ["assets/css/buildings.css"],
+      "js": [
+        "node_modules/jquery/dist/jquery.min.js",
+        "dist/buildings.js"
+      ],
+      "matches": [
+        "*://streeteasy.com/buildings/*",
+        "*://streeteasy.com/*-for-rent/*",
+        "*://streeteasy.com/for-rent/*",
+        "*://streeteasy.com/rentals/*",
+        "*://streeteasy.com/new_jersey",
+        "*://streeteasy.com/hamptons"
+
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "node_modules/jquery/dist/jquery.min.js",
+        "dist/installed.js"
+      ],
+      "matches": [
+        "*://*.theguarantors.com/*",
+        "*://theguarantors.com/*"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

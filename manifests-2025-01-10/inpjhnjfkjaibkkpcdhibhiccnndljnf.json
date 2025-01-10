@@ -1,0 +1,80 @@
+---
+name: Devyce Softphone Extension
+version: 0.12.4
+category_slug: productivity/communication
+featured: false
+rating: null
+rating_count: null
+user_count: 1000
+size: 133KiB
+languages:
+  - English
+release_date: '2024-12-11T23:39:39.000Z'
+creation_date: '2023-12-01T09:08:55.000Z'
+description: >-
+  Extend the capabilities of the Devyce Softphone, including click to call and
+  call control across tabs.
+publisher_hash: ab57bb30a43b0ab4010bfcd67a9c696ad1086037a7f9cfde13662230b4daf900
+publisher: Devyce Limited
+publisher_account: Devyce
+publisher_address: |-
+  2 Minster Court
+  London EC3R 7BB
+  GB
+publisher_phone: '+447537188952'
+extension_website: devyce.com
+extension_website_verified: true
+support_website: https://devyce.com/contact-us/
+privacy_policy: https://devyce.com/app-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Devyce Softphone Extension",
+  "description": "Extend the capabilities of the Devyce Softphone, including click to call and call control across tabs.",
+  "version": "0.12.4",
+  "permissions": ["tabs", "webNavigation"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": [
+        "http://localhost:3000/*",
+        "https://softphone.devyce.io/*"
+      ],
+      "js": ["assets/js/iframe.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://localhost:3000/*", "https://softphone.devyce.io/*"],
+      "js": ["assets/js/softphone.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "exclude_matches": ["http://localhost:3000/*", "https://*.devyce.io/*"],
+      "js": ["assets/js/links.js"],
+      "run_at": "document_end",
+      "css": ["assets/css/devyceStyles.css"],
+      "all_frames": true,
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["/assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "assets/js/background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/imgs/logo16.png",
+      "24": "assets/imgs/logo24.png",
+      "32": "assets/imgs/logo32.png"
+    }
+  }
+}

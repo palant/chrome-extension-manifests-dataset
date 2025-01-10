@@ -1,0 +1,96 @@
+---
+name: RemoteHQ - Instant Cobrowsing
+version: 4.0.3
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 121
+size: 115KiB
+languages:
+  - English (United States)
+release_date: '2022-10-28T13:39:30.000Z'
+creation_date: '2019-05-28T22:31:41.000Z'
+description: Open links in Remote Browser and more
+publisher_hash: d7de6fa2afc73b324a1ea3a4a6b8d7a16c4b21a6c00d26f0ffc289297b6162a2
+publisher: RemoteHQ
+publisher_address: |-
+  39 Arlington rd
+  Chestnut Hill, MA 02467
+  US
+support_website: https://www.remotehq.com/faq
+privacy_policy: https://www.remotehq.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RemoteHQ - Instant Cobrowsing",
+  "description": "Open links in Remote Browser and more",
+  "short_name": "Open links in Remote Browser and more",
+  "version": "4.0.3",
+  "minimum_chrome_version": "88",
+  "icons": {
+    "16": "assets/rhq-16x16.png",
+    "48": "assets/rhq-48x48.png"
+  },
+  "background": {
+    "service_worker": "/background/main.js"
+  },
+  "permissions": [
+    "contextMenus",
+    "storage",
+    "tabs",
+    "system.display"
+  ],
+  "host_permissions": [
+    "https://calendar.google.com/*",
+    "*://*.remotehq.com/*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.remotehq.com/*",
+      "*://localhost:*/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://calendar.google.com/calendar/*"
+      ],
+      "js": [
+        "/content/jquery.js", "/content/rhq-calendar.js"
+      ],
+      "css": [
+        "/css/all.css"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://rooms.remotehq.com/*"
+      ],
+      "js": [
+        "/content/auth.js"
+      ],
+      "all_frames": false,
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/rhq-sygnet.svg"
+      ],
+      "matches": [
+        "*://calendar.google.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "RemoteHQ",
+    "default_popup": "popup/popup.html"
+  }
+}

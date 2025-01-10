@@ -1,0 +1,185 @@
+---
+name: LYH DOI Tools
+version: '0.8'
+category_slug: productivity/tools
+featured: true
+rating: 1
+rating_count: 1
+user_count: 1000
+size: 1021KiB
+languages:
+  - English (United States)
+release_date: '2023-10-09T06:04:37.000Z'
+creation_date: '2021-09-08T05:35:21.000Z'
+description: LYH DOI Tools
+publisher_hash: 2afea9cd4634202752b2462fc7136d52f01feb64673702327d7a11921fb11d4d
+publisher_account: LYH
+support_website: https://github.com/liyuanhe211/LYH_DOI_Tools
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "LYH DOI Tools",
+    "version": "0.8",
+    "manifest_version": 3,
+    "description": "LYH DOI Tools",
+    "permissions": [
+        "tabs",
+        "contextMenus",
+        "storage"
+    ],
+    "host_permissions": [
+        "http://*/*",
+        "https://*/*"
+    ],
+    "commands":
+    {
+        "x_mol_search":
+        {
+            "suggested_key": {"default":"Ctrl+Shift+S"},
+            "description": "Search reference with the selected ref info on x-mol.com to get to the original article page."
+        },
+        "_execute_action":
+        {
+            "suggested_key":
+            {
+                "default": "Ctrl+Shift+L"
+            }
+        }
+    },
+    "content_scripts": [
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "content.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://pubs.acs.org/doi/epdf/*",
+                "https://www.science.org/doi/epdf/*",
+                "https://royalsocietypublishing.org/doi/epdf/*",
+                "https://www.chinesechemsoc.org/doi/epdf/*",
+                "https://www.pnas.org/doi/epdf/*",
+                "https://onlinelibrary.wiley.com/doi/epdf/*",
+                "https://onlinelibrary.wiley.com/doi/pdf/*",
+                "https://*.onlinelibrary.wiley.com/doi/epdf/*",
+                "https://*.onlinelibrary.wiley.com/doi/pdf/*",
+                "https://journals.asm.org/doi/epub/*",
+                "https://www.ahajournals.org/doi/epub/*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "stupid_epdf_correction.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": ["https://www.x-mol.com/q*"],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "x-mol_Auto_Jump.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://chemport.cas.org/cgi-bin/*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "SciFinder_OtherSources_DOI_Clicker.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://lls.reaxys.com/xflink*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "Reaxys_FullText_DOI_Clicker.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://apps.crossref.org/SimpleTextQuery"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "TextQuery.js"
+            ]
+        },
+        {
+            "run_at": "document_start",
+            "matches": [
+                "https://chemport.cas.org/cgi-bin/*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "SciFinder_OtherSources_TabSwitcher.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "Sci_Hub_Auto_Download.js"
+            ]
+        },
+        {
+            "run_at": "document_end",
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ],
+            "js": [
+                "jquery-3.6.0.js",
+                "lib.js",
+                "LibGen_Auto_Download.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "images/*.png"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ]
+        }
+    ],
+    "icons": {
+        "16": "images/Icon16.png",
+        "128": "images/Icon128.png"
+    },
+    "action": {
+        "default_icon": "images/Icon.png",
+        "default_popup": "popup.html"
+    },
+    "background": {
+        "service_worker": "background.js"
+    }
+}

@@ -1,0 +1,115 @@
+---
+name: DossierData BV
+version: 3.3.0
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 133
+size: 57.69KiB
+languages:
+  - Nederlands
+release_date: '2024-06-02T11:55:11.000Z'
+creation_date: '2020-03-26T18:31:39.000Z'
+description: DossierData BV - Brondata verzamelen.
+publisher_hash: cbdc05f53ff81bb92b9f5e0c39e20c63ad00b214e61dc5db65499755c91a23d8
+publisher: iWize B.V.
+publisher_address: |-
+  Lichttoren 32
+  Eindhoven 5611 BJ
+  NL
+publisher_phone: '+31684145503'
+support_website: https://dossierdata.nl/
+privacy_policy: https://iwize.nl/privacy/index.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DossierData BV",
+  "description": "DossierData BV - Brondata verzamelen.",
+  "version": "3.3.0",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://dossierdata.nl/",
+  "icons": {
+    "32": "resources/logo32X32.png",
+    "48": "resources/logo48X48.png",
+    "128": "resources/logo128X128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.overheid.nl/*",
+        "https://*.mijnpensioenoverzicht.nl/*",
+        "https://*.uwv.nl/*",
+        "https://*.belastingdienst.nl/*",
+        "https://*.duo.nl/*",
+        "https://*.digid.nl/*",
+        "https://*.aqopi.com/*",
+        "https://iwize.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/content.js",
+        "content/actions.js",
+        "content/crypto.js",
+        "content/templateMatching.js",
+        "content/fetchBlob.js",
+        "content/downloadPdfByClick.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://*.overheid.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/interceptMoh.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://mijn.duo.nl/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "content/fetchJsonWithAuthHeader.js"
+      ]
+    }
+  ],
+  "permissions": [
+    "cookies",
+    "webRequest",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.aqopi.com/*",
+    "https://iwize.nl/*",
+    "https://*.overheid.nl/*",
+    "https://*.mijnpensioenoverzicht.nl/*",
+    "https://*.duo.nl/*",
+    "https://*.uwv.nl/*",
+    "https://*.belastingdienst.nl/*",
+    "https://*.digid.nl/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": "resources/logo32X32.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "DossierData BV - Brondata extensie"
+  },
+  "web_accessible_resources": [{
+    "resources": ["/resources/logo80X80.png"],
+    "matches": ["<all_urls>"]
+  }],
+  "externally_connectable": {
+    "matches": [
+      "https://*.iwize.nl/*"
+    ]
+  }
+}

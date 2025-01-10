@@ -1,0 +1,122 @@
+---
+name: Choice AI
+version: 1.0.526
+category_slug: lifestyle/entertainment
+featured: false
+rating: 4.6
+rating_count: 10
+user_count: 16
+size: 584KiB
+languages:
+  - English
+release_date: '2024-11-20T06:57:27.000Z'
+creation_date: '2023-10-02T09:06:38.000Z'
+description: >-
+  Personalize your OTT viewing by skipping unwanted scenes with your preferences
+  and interests.
+publisher_hash: 0f4f23c5cf0fa88c50d71f5bb1c7e338430011d38f02b95c7b8acc428f062c3c
+publisher_account: CHOICE
+privacy_policy: https://www.choiceai.in/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Choice AI",
+  "description": "Personalize your OTT viewing by skipping unwanted scenes with your preferences and interests.",
+  "version": "1.0.526",
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "128": "assets/choice_C.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://*.jiocinema.com/*"],
+      "js": [
+        "logger.js",
+        "const.js",
+        "jio_cinema.js",
+        "createStyledButton.js",
+        "createFloatingBox.js",
+        "showFloatingObject.js",
+        "insertBoxAfterButton.js",
+        "checkForElementsIfPageLoaded.js",
+        "waitingForVideoToPlay.js",
+        "createCustomTagBox.js",
+        "render-adds-jio.js",
+        "toogleExtensionBox.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["logger.js", "youtube.js", "createStyledButton.js", "render-adds-yt.js"]
+    },
+    {
+      "matches": ["https://www.zee5.com/*"],
+      "js": ["logger.js", "zee5.js", "createStyledButton.js", "toogleExtensionBox.js"]
+    },
+    {
+      "matches": ["https://www.hotstar.com/*"],
+      "js": ["logger.js", "hotstar.js", "createStyledButton.js", "toogleExtensionBox.js"]
+    },
+    {
+
+      "matches": ["https://www.primevideo.com/*"],
+      "js": ["logger.js", "amazon.js", "createStyledButton.js", "toogleExtensionBox.js"]
+    },
+    {
+      "matches": ["https://www.mxplayer.in/*"],
+      "js": ["logger.js", "mx-player.js", "createStyledButton.js", "toogleExtensionBox.js"]
+    },
+    {
+      "matches": ["https://www.sonyliv.com/*"],
+      "js": ["logger.js", "sony-liv.js", "createStyledButton.js", "toogleExtensionBox.js"]
+    },
+    {
+      "matches": ["https://www.shemaroome.com/*"],
+      "js": ["logger.js", "shemaroo.js", "createStyledButton.js", "toogleExtensionBox.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "floatingBox.js",
+        "ContentTagsPopUp.html",
+        "assets/close.png",
+        "assets/Vector.png",
+        "assets/rectangle.png",
+        "assets/profile.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "dist/background.bundle.js",
+    "type": "module"
+  },
+  "permissions": [
+    "cookies",
+    "webNavigation",
+    "scripting",
+    "https://www.jiocinema.com/*",
+    "http://127.0.0.1:5000/*",
+    "https://choice-mgva.onrender.com/*",
+    "http://localhost/*",
+"https://app.choiceai.in/"
+  ],
+  "host_permissions": [
+    "https://www.jiocinema.com/*",
+    "http://127.0.0.1:5000/*",
+    "https://choice-mgva.onrender.com/*",
+    "https://www.youtube.com/",
+    "http://localhost/*",
+    "https://app.choiceai.in/"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; connect-src 'self' http://127.0.0.1:5000 http://localhost:5000 https://app.choiceai.in:5000 https://choice-mgva.onrender.com"
+  }
+}

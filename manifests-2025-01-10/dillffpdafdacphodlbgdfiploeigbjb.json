@@ -1,0 +1,68 @@
+---
+name: Erocs - 에록스
+version: '2.03'
+category_slug: make_chrome_yours/functionality
+featured: false
+rating: null
+rating_count: null
+user_count: 7
+size: 142KiB
+languages:
+  - 한국어
+release_date: '2024-05-31T11:20:43.000Z'
+creation_date: '2024-03-13T11:19:32.000Z'
+description: |-
+  에록스 확장프로그램은 서비스의 필수 기능들을 제공합니다.
+  에록스를 설치하고 로그인 하면
+  아프리카TV, 치지직에서 방송을 시청할 때 포인트를 얻을 수 있고
+  이전 트위치에서의 포인트를 연동해서 얻을 수 있습니다.
+
+  기능:
+  - Twitch…
+publisher_hash: d4c922ed556946eb4d83866e83ebc1f308104ade9ca1d8d67206037f9e1f3457
+publisher_account: KAWAN
+support_website: https://www.erocs.kr
+privacy_policy: https://www.erocs.kr/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Erocs - 에록스",
+  "version": "2.03",
+  "host_permissions": ["https://www.twitch.tv/", "https://www.erocs.kr/"],
+  "permissions": ["tabs", "cookies", "storage"],
+  "action": {
+    "default_popup": "src/popup/popup.html",
+    "default_icon": {
+      "16": "src/images/icon16.png",
+      "48": "src/images/icon48.png",
+      "128": "src/images/icon128.png"
+    }
+  },
+  "background": { "service_worker": "src/scripts/background.js" },
+  "icons": {
+    "16": "src/images/icon16.png",
+    "48": "src/images/icon48.png",
+    "128": "src/images/icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://play.afreecatv.com/*", "https://chzzk.naver.com/*"],
+      "js": ["src/scripts/content-script.js"],
+      "all_frames": false
+    },
+    {
+      "matches": ["https://chzzk.naver.com/*", "https://www.erocs.kr/*"],
+      "js": ["src/scripts/iframe-script.js"],
+      "all_frames": true
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["src/images/*"],
+      "matches": ["https://play.afreecatv.com/*", "https://chzzk.naver.com/*"]
+    }
+  ]
+}

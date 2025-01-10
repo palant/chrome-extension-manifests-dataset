@@ -1,0 +1,66 @@
+---
+name: Suggestack
+version: 1.8.6
+category_slug: lifestyle/social
+featured: false
+rating: 5
+rating_count: 2
+user_count: 13
+size: 47.43KiB
+languages:
+  - English
+release_date: '2023-03-30T21:25:16.000Z'
+creation_date: '2021-09-21T08:28:17.000Z'
+description: >-
+  This extension attempts to suggest substacks using the content of the substack
+  you are viewing.
+publisher_hash: ff50c8fb131b2409a6bf770f12eab3892f35c50b695a383872f741e3acc9e683
+publisher_account: suggestack
+extension_website: suggestack.glitch.me
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Suggestack",
+  "version": "1.8.6",
+  "manifest_version": 3,
+  "description": "This extension attempts to suggest substacks using the content of the substack you are viewing.",
+  "homepage_url": "http://www.suggestack.xyz/",
+  "icons": {
+    "16": "icons/logo16.png",
+    "48": "icons/logo48.png",
+    "128": "icons/logo128.png"
+
+  },
+  "web_accessible_resources": [{
+    "resources":["icons/logo128.png"],
+    "matches":["*://*/*"]
+  }],
+  "background": {
+    "service_worker":"src/bg/background.js"
+    
+   
+
+  },
+  "action": {
+    "default_popup": "src/page_action/popup.html",
+    "default_icon": "icons/logo2.png",
+    "default_title": "Suggestack"
+    
+  },
+  "permissions":["storage","activeTab","scripting"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.substack.com/p/*",
+        "*://*/*"
+      ],
+      "js": [
+        "src/inject/inject.js"],
+      "run_at": "document_idle",
+      "all_frames": true
+    }
+  ]
+}

@@ -1,0 +1,82 @@
+---
+name: Blurred thumbnails
+version: 1.6.3
+category_slug: lifestyle/fun
+featured: true
+rating: 4.6
+rating_count: 15
+user_count: 960
+size: 31.53KiB
+languages:
+  - English
+release_date: '2025-01-01T06:15:16.000Z'
+creation_date: '2023-03-26T03:30:11.000Z'
+description: Blur thumbnails on YT page for whatever reason
+publisher_hash: 1705792b3957b2861110f23c7aadc3aabb62ba06e77731dc8916e669602977e8
+publisher_account: krzysiek.kurczewski
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Blurred thumbnails",
+  "version": "1.6.3",
+  "description": "Blur thumbnails on YT page for whatever reason",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "options_ui": {
+    "page": "options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "hook/onInstall.js"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.youtube.com/*"
+      ],
+      "js": [
+        "content/blur.js",
+        "content/observer/mutationObserver.js",
+        "content/selectors/home.js",
+        "content/selectors/watch.js",
+        "content/selectors/search.js",
+        "content/selectors/playlists.js",
+        "content/video.js",
+        "content/recycler.js",
+        "content/index.js"
+      ],
+      "css": [
+        "content/style.css",
+        "content/preview.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "https://m.youtube.com/*"
+      ],
+      "js": [
+        "content/blur.js",
+        "content/observer/mutationObserver.js",
+        "content/selectors/home.m.js",
+        "content/selectors/watch.m.js",
+        "content/video.js",
+        "content/index.m.js"
+      ],
+      "css": [
+        "content/style.m.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage"
+  ]
+}

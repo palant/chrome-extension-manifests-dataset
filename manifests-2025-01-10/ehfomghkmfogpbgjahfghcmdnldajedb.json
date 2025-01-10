@@ -1,0 +1,68 @@
+---
+name: SynqUp - Create Better Meetings with AI - Calendar Addon
+version: 1.1.49.3
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 7
+user_count: 92
+size: 146KiB
+languages:
+  - English
+release_date: '2025-01-10T03:51:53.000Z'
+creation_date: '2024-04-03T10:48:35.000Z'
+description: >-
+  Our AI analyzes meeting invitations as you create them and presents tips for
+  improving their productivity and participant engagement
+publisher_hash: 62b218542e74e66fd7eeaf911da19089a300da279582b094745ed21644bab70b
+publisher_account: gcp-organization-admins
+extension_website: synq-up.com
+extension_website_verified: true
+privacy_policy: https://www.synq-up.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "SynqUp - Create Better Meetings with AI - Calendar Addon",
+    "description": "Our AI analyzes meeting invitations as you create them and presents tips for improving their productivity and participant engagement",
+    "host_permissions": [
+        "https://calendar.google.com/*",
+        "https://www.googleapis.com/*"
+    ],
+    "permissions": ["identity", "alarms", "storage", "tabs", "activeTab"],
+    "storage": {
+      "managed_schema": "config-schema.json"
+    },
+    "version": "1.1.49.3",
+    "action": {
+      "default_icon": "images/synqup.png"
+    },
+    "icons": {
+      "16": "images/synqup_16x16.png",
+      "48": "images/synqup_48x48.png",
+      "128": "images/synqup_128x128.png"
+    },
+    "oauth2": {
+      "client_id": "240060497818-m4h5ei4f22r95ged3a5tiujvhdai0409.apps.googleusercontent.com",
+      "scopes": ["openid", "email"]
+    },
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+    "web_accessible_resources": [
+      {
+        "resources": ["images/*", "web/styles.css", "web/settings.css"],
+        "matches": ["https://calendar.google.com/*"] 
+      }
+    ],
+    "options_page": "web/options.html",
+    "content_scripts": [
+        {
+          "matches": ["*://calendar.google.com/*"],
+          "js": ["libs/jwt-decode.js", "scripts/constants.js", "scripts/utils.js", "scripts/content.js", "scripts/calAudit.js", "scripts/settings.js", "scripts/actions.js", "scripts/admin.js"],
+          "css": ["web/styles.css", "web/settings.css"]
+        }
+    ]
+  }

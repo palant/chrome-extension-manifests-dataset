@@ -1,0 +1,105 @@
+---
+name: Tolstoy - Free Screen and Video Recorder
+version: 1.0.51
+category_slug: lifestyle/social
+featured: false
+rating: 5
+rating_count: 9
+user_count: 1000
+size: 1018KiB
+languages:
+  - English
+release_date: '2023-07-17T16:08:30.000Z'
+creation_date: '2022-01-18T05:05:11.000Z'
+description: >-
+  Record your screen and camera with one click, and make your videos interactive
+  with Tolstoy.
+publisher_hash: 9b44bb2884f4d1993be97fe4430c2c4106d6e7abf4c59dcd0a0daefda88d1259
+publisher: Tolstoy
+publisher_account: rnd
+publisher_address: |-
+  60 Hasharon
+  RAANANA 4335232
+  IL
+publisher_phone: '+972506859234'
+extension_website: gotolstoy.com
+extension_website_verified: true
+support_website: https://help.gotolstoy.com/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "short_name": "Tolstoy",
+  "name": "Tolstoy - Free Screen and Video Recorder",
+  "version": "1.0.51",
+  "manifest_version": 3,
+  "description": "Record your screen and camera with one click, and make your videos interactive with Tolstoy.",
+  "homepage_url": "https://app.gotolstoy.com",
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "desktopCapture",
+    "downloads",
+    "storage",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "static/js/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["static/js/recording.js", "static/js/listener.js"]
+    },
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "all_frames": true,
+      "css": ["css/gmail.css"],
+      "js": ["static/js/gmail.js"]
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "run_at": "document_end",
+      "css": ["css/linkedin.css"],
+      "js": ["static/js/linkedin.js"]
+    },
+    {
+      "matches": ["https://app.gotolstoy.com/canvas/"],
+      "run_at": "document_idle",
+      "js": ["js/content_recorder.js"]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "/images/logo16.png",
+      "32": "/images/logo32.png",
+      "48": "/images/logo48.png",
+      "128": "/images/logo128.png"
+    },
+    "default_popup": "index.html"
+  },
+  "icons": {
+    "16": "/images/logo16.png",
+    "32": "/images/logo32.png",
+    "48": "/images/logo48.png",
+    "128": "/images/logo128.png"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["html/*"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["pageWorld.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ],
+  "minimum_chrome_version": "88"
+}

@@ -1,0 +1,76 @@
+---
+name: 爱哔哔-bilibili-B站助手
+version: 0.1.8
+category_slug: lifestyle/entertainment
+featured: false
+rating: 4.777777777777778
+rating_count: 18
+user_count: 2000
+size: 9.87MiB
+languages:
+  - 中文 (简体)
+release_date: '2025-01-08T02:12:38.000Z'
+creation_date: '2024-01-06T09:03:48.000Z'
+description: bilibili 哔哩哔哩网页版视频下载。支持博主投稿视频，番剧视频下载，支持合集一键批量下载。
+publisher_hash: 488a2189f9a5363e6f5f8d71077723308cbd1cc1cbbc35e778ca147ed60fcb73
+publisher_account: vdown
+privacy_policy: https://videodownloadextension.github.io/welcome/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "爱哔哔-bilibili-B站助手",
+  "version": "0.1.8",
+  "description": "bilibili 哔哩哔哩网页版视频下载。支持博主投稿视频，番剧视频下载，支持合集一键批量下载。",
+  "author": "videohelper",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "host_permissions": ["*://*.bilibili.com/*", "*://*.xiaoshujiang.com/*"],
+  "action": {
+    "default_title": "爱哔哔-bilibili-B站助手",
+    "default_icon": "icons/icon48.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "permissions": ["downloads", "scripting", "activeTab", "storage"],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "img/*",
+        "content/*",
+        "*.js",
+        "*.css",
+        "*.png",
+        "*.webp",
+        "*.json",
+        "*.html",
+        "*.wasm"
+      ],
+      "matches": ["*://*.bilibili.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.xiaoshujiang.com/*"]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.bilibili.com/*"],
+      "css": ["content/index.css"],
+      "js": [
+        "content/filesize.js",
+        "content/index.js"
+      ],
+      "run_at": "document_start"
+    }
+  ]
+}

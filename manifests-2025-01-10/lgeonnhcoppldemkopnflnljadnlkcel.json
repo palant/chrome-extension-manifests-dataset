@@ -1,0 +1,88 @@
+---
+name: The WishKeeper
+version: 1.4.5 beta
+category_slug: lifestyle/shopping
+featured: false
+rating: null
+rating_count: null
+user_count: 8
+size: 117KiB
+languages:
+  - Türkçe
+release_date: '2025-01-09T10:11:57.000Z'
+creation_date: '2024-12-06T14:27:28.000Z'
+description: >-
+  Your smart shopping companion! Don't miss out any of your wishes from your
+  favourite stores.
+publisher_hash: 59fd9c81ccf7a7d516be754597d47e688022683148ee7638c100845f884d3f59
+publisher_account: WishKeeper by eezd
+extension_website: eezd.tr
+extension_website_verified: true
+support_website: https://eezd.tr/wishkeeper
+privacy_policy: https://eezd.tr/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "The WishKeeper",
+  "version": "2.50.14",
+  "version_name": "1.4.5 beta",
+  "description": "Your smart shopping companion! Don't miss out any of your wishes from your favourite stores.",
+  "author": "eezd.tr",
+  "homepage_url": "https://eezd.tr/wishkeeper",
+  "permissions": [
+    "notifications",
+    "activeTab",
+    "storage",
+    "scripting",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://wishkeeper.eezd.tr/*",
+    "https://cdnjs.cloudflare.com/*",
+    "https://fonts.googleapis.com/*",
+    "https://fonts.gstatic.com/*",
+    "https://*/*"
+  ],
+  "icons": {
+    "16": "images/icon16.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "The WishKeeper",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+        "matches": ["<all_urls>"],
+        "js": [
+            "config/selectors.js",
+            "config/priceStandards.js",
+            "content.js"
+        ],
+        "run_at": "document_idle"
+    }
+],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; style-src 'self' 'unsafe-inline' https://*.googleapis.com https://*.cloudflare.com; font-src 'self' https://*.gstatic.com; img-src 'self' https://*.eezd.tr https://*.google.com https://* data:; connect-src 'self' https://*.eezd.tr https://*.cloudflare.com"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "templates/wishkeeper-list.html"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

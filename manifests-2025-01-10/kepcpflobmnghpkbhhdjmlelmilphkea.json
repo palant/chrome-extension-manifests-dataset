@@ -1,0 +1,121 @@
+---
+name: oshiparty
+version: 1.28.0
+category_slug: lifestyle/entertainment
+featured: false
+rating: null
+rating_count: null
+user_count: 157
+size: 450KiB
+languages:
+  - 日本語
+release_date: '2024-11-25T12:10:57.000Z'
+creation_date: '2024-04-02T10:33:48.000Z'
+description: Sync Amazon Prime video for streamers and fans
+publisher_hash: c0c24aedfe4ae10bea66c887fdb99c81310f1a2c470fa89c55ea7a05be55aa45
+publisher: SnackTime, Inc.
+support_website: >-
+  https://docs.google.com/forms/d/e/1FAIpQLSe8QRBpN8Zvui1pbHf17tlq0MzguAct-2IUUTaBBz-SXBlADg/viewform?usp=sf_link
+privacy_policy: >-
+  https://www.notion.so/oshiparty-privacy-policy-f21fd29b1f874d4d8dc01e1890c2f0ed?pvs=4
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "oshiparty",
+  "version": "1.28.0",
+  "description": "Sync Amazon Prime video for streamers and fans",
+  "icons": {
+    "16": "images/icon.png",
+    "32": "images/icon.png",
+    "48": "images/icon.png",
+    "128": "images/icon.png"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "scripts/libs/jquery.min.js",
+        "scripts/libs/jquery-ui.min.js",
+        "scripts/libs/socket.io.min.js",
+        "content.js"
+      ],
+      "css": [
+        "content.css",
+        "jquery-ui.min.css",
+        "css/font-awesome4.7/css/font-awesome.min.css"
+      ],
+      "matches": [
+        "https://www.amazon.com/*",
+        "https://www.amazon.co.jp/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "scripts/libs/jquery.min.js",
+        "youtube.js"
+      ],
+      "css": ["youtube.css"],
+      "matches": [
+        "https://www.youtube.com/embed/*",
+        "https://www.youtube.com/live_chat*"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+    {
+      "js": [
+        "scripts/libs/jquery.min.js",
+        "oshiparty/join.js"
+      ],
+      "matches": [
+        "https://oshiparty.com/join/*"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "js": [
+        "scripts/libs/jquery.min.js",
+        "oshiparty/timer.js"
+      ],
+      "matches": [
+        "https://oshiparty.com/timer"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "host_permissions": [
+    "https://*.amazon.com/*",
+    "https://*.amazon.co.jp/*",
+    "*://oshiparty.com/*",
+    "https://chromewebstore.google.com/detail/oshiparty/*",
+    "*://*/*"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "cookies",
+    "webRequest"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/1s_forward.png",
+        "images/1s_backward.png",
+        "images/icon.png",
+        "css/font-awesome4.7/fonts/fontawesome-webfont.woff2"
+      ],
+      "matches": [
+        "https://*.amazon.com/*",
+        "https://*.amazon.co.jp/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "images/icon.png"
+  }
+}

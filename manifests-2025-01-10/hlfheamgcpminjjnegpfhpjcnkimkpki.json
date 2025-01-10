@@ -1,0 +1,132 @@
+---
+name: 仓秘书商品采集(速卖通/1688)
+version: 2.7.8
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 28
+size: 99.22KiB
+languages:
+  - 中文 (简体)
+release_date: '2022-12-02T06:05:40.000Z'
+creation_date: '2022-10-13T04:26:32.000Z'
+description: 仓秘书商品采集(速卖通/1688)
+publisher_hash: 620ab3aad282700057b3555e4253fb9ef4fd363ec5203d8a8e8d9e4639e668ff
+publisher_account: 通晓网络科技
+support_website: https://cangmishu.com/tutorial/
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "仓秘书商品采集(速卖通/1688)",
+    "version": "2.7.8",
+    "author": "Wang Wen Jie",
+    "description": "仓秘书商品采集(速卖通/1688)",
+    
+    "icons":{
+        "48": "./img/cms_logo.png"
+    },
+
+    "action": {            
+        "default_title":"仓秘书商品采集(速卖通/1688)",
+        "default_popup":"popup/popup.html"
+    },
+
+    "content_scripts": [        
+        {
+            "js": [                
+                "js/utils.js", 
+                "js/button.js"         
+            ],
+            "css":[
+                "css/pickup_button.css"
+            ],
+            "matches": [
+                "*://*.1688.com/*",
+                "*://*.aliexpress.com/*"
+            ],
+            "all_frames": true,
+            "run_at":"document_start"
+        },
+        
+        {
+            "js": [            
+                "js/a1688/a8_core.js",
+                "js/a1688/a8_detail.js",
+                "js/a1688/a8_content.js"
+            ],
+                        
+            "matches": [
+                "*://*.1688.com/*"
+            ],
+            "all_frames": true,
+            "run_at":"document_start"
+        },
+
+        {
+            "js": [            
+                "js/cms_content.js"
+            ],
+            "matches": [
+                "*://*.cangmishu.com/*"
+            ],
+            "all_frames": true,
+            "run_at":"document_start"
+        },
+
+        {
+            "js": [          
+                "js/aliexpress/ae_core.js",
+                "js/aliexpress/ae_detail.js",
+                "js/aliexpress/ae_content.js"
+            ],
+            "matches": [
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.us/*"
+            ],
+
+            "run_at":"document_start",
+            "all_frames": true
+        }
+    ],
+        
+    "host_permissions": [
+        "*://*.cangmishu.com/*",
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.us/*"        
+    ],
+
+    "declarative_net_request" : {
+        "rule_resources" : [{
+          "id": "ruleset_1",
+          "enabled": true,
+          "path": "rules_1.json"
+        }]
+    },
+    
+    "permissions": [
+        "storage",
+        "unlimitedStorage",
+        "webRequest",
+        "declarativeNetRequestWithHostAccess"
+    ],
+
+    "background":{
+        "service_worker": "js/background.js"
+    },
+    
+    "web_accessible_resources": [        
+        {
+            "resources":["js/a1688/a8_hide_button.js"],
+            "matches":["*://*.1688.com/*"]
+        },
+        {
+            "resources":["img/cms_text.png", "img/cms_list_button.png"],
+            "matches":["*://*.1688.com/*", "*://*.aliexpress.com/*", "*://*.aliexpress.us/*"]
+        }
+    ]    
+}

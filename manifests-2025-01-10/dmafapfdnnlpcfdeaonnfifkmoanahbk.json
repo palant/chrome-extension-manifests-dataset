@@ -1,0 +1,96 @@
+---
+name: AliExpress Downloader by SimplyTrends.co
+version: 0.0.0.1
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 33
+size: 596KiB
+languages:
+  - English (United States)
+release_date: '2022-09-25T10:24:18.000Z'
+creation_date: '2022-09-25T10:24:18.000Z'
+description: Save AliExpress product images and videos in one click.
+publisher_hash: 07a8afa80b86a357bda92bd132533a14e10581ada039f4efe94cd7db97882ee7
+publisher_account: SimplyTrends Team
+extension_website: simplytrends.co
+extension_website_verified: true
+privacy_policy: https://www.simplytrends.co/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "short_name": "AliExpress Downloader",
+    "name": "AliExpress Downloader by SimplyTrends.co",
+    "description": "Save AliExpress product images and videos in one click.",
+    "version": "0.0.0.1",
+    "manifest_version": 3,
+    "background": {
+        "service_worker": "background.js"
+    },
+    "icons": {
+        "16": "images/icon16.png",
+        "32": "images/icon32.png",
+        "48": "images/icon48.png",
+        "128": "images/icon128.png"
+    },
+    "action": {},
+    "permissions": [
+        "scripting",
+        "storage",
+        "management",
+        "declarativeNetRequest"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "declarative_net_request": {
+        "rule_resources": [
+            {
+                "id": "rule_1",
+                "enabled": true,
+                "path": "rules.json"
+            }
+        ]
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://*.aliexpress.com/*"
+            ],
+            "run_at": "document_start",
+            "js": [
+                "contentscript.js"
+            ]
+        },
+        {
+            "matches": [
+                "https://*.simplytrends.co/crx/*"
+            ],
+            "run_at": "document_start",
+            "all_frames": true,
+            "js": [
+                "simplytrends.js"
+            ]
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "simplytrends.js",
+                "entry.js",
+                "windowscript.js",
+                "contentscript.js",
+                "images/*"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    }
+}

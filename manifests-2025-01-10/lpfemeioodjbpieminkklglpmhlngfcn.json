@@ -1,0 +1,212 @@
+---
+name: 'WebChatGPT: ChatGPT with internet access'
+version: 4.1.53
+category_slug: productivity/tools
+featured: true
+rating: 4.267800882167612
+rating_count: 3174
+user_count: 1000000
+size: 2.5MiB
+languages:
+  - Bahasa Indonesia
+  - Bahasa Melayu
+  - Deutsch
+  - English
+  - English (UK)
+  - English (United States)
+  - Filipino
+  - Français
+  - Kiswahili
+  - Nederlands
+  - Norsk
+  - Tiếng Việt
+  - Türkçe
+  - català
+  - dansk
+  - eesti
+  - español
+  - español (Latinoamérica)
+  - hrvatski
+  - italiano
+  - latviešu
+  - lietuvių
+  - magyar
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - Ελληνικά
+  - Српски
+  - български
+  - русский
+  - українська
+  - עברית
+  - فارسی‎
+  - मराठी
+  - हिन्दी
+  - বাংলা
+  - ગુજરાતી
+  - தமிழ்
+  - తెలుగు
+  - ಕನ್ನಡ
+  - മലയാളം
+  - ไทย
+  - አማርኛ
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+release_date: '2024-11-27T01:42:35.000Z'
+creation_date: '2022-12-07T11:05:59.000Z'
+description: >-
+  Augment your ChatGPT prompts with relevant web search results through web
+  browsing.
+publisher_hash: 5a489cfc983fc62c84387abbce42b42207ceef38144ef1ea27adf6670e8f3530
+publisher_account: WebChatGPT
+extension_website: webchatgpt.app
+extension_website_verified: true
+support_website: https://discord.gg/hjvAtVNtHa
+privacy_policy: https://webchatgpt.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_name__",
+  "short_name": "__MSG_sn__",
+  "description": "__MSG_desc__",
+  "default_locale": "en",
+  "version": "4.1.53",
+  "icons": {
+    "16": "assets/icons/icon16.png",
+    "48": "assets/icons/icon48.png",
+    "128": "assets/icons/icon128.png"
+  },
+  "permissions": [
+    "storage",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "host_permissions": [
+    "*://*/*",
+    "<all_urls>"
+  ],
+  "background": {
+    "service_worker": "background/bg.js",
+    "type": "module"
+  },
+  "action": {},
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chatgpt.com/*",
+        "https://claude.ai/*",
+        "https://bard.google.com/*",
+        "https://gemini.google.com/*"
+      ],
+      "js": [
+        "import_mainUI.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://app.maxai.me/*"
+      ],
+      "js": [
+        "import_authClient.js"
+      ]
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "import_theSearchItem.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.baidu.com/*",
+        "https://cn.bing.com/*",
+        "https://www.bing.com/*",
+        "https://www.sogou.com/*",
+        "https://duckduckgo.com/*",
+        "https://search.yahoo.com/search*",
+        "https://search.naver.com/*",
+        "https://yandex.com/*",
+        "https://wap.yandex.com/*",
+        "https://search.brave.com/*",
+        "https://www.reddit.com/*",
+        "https://twitter.com/*",
+        "https://www.youtube.com/*",
+        "https://www.amazon.com/s/*"
+      ],
+      "js": [
+        "import_searchWithAI.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "import_requesterInject.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://chatgpt.com/favicon.ico"
+      ],
+      "match_about_blank": true,
+      "all_frames": true,
+      "js": [
+        "import_contentArkoseTokenIframe.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "options_ui": {
+    "page": "pages/options/options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "contentScripts/*",
+        "chunks/*.js",
+        "i18n/locales/*",
+        "assets/*",
+        "pages/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "commands": {
+    "toggle-web-access": {
+      "suggested_key": {
+        "default": "Alt+W"
+      },
+      "description": "__MSG_toggleWebAccess__"
+    }
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_bing",
+        "enabled": true,
+        "path": "rules/bing.json"
+      }
+    ]
+  }
+}

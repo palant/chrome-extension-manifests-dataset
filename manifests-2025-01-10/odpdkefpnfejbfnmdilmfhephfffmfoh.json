@@ -1,0 +1,84 @@
+---
+name: Readlang Web Reader
+version: 0.9.10
+category_slug: productivity/education
+featured: true
+rating: 4.298076923076923
+rating_count: 208
+user_count: 100000
+size: 619KiB
+languages:
+  - English
+release_date: '2024-09-11T03:55:24.000Z'
+creation_date: '2013-03-29T11:44:41.000Z'
+description: >-
+  Read websites in the language you're learning, translate words you don't know,
+  and we'll create flashcards to help you remember.
+publisher_hash: d1624498ed48022e30d27773996e9b2b6a8757390244561cc90efc5546732adb
+publisher_account: readlang
+extension_website: readlang.com
+extension_website_verified: true
+support_website: https://readlang.uservoice.com/
+privacy_policy: https://readlang.com/privacyPolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+
+  "name": "Readlang Web Reader",
+  "short_name": "Readlang",
+  "description": "Read websites in the language you're learning, translate words you don't know, and we'll create flashcards to help you remember.",
+  "version": "0.9.10",
+
+  "icons": {
+    "16": "content/icon16.png",
+    "48": "content/icon48.png",
+    "128": "content/icon96_128.png"
+  },
+
+  "permissions": ["activeTab", "contextMenus", "scripting"],
+
+  "host_permissions": [
+    "https://readlang.com/*",
+    "https://test.readlang.com/*",
+    "http://localhost/*"
+  ],
+
+  "commands": {
+    "import": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+I"
+      },
+      "description": "Import text from the current page into Readlang"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://readlang.com/*",
+        "https://test.readlang.com/*",
+        "http://localhost/*"
+      ],
+      "all_frames": true,
+      "js": ["src/contentScript.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["src/allPagesContentScript.js"]
+    }
+  ],
+
+  "action": {
+    "name": "Open Readlang Web Reader",
+    "default_icon": {
+      "19": "content/icon19.png",
+      "38": "content/icon38.png"
+    }
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  }
+}

@@ -1,0 +1,77 @@
+---
+name: RooBY
+version: 1.1.2
+category_slug: lifestyle/games
+featured: false
+rating: 5
+rating_count: 2
+user_count: 30
+size: 24.74MiB
+languages:
+  - English (United States)
+release_date: '2025-01-08T04:48:03.000Z'
+creation_date: '2023-08-31T05:57:31.000Z'
+description: Adds calculators and extra functionality to Generation 1 Pokemon Showdown
+publisher_hash: b019f19b7c12292648db5616e963c32f902c87e088fa60b6c19860424bc8b717
+publisher_account: NonprofitProphet
+privacy_policy: https://www.freeprivacypolicy.com/live/79cf68f9-735b-4adb-a1fe-1fbbb310fc86
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,  
+    "name": "RooBY",
+    "version": "1.1.2",
+    "description": "Adds calculators and extra functionality to Generation 1 Pokemon Showdown",
+    "permissions": [
+      "storage"
+    ],
+    "icons": {
+      "16": "images/icon-16.png",
+      "32": "images/icon-32.png",
+      "48": "images/icon-48.png",
+      "128": "images/icon-128.png"
+    },
+    "background": {
+      "service_worker": "scripts/worker.js",
+      "scripts": ["scripts/worker.js"],
+      "type": "module"
+    },
+    "content_scripts": [
+      {
+        "world": "MAIN",
+        "js": ["scripts/page.js"],
+        "matches": [
+          "https://play.pokemonshowdown.com/*",
+          "https://replay.pokemonshowdown.com/*"
+        ],
+        "run_at": "document_start"    
+      },
+      {
+        "js": ["scripts/unpkg.com_@smogon_calc@0.7.0_dist_production.min.js", "scripts/unpkg.com_@smogon_calc@0.7.0_dist_data_production.min.js", "scripts/util.js", "scripts/consts.js", "scripts/calculator.js", "scripts/playUtil.js", "scripts/playContent.js"],
+        "css": ["styles/style.css"],
+        "matches": [
+          "https://play.pokemonshowdown.com/*",
+          "https://replay.pokemonshowdown.com/*"
+        ],
+        "run_at": "document_end"    
+      },
+      {
+        "js": ["scripts/unpkg.com_@smogon_calc@0.7.0_dist_production.min.js", "scripts/unpkg.com_@smogon_calc@0.7.0_dist_data_production.min.js", "scripts/util.js", "scripts/consts.js", "scripts/calculator.js", "scripts/calcContent.js"],
+        "matches": [
+          "https://calc.pokemonshowdown.com/*"
+        ],
+        "run_at": "document_end"    
+      }
+    ],
+    "web_accessible_resources": [{
+      "matches": ["<all_urls>"],
+      "resources": ["images/icon-128.png", "images/digimonicons-sheet.png", "images/gen5icons-sheet.png", "images/gen5icons-pokeball-sheet.png", "images/articons-sheet.png", "images/articons-pokeball-sheet.png", "images/sprites/*.png", "images/backdrops/*"]
+    }],
+    "browser_specific_settings": {
+      "gecko": {
+        "id": "rooby@datumlocker.com"
+      }
+    }
+  }

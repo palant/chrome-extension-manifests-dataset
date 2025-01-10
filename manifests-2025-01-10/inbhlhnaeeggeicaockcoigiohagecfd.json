@@ -1,0 +1,112 @@
+---
+name: Valosan GMail Extension
+version: 1.83.1105.2056
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 22
+size: 1005KiB
+languages:
+  - English
+release_date: '2024-11-06T09:58:22.000Z'
+creation_date: '2021-02-11T04:37:14.000Z'
+description: Easily pitch to your contacts from Valosan app.
+publisher_hash: 2156bab26309c24a632208aa71c89bb64e7c76fcfc4777c83d6192689a1f6aad
+publisher: Valosan Oy
+publisher_address: |-
+  Eerikinkatu 28
+  Helsinki 00180
+  FI
+publisher_phone: '+358503392586'
+extension_website: valosan.com
+extension_website_verified: true
+support_website: https://valosan.com/faq
+privacy_policy: https://valosan.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Valosan GMail Extension",
+  "short_name": "valosan-gmail-extension",
+  "version": "1.83.1105.2056",
+  "author": "Ruslan Gainutdinov <ruslan@sanfrancisco.fi>",
+  "description": "Easily pitch to your contacts from Valosan app.",
+  "homepage_url": "https://valosan.com",
+  "action": {
+    "default_icon": {
+      "16": "images/valosan-icon-16x16-rounded-box.png",
+      "32": "images/valosan-icon-32x32-rounded-box.png",
+      "64": "images/valosan-icon-64x64-rounded-box.png",
+      "128": "images/valosan-icon-128x128-rounded-box.png",
+      "256": "images/valosan-icon-256x256-rounded-box.png"
+    },
+    "default_title": "Valosan GMail Extension",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/valosan-icon-16x16-rounded-box.png",
+    "32": "images/valosan-icon-32x32-rounded-box.png",
+    "64": "images/valosan-icon-64x64-rounded-box.png",
+    "128": "images/valosan-icon-128x128-rounded-box.png",
+    "256": "images/valosan-icon-256x256-rounded-box.png"
+  },
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "src/valosanExtension.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/*",
+        "assets/*",
+        "images/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    },
+    {
+      "resources": [
+        "*.map"
+      ],
+      "matches": [
+        "https://mail.google.com/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "scripting",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback"
+  ],
+  "host_permissions": [
+    "*://mail.google.com/*",
+    "*://*.googleusercontent.com/proxy/*",
+    "*://*.googleusercontent.com/meips/*",
+    "*://p.valosan.com/*",
+    "*://pdev.valosan.com/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  }
+}

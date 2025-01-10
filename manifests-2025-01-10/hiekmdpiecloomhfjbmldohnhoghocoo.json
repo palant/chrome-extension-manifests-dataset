@@ -1,0 +1,82 @@
+---
+name: Second Opinion
+version: 1.0.3
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 23
+size: 423KiB
+languages:
+  - English
+release_date: '2025-01-01T05:29:56.000Z'
+creation_date: '2024-12-25T12:02:14.000Z'
+description: Get a Second Opinion by Grok.
+publisher_hash: 0c9443539ac2434354987408f63bd1d08f296e74a13e819d5b740ff0f79ae7d4
+publisher_account: Second Opinion
+extension_website: secondopinion.so
+extension_website_verified: false
+privacy_policy: https://secondopinion.so/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Second Opinion",
+  "version": "1.0.3",
+  "description": "Get a Second Opinion by Grok.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    },
+    "default_popup": "window.html"
+  },
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://*.chromiumapp.org/*",
+    "https://chat.openai.com/*",
+    "https://*.chatgpt.com/*"
+  ],
+  "oauth2": {
+    "client_id": "670802600855-30edt95j78hco0b4oomeulrabdtq91a0.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [{
+    "resources": ["firebase/*.js", "firebase/*/*.js"],
+    "matches": ["https://chat.openai.com/*", "https://*.chatgpt.com/*"]
+  }, {
+    "resources": ["icons/*.png", "keywords.js"],
+    "matches": ["https://chat.openai.com/*", "https://*.chatgpt.com/*"]
+  }],
+  "content_scripts": [
+    {
+      "matches": ["https://chat.openai.com/*", "https://*.chatgpt.com/*"],
+      "js": ["keywords.js", "content_script.bundle.js"],
+      "css": ["styles.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "service_worker": "background.bundle.js"
+  }
+}

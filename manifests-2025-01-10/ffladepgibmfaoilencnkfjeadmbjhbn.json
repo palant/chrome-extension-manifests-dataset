@@ -1,0 +1,96 @@
+---
+name: FMA - Flashcard Maker for Anki
+version: 0.2.0.7
+category_slug: productivity/education
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 49.04MiB
+languages:
+  - English
+release_date: '2024-12-16T05:17:35.000Z'
+creation_date: '2024-12-02T10:33:09.000Z'
+description: >-
+  An AI powered flashcard generator for Anki, aimed for the quick tranformation
+  of online resources into Anki flashcards
+publisher_hash: bcf33f42f3f123c3256cf1d0d7a6afb5026d8428d602779c7d9f25c857e8a5ac
+publisher: Soki AG
+publisher_account: Soki
+publisher_address: |-
+  Dufourstrasse 150
+  St. Gallen 9000
+  CH
+privacy_policy: >-
+  https://soki-ag.notion.site/Privacy-Policy-for-FMA-f1ac12850a534e49b3e9c1c87bb86885
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "FMA - Flashcard Maker for Anki",
+  "version": "0.2.0.7",
+  "version_name": "0.2.0.7",
+  "description": "An AI powered flashcard generator for Anki, aimed for the quick tranformation of online resources into Anki flashcards",
+  "icons": {
+    "200": "icons/fma.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScripts/highlightContentScript.js"]
+    },
+    {
+      "matches": ["*://chatgpt.com/*"],
+      "runAt": "document_start",
+      "js": ["contentScripts/chatGPTContentScript.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "background/backgroundScript.mjs",
+    "type": "module"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "icons/*.png",
+        "icons/*.svg",
+        "fonts/*",
+        "css/*.css",
+        "contentScripts/highlightContentScript.css",
+        "contentScripts/highlightContentScript.css.map",
+        "contentScripts/highlightContentScript.js.map",
+        "chatGPTWebPS.js",
+        "*.mjs",
+        "*.js",
+        "*.css",
+        "*.map"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "permissions": ["tabs", "storage", "system.display"],
+  "options_ui": {
+    "page": "options/options.html",
+    "open_in_tab": true
+  },
+  "action": {
+    "default_icon": "icons/fma.png",
+    "default_title": "Flashcard Maker for Anki",
+    "default_popup": "popup/index.html"
+  },
+  "commands": {
+    "trigger_tooltip": {
+      "suggested_keys": {
+        "default": "Ctrl+Shift+Y"
+      },
+      "description": "Trigger tooltip event"
+    }
+  },
+  "minimum_chrome_version": "92"
+}

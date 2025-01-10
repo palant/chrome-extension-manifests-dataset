@@ -1,0 +1,117 @@
+---
+name: Earn Alliance Companion
+version: 1.0.23
+category_slug: lifestyle/entertainment
+featured: false
+rating: 3.1639344262295084
+rating_count: 183
+user_count: 30000
+size: 372KiB
+languages:
+  - English
+release_date: '2024-09-26T03:52:42.000Z'
+creation_date: '2024-02-22T12:37:18.000Z'
+description: Earn Alliance Companion
+publisher_hash: 1f84a174250e56ce9670b543cee09192db0840bee75085a614f2fa9033cded16
+publisher: Earn Alliance Holdings Pte. Ltd
+publisher_account: Earn Alliance
+privacy_policy: https://www.earnalliance.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Earn Alliance Companion",
+  "version": "1.0.23",
+  "description": "Earn Alliance Companion",
+  "manifest_version": 3,
+  "options_page": "options.html",
+  "host_permissions": [
+    "*://account.riotgames.com/*",
+    "*://ca.account.sony.com/*"
+  ],
+  "permissions": ["storage", "alarms", "tabs", "cookies"],
+  "content_scripts": [
+    {
+      "js": ["main-world.js"],
+      "run_at": "document_idle",
+      "world": "MAIN",
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://store.epicgames.com/*"
+      ]
+    },
+    {
+      "js": ["lib/jquery.js", "lib/toastr.min.js", "inject.js"],
+      "css": ["lib/toastr.min.css", "css/inject.css"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*",
+        "*://store.epicgames.com/*",
+        "*://www.epicgames.com/*"
+      ]
+    },
+    {
+      "js": ["lib/jquery.js", "googleplay-scraper.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "matches": ["*://play.google.com/library/games"]
+    },
+    {
+      "js": ["lib/jquery.js", "riotgames-scraper.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "matches": ["*://account.riotgames.com/*"]
+    },
+    {
+      "js": ["lib/jquery.js", "playstation-redirect.js"],
+      "run_at": "document_idle",
+      "world": "ISOLATED",
+      "matches": ["*://id.sonyentertainmentnetwork.com/id/management_ca/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/logo.png",
+      "32": "img/logo.png",
+      "48": "img/logo.png",
+      "128": "img/logo.png"
+    }
+  },
+  "icons": {
+    "16": "img/logo.png",
+    "32": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.vercel.app/*",
+      "*://localhost/*",
+      "*://earnalliance.com/*",
+      "*://www.earnalliance.com/*",
+      "*://test.earnalliance.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["img/logo.png"],
+      "matches": [
+        "*://*.vercel.app/*",
+        "*://localhost/*",
+        "*://earnalliance.com/*",
+        "*://www.earnalliance.com/*",
+        "*://test.earnalliance.com/*",
+        "*://play.google.com/*",
+        "*://account.riotgames.com/*",
+        "*://id.sonyentertainmentnetwork.com/*"
+      ]
+    }
+  ]
+}

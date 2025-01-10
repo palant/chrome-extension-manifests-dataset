@@ -1,0 +1,76 @@
+---
+name: DarkUC - Modo Oscuro UC
+version: v0.4.8
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 144
+size: 756KiB
+languages:
+  - español (Latinoamérica)
+release_date: '2023-04-21T07:58:32.000Z'
+creation_date: '2021-01-27T09:20:40.000Z'
+description: Extensión que permite activar Modo Oscuro en plataformas de la UC.
+publisher_hash: 1d9f425fddc170f0a84f5ab52e7f4a15801486838f3bf626eccf14dc1337dc90
+publisher_account: Javier Z. Avello
+support_website: https://avello.cl/proyectos/dark-uc
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "DarkUC - Modo Oscuro UC",
+  "version": "0.4.8",
+  "version_name": "v0.4.8",
+  "author": "Javier Z. Avello",
+  "description": "Extensión que permite activar Modo Oscuro en plataformas de la UC.",
+  "short_name": "Dark UC",
+  "browser_action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Configuración Modo Oscuro UC",
+    "default_icon": {
+      "16": "imagenes/icono/16.png",
+      "32": "imagenes/icono/32.png",
+      "128": "imagenes/icono/icono.png"
+    }
+  },
+  "background": {
+    "scripts": ["background.js"]
+  },
+  "options_ui": {
+    "page": "popup/config.html",
+    "open_in_tab": false
+  },
+  "permissions": ["storage"],
+  "icons": {
+    "16": "imagenes/icono/16.png",
+    "32": "imagenes/icono/32.png",
+    "128": "imagenes/icono/icono.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://cursos.canvas.uc.cl/*", "https://applications.zoom.us/lti/rich*"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "css": ["css/general.css", "css/canvas.css"],
+      "js": ["js/jquery-3.6.0.min.js", "js/canvas.js", "js/canvas_start.js"]
+    },
+    {
+      "matches": ["https://applications.zoom.us/lti/rich*"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "css": ["css/canvas_zoom.css"]
+    },
+    {
+      "matches": ["https://cursos.canvas.uc.cl/*"],
+      "all_frames": true,
+      "js": ["js/canvas_sidebar.js"]
+    },
+    {
+      "matches": ["https://cursos.canvas.uc.cl/*/assignments*", "https://cursos.canvas.uc.cl/*/quizzes*"],
+      "js": ["js/jquery-3.6.0.min.js", "js/canvas_aviso.js"]
+    }
+  ]
+}

@@ -1,0 +1,103 @@
+---
+name: 'VU Quiz Firewall Bypass (VUBuddy): A.I Quiz Solver & One-Click Lecture Skip'
+version: 2.2.0
+category_slug: productivity/tools
+featured: false
+rating: 4.201086956521739
+rating_count: 184
+user_count: 10000
+size: 260KiB
+languages:
+  - English (United States)
+release_date: '2025-01-09T18:32:50.000Z'
+creation_date: '2024-04-29T08:19:38.000Z'
+description: >-
+  VU Buddy is AI-powered quiz solver and lesson skipper - your ultimate study
+  companion for quick answers and smart learning shortcuts
+publisher_hash: d4f22519e33b62ae0b35d8a030a4a4c82a90bd7c09d6fb18cc2ad4260d48da42
+publisher_account: gptquizapp
+extension_website: vubuddy.com
+extension_website_verified: true
+privacy_policy: https://fmedu.org/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "minimum_chrome_version": "114",
+  "name": "VU Quiz Firewall Bypass (VUBuddy): A.I Quiz Solver & One-Click Lecture Skip",
+  "description": "VU Buddy is AI-powered quiz solver and lesson skipper - your ultimate study companion for quick answers and smart learning shortcuts",
+  "version": "2.2.0",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAhWEPLIx4FsuK63SkU5NNfgwIkja0OES9Eyjm/MwKJOk9GnIt7UhS5F12npaIRJh6ZQt3xyW9RRdNHYli5W39aHAjUOoZqa/4zAftgzfYgePzK3VUSRssyCd0Z7m5exs/UL0KT+WodXHClN/DaoD41Llg+0ZiyN/dXRDDI6mkzsXp8j7hzD2L8oI+G5jV1MQxOt8CWCnQrqmNekS2WZhSqrVY4o8IrV2VGGdIaSMx4GrizB7mr3c4V04fn9EXG8AC/NsTfrXzuU6T/CzqloN0UvUJra8Y812vulUY4Qns1Nqg4wiBKOLcarHlEK/UjU+7DnzDFXNCNM3/mVNDPKeIaQIDAQAB",
+  "permissions": [
+    "storage",
+    "scripting",
+    "declarativeNetRequest",
+    "cookies"
+  ],
+  "host_permissions": [
+    "*://vulms.vu.edu.pk/*",
+    "https://vubuddy.com/*"
+  ],
+  "icons": {
+    "16": "assets/icon-16.png",
+    "48": "assets/icon-48.png",
+    "128": "assets/icon-128.png"
+  },
+  "action": {
+    "default_icon": "assets/icon-128.png",
+    "default_popup": "assets/popup.html"
+  },
+  "background": {
+    "service_worker": "assets/service-worker.js",
+    "type": "module"
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ua_rules",
+        "enabled": true,
+        "path": "ua_rules.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.vu.edu.pk/Quiz/QuizQuestion.aspx?*",
+        "*://*.vu.edu.pk/LessonViewer.aspx*"
+      ],
+      "js": [
+        "assets/ua-patch.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    },
+    {
+      "matches": [
+        "*://*.vu.edu.pk/*"
+      ],
+      "js": [
+        "assets/content-script-import.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "resources": [
+        "assets/app.css",
+        "assets/content-script.js",
+        "/assets/fonts/*.ttf",
+        "/assets/chunks/*.js",
+        "/assets/*.png",
+        "assets/pdf-viewer.html"
+      ]
+    }
+  ]
+}

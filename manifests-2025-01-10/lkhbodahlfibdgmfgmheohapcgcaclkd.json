@@ -1,0 +1,79 @@
+---
+name: PageSlicer AI - Instant Webpage Summaries
+version: '1.1'
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 2
+size: 42.88MiB
+languages:
+  - English
+release_date: '2024-12-24T09:22:58.000Z'
+creation_date: '2024-12-10T04:37:50.000Z'
+description: Get AI-powered summaries of web pages and link previews instantly.
+publisher_hash: e1be3057c48a0aaf67a667c4972a58f92a41e1bdbc3c860cae4da780e03cdadb
+publisher_account: Paul Moreira
+privacy_policy: https://chrome-extension-project-99812.web.app/privacy-policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PageSlicer AI - Instant Webpage Summaries",
+  "version": "1.1",
+  "description": "Get AI-powered summaries of web pages and link previews instantly.",
+  
+  "icons": {
+    "16": "src/icons/icon16.png",
+    "48": "src/icons/icon48.png",
+    "128": "src/icons/icon128.png"
+  },
+
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "src/icons/icon16.png",
+      "48": "src/icons/icon48.png",
+      "128": "src/icons/icon128.png"
+    }
+  },
+
+  "permissions": [
+    "activeTab",
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://us-central1-chrome-extension-project-99812.cloudfunctions.net/*"
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts allow-forms allow-popups allow-modals; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self'"
+  },
+
+  "web_accessible_resources": [{
+    "resources": [
+      "*.html",
+      "*.css",
+      "dist/*.js",
+      "src/icons/*",
+      "src/external/*"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+
+  "background": {
+    "service_worker": "dist/background.bundle.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["dist/content.bundle.js"]
+    }
+  ]
+}

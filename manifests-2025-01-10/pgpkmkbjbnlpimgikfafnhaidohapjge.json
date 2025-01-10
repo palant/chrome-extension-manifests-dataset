@@ -1,0 +1,120 @@
+---
+name: we advocacy notification chrome extension
+version: '14.30'
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 7000
+size: 810KiB
+languages:
+  - English (United States)
+release_date: '2024-03-14T02:40:49.000Z'
+creation_date: '2018-01-25T12:25:02.000Z'
+description: We advocacy is the best productivity suite for Gmail
+publisher_hash: 5240cb4b930d9fda0bf0bbf9ce1d9b6a50cd62b2c58a33f3ea7e94c38f889a33
+publisher: we advocacy
+publisher_address: |-
+  10 Chemin du Renevier
+  Corenc 38700
+  FR
+publisher_phone: '+33603675500'
+extension_website: weadvocacy.com
+extension_website_verified: true
+support_website: https://www.weadvocacy.com/support
+privacy_policy: https://www.weadvocacy.com/privacy-policy-and-gdpr-compliance
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "we advocacy notification chrome extension",
+  "version": "14.30",
+  "description": "We advocacy is the best productivity suite for Gmail",
+  "homepage_url": "https://www.weadvocacy.fr",
+  "author": "we advocacy",
+  "icons": {
+    "16": "images/icons/16.png",
+    "48": "images/icons/48.png",
+    "128": "images/icons/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "images/icons/48-grey.png"
+    }
+  },
+  "background": {
+    "service_worker": "swbg.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "gmail/inject_gmail.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "frame/inject_frame.js",
+        "gmail/index.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://app.weadvocacy.com/userx",
+        "*://app.weadvocacy.fr/userx"
+      ],
+      "all_frames": false,
+      "js": [
+        "userx/index.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "gmail/gmail.js",
+        "gmail/index.js",
+        "static/files/notification_iframe.html",
+        "static/files/signatures.html",
+        "frame/frame.js",
+        "css/custom.css",
+        "css/smallnotif.css",
+        "js/bootstrap.min.js",
+        "js/jquery.js",
+        "js/popper.min.js",
+        "js/frame.js",
+        "js/signatures.js"
+      ],
+      "matches": [
+        "*://mail.google.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "userx/index.js"
+      ],
+      "matches": [
+        "*://app.weadvocacy.com/*",
+        "*://app.weadvocacy.fr/*"
+      ]
+    }
+  ],
+  "permissions": [
+    "alarms",
+    "storage",
+    "notifications",
+    "identity",
+    "identity.email"
+  ]
+}

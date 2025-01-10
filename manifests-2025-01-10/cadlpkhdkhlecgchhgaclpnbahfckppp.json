@@ -1,0 +1,101 @@
+---
+name: Research Notes
+version: 1.0.8.5
+category_slug: productivity/tools
+featured: false
+rating: 4.3
+rating_count: 20
+user_count: 2000
+size: 666KiB
+languages:
+  - English
+release_date: '2025-01-03T06:59:01.000Z'
+creation_date: '2018-08-11T20:23:48.000Z'
+description: >-
+  Bookmark, tag or add notes to pages, highlight and save quotes or images, save
+  selected Google searches, filter out search results.
+publisher_hash: b203ebfebaee29e115b5647d89c2b08749ff6198c7f38b52b3118d190c8a3c6d
+publisher: MTIP OÜ
+publisher_account: onlineresearchnotes.com
+publisher_address: |-
+  Peterburi tee 53
+  Tallinn 11415
+  EE
+extension_website: onlineresearchnotes.com
+extension_website_verified: true
+support_website: https://www.onlineresearchnotes.com/#help
+privacy_policy: https://www.onlineresearchnotes.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Research Notes",
+ "description": "Bookmark, tag or add notes to pages, highlight and save quotes or images, save selected Google searches, filter out search results.",
+ "version": "1.0.8.5",
+ "action": {
+  "default_icon": "rn128.png",
+   "default_popup": "deskr-popup.html"
+  }, 
+ "icons": {
+  "128": "rn128.png"
+ },
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "permissions": [
+  "tabs",
+  "storage",
+  "unlimitedStorage",
+  "background",
+  "contextMenus",
+  "bookmarks",
+  "clipboardRead",
+  "scripting"
+ ],
+ "background": {
+  "service_worker": "bkg-srv-worker.js"
+ },
+ "web_accessible_resources": [{ 
+  "resources": ["images/*.png"],
+   "matches": ["<all_urls>"]
+ }],
+ "host_permissions": ["http://*/*", "https://*/*", "file://*/*"],
+ "content_scripts": [{
+  "matches": ["<all_urls>"],
+  "css": ["deskr.css", 
+   "tagit.ui-zendesk-modified.css",
+   "jquery.tagit.css",
+   "balloon.css"
+  ],
+  "js": ["jquery-1.11.3.min.js", "jquery.tablesorter.js", "jquery-ui-1.11.4-custom-Core-Widget-Position-Autocomplete.min.js", "tag-it-modified.js", "he.js", "mark.js", "deskr-common.js", "deskr.js"],
+  "run_at": "document_idle"
+ }],
+ "commands": {
+  "save_quote": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+Q",
+    "mac": "Command+Shift+Q"
+   },
+   "description": "Highlight the selection and save as quote"
+  },
+  "open_all_notes": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+S",
+    "mac": "Command+Shift+S"
+   },
+   "description": "Open the all notes -page"
+  },
+  "_execute_action": {
+   "suggested_key": {
+    "default": "Ctrl+Shift+F",
+    "mac": "Command+Shift+F"
+   }
+  }
+ },
+ "options_ui": {
+  "page": "options.html",
+  "open_in_tab": false
+ }
+}

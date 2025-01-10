@@ -1,0 +1,86 @@
+---
+name: KnowledgeNet.ai Extension
+version: 0.34.0
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 4
+user_count: 1000
+size: 1.04MiB
+languages:
+  - English
+release_date: '2024-11-18T19:26:43.000Z'
+creation_date: '2022-11-21T03:26:36.000Z'
+description: >-
+  Automatically surface knowledge while browsing the web, including any emails,
+  attachments and internal communications
+publisher_hash: 4deab3cd2b318d4eb8f5d727f4e5bce22a4802e47b0c4d1f92380bd42761654e
+publisher: KnowledgeNet.ai
+publisher_address: |-
+  4539 Metropolitan Ct
+  Frederick, MD 21704-9452
+  US
+publisher_phone: '+12025698416'
+support_website: http://help.knowledgenet.ai
+privacy_policy: https://knowledgenet.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "KnowledgeNet.ai Extension",
+  "description": "Automatically surface knowledge while browsing the web, including any emails, attachments and internal communications",
+  "version": "0.34.0",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Click to show an alert",
+    "default_icon": "icon48.png"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["entry.js", "icon128.png", "icon16.png", "icon48.png", "template.html", "main.css"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://mail.google.com/*",
+        "https://inbox.google.com/*"
+      ],
+      "js": ["gmail.js"],
+      "css": ["gmail.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["<all_urls>"],
+      "css": ["main.css"],
+      "js": ["content.js"]
+    }
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/",
+    "https://mail.google.com/",
+    "https://inbox.google.com/"
+  ],
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "scripting",
+    "contextMenus",
+    "cookies",
+    "storage"
+  ],
+  "externally_connectable": {
+    "matches": ["https://*.knowledgenet.ai/*", "https://*.linkedin.com/*"]
+  }  
+}

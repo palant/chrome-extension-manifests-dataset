@@ -1,0 +1,118 @@
+---
+name: Tippin Extension (tippin.me)
+version: 1.0.7
+category_slug: lifestyle/social
+featured: false
+rating: 4.545454545454546
+rating_count: 22
+user_count: 1000
+size: 3.74MiB
+languages:
+  - English
+release_date: '2022-01-21T06:31:55.000Z'
+creation_date: '2019-02-06T15:55:07.000Z'
+description: Send and receive Bitcoin tips to Twitter users!
+publisher_hash: 403879fcb05014db5a68081f3d0c43dc4c613ad386cf3250c77bd23099ef1e49
+publisher_account: tippin.me
+extension_website: tippin.me
+extension_website_verified: false
+support_website: https://tippin.me/
+privacy_policy: https://tippin.me/PrivacyPolicy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Tippin Extension (tippin.me)",
+  "short_name": "Tippin",
+  "version": "1.0.7",
+  "description": "Send and receive Bitcoin tips to Twitter users!",
+  "manifest_version": 3,
+  "icons": {
+    "16": "icon-on/16.png",
+    "48": "icon-on/48.png",
+    "128": "icon-on/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icon-off/16.png",
+      "48": "icon-off/48.png",
+      "128": "icon-off/128.png"
+    },
+    "default_popup": "index.html"
+  },
+  "homepage_url": "https://tippin.me",
+  "content_security_policy": {
+    "script-src": [
+      "self",
+      "sha256-GgRxrVOKNdB4LrRsVPDSbzvfdV4UqglmviH9GoBJ5jk="
+    ],
+    "object-src": [
+      "self"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://tippin.me/*"
+      ],
+      "js": [
+        "jquery.js",
+        "official/content-official.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://twitter.com/*",
+        "https://mobile.twitter.com/*",
+        "https://tweetdeck.twitter.com/*"
+      ],
+      "js": [
+        "jquery.js",
+        "tippin/content-tippin.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "all_frames": true,
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "payAnyWhere/content-payAnyWhere.js"
+      ]
+    }
+  ],
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "scripting",
+    "declarativeContent"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*.svg",
+        "injectedScript/injectedScript.js"
+      ],
+      "matches": [
+        "https://twitter.com/*",
+        "https://tweetdeck.twitter.com/*",
+        "https://mobile.twitter.com/*"
+      ]
+    },
+    {
+      "resources": [
+        "payAnyWhereInjectedScript/payAnyWhereInjectedScript.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

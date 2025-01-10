@@ -1,0 +1,75 @@
+---
+name: LeadLoft Prospector
+version: 4.1.23
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 20
+user_count: 409
+size: 86.59KiB
+languages:
+  - English (United States)
+release_date: '2025-01-07T05:31:31.000Z'
+creation_date: '2022-04-04T04:07:29.000Z'
+description: Find emails from LinkedIn and websites.
+publisher_hash: 5d71dad399981753bc66d507671286c686a3235c4448c9f9e6350ae06342ca1f
+publisher: LeadLoft
+publisher_address: |-
+  4712 Admiralty Way #1116
+  Marina Del rey, CA 90292
+  US
+extension_website: leadloft.com
+extension_website_verified: true
+support_website: https://www.leadloft.com/contact-us
+privacy_policy: https://www.leadloft.com/user-agreements/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "LeadLoft Prospector",
+  "description": "Find emails from LinkedIn and websites.",
+  "version": "4.1.23",
+  "action": {
+    "name": "Manipulate DOM",
+    "default_icon": "logo48.png",
+    "default_popup": "popup.html",
+    "default_title": "LeadLoft Prospector"
+  },
+  "icons": {
+    "16": "logo16.png",
+    "48": "logo48.png",
+    "128": "logo128.png"
+  },
+  "host_permissions": ["https://*.leadloft.com/*", "https://*.linkedin.com/*"],
+  "permissions": ["tabs", "scripting", "storage", "cookies"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": ["inject.js"],
+      "run_at": "document_start",
+      "matches": ["*://*.linkedin.com/*"]
+    },
+    {
+      "js": ["profile.js", "config.js", "jquery-2.1.1.min.js", "sha256.js", "content.js"],
+      "css": ["toolbar.css"],
+      "matches": ["*://*.linkedin.com/*", "*://*.leadloft.com/*"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["injected.js"],
+      "matches": ["https://*.linkedin.com/*"]
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["*://*.linkedin.com/*", "*://*.leadloft.com/*"]
+  },
+  "content_security_policy": {
+    "script-srcs": "self",
+    "object-src": "self"
+  }
+}

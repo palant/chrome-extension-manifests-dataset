@@ -1,0 +1,101 @@
+---
+name: 10ten Japanese Reader (Rikaichamp)
+version: 1.22.0
+category_slug: productivity/education
+featured: true
+rating: 4.702702702702703
+rating_count: 74
+user_count: 20000
+size: 16.77MiB
+languages:
+  - English
+  - 日本語
+release_date: '2024-10-17T11:40:14.000Z'
+creation_date: '2021-05-14T07:33:19.000Z'
+description: Translate Japanese by hovering over words.
+publisher_hash: dbcc7fbbfa7a0351aecf41e0463f3baa1f9189ac6d8dc9cb523fc2ba1f516578
+publisher: Birchill, Inc.
+publisher_account: Birchill
+publisher_address: |-
+  1-7-2, OTEMACHI
+  CHIYODA-KU, 東京都 100-0004
+  JP
+publisher_phone: '+818051761705'
+support_website: https://github.com/birchill/10ten-ja-reader
+privacy_policy: https://reader.10ten.study/privacy.html
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "10ten Japanese Reader (Rikaichamp)",
+  "author": "Brian Birtles",
+  "version": "1.22.0",
+  "description": "__MSG_extension_description__",
+  "default_locale": "en",
+  "minimum_chrome_version": "100",
+  "icons": {
+    "16": "images/10ten-ja-reader-16.png",
+    "32": "images/10ten-ja-reader-32.png",
+    "48": "images/10ten-ja-reader-48.png",
+    "96": "images/10ten-ja-reader-96.png",
+    "128": "images/10ten-ja-reader-128.png"
+  },
+  "permissions": [
+    "alarms",
+    "contextMenus",
+    "storage",
+    "unlimitedStorage"
+  ],
+  "background": {
+    "service_worker": "10ten-ja-background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/10ten-disabled-16.png",
+      "32": "images/10ten-disabled-32.png",
+      "48": "images/10ten-disabled-48.png"
+    },
+    "default_title": "__MSG_command_toggle_disabled__"
+  },
+  "options_ui": {
+    "open_in_tab": true,
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "match_about_blank": true,
+      "js": ["10ten-ja-content.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://docs.google.com/*"],
+      "js": ["10ten-ja-gdocs-bootstrap.js"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "css/popup-fonts.css",
+      "css/selection.css",
+      "docs/introducing-the-mouse.html",
+      "fonts/*.woff2"
+    ],
+    "matches": [ "<all_urls>" ]
+  }],
+  "offline_enabled": true,
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+R"
+      },
+      "description": "__MSG_command_toggle_description__"
+    }
+  }
+}

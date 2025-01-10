@@ -1,0 +1,75 @@
+---
+name: Context RepuTracker-users reputation tracker
+version: '0.60'
+category_slug: lifestyle/social
+featured: false
+rating: 5
+rating_count: 1
+user_count: 25
+size: 111KiB
+languages:
+  - English
+  - русский
+release_date: '2024-10-21T21:36:19.000Z'
+creation_date: '2021-12-08T07:47:39.000Z'
+description: Your personal tracker for social networks users reputation
+publisher_hash: 58aa3811cb1e1924ce9bc1b596b451939f6123e5321319ff85578e9b873de59e
+publisher_account: contextreputation
+privacy_policy: https://github.com/dmiandr/context/blob/master/privacypolicy.md
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "default_locale": "en",
+  "name": "Context RepuTracker-users reputation tracker",
+  "short_name": "Context RepuTracker",
+  "version": "0.60",
+  "description": "__MSG_short_description__",
+  "author": "dmitrevo",
+  "homepage_url": "https://github.com/dmiandr/context",
+
+  "icons": {
+    "48": "icons/context48.png"
+  },
+  "action": {
+    "default_icon": {
+      "48": "icons/context48.png"
+    },
+    "default_popup": "popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  
+  "commands": {
+    "store-all-events": {
+        "suggested_key": { "default": "Ctrl+Shift+1" },
+        "description": "Add all events on page to events base"
+    }
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["*://*.cont.ws/*", "*://*.vk.com/*", "*://*.livejournal.com/*", "*://*.youtube.com/*", "*://*.habr.com/*"],  
+      "css": ["ddmenu.css"],
+      "js": ["mutation.js", "userinfodialog.js", "contextlib.js", "initfirst.js", "contws.js", "vkcom.js", "ljcom.js", "youtubecom.js", "habrcom.js", "content.js"]
+    }
+  ],
+  "incognito": "spanning",
+  "content_security_policy": {
+      "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "web_accessible_resources": [{
+      "resources": ["addhistorydialog.html", "userinfodialog.html", "userinfodialog.js", "contextlib.js", "icons/link32.png", "icons/rarr32.png"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+  }]
+}

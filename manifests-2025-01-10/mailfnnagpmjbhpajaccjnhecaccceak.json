@@ -1,0 +1,61 @@
+---
+name: InboxTransactionViewer
+version: 1.2.0
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 3
+user_count: 8
+size: 57.74KiB
+languages:
+  - English
+release_date: '2025-01-03T08:08:26.000Z'
+creation_date: '2024-05-06T05:33:40.000Z'
+description: Chrome Extension displaying Stripe customer info alongside Gmail emails
+publisher_hash: 96e9ea7644a675216af403f5577bcf3a009748b00c37d3b7ac37f9263e972020
+publisher_account: inboxtransactionviewer.com
+extension_website: inboxtransactionviewer.com
+extension_website_verified: true
+support_website: https://inboxtransactionviewer.com
+privacy_policy: https://inboxtransactionviewer.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "InboxTransactionViewer",
+  "description": "Chrome Extension displaying Stripe customer info alongside Gmail emails",
+  "version": "1.2.0",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "icons/transactionInGmail.png",
+      "48": "icons/transactionInGmail.png",
+      "128": "icons/transactionInGmail.png"
+    }
+  },
+  "icons": {
+    "16": "icons/transactionInGmail.png",
+    "48": "icons/transactionInGmail.png",
+    "128": "icons/transactionInGmail.png"
+  },
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "js": ["utils/blockedWords.js", "contentScript.js"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": ["storage", "tabs", "alarms"],
+  "host_permissions": ["https://api.stripe.com/*"],
+  "web_accessible_resources": [
+    {
+      "resources": ["icons/transactionInGmail.png"],
+      "matches": ["https://mail.google.com/*"]
+    }
+  ]
+}

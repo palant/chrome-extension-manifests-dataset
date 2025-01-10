@@ -1,0 +1,113 @@
+---
+name: ChatGPT
+version: 1.0.0
+category_slug: productivity/tools
+featured: true
+rating: null
+rating_count: null
+user_count: 12
+size: 122KiB
+languages:
+  - English
+release_date: '2023-11-28T06:32:27.000Z'
+creation_date: '2023-11-28T06:32:27.000Z'
+description: Integrate ChatGPT into your daily browsing & search experience!
+extension_website: brainbuddy.to
+extension_website_verified: true
+support_website: >-
+  https://chrome.google.com/webstore/detail/eckmnmhdogjdhjcnmmllbpocpkfdgjoo/support
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "ChatGPT",
+  "short_name": "ChatGPT",
+  "version": "1.0.0",
+  "description": "Integrate ChatGPT into your daily browsing & search experience!",
+  "icons": {
+    "32": "images/32.png",
+    "64": "images/64.png",
+    "128": "images/128.png"
+  },
+  "side_panel": {
+    "default_path": "sidepanel.html"
+  },
+  "permissions": [
+    "sidePanel",
+    "unlimitedStorage",
+    "storage",
+    "background",
+    "contextMenus",
+    "declarativeNetRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "ruleset_1",
+      "enabled": true,
+      "path": "rule.json"
+    }]
+  },
+  "host_permissions": 
+  [
+    "*://*.openai.com/*"
+  ],
+  "optional_host_permissions": ["https://*/*"],
+  "content_scripts": 
+  [
+    {
+      "matches": ["*://*.openai.com/*"],
+      "all_frames": true,
+      "js": ["js/content_script.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["js/all.js"],
+      "css": ["all.css"],
+      "run_at": "document_idle"
+    }
+  ],
+  "web_accessible_resources": 
+  [
+    {
+      "resources": ["*"],
+      "matches": ["<all_urls>"],
+      "all_frames": true,
+      "extension_ids": ["*"]
+    }
+  ],
+  "commands": 
+  {
+    "_execute_action": 
+    {
+      "suggested_key": 
+      {
+        "default": "Alt+C",
+        "windows": "Alt+C",
+        "mac": "Alt+C",
+        "chromeos": "Alt+C",
+        "linux": "Alt+C"
+      },
+      "description": "Press Alt + C to open ChatGPT"
+    }
+  },
+  "offline_enabled": true,
+  "author": "ChatGPT",
+  "background": {
+    "service_worker": "js/service.js"
+  },
+  "content_security_policy": {
+    "extension_pages": "font-src 'self'; script-src 'self'; object-src 'self'; worker-src 'self'",
+    "content_scripts": "font-src 'self'; script-src 'self'; object-src 'self'; worker-src 'self'"
+  },
+  "minimum_chrome_version": "114", 
+  "action": {
+    "default_icon": {
+      "32": "images/32.png",
+      "64": "images/64.png",
+      "128": "images/128.png"
+    },
+    "default_title": "ChatGPT Sidebar [Alt + C]"
+  }
+}

@@ -1,0 +1,71 @@
+---
+name: Bookface Companion
+version: '1.29'
+category_slug: productivity/workflow
+featured: false
+rating: 4.909090909090909
+rating_count: 11
+user_count: 1000
+size: 1.45MiB
+languages:
+  - English
+release_date: '2023-05-18T04:40:28.000Z'
+creation_date: '2017-01-16T17:01:27.000Z'
+description: Count down to Demo Day and search Bookface from your Omnibox.
+publisher_hash: bae8ec42bf82f486e03f98e669f8aa63b45855090f93689f5fd28d7f39859326
+publisher: Y Combinator
+publisher_address: |-
+  335 Pioneer Way
+  Mountain View, CA 94041-1505
+  US
+extension_website: www.ycombinator.com
+extension_website_verified: true
+privacy_policy: https://www.ycombinator.com/legal
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Bookface Companion",
+  "offline_enabled": true,
+  "version": "1.29",
+  "description": "Count down to Demo Day and search Bookface from your Omnibox.",
+  "manifest_version": 2,
+  "icons": {
+    "16": "images/icon-16.png",
+    "48": "images/icon-48.png",
+    "128": "images/icon-128.png"
+  },
+  "omnibox": {
+    "keyword": "bf"
+  },
+  "chrome_url_overrides": {
+    "newtab": "index.html"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": ["tabs", "storage", "https://bookface.ycombinator.com/*"],
+  "optional_permissions": [
+    "https://mail.google.com/*",
+    "https://inbox.google.com/*"
+  ],
+  "web_accessible_resources": ["/images/*", "pageWorld.js"],
+  "page_action": {
+    "default_icon": "images/icon-128.png",
+    "default_title": "View on Bookface"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://mail.google.com/*", "https://inbox.google.com/*"],
+      "js": ["inboxsdk.js", "content.js"],
+      "css": ["static/css/content.css"],
+      "run_at": "document_end"
+    }
+  ]
+}

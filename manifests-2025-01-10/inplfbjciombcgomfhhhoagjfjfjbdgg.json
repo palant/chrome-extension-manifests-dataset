@@ -1,0 +1,80 @@
+---
+name: FlightSeats.io Reward Seat Finder
+version: 0.2.0
+category_slug: lifestyle/travel
+featured: false
+rating: 4.5
+rating_count: 2
+user_count: 930
+size: 52.33KiB
+languages:
+  - English
+release_date: '2025-01-10T01:31:58.000Z'
+creation_date: '2024-06-27T07:54:55.000Z'
+description: Frequent flyer reward fare search made easy
+publisher_hash: 8e961442e740fb5cb5b93595b365c6e52d8b016b5115f717d5796ce058475d96
+publisher_account: FlightSeats.io
+extension_website: flightseats.io
+extension_website_verified: true
+support_website: https://flightseats.io/contact
+privacy_policy: https://flightseats.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "FlightSeats.io Reward Seat Finder",
+  "description": "Frequent flyer reward fare search made easy",
+  "version": "0.2.0",
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "images/icons/icon32.png"
+  },
+  "icons": {
+    "16": "images/icons/icon16.png",
+    "32": "images/icons/icon32.png",
+    "48": "images/icons/icon48.png",
+    "128": "images/icons/icon128.png"
+  },
+  "permissions": ["storage", "tabs"],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.qantas.com/*/en.html",
+        "https://www.qantas.com/*/en/book-a-trip/flights*",
+        "https://www.qantas.com/*/en/my-account",
+        "https://www.virginaustralia.com/*",
+        "https://book.virginaustralia.com/dx/VADX/*"
+      ],
+      "js": [ "js/utils.js" ]
+    },
+    {
+      "matches": [
+        "https://www.qantas.com/*/en.html",
+        "https://www.qantas.com/*/en/book-a-trip/flights*",
+        "https://www.qantas.com/*/en/my-account"
+      ],
+      "js": [ "scripts/qantas.js" ]
+    },
+    {
+      "matches": [ "https://www.virginaustralia.com/*" ],
+      "js": [ "scripts/virginCalendar.js" ]
+    },
+    {
+      "matches": [ "https://book.virginaustralia.com/dx/VADX/*" ],
+      "include_globs": [ "*&date=*" ],
+      "js": [ "scripts/virginFlights.js" ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [ "https://www.qantas.com/*" ],
+      "resources": [ "images/icons/flight-seats-logo.svg" ]
+    }
+  ]
+}

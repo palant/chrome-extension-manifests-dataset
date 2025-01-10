@@ -1,0 +1,84 @@
+---
+name: Bloom Extension
+version: 2.0.4
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 2
+user_count: 2000
+size: 2.4MiB
+languages:
+  - English (United States)
+release_date: '2025-01-06T12:18:48.000Z'
+creation_date: '2024-11-18T05:56:06.000Z'
+description: >-
+  Adds BloomBot quicktask buttons for quickly buying and sniping tokens on
+  Solana.
+publisher_hash: a11086b142b876cae476dac65a121142035c062d122605b3f41e9b7e343cd910
+publisher_account: bloombotextension
+privacy_policy: https://tos.bloombot.app
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Bloom Extension",
+  "version": "2.0.4",
+  "description": "Adds BloomBot quicktask buttons for quickly buying and sniping tokens on Solana.",
+  "permissions": ["storage", "tabs", "webNavigation"],
+  "host_permissions": ["https://extension.bloombot.app/*"],
+  "content_scripts": [
+    {
+      "matches": ["https://photon-sol.tinyastro.io/*"],
+      "js": ["src/content_script/photon.js"]
+    },
+    {
+      "matches": [
+        "https://bullx.io/*",
+        "https://backup.bullx.io/*",
+        "https://backup2.bullx.io/*"
+      ],
+      "js": ["src/content_script/bullx.js"]
+    },
+    {
+      "matches": ["https://neo.bullx.io/*"],
+      "js": ["src/content_script/bullx-neo.js"]
+    },
+    {
+      "matches": ["https://neo.bullx.io/*"],
+      "js": ["src/content_script/blocker.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://gmgn.ai/*"],
+      "js": ["src/content_script/gmgn.js"]
+    },
+    {
+      "matches": ["https://dexscreener.com/*"],
+      "js": ["src/content_script/dexscreener.js"]
+    },
+    {
+      "matches": ["https://ape.pro/*"],
+      "js": ["src/content_script/ape.js"]
+    }
+  ],
+  "background": {
+    "service_worker": "src/background.js"
+  },
+  "icons": {
+    "48": "src/public/assets/images/bloom-48.png",
+    "128": "src/public/assets/images/bloom-128.png"
+  },
+  "action": {
+    "default_icon": "src/public/assets/images/bloom-48.png",
+    "default_title": "Bloom",
+    "default_popup": "src/public/popup.html"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["src/content_script/overrides.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

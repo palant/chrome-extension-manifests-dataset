@@ -1,0 +1,65 @@
+---
+name: miniOrange CASB
+version: '2.4'
+category_slug: make_chrome_yours/privacy
+featured: false
+rating: 5
+rating_count: 1
+user_count: 25
+size: 588KiB
+languages:
+  - English
+release_date: '2024-12-18T20:59:20.000Z'
+creation_date: '2023-11-24T06:10:35.000Z'
+description: >-
+  Real-time security for cloud-based SaaS applications, ensuring robust
+  protection and swift response to threats and vulnerabilities.
+publisher_hash: 1b68ea6ef22804776031fc6bc72a2e7d67a68011809a40c0c00bbdd7587d624c
+publisher_account: miniOrange
+support_website: https://www.miniorange.com/contact
+privacy_policy: https://www.miniorange.com/terms-and-policies/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "miniOrange CASB",
+  "version": "2.4",
+  "description": "Real-time security for cloud-based SaaS applications, ensuring robust protection and swift response to threats and vulnerabilities.",
+  "icons": {
+    "128": "/resources/images/mo-icon.png"
+  },
+  "action": {
+    "default_popup": "resources/html/popup.html"
+  },
+  "permissions": [
+    "proxy",
+    "activeTab",
+    "storage",
+    "declarativeNetRequest",
+    "cookies",
+    "tabs",
+    "webRequest",
+    "webRequestAuthProvider"
+  ],
+  "background": {
+    "service_worker": "service-workers/background.js"
+  },
+  "content_scripts": [{
+      "js": ["applications/shopify/non-plus/sso/lookupHandler.js", "application-constants/application-properties.js"],
+      "matches": ["https://accounts.shopify.com/lookup*"]
+    },
+    {
+      "js": ["applications/shopify/non-plus/sso/loginHandler.js", "application-constants/application-properties.js"],
+      "matches": ["https://accounts.shopify.com/login?*"]
+    },
+    {
+      "js": ["applications/common/form-post-data.js"],
+      "matches": ["https://proxy.miniorange.com/set-access-token?isAuthorized=true"]
+    }
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ]
+}

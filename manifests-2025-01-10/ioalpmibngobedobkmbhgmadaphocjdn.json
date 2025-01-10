@@ -1,0 +1,77 @@
+---
+name: OneLogin for Google Chrome
+version: 4.0.0
+category_slug: productivity/workflow
+featured: false
+rating: 2.9894736842105263
+rating_count: 95
+user_count: 1000000
+size: 2.71MiB
+languages:
+  - English
+release_date: '2025-01-10T15:41:38.000Z'
+creation_date: '2012-08-19T02:25:32.000Z'
+description: Single Sign-On for cloud lovers.
+publisher_hash: 3b03b81d7a845d9df34996df0ec5d1d12b3a23badaf01d978dd9a12d7f824b82
+publisher: One Identity LLC
+publisher_account: OneLogin, Inc.
+publisher_address: |-
+  20 Enterprise Suite 100
+  Aliso Viejo, CA 92656-7104
+  US
+publisher_phone: '+15038935823'
+extension_website: onelogin.com
+extension_website_verified: true
+support_website: https://support.onelogin.com
+privacy_policy: https://www.onelogin.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "OneLogin for Google Chrome",
+  "description": "Single Sign-On for cloud lovers.",
+  "version": "4.0.0",
+  "incognito": "split",
+  "icons": {
+    "16": "icons/normal/Icon-16.png",
+    "48": "icons/normal/Icon-48.png",
+    "128": "icons/normal/Icon-128.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["http://*/*", "https://*/*"],
+  "content_scripts": [
+    {
+      "js": ["contentPortal.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "include_globs": ["http://localhost:*/*", "http://*.onelogin*/*", "https://*.onelogin*/*"],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "js": ["contentAll.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "permissions": [
+    "storage",
+    "cookies",
+    "scripting",
+    "activeTab",
+    "declarativeNetRequest",
+    "declarativeNetRequestWithHostAccess",
+    "webRequest",
+    "tabs",
+    "webNavigation"
+  ]
+}

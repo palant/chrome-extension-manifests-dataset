@@ -1,0 +1,67 @@
+---
+name: CodeGuide
+version: 0.1.5
+category_slug: productivity/developer
+featured: false
+rating: 5
+rating_count: 2
+user_count: 30
+size: 1.56MiB
+languages:
+  - English
+release_date: '2024-09-02T10:07:36.000Z'
+creation_date: '2024-08-19T11:13:27.000Z'
+description: AI powered assistant for solving algorithm challenges
+publisher_hash: aadc6fc55f6e656f39246298564d5fcc2c05f58d084932e7134732aeeba33e62
+publisher_account: CodeGuide
+privacy_policy: https://ai-server-ruddy.vercel.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CodeGuide",
+  "version": "0.1.5",
+  "description": "AI powered assistant for solving algorithm challenges",
+  "permissions": ["activeTab", "storage"],
+  "host_permissions": [
+    "https://www.codewars.com/*",
+    "https://leetcode.com/*",
+    "https://codeforces.com/*"
+  ],
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "32": "icons/icon32.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.codewars.com/kata/*", "https://leetcode.com/problems/*", "https://codeforces.com/problemset/problem/*"],
+      "js": ["supportedSites.js", "content.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["supportedSites.js"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

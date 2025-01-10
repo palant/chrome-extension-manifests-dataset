@@ -1,0 +1,103 @@
+---
+name: Salesmate CRM for Gmail
+version: 1.6.3
+category_slug: productivity/workflow
+featured: true
+rating: 4.518518518518518
+rating_count: 27
+user_count: 946
+size: 4.53MiB
+languages:
+  - English
+release_date: '2025-01-05T05:03:04.000Z'
+creation_date: '2017-05-15T07:26:06.000Z'
+description: >-
+  Chrome Extension for Salesmate lets you access your CRM data and manage your
+  day to day interactions with customers inside Gmail
+publisher_hash: 686114310fd7a077c2239465a16cb3f075be39598eef61a736a13d3fc1b6d827
+publisher_account: Salesmate.io
+support_website: https://support.salesmate.io/hc/en-us/articles/115003230249
+privacy_policy: http://www.salesmate.io/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Salesmate CRM for Gmail",
+    "version": "1.6.3",
+    "description": "Chrome Extension for Salesmate lets you access your CRM data and manage your day to day interactions with customers inside Gmail",
+    "action": {
+        "default_icon": "images/chrome-icon.png"
+    },
+    "icons": {
+        "16": "images/salesmate_icon16.png",
+        "48": "images/salesmate_icon48.png",
+        "128": "images/salesmate_icon128.png"
+    },
+    "background": {
+        "service_worker": "content_script/background.js"
+    },
+    "externally_connectable": {
+        "matches": [
+            "*://*.gmail.com/*/*",
+            "*://mail.google.com/*/*"
+        ]
+    },
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "salesmate-chrome-icon.png",
+                "logo.svg",
+                "salesmate-h.png",
+                "content_script/*",
+                "images/*",
+                "images/*"
+            ],
+            "matches": [
+                "*://*.google.com/*",
+                "*://*.googleapis.com/*"
+            ]
+        }
+    ],
+    "content_security_policy":{
+        "extension_pages": "script-src 'self'; object-src 'self'"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://mail.google.com/*",
+                "http://mail.google.com/*"
+            ],
+            "js": [
+                "content_script/content_script_extension_id.js",
+                "content_script/recaptcha_api.js",
+                "content_script/recaptcha_en.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "smr-1",
+            "enabled": true,
+            "path": "api-request-rules.json"
+        }]
+    },
+    "permissions": [
+        "cookies",
+        "tabs",
+        "declarativeNetRequest",
+        "identity",
+        "scripting"
+    ],
+    "host_permissions": [
+        "*://*/*"
+    ],
+    "oauth2": {
+        "client_id": "1028486930387-4f5pmjd3m42610pjss3p5nl0r6afpi10.apps.googleusercontent.com",
+        "scopes": [
+            "https://www.googleapis.com/auth/userinfo.email"
+        ]
+    }
+}

@@ -1,0 +1,72 @@
+---
+name: PubMed Citation Bar
+version: '2.81'
+category_slug: productivity/tools
+featured: true
+rating: 5
+rating_count: 1
+user_count: 59
+size: 787KiB
+languages:
+  - English (United States)
+release_date: '2024-11-24T16:38:07.000Z'
+creation_date: '2024-10-16T06:55:54.000Z'
+description: >-
+  Enhances PubMed with citation metrics, Altmetric scores, impact filtering, and
+  more. Quickly identify high-impact medical research.
+publisher_hash: 9b8d963ecbac06ee2109d6ef2104990c58f3976098b074dc80a3beba497c585f
+publisher_account: tomlaheyh
+support_website: https://sites.google.com/view/pubmedcitationbar/home
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "PubMed Citation Bar",
+ "version": "2.81",
+ "description": "Enhances PubMed with citation metrics, Altmetric scores, impact filtering, and more. Quickly identify high-impact medical research.",
+ "permissions": [
+   "activeTab",
+   "storage",
+   "scripting",
+   "tabs"
+ ],
+ "host_permissions": [
+   "https://pubmed.ncbi.nlm.nih.gov/*",
+   "https://icite.od.nih.gov/*",
+   "https://docs.google.com/*",
+   "https://sites.google.com/view/pubmedcitationbar/*",
+   "https://eutils.ncbi.nlm.nih.gov/*"
+ ],
+ "background": {
+   "service_worker": "background.js",
+   "type": "module"
+ },
+ "action": {
+   "default_popup": "popup.html",
+   "default_area": "navbar",
+   "default_icon": {
+      "48": "icon48.png",
+      "128": "icon128.png"
+   }
+ },
+ "content_scripts": [
+   {
+     "matches": ["https://pubmed.ncbi.nlm.nih.gov/*"],
+     "js": ["content.js"]
+   }
+ ],
+ "web_accessible_resources": [
+   {
+     "resources": [
+       "getJournalRankingData.js", 
+       "insertCitationBar.js", 
+       "Top-Journals.csv", 
+       "journalRanking-2023.csv",
+       "SJR-2023.csv"
+     ],
+     "matches": ["https://pubmed.ncbi.nlm.nih.gov/*"]
+   }
+ ]
+}

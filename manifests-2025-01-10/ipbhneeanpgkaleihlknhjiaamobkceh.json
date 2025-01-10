@@ -1,0 +1,82 @@
+---
+name: Clipboard Permission Manager
+version: '0.4'
+category_slug: productivity/workflow
+featured: false
+rating: 2.8666666666666667
+rating_count: 15
+user_count: 10000
+size: 30.35KiB
+languages:
+  - English
+release_date: '2018-05-03T04:47:20.000Z'
+creation_date: '2016-02-08T00:38:50.000Z'
+description: >-
+  Allows users to grant direct clipboard access to web pages that use the W3C
+  Clipboard API.
+publisher_hash: cadab508c8e7805cc13a987c7aa32000b0b0458bf579d9541a68d90dbb136e39
+publisher_account: Glyptodon, Inc.
+extension_website: glyptodon.org
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+
+    "manifest_version" : 2,
+
+    "name"        : "Clipboard Permission Manager",
+    "version"     : "0.4",
+    "description" : "Allows users to grant direct clipboard access to web pages that use the W3C Clipboard API.",
+
+    "icons" : {
+        "16"  : "icons/clipboard-allow-16.png",
+        "32"  : "icons/clipboard-allow-32.png",
+        "48"  : "icons/clipboard-allow-48.png",
+        "64"  : "icons/clipboard-allow-64.png",
+        "128" : "icons/clipboard-allow-128.png"
+    },
+
+    "permissions" : [
+        "http://*/*",
+        "https://*/*",
+        "clipboardRead",
+        "clipboardWrite",
+        "storage"
+    ],
+
+    "background" : {
+        "persistent" : false,
+        "scripts" : [
+            "private/background/clipboardService.js",
+            "private/background/popupService.js"
+        ]
+    },
+
+    "page_action" : {
+        "default_popup" : "private/popup/popup.html",
+        "default_icon" : {
+            "19" : "private/popup/icons/clipboard-maybe-19.png",
+            "38" : "private/popup/icons/clipboard-maybe-38.png"
+        }
+    },
+
+    "content_scripts" : [{
+        "matches" : [
+            "http://*/*",
+            "https://*/*"
+        ],
+        "js" : [
+            "private/content/init.js",
+            "private/content/clipboardBroker.js"
+        ],
+        "run_at"     : "document_start",
+        "all_frames" : true
+    }],
+
+    "web_accessible_resources" : [
+        "public/execCommand.js"
+    ]
+
+}

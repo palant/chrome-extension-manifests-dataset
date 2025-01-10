@@ -1,0 +1,153 @@
+---
+name: AliSaver - AliExpress Shopping and Cashback
+version: 4.2.0
+category_slug: lifestyle/shopping
+featured: true
+rating: 4.567843866171004
+rating_count: 2152
+user_count: 20000
+size: 562KiB
+languages:
+  - Bahasa Indonesia
+  - Deutsch
+  - English
+  - Français
+  - Türkçe
+  - español
+  - italiano
+  - polski
+  - português (Brasil)
+  - português (Portugal)
+  - română
+  - slovenský
+  - čeština
+  - Ελληνικά
+  - български
+  - русский
+  - українська
+  - עברית
+  - ไทย
+  - ‫العربية
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+release_date: '2025-01-06T05:35:58.000Z'
+creation_date: '2015-07-01T07:32:05.000Z'
+description: >-
+  Earn cashback on AliExpress purchases; Track price history and receive
+  price-drop notification; Search product by image.
+publisher_hash: c4fa54bf6168344547bdd439170f3c85ab6f7b8817e71e243a4aef8939a11615
+publisher_account: Akarat Tech
+extension_website: deals99.com
+extension_website_verified: true
+support_website: https://deals99.com/help
+privacy_policy: https://deals99.com/doc/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_extName__",
+  "description": "__MSG_extDesc__",
+  "version": "4.2.0",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "action": {
+    "default_icon": {
+      "16": "build/logo_16.png",
+      "24": "build/logo_24.png",
+      "32": "build/logo_32.png"
+    },
+    "default_popup": "build/popup.html"
+  },
+  "icons": {
+    "16": "build/logo_16.png",
+    "48": "build/logo_48.png",
+    "128": "build/logo_128.png"
+  },
+  "options_ui": {
+    "page": "build/options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.deals99.com/*"],
+      "js": ["build/install_status.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.aliexpress.com/*",
+        "*://*.aliexpress.us/*",
+        "*://*.aliexpress.ru/*"
+      ],
+      "exclude_matches": [
+        "*://developers.aliexpress.com/*",
+        "*://login.aliexpress.com/*",
+        "*://open.aliexpress.com/*",
+        "*://portals.aliexpress.com/*",
+        "*://*.aliexpress.com/item/*",
+        "*://*.aliexpress.us/item/*",
+        "*://*.aliexpress.ru/item/*",
+        "*://*.aliexpress.com/store/product/*",
+        "*://*.aliexpress.us/store/product/*",
+        "*://*.aliexpress.ru/store/product/*"
+      ],
+      "js": [
+        "build/main.js",
+        "build/aliexpress_toolbar.js",
+        "build/promotion_urls.js"
+      ],
+      "css": ["build/main.css"]
+    },
+    {
+      "matches": [
+        "*://*.aliexpress.com/item/*",
+        "*://*.aliexpress.us/item/*",
+        "*://*.aliexpress.ru/item/*",
+        "*://*.aliexpress.com/store/product/*",
+        "*://*.aliexpress.us/store/product/*",
+        "*://*.aliexpress.ru/store/product/*"
+      ],
+      "js": [
+        "build/main.js",
+        "build/aliexpress_item.js",
+        "build/promotion_urls.js"
+      ],
+      "css": ["build/main.css", "build/aliexpress_item.css"]
+    },
+    {
+      "matches": [
+        "*://*.aliexpress.com/wholesale*",
+        "*://*.aliexpress.us/wholesale*",
+        "*://*.aliexpress.com/w/wholesale*",
+        "*://*.aliexpress.us/w/wholesale*",
+        "*://*.aliexpress.com/af/*",
+        "*://*.aliexpress.us/af/*",
+        "*://*.aliexpress.com/category/*",
+        "*://*.aliexpress.us/category/*",
+        "*://*.aliexpress.com/af/category/*",
+        "*://*.aliexpress.us/af/category/*",
+        "*://*.aliexpress.com/premium/category/*",
+        "*://*.aliexpress.us/premium/category/*",
+        "*://*.aliexpress.com/store/*/*"
+      ],
+      "js": ["build/aliexpress_item_list.js"],
+      "css": ["build/aliexpress_item_list.css"]
+    }
+  ],
+  "background": {
+    "service_worker": "build/background.js"
+  },
+  "permissions": [
+    "activeTab",
+    "alarms",
+    "contextMenus",
+    "notifications",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://deals99.com/jsonp/*",
+    "https://api.alitools.io/products/*"
+  ]
+}

@@ -1,0 +1,90 @@
+---
+name: Etsy Heart Exchanger
+version: 4.1.36
+category_slug: productivity/workflow
+featured: false
+rating: 4.697916666666667
+rating_count: 96
+user_count: 1000
+size: 426KiB
+languages:
+  - English
+release_date: '2024-12-20T08:12:31.000Z'
+creation_date: '2016-06-15T06:33:04.000Z'
+description: Tool for automatic exchanging of item views and hearts.
+publisher_hash: 004a7c28c4ab74e87a8f9c690d8bedd71640ba474b7ef90ec6d6cd4e6bfdc26b
+publisher_account: Risto P.
+extension_website: heartexchanger.com
+extension_website_verified: true
+support_website: https://hex.heartexchanger.com/contact
+privacy_policy: https://hex.heartexchanger.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Etsy Heart Exchanger",
+  "description": "Tool for automatic exchanging of item views and hearts.",
+  "version": "4.1.36",
+  "homepage_url": "http://heartexchanger.com",
+  "icons": {
+    "256": "/icons/icon.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://*.heartexchanger.com/*"
+    ]
+  },
+  "browser_action": {
+    "default_icon": "icons/icon.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "webRequest",
+    "webRequestBlocking",
+    "storage",
+    "*://*.etsy.com/*",
+    "*://*.heartexchanger.com/*"
+  ],
+  "background": {
+    "scripts": [
+      "vendor.bundle.js",
+      "background.bundle.js"
+    ]
+  },
+  "content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'self'",
+  "content_scripts": [
+    {
+      "run_at": "document_end",
+      "matches": [
+        "https://*.etsy.com/*"
+      ],
+      "js": [
+        "vendor.bundle.js",
+        "etsy.bundle.js"
+      ],
+      "css": []
+    },
+    {
+      "run_at": "document_start",
+      "matches": [
+        "https://*.heartexchanger.com/*",
+        "http://*.heartexchanger.com/*"
+      ],
+      "js": [
+        "vendor.bundle.js",
+        "hex.bundle.js"
+      ],
+      "css": []
+    }
+  ],
+  "web_accessible_resources": [
+    "/node_modules/**/*.*",
+    "/dist/**/*.js",
+    "/js/*.js",
+    "*.html",
+    "icons/*.*"
+  ]
+}

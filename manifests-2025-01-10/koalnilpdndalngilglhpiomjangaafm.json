@@ -1,0 +1,79 @@
+---
+name: Atteipo地圖助手
+version: 2.4.4
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 33
+size: 399KiB
+languages:
+  - 中文 (繁體)
+release_date: '2024-12-07T05:39:38.000Z'
+creation_date: '2024-12-07T05:39:38.000Z'
+description: Atteipo地圖助手工具
+publisher_hash: 6fc85c34e6b76d6dfbeb8a525e7051cd903b108d388192d84cfad2d8ef2182f8
+publisher_account: atteipo
+privacy_policy: https://www.atteipo.com.tw/about/%E9%9A%B1%E7%A7%81%E6%AC%8A%E6%94%BF%E7%AD%96
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Atteipo地圖助手",
+  "version": "2.4.4",
+  "description": "Atteipo地圖助手工具",
+  "icons": {
+    "16": "img/logo.png",
+    "48": "img/logo.png",
+    "128": "img/logo.png"
+  },
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": "img/logo.png",
+    "default_title": "Atteipo地圖助手工具",
+    "default_popup": "page/popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches":["<all_urls>"],
+      "js":["js/getUserMark.js"]
+    },
+    {
+      "matches": [
+        "*://*.google.com/maps*",
+        "*://*.yandex.com/maps*"
+      ],
+      "js": [
+        "js/content.js"
+      ],
+      "css": [
+        "css/DS.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "permissions": [
+    "storage",
+    "notifications"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/js/center_inject.js",
+        "/plugin/xlsx.full.min.js",
+        "/plugin/vue.min.js",
+        "/plugin/localforage.min.js",
+        "/plugin/message.js"
+      ],
+      "matches": [
+        "*://*.google.com/*",
+        "*://*.yandex.com/*"
+      ]
+    }
+  ]
+}

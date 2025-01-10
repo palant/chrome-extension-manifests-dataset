@@ -1,0 +1,70 @@
+---
+name: SwissCanyons
+version: '0.8'
+category_slug: lifestyle/fun
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 14.59KiB
+languages:
+  - Deutsch
+release_date: '2024-10-25T10:20:12.000Z'
+creation_date: '2024-10-18T05:01:57.000Z'
+description: Enrichs the swiss Canyons with hydrodata and weather forecasts
+publisher_hash: 3dc7796b1cd6a138b998e84f9d8c2b20451957aee8aa9750dc68456bd3f18fa3
+publisher_account: Flipsi2412
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "SwissCanyons",
+  "version": "0.8",
+
+  "description": "Enrichs the swiss Canyons with hydrodata and weather forecasts",
+
+  "icons": {
+    "16": "icons/schweiz_16.png",
+    "24": "icons/schweiz_24.png",
+    "32": "icons/schweiz_32.png",
+    "128": "icons/schweiz_128.png",
+    "1": "icons/ssvg.svg"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [ "*://*.opencanyon.org/*/canyon/*" ],
+      "js": [ "enrich.js" ]
+    }
+  ],
+
+  "background": {
+    "service_worker": "loadRef.js",
+    "type": "module"
+  },
+
+  "permissions": [
+    "storage"
+  ],
+
+  "host_permissions": [
+    "https://*.meteoswiss-app.ch/*",
+    "https://*.admin.ch/*",
+    "<all_urls>",
+    "https://*/*",
+    "https://www.meteoschweiz.admin.ch/*"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "matches": [ "<all_urls>" ],
+      "resources": [ "/resources/ReferenzWasser.json" ]
+    },
+    {
+      "matches": [ "<all_urls>" ],
+      "resources": [ "/resources/Ssvg.svg" ]
+    }
+  ]
+}

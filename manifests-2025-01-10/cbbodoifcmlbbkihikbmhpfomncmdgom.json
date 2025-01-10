@@ -1,0 +1,72 @@
+---
+name: BigCV Extension
+version: 1.2.0
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 3
+user_count: 7
+size: 174KiB
+languages:
+  - Tiếng Việt
+release_date: '2024-07-12T18:56:52.000Z'
+creation_date: '2024-06-13T03:23:28.000Z'
+description: >-
+  Lưu dữ liệu hóa đơn một cách khoa học phục vụ báo cáo thông tin cho lãnh đạo
+  công ty nhanh chóng kịp thời và hiệu quả
+publisher_hash: 9342ddc932ea9d59dada074227c2c3ed69e5565b772051047d076a000bf301f2
+support_website: https://big-cv.web.app/home-page
+privacy_policy: https://big-cv.web.app/chinh-sach-bao-mat
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "BigCV Extension",
+  "short_name": "BigCV Extension",
+  "version": "1.2.0",
+  "description": "",
+  "icons": {
+    "16": "/icons/logo16.png",
+    "48": "/icons/logo48.png",
+    "128": "/icons/logo128.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "permissions": [
+    "webRequest",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "host_permissions": [
+    "https://*/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.kiotviet.vn/sale/*",
+        "https://*.kiotviet.com/sale/*"
+      ],
+      "js": [
+        "content_scripts/payment_script.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.kiotviet.vn/man/*",
+        "https://*.kiotviet.com/man/*"
+      ],
+      "js": [
+        "content_scripts/cancel_invoice_script.js",
+        "content_scripts/import_goods_script.js"
+      ],
+      "run_at": "document_end"
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+---
+name: Hours to Lose
+version: '1.0'
+category_slug: lifestyle/shopping
+featured: false
+rating: null
+rating_count: null
+user_count: 2
+size: 17.4KiB
+languages:
+  - English (United States)
+release_date: '2020-12-11T09:25:58.000Z'
+creation_date: '2020-12-11T09:25:58.000Z'
+description: How much time do you need to work for Amazon products?
+publisher_hash: b549b4856e6564d57d02eb29bae91bf3b2b886dfb75057f845421fe554958aa9
+publisher_account: tylerscheviak
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Hours to Lose",
+    "version": "1.0",
+    "description": "How much time do you need to work for Amazon products?",
+    "manifest_version": 2,
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": [
+                "https://www.amazon.com/s?*"
+            ],
+            "js": [
+                "src/utils.js",
+                "src/inject.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "https://www.amazon.com/*"
+            ],
+            "exclude_matches": ["https://www.amazon.com/s?*"],
+            "js": [
+                "src/utils.js",
+                "src/product.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        }
+    ],
+    "background": {
+        "scripts": [
+            "./src/utils.js",
+            "./src/background.js"
+        ],
+        "persistent": false
+    },
+    "web_accessible_resources": [
+        "images/**/*.png"
+    ],
+    "browser_action": {
+        "default_icon": {
+            "16": "./images/icons/icon.png",
+            "48": "./images/icons/icon.png"
+        },
+        "default_popup": "./src/pages/popup.html"
+    },
+    "icons": {
+        "16": "./images/icons/icon.png",
+        "48": "./images/icons/icon.png",
+        "128": "./images/icons/icon.png"
+    }
+}

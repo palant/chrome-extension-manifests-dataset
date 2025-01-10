@@ -1,0 +1,75 @@
+---
+name: CiteDrive 'BibTeX' Companion
+version: 4.3.1
+category_slug: productivity/education
+featured: true
+rating: 4
+rating_count: 6
+user_count: 3000
+size: 15.9KiB
+languages:
+  - English
+release_date: '2024-12-02T03:03:56.000Z'
+creation_date: '2021-06-30T05:23:24.000Z'
+description: Saving articles from the web browser to Overleaf with a single click
+publisher_hash: 8a214b4431239be5e0ee40eafed2f1daca650d931b92eadac71653e60c6b46fa
+publisher_account: CiteDrive
+extension_website: citedrive.com
+extension_website_verified: true
+support_website: https://github.com/orgs/citedrive/discussions
+privacy_policy: https://www.citedrive.com/en/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "CiteDrive 'BibTeX' Companion",
+  "version": "4.3.1",
+  "description": "Saving articles from the web browser to Overleaf with a single click",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_icon": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+  "permissions": [
+    "activeTab",
+    "scripting"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "js": [
+        "services/util.js",
+        "services/saveDOI.js",
+        "services/savePreprint.js",
+        "services/saveOnline.js",
+        "services/shortenAuthors.js",
+        "content.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*.overleaf.com/project/*"
+      ],
+      "js": [
+        "services/overleaf.js"
+      ],
+      "world": "MAIN"
+    },
+    {
+      "matches": ["https://scholar.googleusercontent.com/scholar.bib*"],
+      "js": ["services/googleScholar.js"]
+    }
+    
+  ]
+
+}

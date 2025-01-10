@@ -1,0 +1,103 @@
+---
+name: PassWatch
+version: 1.2.1
+category_slug: productivity/workflow
+featured: false
+rating: 4
+rating_count: 4
+user_count: 2000
+size: 5.23MiB
+languages:
+  - English
+release_date: '2025-01-10T10:45:43.000Z'
+creation_date: '2021-11-16T10:50:58.000Z'
+description: >-
+  Never forget a password again! PassWatch will make your life easier and
+  passwords safer.
+publisher_hash: e211d4794bb94cad6be95bb8703fa8b6544b34c96b4f54d10c304153fdaa071f
+publisher: Intersections, LLC
+publisher_account: Pango GmbH
+publisher_address: |-
+  250 Northern Ave.
+  Boston, MA 02210
+  US
+support_website: https://passwatch.co/contact/
+privacy_policy: https://www.hotspotshield.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PassWatch",
+  "short_name": "PassWatch",
+  "description": "Never forget a password again! PassWatch will make your life easier and passwords safer.",
+  "version": "1.2.1",
+  "author": "PassWatch",
+  "homepage_url": "https://passwatch.co",
+  "background": {
+    "service_worker": "src/background/service-worker-wrapper.js"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "src/forge/forge.js",
+        "src/content_scripts/content-script.js"
+      ],
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "icons": {
+    "16": "src/images/icons/icon-16.png",
+    "48": "src/images/icons/icon-48.png",
+    "128": "src/images/icons/icon-128.png"
+  },
+  "permissions": [
+    "tabs",
+    "browsingData",
+    "storage",
+    "cookies",
+    "activeTab",
+    "unlimitedStorage",
+    "clipboardWrite",
+    "bookmarks"
+  ],
+  "optional_permissions": [
+    "contextMenus",
+    "privacy"
+  ],
+  "action": {
+    "default_icon": {
+      "128": "src/images/icons/icon-128.png"
+    },
+    "default_popup": "src/ui/index.html",
+    "default_title": "PassWatch"
+  },
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "resources": [
+        "src/images/icons/blank.png",
+        "src/content_scripts/popup.html",
+        "src/content_scripts/notification.html",
+        "src/images/icons/icon-32.png",
+        "src/images/icons/icon-32-i.png",
+        "src/images/icons/iconForce-32.png"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; img-src * data: ; object-src 'self'"
+  }
+}

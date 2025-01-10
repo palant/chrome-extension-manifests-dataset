@@ -1,0 +1,83 @@
+---
+name: 'Ghostwrite: ChatGPT Email Assistant'
+version: 0.0.0.18
+category_slug: productivity/communication
+featured: true
+rating: 4.157894736842105
+rating_count: 57
+user_count: 30000
+size: 80.78KiB
+languages:
+  - English (United States)
+release_date: '2024-05-27T06:51:11.000Z'
+creation_date: '2022-06-14T07:44:04.000Z'
+description: A ChatGPT powered AI email writing assistant.
+publisher_hash: 557041476948756a7de2f4322eb28b9cb9e1e241057b6f03acd9a0d4db3601b1
+publisher: Lydian AI LLC
+publisher_account: will
+publisher_address: |-
+  169 Harold Dr
+  Unit 2
+  Incline Village, NV 89451
+  US
+extension_website: ghostwrite.rip
+extension_website_verified: true
+support_website: https://www.ghostwrite.rip/support
+privacy_policy: https://www.ghostwrite.rip/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Ghostwrite: ChatGPT Email Assistant",
+  "short_name": "ghostwrite",
+  "version": "0.0.0.18",
+  "author": "Lydian AI <_start@lydian.ai>",
+
+  "description": "A ChatGPT powered AI email writing assistant.",
+
+  "content_scripts": [
+    {
+      "matches": ["*://mail.google.com/*", "*://outlook.live.com/*"],
+      "js": ["dist/extensionInjector.bundle.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["dist/gmailJS.bundle.js", "dist/gwExtension.bundle.js"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "host_permissions": [
+    "https://dev.ghostwrite.rip/*",
+    "http://dev.ghostwrite.rip/*",
+    "https://app.ghostwrite.rip/",
+    "https://outlook.live.com/*"
+  ],
+  "externally_connectable": {
+    "matches": ["*://dev.ghostwrite.rip/*", "*://app.ghostwrite.rip/*"]
+  },
+  "permissions": ["cookies", "declarativeNetRequest", "declarativeNetRequestFeedback"],
+
+  "optional_host_permissions": ["https://*/*"],
+  "optional_permissions": ["scripting"],
+
+  "background": {
+    "service_worker": "dist/background.bundle.js"
+  },
+
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "removeHeader",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "options_page": "options.html"
+}

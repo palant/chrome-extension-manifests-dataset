@@ -1,0 +1,92 @@
+---
+name: lemlist
+version: 4.0.12
+category_slug: productivity/workflow
+featured: false
+rating: 4.733333333333333
+rating_count: 75
+user_count: 30000
+size: 208KiB
+languages:
+  - English
+  - Français
+release_date: '2024-12-19T19:32:04.000Z'
+creation_date: '2020-05-29T04:18:18.000Z'
+description: >-
+  Scrape LinkedIn & Sales Navigator profiles, find their emails and phone
+  numbers, and add them directly to your outreach campaigns!
+publisher_hash: cfb91be2628b5085f6e7dde7619b32985e8b8e607adced40524cd21421c85bab
+publisher: lempire
+publisher_account: lemlist
+publisher_address: |-
+  8 Rue de Cléry
+  Paris 75002
+  FR
+extension_website: lemlist.com
+extension_website_verified: true
+support_website: https://help.lemlist.com
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "4.0.12",
+  "name": "lemlist",
+  "description": "Scrape LinkedIn & Sales Navigator profiles, find their emails and phone numbers, and add them directly to your outreach campaigns!",
+  "homepage_url": "https://lemlist.com",
+  "icons": {
+    "16": "icons/icon_v4_16.png",
+    "48": "icons/icon_v4_48.png",
+    "128": "icons/icon_v4_128.png"
+  },
+  "default_locale": "en",
+  "background": {
+    "service_worker": "src/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+        "js": [ "src/lib/popper.js", "src/lib/tippy.js" ],
+        "matches": [ "https://www.linkedin.com/*", "https://mail.google.com/*" ]
+    },
+    {
+        "js": [ "src/inject.js" ],
+        "css": ["src/inject.css"],
+        "matches": [ "https://www.linkedin.com/*", "https://mail.google.com/*" ],
+        "run_at": "document_start"
+    },
+    {
+      "js": [ "src/lib/jquery.js" ],
+      "matches": [ "https://mail.google.com/*" ],
+      "run_at": "document_start"
+    }
+],
+  "web_accessible_resources": [{
+    "resources": [
+      "src/app-iframe.html",
+      "icons/icon_v4_48.png",
+      "src/inject.js"
+    ],
+    "matches": ["<all_urls>"],
+    "use_dynamic_url": true
+  }],
+  "action": {
+    "default_icon": "icons/icon_v4_128.png",
+    "default_title": "lemlist",
+    "default_popup": "src/popup.html"
+  },
+  "permissions": [
+    "activeTab",
+    "tabs",
+    "cookies",
+    "storage"
+  ],
+  "host_permissions": [
+    "*://*.linkedin.com/*",
+    "*://mail.google.com/*",
+    "*://localhost/*",
+    "*://*.lemlist.com/*",
+    "*://*.lempire.com/*"
+  ]
+}

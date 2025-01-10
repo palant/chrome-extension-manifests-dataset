@@ -1,0 +1,105 @@
+---
+name: 'Redpen: Report bugs with screenshot/recording'
+version: 1.0.78
+category_slug: productivity/developer
+featured: true
+rating: 5
+rating_count: 19
+user_count: 413
+size: 325KiB
+languages:
+  - English (United States)
+release_date: '2024-07-31T06:33:31.000Z'
+creation_date: '2021-08-08T08:59:44.000Z'
+description: Capture screenshot and record screen to report bugs and visual feedback.
+publisher_hash: 9ade528cc305967218c4fa20a6a9c961c7cf9b98484a39d1c38613a7d913bc78
+publisher: Ajmera Infotech Inc.
+publisher_address: |-
+  3031 Tisch Way
+  Ste #110 PW
+  San Jose, CA 95128
+  US
+extension_website: redpen.ai
+extension_website_verified: true
+support_website: >-
+  https://www.redpen.ai/docs?utm_source=chrome_extension&utm_medium=marketplace&utm_campaign=integration
+privacy_policy: >-
+  https://www.ajmerainfotech.com/privacy?utm_source=chrome_extension&utm_medium=marketplace&utm_campaign=integration&app=redpen
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "name": "Redpen: Report bugs with screenshot/recording",
+ "version": "1.0.78",
+ "offline_enabled": true,
+ "manifest_version": 3,
+ "description": "Capture screenshot and record screen to report bugs and visual feedback.",
+ "action": {
+  "default_icon": {
+   "16": "./assets/logo_16.png",
+   "48": "./assets/logo_48.png",
+   "64": "./assets/logo_64.png",
+   "128": "./assets/logo_128.png"
+  },
+  "default_title": "Redpen - click to capture (Alt+Shift+X), double click to record (Alt+Shift+D)"
+ },
+ "background": {
+  "service_worker": "./js/background.js"
+ },
+ "icons": {
+  "16": "./assets/logo_16.png",
+  "48": "./assets/logo_48.png",
+  "64": "./assets/logo_64.png",
+  "128": "./assets/logo_128.png"
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://app.redpen.ai/*"],
+   "js": ["./js/redpenContentScript.js"]
+  },
+  {
+   "matches": ["http://*/*", "https://*/*"],
+   "exclude_matches": ["https://app.redpen.ai/*"],
+   "js": ["./js/consoleScriptInjector.js", "./js/displayInfoContentScript.js", "./js/videoContentScript.js"]
+  }
+ ],
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "/js/browserConsoleReader.js",
+    "/js/videoContentScript.js",
+    "/assets/images/*"
+   ],
+   "matches": ["*://*/*"]
+  }
+ ],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'; media-src *; style-src *;"
+ },
+ "host_permissions": ["*://*/*"],
+ "permissions": [
+  "scripting",
+  "activeTab",
+  "tabs",
+  "storage",
+  "history",
+  "webRequest"
+ ],
+ "commands": {
+  "redpen_capture": {
+   "suggested_key": {
+    "default": "Alt+Shift+X",
+    "mac": "Alt+Shift+X"
+   },
+   "description": "Capture a screenshot"
+  },
+  "redpen_video_record": {
+   "suggested_key": {
+    "default": "Alt+Shift+D",
+    "mac": "Alt+Shift+D"
+   },
+   "description": "Record a video"
+  }
+ }
+}

@@ -1,0 +1,71 @@
+---
+name: Kadai-Portal
+version: 2.0.6
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 2
+user_count: 108
+size: 18.49MiB
+languages:
+  - 日本語
+release_date: '2024-03-02T09:39:54.000Z'
+creation_date: '2022-02-13T13:19:37.000Z'
+description: Chrome Extension for Students of Kagawa-Univ by SETOKU
+publisher_hash: be972667967d8b1b42ba840545fb8dcfe72f629dbf15a5c2fd1e82fe2beeb547
+publisher_account: mimimimineko
+extension_website: kadai-portal.mimimimineko.com
+extension_website_verified: true
+support_website: https://mimimimineko.com
+privacy_policy: https://kadai-portal.mimimimineko.com/policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name":"Kadai-Portal",
+    "manifest_version":3,
+    "version":"2.0.6",
+    "permissions": ["storage","downloads","activeTab","contextMenus","tabs"],
+    "description": "Chrome Extension for Students of Kagawa-Univ by SETOKU",
+    "icons": {
+        "16": "src/icon/icon16.png",
+        "48": "src/icon/icon48.png",
+        "128": "src/icon/icon128.png"
+    },
+    "action":{
+        "default_icon":{
+            "16": "src/icon/icon16.png",
+            "48": "src/icon/icon48.png",
+            "128": "src/icon/icon128.png"
+            },
+        "default_title":"【隊員募集中】SETOKU サイバー防犯ボランティア",
+        "default_popup":"src/popup/popup.html"
+    },
+    "homepage_url":"https://kadai-portal.mimimimineko.com/",
+    "background": {
+        "service_worker": "src/scripts/background.js"
+    },
+    "content_scripts":[
+        {
+            "matches": ["<all_urls>"],
+            "run_at":"document_start",
+            "js":["src/scripts/allsites/copyURLTrigger.js","src/scripts/allsites/scanphishing.js"]
+        },
+        {
+            "matches": ["https://kadai-moodle.kagawa-u.ac.jp/*","https://lms-sp.itc.kagawa-u.ac.jp/*"],
+            "run_at":"document_start",
+            "js":["src/scripts/kadai-moodle/calculateNumberOfChar.js","src/scripts/kadai-moodle/changeMainColor.js"]
+        }
+    ],
+    "commands": {
+        "_execute_action": {
+          "suggested_key": {
+            "default": "Ctrl+Shift+H",
+            "mac": "MacCtrl+Shift+H"
+          },
+          "description": "Run extension."
+        }
+      }
+    
+}

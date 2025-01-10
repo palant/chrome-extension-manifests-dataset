@@ -1,0 +1,80 @@
+---
+name: Twitch Kicker
+version: 1.0.1
+category_slug: lifestyle/fun
+featured: false
+rating: 1
+rating_count: 2
+user_count: 56
+size: 15.08KiB
+languages:
+  - English
+release_date: '2023-07-10T08:38:06.000Z'
+creation_date: '2023-07-10T08:38:06.000Z'
+description: Adds Kick.com streamers to the "following" section of the Twitch homepage
+publisher_hash: 541054670f10d222b00296f1eafa28c6ff1fc8435458ac9c48575f46a2dac590
+publisher_account: sunergraversen
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "Twitch Kicker",
+    "description": "Adds Kick.com streamers to the \"following\" section of the Twitch homepage",
+    "homepage_url": "https://suneg.site",
+    "version": "1.0.1",
+    "manifest_version": 3,
+    "minimum_chrome_version": "111",
+    "icons": { 
+      "16": "kickLoggedIn16.png",
+      "48": "kickLoggedIn48.png",
+      "128": "kickLoggedIn128.png" 
+    },
+    "action": {
+      "default_icon": {
+        "16": "kickLoggedIn16.png",
+        "48": "kickLoggedIn48.png",
+        "128": "kickLoggedIn128.png" 
+      }
+    },
+    "content_scripts": [
+      {
+        "run_at" : "document_idle",
+        "js": ["after.js"],
+        "matches": [
+          "https://*.twitch.tv/*",
+          "http://*.twitch.tv/*"
+        ]
+      }
+    ],
+    "background": {
+      "service_worker": "background.js"
+    },
+
+    "declarative_net_request" : {
+      "rule_resources" : [{
+        "id": "corsbypass",
+        "enabled": false,
+        "path": "corsrules.json"
+    }]},
+
+    "permissions": [
+      "cookies",
+      "declarativeNetRequestWithHostAccess",
+      "declarativeNetRequestFeedback"
+    ],
+    "host_permissions": [
+      "https://*.twitch.tv/*",
+      "http://*.twitch.tv/*",
+      "http://kick.com/*",
+      "https://kick.com/*"
+    ],
+    "web_accessible_resources": [
+      {
+        "resources": [ "tagToInject.html" ],
+        "matches": [ "https://*.twitch.tv/*" ],
+        "extension_ids": [ "pbiilmjaijfkbelndicpeccoclcmghak" ]
+      }
+    ]
+  }
+  

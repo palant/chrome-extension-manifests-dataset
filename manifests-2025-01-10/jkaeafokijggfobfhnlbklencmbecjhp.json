@@ -1,0 +1,97 @@
+---
+name: Rods&Cones
+version: 3.2.2
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 3
+user_count: 1000
+size: 11.32MiB
+languages:
+  - English
+release_date: '2024-12-10T19:41:41.000Z'
+creation_date: '2020-11-27T04:25:39.000Z'
+description: Rods&Cones for Remote Expert
+publisher_hash: b1ea6927fe4830ab5037bafd9e1559450aba12886492ec1774a96a59e7e35208
+publisher_account: Rods&Cones
+publisher_address: |-
+  Oudebaan 2
+  Vosselaar 2350
+  BE
+publisher_phone: '+32472961233'
+support_website: https://www.rods-cones.com/manual
+privacy_policy: https://www.rods-cones.com/re_terms
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Rods&Cones",
+  "version": "3.2.2",
+  "description": "Rods&Cones for Remote Expert",
+  "manifest_version": 3,
+  "permissions": [
+    "background",
+    "storage",
+    "tabCapture",
+    "tabs",
+    "offscreen",    
+    "alarms"
+  ],
+  "host_permissions": [
+    "https://api.rods-cones.com/"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://expert.rods-cones.com/session/home",
+        "https://expert.rods-cones.com/session/qrcode/*"
+      ],
+      "run_at": "document_start",
+      "js": [
+        "credentials-injector.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://expert.rods-cones.com/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "rctabshelper.js"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "authcallback.html"
+      ],
+      "matches": [
+        "https://identity.rods-cones.com/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "images/rodscones_icon16.png",
+      "32": "images/rodscones_icon32.png",
+      "48": "images/rodscones_icon48.png",
+      "128": "images/rodscones_icon128.png"
+    }
+  },
+  "icons": {
+    "16": "images/rodscones_icon16.png",
+    "32": "images/rodscones_icon32.png",
+    "48": "images/rodscones_icon48.png",
+    "128": "images/rodscones_icon128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self';"
+  },
+  "options_page": "options.html"
+}

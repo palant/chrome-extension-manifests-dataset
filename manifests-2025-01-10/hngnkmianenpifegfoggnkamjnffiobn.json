@@ -1,0 +1,162 @@
+---
+name: Writer
+version: 2.13.0
+category_slug: productivity/workflow
+featured: true
+rating: 4.375
+rating_count: 64
+user_count: 90000
+size: 10.67MiB
+languages:
+  - English
+release_date: '2024-12-29T03:04:33.000Z'
+creation_date: '2019-10-09T19:23:54.000Z'
+description: Generative AI in all the places you work
+publisher_hash: d63ad10ed47efc598536613038b6ef5b452ed753c32927729bc0a8ac2462e902
+publisher: Writer .Inc
+publisher_account: Writer.com
+publisher_address: |-
+  140 Geary St Floor 8
+  San Francisco, CA 94108-5619
+  US
+publisher_phone: '+14155101132'
+extension_website: writer.com
+extension_website_verified: true
+support_website: https://support.writer.com
+privacy_policy: https://writer.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Writer",
+  "version": "2.13.0",
+  "description": "Generative AI in all the places you work",
+  "options_page": "options.html",
+  "permissions": [
+    "tabs",
+    "cookies",
+    "storage",
+    "scripting",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "http://*/",
+    "https://*/"
+  ],
+  "background": {
+    "service_worker": "static/background.js"
+  },
+  "icons": {
+    "16": "icon16.png",
+    "32": "icon32.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+  "action": {
+    "default_title": "Open Writer Side Panel",
+    "default_icon": {
+      "36": "assets/icon/off.png"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://docs.google.com/spreadsheets/*",
+        "*://miro.com/*",
+        "*://www.achieve.com/*",
+        "*://*.sdlproducts.com/*",
+        "*://onedrive.live.com/*",
+        "*://*.sharepoint.com/*",
+        "*://*.styleguide.com/*"
+      ],
+      "css": [
+        "static/global.css"
+      ],
+      "js": [
+        "static/content.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "static/sidePanelButton.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": false
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "*://docs.google.com/spreadsheets/*",
+        "*://miro.com/*",
+        "*://www.achieve.com/*",
+        "*://*.sdlproducts.com/*",
+        "*://onedrive.live.com/*",
+        "*://*.sharepoint.com/*",
+        "*://*.styleguide.com/*"
+      ],
+      "js": [
+        "static/iframeInit.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true,
+      "match_about_blank": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": [
+        "*://docs.google.com/document/*"
+      ],
+      "js": [
+        "static/gdocsInit.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "*://docs.google.com/document/*"
+      ],
+      "js": [
+        "static/gdocsPreInject.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "fonts/*",
+        "css/*",
+        "js/pdfWorker.js",
+        "static/inline-assets/*",
+        "static/global.css",
+        "static/content.js",
+        "static/gdocsInit.js",
+        "static/gdocsPreInjectImpl.js",
+        "static/gdocsAnnotatedCanvas.js",
+        "static/buzzFeedInjectScript.js",
+        "static/tinymceInjectScript.js",
+        "static/iframeInit.js",
+        "static/sidePanel.js",
+        "static/codemirror5Script.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "manifest_version": 3
+}

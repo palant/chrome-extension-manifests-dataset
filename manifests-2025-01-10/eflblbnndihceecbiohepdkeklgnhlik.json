@@ -1,0 +1,88 @@
+---
+name: DEVSOL parse
+version: 1.1.8
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 5
+size: 10.56MiB
+languages:
+  - русский
+release_date: '2023-09-06T06:53:18.000Z'
+creation_date: '2023-06-27T12:01:41.000Z'
+description: Парсинг страниц для модуля Devsol Recruitment
+publisher_hash: 003964cea473272dd9e49e14297e732f44ca9eb18c876a1d54b478b3b3686cf2
+publisher_account: DEVSOL
+support_website: https://devsol.ru/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DEVSOL parse",
+  "description": "Парсинг страниц для модуля Devsol Recruitment",
+  "version": "1.1.8",
+  "icons": {
+    "16": "/images/get_started16.png",
+    "32": "/images/get_started32.png",
+    "48": "/images/get_started48.png",
+    "128": "/images/get_started128.png"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "/images/get_started16.png",
+      "32": "/images/get_started32.png",
+      "48": "/images/get_started48.png",
+      "128": "/images/get_started128.png"
+    }
+  },
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/webResources.js"],
+      "matches": ["*://*.superjob.ru/*"]
+    },
+    {
+      "resources":
+    [
+      "tesseract/tesseract.min.js",
+      "tesseract/worker.min.js",
+      "tesseract/lang-data/*.traineddata.gz"
+    ],
+      "matches": ["*://*.avito.ru/*"]
+    }
+
+  ],
+  "content_scripts": [
+    {
+      "matches": [ "*://*.hh.ru/*", "*://*.hh.ua/*", "*://*.grc.ua/*", "*://*.hh.kz/*"],
+      "js": ["js/contentHH.js"]
+    },
+    {
+      "matches": ["*://*.avito.ru/*"],
+      "js": ["js/contentAvito.js","tesseract/tesseract.min.js"]
+    },
+    {
+      "matches": [ "*://*.superjob.ru/*"],
+      "js": ["js/contentSuperjob.js"]
+    },
+    {
+      "matches": ["*://*.joblab.ru/*"],
+      "js": ["js/contentJobLab.js"]
+    },
+    {
+      "matches": [ "*://*.rabota.ru/*"],
+      "js": ["js/contentRabotaRu.js"]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "options_page": "options.html"
+}

@@ -1,0 +1,82 @@
+---
+name: TenTrucks
+version: 1.0.2
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 13
+size: 552KiB
+languages:
+  - English (United States)
+release_date: '2022-09-18T06:33:38.000Z'
+creation_date: '2022-02-24T09:24:23.000Z'
+description: >-
+  TenTrucks extension pulls trip data from Amazon Relay and generates a load in
+  TenTrucks TMS with all the load information entered.
+publisher_hash: 559064474c1ff787cf95cd71631553dd99c32ef6aa119acacf64d022eff3baf6
+publisher_account: support
+extension_website: tentrucks.com
+extension_website_verified: true
+support_website: https://tentrucks.com/contact/
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "TenTrucks",
+  "version": "1.0.2",
+  "description": "TenTrucks extension pulls trip data from Amazon Relay and generates a load in TenTrucks TMS with all the load information entered.",
+  "permissions": [
+    "storage"
+  ],
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://relay.amazon.com/tours*",
+        "https://relay.amazon.co.uk/tours*",
+        "https://relay.amazon.it/tours*",
+        "https://relay.amazon.de/tours*",
+        "https://relay.amazon.fr/tours*",
+        "https://relay.amazon.es/tours*"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "action": {
+    "default_icon": "assets/images/icon48.png",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "assets/images/icon16.png",
+    "48": "assets/images/icon48.png",
+    "128": "assets/images/icon128.png"
+  },
+  "externally_connectable": {
+    "matches": [
+      "https://*.tentrucks.com/*",
+      "https://relay.amazon.com/*"
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/*",
+        "assets/images/*.png",
+        "injected.js"
+      ],
+      "matches": ["https://relay.amazon.com/*"]
+    }
+  ],
+  "content_security_policy": {
+    "script-src": "'self' https://app.tentrucks.com",
+    "object-src": "self"
+  }
+}

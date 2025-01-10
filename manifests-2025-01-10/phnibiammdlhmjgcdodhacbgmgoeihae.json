@@ -1,0 +1,67 @@
+---
+name: RemoteFocus
+version: 0.2.3
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 127
+size: 386KiB
+languages:
+  - English
+release_date: '2024-10-10T05:31:11.000Z'
+creation_date: '2024-07-04T12:20:26.000Z'
+description: >-
+  Enables users to seamlessly refer patients from approved EMRs to the
+  RemoteFocus chronic care provider
+publisher_hash: ded89de6ee2ba343f73221b1ca82f79ec74d4bc430518d304feca12bd48c8a56
+publisher_account: EmmaCare
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "RemoteFocus",
+  "version": "0.2.3",
+  "description": "Enables users to seamlessly refer patients from approved EMRs to the RemoteFocus chronic care provider",
+  "icons": {
+    "16": "images/dist/icon-16.png",
+    "32": "images/dist/icon-32.png",
+    "48": "images/dist/icon-48.png",
+    "128": "images/dist/icon-128.png"
+  },
+  "permissions": ["storage"],
+  "host_permissions": [
+    "http://localhost:7777/",
+    "https://dev-api.emmacare-dev.com/",
+    "https://sandbox-api.emmacare-dev.com/",
+    "https://preprod-api.emmacare-dev.com/",
+    "https://api.emmacare.com/"
+  ],
+  "options_page": "options.html",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "js": ["scripts/hhax.js", "scripts/jquery-3.7.1.min.js"],
+      "matches": [
+        "https://app.hhaexchange.com/*/Patient/InternalPatientInfo.aspx*PatientId=*"
+      ]
+    },
+    {
+      "js": ["scripts/hhax-linked-patient.js"],
+      "matches": [
+        "https://app.hhaexchange.com/*/Patient/Patient.aspx*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["images/*", "scripts/*", "build/*.js", "bootstrap/bootstrap.min.css", "options.html"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

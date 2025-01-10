@@ -1,0 +1,87 @@
+---
+name: Winning Hunter
+version: 1.0.0
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 481
+size: 496KiB
+languages:
+  - English
+release_date: '2024-12-11T10:55:08.000Z'
+creation_date: '2024-12-11T10:55:08.000Z'
+description: >-
+  Works with Shopify updates. Real-time revenue tracking, product research, and
+  Facebook Ads in one powerful dropshipping tool.
+publisher_hash: cc438ec11f212b5955b41b66bc984cac234db9d1d225e27605c76b5c0b6698aa
+publisher: Winninghunter
+publisher_account: winninghunter.com
+publisher_address: |-
+  Mainhavenweg 17
+  Amsterdam 1043 AL
+  NL
+extension_website: winninghunter.com
+extension_website_verified: true
+support_website: https://winninghunter.com/contact
+privacy_policy: https://winninghunter.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Winning Hunter",
+  "version": "1.0.0",
+  "description": "Works with Shopify updates. Real-time revenue tracking, product research, and Facebook Ads in one powerful dropshipping tool.",
+  "icons": {
+    "16": "icon96.png",
+    "48": "icon96.png",
+    "128": "icon96.png"
+  },
+  "background": {
+    "service_worker": "./background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [ "<all_urls>" ],
+      "exclude_matches": ["https://www.facebook.com/*"],
+      "js": ["/static/js/main.js"]
+    },
+    {
+      "js": ["./AdApp/facebook/index.js"],
+      "matches": ["*://*.facebook.com/ads/library*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["./AdApp/tiktok/index.js"],
+      "matches": ["<all_urls>"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["./AdApp/tiktok/creativeCenterDashboard.js"],
+      "matches": ["*://ads.tiktok.com/business/creativecenter/inspiration/topads*"],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [ "/static/*" ],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "action": {
+    "default_popup": "./AdApp/popup.html",
+    "default_title": "Winning Hunter"
+  },
+  "permissions": [
+    "identity",
+    "identity.email",
+    "storage",
+    "tabs",
+    "scripting",
+    "webRequest",
+    "cookies"
+  ],
+  "host_permissions": ["*://*/*"]
+}

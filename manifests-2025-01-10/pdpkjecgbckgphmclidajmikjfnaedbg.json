@@ -1,0 +1,105 @@
+---
+name: Co-Founder
+version: 1.23.10.19
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 1
+size: 86.39KiB
+languages:
+  - English (United States)
+release_date: '2023-10-19T10:06:03.000Z'
+creation_date: '2023-09-28T09:55:48.000Z'
+description: >-
+  Co-founder supports startup journey. Tailored prompts and Chrome Extension.
+  Coming later, template and Deck AI
+publisher_hash: d7d4ded8cc0713c4c7ae79ad36ecede04487b33ebd03b4d4a6b3d7e5fba5b933
+publisher: Brinc
+extension_website: yourcofounder.io
+extension_website_verified: true
+support_website: https://yourcofounder.io
+privacy_policy: https://www.brinc.io/privacy-policy-2
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Co-Founder",
+  "version": "1.23.10.19",
+  "description": "Co-founder supports startup journey. Tailored prompts and Chrome Extension. Coming later, template and Deck AI",
+  "manifest_version": 3,
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "scripting",
+    "nativeMessaging",
+    "declarativeNetRequestWithHostAccess"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "https://yourcofounder.io/*",
+      "https://*.crunchbase.com/*"
+    ]
+  },
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "enabled": true,
+        "id": "ruleset_1",
+        "path": "rules.json"
+      }
+    ]
+  },
+  "icons": { "16": "logo.png", "48": "logo.png" },
+  "host_permissions": ["https://chat.openai.com/*"],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://chat.openai.com/chat/*",
+        "https://chat.openai.com/chat?*"
+      ],
+      "js": ["inject_helper.js", "chatgpt_content_script.js"]
+    },
+    {
+      "matches": ["https://*.crunchbase.com/organization/*"],
+      "js": ["inject_helper.js", "crunchbase_content_script.js"]
+    },
+    {
+      "matches": ["https://yourcofounder.io/*"],
+      "js": ["inject_helper.js", "co_founder_rails_content_script.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://yourcofounder.io/*",
+        "https://*.crunchbase.com/*"
+      ],
+      "resources": [
+        "chatgpt_content_script.js",
+        "chatgpt_inject.js",
+        "co_founder_rails_content_script.js",
+        "co_founder_rails_inject.js",
+        "config.js",
+        "crunchbase_content_script.js",
+        "crunchbase_inject.js",
+        "jquery.js",
+        "style.css",
+        "utils.js",
+        "template.js",
+        "co_founder_client.js",
+        "message_popup.js",
+        "logo.png" 
+      ],
+      "use_dynamic_url": true
+    }
+  ]
+}

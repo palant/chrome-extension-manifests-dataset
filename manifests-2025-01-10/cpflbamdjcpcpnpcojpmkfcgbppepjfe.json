@@ -1,0 +1,94 @@
+---
+name: Bonushops — Кэшбэк-сервис России
+version: '1.01'
+category_slug: lifestyle/shopping
+featured: false
+rating: 5
+rating_count: 1
+user_count: 34
+size: 987KiB
+languages:
+  - русский
+release_date: '2023-02-21T09:19:29.000Z'
+creation_date: '2023-01-31T02:32:32.000Z'
+description: >-
+  Bonushops — это сервис, который позволяет возвращать кэшбэк за покупки в
+  AliExpress, Яндекс Маркет, Эльдорадо, Летуаль и сотнях…
+publisher_hash: 0753c0fd7ae74e457d8cb58261001f719b1b2e5d7139b577a28442536d5d993c
+publisher: ООО
+publisher_account: Bonushops — кэшбэк-сервис России
+publisher_address: |-
+  14-я Парковая ул., 8
+  Москва, Москва 105203
+  RU
+extension_website: bonushops.ru
+extension_website_verified: true
+privacy_policy: https://bonushops.ru/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+
+    "name": "Bonushops — Кэшбэк-сервис России",
+    "version": "1.01",
+
+ "host_permissions": [
+  "https://bonushops.ru:7851/*",
+  "https://bonushops.ru:7856/*",
+  "https://bonushops.ru:7855/*",
+  "https://bonushops.ru/*",
+        "https://fonts.googleapis.com/*"
+ ],
+
+ "permissions": [
+  "tabs",
+  "activeTab",
+  "cookies",
+  "storage"
+ ],
+
+    "icons": {
+        "16": "icons/default16.png",
+        "32": "icons/default32.png",
+        "48": "icons/default48.png",
+        "128": "icons/default128.png"
+    },
+
+    "action": {
+        "default_popup": "popup/dist/index.html"
+    },
+
+ "background": {
+        "service_worker": "bg_loader.js"
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": ["images/*", "icons/*", "fonts/*"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+
+    "content_scripts": [
+        {
+            "matches": ["<all_urls>"],
+            "run_at": "document_idle",
+            "js": ["content.js"],
+            "css": ["content.css"]
+        },
+        {
+            "matches": ["https://yandex.ru/search/?text=*"],
+            "run_at": "document_idle",
+            "js": ["content_yandex.js"],
+            "css": ["content_searcher.css"]
+        },
+        {
+            "matches": ["https://www.google.ru/search?q=*", "https://www.google.com/search?q=*"],
+            "run_at": "document_idle",
+            "js": ["content_google.js"],
+            "css": ["content_searcher.css"]
+        }
+    ]
+}

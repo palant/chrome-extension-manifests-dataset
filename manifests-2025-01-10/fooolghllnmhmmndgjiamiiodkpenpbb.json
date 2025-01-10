@@ -1,0 +1,175 @@
+---
+name: NordPass® (legacy)
+version: 5.26.18
+category_slug: productivity/workflow
+featured: true
+rating: 4.090205318074722
+rating_count: 2971
+user_count: 200000
+size: 14.43MiB
+languages:
+  - Deutsch
+  - English
+  - Français
+  - Nederlands
+  - español
+  - italiano
+  - lietuvių
+release_date: '2024-12-19T08:51:22.000Z'
+creation_date: '2019-08-04T16:03:17.000Z'
+description: >-
+  NordPass is your freedom from password stress. Generate and securely store
+  strong passwords and autofill them with a single click.
+publisher_hash: 7ae0b24f6e3181077b17171a529ab21bf0f2633203e31637fef3ec385ac2fddb
+publisher: nordvpn S.A.
+publisher_account: NordPass
+support_website: https://support.nordpass.com/hc/en-us
+privacy_policy: https://my.nordaccount.com/legal/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "NordPass® (legacy)",
+    "short_name": "NordPass",
+    "description": "__MSG_extDescription__",
+    "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAwnwO5XE3WRgcqoD0LvJiv6nG0YqtByT+m9BTtZ342S6MrbQIydsNMzPoqffdaJOJ4RTyPFgvv6CG8ksvzw7JW8yp33qZiH/OeOZvTuEFQ0LNMPg8X4aibfmKWBhWQto0Vnwa0sboXqi5Ns+7yyZhXFmjnqrXmdME+mPzk5cS3dMI4vzZ3wlCrDCI5evE2mjSn8BriBaRH8aY0VB5k8xM1z4llH/TMUBndkhUKUq1VXVEd68kzjCJH16OnJ2B1p6PMQJayWdb8as4qu+m+Sp32MsR277RGPguIC5LS+gPyvOm8ndVPApQQcaXJr+isWMj+X4VWIVX+eIbLyfiM1mOJQIDAQAB",
+    "icons": {
+        "16": "assets/manifestIcons/icon-16.png",
+        "32": "assets/manifestIcons/icon-32.png",
+        "48": "assets/manifestIcons/icon-48.png",
+        "96": "assets/manifestIcons/icon-96.png",
+        "128": "assets/manifestIcons/icon-128.png"
+    },
+    "content_scripts": [
+        {
+            "all_frames": true,
+            "js": [
+                "jsAndWasm/content.js",
+                "jsAndWasm/classifier.js"
+            ],
+            "exclude_matches": [
+                "*://nobodyone.dev/*",
+                "*://nonone.dev/*",
+                "*://nordaccount.com/*",
+                "*://app.stag.global.nordpass.com/*",
+                "*://app.nordpass.com/*",
+                "*://panel.nordpass.com/*",
+                "*://nordpass.com/secure-password/",
+                "*://nordbusinessaccount.com/*",
+                "*://data.nordpoolgroup.com/*"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "js": [
+                "jsAndWasm/redirectContent.js"
+            ],
+            "matches": [
+                "https://nordpass.com/app/*"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "all_frames": true,
+            "js": [
+                "jsAndWasm/passkeys.js"
+            ],
+            "exclude_matches": [
+                "*://nobodyone.dev/*",
+                "*://nonone.dev/*",
+                "*://nordaccount.com/*",
+                "*://app.stag.global.nordpass.com/*",
+                "*://app.nordpass.com/*",
+                "*://panel.nordpass.com/*",
+                "*://nordpass.com/secure-password/",
+                "*://nordbusinessaccount.com/*",
+                "*://data.nordpoolgroup.com/*"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "run_at": "document_start",
+            "world": "MAIN"
+        },
+        {
+            "all_frames": false,
+            "js": [
+                "jsAndWasm/nordpass-script.js"
+            ],
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "run_at": "document_start",
+            "world": "MAIN"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/*.svg",
+                "assets/*.ttf",
+                "assets/lang/*.json",
+                "iconFrame.html",
+                "biometrics.html",
+                "jsAndWasm/passkeys.js",
+                "jsAndWasm/nordpass-script.js",
+                "css/content.css",
+                "assets/manifestIcons/icon.svg",
+                "app.html"
+            ],
+            "matches": [
+                "https://*/*",
+                "http://*/*"
+            ]
+        }
+    ],
+    "permissions": [
+        "storage",
+        "tabs",
+        "privacy",
+        "contextMenus",
+        "idle",
+        "alarms",
+        "offscreen"
+    ],
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "nordpass@nordpass.com",
+            "strict_min_version": "109.0"
+        },
+        "safari": {
+            "strict_min_version": "16.0"
+        }
+    },
+    "background": {
+        "service_worker": "jsAndWasm/background.js"
+    },
+    "version": "5.26.18",
+    "default_locale": "en",
+    "optional_permissions": [
+        "clipboardRead",
+        "clipboardWrite"
+    ],
+    "content_security_policy": {
+        "extension_pages": "base-uri 'self'; object-src 'none'; script-src 'self' 'wasm-unsafe-eval'; style-src 'self'; default-src 'none'; font-src 'self'; child-src 'none'; frame-src 'none'; frame-ancestors 'none'; connect-src 'self' data: https://status-check.global.nordpass.com/ https://api-toggle.nordpass.com https://api-toggle.stag.eu.nordpass.com/ https://api.nordpass.com https://api.eu.nordpass.com https://api2.nordpass.com https://api.stag.eu.nordpass.com https://api2.stag.eu.nordpass.com https://s1.npass.app https://debug2.nordpass.com https://api.nordbusinessaccount.com https://business-auth.eu.nordpass.com https://business-auth.stag.eu.nordbusinessaccount.com https://downloads.npass.app https://nl-cs-production-cloud-storage.s3.amazonaws.com/ https://nl-cs-staging-cloud-storage.s3.amazonaws.com/ https://sdk-api.devcycle.com/ https://realtime.ably.io https://lastpass.com/ https://login.microsoftonline.com/ https://graph.microsoft.com/oidc/userinfo https://graph.microsoft.com/v1.0/me https://accounts.lastpass.com/federatedlogin/api/v1/getkey wss://nc-unit1-mqtt.nordpass.com:8885/mqtt wss://nc-unit1-mqtt-k8s.nordpass.com:8885/mqtt wss://nc-unit1-mqtt.mismatch.site:8895/mqtt; img-src 'self' blob: data: https://s1.npass.app https://assets-static-np.s3.amazonaws.com https://api.nordbusinessaccount.com https://business-auth.eu.nordpass.com https://business-auth.stag.eu.nordbusinessaccount.com https://avatars.nordpass.com https://avatars.stag.global.nordpass.com/"
+    },
+    "minimum_chrome_version": "116.0",
+    "action": {
+        "default_icon": "assets/manifestIcons/icon-48.png",
+        "default_popup": "index.html",
+        "default_title": "NordPass Password Manager"
+    },
+    "host_permissions": [
+        "https://api-toggle.nordpass.com/*",
+        "https://api-toggle.stag.eu.nordpass.com/*",
+        "https://lastpass.com/*"
+    ]
+}

@@ -1,0 +1,122 @@
+---
+name: Tiplino a böngészőbe
+version: 3.0.4
+category_slug: lifestyle/shopping
+featured: false
+rating: 5
+rating_count: 6
+user_count: 6000
+size: 208KiB
+languages:
+  - magyar
+release_date: '2024-05-04T11:14:47.000Z'
+creation_date: '2021-05-11T03:24:57.000Z'
+description: >-
+  A Tiplino a böngészőben mindig figyelmezteti, ha pénzt szerezhet vissza a
+  vásárlásból.
+publisher_hash: 7caa18ef02394b06caaf42c8f68524023faba81426698ff655bff145952f116d
+publisher: Tipli s.r.o.
+publisher_account: Tipli
+publisher_address: |-
+  Na Poříčí 25
+  Praha 110 00
+  CZ
+publisher_phone: '+420733439188'
+extension_website: tiplino.hu
+extension_website_verified: true
+privacy_policy: https://www.tipli.cz/souhlas-se-zpracovanim-osobnich-udaju
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.4",
+  "name": "Tiplino a böngészőbe",
+  "description": "A Tiplino a böngészőben mindig figyelmezteti, ha pénzt szerezhet vissza a vásárlásból.",
+  "homepage_url": "https://www.tiplino.hu",
+  "icons": {
+    "128": "assets/icon128.png",
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png"
+  },
+  "author": "https://www.tiplino.hu",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Tiplino a böngészőbe"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "roboto.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "protect-content-boxes.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.google.cz/*",
+        "https://www.google.sk/*",
+        "https://www.google.pl/*",
+        "https://www.google.ro/*",
+        "https://search.seznam.cz/*",
+        "https://*.heureka.cz/*",
+        "https://www.zbozi.cz/*"
+      ],
+      "js": [
+        "serp.js"
+      ],
+      "css": [
+        "roboto.css",
+        "serp.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

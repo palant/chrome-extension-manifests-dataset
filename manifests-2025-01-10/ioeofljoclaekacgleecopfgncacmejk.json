@@ -1,0 +1,88 @@
+---
+name: Holiday forecast
+version: 0.13.2
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 141
+size: 622KiB
+languages:
+  - English
+release_date: '2024-12-02T10:52:08.000Z'
+creation_date: '2020-07-07T04:05:17.000Z'
+description: Import holiday and homeworking in Holiday forecast
+publisher_hash: 6cb094c906637b3ff837366b1ea60044402ce30be13e6f53a662ae9e1327fb7b
+publisher_account: fstaudt
+privacy_policy: https://www.soprasteria.com/footer/personal-data-protection-charter
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Holiday forecast",
+  "version": "0.13.2",
+  "description": "Import holiday and homeworking in Holiday forecast",
+  "permissions": [
+    "tabs",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://holiday.apps.ocp4.innershift.sodigital.io/",
+    "https://www.myworkandme.com/",
+    "https://4you.is.soprasteria.com/"
+  ],
+  "background": {
+    "service_worker": "scripts/background.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Holiday forecast",
+    "default_icon": {
+      "16": "icons/holiday_icon16.png",
+      "32": "icons/holiday_icon32.png",
+      "48": "icons/holiday_icon48.png",
+      "128": "icons/holiday_icon128.png"
+    }
+  },
+  "icons": {
+    "16": "icons/holiday_icon16.png",
+    "32": "icons/holiday_icon32.png",
+    "48": "icons/holiday_icon48.png",
+    "128": "icons/holiday_icon128.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://www.myworkandme.com/ebloxhr/hrwwevo/*"
+      ],
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/utils.js",
+        "content_scripts/holidayButton.js",
+        "content_scripts/eblox.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://4you.is.soprasteria.com/*"
+      ],
+      "include_globs": [
+        "*/ptaForYou/pages/planning/PTAPlanningIndividuelAnnuel.jsp*"
+      ],
+      "all_frames": true,
+      "run_at": "document_end",
+      "js": [
+        "content_scripts/utils.js",
+        "content_scripts/holidayButton.js",
+        "content_scripts/hr4you.js"
+      ]
+    }
+  ]
+}

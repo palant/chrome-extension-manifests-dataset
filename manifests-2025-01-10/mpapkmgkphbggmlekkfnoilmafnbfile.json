@@ -1,0 +1,187 @@
+---
+name: PixieBrix BETA
+version: 2.2.3
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 9000
+size: 10.87MiB
+languages:
+  - English (United States)
+release_date: '2025-01-07T22:51:26.000Z'
+creation_date: '2024-04-04T12:19:55.000Z'
+description: >-
+  Customize, extend, and integrate your favorite SaaS apps without writing a
+  line of code!
+publisher_hash: 35089e7a7d86af697a845cb4c2f9e8c44d73aef17cf898266422aed7fc3b7127
+publisher: PixieBrix, Inc.
+publisher_address: |-
+  169 Madison Ave #2083
+  New York, NY 10016
+  US
+support_website: https://www.pixiebrix.com/
+privacy_policy: https://www.pixiebrix.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "author": "PixieBrix, Inc.",
+  "name": "PixieBrix BETA",
+  "short_name": "PixieBrix BETA",
+  "description": "Customize, extend, and integrate your favorite SaaS apps without writing a line of code!",
+  "homepage_url": "https://www.pixiebrix.com",
+  "minimum_chrome_version": "116.0",
+  "icons": {
+    "16": "icons/beta/logo16.png",
+    "32": "icons/beta/logo32.png",
+    "48": "icons/beta/logo48.png",
+    "128": "icons/beta/logo128.png"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; font-src 'self' https://fonts.gstatic.com; connect-src 'self' http: https: wss: data:; object-src 'self'; img-src 'self' data: https:; style-src 'self' 'unsafe-inline' https:; frame-src 'self' http: https:;",
+    "sandbox": "sandbox allow-scripts allow-forms; script-src 'self' 'unsafe-inline' 'unsafe-eval'; child-src 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://*.googleapis.com/*"
+      ],
+      "js": [
+        "contentScript.js"
+      ],
+      "css": [
+        "contentScript.css"
+      ],
+      "all_frames": true,
+      "match_about_blank": true,
+      "run_at": "document_idle",
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "exclude_matches": [
+        "https://*.googleapis.com/*"
+      ],
+      "js": [
+        "hotkeyContentScript.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_origin_as_fallback": true
+    },
+    {
+      "matches": [
+        "https://*/*"
+      ],
+      "js": [
+        "loadActivationEnhancements.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.pixiebrix.com/*"
+      ],
+      "js": [
+        "setExtensionIdInApp.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "sandbox": {
+    "pages": [
+      "sandbox.html"
+    ]
+  },
+  "optional_permissions": [
+    "clipboardWrite"
+  ],
+  "permissions": [
+    "activeTab",
+    "storage",
+    "identity",
+    "tabs",
+    "tabCapture",
+    "webNavigation",
+    "contextMenus",
+    "alarms",
+    "devtools",
+    "scripting",
+    "offscreen",
+    "sidePanel"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "devtools_page": "devtools.html",
+  "externally_connectable": {
+    "matches": [
+      "https://*.pixiebrix.com/*"
+    ]
+  },
+  "storage": {
+    "managed_schema": "managedStorageSchema.json"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "css/*",
+        "bundles/*",
+        "sandbox.html",
+        "frame.html",
+        "sidebar.html",
+        "pageScript.js",
+        "ephemeralForm.html",
+        "permissionsFrame.html",
+        "walkthroughModal.html",
+        "ephemeralPanel.html",
+        "audio/*",
+        "user-icons/*",
+        "img/*",
+        "*.css"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_title": "PixieBrix",
+    "default_icon": {
+      "16": "icons/inactive/logo16.png",
+      "32": "icons/inactive/logo32.png",
+      "48": "icons/inactive/logo48.png",
+      "128": "icons/inactive/logo128.png"
+    }
+  },
+  "commands": {
+    "toggle-quick-bar": {
+      "description": "Toggle Quick Bar",
+      "suggested_key": {
+        "default": "Ctrl+M",
+        "mac": "Command+M"
+      }
+    }
+  },
+  "background": {
+    "service_worker": "background.worker.js",
+    "type": "module"
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "side_panel": {
+    "default_path": "sidebar.html"
+  },
+  "version": "2.2.3.3000",
+  "version_name": "2.2.3"
+}

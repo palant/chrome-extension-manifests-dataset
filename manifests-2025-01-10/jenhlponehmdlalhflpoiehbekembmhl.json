@@ -1,0 +1,86 @@
+---
+name: AllSimpleRecipes
+version: '1.0'
+category_slug: lifestyle/household
+featured: false
+rating: 5
+rating_count: 1
+user_count: 4
+size: 24.16KiB
+languages:
+  - English
+release_date: '2024-05-08T11:13:28.000Z'
+creation_date: '2024-04-25T10:52:56.000Z'
+description: >-
+  Streamline your cooking experience by decluttering recipe websites, featuring
+  ad-blocking and customized filtering.
+publisher_hash: ec1376a0f24618df9ae18f2d7ba9d24efd7ec6c97cd8abfce42682873a048b87
+publisher_account: semaanceline
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "AllSimpleRecipes",
+    "version": "1.0",
+    "description": "Streamline your cooking experience by decluttering recipe websites, featuring ad-blocking and customized filtering.",
+    "manifest_version": 3,
+
+    "permissions": [
+        "storage",
+        "declarativeNetRequest",
+        "declarativeNetRequestWithHostAccess"
+    ],
+
+    "background": {
+        "service_worker": "scripts/background.js"
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*.allrecipes.com/*"],
+            "js": ["scripts/start.js"],
+            "run_at": "document_start"
+        },
+        {
+            "matches": ["*://*.allrecipes.com/*"],
+            "js": ["scripts/content.js"],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": ["<all_urls>"],
+            "js": ["scripts/popup.js"]
+        }
+    ],
+
+    "host_permissions": [
+        "<all_urls>"
+    ],
+
+    "action": {
+        "default_title": "AllSimpleRecipes",
+        "default_popup": "popup.html"
+    },
+
+    "icons": {
+        "16": "images/icon-16.png",
+        "32": "images/icon-32.png",
+        "48": "images/icon-48.png",
+        "128": "images/icon-128.png"
+    },
+
+    "web_accessible_resources": [
+        {
+            "resources": ["styles/injected-styles.css"],
+            "matches": ["<all_urls>"]
+        }
+    ],
+
+    "declarative_net_request": {
+        "rule_resources": [{
+            "id": "ruleset_1",
+            "enabled": true,
+            "path": "rules.json"
+        }]
+    }
+}

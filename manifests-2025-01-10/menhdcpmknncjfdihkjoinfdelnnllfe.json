@@ -1,0 +1,107 @@
+---
+name: Intermedia Unite™ Chrome Extension
+version: 0.41.11
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 10
+user_count: 6000
+size: 1.72MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - Nederlands
+  - italiano
+  - русский
+  - 日本語
+release_date: '2024-07-04T09:15:11.000Z'
+creation_date: '2019-06-18T16:03:37.000Z'
+description: Intermedia Unite™ Chrome Extension
+publisher_hash: f3ee8477de2377a4aedc1d256235e45ae87764971dc46729c255bcb4fd0967e2
+publisher_account: Intermedia
+support_website: https://kb.intermedia.net
+privacy_policy: https://www.intermedia.net/assets/pdf/legal/PrivacyPolicy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "__MSG_manifest_name__",
+  "short_name": "__MSG_manifest_short_name__",
+  "description": "__MSG_manifest_description__",
+  "default_locale": "en",
+  "version": "0.41.11",
+  "icons": {
+    "64": "assets/images/logo-64.png",
+    "128": "assets/images/logo-128.png"
+  },
+  "action": {
+    "default_popup": "popup/index.html"
+  },
+  "background": {
+    "service_worker": "scripts/events.background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "exclude_globs": [
+        "*://meeting.*anymeeting*.com/**",
+        "*://webinar.*anymeeting*.com/**",
+        "*://meeting.gomeet*.com/**",
+        "*://webinar.meeting.gomeet*.com/**",
+        "*://meeting.rambomeet-*.com/**",
+        "*://webinar.meeting.rambomeet-*.com/**",
+        "*://meeting.meetuniverge.blue/**",
+        "*://webinar.meetuniverge.blue/**"
+      ],
+      "js": [
+        "scripts/ctc.content.js"
+      ],
+      "css": [
+        "assets/css/ctc.content.css"
+      ],
+      "run_at": "document_idle",
+      "all_frames": true
+    },
+    {
+      "matches": [
+        "https://www.google.com/calendar/*",
+        "https://calendar.google.com/calendar/*"
+      ],
+      "js": [
+        "scripts/gc.content.js"
+      ],
+      "css": [
+        "assets/css/gc.content.css"
+      ]
+    }
+  ],
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "host_permissions": [
+    "https://extend-api.intermedia.net/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "popup/index.html",
+        "assets/*"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox script-src 'self'; object-src 'self'"
+  }
+}

@@ -1,0 +1,85 @@
+---
+name: Comeet Sourcing for Chrome
+version: 0.1.7.4
+category_slug: productivity/workflow
+featured: false
+rating: 4
+rating_count: 4
+user_count: 1000
+size: 75.75KiB
+languages:
+  - English
+release_date: '2024-01-26T10:11:29.000Z'
+creation_date: '2017-02-09T12:52:19.000Z'
+description: Source candidates from LinkedIn with just the click of a button!
+publisher_hash: 9fb274defe21e37f42a2d6acd5c3eb6a842a4375a3b5ebcedf13e8379f55f99c
+publisher_account: Comeet
+publisher_address: |-
+  109 S 5th St
+  Brooklyn, New York 11249
+  United States
+extension_website: www.comeet.co
+extension_website_verified: false
+support_website: https://help.comeet.com/en/articles/3112493-comeet-sourcing-for-chrome
+privacy_policy: https://help.comeet.com/en/articles/5968370-privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Comeet Sourcing for Chrome",
+  "description": "Source candidates from LinkedIn with just the click of a button!",
+  "version": "0.1.7.4",
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Comeet",
+    "default_icon": {
+      "16": "common/img/co-16-blue.png",
+      "48": "common/img/co-48-blue.png",
+      "128": "common/img/co-128-blue.png"
+    }
+  },
+  "background": {
+    "service_worker": "background/background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*.linkedin.com/*", "https://*.linkedin.com/*"],
+      "css": ["content_scripts/styles.css"],
+      "js": [
+        "common/lib/jquery-3.1.1.min.js",
+        "common/lib/iframeResizer.min.js",
+        "common/js/extensionConfig.js",
+        "content_scripts/config.js",
+        "content_scripts/linkedinUtils.js",
+        "content_scripts/content.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["common/img/*"],
+      "matches": ["*://*/*"]
+    },
+    {
+      "resources": ["common/js/*", "common/lib/*"],
+      "matches": ["http://*.linkedin.com/*", "https://*.comeet.co/*", "https://*.comeet.com/*"]
+    }
+  ],
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "storage",
+    "webNavigation"
+  ],
+  "host_permissions": [
+    "*://*.comeet.co/*",
+    "http://*.linkedin.com/*",
+    "https://*.linkedin.com/*"
+  ],
+  "externally_connectable": {
+    "matches": ["*://localhost/*", "https://*.comeet.co/*"]
+  }
+}

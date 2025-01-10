@@ -1,0 +1,125 @@
+---
+name: Gluegent Gate AutoLogin
+version: 2.0.1
+category_slug: make_chrome_yours/privacy
+featured: false
+rating: null
+rating_count: null
+user_count: 24
+size: 245KiB
+languages:
+  - English
+  - 日本語
+release_date: '2024-12-18T07:11:04.000Z'
+creation_date: '2020-12-22T06:09:31.000Z'
+description: セシオス自動ログイン拡張機能。SSOサーバーに保存されている認証情報でサービスに自動ログインする。まずSSOサーバーにログインして下さい。
+publisher_hash: 39284c8832046f67357a03a97eb4189e7ffeeb97750c70598d939b06e474157a
+publisher: サイオステクノロジー株式会社
+publisher_account: service
+support_website: https://support.gluegent.com/
+privacy_policy: https://www.gluegent.com/privacy/privacy.html
+---
+
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Gluegent Gate AutoLogin",
+    "version": "2.0.1",
+    "description": "__MSG_description__",
+    "default_locale": "ja",
+    "minimum_chrome_version": "92",
+
+    "icons": {
+        "16": "images/logo_16.png",
+        "48": "images/logo_48.png",
+        "128": "images/logo_128.png"
+    },
+
+    "action": {
+        "default_popup": "popup/popup.html",
+        "default_title": "Gluegent Gate AutoLogin",
+        "default_icon": {
+            "16": "images/logo_16.png",
+            "48": "images/logo_48.png",
+            "128": "images/logo_128.png"
+        }
+    },
+
+    "background": {
+        "service_worker": "service_worker.js",
+
+        "scripts": [
+            "lib/constants.js",
+            "lib/aes.js",
+            "lib/slink_util.js",
+            "service_worker.js",
+            "background/autologin.js",
+            "background/recording.js"
+        ]
+    },
+
+    "content_scripts": [
+        {
+            "matches": ["*://*/*"],
+            "css": ["content/jquery-ui-1.12.1.embedded.css"],
+            "js": [
+                "lib/jquery-3.7.1.min.js", "lib/jquery-ui-1.12.1.min.js", "lib/bililiteRange.js", "lib/jquery.sendkeys.js",
+                "lib/slink_util.js", "lib/constants.js",
+                "content/autologin.js", "content/recording.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_idle"
+        }
+    ],
+
+    "externally_connectable" : {
+        "matches": ["*://*/*"]
+    },
+
+    "incognito" : "split",
+
+    "options_ui": {
+        "page": "options/options.html"
+    },
+
+    "web_accessible_resources": [
+        {
+          "resources": [
+            "lib/*",
+            "images/*"
+          ],
+          "matches": [
+            "*://*/*"
+          ]
+        }
+    ],
+
+    "content_security_policy": {
+       "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; style-src 'self' 'unsafe-inline';"
+    },
+
+    "permissions": [
+        "storage",
+        "cookies",
+        "tabs",
+        "activeTab",
+        "webRequest",
+        "webRequestAuthProvider",
+        "scripting"
+    ],
+
+    "host_permissions": [
+        "*://*/*"
+    ],
+
+    "browser_specific_settings": {
+        "gecko": {
+            "id": "{0386de0c-41e6-4487-8b6b-483026de76af}",
+            "strict_min_version": "109.0"
+        }
+    }
+
+}
+

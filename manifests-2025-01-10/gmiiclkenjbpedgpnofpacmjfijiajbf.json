@@ -1,0 +1,92 @@
+---
+name: uLav FRESH
+version: 1.0.6
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 12
+user_count: 95
+size: 54.65KiB
+languages:
+  - Français
+release_date: '2021-08-27T13:45:41.000Z'
+creation_date: '2020-04-01T08:21:04.000Z'
+description: La vie est trop courte pour se reconnecter constamment à Mon Portail.
+publisher_hash: cab762cd6aaa2307db48bb63e95056e612bd917ca39048ef54b801d929916902
+publisher_account: Frédéric Fortier-Chouinard
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "uLav FRESH",
+  "author": "Frédéric Fortier-Chouinard",
+  "version": "1.0.6",
+  "description": "La vie est trop courte pour se reconnecter constamment à Mon Portail.",
+  "permissions": [
+    "alarms",
+    "tabs",
+    "storage",
+    "contextMenus",
+    "webNavigation",
+    "https://*.ulaval.ca/*"
+  ],
+  "background": {
+    "scripts": [
+      "background/settingsManager.js",
+      "background/autoRefresh.js",
+      "background/browserAction.js",
+      "background/darkThemeManager.js"
+    ],
+    "persistent": false
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://authentification.ulaval.ca/*"
+      ],
+      "js": [
+        "contentScripts/loginScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://authentification.ulaval.ca/index.html?*erreur*"
+      ],
+      "js": [
+        "contentScripts/failedLoginScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://monportail.ulaval.ca/*",
+        "https://*.monportail.ulaval.ca/*",
+        "https://authentification.ulaval.ca/*"
+      ],
+      "js": [
+        "contentScripts/darkThemeInjector.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    "injectedStyles/dark-theme.css"
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "images/logo16.png",
+      "32": "images/logo32.png",
+      "48": "images/logo48.png",
+      "128": "images/logo128.png"
+    },
+    "default_title": "uLav FRESH",
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "16": "images/logo16.png",
+    "32": "images/logo32.png",
+    "48": "images/logo48.png",
+    "128": "images/logo128.png"
+  },
+  "manifest_version": 2
+}

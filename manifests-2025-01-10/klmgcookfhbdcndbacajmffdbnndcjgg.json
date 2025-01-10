@@ -1,0 +1,105 @@
+---
+name: CartaCx WhatsApp Múltiple
+version: 3.4.6
+category_slug: productivity/communication
+featured: false
+rating: 5
+rating_count: 1
+user_count: 795
+size: 505KiB
+languages:
+  - español (Latinoamérica)
+release_date: '2024-12-11T15:09:54.000Z'
+creation_date: '2023-08-14T04:42:39.000Z'
+description: Extensión de CartaCx para envío de cartas por WhatsApp
+publisher_hash: 91ba49c3240891bdaaddaf097d93fa247d219a8c77f94d8eb3303a08da338269
+publisher: ADP PUNTO MX
+publisher_account: devlog
+publisher_address: |-
+  Blvd. Adolfo López Mateos 1936
+  Oficina 402
+  Ciudad de México, CDMX 01049
+  MX
+extension_website: adpunto.mx
+extension_website_verified: true
+support_website: https://www.adpdev.com/adp/cartas/system/crisp-chat/index.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "version": "3.4.6",
+    "manifest_version":3,
+    "name":"CartaCx WhatsApp Múltiple",
+    "description":"Extensión de CartaCx para envío de cartas por WhatsApp",
+
+    "action":{
+        "default_icon": "img/cartas-logo16.png",
+        "default_title" : "CartaCx WhatsApp Múltiple",
+        "default_popup": "popup.html"
+    },
+
+    "icons": {
+        "16": "img/cartas-logo16.png",
+        "32": "img/cartas-logo32.png",
+        "48": "img/cartas-logo48.png",
+        "128": "img/cartas-logo128.png"
+    },
+
+    "background":{
+        "service_worker": "js/background.js",
+        "type": "module"
+    },
+    "permissions":[
+        "tabs",
+        "activeTab", 
+        "scripting",
+        "storage",
+        "webRequest",
+        "webNavigation"
+    ],
+
+    "host_permissions": [
+        "https://www.adpdev.com/adp/cartas/*",
+        "https://app.carta.cx/*",
+        "https://0cg43psd3f.execute-api.us-east-1.amazonaws.com/*"
+    ],
+
+    "externally_connectable": {
+        "ids": ["*"],
+        "matches": [
+            "https://www.adpdev.com/*",
+            "https://app.carta.cx/*"
+        ]
+    },
+
+    "commands": {
+        "open-whatsapp": {
+          "suggested_key": {
+            "default": "Ctrl+Shift+O",
+            "mac": "Command+Shift+O"
+          },
+          "description": "Abre WhatsApp Web"
+        }
+    },
+    "content_scripts":[
+        {
+            "matches": ["https://*.web.whatsapp.com/*"],
+            "js": ["js/content-script-whatsapp.js"],
+            "world": "MAIN"
+        },
+        {
+            "matches": ["https://nsomx.my.site.com/*"],
+            "js": ["js/content-script-salesforce.js"]
+        },
+        {
+            "matches": ["https://*.web.whatsapp.com/*"],
+            "js": ["js/whatsappContent.js"]
+        }
+    ],
+    "web_accessible_resources": [{
+        "resources": ["js/content-script-whatsapp.js"],
+        "matches": ["https://*.web.whatsapp.com/*"]
+    }]
+
+}

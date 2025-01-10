@@ -1,0 +1,64 @@
+---
+name: Prompt Dress
+version: 0.2.0
+category_slug: productivity/workflow
+featured: true
+rating: null
+rating_count: null
+user_count: 142
+size: 2.67MiB
+languages:
+  - English (United States)
+release_date: '2023-12-18T09:11:01.000Z'
+creation_date: '2023-08-17T08:39:18.000Z'
+description: A browser extension that helps you store and manage your AI prompts.
+publisher_hash: 766218fbbc63c20a23aee2b5c49aff194fa585a2d6ebd8a46bf4744d86203406
+publisher_account: k8603427
+support_website: https://prompt-dress.com/support
+privacy_policy: https://prompt-dress.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Prompt Dress",
+    "version": "0.2.0",
+    "description": "A browser extension that helps you store and manage your AI prompts.",
+    "author": "Konstantin Kovar <prompt-dress@vomkonstant.in>",
+    "icons": {
+        "16": "./icons/icon16.png",
+        "48": "./icons/icon48.png",
+        "128": "./icons/icon128.png"
+    },
+    "action": {
+        "default_title": "Prompt Dress",
+        "default_popup": "./src/popup/index.html",
+        "default_icon": {
+            "48": "./icons/icon48.png"
+        }
+    },
+    "background": {
+        "service_worker": "./background.js"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "https://chat.openai.com/*"
+            ],
+            "js": [
+                "./set-interval-async.js",
+                "./prompt-chat-gpt.js"
+            ],
+            "run_at": "document_idle"
+        }
+    ],
+    "options_ui": {
+        "page": "./src/options/index.html",
+        "open_in_tab": true
+    },
+    "permissions": [
+        "contextMenus",
+        "storage"
+    ]
+}

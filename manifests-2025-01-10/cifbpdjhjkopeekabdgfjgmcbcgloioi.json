@@ -1,0 +1,78 @@
+---
+name: Cool Translator
+version: 2.1.0
+category_slug: make_chrome_yours/accessibility
+featured: true
+rating: 4.294117647058823
+rating_count: 17
+user_count: 301
+size: 1.22MiB
+languages:
+  - English
+release_date: '2023-03-28T11:11:04.000Z'
+creation_date: '2015-06-14T18:40:48.000Z'
+description: >-
+  Translate words on the page. Type in and translate words in Cool Translator
+  popup. Translate subtitles while you watch Netflix.
+publisher_hash: 64c487ed6244c7f19b8afbb0536168fef836aeb36f3d4c51d9803ba4e1ac160c
+publisher_account: wsbaser
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "author": "wsbaser",
+  "manifest_version": 3,
+  "name": "Cool Translator",
+  "version": "2.1.0",
+  "description": "Translate words on the page. Type in and translate words in Cool Translator popup. Translate subtitles while you watch Netflix.",
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "icons": {
+      "16": "icons/icon16.png",
+      "48": "icons/icon48.png",
+      "128": "icons/icon128.png"
+   },
+  "content_scripts": [{
+    "all_frames": false,
+    "js": [
+      "assets/injectcontentiframe.js"
+      ],
+    "css": [],
+    "matches": [ "<all_urls>" ],
+    "run_at": "document_end"
+  },{
+    "js": [
+      "assets/netflixsubtitles.js"
+      ],
+    "matches": [ "https://www.netflix.com/*" ],
+    "run_at": "document_end"
+  }],
+  "background": {
+    "service_worker": "assets/background.js"
+  },
+  "host_permissions": ["<all_urls>"],
+  "permissions": ["storage"],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "assets/content.js",
+        "content_iframe.html", 
+        "assets/images/linguee/sprites14.png", 
+        "assets/images/ll/sound.png",
+        "assets/images/ll/marker.png",
+        "assets/images/ll/blank.gif",
+        "assets/images/bg.png",
+        "assets/images/icon16.png",
+        "assets/images/add.png",
+        "assets/images/flags.png",
+        "assets/images/sprites.png"
+      ],
+      "matches": [ "<all_urls>" ]
+    }
+  ],
+  "externally_connectable": {
+    "matches": [ "http://localhost:13189/*", "http://localhost/*"]
+  }
+}

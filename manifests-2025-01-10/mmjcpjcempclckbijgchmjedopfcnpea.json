@@ -1,0 +1,75 @@
+---
+name: Nocturnal Surfer Extension
+version: 1.0.1
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 22
+size: 700KiB
+languages:
+  - English
+release_date: '2021-09-07T22:04:50.000Z'
+creation_date: '2021-07-06T03:58:17.000Z'
+description: Inverted display mode for less eye strain in dark or dim lighting
+publisher_hash: e13eef57a5f23d5ca97850975b817e8c4140af7a18ef6f50a09a9d33392c4878
+publisher: BrowserTech
+publisher_address: |-
+  3513 McClaflin Dr
+  Enid, OK 73701
+  US
+extension_website: browsertech.co
+extension_website_verified: false
+privacy_policy: https://browsertech.co/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Nocturnal Surfer Extension",
+  "short_name": "Nocturnal Surfer",
+  "homepage_url": "https://nocturnalsurfer.browsertech.co",
+  "description": "Inverted display mode for less eye strain in dark or dim lighting",
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "activeTab",
+    "tabs",
+    "https://api.browsertech.co/nightlight/"
+  ],
+  "version": "1.0.1",
+  "browser_action": {
+    "default_icon": "public/images/icon.png",
+    "default_title": "Toggle night mode"
+  },
+  "icons": {
+    "16": "public/images/bd-16.png",
+    "32": "public/images/bd-32.png",
+    "48": "public/images/bd-48.png",
+    "128": "public/images/bd-128.png"
+  },
+  "chrome_url_overrides": {
+    "newtab": "landing.html"
+  },
+  "web_accessible_resources": ["images/*.*"],
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": ["content_script_start.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": ["content_script_idle.js"],
+      "matches": ["http://*/*", "https://*/*"],
+      "run_at": "document_idle"
+    }
+  ],
+  "content_security_policy": "script-src 'self' https://ssl.google-analytics.com; object-src 'self';style-src 'self' 'unsafe-inline' *;media-src *;"
+}

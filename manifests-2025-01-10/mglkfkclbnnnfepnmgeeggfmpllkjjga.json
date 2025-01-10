@@ -1,0 +1,220 @@
+---
+name: Sellha
+version: 2.1.0
+category_slug: productivity/tools
+featured: false
+rating: 4.25
+rating_count: 8
+user_count: 10000
+size: 38.3MiB
+languages:
+  - 한국어
+release_date: '2024-12-05T10:17:26.000Z'
+creation_date: '2022-02-17T07:27:29.000Z'
+description: Sellha Chrome Extension
+publisher_hash: 8cb5df3567695a172b20d2e2c87faaeee49df1fee6ac8385767807b7d0c134c6
+publisher: '-'
+publisher_account: ilovemalanghoney
+publisher_address: |-
+  센텀중앙로97
+  센텀스카이비즈 2701호
+  해운대구, 부산광역시 48058
+  KR
+privacy_policy: https://sellha.kr/policy/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sellha",
+  "version": "2.1.0",
+  "description": "Sellha Chrome Extension",
+  "icons": {
+    "16": "icons/logo_s.png",
+    "32": "icons/logo_s.png",
+    "48": "icons/logo_s.png",
+    "128": "icons/logo_s.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Sellha",
+    "default_icon": "icons/logo_s.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": [
+    "storage",
+    "tabs",
+    "declarativeNetRequest",
+    "declarativeNetRequestFeedback",
+    "declarativeNetRequestWithHostAccess",
+    "cookies"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "ruleset_1",
+        "enabled": true,
+        "path": "rules.json"
+      }
+    ]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["test.png"],
+      "matches": [
+        "*://*.sellha.kr/*",
+        "*://*.sellha.co.kr/*",
+        "*://*.sellha.net/*",
+        "http://localhost/*"
+      ]
+    }
+  ],
+  "host_permissions": [
+    "*://*.sellha.kr/*",
+    "*://*.sellha.co.kr/*",
+    "*://*.sellha.net/*",
+    "*://brand.naver.com/*",
+    "*://m.brand.naver.com/*",
+    "*://shopping.naver.com/*",
+    "*://*.shopping.naver.com/*",
+    "*://m.smartstore.naver.com/*",
+    "*://smartstore.naver.com/*",
+    "http://localhost/*",
+    "*://www.coupang.com/*",
+    "*://m.coupang.com/*",
+    "https://adcr.naver.com/*",
+    "https://search.shopping.naver.com/*",
+    "*://*.coupang.com/*",
+    "*://advertising.coupang.com/*",
+    "http://www.smbs.biz/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*.sellha.kr/*",
+        "*://*.sellha.co.kr/*",
+        "*://*.sellha.net/*",
+        "http://localhost/*"
+      ],
+      "run_at": "document_idle",
+      "js": [
+        "pdContentScript.js",
+        "rtContentScript.js",
+        "bdContentScript.js",
+        "bpContentScript.js"
+      ]
+    },
+    {
+      "matches": [
+        "https://smartstore.naver.com/*",
+        "https://brand.naver.com/*",
+        "https://shopping.naver.com/*"
+      ],
+      "css": ["sellhaCommon.css", "insertProductDetail.css"],
+      "js": [
+        "chartjs.js",
+        "chartjs-plugin-datalabels.min.js",
+        "axios/axios.min.js",
+        "insertProductDetail.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://advertising.coupang.com/marketing/dashboard/pa"],
+      "js": ["coupangCpcScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://detail.1688.com/*"],
+      "js": ["pluginScript1688.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://cart.1688.com/*"],
+      "js": ["test.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://xauth.coupang.com/auth/*"],
+      "js": ["authCoupangScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://advertising.coupang.com/user/*"],
+      "js": ["authAdCoupangScript.js"],
+      "run_at": "document_start"
+    },
+
+    {
+      "matches": [
+        "https://wing.coupang.com/tenants/seller-web/post-matching/page/matching-view"
+      ],
+      "js": ["coupangViewsScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://wing.coupang.com/"],
+      "js": ["coupangWingScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://search.shopping.naver.com/search/*"],
+      "js": ["chartjs.js", "searchShoppingNaverScript.js"],
+      "css": ["sellhaCommon.css", "searchShoppingNaverScript.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://search.shopping.naver.com/ns/search*"],
+      "js": ["chartjs.js", "searchShoppingNaverPlusScript.js"],
+      "css": ["sellhaCommon.css", "searchShoppingNaverScript.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://search.shopping.naver.com/catalog/*"],
+      "js": ["getDocument.js", "axios/axios.min.js", "catalogScript.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.coupang.com/np/search?*"],
+      "js": ["searchShoppingCoupangScript.js"],
+      "css": ["sellhaCommon.css", "searchShoppingCoupang.css"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.coupang.com/vp/products/*"],
+      "css": [
+        "sellhaCommon.css",
+        "insertProductDetail.css",
+        "coupangProduct.css"
+      ],
+      "js": [
+        "chartjs.js",
+        "chartjs-plugin-datalabels.min.js",
+        "axios/axios.min.js",
+        "coupangProductScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://cafe.naver.com/*"],
+      "js": ["naverCafeScript.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://advertising.coupang.com/dashboard"],
+      "js": ["advertisingCoupangMarketingReportScript.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.sellha.kr/*",
+      "*://*.sellha.co.kr/*",
+      "*://*.sellha.net/*",
+      "http://localhost/*"
+    ]
+  }
+}

@@ -1,0 +1,71 @@
+---
+name: Flix Trix!
+version: 1.1.3
+category_slug: lifestyle/fun
+featured: false
+rating: 5
+rating_count: 2
+user_count: 81
+size: 41.28KiB
+languages:
+  - English
+release_date: '2023-06-22T04:09:07.000Z'
+creation_date: '2021-02-27T05:48:26.000Z'
+description: Tools for your streaming services. Works with Netflix, Amazon, and Disney+!
+publisher_hash: 90a8550c094682f29343116dc25c64f66e3f5fd3586fe8c4993a93dc320d69e7
+publisher_account: Flix Trix
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "Flix Trix!",
+  "description": "Tools for your streaming services. Works with Netflix, Amazon, and Disney+!",
+  "version": "1.1.3",
+  "icons": {"128": "icon_128.png"},
+  "browser_action": {
+    "default_icon": "icon.png",
+    "default_popup": "popup.html",
+    "default_title": "Flix Trix!"
+  },
+  "permissions": [
+    "storage",
+    "webNavigation",
+    "*://www.netflix.com/browse/my-list",
+    "*://www.netflix.com/browse",
+    "*://www.disneyplus.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": ["*://www.netflix.com/browse/my-list"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://www.netflix.com/browse"],
+      "js": ["continue_watching_to_top.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://www.disneyplus.com/*"],
+      "js": ["continue_watching_to_top.js"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": ["*://www.disneyplus.com/*/watchlist"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://*/gp/video/mystuff/*"],
+      "js": ["content.js"]
+    },
+    {
+      "matches": ["*://*/gp/video/storefront/*"],
+      "js": ["continue_watching_to_top.js"],
+      "run_at": "document_idle"
+    }
+  ],
+  "background": {
+    "scripts": ["background.js"]
+  }
+}

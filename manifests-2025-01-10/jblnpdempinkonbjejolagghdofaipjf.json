@@ -1,0 +1,55 @@
+---
+name: Chess.com to Lichess Import
+version: '0.80'
+category_slug: lifestyle/fun
+featured: false
+rating: 3.769230769230769
+rating_count: 13
+user_count: 736
+size: 3.34MiB
+languages:
+  - English (United States)
+release_date: '2024-02-24T12:01:44.000Z'
+creation_date: '2021-06-02T12:46:28.000Z'
+description: Allows users to import Chess.com games into Lichess with one click
+publisher_hash: 09ac6ee00d456731b83fae79db05cbe7fda01b0cf6799b204f166415cf80b433
+publisher_account: 17victork
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Chess.com to Lichess Import",
+  "description": "Allows users to import Chess.com games into Lichess with one click",
+  "version": "0.80",
+  "icons":{
+    "48":"logo48.png",
+    "128":"logo128.png"
+  },
+  "action": {
+    "default_popup": "./donation.html"
+  },
+  "permissions": [
+    "storage",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "https://lichess.org/*"
+  ],
+  "background": {
+    "service_worker": "./scripts/background.js",
+    "type": "module"
+  },
+  "web_accessible_resources": [{
+    "resources": ["table.html", "scripts/*", "styles/*"],
+    "matches": ["https://www.chess.com/*", "https://lichess.org/*"],
+    "use_dyanmics_url": true
+  }],
+  "content_scripts": [
+    {
+      "matches": ["https://www.chess.com/*", "https://lichess.org/*"],
+      "js": ["./scripts/ratingWindow.js", "./scripts/injectHtmlButtonToPage.js", "./scripts/lichessPressAnalysis.js"]
+    }
+  ],
+  "manifest_version": 3
+}

@@ -1,0 +1,105 @@
+---
+name: TeamCity Notifier
+version: 0.0.26
+category_slug: productivity/developer
+featured: false
+rating: 2.7777777777777777
+rating_count: 9
+user_count: 3000
+size: 623KiB
+languages:
+  - English
+release_date: '2025-01-09T15:50:16.000Z'
+creation_date: '2020-04-29T00:03:47.000Z'
+description: Shows notifications about various events in TeamCity
+publisher_hash: a6717aa3150782a5036d6dcafef39954f180c40245015d0997d4451fe3e7b8eb
+publisher: JetBrains s.r.o
+publisher_account: JetBrains
+publisher_address: |-
+  Na Hřebenech II 1718/8
+  Praha 140 00
+  CZ
+publisher_phone: '+420601527473'
+extension_website: jetbrains.com
+extension_website_verified: true
+privacy_policy: https://www.jetbrains.com/legal/docs/privacy/privacy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "TeamCity Notifier",
+  "version": "0.0.26",
+  "description": "Shows notifications about various events in TeamCity",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "teamcity-notifier-extension@jetbrains.com"
+    }
+  },
+  "permissions": [
+    "storage",
+    "notifications",
+    "declarativeNetRequestWithHostAccess",
+    "background",
+    "offscreen"
+  ],
+  "host_permissions": [
+    "<all_urls>"
+  ],
+  "icons": {
+    "16": "assets/action-icon-16.png",
+    "32": "assets/icon-32.png",
+    "48": "assets/icon-48.png",
+    "96": "assets/icon-96.png",
+    "128": "assets/icon-128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "assets/action-icon-disabled-16.png",
+      "24": "assets/action-icon-disabled-24.png",
+      "32": "assets/action-icon-disabled-32.png"
+    },
+    "default_title": "TeamCity Notifier",
+    "default_popup": "dist/popup.html"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "all_frames": true,
+      "js": [
+        "detect/content.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://*/*"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "js": [
+        "notify/content.js"
+      ]
+    }
+  ],
+  "options_ui": {
+    "page": "dist/options.html",
+    "browser_style": true
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "detect/inject.js",
+        "notify/inject.js"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ]
+}

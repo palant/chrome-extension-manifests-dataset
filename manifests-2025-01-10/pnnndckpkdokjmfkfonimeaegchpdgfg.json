@@ -1,0 +1,88 @@
+---
+name: Meetask Meeting Recorder
+version: 3.0.0
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 3
+user_count: 7
+size: 42.12KiB
+languages:
+  - English
+release_date: '2024-08-07T07:33:23.000Z'
+creation_date: '2023-07-18T08:47:32.000Z'
+description: This extension is only for Meetask app!
+publisher_hash: c60347f7ee724f896bbab41ac71eeb821df64169b79a4a8f9dc28132d50100a7
+publisher: SmartyX GmbH
+publisher_account: SmartyX.ai
+publisher_address: |-
+  Martinshardt 19
+  Siegen 57074
+  DE
+extension_website: smartyx.ai
+extension_website_verified: true
+support_website: https://www.smartyx.ai/contact
+privacy_policy: https://www.smartyx.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Meetask Meeting Recorder",
+  "description": "This extension is only for Meetask app!",
+  "version": "3.0.0",
+  "manifest_version": 3,
+  "action": {
+    "default_icon": "/images/MeeTask-logo-deactive.png",
+    "default_popup": "popup/popup.html",
+    "default_title": "Open MeeTask Meeting Recorder interface"
+  },
+  "icons": {
+    "16": "/images/smartyx-logo-16.png",
+    "32": "/images/smartyx-logo-32.png",
+    "64": "/images/smartyx-logo-64.png",
+    "128": "/images/smartyx-logo-128.png"
+  },
+  "background": {
+    "service_worker": "serviceWorker/service-worker.js"
+  },
+  "permissions": ["tabs", "tabCapture", "offscreen"],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://localhost/*",
+        "https://test.smartyx.ai/*",
+        "https://www.test.smartyx.ai/*",
+        "https://meetask.smartyx.ai/*",
+        "https://www.meetask.smartyx.ai/*"
+      ],
+      "js": ["scripts/recorder-content-script.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["scripts/meeting-content-script.js"],
+      "run_at": "document_start",
+      "all_frames": true,
+      "exclude_matches": [
+        "http://localhost/*",
+        "https://test.smartyx.ai/*",
+        "https://www.test.smartyx.ai/*",
+        "https://meetask.smartyx.ai/*",
+        "https://www.meetask.smartyx.ai/*"
+      ]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["extensionWorklet/AudioRecorderProcessor.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": [
+        "streamController/streamController.html",
+        "images/MeeTask-logo.png"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

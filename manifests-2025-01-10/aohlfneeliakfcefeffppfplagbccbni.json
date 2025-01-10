@@ -1,0 +1,107 @@
+---
+name: Sortd for Gmail
+version: 2.3.483.14042
+category_slug: productivity/workflow
+featured: true
+rating: 4.055327868852459
+rating_count: 488
+user_count: 50000
+size: 8.7MiB
+languages:
+  - English
+release_date: '2024-12-17T04:19:15.000Z'
+creation_date: '2013-11-11T12:30:28.000Z'
+description: >-
+  All-in-one Sales, Service, Help Desk & Task Manager for Gmail teams. Visual
+  boards right in Gmail to share, assign and track emails.
+publisher_hash: 0fac6199009ec95cdfdefcaae86eb8f20253cdb87aade2aa34b5a075b15adda7
+publisher: Sortd Inc
+publisher_account: Sortd
+publisher_address: |-
+  9450 SW Gemini Dr
+  Beaverton, OR 97008-7105
+  US
+publisher_phone: '+27832787690'
+extension_website: www.sortd.com
+extension_website_verified: true
+support_website: http://sortd.freshdesk.com
+privacy_policy: https://www.sortd.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "Sortd for Gmail",
+ "short_name": "Sortd",
+ "description": "All-in-one Sales, Service, Help Desk & Task Manager for Gmail teams. Visual boards right in Gmail to share, assign and track emails.",
+ "version": "2.3.483.14042",
+ "declarative_net_request": {
+  "rule_resources": []
+ },
+ "permissions": ["storage", "scripting", "declarativeNetRequestWithHostAccess"],
+ "optional_permissions": ["notifications"],
+ "host_permissions": ["https://app.sortd.com/*", "https://mail.google.com/*"],
+ "optional_host_permissions": ["*://*.googleusercontent.com/*", "*://*.sortd.com/*"],
+ "content_security_policy": {
+  "extension_pages": "script-src 'self'; object-src 'self'"
+ },
+ "web_accessible_resources": [
+  {
+   "resources": [
+    "css/*",
+    "img/*",
+    "lib/*",
+    "templates/*",
+    "pageWorld.js",
+    "frameWrapper.js",
+    "videoFrameWrapper.js",
+
+    "components/polyfills.js",
+    "components/main.js",
+
+    "main.js"
+   ],
+   "matches": ["https://mail.google.com/*"]
+  }
+ ],
+ "icons": {
+  "16": "img/icons/sortd_icon_16x16.png",
+  "48": "img/icons/sortd_icon_48x48.png",
+  "128": "img/icons/sortd_icon_128x128.png"
+ },
+ "background": {
+  "service_worker": "background.js",
+  "type": "module"
+ },
+ "content_scripts": [
+  {
+   "matches": ["https://mail.google.com/*"],
+   "exclude_matches": [
+    "https://mail.google.com/*&view=*",
+    "https://mail.google.com/*/?view=*",
+    "https://mail.google.com/mail/mu/background*",
+    "https://mail.google.com/mail/u/*/h/*/?*",
+    "https://mail.google.com/chat/*"
+   ],
+   "run_at": "document_idle",
+   "js": [
+    "lib/webcomponents-ce.js",
+    "lib/jquery.min.js",
+    "lib/kefir.min.js",
+    "lib/pickadate/picker.js",
+    "lib/pickadate/picker.date.js",
+
+    "load.js"
+   ]
+  },
+  {
+   "matches": ["https://app.sortd.com/su/*/indexce"],
+   "js": ["login/indexce.js"]
+  },
+  {
+   "matches": ["https://app.sortd.com/login/*"],
+   "js": ["login/authfailure.js"]
+  }
+ ]
+}

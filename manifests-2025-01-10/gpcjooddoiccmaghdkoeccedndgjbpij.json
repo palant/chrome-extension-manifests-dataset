@@ -1,0 +1,65 @@
+---
+name: Flappypedia
+version: 0.0.7
+category_slug: productivity/workflow
+featured: true
+rating: 5
+rating_count: 2
+user_count: 30
+size: 224KiB
+languages:
+  - English
+release_date: '2022-10-30T08:45:03.000Z'
+creation_date: '2022-10-20T07:52:01.000Z'
+description: Flappypedia is a product that makes knowledge alive and within reach.
+publisher_hash: 7299c0cd9849ff035f19c5c2b68aa2e71cd9106108d743e5d4b22ecf8f2b1bb5
+publisher_account: flappypedia
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "Flappypedia",
+    "description": "Flappypedia is a product that makes knowledge alive and within reach.",
+    "version": "0.0.7",
+    "default_locale": "en",
+    "background": {
+        "service_worker": "/background.js"
+    },
+    "permissions": ["activeTab", "cookies"],
+    "host_permissions": [
+        "https://flappypedia.com/*"
+    ],
+    "action": {
+        "default_popup": "popup.html"
+    },
+    "icons": {
+        "16": "icons/flappy_logo_x1.png",
+        "48": "icons/flappy_logo_x2.png",
+        "128": "icons/flappy_logo_x3.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "/content.js",
+                "/injectors/google_docs_injector.js"
+            ]
+        },
+        {
+            "all_frames": true,
+            "js": ["injector.js"],
+            "matches": ["*://docs.google.com/document/*"],
+            "run_at": "document_start"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["*.js", "*.css"],
+            "matches": ["<all_urls>"]
+        }
+    ]
+}

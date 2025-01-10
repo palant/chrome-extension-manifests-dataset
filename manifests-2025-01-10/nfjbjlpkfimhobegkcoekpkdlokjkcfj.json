@@ -1,0 +1,153 @@
+---
+name: Save and search with Stacks
+version: 2.6.5
+category_slug: productivity/tools
+featured: true
+rating: 4.2631578947368425
+rating_count: 19
+user_count: 2000
+size: 2.09MiB
+languages:
+  - English (United States)
+release_date: '2024-12-20T05:05:04.000Z'
+creation_date: '2022-01-20T11:45:43.000Z'
+description: Stacks is your personal search engine. Recall bookmarks automatically.
+publisher_hash: 506aab622f34cf5d246a12bb0801c3db5fa8beb78e63b75790741abdd98c3edc
+publisher_account: Better Stacks
+extension_website: betterstacks.com
+extension_website_verified: true
+support_website: https://airtable.com/shrNknmfzfl56Aqpe
+privacy_policy: https://betterstacks.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Save and search with Stacks",
+  "description": "Stacks is your personal search engine. Recall bookmarks automatically.",
+  "version": "2.6.5",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Stacks - save, search and share bookmarks instantly",
+    "default_icon": "logo.png"
+  },
+  "permissions": [
+    "favicon",
+    "activeTab",
+    "tabs",
+    "bookmarks",
+    "storage",
+    "contextMenus",
+    "scripting",
+    "webRequest"
+  ],
+  "icons": {
+    "16": "logo.png",
+    "48": "logo.png",
+    "128": "logo.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+
+  "commands": {
+    "StackSearchCommand": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+K",
+        "mac": "Shift+Command+K"
+      },
+      "description": "Search with Stacks"
+    }
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://betterstacks.com/*"],
+      "js": ["contentScript.js"]
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": [
+        "jquery-2.1.3.min.js",
+        "contentScriptPage.js",
+        "saveAllTabs.js",
+        "annotationCommentsScript.js",
+        "annotationCommentsPage.js",
+        "conversationAssistantContentScript.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://github.com/*"],
+      "js": ["githubScript.js"]
+    },
+    {
+      "matches": ["https://x.com/*"],
+      "js": ["twitterScript.js"]
+    },
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "js": ["instagramScript.js"]
+    },
+    {
+      "js": ["contentScriptForTwitter.js"],
+      "matches": ["https://x.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["contentScriptForLinkedIn.js"],
+      "matches": ["https://www.linkedin.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://www.linkedin.com/*"],
+      "js": ["linkedInSciptPage.js"]
+    },
+    {
+      "matches": ["https://www.facebook.com/*"],
+      "js": ["facebookSciptPage.js"]
+    },
+    {
+      "matches": ["https://www.instagram.com/*"],
+      "js": ["contentScriptForInstagram.js"]
+    },
+    {
+      "js": ["contentScriptForYoutube.js"],
+      "matches": ["https://www.youtube.com/*"],
+      "run_at": "document_start"
+    },
+    {
+      "js": ["contentScriptForSavingImage.js"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "matches": ["https://www.perplexity.ai/search/*"],
+      "js": ["perplexityContentScript.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://www.phind.com/*"],
+      "js": ["phindContentScript.js"],
+      "run_at": "document_end"
+    }
+  ],
+
+  "host_permissions": [
+    "https://x.com/*",
+    "https://www.linkedin.com/*",
+    "https://github.com/*",
+    "https://www.instagram.com/*",
+    "https://api.mixpanel.com/*"
+  ],
+
+  "web_accessible_resources": [
+    {
+      "resources": ["assets/*"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; script-src-elem 'self' 'unsafe-inline'"
+  }
+}

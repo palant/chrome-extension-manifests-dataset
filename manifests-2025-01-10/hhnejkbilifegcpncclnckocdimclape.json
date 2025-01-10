@@ -1,0 +1,91 @@
+---
+name: AliExplore | AliExpress Image Downloader
+version: 5.7.3
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 82
+user_count: 528
+size: 613KiB
+languages:
+  - English (United States)
+release_date: '2023-02-24T11:06:53.000Z'
+creation_date: '2021-01-23T04:40:00.000Z'
+description: Downloads AliExpress product images and videos with single click.
+publisher_hash: 23948d9b35252a879e81332667adc21769645988f960acd543c1b7bdf29681da
+publisher_account: Hellinex
+support_website: https://sites.google.com/view/privacy-policy-aliexpress/home
+privacy_policy: https://www.alisuperplus.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+   
+    "manifest_version":2,
+    "name":"AliExplore | AliExpress Image Downloader",
+    "description":"Downloads AliExpress product images and videos with single click.",
+    "version":"5.7.3",
+    "content_security_policy":"script-src 'self' 'unsafe-eval'; object-src 'self'",
+    "icons":{
+        "16":"./public/icon_16.png",
+        "48":"./public/icon_48.png",
+        "128":"./public/icon_128.png"
+    },
+    "browser_action":{
+        "default_popup":"popup.html",
+        "default_icon":{
+            "16":"./public/icon_16.png",
+            "48":"./public/icon_48.png"
+        }
+    },
+    "content_scripts":[
+        {
+            "matches":[
+                "*://*.aliexpress.com/item/*",
+                "*://*.aliexpress.com/store/product/*",
+                "*://*.aliexpress.ru/item/*",
+                "*://*.aliexpress.ru/store/product/*"
+            ],
+            "run_at":"document_idle",
+            "js":[
+                "./productPage.min.js"
+            ],
+            "css":[
+                "./css/inject/fontawesome.min.css",
+                "./css/inject/styles.css"
+            ]
+        },
+        {
+            "matches":[
+                "*://*.aliexpress.com/*",
+                "*://*.aliexpress.ru/*"
+            ],
+            "run_at":"document_idle",
+            "css":[
+                "./css/inject/fontawesome.min.css",
+                "./css/inject/styles.css"
+            ]
+        }
+    ],
+    "background":{
+        "scripts":[
+            "./background.min.js"
+        ],
+        "persistent":true
+    },
+    "permissions":[
+        "storage",
+        "webRequest",
+        "webRequestBlocking",
+        "*://*.aliexpress.com/",
+        "*://*.aliexpress.ru/",
+        "*://*.alicdn.com/",
+        "*://cloud.video.taobao.com/",
+        "*://fedotech.com/"
+    ],
+    "web_accessible_resources":[
+        "public/**/*.png",
+        "public/**/*.jpg",
+        "public/*.woff2"
+    ]
+}

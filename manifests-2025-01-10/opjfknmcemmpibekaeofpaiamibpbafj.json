@@ -1,0 +1,65 @@
+---
+name: Viborg Skole/Dagtilbud login hjælper
+version: 0.0.1
+category_slug: make_chrome_yours/accessibility
+featured: false
+rating: 3
+rating_count: 2
+user_count: 10000
+size: 2.21MiB
+languages:
+  - dansk
+release_date: '2020-10-06T06:56:08.000Z'
+creation_date: '2020-10-06T06:56:08.000Z'
+description: Simpel lille extension der automatiserer STIL broker login flow
+publisher_hash: 0c7521039003793bc7510ae8b5f195e8b40c1c310ac6ee503856c113cd4ad0e7
+publisher_account: Viborg Skole Dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Viborg Skole/Dagtilbud login hjælper",
+  "version": "0.0.1",
+  "description": "Simpel lille extension der automatiserer STIL broker login flow",
+  "permissions": ["storage"],
+  "browser_action":{
+    "default_popup": "popup.html",
+    "default_title": "Viborg Skole/Dagtilbud login hjælper"
+  },
+  "background": {
+    "scripts": ["background.js"],
+    "persistent": false
+  },
+  "options_page": "options.html",
+  "content_scripts": [
+    {
+      "matches": [
+        "https://broker.unilogin.dk/auth/realms/broker/*"
+      ],
+      "exclude_globs": [
+        "*post-broker-login*"
+      ],
+      "js": ["handler.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["https://adfs.viborgskoler.dk/adfs/*"],
+      "exclude_globs": [
+        "https://adfs.viborgskoler.dk/adfs/*&RedirectToIdentityProvider=AD+AUTHORITY*"
+      ],
+      "js": ["redirectToAdAuthority.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "icons": {
+    "16": "images/lock16.png",
+    "32": "images/lock32.png",
+    "48": "images/lock48.png",
+    "128": "images/lock120.png"
+  },
+  "web_accessible_resources": [
+    "images/*.gif"
+  ],
+  "manifest_version": 2
+}

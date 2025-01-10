@@ -1,0 +1,93 @@
+---
+name: Debugger for Google Analytics 4 (GA4)
+version: 3.4.15
+category_slug: productivity/developer
+featured: true
+rating: 4
+rating_count: 29
+user_count: 30000
+size: 102KiB
+languages:
+  - English (United States)
+release_date: '2024-09-12T10:46:24.000Z'
+creation_date: '2022-11-02T07:06:17.000Z'
+description: Browser DevTools extension for debugging Google Analytics 4 (GA4) events.
+publisher_hash: 2904b5c1d7e36601862b981b4a9f7b3b057f67d2e4bb14bc52b17c030b083781
+publisher_account: James Yoon
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Debugger for Google Analytics 4 (GA4)",
+  "version": "3.4.15",
+  "version_name": "3.4.15",
+  "description": "Browser DevTools extension for debugging Google Analytics 4 (GA4) events.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "build/icons/16.png",
+    "48": "build/icons/48.png",
+    "128": "build/icons/128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "build/icons/16-gray.png",
+      "48": "build/icons/48-gray.png",
+      "128": "build/icons/128-gray.png"
+    },
+    "default_title": "Debugger for Google Analytics™ 4",
+    "default_popup": "build/disabled.html"
+  },
+  "declarative_net_request": {
+    "rule_resources": [{
+      "id": "debug_mode_ruleset",
+      "enabled": false,
+      "path": "add_debug_mode_rule.json"
+    },
+    {
+      "id": "opt_out_ruleset",
+      "enabled": false,
+      "path": "add_opt_out_rule.json"
+    }]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [ 
+        "build/devtools.html",  
+        "build/main.html",
+        "build/scripts/background.js",
+        "build/scripts/installDetector.js",
+        "build/scripts/installHook.js"
+      ],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "devtools_page": "build/main.html",
+  "background": {
+    "service_worker": "build/scripts/background.js",
+    "type": "module"
+  },
+  "permissions": [ "webRequest", "declarativeNetRequest" ],
+  "host_permissions": [
+    "https://www.google-analytics.com/g/collect?v=2*",
+    "https://analytics.google.com/g/collect?v=2*",
+    "https://*/*g/collect?v=2*",
+    "https://*/gtag/js*",
+    "*://localhost/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "build/scripts/detector.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

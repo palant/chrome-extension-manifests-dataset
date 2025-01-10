@@ -1,0 +1,88 @@
+---
+name: DvSum Data Catalog Extension
+version: 1.0.0
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 3
+user_count: 6
+size: 229KiB
+languages:
+  - English
+release_date: '2022-04-05T12:56:27.000Z'
+creation_date: '2022-03-16T13:00:54.000Z'
+description: >-
+  Enable business users to view and contribute to Data Catalog right inside any
+  web app and report. Increase Data Literacy and trust.
+publisher_hash: de41f6a1725a846f1cd4fafb6d558dc6d33944d12ec2549c3a600aa031b54c8d
+publisher: DVSUM, INC.
+publisher_account: DvSum, Inc.
+publisher_address: |-
+  440 N Wolfe Rd
+  Sunnyvale, CA 94085
+  US
+support_website: https://support.dvsum.com
+privacy_policy: https://dvsum.ai/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DvSum Data Catalog Extension",
+  "description": "Enable business users to view and contribute to Data Catalog right inside any web app and report. Increase Data Literacy and trust.",
+  "version": "1.0.0",
+  "icons": {
+    "16": "icon.png",
+    "48": "icon-2x.png",
+    "128": "icon-3x.png"
+  },
+  "action": {
+    "default_title": "DvSum Data Intelligence"
+  },
+  "options_page": "options.html",
+  "permissions": [
+    "storage",
+    "contextMenus",
+    "tabs",
+    "activeTab",
+    "scripting",
+    "webNavigation",
+    "contentSettings",
+    "management"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "host_permissions": ["<all_urls>"],
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["contentScript.js"],
+      "exclude_matches": ["https://auth.dvsum.ai/login*"],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://auth.dvsum.ai/login*",
+        "https://www.app.dvsum.ai/login*"
+      ],
+      "css": [],
+      "js": ["contentScript_signin.js"],
+      "run_at": "document_start"
+    }
+  ],
+  "externally_connectable": {
+    "matches": ["https://www.app.dvsum.ai/*"]
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["searchIcon.png"],
+      "matches": ["<all_urls>"]
+    },
+    {
+      "resources": ["dvsum.png", "dvsum-logo.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

@@ -1,0 +1,142 @@
+---
+name: Thumbnails.com - Thumbnail ideas for YouTubers
+version: 0.2.4
+category_slug: lifestyle/art
+featured: false
+rating: 5
+rating_count: 1
+user_count: 32
+size: 1.3MiB
+languages:
+  - English (United States)
+release_date: '2024-12-16T22:57:28.000Z'
+creation_date: '2024-04-03T07:35:58.000Z'
+description: Thumbnail ideas for YouTubers.
+publisher_hash: bcb9275f96e2abc83778746cf194e1b87b63086a3a084c7252f212b893e86b54
+publisher_account: Krager Labs
+publisher_address: |-
+  1255 Northwest 9th Avenue
+  207
+  Portland, OR 97209
+  US
+publisher_phone: '+15037098524'
+extension_website: thumbnails.com
+extension_website_verified: true
+support_website: https://thumbnails.com/#faq
+privacy_policy: https://thumbnails.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Thumbnails.com - Thumbnail ideas for YouTubers",
+  "version": "0.2.4",
+  "description": "Thumbnail ideas for YouTubers.",
+  "manifest_version": 3,
+  "icons": {
+    "16": "images/logo-16x16.png",
+    "32": "images/logo-32x32.png",
+    "128": "images/logo-128x128.png"
+  },
+  "action": {
+    "default_icon": {
+      "16": "images/logo-16x16.png",
+      "32": "images/logo-32x32.png"
+    },
+    "default_popup": "pages/popup.html"
+  },
+
+  "background": {
+    "service_worker": "background.bundle.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": [
+        "https://studio.youtube.com/*"
+      ],
+      "css": [
+        "css/local/index.css", "css/local/popup.css"
+      ],
+      "js": [
+        "scripts/index.bundle.js", "scripts/popup.bundle.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    },
+
+    {
+   "run_at": "document_start",
+   "js": [
+    "scripts/tests.bundle.js"
+   ],
+   "matches": [ "https://studio.youtube.com/channel*"],
+   "all_frames": true
+  },
+
+    {
+      "matches": [
+        "https://1of10.com/*"
+      ],
+      "css": [
+        "css/local/index.css",
+        "css/local/popup.css"
+      ],
+      "js": [
+        "scripts/oneoften.bundle.js",
+        "scripts/popup.bundle.js"
+      ],
+      "run_at": "document_end",
+      "all_frames": true
+    }
+
+  ],
+  "permissions": [
+    "activeTab",
+    "contextMenus",
+    "webNavigation",
+    "storage",
+    "tabs",
+    "scripting",
+    "identity",
+    "downloads"  
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+
+  "externally_connectable": {
+    "matches": [
+      "*://localhost/*",
+      "*://tubesplit.com/*",
+      "*://tubesplit.test/*",
+      "*://thumbapp.thumbnails.com/*",
+      "*://thumbnails.com/*",
+      "*://scripts.simpleanalyticscdn.com/*",
+      "*://queue.simpleanalyticscdn.com/*",
+      "*://1of10.com/*"
+    ]
+  },
+  "host_permissions": [
+    "*://studio.youtube.com/*",
+    "*://www.youtube.com/*",
+    "*://tubesplit.com/*",
+    "*://tubesplit.test/*",
+    "*://thumbapp.thumbnails.com/*",
+    "*://thumbnails.com/*",
+    "*://img.youtube.com/*",
+    "*://1of10.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self';"
+  }
+
+}

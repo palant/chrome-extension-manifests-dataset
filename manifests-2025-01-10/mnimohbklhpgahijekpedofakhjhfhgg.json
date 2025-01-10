@@ -1,0 +1,87 @@
+---
+name: Demoboost Capture 1.0
+version: 3.3.1
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 8
+user_count: 555
+size: 903KiB
+languages:
+  - English
+release_date: '2024-12-10T19:41:57.000Z'
+creation_date: '2021-08-20T08:05:02.000Z'
+description: Demo experience that sells. Easily create, share and track your demos.
+publisher_hash: 76a24579ca46ee8191da5acb9643dfad5fbcac93b86865fa96f059582a582943
+publisher_account: Kamil Smuga
+extension_website: demoboost.com
+extension_website_verified: true
+privacy_policy: https://demoboost.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Demoboost Capture 1.0",
+  "description": "Demo experience that sells. Easily create, share and track your demos.",
+  "version": "3.3.1",
+  "manifest_version": 3,
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Demoboost Capture 1.0"
+ },
+  "icons": {
+    "16": "logo_16.png",
+    "32": "logo_32.png",
+    "48": "logo_48.png",
+    "128": "logo_128.png"
+  },
+  "permissions": ["activeTab", "storage", "unlimitedStorage", "scripting"],
+  "optional_host_permissions": ["*://*/*"],
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "run_at": "document_start",
+      "js": ["lib/chrome-browser-polyfill.js", "lib/single-file-frames.js", "lib/extension-frames.js"],
+      "all_frames": true,
+      "match_about_blank": true
+    },
+    {
+      "matches": ["*://*/*"],
+      "run_at": "document_start",
+      "js": [
+        "lib/chrome-browser-polyfill.js",
+        "lib/single-file-bootstrap.js",
+        "lib/extension-core.js",
+        "lib/single-file.js"
+      ],
+      "all_frames": false
+    },
+    {
+      "matches": ["<all_urls>"],
+      "js": ["./static/js/canvas.js"],
+      "all_frames": true,
+      "run_at": "document_start",
+      "world": "MAIN"
+    },
+    {
+      "matches": ["*://*/*"],
+      "js": ["./static/js/content.js"],
+      "all_frames": true,
+      "persistent": false,
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "./static/js/background.js"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+       "lib/web/hooks/hooks-web.js",
+       "lib/web/hooks/hooks-frames-web.js"
+    ],
+    "matches": [
+      "*://*/*"
+    ]
+ }]
+}

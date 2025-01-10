@@ -1,0 +1,117 @@
+---
+name: Apex Debugger
+version: 0.8.0
+category_slug: productivity/developer
+featured: false
+rating: 4.3
+rating_count: 30
+user_count: 10000
+size: 881KiB
+languages:
+  - English
+release_date: '2024-12-02T11:31:04.000Z'
+creation_date: '2014-10-25T03:39:52.000Z'
+description: Debug Salesforce apex code with ease
+publisher_hash: db93a302eee385796c3d8c710afdfc8f57c9feda22ae8335bb3fba4279db04c7
+publisher_account: motiko
+extension_website: apex-debugger-website.vercel.app
+extension_website_verified: true
+support_website: https://github.com/motiko/sfdc-debug-logs/issues
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Apex Debugger",
+  "short_name": "Apex Debgr",
+  "version": "0.8.0",
+  "manifest_version": 3,
+  "author": "Moti Korets",
+  "icons": {
+    "16": "img/16.png",
+    "48": "img/48.png",
+    "128": "img/128.png"
+  },
+  "description": "Debug Salesforce apex code with ease",
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "options_ui": {
+    "page": "html/options.html"
+  },
+  "action": {
+    "default_icon": {
+      "16": "img/16.png"
+    }
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'; connect-src https://*.force.com https://*.salesforce.com"
+  },
+  "content_scripts": [{
+      "css": [
+        "css/debug.css"
+      ],
+      "matches": [
+        "https://*.force.com/p/setup/layout/ApexDebugLogDetailEdit/*",
+        "https://*.salesforce.com/p/setup/layout/ApexDebugLogDetailEdit/*",
+        "https://*.salesforce-setup.com/p/setup/layout/ApexDebugLogDetailEdit/*"
+      ],
+      "js": [
+        "js/lib/beautify/1.7.4/beautify.min.js",
+        "js/lib/beautify/1.7.4/beautify-html.min.js",
+        "js/sfdc.debug.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.force.com/setup/ui/listApexTraces.apexp*",
+        "https://*.salesforce.com/setup/ui/listApexTraces.apexp*",
+        "https://*.salesforce-setup.com/setup/ui/listApexTraces.apexp*"
+      ],
+      "css": [
+        "css/debug.logs.css"
+      ],
+      "js": [
+        "js/sfdc.debug.btn.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://*.force.com/*",
+        "https://*.salesforce.com/*",
+        "https://*.salesforce-setup.com/*"
+      ],
+      "js": [
+        "js/default_shortcuts.js",
+        "js/lib/mousetrap/1.6.1/mousetrap.min.js",
+        "js/utils.js",
+        "js/shortcuts.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "https://*.force.com/01p*",
+        "https://*.force.com/setup/build/allTriggers.apexp*",
+        "https://*.salesforce.com/01p*",
+        "https://*.salesforce-setup.com/01p*",
+        "https://*.salesforce.com/setup/build/allTriggers.apexp*",
+        "https://*.salesforce-setup.com/setup/build/allTriggers.apexp*"
+      ],
+      "js": [
+        "js/sfdc.classes.js"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "permissions": [
+    "storage"
+  ],
+  "host_permissions": [
+    "https://*.force.com/*",
+    "https://*.salesforce.com/*",
+    "https://*.salesforce-setup.com/*"
+  ]
+}

@@ -1,0 +1,123 @@
+---
+name: Tipli v brskalniku
+version: 3.0.8
+category_slug: lifestyle/shopping
+featured: false
+rating: null
+rating_count: null
+user_count: 433
+size: 219KiB
+languages:
+  - slovenščina
+release_date: '2024-05-04T05:14:27.000Z'
+creation_date: '2024-03-15T10:11:52.000Z'
+description: >-
+  Tipli v brskalniku vas vedno obvesti, da lahko od nakupa prejmete vračilo
+  kupnine.
+publisher_hash: 7caa18ef02394b06caaf42c8f68524023faba81426698ff655bff145952f116d
+publisher: Tipli s.r.o.
+publisher_account: Tipli
+publisher_address: |-
+  Na Poříčí 25
+  Praha 110 00
+  CZ
+publisher_phone: '+420733439188'
+extension_website: tipli.si
+extension_website_verified: true
+support_website: https://www.tipli.si/kontaktirajte
+privacy_policy: https://www.tipli.si/soglasje-za-obdelavo-osebnih-podatkov
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "version": "3.0.8",
+  "name": "Tipli v brskalniku",
+  "description": "Tipli v brskalniku vas vedno obvesti, da lahko od nakupa prejmete vračilo kupnine.",
+  "homepage_url": "http://www.tipli.si",
+  "icons": {
+    "128": "assets/icon128.png",
+    "16": "assets/icon16.png",
+    "48": "assets/icon48.png"
+  },
+  "author": "https://www.tipli.si",
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/icon128.png",
+      "16": "assets/icon16.png",
+      "48": "assets/icon48.png"
+    },
+    "default_popup": "popup.html",
+    "default_title": "Tipli v brskalniku"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "css": [
+        "roboto.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "<all_urls>"
+      ],
+      "js": [
+        "protect-content-boxes.js"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "matches": [
+        "https://www.google.com/*",
+        "https://www.google.cz/*",
+        "https://www.google.sk/*",
+        "https://www.google.pl/*",
+        "https://www.google.ro/*",
+        "https://search.seznam.cz/*",
+        "https://*.heureka.cz/*",
+        "https://www.zbozi.cz/*"
+      ],
+      "js": [
+        "serp.js"
+      ],
+      "css": [
+        "roboto.css",
+        "serp.css"
+      ],
+      "run_at": "document_idle"
+    }
+  ],
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": false
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "webRequest"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ]
+}

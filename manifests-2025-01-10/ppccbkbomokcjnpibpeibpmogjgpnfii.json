@@ -1,0 +1,83 @@
+---
+name: JobTitle.io
+version: 0.0.56
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 1.05MiB
+languages:
+  - English
+release_date: '2020-07-28T06:45:27.000Z'
+creation_date: '2020-07-16T03:29:54.000Z'
+description: Get real time notifications and data updates when your contacts change jobs.
+publisher_hash: 5b4df26271266d88d1587728bd90d6458df5c730e185f2d3a2162db8db0a490c
+publisher: OVERLOOP SRL
+publisher_account: Overloop
+publisher_address: |-
+  Rue des Pères Blancs 4
+  Etterbeek 1040
+  BE
+publisher_phone: '+32498636468'
+extension_website: jobtitle.io
+extension_website_verified: false
+privacy_policy: https://overloop.com/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "JobTitle.io",
+  "version": "0.0.56",
+  "description": "Get real time notifications and data updates when your contacts change jobs.",
+  "manifest_version": 2,
+  "background": {
+    "scripts": ["background.bundle.js"],
+    "persistent": true
+  },
+  "icons": {
+    "16": "assets/images/icon-16.png",
+    "48": "assets/images/icon-48.png",
+    "128": "assets/images/icon-128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "webNavigation",
+    "cookies",
+    "*://*.linkedin.com/*",
+    "*://*.jobtitle.io/*"
+  ],
+  "web_accessible_resources": [
+    "*"
+  ],
+  "externally_connectable": {
+    "matches": [
+      "*://*.jobtitle.io/*",
+      "*://*.linkedin.com/*"
+    ]
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*.jobtitle.io/*"],
+      "js": ["jobtitle-detect.bundle.js"],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.linkedin.com/*"],
+      "exclude_matches": [
+        "*://*.linkedin.com/sales/*"
+      ],
+      "js": ["linkedin-content-script.bundle.js"],
+      "css": ["assets/content.css"]
+    }
+  ],
+  "browser_action": {
+    "default_icon": {
+      "16": "assets/images/icon-16.png",
+      "48": "assets/images/icon-48.png",
+      "128": "assets/images/icon-128.png"
+    }
+  }
+}

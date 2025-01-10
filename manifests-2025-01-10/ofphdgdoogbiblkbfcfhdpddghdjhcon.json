@@ -1,0 +1,88 @@
+---
+name: Feed Collector
+version: 0.0.22
+category_slug: productivity/communication
+featured: false
+rating: 5
+rating_count: 1
+user_count: 74
+size: 789KiB
+languages:
+  - English
+release_date: '2024-08-12T04:58:42.000Z'
+creation_date: '2024-04-02T09:36:05.000Z'
+description: >-
+  A browser extension used for research purposes that collects some tweets from
+  your Twitter feed.
+publisher_hash: 820d25f28c2a69aa03d7d833202a38814db2d4fcb8b90f6489a0bd8415649c35
+publisher_account: Farnaz Jahanbakhsh
+privacy_policy: >-
+  https://docs.google.com/document/d/1-tJ8y5xLelMuae8HqVssjwRz3xPCxWOlE7F-JGOEKPA/edit?usp=sharing
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Feed Collector",
+  "version": "0.0.22",
+  "description": "A browser extension used for research purposes that collects some tweets from your Twitter feed.",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "32": "./assets/icon-32.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "storage"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js",
+        "dist/contentScripts/config.js",
+        "dist/contentScripts/libs/jquery.min.js",
+        "dist/contentScripts/libs/client.js",
+        "dist/contentScripts/libs/timeme.min.js",
+        "dist/contentScripts/libs/utils.js",
+        "dist/contentScripts/events.js",
+        "dist/contentScripts/logic.js",
+        "dist/contentScripts/launcher.js"
+      ],
+      "css": [
+        "public/main.css"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css",
+        "dist/contentScripts/injected.js"
+      ],
+      "matches": [
+        "*://twitter.com/*",
+        "*://x.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

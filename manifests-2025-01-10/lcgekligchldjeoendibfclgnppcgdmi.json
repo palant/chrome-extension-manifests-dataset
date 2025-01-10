@@ -1,0 +1,78 @@
+---
+name: 直播中控宝
+version: 1.5.4
+category_slug: productivity/tools
+featured: false
+rating: null
+rating_count: null
+user_count: 3000
+size: 7.25MiB
+languages:
+  - 中文 (简体)
+release_date: '2024-10-18T08:55:28.000Z'
+creation_date: '2024-02-01T08:48:01.000Z'
+description: >-
+  面向直播中控人员，提供直播商品自动讲解、改价改库存、库存清零、自动发评/回评、自动补库存、自动发福袋、自动发优惠券、手机中控遥控器、扫码过品、自动货架、评论监测、流量波动智能提醒、直播数据大屏整合等服务
+publisher_hash: 8a64ef19c8c98129869f3d0e9b2fc9814211131d3fa1da66a9afa99437efcb5b
+publisher_account: sumwhy.sumlive
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "直播中控宝",
+  "description": "面向直播中控人员，提供直播商品自动讲解、改价改库存、库存清零、自动发评/回评、自动补库存、自动发福袋、自动发优惠券、手机中控遥控器、扫码过品、自动货架、评论监测、流量波动智能提醒、直播数据大屏整合等服务",
+  "version": "1.5.4",
+  "action": {
+    "default_title": "直播中控宝",
+    "default_icon": "assets/icon/logo.png",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs", "storage", "cookies", "activeTab"],
+  "host_permissions": [
+    "*://*.jinritemai.com/*",
+    "*://*.kwaixiaodian.com/*",
+    "https://*.myqcloud.com/*",
+    "*://*.sumlive.cn/*",
+    "*://*.douyin.com/*",
+    "*://*.weixin.qq.com/*",
+    "*://*.taobao.com/*",
+    "*://*.xiaohongshu.com/*"
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  },
+  "icons": {
+    "16": "assets/icon/logo.png",
+    "48": "assets/icon/logo.png",
+    "128": "assets/icon/logo.png"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://zs.kwaixiaodian.com/*",
+        "https://fxg.jinritemai.com/*",
+        "https://buyin.jinritemai.com/*",
+        "https://eos.douyin.com/*",
+        "https://channels.weixin.qq.com/*",
+        "https://liveplatform.taobao.com/*",
+        "https://redlive.xiaohongshu.com/*",
+        "https://jsls.jinritemai.com/*"
+      ],
+      "js": ["js/content.js", "js/inject.js","js/dy.js","js/ks.js","js/xhs.js","js/wx.js","js/tb.js","js/bdsh.js"],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'",
+    "sandbox": "sandbox allow-scripts; script-src 'unsafe-inline'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": ["js/content.js", "fonts/*", "js/*", "/assets/*", "css/*"],
+      "matches": ["http://*/*", "https://*/*"],
+      "use_dynamic_url": true
+    }
+  ]
+}

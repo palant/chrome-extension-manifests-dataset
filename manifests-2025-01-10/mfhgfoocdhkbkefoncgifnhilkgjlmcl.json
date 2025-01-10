@@ -1,0 +1,89 @@
+---
+name: inbox-manager
+version: 0.0.1
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 0
+size: 297KiB
+languages:
+  - Français
+release_date: '2022-05-18T06:00:28.000Z'
+creation_date: '2022-05-18T06:00:28.000Z'
+description: Inbox manager for Google Chrome
+publisher_hash: 3bec1eb97a080771da6d8371a11658628a6fc96430e947061ca3714a01e3f390
+publisher_account: inbox.manager.hepia
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "inbox-manager",
+    "description": "Inbox manager for Google Chrome",
+    "version": "0.0.1",
+    "background": {
+        "service_worker": "/background.js",
+        "perstistent": true
+    },
+    "permissions": [
+        "storage",
+        "activeTab",
+        "tabs",
+        "contextMenus"
+    ],
+    "action": {
+        "default_popup": "popup.html",
+        "default_title": "Pressez Ctrl(Win)/Command(Mac)+Shift+Y pour ajouter un élément à votre inbox",
+        "default_icon": {
+            "16": "/icons/saving16.png",
+            "32": "/icons/saving32.png",
+            "48": "/icons/saving48.png",
+            "128": "/icons/saving128.png"
+        }
+    },
+    "commands": {
+        "_execute_action": {
+            "suggested_key": {
+                "default": "Ctrl+Shift+Y"
+            }
+        }
+    },
+    "icons": {
+        "16": "/icons/saving16.png",
+        "32": "/icons/saving32.png",
+        "48": "/icons/saving48.png",
+        "128": "/icons/saving128.png"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "*://mail.google.com/*"
+            ],
+            "js": [
+                "/gmail.js"
+            ],
+            "css": [
+                "/css/gmail.css"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "/selection.js"
+            ],
+            "css": [
+                "/css/selection.css"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "options_page": "options.html"
+}

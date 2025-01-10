@@ -1,0 +1,114 @@
+---
+name: Secure Single Sign-On Plug-in
+version: 4.0.20
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 2
+user_count: 3000
+size: 112KiB
+languages:
+  - English (United States)
+release_date: '2024-12-03T13:52:30.000Z'
+creation_date: '2014-07-23T11:42:37.000Z'
+description: Secure auto login to any app
+publisher_hash: 1b68ea6ef22804776031fc6bc72a2e7d67a68011809a40c0c00bbdd7587d624c
+publisher_account: miniOrange
+extension_website: miniorange.com
+extension_website_verified: true
+support_website: https://idp.miniorange.com/steps-to-setup-secure-browser-sso-apps/
+privacy_policy: https://www.miniorange.com/usecases/miniOrange_Privacy_Policy.pdf
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Secure Single Sign-On Plug-in",
+  "author": "miniOrange",
+  "short_name": "miniOrange SSO",
+  "version": "4.0.20",
+  "manifest_version": 3,
+  "description": "Secure auto login to any app",
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "html/widget.html",
+        "html/fill-password.html",
+        "html/strong-password.html",
+        "images/icon32-black.png",
+        "images/icon32.png",
+        "images/arrow32.png",
+        "js/jsSelector.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "icons": {
+    "32": "images/icon32.png",
+    "128": "images/icon128.png"
+  },
+  "action": {
+    "default_icon": {
+      "32": "images/icon32.png",
+      "128": "images/icon128.png"
+    },
+    "default_popup": "html/popup.html"
+  },
+  "content_scripts": [
+    {
+      "all_frames": true,
+      "js": [
+        "js/appDetails.js",
+        "js/extension.js",
+        "js/lib/uri-js/URI.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": true,
+      "js": [
+        "js/mo-widget.js",
+        "js/context-menu.js",
+        "js/spinitiated/initialize.js",
+        "js/sso-mo-login.js",
+        "js/common.js",
+        "js/parser.js",
+        "js/checkFieldVisibility.js",
+        "js/detectFields.js",
+        "js/lib/js-mcrypt/mcrypt.js",
+        "js/lib/js-mcrypt/rijndael.js",
+        "js/lib/js-mcrypt/Serpent.js",
+        "js/lib/uri-js/URI.js",
+        "js/jsSelector.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self' 'wasm-unsafe-eval'; object-src 'self'"
+  },
+  "host_permissions": [
+    "https://*/*",
+    "http://*/*"
+  ],
+  "permissions": [
+    "storage",
+    "privacy",
+    "management",
+    "cookies",
+    "tabs",
+    "scripting",
+    "contextMenus"
+  ],
+  "background": {
+    "service_worker": "js/background.js"
+  }
+}

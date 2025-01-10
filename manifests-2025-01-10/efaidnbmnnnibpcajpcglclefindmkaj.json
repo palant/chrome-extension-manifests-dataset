@@ -1,0 +1,256 @@
+---
+name: 'Adobe Acrobat: PDF edit, convert, sign tools'
+version: 25.1.1.1
+category_slug: productivity/workflow
+featured: true
+rating: 4.391318243344864
+rating_count: 53192
+user_count: 234000000
+size: 1.9MiB
+languages:
+  - Deutsch
+  - English
+  - English (UK)
+  - Français
+  - Nederlands
+  - Norsk
+  - Türkçe
+  - català
+  - dansk
+  - español
+  - hrvatski
+  - italiano
+  - magyar
+  - polski
+  - português (Brasil)
+  - română
+  - slovenský
+  - slovenščina
+  - suomi
+  - svenska
+  - čeština
+  - русский
+  - українська
+  - 中文 (简体)
+  - 中文 (繁體)
+  - 日本語
+  - 한국어
+release_date: '2025-01-10T05:35:27.000Z'
+creation_date: '2014-11-25T07:13:01.000Z'
+description: >-
+  Do more in Google Chrome with Adobe Acrobat PDF tools. View, fill, comment,
+  sign, and try convert and compress tools.
+publisher_hash: ce56b313aa7b689ce64f16c58449700e22e1a9e75a7a86d0b21be7caf47696d0
+publisher: Adobe Inc.
+publisher_address: |-
+  345 Park Ave
+  San Jose, CA 95110
+  US
+extension_website: www.adobe.com
+extension_website_verified: true
+support_website: http://forums.adobe.com/community/acrobat?view=overview
+privacy_policy: https://www.adobe.com/privacy/policy.html
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "name": "__MSG_web2pdfExtnName__",
+    "storage": {
+        "managed_schema": "schema.json"
+    },
+    "description": "__MSG_web2pdfExtnDescriptionChrome__",
+    "version": "25.1.1.1",
+    "options_page": "browser/js/options.html",
+    "default_locale": "en",
+    "permissions": [
+        "contextMenus",
+        "tabs",
+        "downloads",
+        "nativeMessaging",
+        "webRequest",
+        "webNavigation",
+        "storage",
+        "scripting",
+        "alarms",
+        "offscreen",
+        "cookies"
+    ],
+    "background": {
+        "service_worker": "service-worker.js",
+        "type": "module"
+    },
+    "incognito": "not_allowed",
+    "externally_connectable": {
+        "ids": [
+            "bngnhmnppadfcmpggglniifohlkmddfc"
+        ],
+        "matches": [
+            "https://*.adobe.com/*",
+            "https://*.acrobat.com/*",
+            "https://adobe.com/*",
+            "https://www.adobe.com/*"
+        ]
+    },
+    "icons": {
+        "16": "browser/images/acrobat_dc_appicon_16.png",
+        "48": "browser/images/acrobat_dc_appicon_48.png",
+        "128": "browser/images/acrobat_dc_appicon_128.png"
+    },
+    "action": {
+        "default_title": "__MSG_extensionMenuTitle__",
+        "default_icon": "browser/images/acrobat_dc_appicon_24.png",
+        "default_popup": "browser/js/popup.html"
+    },
+    "content_scripts": [
+        {
+            "matches": [
+                "file://*/*",
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "libs/jquery-3.1.1.min.js",
+                "browser/js/ch-settings.js",
+                "content_scripts/content-script-utils.js",
+                "content_scripts/ch-content-script.js",
+                "content_scripts/injectBannerIframe.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "http://*/*",
+                "https://*/*"
+            ],
+            "css": [
+                "browser/css/express-tooltip.css"
+            ],
+            "js": [
+                "content_scripts/express/express-tooltip.js"
+            ],
+            "run_at": "document_idle"
+        },
+        {
+            "matches": [
+                "file://*/*",
+                "http://*/*",
+                "https://*/*"
+            ],
+            "js": [
+                "content_scripts/ch-content-script-dend.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "<all_urls>"
+            ],
+            "js": [
+                "content_scripts/detect-embedded.js"
+            ],
+            "all_frames": true,
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://drive.google.com/*",
+                "https://drive.usercontent.google.com/download*"
+            ],
+            "css": [
+                "browser/css/gdrive-content-script.css",
+                "browser/css/gsuite-fte.css"
+            ],
+            "js": [
+                "content_scripts/gdrive-content-script.js"
+            ],
+            "run_at": "document_end"
+        },
+        {
+            "matches": [
+                "https://mail.google.com/*"
+            ],
+            "css": [
+                "browser/css/gmail-content-script.css",
+                "browser/css/gsuite-fte.css"
+            ],
+            "js": [
+                "content_scripts/gmail-content-script.js"
+            ],
+            "run_at": "document_start"
+        },
+        {
+            "matches": [
+                "https://acrobat.adobe.com/*",
+                "https://documentcloud.adobe.com/*"
+            ],
+            "js": [
+                "content_scripts/acrobat-content-script.js"
+            ],
+            "run_at": "document_end"
+        }
+    ],
+    "minimum_chrome_version": "107.0",
+    "manifest_version": 3,
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "viewer.html",
+                "signInHandler.html",
+                "browser/js/check-cookies.html",
+                "browser/js/express.html",
+                "browser/js/frame.html",
+                "browser/js/frameUI.html",
+                "browser/js/local-fte.html",
+                "browser/js/lsCopy.html",
+                "signInAdobeYolo.html",
+                "browser/images/acrobat_dc_appicon_128.png",
+                "browser/images/acrobat_dc_trefoil_24_white.svg",
+                "browser/css/fonts/AdobeClean-Regular.otf",
+                "browser/js/viewer/localFileSignInRedirection.html",
+                "browser/js/download-banner.html",
+                "browser/js/successToast.html",
+                "browser/js/failToast.html"
+            ],
+            "matches": [
+                "<all_urls>"
+            ]
+        },
+        {
+            "resources": [
+                "content_scripts/gmail/gmail-inject.js",
+                "content_scripts/gmail/state.js",
+                "content_scripts/gmail/util.js",
+                "content_scripts/gsuite/fte-utils.js",
+                "content_scripts/gsuite/util.js",
+                "content_scripts/gmail/gmail-response-service.js",
+                "content_scripts/gmail/native-viewer-touch-point-service.js",
+                "content_scripts/gmail/message-view-touch-point-service.js",
+                "content_scripts/gmail/list-view-touch-point-service.js"
+            ],
+            "matches": [
+                "https://mail.google.com/*"
+            ]
+        },
+        {
+            "resources": [
+                "content_scripts/gdrive/get-auth-user.js",
+                "content_scripts/gsuite/fte-utils.js",
+                "content_scripts/gsuite/util.js"
+            ],
+            "matches": [
+                "https://drive.google.com/*"
+            ]
+        }
+    ],
+    "content_security_policy": {
+        "extension_pages": "script-src 'self'; child-src 'self'; object-src 'self'; style-src 'self' 'unsafe-inline'; frame-src https://use.typekit.net https://assets.adobedtm.com https://*.adobecontent.io https://*.adobelogin.com https://local-test.acrobat.com:* https://local-test.acrobat.adobe.com:* https://*.acrobat.com https://*.adobe.com https://*.adobe.io"
+    },
+    "host_permissions": [
+        "<all_urls>"
+    ],
+    "optional_permissions": [
+        "history",
+        "bookmarks"
+    ]
+}

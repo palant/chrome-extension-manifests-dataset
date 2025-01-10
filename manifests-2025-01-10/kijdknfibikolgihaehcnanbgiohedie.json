@@ -1,0 +1,130 @@
+---
+name: DateFarmer | AI Autoswiper for Tinder, Bumble & Badoo
+version: 1.6.8
+category_slug: productivity/communication
+featured: false
+rating: 5
+rating_count: 10
+user_count: 115
+size: 528KiB
+languages:
+  - English
+release_date: '2025-01-09T03:28:11.000Z'
+creation_date: '2024-07-14T07:18:43.000Z'
+description: >-
+  AI Auto Swiper for Tinder, Bumble & Badoo: Autoswiping, chat tips, and profile
+  optimization for a seamless dating experience.
+publisher_hash: 71d9496953aa3b0af349c90303006e436a8305efcecd7163483eef57831f6b50
+publisher_account: patrikb42222
+publisher_address: |-
+  Mátyás Király u.
+  40/A
+  Szajol 5081
+  HU
+publisher_phone: '+36205062003'
+extension_website: datefarmer.app
+extension_website_verified: true
+privacy_policy: https://datefarmer.app/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "DateFarmer | AI Autoswiper for Tinder, Bumble & Badoo",
+  "version": "1.6.8",
+  "description": "AI Auto Swiper for Tinder, Bumble & Badoo: Autoswiping, chat tips, and profile optimization for a seamless dating experience.",
+  "action": {
+    "default_icon": "./assets/icon-32.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-16.png",
+    "32": "./assets/icon-32.png",
+    "48": "./assets/icon-48.png",
+    "128": "./assets/icon-128.png"
+  },
+  "permissions": [
+    "storage",
+    "identity",
+    "cookies",
+    "debugger",
+    "alarms",
+    "declarativeNetRequest",
+    "webRequest"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "block_images",
+        "enabled": false,
+        "path": "block_images_rules.json"
+      }
+    ]
+  },
+  "host_permissions": [
+    "*://tinder.com/*",
+    "*://*.bumble.com/*",
+    "*://*.badoo.com/*",
+    "*://maps.googleapis.com/*",
+    "*://datefarmer.app/*",
+    "*://api.gotinder.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "*://tinder.com/*",
+        "*://*.bumble.com/*",
+        "*://*.badoo.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://datefarmer.app/*"
+      ],
+      "js": [
+        "dist/contentScripts/login.js"
+      ]
+    },
+    {
+      "matches": [
+        "*://tinder.com/*",
+        "*://*.bumble.com/*",
+        "*://*.badoo.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/location-set.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "world": "MAIN"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/contentScripts/style.css"
+      ],
+      "matches": [
+        "*://tinder.com/*",
+        "*://*.bumble.com/*",
+        "*://*.badoo.com/*"
+      ]
+    }
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "oauth2": {
+    "client_id": "574142763620-cg566rt392mkgdf7g3enlp8ludk85iuv.apps.googleusercontent.com",
+    "scopes": [
+      "https://www.googleapis.com/auth/userinfo.email"
+    ]
+  }
+}

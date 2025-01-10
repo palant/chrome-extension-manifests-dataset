@@ -1,0 +1,67 @@
+---
+name: maplelegends-webext
+version: 0.4.2
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 2
+size: 586KiB
+languages:
+  - English
+release_date: '2021-02-20T12:58:50.000Z'
+creation_date: '2021-02-08T07:24:56.000Z'
+description: >-
+  Adds plots to leveling history, tracks current server status, and maintains
+  voting history.
+publisher_hash: 1111ef990be2f3cbbaba8652e462c39b715ad30dc994455f3a46c5145f279c6f
+publisher_account: geospiza
+support_website: https://github.com/geospiza-fortis/maplelegends-webext
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 2,
+  "name": "maplelegends-webext",
+  "version": "0.4.2",
+
+  "description": "Adds plots to leveling history, tracks current server status, and maintains voting history.",
+
+  "icons": {
+    "48": "icons/omok.png"
+  },
+  "permissions": [
+    "webNavigation",
+    "storage",
+    "https://maplelegends.com/*",
+    "https://maplestory.io/api/character/*",
+    "https://storage.googleapis.com/geospiza/query/maplelegends-online-count-7-day.json",
+    "https://gtop100.com/topsites/MapleStory/*",
+    "https://topg.org/maplestory-private-servers/*"
+  ],
+
+  "content_scripts": [
+    {
+      "matches": ["*://maplelegends.com/levels?name*"],
+      "js": ["content/leveling.js"]
+    },
+    {
+      "matches": ["*://maplelegends.com/vote"],
+      "js": ["content/voting.js"],
+      "css": ["content/voting.css"]
+    },
+    {
+      "matches": ["https://gtop100.com/*", "https://topg.org/*"],
+      "js": ["content/vote-history.js"]
+    }
+  ],
+  "background": {
+    "scripts": ["background-bundle.js"]
+  },
+  "browser_action": {
+    "default_icon": "icons/omok.png",
+    "default_title": "MapleLegends extension",
+    "default_popup": "popup/index.html"
+  }
+}

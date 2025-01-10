@@ -1,0 +1,55 @@
+---
+name: MyGroceries
+version: '1.0'
+category_slug: lifestyle/household
+featured: false
+rating: null
+rating_count: null
+user_count: 4
+size: 20.15KiB
+languages:
+  - Français
+release_date: '2024-06-25T05:38:18.000Z'
+creation_date: '2024-06-25T05:38:18.000Z'
+description: Compute a grocery list from various recipe providers (HelloFresh, Marmiton...)
+publisher_hash: ed8928ea1150339d9862881638c5654fce9764c667a09558e50de736edd36d7a
+publisher_account: vanilor.dev
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+    "manifest_version": 3,
+    "name": "MyGroceries",
+    "description": "Compute a grocery list from various recipe providers (HelloFresh, Marmiton...)",
+    "version": "1.0",
+    "action": {
+      "default_popup": "popup.html",
+      "default_icon": "icon.png"
+    },
+    "permissions": [
+        "storage"
+    ],
+    "content_scripts": [
+        {
+            "matches": ["http://*.hellofresh.fr/recipes/*", "https://*.hellofresh.fr/recipes/*"],
+            "js": ["plugins/hellofresh.js"],
+            "all_frames": true
+        },
+        {
+            "matches": ["http://*.marmiton.org/recettes/*", "https://*.marmiton.org/recettes/*"],
+            "js": ["plugins/marmiton.js"],
+            "all_frames": true
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["plugins/hellofresh_web_accessible.js"],
+            "matches": ["https://*.hellofresh.fr/*"]
+        },
+        {
+            "resources": ["plugins/marmiton_web_accessible.js"],
+            "matches": ["https://*.marmiton.org/*"]
+        }
+    ]
+  }

@@ -1,0 +1,136 @@
+---
+name: Cuponomia - Cupom e Cashback
+version: 4.18.3
+category_slug: lifestyle/shopping
+featured: false
+rating: 4.902415458937198
+rating_count: 5175
+user_count: 600000
+size: 9.86MiB
+languages:
+  - português (Brasil)
+release_date: '2025-01-08T22:10:13.000Z'
+creation_date: '2016-05-09T21:30:27.000Z'
+description: >-
+  O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que
+  estiver comprando. Economia em apenas um clique!
+publisher_hash: 71e6e9fa503a397324f3fa8919c2731b9eb2a4a1a250efd90c4b38eb7e8b53d9
+publisher_account: Cuponomia
+publisher_address: |-
+  Av. Sao Joao, 2405
+  2102
+  Sao Jose dos Campos, SP 12242000
+  Brazil
+extension_website: cuponomia.com.br
+extension_website_verified: true
+support_website: https://www.cuponomia.com.br/perguntas-frequentes
+privacy_policy: https://www.cuponomia.com.br/privacidade
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Cuponomia - Cupom e Cashback",
+  "description": "O Cuponomia te avisa sempre que existir Cupons ou Cashback para a loja que estiver comprando. Economia em apenas um clique!",
+  "manifest_version": 3,
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "homepage_url": "https://www.cuponomia.com.br",
+  "icons": {
+    "128": "assets/img/icons/main-icon.png"
+  },
+  "action": {
+    "default_icon": {
+      "128": "assets/img/icons/main-icon.png"
+    },
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content-scripts/icon-events.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content-scripts/check-website.js",
+        "content-scripts/inject-store-scrapers.js"
+      ],
+      "matches": [
+        "https://*/*",
+        "http://*/*"
+      ],
+      "run_at": "document_idle"
+    },
+    {
+      "js": [
+        "content-scripts/cuponomia.js"
+      ],
+      "matches": [
+        "*://*.cuponomia.com.br/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content-scripts/check-google-search.js"
+      ],
+      "matches": [
+        "http://www.google.com/*",
+        "https://www.google.com/*",
+        "https://www.google.com.br/*",
+        "http://www.google.com.br/*"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "js": [
+        "content-scripts/check-bing-search.js"
+      ],
+      "matches": [
+        "http://www.bing.com/*",
+        "https://www.bing.com/*"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "permissions": [
+    "tabs",
+    "storage",
+    "cookies",
+    "webRequest",
+    "scripting",
+    "alarms"
+  ],
+  "host_permissions": [
+    "*://*/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "*.json",
+        "*.css",
+        "*.html",
+        "*.png",
+        "*.svg",
+        "*.js",
+        "*.woff",
+        "*.woff2",
+        "*.mp4"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "version": "4.18.3"
+}

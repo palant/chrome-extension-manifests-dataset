@@ -1,0 +1,77 @@
+---
+name: Tab Suspender
+version: '1.5'
+category_slug: productivity/workflow
+featured: false
+rating: 4.8023255813953485
+rating_count: 86
+user_count: 1000
+size: 108KiB
+languages:
+  - English
+release_date: '2025-01-03T05:07:00.000Z'
+creation_date: '2021-09-03T07:54:34.000Z'
+description: >-
+  Tab Suspender suspends tabs which are in background for long periods, to
+  reduce RAM usage.
+publisher_hash: 9b88320487ce527fd9282386d50ccfe9df3a35a7facf958252dacee07158d538
+publisher_account: Multivariate AI Solution
+support_website: https://multivariate.tech/
+privacy_policy: https://multivariate.tech/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Tab Suspender",
+
+  "version": "1.5",
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAlIY2Pa0bjJANKRYICng81K/bXJXnHkv+9SUXfRJCE4mUW5nLBAGS9Sk6HgOlR3ijah80vVqps/0EKdI+L0JfcnBtEEfrs+a2G92TlLfh7kPwJ/vqdVXWH6bLzUEAbJQh36zoBa0iNBjW3XrbC6rwMFptk20Pvj6NTpCefVpIVhx1g2B3ZGQcVXzsoFoQJeS4VuEhnpWvZR56D1UF3ySLS1pRA9Awr8V1ka/sXtZIuUMJmF17/WwuyShuBbQODJX7ggK8iVBwlm359cHw0IKN40YgniBIFwlIMjkRxNSv8EWydFtykxF4rBxUZtdMdZOCMR9gMZ5yH5P0leseZor8dQIDAQAB",
+  "oauth2": {
+    "client_id": "179232417308-pqbequbvcogi82tnu39rcqnfgsa41j30.apps.googleusercontent.com",
+    "scopes": ["https://www.googleapis.com/auth/spreadsheets"]
+  },
+
+  "description": "Tab Suspender suspends tabs which are in background for long periods, to reduce RAM usage.",
+  "icons": {
+    "16": "icons/icon16.png",
+    "32": "icons/icon32.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "service_worker": "background.js"
+  },
+  "action": {
+    "default_title": "Tab_suspender",
+    "default_popup": "popup.html"
+  },
+  "permissions": ["tabs", "storage", "identity","scripting","activeTab"],
+  "host_permissions": ["https://sheets.googleapis.com/v4/spreadsheets/*"],
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "run_at": "document_idle",
+      "js": ["contentScript.js"]
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": ["suspend.html", "suspend.js"],
+      "matches": ["<all_urls>"],
+      "extension_ids": []
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+E",
+        "mac": "Command+Shift+E"
+      },
+      "description": "Open Pop Up"
+      
+    }
+  }
+}

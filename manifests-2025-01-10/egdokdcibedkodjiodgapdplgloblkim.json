@@ -1,0 +1,98 @@
+---
+name: Peoplefone Softphone Extension
+version: 1.0.1.3
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 1000
+size: 20.72KiB
+languages:
+  - Deutsch
+  - English
+  - Français
+release_date: '2024-11-29T11:56:08.000Z'
+creation_date: '2020-11-14T05:01:36.000Z'
+description: You need a peoplefone account and a valid subscription for the softphone.
+publisher_hash: ae8c0c2a94e9d2e5621cc589696a654a81d02599184f75fb40635d8556ecfa26
+publisher: Peoplefone AG
+publisher_account: peoplefone
+publisher_address: |-
+  Albisstrasse 107
+  Zürich 8038
+  CH
+publisher_phone: '+41772613537'
+extension_website: peoplefone.com
+extension_website_verified: true
+support_website: https://support.peoplefone.ch
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "__MSG_app_name__",
+  "description": "__MSG_app_description__",
+  "version": "1.0.1.3",
+  "manifest_version": 3,
+  "default_locale": "en",
+  "icons": {
+    "48": "/img/icon_48.png",
+    "128": "/img/icon_128.png"
+  },
+  "action": {
+    "default_title": "__MSG_extension_name__"
+  },
+  "externally_connectable": {
+    "matches": [
+      "*://.peoplefone.com/*"
+    ]
+  },
+  "permissions": [
+    "tabs",
+    "notifications",
+    "storage"
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "/img/icon.svg"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "http://*/*",
+        "https://*/*"
+      ],
+      "exclude_matches": [
+        "*://webrtc.peoplefone.ch/*",
+        "*://softphone.peoplefone.com/*",
+        "*://softphone-rc.peoplefone.com/*"
+      ],
+      "css": [
+        "content.css"
+      ],
+      "js": [
+        "content.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": [
+        "*://webrtc.peoplefone.ch/*",
+        "*://softphone.peoplefone.com/*",
+        "*://softphone-rc.peoplefone.com/*"
+      ],
+      "js": [
+        "content_notif.js"
+      ]
+    }
+  ]
+}

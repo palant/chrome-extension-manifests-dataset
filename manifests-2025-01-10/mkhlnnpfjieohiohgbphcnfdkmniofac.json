@@ -1,0 +1,101 @@
+---
+name: Definitions.net
+version: 1.0.9
+category_slug: productivity/tools
+featured: false
+rating: 4.9
+rating_count: 10
+user_count: 3000
+size: 548KiB
+languages:
+  - English
+release_date: '2024-12-24T16:35:37.000Z'
+creation_date: '2018-02-12T11:01:40.000Z'
+description: >-
+  Get instant dictionary definitions for any word or term that hits you anywhere
+  on the web!
+publisher_hash: 80e7b02158f738401707dd1ace1d62235994960ffab585d89757e9b1dc460394
+publisher: STANDS4 LTD
+publisher_account: STANDS4 LLC
+publisher_address: |-
+  51 HaShita Street
+  Kfar Neter 40593
+  IL
+extension_website: definitions.net
+extension_website_verified: true
+support_website: https://www.definitions.net/contact.php
+privacy_policy: https://www.definitions.net/privacy.php
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Definitions.net",
+  "short_name": "Definitions.net",
+  "version": "1.0.9",
+  "description": "__MSG_appDesc__",
+  "default_locale": "en",
+  "icons": { "16": "images/icon16.png",
+             "48": "images/icon48.png",
+             "64": "images/icon64.png",
+             "128": "images/icon128.png" },
+  "author": "STANDS4 LLC",
+  "homepage_url": "https://www.definitions.net",
+  "action": {
+    "default_icon": "images/def-fav-48.png",
+    "default_popup": "popup.html",
+    "default_title": "__MSG_tooltip__"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "background": {
+    "service_worker": "bs/background.js"
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "images/*",
+      "**/*.js",
+      "vendors/*",
+      "popup.html"
+    ],
+    "matches": ["<all_urls>"]
+  }],
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*", "file:///*"],
+      "js": [
+        "vendors/jquery.min.js",
+        "vendors/jquery-ui-1.12.0.min.js",
+        "vendors/purify.min.js",
+        "vendors/most.min.js",
+        "share/helpers.js",
+        "share/tools.js",
+        "share/markup.js",
+        "cs/contentscript.js"
+      ]
+    },
+    {
+      "matches": [
+        "http://www.definitions.net/*",
+        "https://www.definitions.net/*"
+      ],
+      "js": ["cs/contentscript-lt.js"]
+    }
+  ],
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Ctrl+Shift+Space"
+      }
+    }
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  }
+}

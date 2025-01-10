@@ -1,0 +1,97 @@
+---
+name: Launch
+version: 0.3.6
+category_slug: productivity/education
+featured: true
+rating: null
+rating_count: null
+user_count: 33
+size: 84.86MiB
+languages:
+  - English
+release_date: '2022-10-27T12:45:39.000Z'
+creation_date: '2021-12-20T10:12:36.000Z'
+description: Launch. Your Next Career Faster.
+publisher_hash: f7455e09407e72c2a8e6ee725acd624219e8c7c82520e046f84cba859f5f48e1
+publisher: JobLaunch
+publisher_account: JobLaunch Technologies Pty Ltd
+publisher_address: |-
+  Unit 1805 16 Gadigal Avenue
+  Sydney, NSW 2017
+  AU
+privacy_policy: >-
+  https://sites.google.com/joblaunch.co/terms-conditions-and-privacy/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Launch",
+  "description": "Launch. Your Next Career Faster.",
+  "version": "0.3.6",
+  "manifest_version": 3,
+  "icons": {
+    "48": "img/launch_icon.png",
+    "128": "img/launch_icon.png"
+  },
+  "action": {
+    "default_popup": "index.html"
+  },
+  "key":"MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAvMaydksF13r/rOZrWGo+UGP0cai0BcC/0pAapPbiPNP4HCAcxzsENEIS49JaXXhGRx2zxEsvtgQgzcwte0p6slh/eamfkdbhKs9a4wHz3evd38QLcumqT21k48r8BXatTA24dUS8kjjD6PespCcBRKbTEd55aJIVyntbqE5iZyoiNN5mrMEsNKUG+N3hbFjEKRxUhUWn9y8rfmSz8IRpEuOQNGL2raaf6Ug5ZnTbuWrXwidG3GjczDjR7dNzuCVCQBw0ZR1OS9Bcr2t/PmcLWuyXL82rwHkuS56BmBSrCnSRd2ExJHiUvElSiLTat2uN7M+cIqAYY1BENqkscOdWawIDAQAB",
+  "background": {
+    "service_worker": "./extensions/js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "all_frames": true,
+      "js": [
+        "./extensions/js/content.js",
+        "./assets/izitoast/js/iziToast.min.js"
+      ],
+      "css": [
+        "./assets/izitoast/css/iziToast.min.css",
+        "./assets/confetti/confetti-tingle.min.css",
+        "./extensions/css/index.css"
+      ] ,
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://*.youtube.com/*", "*://learn.microsoft.com/*", "*://*.udemy.com/*"],
+      "all_frames": true,
+      "js": [
+        "./extensions/js/videoTracking.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["*://medium.com/*", "*://*.medium.com/*", "*://stackoverflow.com/*", "*://*.w3schools.com/*"],
+      "exclude_globs": ["*search?q=*"],
+      "all_frames": true,
+      "js": [
+        "./extensions/js/textParsing.js"
+      ],
+      "run_at": "document_end"
+    },
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "exclude_globs": ["*youtube.com*", "*google.com*", "*udemy.com*"],
+      "all_frames": true,
+      "js": [
+        "./extensions/js/textTracking.js"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "permissions": [
+    "identity",
+    "tabs",
+    "storage",
+    "webNavigation"
+  ],
+  "content_security_policy": {
+    "script-src":  "self unsafe-eval",
+    "object-src": "self"
+  }
+}

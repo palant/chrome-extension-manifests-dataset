@@ -1,0 +1,77 @@
+---
+name: Ground News - Bias Checker
+version: 3.1.2
+category_slug: lifestyle/news
+featured: true
+rating: 4.019230769230769
+rating_count: 52
+user_count: 30000
+size: 1.14MiB
+languages:
+  - English
+release_date: '2024-11-30T04:05:54.000Z'
+creation_date: '2020-08-24T13:03:14.000Z'
+description: Explore the web and lookup articles you find on Ground News
+publisher_hash: f5607871c650e4fbea91e45d7f51d7254e41ccf0300d7f63a6bb0b9a9cee8675
+publisher_account: Ground News
+extension_website: ground.news
+extension_website_verified: true
+support_website: https://help.ground.news/
+privacy_policy: https://ground.news/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Ground News - Bias Checker",
+  "version": "3.1.2",
+  "description": "Explore the web and lookup articles you find on Ground News",
+  "icons": {
+    "16": "16.png",
+    "32": "32.png",
+    "48": "48.png",
+    "128": "128.png"
+  },
+  "permissions": ["tabs", "storage"],
+  "host_permissions": ["https://extension.ground.news/*"],
+  "background": {
+    "service_worker": "js/background.js",
+    "type": "module"
+  },
+  "content_scripts": [
+    {
+      "matches": ["http://*/*", "https://*/*"],
+      "js": ["js/vendor.js", "js/content_script.js"],
+      "run_at": "document_start"
+    },
+    {
+      "matches": ["https://ground.news/extension/*/toolbar*"],
+      "js": ["js/toolbar_content_script.js"],
+      "all_frames": true,
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [{
+    "resources": [
+      "frame.html",
+      "js/frame.js",
+      "popup.html",
+      "js/popup.js"
+    ],
+    "matches": ["http://*/*", "https://*/*"]
+  }],
+  "action": {
+    "default_icon": {
+      "16": "16.png",
+      "32": "32.png",
+      "48": "48.png",
+      "128": "128.png"
+    },
+    "default_title": "Ground News Explorer",
+    "default_popup": "menu.html"
+  },
+  "externally_connectable": {
+    "matches": ["https://*.ground.news/*"]
+  },
+  "manifest_version": 3
+}

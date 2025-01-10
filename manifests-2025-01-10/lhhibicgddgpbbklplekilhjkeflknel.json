@@ -1,0 +1,98 @@
+---
+name: StorkyApp Sessions Recorder
+version: 1.1.3
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 6
+size: 642KiB
+languages:
+  - English
+release_date: '2020-12-20T21:55:35.000Z'
+creation_date: '2020-09-21T10:23:07.000Z'
+description: >-
+  StorkyApp sessions recorder that records screen activity, camera, mic, tab,
+  speakers for later
+publisher_hash: e1d92cff197a00562ffbcf3a3dfb77e9b8aac3ad84922558e6f93859cc2d3dc2
+publisher_account: StorkyApp
+extension_website: storky.app
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+  
+   "name": "StorkyApp Sessions Recorder",
+   "short_name": "SSRecorder",
+   "author": "Aml Maklad",
+   "version": "1.1.3",
+   "manifest_version":2,
+   "minimum_chrome_version":"49",
+   "description": "StorkyApp sessions recorder that records screen activity, camera, mic, tab, speakers for later ",
+   "homepage_url": "https://storkyapp.com",
+   "background":{  
+      "scripts":[  
+         "background/background.common.js",
+         "background/background.js",
+         "background/background.desktopCapture.js",
+         "background/background.tabCapture.js",
+         "background/background.badgeText.js",
+         "background/background.getUserMedia.js",
+         "background/background.messaging.js",
+         "background/background.players.js",
+         "RecordRTC/MediaStreamRecorder.js",
+         "RecordRTC/MultiStreamRecorder.js",
+         "RecordRTC/MultiStreamsMixer.js",
+         "RecordRTC/StereoAudioRecorder.js",
+         "RecordRTC/DiskStorage.js",
+         "RecordRTC/EBML.js"
+      ],
+      "persistent":false
+   },
+   "content_scripts":[  
+      {  
+        "matches":[  
+         "https://app.storkyapp.com/conference/*/*/app",
+         "http://localhost:8001/conference/*/*/app",
+         "http://localhost:3000/conference/*/*/app"
+        ],
+        "js":[  
+            "background/background.contentScript.js"
+        ],
+        "all_frames": true,
+        "run_at": "document_start"
+      }
+    ],
+   "browser_action":{  
+      "default_icon":"images/main-icon.png",
+      "default_title": "Record Your session",
+      "default_popup": "main.html"
+   },
+   "icons":{  
+      "16":"images/main-icon.png",
+      "22":"images/main-icon.png",
+      "32":"images/main-icon.png",
+      "48":"images/main-icon.png",
+      "128":"images/main-icon.png"
+   },
+   "permissions":[  
+      "desktopCapture",
+      "storage",
+      "tabs",
+      "tabCapture",
+      "activeTab",
+      "https://storkyapp.com/conference/*/*/app",
+      "http://localhost:8001/conference/*/*/app",
+      "http://localhost:3000/conference/*/*/app"
+   ],
+   "content_security_policy": "script-src 'self' https://apis.google.com; object-src 'self'",
+   "web_accessible_resources":[  
+      "images/main-icon.png"
+   ],
+   "options_ui":{  
+      "page":"options.html",
+      "chrome_style":false,
+      "open_in_tab": true
+   }
+}

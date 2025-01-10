@@ -1,0 +1,118 @@
+---
+name: 'Briefly: AI meeting summary & email follow up'
+version: '0.510'
+category_slug: productivity/workflow
+featured: true
+rating: 4.529411764705882
+rating_count: 17
+user_count: 5000
+size: 1.11MiB
+languages:
+  - English (United States)
+release_date: '2024-12-17T17:16:47.000Z'
+creation_date: '2023-01-05T17:20:37.000Z'
+description: >-
+  Capture meeting notes, transcribe, summarize and gather insights without
+  distraction.
+publisher_hash: c5aa9054a4fd316df5a2e304cd217f93e3096e3fc312ae2363eec474f34ec69a
+publisher_account: Briefly App
+publisher_address: |-
+  222 W Baltimore Ave
+  Larkspur, CA 94939-2126
+  US
+publisher_phone: '+16508680596'
+support_website: https://www.brieflyai.com/contact-us
+privacy_policy: https://www.brieflyai.com/privacy-policy
+---
+
+{
+  "update_url": "https://clients2.google.com/service/update2/crx",
+  "manifest_version": 3,
+  "name": "Briefly: AI meeting summary & email follow up",
+  "short_name": "Briefly",
+  "description": "Capture meeting notes, transcribe, summarize and gather insights without distraction.",
+  "version": "0.510",
+  "background": {
+    "service_worker": "src/bg/background.js",
+    "type": "module"
+  },
+  "icons": {
+    "16": "icons/icon32.png",
+    "48": "icons/icon32.png",
+    "128": "icons/icon32.png"
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "identity"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'; base-uri 'self'; form-action 'self'; frame-ancestors 'self';"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "*://meet.google.com/*-*-*"
+      ],
+      "js": [
+        "src/inject/inject.js"
+      ],
+      "css": [
+        "src/inject/inject.css",
+        "src/inject/sidebar.css"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://mail.google.com/*"
+      ],
+      "js": [
+        "src/inject/inject-gmail.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://localhost/*",
+        "*://d2uoparhecajuz.cloudfront.net/*",
+        "*://app.brieflyai.com/*"
+      ],
+      "js": [
+        "src/inject/inject-web-ui.js"
+      ],
+      "run_at": "document_start"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "src/deps/*.js",
+        "src/inject/*.js",
+        "src/common/*.js",
+        "src/common/backgroundMessageHandlers/*.js",
+        "src/utils/*.js",
+        "i18n.js",
+        "*.png"
+      ],
+      "matches": [
+        "*://*/*"
+      ]
+    }
+  ],
+  "action": {
+    "default_icon": {
+      "16": "icons/icon32.png",
+      "24": "icons/icon32.png",
+      "32": "icons/icon32.png"
+    },
+    "default_title": "Briefly",
+    "default_popup": "popup.html"
+  },
+  "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgCSKj0FKdKjLILGzJy98xb94YHvf8d3NyjUi7h5W/XU9iEQqwVEAa6rOc4sESCcQg3N+ILPsIwsZtTAvt0f/fxSBD2SSa9KVSCvMdgVCYtYv65Xxh8WI9BrnHNW4CTv++wtbsWrBVH+fVGMjiMrFXEK22PelCrPBKyt1f7m3MD50P1y7G4yK72hy2fSLdFwmDOpr/n7xxV8c+l82k4/q4y83AM4avQKitRwTQSM9b3KblEFwOG85B4Qfwgd3Jpjr580e67Y0p7BiF3F0A6eKX8MZ6WlzvvgFgrgM9KlmSPHyy2KqDuiHS3FaRWHQf/c6xqVXpX47AaE3TWHCPAe3MQIDAQAB",
+  "externally_connectable": {
+    "matches": [
+      "https://app.brieflyai.com/*"
+    ]
+  }
+}

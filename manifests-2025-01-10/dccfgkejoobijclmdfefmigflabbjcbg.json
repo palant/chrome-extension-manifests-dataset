@@ -1,0 +1,90 @@
+---
+name: PromptDrive
+version: 1.0.9
+category_slug: productivity/workflow
+featured: true
+rating: 4.833333333333333
+rating_count: 12
+user_count: 1000
+size: 217KiB
+languages:
+  - English
+release_date: '2023-07-10T10:01:39.000Z'
+creation_date: '2023-06-22T11:54:59.000Z'
+description: >-
+  Save, share and organize prompts to streamline workflow for ChatGPT, Bard AI,
+  Mid-journey and other prompt driven AI tools.
+publisher_hash: 7c554374f161479f67a569ed3744ead9ba68acc083904c22f72178a1f8a2b229
+publisher: mdk.digital GmbH
+publisher_account: thorsten.laabs
+publisher_address: |-
+  Fritz-Schäffer-Straße 1
+  mdk.digital GmbH
+  Bonn 53113
+  DE
+publisher_phone: '+491712042416'
+extension_website: promptdrive.ai
+extension_website_verified: true
+privacy_policy: https://app.promptdrive.ai/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "PromptDrive",
+  "version": "1.0.9",
+  "description": "Save, share and organize prompts to streamline workflow for ChatGPT, Bard AI, Mid-journey and other prompt driven AI tools.",
+  "action": {
+    "default_icon": "./assets/icon-512.png",
+    "default_popup": "./dist/popup/index.html"
+  },
+  "options_ui": {
+    "page": "./dist/options/index.html",
+    "open_in_tab": true
+  },
+  "omnibox": {
+    "keyword": "pd"
+  },
+  "background": {
+    "service_worker": "./dist/background/index.mjs"
+  },
+  "icons": {
+    "16": "./assets/icon-512.png",
+    "48": "./assets/icon-512.png",
+    "128": "./assets/icon-512.png"
+  },
+  "permissions": [
+    "activeTab",
+    "clipboardWrite",
+    "contextMenus",
+    "scripting",
+    "storage"
+  ],
+  "host_permissions": [
+    "https://chat.openai.com/*",
+    "https://bard.google.com/*"
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://chat.openai.com/*",
+        "https://bard.google.com/*"
+      ],
+      "js": [
+        "dist/contentScripts/index.global.js"
+      ]
+    }
+  ],
+  "externally_connectable": {
+    "ids": [
+      "*"
+    ],
+    "matches": [
+      "*://*/*"
+    ]
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  }
+}

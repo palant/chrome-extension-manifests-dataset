@@ -1,0 +1,75 @@
+---
+name: Sentry Cookie Sync
+version: 1.5.0
+category_slug: productivity/developer
+featured: true
+rating: 5
+rating_count: 1
+user_count: 154
+size: 1.31MiB
+languages:
+  - English
+release_date: '2024-12-24T06:21:22.000Z'
+creation_date: '2023-06-25T07:58:44.000Z'
+description: Sync cookies for local frontend development of sentry.io
+publisher_hash: 22e0d2fdee183de8bb8a1ce7e6bdc8432ff3dfd8eb0c110075783433e7345aa1
+publisher: Sentry.io
+publisher_address: |-
+  45 Fremont St
+  San Francisco, CA 94105-2228
+  US
+support_website: https://github.com/getsentry/cookie-sync/issues
+privacy_policy: https://sentry.io/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "Sentry Cookie Sync",
+  "version": "1.5.0",
+  "icons": {
+    "32": "assets/icons/favicon-32.png",
+    "128": "assets/icons/favicon-128.png",
+    "180": "assets/icons/favicon-180.png",
+    "192": "assets/icons/favicon-192.png"
+  },
+  "description": "Sync cookies for local frontend development of sentry.io",
+  "homepage_url": "https://github.com/getsentry/cookie-sync",
+  "short_name": "Cookie Sync",
+  "permissions": [
+    "cookies",
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.sentry.io/*",
+    "https://*.sentry.dev/*",
+    "https://*.dev.getsentry.net/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "author": "Ryan Albrecht",
+  "minimum_chrome_version": "88",
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Sentry Cookie Sync"
+  },
+  "background": {
+    "service_worker": "js/serviceworker.bundle.js"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.sentry.dev/auth/login/",
+        "https://dev.getsentry.net:7999/auth/login/",
+        "https://*.dev.getsentry.net:7999/auth/login/",
+        "https://new.staging.getsentry.net/auth/login"
+      ],
+      "js": [
+        "js/contentScript.bundle.js"
+      ]
+    }
+  ]
+}

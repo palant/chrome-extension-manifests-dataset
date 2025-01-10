@@ -1,0 +1,102 @@
+---
+name: 샵플링 플러그인
+version: 0.6.5
+category_slug: productivity/workflow
+featured: false
+rating: null
+rating_count: null
+user_count: 4000
+size: 110KiB
+languages:
+  - 한국어
+release_date: '2024-06-17T07:12:41.000Z'
+creation_date: '2019-08-25T08:07:15.000Z'
+description: 샵플링 플러그인
+publisher_hash: 9b584b63c34acfc8b3d9221572f5f38cc56869705f83f7df840f38170bdb2672
+publisher: 주식회사 샵플링
+publisher_account: 샵플링
+publisher_address: |-
+  국제금융로 6길 30 5층 507호
+  영등포구 07328
+  한국
+extension_website: www.shopling.co.kr
+extension_website_verified: true
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "author": "Shopling",
+ "name": "샵플링 플러그인",
+ "description": "샵플링 플러그인",
+ "version": "0.6.5",
+ "homepage_url":"https://www.shopling.co.kr",
+ "action": {
+  "default_icon": "resource/icon.png",
+  "default_popup": "popup/popup.html"
+ },
+ "icons": { "128": "resource/icon.png" },
+ "permissions": [
+  "storage",
+  "debugger"
+ ],
+ "host_permissions": [
+  "<all_urls>"
+ ],
+ "background": {
+  "service_worker": "background.js"
+ },
+ "content_scripts": [
+  {
+   "matches": ["http://a.shopling.co.kr/*","http://cl.shopling.co.kr/*","http://pidion.shopling.co.kr/*"],
+   "run_at": "document_start",
+   "js": [
+    "plugin/jquery.js",
+    "library/common.js",
+    "script/check_protocol_is_https.js"
+   ]
+  },
+  {
+   "matches": ["https://a.shopling.co.kr/*","https://cl.shopling.co.kr/*","https://pidion.shopling.co.kr/*"],
+   "run_at": "document_idle",
+   "all_frames": true,
+   "js": [
+    "plugin/jquery.js",
+    "library/common.js",
+    "script/shopling_data_process.js"
+   ]
+  },
+  {
+   "matches": [
+    "https://*.taobao.com/*",
+    "https://*.tmall.com/*",
+    "https://*.aliexpress.com/*",
+    "https://*.1688.com/*",
+    "https://*.rakuten.co.jp/*",
+    "https://*.amazon.co.jp/*",
+    "https://*.shopping.yahoo.co.jp/*",
+    "https://*.item.jd.com/*",
+    "https://*.temu.com/*"
+   ],
+   "run_at": "document_start",
+   "all_frames": true,
+   "js": [
+    "plugin/jquery.js",
+    "library/common.js",
+    "script/overseas_notranslate.js", "script/overseas_item_data_crawling.js"
+   ]
+  },
+  {
+   "matches": ["*://*/*"],
+   "exclude_matches": ["*://a.shopling.co.kr/*","*://cl.shopling.co.kr/*","*://pidion.shopling.co.kr/*"],
+   "run_at": "document_idle",
+   "all_frames": true,
+   "js": [
+    "plugin/jquery.js", "plugin/bililiteRange.js", "plugin/jquery.sendkeys.js",
+    "library/common.js",
+    "script/shopping_mall_auto_login.js"
+   ]
+  }
+ ]
+}

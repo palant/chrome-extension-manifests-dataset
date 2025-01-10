@@ -1,0 +1,81 @@
+---
+name: crib.ninja
+version: 0.16.0
+category_slug: productivity/workflow
+featured: false
+rating: 5
+rating_count: 1
+user_count: 13
+size: 612KiB
+languages:
+  - English
+release_date: '2018-02-16T16:41:28.000Z'
+creation_date: '2016-08-15T11:25:26.000Z'
+description: Add links easily to crib.ninja
+publisher_hash: bf9cb77a39dd4a83a7d480e3936925a2621a87a648ce1c2879a1e3c5ea79b881
+publisher: link.fish UG (haftungsbeschränkt)
+publisher_address: |-
+  Wilhelm-Kuhr-Str. 43
+  Berlin, Berlin 13359
+  Germany
+extension_website: crib.ninja
+extension_website_verified: true
+support_website: http://crib.ninja/faq/
+privacy_policy: https://link.fish/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "crib.ninja",
+  "version": "0.16.0",
+  "manifest_version": 2,
+  "description": "Add links easily to crib.ninja",
+  "homepage_url": "http://crib.ninja",
+  "icons": {
+    "16": "icons/icon16.png",
+    "48": "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+  "background": {
+    "page": "src/bg/background.html",
+    "persistent": true
+  },
+  "page_action": {
+    "default_icon": "icons/offline/icon19.png",
+    "default_title": "Easy apartment search with crib.ninja",
+    "default_popup": "src/page_action/index.html"
+  },
+  "content_scripts": [{
+    "matches": [
+      "https://app.crib.ninja/auto-auth.html"
+    ],
+    "js": [
+      "src/auto_auth/auto_auth-bundle.min.js"
+    ],
+    "run_at": "document_end",
+    "all_frames": true
+  }, {
+    "matches": [
+      "<all_urls>"
+    ],
+    "js": [
+      "src/third-party/linkclump/src/linkclump.js"
+    ],
+    "run_at": "document_end",
+    "all_frames": true
+  }],
+  "options_page": "src/options/index.html",
+  "permissions": [
+    "bookmarks",
+    "windows",
+    "contextMenus",
+    "tabs",
+    "notifications",
+    "http://*/*",
+    "https://*/*"
+  ],
+  "web_accessible_resources": [
+    "src/page_action/screenshot-placeholder.jpg"
+  ]
+}

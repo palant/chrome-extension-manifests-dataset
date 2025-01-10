@@ -1,0 +1,83 @@
+---
+name: FoxyRecon
+version: 0.23.0
+category_slug: productivity/tools
+featured: false
+rating: 5
+rating_count: 1
+user_count: 20
+size: 3.75MiB
+languages:
+  - English
+release_date: '2024-12-14T06:51:19.000Z'
+creation_date: '2024-12-14T06:51:19.000Z'
+description: A Firefox add-on for OSINT investigations
+publisher_hash: 8c66221acb50854c57ab68a258c0595beca360cbd9fc3bab87ac26a99f93e3a2
+publisher_account: Vincenzo Caputo
+support_website: https://github.com/vincenzocaputo/FoxyRecon/issues
+privacy_policy: https://github.com/vincenzocaputo/FoxyRecon/wiki/Privacy-Policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+ "manifest_version": 3,
+ "name": "FoxyRecon",
+ "version": "0.23.0",
+ "description": "A Firefox add-on for OSINT investigations",
+
+ "icons": {
+  "16": "assets/icons/foxyrecon-icon-16.png",
+  "48": "assets/icons/foxyrecon-icon-48.png"
+ },
+
+    "content_security_policy": {
+        "extension_pages": "default-src 'self'; img-src 'self' data:; script-src 'self'; style-src 'self'"
+    },
+
+    "background": {
+        "service_worker": "src/background.js",
+        "type": "classic"
+    },
+
+    "content_scripts": [{
+        "matches": ["*://*/*"],
+        "js": [
+            "src/utils/indicatorparser.js", 
+            "src/utils/utils.js", 
+            "src/utils/graph.js",
+            "src/content_scripts/graph.js",
+            "src/content_scripts/add_node_popup.js",
+            "src/content_scripts/catch.js",
+            "src/content_scripts/message-box.js",
+            "src/content_scripts/autofill.js"
+        ],
+        "css": [
+            "src/content_scripts/css/addnode-popup.css",
+            "src/content_scripts/css/message-box.css"
+        ]
+
+    }],
+
+    "web_accessible_resources": [
+        {
+            "resources": [
+                "assets/icons/foxyrecon-icon-32.png",
+                "src/json/tools.json"
+            ],
+            "matches": ["*://*/*"]
+        }
+    ],
+
+ "permissions": [
+  "contextMenus",
+        "storage"
+ ],
+
+ "action": {
+        "default_icon": "assets/icons/foxyrecon-icon-48.png",
+        "default_title": "FoxyRecon",
+        "default_popup": "src/popup/main_popup.html"
+ }
+
+}

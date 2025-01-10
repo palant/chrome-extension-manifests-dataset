@@ -1,0 +1,108 @@
+---
+name: ReaderClue
+version: 0.0.57
+category_slug: productivity/education
+featured: false
+rating: null
+rating_count: null
+user_count: 3
+size: 2.48MiB
+languages:
+  - English
+release_date: '2024-12-04T12:18:25.000Z'
+creation_date: '2024-11-19T06:36:58.000Z'
+description: >-
+  Unlock the world of reading! A friendly assistant that turns on-screen text
+  into speech.
+publisher_hash: 04c8f264b4431c065415b4b82f1273d6f3b49d3c9b915c1cd31e4aa9425216c2
+publisher: Improving Startups
+publisher_account: Leblanc Meneses
+publisher_address: |-
+  2002 Karnes Dr
+  Keller, TX 76248-8386
+  US
+publisher_phone: '+18172265740'
+support_website: https://github.com/leblancmeneses/chrome-extensions-issue-tracker/discussions
+privacy_policy: https://www.improvingstartups.com/privacy-policy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3,
+  "name": "ReaderClue",
+  "description": "Unlock the world of reading! A friendly assistant that turns on-screen text into speech.",
+  "version": "0.0.57",
+  "homepage_url": "https://www.improvingstartups.com/?extension=readerclue",
+  "oauth2": {
+    "client_id": "799250677685-uh2c8sstgah16hhhtgfqfspu0gjemlbt.apps.googleusercontent.com",
+    "scopes": [
+      "email",
+      "profile",
+      "openid"
+    ]
+  },
+  "background": {
+    "service_worker": "scripts/background/main.js"
+  },
+  "action": {
+    "default_title": "Open ReaderClue",
+    "default_icon": {
+      "16": "images/icon16.png",
+      "32": "images/icon32.png",
+      "48": "images/icon48.png",
+      "128": "images/icon128.png"
+    },
+    "default_popup": "pages/popup/browser/index.html"
+  },
+  "icons": {
+    "16": "images/icon16.png",
+    "32": "images/icon32.png",
+    "48": "images/icon48.png",
+    "128": "images/icon128.png"
+  },
+  "permissions": [
+    "activeTab",
+    "storage",
+    "contextMenus",
+    "scripting"
+  ],
+  "host_permissions": [
+    "*://*.acellus.com/*",
+    "https://*.linkedin.com/*"
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "pages/popup/browser/*",
+        "images/*"
+      ],
+      "matches": [
+        "<all_urls>"
+      ]
+    }
+  ],
+  "content_scripts": [
+    {
+      "matches": [
+        "https://*.linkedin.com/*"
+      ],
+      "js": [
+        "inject_linkedin_csp.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "matches": [
+        "*://*.acellus.com/*"
+      ],
+      "js": [
+        "inject_executeConsoleOverride.js"
+      ],
+      "run_at": "document_start",
+      "all_frames": true,
+      "match_about_blank": true,
+      "world": "MAIN"
+    }
+  ]
+}

@@ -1,0 +1,153 @@
+---
+name: GoNimble.net - AliExpress Product Importer
+version: 3.0.3
+category_slug: lifestyle/shopping
+featured: true
+rating: 2.9210526315789473
+rating_count: 38
+user_count: 10000
+size: 348KiB
+languages:
+  - English
+release_date: '2022-09-21T07:07:38.000Z'
+creation_date: '2017-05-21T08:00:29.000Z'
+description: >-
+  Import products from Aliexpress directly to your Shopify store with a single
+  click.
+publisher_hash: f94deab4256c9298e33746a289fee12fbe765db7af6549badbf149878bcc095f
+publisher: Celestial Commerce AB
+publisher_account: GoNimble.net
+publisher_address: |-
+  Flintvägen 16
+  Örebro 703 74
+  SE
+extension_website: gonimble.net
+extension_website_verified: true
+support_website: http://help.gonimble.net
+privacy_policy: https://www.gonimble.net/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "manifest_version": 3 ,
+  "name": "GoNimble.net - AliExpress Product Importer",
+  "short_name": "GoNimble.net",
+  "background": {
+    "service_worker": "background.js"
+  },
+  "description": "Import products from Aliexpress directly to your Shopify store with a single click.",
+  "version": "3.0.3",
+  "icons": {
+    "128": "icon_128.png"
+  },
+  "action": {
+    "default_icon": "ft.png",
+    "default_popup": "popup.html"
+  },
+  "content_scripts": [
+    {
+      "matches": [
+        "https://ds.aliexpress.com/*",
+        "https://ds.aliexpress.com/dscenter/*"
+      ],
+      "js": [
+        "jquery.min.js",
+        "src/dsCenter/content.js"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "css": ["style.css", "css/cybermonday.css"],
+      "js": [
+        "jquery.min.js",
+        "searchPage.js",
+        "src/chartjs/Chart.min.js",
+        "src/cyberMondayDeal.js"
+      ],
+      "matches": [
+        "https://*.aliexpress.com/af/*",
+        "http://*.aliexpress.com/af/*",
+        "https://*.aliexpress.com/w/*",
+        "http://*.aliexpress.com/w/*",
+        "https://*.aliexpress.com/category/*",
+        "http://*.aliexpress.com/category/*",
+        "https://*.aliexpress.com/wholesale*",
+        "http://*.aliexpress.com/wholesale*",
+        "https://*.aliexpress.com/premium*",
+        "http://*.aliexpress.com/premium*"
+      ]
+    },
+    {
+      "css": ["style.css"],
+      "js": ["jquery.min.js", "itemPage.js", "src/chartjs/Chart.min.js"],
+      "matches": [
+        "https://*.aliexpress.com/item/*",
+        "https://*.aliexpress.com/store/product/*"
+      ]
+    },
+    {
+      "css": ["style.css"],
+      "js": ["jquery.min.js", "src/dropifiedProductFetcher.js"],
+      "matches": [
+        "https://app.dropified.com/product/*",
+        "https://app.dropified.com/*"
+      ]
+    },
+    {
+      "js": ["jquery.min.js", "src/nimblePage.js"],
+      "matches": ["*://www.gonimble.net/dashboard/unmigrated"]
+    },
+    {
+      "css": ["css/paymentBar.css", "src/orderProcessor/dist/app.46db3229.css"],
+      "js": [
+        "jquery.min.js",
+        "src/aliexpressOrderlistpage.js",
+        "src/orderProcessor/dist/app.0848666f.js"
+      ],
+      "matches": [
+        "*://trade.aliexpress.com/orderList.htm*",
+        "*://*.aliexpress.com/order/payResult.htm*",
+        "*://*.aliexpress.com/p/order/index.html"
+      ]
+    },
+    {
+      "css": ["style.css"],
+      "js": ["jquery.min.js", "src/nimbleMigrator.js"],
+      "matches": [
+        "*://*.gonimble.net/dashboard/migrator",
+        "*://localhost/dashboard/migrator"
+      ]
+    }
+  ],
+
+  "externally_connectable": {
+    "matches": [
+      "*://www.gonimble.net/*",
+      "*://trade.aliexpress.com/orderList.htm*",
+      "*://www.localhost/*",
+      "*://www.nimbledev:*/*"
+    ]
+  },
+  "web_accessible_resources": [{
+    "resources": [
+      "src/orderProcessor/index.js",
+      "src/orderProcessor/*"
+    ],
+    "matches": [
+      "*://trade.aliexpress.com/*",
+      "*://*.aliexpress.com/*"
+    ]
+  }],
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "host_permissions": [
+    "*://trade.aliexpress.com/orderList.htm*",
+    "https://*/admin/*",
+    "https://www.aliexpress.com/*",
+    "https://home.aliexpress.com/*",
+    "https://*.dsers.com/*"
+  ]
+}

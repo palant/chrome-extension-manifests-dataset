@@ -1,0 +1,95 @@
+---
+name: Pigogo ALERT!
+version: 2.1.0
+category_slug: lifestyle/shopping
+featured: false
+rating: 4.2
+rating_count: 10
+user_count: 5000
+size: 961KiB
+languages:
+  - Ελληνικά
+release_date: '2024-07-18T09:33:25.000Z'
+creation_date: '2017-07-19T11:27:54.000Z'
+description: Receive Cashback, Coupons, Deals and Offers from shopping.
+publisher_hash: 26fca77de7f05178ff98adf13eec2b90dd724fb09fd667eadd31e60045cb5792
+publisher: PIGOGO O.E.
+publisher_account: Pigogo
+publisher_address: |-
+  Averof 24
+  Nea Ionia 14232
+  GR
+publisher_phone: '+306973828931'
+extension_website: www.pigogo.gr
+extension_website_verified: true
+privacy_policy: https://www.pigogo.gr/privacy
+---
+
+{
+"update_url": "https://clients2.google.com/service/update2/crx",
+
+  "name": "Pigogo ALERT!",
+  "version": "2.1.0",
+  "description": "Receive Cashback, Coupons, Deals and Offers from shopping.",
+  "homepage_url": "https://pigogo.gr",
+  "manifest_version": 3,
+  "permissions": [
+    "storage",
+    "tabs",
+    "cookies",
+    "webRequest",
+    "declarativeNetRequest"
+  ],
+  "host_permissions": [
+    "*://www.pigogo.gr/*",
+    "*://backend.pigogo.gr/*"
+  ],
+  "declarative_net_request": {
+    "rule_resources": [
+      {
+        "id": "pigogo",
+        "enabled": true,
+        "path": "ruleset.json"
+      }
+    ]
+  },
+  "content_scripts": [
+    {
+      "all_frames": false,
+      "js": [
+        "ci.content.pack.js",
+        "js/contentBundle.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_start"
+    },
+    {
+      "all_frames": false,
+      "js": [
+        "ci.browser.helper.js"
+      ],
+      "matches": [
+        "<all_urls>"
+      ],
+      "run_at": "document_end"
+    }
+  ],
+  "background": {
+    "service_worker": "backgroundBrowserified.js",
+    "type": "module"
+  },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "action": {
+    "default_popup": "popup/popup.html",
+    "default_title": "Pigogo",
+    "default_icon": "img/neutral_18.png"
+  },
+  "icons": {
+    "48": "img/neutral_48.png",
+    "128": "img/neutral_128.png"
+  }
+}
