@@ -10,7 +10,7 @@ This has been inspired by a [similar repository](https://github.com/mandatorypro
   * Changed scraping approach, increased number of manifests from 10k to >50k
 * 2023-11-29
   * Changed scraping approach, increased number of manifests to >100k
-  * User counts beyond 10,000,000 are now possible
+  * `user_count` field is now numerical rather than a formatted string, values beyond 10,000,000 are now possible
   * `release_date` field is in ISO format now
   * `slug` field has been removed, it can be deduced from `name` field
   * `category` field has been removed, `category_slug` field can be used instead
